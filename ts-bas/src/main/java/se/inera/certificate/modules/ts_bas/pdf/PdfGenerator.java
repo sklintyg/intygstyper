@@ -53,13 +53,22 @@ import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfGenerator {
 
+    // Constants for printing ID and origin in left margin
+    private static final int MARGIN_TEXT_START_X = 46;
+    private static final int MARGIN_TEXT_START_Y = 137;
+    private static final int MARGIN_TEXT_FONTSIZE = 7;
+    private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
+    private static final String WEBCERT_MARGIN_TEXT = "Intyget är utskrivet från Webcert.";
+
     private static final StringField INVANARE_ADRESS_FALT1 = new StringField("Falt");
-    private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt__1");
+    private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt_h_1");
     private static final StringField INVANARE_ADRESS_FALT3 = new StringField("Falt__2");
     private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__3");
 
@@ -180,9 +189,6 @@ public class PdfGenerator {
     private static final CheckField ST_LAKARE_CHECK = new CheckField("Falt_93");
     private static final CheckField AT_LAKARE_CHECK = new CheckField("Falt_94");
 
-    private static final StringField UTLATANDE_ID = new StringField("Cert-id");
-    private static final StringField UTSKRIVET_FRAN = new StringField("Cert-printed-from");
-
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 
     private final boolean formFlattening;
@@ -202,17 +208,46 @@ public class PdfGenerator {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            PdfReader pdfReader = new PdfReader("pdf/TSTRK1007U06V06.pdf");
+            PdfReader pdfReader = new PdfReader("pdf/TSTRK1007 NKL fas4 e-tjanst 2015-04-10.pdf");
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
             populatePdfFields(utlatande, fields, applicationOrigin);
+
+            // Decorate PDF depending on the origin of the pdf-call
+            switch (applicationOrigin) {
+                case MINA_INTYG:
+                    createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), MINA_INTYG_MARGIN_TEXT);
+                    break;
+                case WEBCERT:
+                    createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), WEBCERT_MARGIN_TEXT);
+                    break;
+                default:
+                    break;
+            }
+
             pdfStamper.close();
 
             return outputStream.toByteArray();
 
         } catch (Exception e) {
             throw new PdfGeneratorException(e);
+        }
+    }
+
+    private void createLeftMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {
+        PdfContentByte addOverlay;
+        BaseFont bf = BaseFont.createFont();
+        // Do text
+        for (int i = 1; i <= numberOfPages; i++) {
+            addOverlay = pdfStamper.getOverContent(i);
+            addOverlay.saveState();
+            addOverlay.beginText();
+            addOverlay.setFontAndSize(bf, MARGIN_TEXT_FONTSIZE);
+            addOverlay.setTextMatrix(0, 1, -1, 0, MARGIN_TEXT_START_X, MARGIN_TEXT_START_Y);
+            addOverlay.showText(String.format("Intygs-ID: %s. %s", id, text));
+            addOverlay.endText();
+            addOverlay.restoreState();
         }
     }
 
@@ -248,7 +283,7 @@ public class PdfGenerator {
         populateMedicinering(utlatande.getMedicinering(), fields);
         populateOvrigt(utlatande.getKommentar(), fields);
         populateBedomning(utlatande.getBedomning(), fields);
-        populateAvslut(utlatande, fields, applicationOrigin);
+        populateAvslut(utlatande, fields);
     }
 
     private void populatePatientInfo(Patient patient, AcroFields fields) throws IOException, DocumentException {
@@ -399,7 +434,7 @@ public class PdfGenerator {
         BEDOMNING_BOR_UNDERSOKAS_SPECIALIST.setField(fields, bedomning.getLakareSpecialKompetens());
     }
 
-    private void populateAvslut(Utlatande utlatande, AcroFields fields, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
+    private void populateAvslut(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
         INTYGSDATUM.setField(fields, utlatande.getGrundData().getSigneringsdatum().toString("yyMMdd"));
         Vardenhet vardenhet = utlatande.getGrundData().getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
@@ -419,18 +454,6 @@ public class PdfGenerator {
         List<String> befattningar = utlatande.getGrundData().getSkapadAv().getBefattningar();
         ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.ST_LAKARE.name()));
         AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.name()));
-
-        UTLATANDE_ID.setField(fields, utlatande.getId());
-        switch (applicationOrigin) {
-        case MINA_INTYG:
-            UTSKRIVET_FRAN.setField(fields, "Mina Intyg");
-            break;
-        case WEBCERT:
-            UTSKRIVET_FRAN.setField(fields, "Webcert");
-            break;
-        default:
-            break;
-        }
     }
 
     private static final class CheckField {

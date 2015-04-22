@@ -9,7 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -133,7 +133,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public TSDiabetesIntyg asTransportModel() throws ScenarioNotFoundException {
+        public RegisterTSDiabetesType asTransportModel() throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
             } catch (IOException e) {

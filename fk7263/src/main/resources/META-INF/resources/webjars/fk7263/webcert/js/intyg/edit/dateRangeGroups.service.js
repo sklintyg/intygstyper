@@ -62,7 +62,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    from.$formatters.push(function(modelValue) {
+                    from.$parsers.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });
 
@@ -71,7 +71,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                 if (from) {
 
                     // add formatters
-                    tom.$formatters.push(function(modelValue) {
+                    tom.$parsers.push(function(modelValue) {
                         return nedsattFormatter(self, modelValue);
                     });
                 }
@@ -222,25 +222,32 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
             if (this.certModel !== undefined) {
                 var nedsatt = this[nedsattModelName];
                 if (nedsatt.workState) {
-
+                    var tom, from;
                     // Set from date
                     // find highest max date
                     var moments = this.findStartEndMoments();
                     if (!nedsatt.certFrom() || !dateUtils.isDate(nedsatt.certFrom())) {
 
                         if (moments.maxMoment !== null && moments.maxMoment.isValid()) {
-                            nedsatt.setCertFrom(moments.maxMoment.add('days', 1).format('YYYY-MM-DD'));
+                            from = moments.maxMoment.add('days', 1).format('YYYY-MM-DD');
+                            nedsatt.setCertFrom( from );
                         } else {
                             // if no max moment is available, use today
-                            nedsatt.setCertFrom($filter('date')(this.today, 'yyyy-MM-dd'));
+                            from = $filter('date')(this.today, 'yyyy-MM-dd');
+                            nedsatt.setCertFrom( from );
                         }
 
                     }
 
                     // Set tom date
                     if (nedsatt.certFrom() && (!nedsatt.certTom() || !dateUtils.isDate(nedsatt.certTom()))) {
-                        nedsatt.setCertTom( dateUtils.toMoment(nedsatt.certFrom()).add('days', 7).format('YYYY-MM-DD') );
+                        tom = dateUtils.toMoment(nedsatt.certFrom()).add('days', 7).format('YYYY-MM-DD');
+                        nedsatt.setCertTom( tom );
                     }
+
+                    // make sure the form is set
+                    //nedsatt.nedsattFormFrom = from;
+                    //nedsatt.nedsattFormTom = tom;
                 } else {
                     // Remove dates
                     nedsatt.setCertFrom( undefined );

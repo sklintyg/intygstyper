@@ -7,6 +7,7 @@ var fk7263Messages = {
         'fk7263.message.certificateloading': 'Hämtar intyg...',
 
         'fk7263.label.send': 'Skicka intyg till Försäkringskassan',
+        'fk7263.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
         'fk7263.button.send': 'Skicka till Försäkringskassan',
 
         // FK 7263

@@ -33,7 +33,6 @@ import org.custommonkey.xmlunit.Difference;
 import org.custommonkey.xmlunit.DifferenceConstants;
 import org.custommonkey.xmlunit.DifferenceListener;
 import org.custommonkey.xmlunit.ElementNameAndTextQualifier;
-import org.custommonkey.xmlunit.ElementQualifier;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,10 +44,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
@@ -69,13 +65,13 @@ import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
+import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
-import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.IntygMeta;
 
@@ -184,7 +180,7 @@ public class ModuleApiTest {
     @Test
     public void testGetCertificate() throws ModuleException, ScenarioNotFoundException {
         GetTSBasResponseType result = new GetTSBasResponseType();
-        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel());
+        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel().getIntyg());
         result.setMeta(createMeta());
         result.setResultat(ResultTypeUtil.okResult());
         Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
@@ -208,7 +204,6 @@ public class ModuleApiTest {
         String expected = FileUtils.readFileToString(new ClassPathResource("scenarios/transport/valid-maximal.xml").getFile());
 
         XMLUnit.setIgnoreWhitespace(true);
-        XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected, actual);
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
         diff.overrideElementQualifier(new ElementNameAndTextQualifier());
@@ -221,12 +216,6 @@ public class ModuleApiTest {
                 // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
                 // same
                 return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
-            } else if (DifferenceConstants.ELEMENT_TAG_NAME_ID == difference.getId()) {
-                if (difference.toString().contains("'intyg'")) {
-                    return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
-                } else {
-                    return RETURN_ACCEPT_DIFFERENCE;
-                }
             } else {
                 return RETURN_ACCEPT_DIFFERENCE;
             }

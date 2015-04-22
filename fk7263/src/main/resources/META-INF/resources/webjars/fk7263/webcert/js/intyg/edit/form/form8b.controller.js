@@ -17,6 +17,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 nedsattMed75 : null,
                 nedsattMed100 : null,
                 onChangeWorkStateCheck : function(nedsattModelName) {
+                    $log.debug('------------------------ onChangeWorkStateCheck');
                     if(_dateRangeGroups){
                         _dateRangeGroups.onChangeWorkStateCheck(nedsattModelName);
                     }
@@ -32,6 +33,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             $scope.datesPeriodTooLong = false;
             $scope.totalCertDays = false;
 
+            $scope.$watch('field8b.nedsattMed25.workState', function(newVal, oldVal) {
+                $log.debug('workstate : newVal:' + newVal + ', oldVal:' + oldVal);
+            });
 
             $scope.$watch('viewState.common.doneLoading', function(newVal) {
                 if (newVal) {

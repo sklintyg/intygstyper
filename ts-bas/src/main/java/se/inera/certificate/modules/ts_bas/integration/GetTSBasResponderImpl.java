@@ -83,7 +83,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
 
     private void attachCertificateDocument(CertificateHolder certificate, GetTSBasResponseType response) {
         try {
-            TSBasIntyg tsBasIntyg = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument()));
+            TSBasIntyg tsBasIntyg = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument())).getIntyg();
             response.setIntyg(tsBasIntyg);
         } catch (Exception e) {
             Throwables.propagate(e);

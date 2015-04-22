@@ -72,7 +72,6 @@ import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSB
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -190,7 +189,7 @@ public class TsBasModuleApi implements ModuleApi {
 
         RegisterTSBasType request = new RegisterTSBasType();
         try {
-            request.setIntyg(InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel())));
+            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
         } catch (ConverterException e) {
             LOG.error("Failed to convert to transport format during registerTSBas", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
@@ -220,13 +219,6 @@ public class TsBasModuleApi implements ModuleApi {
             e.printStackTrace();
         }
         // TODO handle response
-
-//        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
-//            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
-//                    ? response.getResult().getResultText()
-//                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
-//            throw new ExternalServiceCallException(message);
-//        }
     }
 
     @Override
@@ -258,7 +250,6 @@ public class TsBasModuleApi implements ModuleApi {
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
         // TODO: do something here
         return true;
-        //throw new UnsupportedOperationException("Unsupported for this module");
     }
 
     @Override
@@ -271,11 +262,11 @@ public class TsBasModuleApi implements ModuleApi {
         String xmlString = null;
         try {
             Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
-            TSBasIntyg external = InternalToTransport.convert(internal);
+            RegisterTSBasType external = InternalToTransport.convert(internal);
             StringWriter writer = new StringWriter();
 
-            JAXBElement<TSBasIntyg> jaxbElement = new JAXBElement<TSBasIntyg>(new QName("ns3:basIntyg"), TSBasIntyg.class, external);
-            JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
+            JAXBElement<RegisterTSBasType> jaxbElement = new JAXBElement<RegisterTSBasType>(new QName("ns3:RegisterTSBas"), RegisterTSBasType.class, external);
+            JAXBContext context = JAXBContext.newInstance(RegisterTSBasType.class);
             context.createMarshaller().marshal(jaxbElement, writer);
             xmlString = writer.toString();
 

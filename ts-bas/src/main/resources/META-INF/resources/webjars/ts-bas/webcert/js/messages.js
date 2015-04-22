@@ -25,6 +25,7 @@ var tsBasMessages = {
         'ts-bas.label.bedomning': 'Bedömning',
         'ts-bas.label.unit': 'Vårdenhet',
         'ts-bas.label.send': 'Skicka intyg till Transportstyrelsen',
+        'ts-bas.label.send.body': '',
         'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
 
         'ts-bas.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',

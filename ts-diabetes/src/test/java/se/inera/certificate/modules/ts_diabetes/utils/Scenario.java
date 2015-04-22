@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.ts_diabetes.utils;
 
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
+
 
 
 /**
@@ -30,7 +31,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    TSDiabetesIntyg asTransportModel() throws ScenarioNotFoundException;
+    RegisterTSDiabetesType asTransportModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

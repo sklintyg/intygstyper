@@ -2,13 +2,8 @@ package se.inera.certificate.modules.ts_diabetes.model.validator;
 
 import static org.junit.Assert.fail;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -17,8 +12,15 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
+import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
+import se.inera.certificate.xml.SchemaValidatorBuilder;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class DomainTransportModelValidatorTest {
 
@@ -26,16 +28,16 @@ public class DomainTransportModelValidatorTest {
 
     private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/core_components/se_intygstjanster_services_types_1.0.xsd";
 
-    //private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/insuranceprocess-healthreporting/core-components/iso_dt_subset_1.0.xsd";
+    private static final String COMMON_REGISTER_SCHEMA = "/interactions/RegisterTSDiabetesInteraction/RegisterTSDiabetesResponder_1.0.xsd";
 
     private static Schema commonSchema;
 
     @BeforeClass
     public static void initCommonSchema() throws Exception {
         SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
-        Source rootSource = schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_SCHEMA);
-        //schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_ISO_SCHEMA);
+        Source rootSource = schemaValidatorBuilder.registerResource(COMMON_REGISTER_SCHEMA);
         schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_TYPES_SCHEMA);
+        schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_SCHEMA);
 
         commonSchema = schemaValidatorBuilder.build(rootSource);
     }
@@ -60,9 +62,9 @@ public class DomainTransportModelValidatorTest {
     private void validateUtlatande(Scenario scenario) {
         try {
             ByteArrayOutputStream output = new ByteArrayOutputStream();
-            JAXBElement<TSDiabetesIntyg> jaxbElement = new JAXBElement<TSDiabetesIntyg>(new QName("ns3:diabetesIntyg"), TSDiabetesIntyg.class,
+            JAXBElement<RegisterTSDiabetesType> jaxbElement = new JAXBElement<RegisterTSDiabetesType>(new QName("ns3:RegisterTSDiabetes"), RegisterTSDiabetesType.class,
                     scenario.asTransportModel());
-            JAXBContext context = JAXBContext.newInstance(TSBasIntyg.class);
+            JAXBContext context = JAXBContext.newInstance(RegisterTSDiabetesType.class);
             context.createMarshaller().marshal(jaxbElement, output);
 
             Validator validator = commonSchema.newValidator();

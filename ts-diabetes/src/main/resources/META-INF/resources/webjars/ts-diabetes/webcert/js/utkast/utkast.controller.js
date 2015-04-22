@@ -98,13 +98,19 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                         }
                     }
                     $scope.form.korkortd = visaKorkortd;
-                    if (!visaKorkortd) {
+                    if (visaKorkortd) {
+                        $scope.cert.restoreFromAttic('hypoglykemier.egenkontrollBlodsocker');
+                        $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstVakenTid');
+                        $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
+                        $scope.cert.restoreFromAttic('bedomning.lamplighetInnehaBehorighet');
+                    } else {
                         $scope.cert.updateToAttic('hypoglykemier.egenkontrollBlodsocker');
+                        $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstVakenTid');
+                        $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
+                        $scope.cert.updateToAttic('bedomning.lamplighetInnehaBehorighet');
                         $scope.cert.hypoglykemier.egenkontrollBlodsocker = undefined;
                         $scope.cert.hypoglykemier.allvarligForekomstVakenTid = undefined;
                         $scope.cert.bedomning.lamplighetInnehaBehorighet = undefined;
-                    } else {
-                        $scope.cert.restoreFromAttic('hypoglykemier.egenkontrollBlodsocker');
                     }
                 }
             }, true);
@@ -120,19 +126,33 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             $scope.$watch('cert.hypoglykemier.teckenNedsattHjarnfunktion',
                 function(forekommerTeckenNedsattHjarnfunktion) {
                     if (!forekommerTeckenNedsattHjarnfunktion && $scope.cert.hypoglykemier) {
+                        $scope.cert.updateToAttic('hypoglykemier.saknarFormagaKannaVarningstecken');
+                        $scope.cert.updateToAttic('hypoglykemier.allvarligForekomst');
+                        $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstTrafiken');
+
                         $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
                         $scope.cert.hypoglykemier.allvarligForekomst = undefined;
                         $scope.cert.hypoglykemier.allvarligForekomstTrafiken = undefined;
+                    } else {
+                        $scope.cert.restoreFromAttic('hypoglykemier.saknarFormagaKannaVarningstecken');
+                        $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomst');
+                        $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstTrafiken');
                     }
                 }, true);
             $scope.$watch('cert.hypoglykemier.allvarligForekomst', function(haftAllvarligForekomst) {
                 if (!haftAllvarligForekomst && $scope.cert.hypoglykemier) {
+                    $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstBeskrivning');
                     $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = undefined;
+                } else {
+                    $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstBeskrivning');
                 }
             }, true);
             $scope.$watch('cert.hypoglykemier.allvarligForekomstTrafiken', function(haftAllvarligForekomstTrafiken) {
                 if (!haftAllvarligForekomstTrafiken && $scope.cert.hypoglykemier) {
+                    $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstTrafikBeskrivning');
                     $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = undefined;
+                } else {
+                    $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstTrafikBeskrivning');
                 }
             }, true);
 
@@ -148,27 +168,52 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             };
             $scope.$watch('cert.hypoglykemier.allvarligForekomstVakenTid', function(haftAllvarligForekomstVakenTid) {
                 if (!haftAllvarligForekomstVakenTid && $scope.cert.hypoglykemier) {
+                    $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
                     $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = undefined;
+                } else {
+                    $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
                 }
             }, true);
             // ---
 
             $scope.$watch('cert.syn.separatOgonlakarintyg', function(separatOgonlakarintyg) {
-                if (separatOgonlakarintyg && $scope.cert.syn) {
-                    viewState.intygModel.clear('syn.synfaltsprovningUtanAnmarkning');
-                    viewState.intygModel.clear('syn.hoger');
-                    viewState.intygModel.clear('syn.vanster');
-                    viewState.intygModel.clear('syn.binokulart');
-                    viewState.intygModel.clear('syn.diplopi');
+                if(separatOgonlakarintyg !== undefined) {
+                    if (separatOgonlakarintyg && $scope.cert.syn) {
+                        $scope.cert.updateToAttic('syn.synfaltsprovningUtanAnmarkning');
+                        $scope.cert.updateToAttic('syn.hoger');
+                        $scope.cert.updateToAttic('syn.vanster');
+                        $scope.cert.updateToAttic('syn.binokulart');
+                        $scope.cert.updateToAttic('syn.diplopi');
+
+                        $scope.cert.clear('syn.synfaltsprovningUtanAnmarkning');
+                        $scope.cert.clear('syn.hoger');
+                        $scope.cert.clear('syn.vanster');
+                        $scope.cert.clear('syn.binokulart');
+                        $scope.cert.clear('syn.diplopi');
+                    } else {
+                        $scope.cert.restoreFromAttic('syn.synfaltsprovningUtanAnmarkning');
+                        $scope.cert.restoreFromAttic('syn.hoger');
+                        $scope.cert.restoreFromAttic('syn.vanster');
+                        $scope.cert.restoreFromAttic('syn.binokulart');
+                        $scope.cert.restoreFromAttic('syn.diplopi');
+                    }
                 }
             }, true);
-            $scope.$watch('form.behorighet', function(uppfyllerKravForBehorighet) {
+            $scope.$watch('form.behorighet', function(uppfyllerKravForBehorighet, oldVal) {
+                if(uppfyllerKravForBehorighet === oldVal){
+                    return;
+                }
+                //console.log('----- newval : ' + uppfyllerKravForBehorighet + ', oldVal:' + oldVal);
+
                 if ($scope.cert.bedomning) {
                     $scope.cert.bedomning.kanInteTaStallning = !uppfyllerKravForBehorighet;
                     if (!uppfyllerKravForBehorighet) {
-                        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
-                            korkortstyp.selected = false;
-                        });
+                        //console.log('-- update, clear');
+                        $scope.cert.updateToAttic('bedomning.korkortstyp');
+                        $scope.cert.clear('bedomning.korkortstyp');
+                    } else {
+                        //console.log('-- restore');
+                        $scope.cert.restoreFromAttic('bedomning.korkortstyp');
                     }
                 }
             });
@@ -250,42 +295,37 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             ManageCertView.load(viewState.common.intyg.type, viewState.draftModel);
 
 
-            $scope.$on('saveRequest', function($event, deferred) {
-                // Mark form as saved, will be marked as not saved if saving fails.
+            $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
-//                $scope.cert.prepare();
-
-                //convertFormToCert();// Move into prepare later
-
-                var intygSaveRequest = {
-                    intygsId : viewState.intygModel.id,
-                    intygsTyp : viewState.common.intyg.type,
-                    cert          : viewState.intygModel.toSendModel(),
-                    saveComplete  : $q.defer()
+                var intygState = {
+                    viewState     : viewState,
+                    formFail : function(){
+                        $scope.certForm.$setDirty();
+                    }
                 };
-
-                intygSaveRequest.saveComplete.promise.then(function(result) {
-
-                    // save success
-                    viewState.common.validationMessages = result.validationMessages;
-                    viewState.common.validationMessagesGrouped = result.validationMessagesGrouped;
-                    viewState.common.error.saveErrorMessageKey = null;
-
-                }, function(result) {
-                    // save failed
-                    $scope.certForm.$setDirty();
-                    viewState.common.error.saveErrorMessageKey = result.errorMessageKey;
-                });
-
-                deferred.resolve(intygSaveRequest);
+                saveDefered.resolve(intygState);
             });
 
-            $scope.$watch('viewState.common.doneLoading', function(doneLoading){
-                if(doneLoading === true){
-                    addDateParser($scope.certForm);
+            $scope.$on('$destroy', function() {
+                if(!$scope.certForm.$dirty){
+                    $scope.destroyList();
                 }
             });
 
+            $scope.destroyList = function(){
+                viewState.clearModel();
+            };
+
+            $scope.$on('intyg.loaded', function(){
+                if($scope.certForm && $scope.certForm.allvarligForekomstVakenTidObservationstid){
+                    var formElement = $scope.certForm.allvarligForekomstVakenTidObservationstid;
+                    //dateUtils.addDateParserFormatter(formElement);
+                    formElement.$parsers.push(function(viewValue) {
+                        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
+                        return viewValue;
+                    });
+                }
+            });
 
 
         }]);
