@@ -278,22 +278,6 @@
         <inherited>false</inherited>
         <executions>
           <execution>
-            <id>unpack-build-tools</id>
-            <phase>initialize</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>se.inera.intyg.common</groupId>
-                  <artifactId>common-build-tools</artifactId>
-                </artifactItem>
-              </artifactItems>
-              <outputDirectory>${project.build.directory}/build-tools</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
             <id>unpack-webjar-dependencies</id>
             <phase>process-test-resources</phase>
             <goals>
