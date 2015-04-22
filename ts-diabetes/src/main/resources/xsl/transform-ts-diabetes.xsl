@@ -20,7 +20,7 @@
       <reg:utlatande>
 
         <xsl:call-template name="utlatandeHeader">
-          <xsl:with-param name="displayName" select="'ts-diabetes'"/>
+          <xsl:with-param name="displayName" select="'TSTRK1031 (U06)'"/>
         </xsl:call-template>
 
         <xsl:call-template name="grundData">
