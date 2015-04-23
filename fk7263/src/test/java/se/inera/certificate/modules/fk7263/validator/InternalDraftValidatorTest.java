@@ -63,7 +63,8 @@ public class InternalDraftValidatorTest {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
-            assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
+            assertEquals("Error in scenario " + scenario.getName() + "\n",
+                    ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
 

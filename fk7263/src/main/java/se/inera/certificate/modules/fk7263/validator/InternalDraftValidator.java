@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
@@ -104,6 +105,11 @@ public class InternalDraftValidator {
         if (utlatande.getAnnanReferens() != null && isNullOrEmpty(utlatande.getAnnanReferensBeskrivning())) {
             addValidationError(validationMessages, "intygbaseratpa.annat", ValidationMessageType.EMPTY,
                     "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
+        }
+        if (utlatande.getPrognosBedomning() == PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma
+            && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+            addValidationError(validationMessages, "prognos", ValidationMessageType.EMPTY,
+                    "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
         }
     }
 
