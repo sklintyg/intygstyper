@@ -2,8 +2,12 @@ package se.inera.certificate.modules.ts_diabetes.model.validator;
 
 import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
+import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
+import se.inera.certificate.xml.SchemaValidatorBuilder;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -12,15 +16,8 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
-import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 public class DomainTransportModelValidatorTest {
 
