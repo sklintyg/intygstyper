@@ -1,5 +1,4 @@
 {"id": "6ea04fd0-5fef-4809-823b-efeddf8a4d55",
- "typ": "fk7263",
     "grundData": {
         "signeringsdatum": "2013-03-17T00:00:00.000",
         "skapadAv": {
@@ -36,27 +35,23 @@
     "undersokningAvPatienten":"2013-03-17",
 
     "diagnosKod" : "S47",
-    "diagnosBeskrivning": "Klämskada på överarm",
+    "diagnosBeskrivning1":"Klämskada på överarm",
+    "diagnosKod2" : "A000",
+    "diagnosBeskrivning2" : "Kolera orsakad av Vibrio cholerae 01, biovar cholerae",
+    "diagnosKod3" : "Z233",
+    "diagnosBeskrivning3" : "Vaccination avseende pest",
+    "samsjuklighet" : true,
+    "diagnosBeskrivning" : "Klämskada som orsakat kolera och pest",
 
-    "sjukdomsforlopp" : "Aktuellt sjukdomsförlopp",
-
-    "atgardInomSjukvarden" : "Utreder om spektralanalys behövs",
-    "rekommendationKontaktForetagshalsovarden" : true,
-    "kontaktMedFk" : true,
-
-    "rehabilitering" : "rehabiliteringAktuell",
-
-    "nuvarandeArbete":true,
-    "nuvarandeArbetsuppgifter":"Dirigent Dirigerar en för större orkester på deltid",
+    "foraldrarledighet":true,
 
     "funktionsnedsattning" : "Kraftigt nedsatt rörlighet i överarmen pga skadan.\nBöj- och sträckförmågan är mycket dålig.\nSmärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.",
     "aktivitetsbegransning" : "Patienten bör/kan inte använda armen förrän skadan läkt.\nSkadan förvärras vid för tidigt påtvingad belastning.\nPatienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
-    "prognosBedomning" : "arbetsformagaPrognosGarInteAttBedoma",
-    "arbetsformagaPrognosGarInteAttBedomaBeskrivning" : "Det går inte att bedöma pga solförmörkelse",
-    "arbetsformagaPrognos" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
 
     "nedsattMed100":{
         "from" :"2013-03-17",
         "tom" :"2013-04-07"
-    }
+    },
+
+    "prognosBedomning": "arbetsformagaPrognosGarInteAttBedoma"
 }
