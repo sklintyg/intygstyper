@@ -41,6 +41,7 @@ public class RegisterCertificateResponderStub implements RegisterCertificateResp
         props.put("Makulerad", "NEJ");
 
         LOGGER.info("TS-STUB Received request");
+        LOGGER.info("Request with id: {}", request.getUtlatande().getUtlatandeId().getExtension());
         tsCertificatesStore.addCertificate(id, props);
         response.setResult(ResultTypeUtil.okResult());
         return response;

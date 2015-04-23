@@ -197,7 +197,7 @@ public class ModuleService implements ModuleApi {
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
 
-        SOAPMessage response = sendTsDiabetesClient.registerCertificate(transformedPayload);
+        SOAPMessage response = sendTsDiabetesClient.registerCertificate(transformedPayload, logicalAddress);
 //        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
 //            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
 //                    ? response.getResult().getResultText()

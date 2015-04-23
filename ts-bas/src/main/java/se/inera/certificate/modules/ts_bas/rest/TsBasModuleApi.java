@@ -211,13 +211,8 @@ public class TsBasModuleApi implements ModuleApi {
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
 
-        SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload);
-        try {
-            LOG.debug("Got response with header: {}", response.getSOAPBody());
-        } catch (SOAPException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload, logicalAddress);
+        LOG.debug(response.toString());
         // TODO handle response
     }
 
