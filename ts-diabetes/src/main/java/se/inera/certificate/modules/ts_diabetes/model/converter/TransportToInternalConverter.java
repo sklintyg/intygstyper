@@ -122,18 +122,21 @@ public class TransportToInternalConverter {
         return result;
     }
 
-    private static void readHypoglykemier(Hypoglykemier hypoglykemier, se.inera.intygstjanster.ts.services.v1.Hypoglykemier hypoglykemier2) {
-        hypoglykemier.setAllvarligForekomst(hypoglykemier2.isHarAllvarligForekomst());
-        hypoglykemier.setAllvarligForekomstBeskrivning(hypoglykemier2.getAllvarligForekomstBeskrivning());
-        hypoglykemier.setAllvarligForekomstTrafikBeskrivning(hypoglykemier2.getAllvarligForekomstTrafikBeskrivning());
-        hypoglykemier.setAllvarligForekomstTrafiken(hypoglykemier2.isHarAllvarligForekomstTrafiken());
-        hypoglykemier.setAllvarligForekomstVakenTid(hypoglykemier2.isHarAllvarligForekomstVakenTid());
-        
-        hypoglykemier.setAllvarligForekomstVakenTidObservationstid(InternalDateAdapter.parseInternalDate(hypoglykemier2.getAllvarligForekomstVakenTidAr()));
-        hypoglykemier.setEgenkontrollBlodsocker(hypoglykemier2.isGenomforEgenkontrollBlodsocker());
-        hypoglykemier.setKunskapOmAtgarder(hypoglykemier2.isHarKunskapOmAtgarder());
-        hypoglykemier.setSaknarFormagaKannaVarningstecken(hypoglykemier2.isSaknarFormagaKannaVarningstecken());
-        hypoglykemier.setTeckenNedsattHjarnfunktion(hypoglykemier2.isHarTeckenNedsattHjarnfunktion());
+    private static void readHypoglykemier(Hypoglykemier hypoglykemier, se.inera.intygstjanster.ts.services.v1.Hypoglykemier source) {
+        hypoglykemier.setAllvarligForekomst(source.isHarAllvarligForekomst());
+        hypoglykemier.setAllvarligForekomstBeskrivning(source.getAllvarligForekomstBeskrivning());
+        hypoglykemier.setAllvarligForekomstTrafikBeskrivning(source.getAllvarligForekomstTrafikBeskrivning());
+        hypoglykemier.setAllvarligForekomstTrafiken(source.isHarAllvarligForekomstTrafiken());
+        if (source.isHarAllvarligForekomstVakenTid() != null) {
+            hypoglykemier.setAllvarligForekomstVakenTid(source.isHarAllvarligForekomstVakenTid());
+            if (source.isHarAllvarligForekomstVakenTid() && InternalDateAdapter.parseInternalDate(source.getAllvarligForekomstVakenTidAr()) != null) {
+                hypoglykemier.setAllvarligForekomstVakenTidObservationstid(InternalDateAdapter.parseInternalDate(source.getAllvarligForekomstVakenTidAr()));
+            }
+        }
+        hypoglykemier.setEgenkontrollBlodsocker(source.isGenomforEgenkontrollBlodsocker());
+        hypoglykemier.setKunskapOmAtgarder(source.isHarKunskapOmAtgarder());
+        hypoglykemier.setSaknarFormagaKannaVarningstecken(source.isSaknarFormagaKannaVarningstecken());
+        hypoglykemier.setTeckenNedsattHjarnfunktion(source.isHarTeckenNedsattHjarnfunktion());
     }
 
     private static void readDiabetes(Diabetes diabetes, se.inera.intygstjanster.ts.services.v1.Diabetes diabetes2) {

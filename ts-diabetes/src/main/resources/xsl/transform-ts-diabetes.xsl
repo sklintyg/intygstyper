@@ -175,9 +175,11 @@
         <p:observation>
           <p:observationskod code="OBS24" codeSystem="{$id_kv_observationer_intyg}"
               codeSystemName="kv_observationer_intyg"/>
-          <p:observationstid>
-            <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstVakenTidAr"/>
-          </p:observationstid>
+          <xsl:if test="ns1:hypoglykemier/ns1:harAllvarligForekomstVakenTid = 'true' or ns1:hypoglykemier/ns1:harAllvarligForekomstVakenTid = '1'">
+            <p:observationstid>
+              <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstVakenTidAr"/>
+            </p:observationstid>
+          </xsl:if>
           <p:forekomst>
             <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomstVakenTid"/>
           </p:forekomst>
