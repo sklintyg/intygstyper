@@ -124,7 +124,7 @@
             </goals>
           </execution>
           <execution>
-            <id>javascript minaintyg tests</id>
+            <id>javascript ts-diabetes tests</id>
             <goals>
               <goal>karma</goal>
             </goals>
@@ -170,6 +170,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
+        <inherited>false</inherited>
         <executions>
           <execution>
             <id>unpack-build-tools</id>
@@ -189,6 +190,7 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
   </build>
 </project>

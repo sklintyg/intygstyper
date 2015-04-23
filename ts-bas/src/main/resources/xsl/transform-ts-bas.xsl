@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
     xmlns:ns1="urn:local:se:intygstjanster:services:1"
     xmlns:ns2="urn:local:se:intygstjanster:services:RegisterTSBasResponder:1"
+    xmlns:ns3="urn:local:se:intygstjanster:services:types:1"
     xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:1"
     xmlns:p2="urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1"
     xmlns:reg="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1">
@@ -10,27 +11,29 @@
 
   <xsl:include href="xsl/transform-ts-common.xsl"/>
 
+  <xsl:variable name="ts-bas-ns" select="'urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1'"/>
+  <xsl:variable name="ts-bas-prefix" select="'p2'"/>
+
   <xsl:template match="ns2:intyg">
     <reg:RegisterCertificate>
       <reg:utlatande>
 
         <xsl:call-template name="utlatandeHeader">
-          <xsl:with-param name="displayName" select="'ts-bas'"/>
+          <xsl:with-param name="displayName" select="'TSTRK1007 (U06)'"/>
         </xsl:call-template>
 
         <xsl:call-template name="grundData">
-          <xsl:with-param name="ns-namespace" select="'urn:riv:clinicalprocess:healthcond:certificate:ts-bas:1'"/>
-          <xsl:with-param name="ns-prefix" select="'p2'"/>
+          <xsl:with-param name="ns-namespace" select="$ts-bas-ns"/>
+          <xsl:with-param name="ns-prefix" select="$ts-bas-prefix"/>
         </xsl:call-template>
 
         <xsl:call-template name="vardKontakt"/>
 
         <!-- Synfältsprövning (Donders konfrontationsmetod) -->
-        <p:aktivitet>
-          <p:aktivitets-id root="1.2.752.129.2.1.2.1" extension="${aktivitets-id1}"/>
-          <p:aktivitetskod code="86944008" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-          <p2:metod code="MET1" codeSystem="{$id_kv_metod}" codeSystemName="kv_metod"/>
-        </p:aktivitet>
+        <xsl:call-template name="ogatsSynfaltAktivitet">
+          <xsl:with-param name="ns-namespace" select="$ts-bas-ns"/>
+          <xsl:with-param name="ns-prefix" select="$ts-bas-prefix"/>
+        </xsl:call-template>
 
         <xsl:call-template name="ogatsRorlighetAktivitet"/>
 
@@ -86,14 +89,14 @@
         </xsl:if>
 
         <p:rekommendation>
-          <p:rekommendationskod code="REK8" codeSystem="{$id_kv_rekommendation_intyg}" codeSystemName="kv_rekommendation_intyg" />
+          <p:rekommendationskod code="REK8" codeSystem="{$id_kv_rekommendation_intyg}" codeSystemName="kv_rekommendation_intyg"/>
           <xsl:choose>
             <xsl:when test="ns1:bedomning/ns1:kanInteTaStallning = 'true' or ns1:bedomning/ns1:kanInteTaStallning = '1'">
               <p2:varde code="VAR11" codeSystem="{$id_kv_korkortsbehorighet}" codeSystemName="kv_körkortsbehörighet"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:for-each select="ns1:bedomning/ns1:korkortstyp">
-                  <p2:varde codeSystem="{$id_kv_korkortsbehorighet}" codeSystemName="kv_körkortsbehörighet" code="{$korkortsTyp/mapping[@key = current()]/@value}"/>
+                <p2:varde codeSystem="{$id_kv_korkortsbehorighet}" codeSystemName="kv_körkortsbehörighet" code="{$korkortsTyp/mapping[@key = current()]/@value}"/>
               </xsl:for-each>
             </xsl:otherwise>
           </xsl:choose>
@@ -143,61 +146,10 @@
           </p:forekomst>
         </p:observation>
 
-        <!-- Synfunktion utan korrektion (3.5.1 - 3.5.3) -->
-        <p:observation>
-          <p:observationskod code="420050001" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-          <p:varde>
-            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:hogerOga"/>
-          </p:varde>
-          <p2:lateralitet code="24028007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-        </p:observation>
-
-        <p:observation>
-          <p:observationskod code="420050001" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-          <p:varde>
-            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:vansterOga"/>
-          </p:varde>
-          <p2:lateralitet code="7771000" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-        </p:observation>
-
-        <p:observation>
-          <p:observationskod code="420050001" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-          <p:varde>
-            <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaUtanKorrektion/ns1:binokulart"/>
-          </p:varde>
-          <p2:lateralitet code="51440002" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-        </p:observation>
-
-        <!-- Synskärpa med korrektion -->
-        <xsl:if test="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:hogerOga">
-          <p:observation>
-            <p:observationskod code="397535007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-            <p:varde>
-              <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:hogerOga"/>
-            </p:varde>
-            <p2:lateralitet code="24028007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-          </p:observation>
-        </xsl:if>
-
-        <xsl:if test="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:vansterOga">
-          <p:observation>
-            <p:observationskod code="397535007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-            <p:varde>
-              <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:vansterOga"/>
-            </p:varde>
-            <p2:lateralitet code="7771000" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-          </p:observation>
-        </xsl:if>
-
-        <xsl:if test="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:binokulart">
-          <p:observation>
-            <p:observationskod code="397535007" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-            <p:varde>
-              <xsl:attribute name="value" select="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:binokulart"/>
-            </p:varde>
-            <p2:lateralitet code="51440002" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-          </p:observation>
-        </xsl:if>
+        <xsl:call-template name="synfunktionObservation">
+          <xsl:with-param name="ns-namespace" select="$ts-bas-ns"/>
+          <xsl:with-param name="ns-prefix" select="$ts-bas-prefix"/>
+        </xsl:call-template>
 
         <!-- Kontaktlinser -->
         <xsl:if test="ns1:synfunktion/ns1:synskarpaMedKorrektion/ns1:harKontaktlinsHogerOga">
@@ -324,7 +276,7 @@
                 </p:observation>
               </xsl:if>
 
-              <!-- Tabettbehandling -->
+              <!-- Tablettbehandling -->
               <xsl:if test="ns1:diabetes/ns1:harBehandlingTabletter = 'true' or ns1:diabetes/ns1:harBehandlingTabletter = '1'">
                 <p:observation>
                   <p:observationskod code="170746002" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
@@ -458,7 +410,7 @@
         </p2:observationAktivitetRelation>
 
         <xsl:for-each select="ns1:intygAvser/ns1:korkortstyp">
-          <p2:intygAvser codeSystem="${id_kv_intyget_avser}" codeSystemName="kv_intyget_avser" code="{$intygAvser/mapping[@key = current()]/@value}"/>
+          <p2:intygAvser codeSystem="{$id_kv_intyget_avser}" codeSystemName="kv_intyget_avser" code="{$intygAvser/mapping[@key = current()]/@value}"/>
         </xsl:for-each>
 
         <p2:utgava>

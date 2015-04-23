@@ -319,13 +319,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             $scope.$on('intyg.loaded', function(){
                 if($scope.certForm && $scope.certForm.allvarligForekomstVakenTidObservationstid){
                     var formElement = $scope.certForm.allvarligForekomstVakenTidObservationstid;
-                    //dateUtils.addDateParserFormatter(formElement);
-                    formElement.$parsers.push(function(viewValue) {
-                        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
-                        return viewValue;
-                    });
+                    dateUtils.addDateParserFormatter(formElement);
                 }
             });
-
-
         }]);

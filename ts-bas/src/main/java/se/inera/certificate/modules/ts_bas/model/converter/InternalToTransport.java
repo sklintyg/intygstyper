@@ -110,9 +110,9 @@ public final class InternalToTransport {
         utlatande.setIntygsId(source.getId());
         utlatande.setGrundData(buildGrundData(source.getGrundData()));
 
-        UtlatandeKod utlatandeKod = UtlatandeKod.valueOf(source.getTyp());
+        UtlatandeKod utlatandeKod = UtlatandeKod.getCurrentVersion();
 
-        utlatande.setIntygsTyp(utlatandeKod.getTypForTransportConvertion());
+        utlatande.setIntygsTyp(utlatandeKod.getCode());
 
         utlatande.setUtgava(utlatandeKod.getTsUtgava());
         utlatande.setVersion(utlatandeKod.getTsVersion());

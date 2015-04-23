@@ -31,10 +31,10 @@ import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 import se.inera.intygstjanster.ts.services.v1.SynfunktionDiabetes;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 
 public class TransportToInternalConverter {
     private static final String VARDKONTAKT_TYP = "5880005";
-    private static final String TYPE = "TS_DIABETES_U06_V02";
     
     public static final Map<DiabetesTypVarden, String> typVardenMap;
     
@@ -50,7 +50,7 @@ public class TransportToInternalConverter {
         Utlatande result = new Utlatande();
         
         result.setId(transport.getIntygsId());
-        result.setTyp(TYPE);
+        result.setTyp(UtlatandeKod.getCurrentVersion().getCode());
         result.setGrundData(readGrundData(transport.getGrundData()));
         readDiabetes(result.getDiabetes(), transport.getDiabetes());
         readHypoglykemier(result.getHypoglykemier(), transport.getHypoglykemier());

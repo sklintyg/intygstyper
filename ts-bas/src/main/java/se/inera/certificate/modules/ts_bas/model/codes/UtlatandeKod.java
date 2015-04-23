@@ -23,7 +23,7 @@ package se.inera.certificate.modules.ts_bas.model.codes;
  */
 public enum UtlatandeKod {
 
-    TS_BAS_U06_V06("TSTRK1007", "06", "06",
+    TS_BAS_U06_V06("ts-bas", "06", "06",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
 
     // NOTE: USED FOR TESTING ONLY

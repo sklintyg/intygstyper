@@ -6,6 +6,7 @@ import java.util.Map;
 
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
+import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
@@ -59,14 +60,14 @@ public class InternalToTransportConverter {
         result.setIdentitetStyrkt(readIdentitetStyrkt(utlatande.getVardkontakt()));
         result.setIntygAvser(readIntygAvser(utlatande.getIntygAvser()));
         result.setIntygsId(utlatande.getId());
-        result.setIntygsTyp("TSTRK1031 (U06, V06)");
+        result.setIntygsTyp(UtlatandeKod.getCurrentVersion().getCode());
         result.setSeparatOgonLakarintygKommerSkickas(utlatande.getSyn().getSeparatOgonlakarintyg());
         result.setOvrigKommentar(utlatande.getKommentar());
         if (utlatande.getSyn().getSeparatOgonlakarintyg() != null && !utlatande.getSyn().getSeparatOgonlakarintyg()) {
             result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
         }
-        result.setUtgava("06");
-        result.setVersion("02");
+        result.setUtgava(UtlatandeKod.getCurrentVersion().getTsUtgava());
+        result.setVersion(UtlatandeKod.getCurrentVersion().getTsVersion());
         registerTsDiabetes.setIntyg(result);
         return registerTsDiabetes;
     }

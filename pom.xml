@@ -269,9 +269,9 @@
             <name>ts-parent.version</name>
             <version>${ts-parent.version.range}</version>
           </property>
-
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -326,6 +326,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <inherited>false</inherited>
