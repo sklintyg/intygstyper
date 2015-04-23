@@ -237,7 +237,8 @@
             rivta-insuranceprocess.version,
             intyg-clinicalprocess.version,
             intyg-insuranceprocess.version,
-            intyg-transportstyrelsen.version
+            intyg-transportstyrelsen.version,
+            ts-parent.version
           </includeProperties>
           <properties>
             <property>
@@ -264,11 +265,11 @@
               <name>intyg-transportstyrelsen.version</name>
               <version>${intyg-transportstyrelsen.version.range}</version>
             </property>
+            <property>
+              <name>ts-parent.version</name>
+              <version>${ts-parent.version.range}</version>
+            </property>
           </properties>
-          <property>
-            <name>ts-parent.version</name>
-            <version>${ts-parent.version.range}</version>
-          </property>
         </configuration>
       </plugin>
 
