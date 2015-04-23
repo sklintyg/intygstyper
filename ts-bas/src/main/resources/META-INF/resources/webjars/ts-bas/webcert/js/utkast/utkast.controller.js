@@ -53,14 +53,10 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                 if ($scope.cert.intygAvser && $scope.cert.intygAvser.korkortstyp) {
                     var prev = $scope.viewState.korkortd;
                     $scope.viewState.korkortd = isHighlevelKorkortChecked(valdaKorkortstyper);
-                    console.log($scope.viewState.korkortd);
                     if ($scope.viewState.korkortd && $scope.viewState.korkortd !== prev) {
-                        console.log("restoring...");
                         $scope.cert.restoreFromAttic('horselBalans.svartUppfattaSamtal4Meter');
                         $scope.cert.restoreFromAttic('funktionsnedsattning.otillrackligRorelseformaga');
-                        console.log("restored..." + $scope.cert.horselBalans.svartUppfattaSamtal4Meter + ',' + $scope.cert.funktionsnedsattning.otillrackligRorelseformaga);
                     } else {
-                        console.log("sending to attic..." + $scope.cert.horselBalans.svartUppfattaSamtal4Meter + ',' + $scope.cert.funktionsnedsattning.otillrackligRorelseformaga);
                         $scope.cert.updateToAttic('horselBalans.svartUppfattaSamtal4Meter');
                         $scope.cert.updateToAttic('funktionsnedsattning.otillrackligRorelseformaga');
                         $scope.cert.horselBalans.svartUppfattaSamtal4Meter = undefined;

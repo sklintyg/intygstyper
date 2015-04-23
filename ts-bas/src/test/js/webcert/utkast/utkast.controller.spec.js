@@ -147,13 +147,11 @@ describe('ts-bas.UtkastController', function() {
 
     it('should reset hidden fields when some "korkortstyp"-options are deselected', function() {
 
-        console.log('-- START --');
         getCheckboxForKorkortstyp('D1').selected = true;
         $scope.$digest();
 
         $scope.cert.horselBalans.svartUppfattaSamtal4Meter = true;
         $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = true;
-        console.log('Deselecting kortkortstyp');
         getCheckboxForKorkortstyp('D1').selected = false;
         $scope.$digest();
 
@@ -161,7 +159,6 @@ describe('ts-bas.UtkastController', function() {
         expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeUndefined();
 
         // Attic
-        console.log('Reselecting kortkortstyp');
         getCheckboxForKorkortstyp('D1').selected = true;
         $scope.$digest();
 
