@@ -111,168 +111,245 @@ describe('ts-bas.UtkastController', function() {
     it('should show extra fields when some "korkortstyp"-options are selected', function() {
         getCheckboxForKorkortstyp('D1').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('D1').selected = false;
 
         getCheckboxForKorkortstyp('D1E').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('D1E').selected = false;
 
         getCheckboxForKorkortstyp('D').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('D').selected = false;
 
         getCheckboxForKorkortstyp('DE').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('DE').selected = false;
 
         getCheckboxForKorkortstyp('TAXI').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('TAXI').selected = false;
 
         getCheckboxForKorkortstyp('ANNAT').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeFalsy();
+        expect($scope.viewState.korkortd).toBeFalsy();
         getCheckboxForKorkortstyp('ANNAT').selected = false;
 
         getCheckboxForKorkortstyp('C1').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeFalsy();
+        expect($scope.viewState.korkortd).toBeFalsy();
         getCheckboxForKorkortstyp('C1').selected = false;
     });
 
     it('should reset hidden fields when some "korkortstyp"-options are deselected', function() {
+
+        console.log('-- START --');
         getCheckboxForKorkortstyp('D1').selected = true;
-        $scope.cert.horselBalans.svartUppfattaSamtal4Meter = true;
-        $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = true;
         $scope.$digest();
 
+        $scope.cert.horselBalans.svartUppfattaSamtal4Meter = true;
+        $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = true;
+        console.log('Deselecting kortkortstyp');
         getCheckboxForKorkortstyp('D1').selected = false;
         $scope.$digest();
 
-        expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeNull();
-        expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeNull();
+        expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeUndefined();
+        expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeUndefined();
 
+        // Attic
+        console.log('Reselecting kortkortstyp');
+        getCheckboxForKorkortstyp('D1').selected = true;
+        $scope.$digest();
+
+        expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeTruthy();
+        expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeTruthy();
     });
 
     it('should reset hidden fields when "funktionsnedsattning" is set to false', function() {
         $scope.cert.funktionsnedsattning.funktionsnedsattning = true;
-        $scope.cert.funktionsnedsattning.beskrivning = 'Hello';
         $scope.$digest();
 
+        $scope.cert.funktionsnedsattning.beskrivning = 'Hello';
         $scope.cert.funktionsnedsattning.funktionsnedsattning = false;
         $scope.$digest();
 
         expect($scope.cert.funktionsnedsattning.beskrivning).toBe('');
+
+        // Attic
+        $scope.cert.funktionsnedsattning.funktionsnedsattning = true;
+        $scope.$digest();
+
+        expect($scope.cert.funktionsnedsattning.beskrivning).toBe('Hello');
     });
 
     it('should reset hidden fields when "riskfaktorerStroke" is set to false', function() {
         $scope.cert.hjartKarl.riskfaktorerStroke = true;
-        $scope.cert.hjartKarl.beskrivningRiskfaktorer = 'Hello';
         $scope.$digest();
 
+        $scope.cert.hjartKarl.beskrivningRiskfaktorer = 'Hello';
         $scope.cert.hjartKarl.riskfaktorerStroke = false;
         $scope.$digest();
 
         expect($scope.cert.hjartKarl.beskrivningRiskfaktorer).toBe('');
+
+        // Attic
+        $scope.cert.hjartKarl.riskfaktorerStroke = true;
+        $scope.$digest();
+
+        expect($scope.cert.hjartKarl.beskrivningRiskfaktorer).toBe('Hello');
     });
 
     it('should reset hidden fields when "harDiabetes" is set to false', function() {
         $scope.cert.diabetes.harDiabetes = true;
-        $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_1';
         $scope.$digest();
 
+        $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_1';
         $scope.cert.diabetes.harDiabetes = false;
         $scope.$digest();
 
-        expect($scope.cert.diabetes.diabetesTyp).toBeNull();
+        expect($scope.cert.diabetes.diabetesTyp).toBeUndefined();
+
+        // Attic
+        $scope.cert.diabetes.harDiabetes = true;
+        $scope.$digest();
+
+        expect($scope.cert.diabetes.diabetesTyp).toBe('DIABETES_TYP_1');
     });
 
     it('should reset hidden fields when "diabetesTyp" is not "DIABETES_TYP_2"', function() {
         $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_2';
+        $scope.$digest();
+
         $scope.cert.diabetes.kost = true;
         $scope.cert.diabetes.tabletter = true;
         $scope.cert.diabetes.insulin = true;
-        $scope.$digest();
-
         $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_1';
         $scope.$digest();
 
-        expect($scope.cert.diabetes.kost).toBeNull();
-        expect($scope.cert.diabetes.tabletter).toBeNull();
-        expect($scope.cert.diabetes.insulin).toBeNull();
+        expect($scope.cert.diabetes.kost).toBeUndefined();
+        expect($scope.cert.diabetes.tabletter).toBeUndefined();
+        expect($scope.cert.diabetes.insulin).toBeUndefined();
+
+        // Attic
+        $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_2';
+        $scope.$digest();
+
+        expect($scope.cert.diabetes.kost).toBeTruthy();
+        expect($scope.cert.diabetes.tabletter).toBeTruthy();
+        expect($scope.cert.diabetes.insulin).toBeTruthy();
     });
 
     it('should reset hidden fields when "medvetandestorning" is set to false', function() {
         $scope.cert.medvetandestorning.medvetandestorning = true;
-        $scope.cert.medvetandestorning.beskrivning = 'Hello';
         $scope.$digest();
 
+        $scope.cert.medvetandestorning.beskrivning = 'Hello';
         $scope.cert.medvetandestorning.medvetandestorning = false;
         $scope.$digest();
 
         expect($scope.cert.medvetandestorning.beskrivning).toBe('');
+
+        // Attic
+        $scope.cert.medvetandestorning.medvetandestorning = true;
+        $scope.$digest();
+
+        expect($scope.cert.medvetandestorning.beskrivning).toBe('Hello');
     });
 
     it('should reset hidden fields when "teckenMissbruk" and "foremalForVardinsats" is set to false', function() {
         $scope.cert.narkotikaLakemedel.teckenMissbruk = true;
         $scope.cert.narkotikaLakemedel.foremalForVardinsats = true;
-        $scope.cert.narkotikaLakemedel.provtagningBehovs = true;
         $scope.$digest();
 
+        // Set provtagning
+        $scope.cert.narkotikaLakemedel.provtagningBehovs = true;
+
+        // One true, nothing changes
         $scope.cert.narkotikaLakemedel.teckenMissbruk = false;
         $scope.$digest();
+
         expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
 
+        // Still one true, nothing changes
         $scope.cert.narkotikaLakemedel.teckenMissbruk = true;
         $scope.cert.narkotikaLakemedel.foremalForVardinsats = false;
         $scope.$digest();
+
         expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
 
+        // Both false, provtagning = true will be saved and cleared because field is invisible
         $scope.cert.narkotikaLakemedel.teckenMissbruk = false;
         $scope.$digest();
-        expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeNull();
+
+        expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeUndefined();
+
+        // Attic
+        // One true again, provtagning = true should be restored from attic
+        $scope.cert.narkotikaLakemedel.teckenMissbruk = true;
+        $scope.$digest();
+
+        expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
     });
 
     it('should reset hidden fields when "lakarordineratLakemedelsbruk" is set to false', function() {
         $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk = true;
-        $scope.cert.narkotikaLakemedel.lakemedelOchDos = 'Hello';
         $scope.$digest();
 
+        $scope.cert.narkotikaLakemedel.lakemedelOchDos = 'Hello';
         $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk = false;
         $scope.$digest();
 
         expect($scope.cert.narkotikaLakemedel.lakemedelOchDos).toBe('');
+
+        // Attic
+        $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk = true;
+        $scope.$digest();
+
+        expect($scope.cert.narkotikaLakemedel.lakemedelOchDos).toBe('Hello');
     });
 
     it('should reset hidden fields when "sjukhusEllerLakarkontakt" is set to false', function() {
         $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt = true;
+        $scope.$digest();
+
         $scope.cert.sjukhusvard.tidpunkt = 'Förra veckan';
         $scope.cert.sjukhusvard.vardinrattning = 'Sahlgrenska';
         $scope.cert.sjukhusvard.anledning = 'Allt';
-        $scope.$digest();
-
         $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt = false;
         $scope.$digest();
 
         expect($scope.cert.sjukhusvard.tidpunkt).toBe('');
         expect($scope.cert.sjukhusvard.vardinrattning).toBe('');
         expect($scope.cert.sjukhusvard.anledning).toBe('');
+
+        // Attic
+        $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt = true;
+        $scope.$digest();
+
+        expect($scope.cert.sjukhusvard.tidpunkt).toBe('Förra veckan');
+        expect($scope.cert.sjukhusvard.vardinrattning).toBe('Sahlgrenska');
+        expect($scope.cert.sjukhusvard.anledning).toBe('Allt');
     });
 
     it('should reset hidden fields when "stadigvarandeMedicinering" is set to false', function() {
         $scope.cert.medicinering.stadigvarandeMedicinering = true;
-        $scope.cert.medicinering.beskrivning = 'Hello';
         $scope.$digest();
 
+        $scope.cert.medicinering.beskrivning = 'Hello';
         $scope.cert.medicinering.stadigvarandeMedicinering = false;
         $scope.$digest();
 
         expect($scope.cert.medicinering.beskrivning).toBe('');
+
+        // Attic
+        $scope.cert.medicinering.stadigvarandeMedicinering = true;
+        $scope.$digest();
+
+        expect($scope.cert.medicinering.beskrivning).toBe('Hello');
     });
 
     // Helper methods

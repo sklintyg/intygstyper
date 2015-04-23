@@ -88,7 +88,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.type, viewState.draftModel);
+            ManageCertView.load(viewState);
 
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();

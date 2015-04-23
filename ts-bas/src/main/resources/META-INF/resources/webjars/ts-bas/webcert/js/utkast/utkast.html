@@ -115,7 +115,7 @@
                       </ul>
                     </div>
                     <div class="form-group clearfix">
-                      <label class="radio checkbox-columns col-xs-6" ng-repeat="v in form.identity"><input
+                      <label class="radio checkbox-columns col-xs-6" ng-repeat="v in viewState.identitet"><input
                           id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
                           ng-model="cert.vardkontakt.idkontroll">
                         {{v.label}}</label>
@@ -283,7 +283,7 @@
                                    ng-model="cert.horselBalans.balansrubbningar"></td>
                         <td><span message key="ts-bas.label.horselbalans.balansrubbningar"></span></td>
                       </tr>
-                      <tr ng-show="form.korkortd">
+                      <tr ng-show="viewState.korkortd">
                         <td><input id="horselbalansby" name="horselbalansb" type="radio" ng-value="true"
                                    ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
                         <td><input id="horselbalansbn" name="horselbalansb" type="radio" ng-value="false"
@@ -327,7 +327,7 @@
                           </div>
                         </td>
                       </tr>
-                      <tr ng-show="form.korkortd">
+                      <tr ng-show="viewState.korkortd">
                         <td><input id="funktionsnedsattningby" name="funktionsnedsattningb" type="radio"
                                    ng-value="true" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
                         <td><input id="funktionsnedsattningbn" name="funktionsnedsattningb" type="radio"
@@ -846,10 +846,10 @@
 
                     <div class="form-group">
                       <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="'BEDOMNING'"
-                                                  ng-model="form.behorighet">
+                                                  ng-model="viewState.behorighet">
                         <span message key="ts-bas.label.nagon-av-foljande-behorigheter"></span></label>
 
-                      <div class="form-group clearfix indent" data-ng-show="form.behorighet == 'BEDOMNING'">
+                      <div class="form-group clearfix indent" data-ng-show="viewState.behorighet == 'BEDOMNING'">
                         <label class="checkbox checkbox-columns col-xs-2"
                                ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input
                             id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
@@ -857,11 +857,11 @@
                                                            key="ts-bas.label.korkort.{{typ.type}}"></span></label>
                       </div>
                       <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="'KANINTETASTALLNING'"
-                                                  ng-model="form.behorighet">
+                                                  ng-model="viewState.behorighet">
                         <span message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></label>
                     </div>
 
-                    <p ng-show="form.anyTrue">
+                    <p ng-show="viewState.kravYtterligareUnderlag">
                       <span message key="ts-bas.helptext.bedomning.info"></span>
                     </p>
 

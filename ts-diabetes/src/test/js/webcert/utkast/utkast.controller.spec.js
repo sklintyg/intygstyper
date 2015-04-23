@@ -315,8 +315,8 @@ describe('ts-diabetes.UtkastController', function() {
         $scope.cert.syn.separatOgonlakarintyg = false;
         $scope.$digest();
 
-        $scope.cert.syn.hoger.utanKorrektion = '2.0'
-        $scope.cert.syn.hoger.utanKorrektion.medKorrektion= '2.0';
+        $scope.cert.syn.hoger.utanKorrektion = '2.0';
+        $scope.cert.syn.hoger.medKorrektion = '2.0';
         $scope.cert.syn.vanster.utanKorrektion = '2.0';
         $scope.cert.syn.vanster.medKorrektion = '2.0';
         $scope.cert.syn.binokulart.utanKorrektion = '2.0';

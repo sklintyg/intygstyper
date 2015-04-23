@@ -292,8 +292,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState.common.intyg.type, viewState.draftModel);
-
+            ManageCertView.load(viewState);
 
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
