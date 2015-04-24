@@ -26,6 +26,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
@@ -212,8 +213,16 @@ public class TsBasModuleApi implements ModuleApi {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
 
         SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload, logicalAddress);
-        LOG.debug(response.toString());
-        // TODO handle response
+        try {
+            SOAPEnvelope contents = response.getSOAPPart().getEnvelope();
+            if (contents.getBody().hasFault()) {
+                throw new ExternalServiceCallException(contents.getBody().getFault().getTextContent());
+            }
+
+        } catch (SOAPException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     @Override

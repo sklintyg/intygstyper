@@ -3,6 +3,7 @@ package se.inera.certificate.modules.ts_parent.integration;
 import java.io.IOException;
 import java.io.StringReader;
 
+import javax.jws.WebMethod;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -69,11 +70,13 @@ public class SendTSClient {
             builderFactory.setNamespaceAware(true);
             DocumentBuilder builder = builderFactory.newDocumentBuilder();
             Document doc = builder.parse(new InputSource(new StringReader(message)));
-
             soapBody.addDocument(doc);
             soapReq1.saveChanges();
-
             Dispatch<SOAPMessage> dispSOAPMsg = service.createDispatch(PORT_NAME, SOAPMessage.class, Service.Mode.MESSAGE);
+
+            // Set the soap action
+            dispSOAPMsg.getRequestContext().put(Dispatch.SOAPACTION_USE_PROPERTY, true);
+            dispSOAPMsg.getRequestContext().put(Dispatch.SOAPACTION_URI_PROPERTY, "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1:RegisterCertificate");
 
             return dispSOAPMsg.invoke(soapReq1);
 
