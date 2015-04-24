@@ -24,11 +24,8 @@
     <common.version.range>(,2.2.0]</common.version.range>
 
     <!-- RIVTA Schemas -->
-    <rivta-clinicalprocess.version>0-SNAPSHOT</rivta-clinicalprocess.version>
-    <rivta-clinicalprocess.version.range>(,1.1.0]</rivta-clinicalprocess.version.range>
-
-    <rivta-insuranceprocess.version>0-SNAPSHOT</rivta-insuranceprocess.version>
-    <rivta-insuranceprocess.version.range>(,1.1.0]</rivta-insuranceprocess.version.range>
+    <rivta-clinicalprocess.version>1.0.RC3.0</rivta-clinicalprocess.version>
+    <rivta-insuranceprocess.version>3.1.0.0</rivta-insuranceprocess.version>
 
     <!-- Intyg Schemas -->
     <intyg-clinicalprocess.version>0-SNAPSHOT</intyg-clinicalprocess.version>
@@ -102,11 +99,6 @@
         <groupId>se.riv.insuranceprocess.healthreporting</groupId>
         <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
         <version>${rivta-insuranceprocess.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>se.inera.intyg.transportstyrelsen</groupId>
-        <artifactId>intygstjansten-transportstyrelsen-schemas</artifactId>
-        <version>${intyg-transportstyrelsen.version}</version>
       </dependency>
 
       <!-- Intyg Schemas -->
@@ -233,8 +225,6 @@
         <configuration>
           <includeProperties>
             common.version,
-            rivta-clinicalprocess.version,
-            rivta-insuranceprocess.version,
             intyg-clinicalprocess.version,
             intyg-insuranceprocess.version,
             intyg-transportstyrelsen.version,
@@ -244,14 +234,6 @@
             <property>
               <name>common.version</name>
               <version>${common.version.range}</version>
-            </property>
-            <property>
-              <name>rivta-clinicalprocess.version</name>
-              <version>${rivta-clinicalprocess.version.range}</version>
-            </property>
-            <property>
-              <name>rivta-insuranceprocess.version</name>
-              <version>${rivta-insuranceprocess.version.range}</version>
             </property>
             <property>
               <name>intyg-clinicalprocess.version</name>
