@@ -9,8 +9,8 @@
 		http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
     <beans profile="dev,it-ts-stub">
-       <jaxws:endpoint address="/register-certificate-stub"
-            implementor="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" />
+        <bean id="stub" class="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" />
+        <jaxws:endpoint address="/register-certificate-stub" implementor="#stub" />
     </beans>
 
     <beans profile="dev,testability-api">

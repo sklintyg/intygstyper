@@ -22,6 +22,8 @@ public class RegisterCertificateResponderStub implements RegisterCertificateResp
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterCertificateResponderStub.class);
     
+    private boolean throwException = false;
+    
     @Autowired
     private TSCertificateStore tsCertificatesStore;
 
@@ -32,6 +34,11 @@ public class RegisterCertificateResponderStub implements RegisterCertificateResp
     @Override
     public RegisterCertificateResponseType registerCertificate(String logicalAddress, RegisterCertificateType request) {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
+        
+        if(throwException){
+            LOGGER.debug("Throwing fake exception");
+            throw new RuntimeException();
+        }
 
         Utlatande utlatande = request.getUtlatande();
         String id = utlatande.getUtlatandeId().getExtension();
@@ -45,6 +52,14 @@ public class RegisterCertificateResponderStub implements RegisterCertificateResp
         tsCertificatesStore.addCertificate(id, props);
         response.setResult(ResultTypeUtil.okResult());
         return response;
+    }
+
+    public boolean isThrowException() {
+        return throwException;
+    }
+
+    public void setThrowException(boolean throwException) {
+        this.throwException = throwException;
     }
 
 }
