@@ -190,7 +190,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                 $scope.specialiteter = result;
             }, true);
 
-            $scope.$watch('form.behorighet', function (behorighet) {
+            $scope.$watch('viewState.behorighet', function (behorighet) {
                 if (!$scope.cert.bedomning) {
                     $scope.cert.bedomning = {
                         korkortstyp: {},
