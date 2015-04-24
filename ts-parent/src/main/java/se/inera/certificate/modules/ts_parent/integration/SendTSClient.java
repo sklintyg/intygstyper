@@ -62,7 +62,7 @@ public class SendTSClient {
             SOAPEnvelope soapEnvelope = soapReq1.getSOAPPart().getEnvelope();
             SOAPBody soapBody = soapEnvelope.getBody();
             SOAPHeader soapHeader = soapEnvelope.getHeader();
-            SOAPElement address = soapHeader.addChildElement("TO", "ns", "http://www.w3.org/2005/08/addressing");
+            SOAPElement address = soapHeader.addChildElement("To", "ns", "http://www.w3.org/2005/08/addressing");
             address.addTextNode(logicalAddress);
 
             // Create a Document from the message
