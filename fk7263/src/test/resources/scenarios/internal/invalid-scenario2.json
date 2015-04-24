@@ -52,11 +52,11 @@
     "funktionsnedsattning" : "Kraftigt nedsatt rörlighet i överarmen pga skadan.\nBöj- och sträckförmågan är mycket dålig.\nSmärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.",
     "aktivitetsbegransning" : "Patienten bör/kan inte använda armen förrän skadan läkt.\nSkadan förvärras vid för tidigt påtvingad belastning.\nPatienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.",
     "prognosBedomning" : "arbetsformagaPrognosGarInteAttBedoma",
-    "arbetsformagaPrognosGarInteAttBedomaBeskrivning" : "Det går inte att bedöma pga solförmörkelse",
     "arbetsformagaPrognos" : "Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.",
 
     "nedsattMed100":{
         "from" :"2013-03-17",
         "tom" :"2013-04-07"
-    }
+    },
+    "kommentar" : "Det går inte att bedöma pga solförmörkelse"
 }

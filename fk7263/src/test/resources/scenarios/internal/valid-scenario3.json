@@ -43,5 +43,5 @@
         "tom":"2013-04-07"
     },
     "prognosBedomning" : "arbetsformagaPrognosGarInteAttBedoma",
-    "kommentar" : "Det går inte att bedöma"
+    "arbetsformagaPrognosGarInteAttBedomaBeskrivning" : "Det går inte att bedöma"
 }
