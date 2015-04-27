@@ -33,6 +33,10 @@
     "undersokningAvPatienten": "2011-01-26",
 
     "nedsattMed75":{
+        "from" :"2011-01-26",
+        "tom" :"2011"
+    },
+    "nedsattMed100":{
         "from" :"2011-01-26"
     },
     "prognosBedomning" : "arbetsformagaPrognosJa",

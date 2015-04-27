@@ -226,8 +226,8 @@ public class InternalToNotification {
             return;
         }
         
-        if (nedsattningsPeriod.getFrom() == null || nedsattningsPeriod.getTom() == null) {
-            LOG.debug("Found nedsattning for {}%, but either tom or from date is missing", nedsattningMed);
+        if (!nedsattningsPeriod.isValid()) {
+            LOG.debug("Found nedsattning for {}%, but it is invalid", nedsattningMed);
             return;
         }
         
