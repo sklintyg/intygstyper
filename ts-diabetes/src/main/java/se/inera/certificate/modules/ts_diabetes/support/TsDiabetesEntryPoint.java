@@ -8,7 +8,7 @@ import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
-import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
+import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
 
 public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
@@ -16,7 +16,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     public static final String MODULE_ID = "ts-diabetes";
 
     @Autowired
-    private ModuleService tsDiabetesModuleService;
+    private TsDiabetesModuleApi tsDiabetesModuleService;
 
     @Override
     public String getModuleId() {

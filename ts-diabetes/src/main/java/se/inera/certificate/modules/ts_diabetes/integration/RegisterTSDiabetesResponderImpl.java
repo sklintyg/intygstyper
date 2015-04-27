@@ -19,7 +19,7 @@ import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToInternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
+import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.certificate.modules.ts_diabetes.util.ConverterUtil;
 import se.inera.certificate.modules.ts_diabetes.validator.Validator;
 import se.inera.certificate.validate.CertificateValidationException;
@@ -37,7 +37,7 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTSDiabetesResponderImpl.class);
 
     @Autowired
-    private ModuleService moduleService;
+    private TsDiabetesModuleApi moduleService;
 
     @Autowired
     @Qualifier("ts-diabetes-objectMapper")

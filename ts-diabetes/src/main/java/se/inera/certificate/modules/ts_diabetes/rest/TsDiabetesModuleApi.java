@@ -8,6 +8,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 import org.joda.time.LocalDateTime;
@@ -52,7 +54,6 @@ import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.Regist
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -61,9 +62,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author Gustav Norbäcker, R2M
  */
-public class ModuleService implements ModuleApi {
+public class TsDiabetesModuleApi implements ModuleApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ModuleService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TsDiabetesModuleApi.class);
 
     @Autowired
     private Validator validator;
@@ -100,7 +101,7 @@ public class ModuleService implements ModuleApi {
 
     private ModuleContainerApi moduleContainer;
 
-    public ModuleService() throws Exception {
+    public TsDiabetesModuleApi() throws Exception {
     }
 
     @Override
@@ -198,12 +199,16 @@ public class ModuleService implements ModuleApi {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
 
         SOAPMessage response = sendTsDiabetesClient.registerCertificate(transformedPayload, logicalAddress);
-//        if (response.getResult().getResultCode() !=  se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.OK) {
-//            String message = response.getResult().getResultCode() == se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ResultCodeType.INFO
-//                    ? response.getResult().getResultText()
-//                    : response.getResult().getErrorId() + " : " + response.getResult().getResultText();
-//            throw new ExternalServiceCallException(message);
-//        }
+        try {
+            SOAPEnvelope contents = response.getSOAPPart().getEnvelope();
+            if (contents.getBody().hasFault()) {
+                throw new ExternalServiceCallException(contents.getBody().getFault().getTextContent());
+            }
+
+        } catch (SOAPException e) {
+            LOG.error("SOAP-errpr in sendCertificateToRecipient due to: {}", e.getStackTrace().toString());
+            throw new ModuleException("SOAP-errpr in sendCertificateToRecipient.", e);
+        }
     }
 
     @Override

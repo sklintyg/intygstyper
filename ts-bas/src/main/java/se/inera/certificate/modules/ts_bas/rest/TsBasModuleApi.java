@@ -220,7 +220,8 @@ public class TsBasModuleApi implements ModuleApi {
             }
 
         } catch (SOAPException e) {
-            e.printStackTrace();
+            LOG.error("SOAP-errpr in sendCertificateToRecipient due to: {}", e.getStackTrace().toString());
+            throw new ModuleException("SOAP-errpr in sendCertificateToRecipient.", e);
         }
         
     }

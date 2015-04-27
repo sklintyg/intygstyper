@@ -17,7 +17,7 @@ import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.CertificateStateHolder;
 import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToTransportConverter;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
+import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
@@ -35,7 +35,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
     private static final Logger LOGGER = LoggerFactory.getLogger(GetTSDiabetesResponderImpl.class);
 
     @Autowired
-    private ModuleService moduleService;
+    private TsDiabetesModuleApi moduleService;
 
     @Autowired
     @Qualifier("ts-diabetes-objectMapper")
