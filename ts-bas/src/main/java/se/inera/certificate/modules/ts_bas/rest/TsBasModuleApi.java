@@ -27,7 +27,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPEnvelope;
-import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
 import org.joda.time.LocalDateTime;
@@ -212,18 +211,16 @@ public class TsBasModuleApi implements ModuleApi {
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
         String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
 
-        SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload, logicalAddress);
         try {
+            SOAPMessage response = sendTsBasClient.registerCertificate(transformedPayload, logicalAddress);
             SOAPEnvelope contents = response.getSOAPPart().getEnvelope();
             if (contents.getBody().hasFault()) {
                 throw new ExternalServiceCallException(contents.getBody().getFault().getTextContent());
             }
-
-        } catch (SOAPException e) {
-            LOG.error("SOAP-errpr in sendCertificateToRecipient due to: {}", e.getStackTrace().toString());
-            throw new ModuleException("SOAP-errpr in sendCertificateToRecipient.", e);
+        } catch (Exception e) {
+            LOG.error("Error in sendCertificateToRecipient with msg: {} and stacktrace: {}", e.getMessage(), e.getStackTrace());
+            throw new ModuleException("Error in sendCertificateToRecipient.", e);
         }
-        
     }
 
     @Override

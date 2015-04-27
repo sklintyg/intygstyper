@@ -1,13 +1,10 @@
 package se.inera.certificate.modules.ts_parent.integration;
 
-import java.io.IOException;
 import java.io.StringReader;
 
-import javax.jws.WebMethod;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPConstants;
@@ -24,13 +21,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponderService;
 
 import com.google.common.base.Throwables;
 
 public class SendTSClient {
+
+    private static final String REGISTER_NAMESPACE = "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1:RegisterCertificate";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SendTSClient.class);
 
@@ -76,11 +74,11 @@ public class SendTSClient {
 
             // Set the soap action
             dispSOAPMsg.getRequestContext().put(Dispatch.SOAPACTION_USE_PROPERTY, true);
-            dispSOAPMsg.getRequestContext().put(Dispatch.SOAPACTION_URI_PROPERTY, "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:1:RegisterCertificate");
+            dispSOAPMsg.getRequestContext().put(Dispatch.SOAPACTION_URI_PROPERTY, REGISTER_NAMESPACE);
 
             return dispSOAPMsg.invoke(soapReq1);
 
-        } catch (SOAPException | SAXException | IOException | ParserConfigurationException e) {
+        } catch (Exception e) {
             throw Throwables.propagate(e);
         }
     }
