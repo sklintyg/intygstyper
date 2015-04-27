@@ -68,13 +68,13 @@ public class PdfGenerator {
     private static final String WEBCERT_MARGIN_TEXT = "Intyget är utskrivet från Webcert.";
 
     private static final StringField INVANARE_ADRESS_FALT1 = new StringField("Falt");
-    private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt_h_1");
+    private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt__1");
     private static final StringField INVANARE_ADRESS_FALT3 = new StringField("Falt__2");
     private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__3");
 
     private static final CheckGroupField<IntygAvserKategori> INTYG_AVSER;
     static {
-        INTYG_AVSER = new CheckGroupField<IntygAvserKategori>();
+        INTYG_AVSER = new CheckGroupField<>();
         INTYG_AVSER.addField(IntygAvserKategori.C1, "Falt_10");
         INTYG_AVSER.addField(IntygAvserKategori.C1E, "Falt_11");
         INTYG_AVSER.addField(IntygAvserKategori.C, "Falt_12");
