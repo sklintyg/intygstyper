@@ -11,16 +11,16 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
             this.datesOutOfRange = _$scope.datesOutOfRange;
             this.datesPeriodTooLong = _$scope.datesPeriodTooLong;
 
-            this.nedsattMed25 = DateRangeGroupModel.build(_$scope, 'nedsattMed25', '25');
+            this.nedsattMed25 = DateRangeGroupModel.build(_$scope, 'nedsattMed25', '25', this);
             _$scope.field8b.nedsattMed25 = this.nedsattMed25;
 
-            this.nedsattMed50 = DateRangeGroupModel.build(_$scope, 'nedsattMed50', '50');
+            this.nedsattMed50 = DateRangeGroupModel.build(_$scope, 'nedsattMed50', '50', this);
             _$scope.field8b.nedsattMed50 = this.nedsattMed50;
 
-            this.nedsattMed75 = DateRangeGroupModel.build(_$scope, 'nedsattMed75', '75');
+            this.nedsattMed75 = DateRangeGroupModel.build(_$scope, 'nedsattMed75', '75', this);
             _$scope.field8b.nedsattMed75 = this.nedsattMed75;
 
-            this.nedsattMed100 = DateRangeGroupModel.build(_$scope, 'nedsattMed100', '100');
+            this.nedsattMed100 = DateRangeGroupModel.build(_$scope, 'nedsattMed100', '100', this);
             _$scope.field8b.nedsattMed100 = this.nedsattMed100;
 
             this.dateRangeGroups = [this.nedsattMed25,this.nedsattMed50,this.nedsattMed75,this.nedsattMed100];
@@ -32,54 +32,7 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
             this.today = new Date();
             this.today.setHours(0, 0, 0, 0);
 
-            // add the parser and formatter...
-            this.addNedsattFormatters();
-
         };
-
-        DateRangeGroupsService.prototype.addNedsattFormatters = function addNedsattFormatters(){
-
-            var self = this;
-
-            function nedsattFormatter(dateRangeGroups, modelValue) {
-                if (modelValue) {
-                    dateRangeGroups.validateDates();
-                    dateRangeGroups.onArbetsformagaDatesUpdated();
-                }
-                return modelValue;
-            }
-
-            angular.forEach(this.dateRangeGroups, function(dateRangeGroup){
-
-                // Register parsers so we can follow changes in the date inputs
-                var from = dateRangeGroup.nedsattFormFrom;
-                var tom = dateRangeGroup.nedsattFormTom;
-
-                if (from) {
-
-                    // add formatters
-                    /*if (from.$formatters.length > 0) {
-                        from.$formatters.shift();
-                    }*/
-                    from.$parsers.push(function(modelValue) {
-                        return nedsattFormatter(self, modelValue);
-                    });
-
-                }
-
-                if (from) {
-
-                    // add formatters
-                    /*if (tom.$formatters.length > 0) {
-                        tom.$formatters.shift();
-                    }*/
-                    tom.$parsers.push(function(modelValue) {
-                        return nedsattFormatter(self, modelValue);
-                    });
-                }
-
-            }, self);
-        }
 
         DateRangeGroupsService.prototype.validateDatesWithCert = function validateDatesWithCert(cert) {
             this.setCert(cert);
@@ -172,14 +125,18 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
             var startMoments = [];
             var endMoments = [];
 
+            // these should be fetched from the model
             angular.forEach(this.dateRangeGroups, function(dateRangeGroup){
-                var dateValue = dateRangeGroup.momentStrictFrom();
-                if(dateValue){
-                    startMoments.push(dateValue);
-                }
-                dateValue = dateRangeGroup.momentStrictTom();
-                if(dateValue){
-                    endMoments.push(dateValue);
+                if(!dateRangeGroup.toBeforeFrom) {
+                    dateRangeGroup.useCert = true;
+                    var dateValue = dateRangeGroup.momentStrictFrom();
+                    if (dateValue && dateValue.isValid()) {
+                        startMoments.push(dateValue);
+                    }
+                    dateValue = dateRangeGroup.momentStrictTom();
+                    if (dateValue && dateValue.isValid()) {
+                        endMoments.push(dateValue);
+                    }
                 }
             });
 
@@ -197,11 +154,11 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
          * @type {boolean}
          */
         DateRangeGroupsService.prototype.updateTotalCertDays = function(moments) {
-            if(!moments){
-                this._$scope.totalCertDays = 0;
-                return;
-            }
-            this._$scope.totalCertDays = dateUtils.daysBetween(moments.minMoment, moments.maxMoment);
+            var count = 0;
+            angular.forEach(this.dateRangeGroups, function(dateRangeGroup){
+                count += dateRangeGroup.daysBetween;
+            });
+            this._$scope.totalCertDays = count;
         };
 
         /**
@@ -234,14 +191,14 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
                             nedsatt.setCertFrom(moments.maxMoment.add('days', 1).format('YYYY-MM-DD'));
                         } else {
                             // if no max moment is available, use today
-                            nedsatt.setCertFrom($filter('date')(this.today, 'yyyy-MM-dd'));
+                            nedsatt.setCertFrom(moment(this.today).format('YYYY-MM-DD'));
                         }
 
                     }
 
                     // Set tom date
                     if (nedsatt.certFrom() && (!nedsatt.certTom() || !dateUtils.isDate(nedsatt.certTom()))) {
-                        nedsatt.setCertTom( dateUtils.toMoment(nedsatt.certFrom()).add('days', 7).format('YYYY-MM-DD') );
+                        nedsatt.setCertTom( dateUtils.toMoment(nedsatt.certFrom()).add('days', 6).format('YYYY-MM-DD') );
                     }
                 } else {
                     // Remove dates

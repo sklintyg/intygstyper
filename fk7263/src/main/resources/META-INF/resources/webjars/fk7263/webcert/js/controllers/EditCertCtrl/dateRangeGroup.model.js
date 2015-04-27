@@ -5,7 +5,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
         /**
          * Constructor, with class name
          */
-        function DateRangeGroupModel(_$scope, groupName, id) {
+        function DateRangeGroupModel(_$scope, groupName, id, parent) {
             // Public properties, assigned to the instance ('this')
 
             this._$scope = _$scope;
@@ -23,33 +23,27 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             this.workState = false;
 
             this.id = id;
-
+            this.parent = parent;
             this.addNedsattParser();
+            this.addNedsattFormatters();
 
             // on creation the cert model is used and then there after the certForm ( the form model ) is used.
             // this is a bit weird but it's to do with validation etc and the crazy angular stuff thats put on the ng-model attributes.
             // it's much easier in other more complete frameworks ...
             this.useCert = false;
+
+            this.toBeforeFrom = false;
+
+            this.daysBetween = 0;
         }
 
-        // parsers
+        // parsers, these get called on form dom change
         DateRangeGroupModel.prototype.addNedsattParser = function addNedsattParser(){
             var self = this;
 
             // convert the date to an iso string
             function nedsattParser( dateRangeGroup, viewValue) {
-
                 viewValue = dateUtils.convertDateToISOString(viewValue);
-
-                if (!dateRangeGroup.isValid()) {
-                    // uncheck check since both dates are undefined or empty
-                    dateRangeGroup.workState = false;
-
-                } else {
-                    // One of the dates is valid
-                    dateRangeGroup.workState = true; // Check nedsatt checkbox
-                }
-
                 return viewValue;
             }
 
@@ -77,6 +71,47 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             }
 
         };
+
+        // formatters these get called on model changes
+        DateRangeGroupModel.prototype.addNedsattFormatters = function addNedsattFormatters(){
+
+            var self = this;
+
+            function nedsattFormatter(dateRangeGroup, modelValue) {
+                if (modelValue && self.parent) {
+                    self.parent.validateDates();
+                    self.parent.onArbetsformagaDatesUpdated();
+
+                    if (!dateRangeGroup.isValid()) {
+                        // uncheck check since both dates are undefined or empty
+                        dateRangeGroup.workState = false;
+
+                    } else {
+                        // One of the dates is valid
+                        dateRangeGroup.workState = true; // Check nedsatt checkbox
+                    }
+
+                }
+                return modelValue;
+            }
+
+            // Register parsers so we can follow changes in the date inputs
+            var from = this.nedsattFormFrom;
+            var tom = this.nedsattFormTom;
+            if(from) {
+                from.$formatters.push(function(modelValue) {
+                    return nedsattFormatter(self, modelValue);
+                });
+            }
+
+            if(tom){
+                tom.$formatters.push(function(modelValue) {
+                    return nedsattFormatter(self, modelValue);
+                });
+            }
+
+
+        }
 
         DateRangeGroupModel.prototype.equals = function(otherGroup) {
             if(otherGroup && otherGroup.groupName == this.groupName){
@@ -188,6 +223,8 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             //      |               |
             if( dateUtils.isBeforeOrEqual(fromThat, fromThis) && dateUtils.isAfterOrEqual(tomThat, tomThis) ){
                 this.setDateInvalidState(true);
+                this.daysBetween = 0;
+                dateRangeGroup.daysBetween = 0;
                 dateRangeGroup.setDateInvalidState(true);
                 $log.log("1. f2 b f1 and t2 a t1");
             }
@@ -196,6 +233,8 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             if(dateUtils.isBeforeOrEqual(fromThat,fromThis) && (dateUtils.isAfterOrEqual(tomThat, fromThis) && dateUtils.isBeforeOrEqual(tomThat, tomThis) ) ) {
                 this.setDateInvalidState(true);
                 dateRangeGroup.setDateInvalidState(true);
+                this.daysBetween = 0;
+                dateRangeGroup.daysBetween = 0;
                 $log.log("2. f2 b f1 and (t2 a f1 and t2 b t1)");
             }
             //          |       |
@@ -203,6 +242,8 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             if (dateUtils.isAfterOrEqual(fromThat, fromThis) && dateUtils.isBeforeOrEqual(tomThat, tomThis)) {
                 this.setDateInvalidState(true);
                 dateRangeGroup.setDateInvalidState(true);
+                this.daysBetween = 0;
+                dateRangeGroup.daysBetween = 0;
                 $log.log("3. f2 a f1 and t2 b f1");
             }
             //          |       |
@@ -210,6 +251,8 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             if (dateUtils.isAfterOrEqual(fromThat, fromThis) && dateUtils.isBeforeOrEqual(fromThat, tomThis) && (dateUtils.isAfterOrEqual(tomThat, tomThis) )){
                 this.setDateInvalidState(true);
                 dateRangeGroup.setDateInvalidState(true);
+                this.daysBetween = 0;
+                dateRangeGroup.daysBetween = 0;
                 $log.log("4. f2 a f1 and f2 b t1");
             }
 
@@ -245,21 +288,38 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
         }
 
         DateRangeGroupModel.prototype.setDateValidity = function() {
+            this.toBeforeFrom = false;
+            var valid = false;
             if (this.isValid()) {
                 var fromThis = this.momentFrom(),
                     tomThis = this.momentTom();
                 if (this.isFromAfterTom()) {
                     this.setDateInvalidState(true);
+                    this.workState = false;
+                    this.toBeforeFrom = true;
+                    this.daysBetween = 0;
+                    valid = false;
                 } else if(dateUtils.isSame(fromThis, tomThis)){
-                    this.setDateInvalidState(true);
-                }
-                else {
                     this.setDateInvalidState(false);
+                    this.workState = true;
+                    valid = true;
+                } else {
+                    this.setDateInvalidState(false);
+                    this.workState = true;
+                    valid = true;
                 }
                 this.workState = true;
             } else {
                 this.setDateInvalidState(false);
                 this.workState = false;
+                valid = false;
+            }
+
+            if(valid){
+                // work out the days between
+                this.daysBetween = dateUtils.daysBetween(fromThis, tomThis);
+            } else {
+                this.daysBetween = 0;
             }
         };
 
@@ -302,8 +362,8 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             }
         }
 
-        DateRangeGroupModel.build = function(_$scope, groupName, id) {
-            return new DateRangeGroupModel(_$scope, groupName, id);
+        DateRangeGroupModel.build = function(_$scope, groupName, id, parent) {
+            return new DateRangeGroupModel(_$scope, groupName, id, parent);
         };
 
         /**
