@@ -48,10 +48,10 @@ public class ModelCompareUtil {
 
     private int[] makeIntMatrix(Utlatande source) {
         int[] matrix = new int[4];
-        matrix[0] = source.getNedsattMed100() != null ? 1 : 0;
-        matrix[1] = source.getNedsattMed75() != null ? 1 : 0;
-        matrix[2] = source.getNedsattMed50() != null ? 1 : 0;
-        matrix[3] = source.getNedsattMed25() != null ? 1 : 0;
+        matrix[0] = isValid(source.getNedsattMed100()) ? 1 : 0;
+        matrix[1] = isValid(source.getNedsattMed75()) ? 1 : 0;
+        matrix[2] = isValid(source.getNedsattMed50()) ? 1 : 0;
+        matrix[3] = isValid(source.getNedsattMed25()) ? 1 : 0;
         return matrix;
     }
 
@@ -64,56 +64,48 @@ public class ModelCompareUtil {
     }
 
     private boolean checkPerioderDiffers(InternalLocalDateInterval oldPeriod, InternalLocalDateInterval newPeriod) {
-        if (oldPeriod != null && newPeriod != null) {
+        if (isValid(oldPeriod) && isValid(newPeriod)) {
             return oldPeriod.equals(newPeriod) ? false : true;
-        } else if ((oldPeriod == null && newPeriod != null) || (oldPeriod != null && newPeriod == null)) {
+        } else if ((isValid(oldPeriod) && !isValid(newPeriod)) || (!isValid(oldPeriod) && isValid(newPeriod))) {
             return true;
         } else {
             return false;
         }
     }
 
+    private boolean isValid(InternalLocalDateInterval period) {
+        return period != null && period.isValid();
+    }
+    
     private boolean diagnoseDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
-        DiagnosKod[] diagnoskoderOld = { new DiagnosKod(oldUtlatande.getDiagnosKod(), oldUtlatande.getDiagnosKodsystem1()),
-                new DiagnosKod(oldUtlatande.getDiagnosKod2(), oldUtlatande.getDiagnosKodsystem2()),
-                new DiagnosKod(oldUtlatande.getDiagnosKod3(), oldUtlatande.getDiagnosKodsystem3()) };
-        DiagnosKod[] diagnoskoderNew = { new DiagnosKod(newUtlatande.getDiagnosKod(), newUtlatande.getDiagnosKodsystem1()),
-                new DiagnosKod(newUtlatande.getDiagnosKod2(), newUtlatande.getDiagnosKodsystem2()),
-                new DiagnosKod(newUtlatande.getDiagnosKod3(), newUtlatande.getDiagnosKodsystem3()) };
+        DiagnosKod diagnoskodOld = new DiagnosKod(oldUtlatande.getDiagnosKod(), oldUtlatande.getDiagnosKodsystem1());
+        DiagnosKod diagnoskodNew = new DiagnosKod(newUtlatande.getDiagnosKod(), newUtlatande.getDiagnosKodsystem1());
 
-        String[] diagnosbeskrivningOld = { oldUtlatande.getDiagnosBeskrivning1(), oldUtlatande.getDiagnosBeskrivning2(),
-                oldUtlatande.getDiagnosBeskrivning3() };
-        String[] diagnosbeskrivningNew = { newUtlatande.getDiagnosBeskrivning1(), newUtlatande.getDiagnosBeskrivning2(),
-                newUtlatande.getDiagnosBeskrivning3() };
+        String diagnosbeskrivningOld = oldUtlatande.getDiagnosBeskrivning1();
+        String diagnosbeskrivningNew = newUtlatande.getDiagnosBeskrivning1();
 
-        return diagnoseCodesDiffer(diagnoskoderOld, diagnoskoderNew) || diagnoseBeskrivningsDiffer(diagnosbeskrivningOld, diagnosbeskrivningNew);
+        return diagnoseCodeDiffer(diagnoskodOld, diagnoskodNew) || diagnoseBeskrivningDiffer(diagnosbeskrivningOld, diagnosbeskrivningNew);
     }
 
-    private boolean diagnoseCodesDiffer(DiagnosKod[] oldArray, DiagnosKod[] newArray) {
-        for (int i = 0; i < oldArray.length; i++) {
-            DiagnosKod oldDiagnosKod = oldArray[i];
-            DiagnosKod newDiagnosKod = newArray[i];
-            boolean oldValid = moduleService.validateDiagnosisCode(oldDiagnosKod.diagnosKod, oldDiagnosKod.diagnosKodSystem);
-            boolean newValid = moduleService.validateDiagnosisCode(newDiagnosKod.diagnosKod, newDiagnosKod.diagnosKodSystem);
+    private boolean diagnoseCodeDiffer(DiagnosKod oldDiagnosKod, DiagnosKod newDiagnosKod) {
+        boolean oldValid = moduleService.validateDiagnosisCode(oldDiagnosKod.diagnosKod, oldDiagnosKod.diagnosKodSystem);
+        boolean newValid = moduleService.validateDiagnosisCode(newDiagnosKod.diagnosKod, newDiagnosKod.diagnosKodSystem);
 
-            if (oldValid != newValid) {
-                return true;
-            }
-            if (oldValid && newValid && !oldDiagnosKod.equals(newDiagnosKod)) {
-                return true;
-            }
+        if (oldValid != newValid) {
+            return true;
+        }
+        if (oldValid && newValid && !oldDiagnosKod.equals(newDiagnosKod)) {
+            return true;
         }
         return false;
     }
 
-    private boolean diagnoseBeskrivningsDiffer(String[] oldArray, String[] newArray) {
-        for (int i = 0; i < oldArray.length; i++) {
-            if ((!StringUtils.isEmpty(oldArray[i]) && StringUtils.isEmpty(newArray[i]))
-                    || (StringUtils.isEmpty(oldArray[i]) && !StringUtils.isEmpty(newArray[i]))) {
-                return true;
-            } else if (oldArray[i] != null && newArray[i] != null) {
-                return oldArray[i].equals(newArray[i]) ? false : true;
-            }
+    private boolean diagnoseBeskrivningDiffer(String oldBeskrivning, String newBeskrivning) {
+        if ((!StringUtils.isEmpty(oldBeskrivning) && StringUtils.isEmpty(newBeskrivning))
+                || (StringUtils.isEmpty(oldBeskrivning) && !StringUtils.isEmpty(newBeskrivning))) {
+            return true;
+        } else if (oldBeskrivning != null && newBeskrivning != null && !oldBeskrivning.equals(newBeskrivning)) {
+            return true;
         }
         return false;
     }
