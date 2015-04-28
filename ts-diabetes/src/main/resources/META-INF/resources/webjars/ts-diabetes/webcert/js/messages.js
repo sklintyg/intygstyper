@@ -182,16 +182,6 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',
         'ts-diabetes.validation.vardenhet.postort.missing': 'Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt',
         'ts-diabetes.validation.vardenhet.telefonnummer.missing': 'Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt'
-/*
-        //dessa verkar felaktiga, används? känns som kopieringsmisstag.
-        'ts-diabetes.validation.sjukhusvard.missing': 'Objektet sjukhusvård saknas',
-        'ts-diabetes.validation.sjukhusvard.sjukhusellerlakarkontakt.missing': 'Sjukhus eller läkarkontakt saknas',
-        'ts-diabetes.validation.sjukhusvard.anledning.missing': 'Anledning till sjukhusvård saknas',
-        'ts-diabetes.validation.sjukhusvard.tidpunkt.missing': 'Tidpunkt för sjukhusvård saknas',
-        'ts-diabetes.validation.sjukhusvard.vardinrattning.missing': 'Vårdinrättningens namn och klinik saknas',
-
-        //'ts-diabetes.validation.vardkontakt.missing': 'Identitet styrkt saknas',
-        */
     },
     'en': {
         'view.label.pagetitle': 'Show Certificate'
