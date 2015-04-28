@@ -21,8 +21,6 @@ import se.inera.certificate.validate.StringValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
-
 public class InternalDraftValidator {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
@@ -74,12 +72,12 @@ public class InternalDraftValidator {
     }
 
     private void validateVardenhet(Utlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (isNullOrEmpty(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
             addValidationError(validationMessages, "vardperson.postadress", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postadress.missing");
         }
 
-        if (isNullOrEmpty(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
             addValidationError(validationMessages, "vardperson.postnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postnummer.missing");
         } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
@@ -87,12 +85,12 @@ public class InternalDraftValidator {
                     "fk7263.validation.vardenhet.postnummer.incorrect-format");
         }
 
-        if (isNullOrEmpty(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
             addValidationError(validationMessages, "vardperson.postort", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postort.missing");
         }
 
-        if (isNullOrEmpty(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
             addValidationError(validationMessages, "vardperson.telefonnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.telefonnummer.missing");
         }
@@ -102,12 +100,12 @@ public class InternalDraftValidator {
         // Fält 13 - Upplysningar - optional
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
-        if (utlatande.getAnnanReferens() != null && isNullOrEmpty(utlatande.getAnnanReferensBeskrivning())) {
+        if (utlatande.getAnnanReferens() != null && StringUtils.isBlank(utlatande.getAnnanReferensBeskrivning())) {
             addValidationError(validationMessages, "intygbaseratpa.annat", ValidationMessageType.EMPTY,
                     "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
         }
         if (utlatande.getPrognosBedomning() == PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma
-            && isNullOrEmpty(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+            && StringUtils.isBlank(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
             addValidationError(validationMessages, "prognos", ValidationMessageType.EMPTY,
                     "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
         }
@@ -131,7 +129,7 @@ public class InternalDraftValidator {
             if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "fk7263.validation.sysselsattning.missing");
-            } else if (utlatande.isNuvarandeArbete() && StringUtils.isEmpty(utlatande.getNuvarandeArbetsuppgifter())) {
+            } else if (utlatande.isNuvarandeArbete() && StringUtils.isBlank(utlatande.getNuvarandeArbetsuppgifter())) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "fk7263.validation.sysselsattning.arbetsuppgifter.missing");
             }
@@ -187,7 +185,7 @@ public class InternalDraftValidator {
     private void validateAktivitetsbegransning(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
-        if (!utlatande.isAvstangningSmittskydd() && aktivitetsbegransning == null) {
+        if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(aktivitetsbegransning)) {
             addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
                     "fk7263.validation.aktivitetsbegransning.missing");
         }
@@ -196,7 +194,7 @@ public class InternalDraftValidator {
     private void validateFunktionsnedsattning(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
-        if (!utlatande.isAvstangningSmittskydd() && (funktionsnedsattning == null)) {
+        if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(funktionsnedsattning)) {
             addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
                     "fk7263.validation.funktionsnedsattning.missing");
         }
@@ -223,9 +221,9 @@ public class InternalDraftValidator {
             return;
         }
 
-        if (!isNullOrEmpty(utlatande.getDiagnosKod())) {
+        if (!StringUtils.isBlank(utlatande.getDiagnosKod())) {
             String kodsystem = utlatande.getDiagnosKodsystem1();
-            if (isNullOrEmpty(kodsystem)) {
+            if (StringUtils.isBlank(kodsystem)) {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
@@ -236,9 +234,9 @@ public class InternalDraftValidator {
         }
 
         // Validate bidiagnos 1
-        if (!isNullOrEmpty(utlatande.getDiagnosKod2())) {
+        if (!StringUtils.isBlank(utlatande.getDiagnosKod2())) {
             String kodsystem = utlatande.getDiagnosKodsystem2();
-            if (isNullOrEmpty(kodsystem)) {
+            if (StringUtils.isBlank(kodsystem)) {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
@@ -246,9 +244,9 @@ public class InternalDraftValidator {
         }
 
         // Validate bidiagnos 2
-        if (!isNullOrEmpty(utlatande.getDiagnosKod3())) {
+        if (!StringUtils.isBlank(utlatande.getDiagnosKod3())) {
             String kodsystem = utlatande.getDiagnosKodsystem3();
-            if (isNullOrEmpty(kodsystem)) {
+            if (StringUtils.isBlank(kodsystem)) {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
@@ -271,7 +269,7 @@ public class InternalDraftValidator {
 
     private void validateOvrigaRekommendationer(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 6a - If Övrigt is checked, something must be entered.
-        if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isEmpty(utlatande.getRekommendationOvrigt())) {
+        if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isBlank(utlatande.getRekommendationOvrigt())) {
             addValidationError(validationMessages, "rekommendationer", ValidationMessageType.EMPTY,
                     "fk7263.validation.rekommendationer.ovriga");
         }

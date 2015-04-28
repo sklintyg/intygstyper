@@ -76,7 +76,7 @@ Han kommer att kunna återgå till sitt arbete efter genomförd behandling.</kom
 Problemen har pågått en längre tid.</beskrivning>
     </bedomtTillstand>
     <medicinsktTillstand>
-      <beskrivning>Medicinskttillstånd: Klämskada på överarm</beskrivning>
+      <beskrivning>Klämskada på skuldra och överarm. Samsjuklighet föreligger. K10 Andra sjukdomar i käkarna. T10 Fraktur på övre extremitet på icke specificerad nivå. Förtydligande: extra klämd</beskrivning>
       <tillstandskod codeSystemName="ICD-10" code="S47" />
     </medicinsktTillstand>
     <funktionstillstand>

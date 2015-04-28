@@ -54,7 +54,15 @@
 
     "diagnosKod" : "S47",
     "diagnosKodsystem1" : "ICD_10_SE",
-    "diagnosBeskrivning": "Medicinskttillstånd: Klämskada på överarm",
+    "diagnosBeskrivning1": "Klämskada på skuldra och överarm",
+    "diagnosKod2" : "K10",
+    "diagnosKodsystem2" : "ICD_10_SE",
+    "diagnosBeskrivning2": "Andra sjukdomar i käkarna",
+    "diagnosKod3" : "T10",
+    "diagnosKodsystem3" : "ICD_10_SE",
+    "diagnosBeskrivning3": "Fraktur på övre extremitet på icke specificerad nivå",
+    "diagnosBeskrivning": "Förtydligande: extra klämd",
+    "samsjuklighet": true,
 
     "nuvarandeArbete":true,
     "nuvarandeArbetsuppgifter":"Dirigent. Dirigerar en större orkester på deltid",

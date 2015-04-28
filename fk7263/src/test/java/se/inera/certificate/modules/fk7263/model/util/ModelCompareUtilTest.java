@@ -80,6 +80,65 @@ public class ModelCompareUtilTest extends TestCase {
     }
 
     @Test
+    public void testModelIsNotChangedIfInvalidInterval() throws Exception {
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
+
+        // Change the dates and ensure this is not recognized as a change in the model
+        utlatandeOld.setNedsattMed100(null);
+        utlatandeNew.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04"));
+
+        assertFalse(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
+    }
+
+    @Test
+    public void testModelIsNotChangedBetweenTwoInvalidIntervals() throws Exception {
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
+
+        // Change the date and ensure this is not recognized as a change in the model
+        utlatandeOld.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011"));
+        utlatandeNew.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04"));
+
+        assertFalse(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
+    }
+
+    @Test
+    public void testModelIsChangedWhenIntervalIsValid() throws Exception {
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
+
+        // Change the date to a valid date and ensure this is recognized as a change in the model
+        utlatandeOld.setNedsattMed100(null);
+        utlatandeNew.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04-04"));
+
+        assertTrue(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
+    }
+
+    @Test
+    public void testModelIsChangedWhenIntervalBecomesValid() throws Exception {
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
+
+        // Change the date to a valid date and ensure this is recognized as a change in the model
+        utlatandeOld.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04"));
+        utlatandeNew.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04-04"));
+
+        assertTrue(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
+    }
+
+    @Test
+    public void testModelIsChangedWhenIntervalBecomesInvalid() throws Exception {
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
+
+        // Change the date and ensure this is recognized as a change in the model
+        utlatandeNew.setNedsattMed100(new InternalLocalDateInterval("2011-03-03", "2011-04"));
+
+        assertTrue(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
+    }
+
+    @Test
     public void testModelIsChangedDiagnoskod() throws Exception {
         Utlatande utlatandeOld = getUtlatandeFromFile();
         Utlatande utlatandeNew = getUtlatandeFromFile();
@@ -91,7 +150,19 @@ public class ModelCompareUtilTest extends TestCase {
     }
 
     @Test
-    public void testModelIsChangedDiagnosbeskrivning() throws Exception {
+    public void testModelIsNotChangedOnOtherDiagnoskod() throws Exception {
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
+
+        // Mess with the diagnose and make sure the change registers
+        utlatandeNew.setDiagnosKod2(CORRECT_DIAGNOSKOD2);
+        utlatandeNew.setDiagnosKod3(CORRECT_DIAGNOSKOD2);
+
+        assertFalse(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
+    }
+
+    @Test
+    public void testModelIsChangedDiagnosbeskrivning1() throws Exception {
         Utlatande utlatandeOld = getUtlatandeFromFile();
         Utlatande utlatandeNew = getUtlatandeFromFile();
 
@@ -99,6 +170,20 @@ public class ModelCompareUtilTest extends TestCase {
         utlatandeNew.setDiagnosBeskrivning1("BLAH");
 
         assertTrue(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
+    }
+
+    @Test
+    public void testModelIsNotChangedOnOtherDiagnosbeskrivning() throws Exception {
+        Utlatande utlatandeOld = getUtlatandeFromFile();
+        Utlatande utlatandeNew = getUtlatandeFromFile();
+
+        // Mess with the diagnose and make sure the change registers
+        utlatandeNew.setDiagnosBeskrivning2("BLAH");
+        utlatandeNew.setDiagnosBeskrivning3("BLAH");
+        utlatandeNew.setDiagnosBeskrivning("BLAH");
+        utlatandeNew.setSamsjuklighet(false);
+
+        assertFalse(modelCompareUtil.modelDiffers(utlatandeOld, utlatandeNew));
     }
 
     @Test
