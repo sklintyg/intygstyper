@@ -633,13 +633,11 @@
                         <td><span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span></td>
                       </tr>
 
-                      <!-- START WEBCERT-1668 -->
                       <tr data-ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
                         <td colspan="2"></td>
                         <td>
-                          <div class="webcert-col-section table-form-subsection">
                             <p>
-                              <span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
+                              <div style="margin-bottom:12px;" message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></div>
                               <label class="radio">
                                 <input name="narkotikalakemedelb2" type="radio" ng-value="true"
                                        ng-model="cert.narkotikaLakemedel.provtagningBehovs">
@@ -652,10 +650,8 @@
                             <div class="alert alert-info" data-ng-show="cert.narkotikaLakemedel.provtagningBehovs">
                               <span message key="ts-bas.helptext.alkohol-narkotika.provtagning" />
                             </div>
-                          </div>
                         </td>
                       </tr>
-                      <!-- SLUT WEBCERT-1668 -->
 
                       <tr>
                         <td><input name="narkotikalakemedelc" type="radio" ng-value="true"
