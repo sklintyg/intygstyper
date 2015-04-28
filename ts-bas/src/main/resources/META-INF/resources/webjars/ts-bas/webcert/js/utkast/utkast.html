@@ -632,19 +632,27 @@
                                    ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
                         <td><span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span></td>
                       </tr>
-                      <tr data-ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
-                        <td><input name="narkotikalakemedelb2" type="radio" ng-value="true"
-                                   ng-model="cert.narkotikaLakemedel.provtagningBehovs"></td>
-                        <td><input name="narkotikalakemedelb2" type="radio" ng-value="false"
-                                   ng-model="cert.narkotikaLakemedel.provtagningBehovs"></td>
-                        <td>
-                          <p><span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span></p>
 
-                          <div class="alert alert-info" data-ng-show="cert.narkotikaLakemedel.provtagningBehovs">
-                            <span message key="ts-bas.helptext.alkohol-narkotika.provtagning" />
-                          </div>
+                      <tr data-ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
+                        <td colspan="2"></td>
+                        <td>
+                            <p>
+                              <div style="margin-bottom:12px;" message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></div>
+                              <label class="radio">
+                                <input name="narkotikalakemedelb2" type="radio" ng-value="true"
+                                       ng-model="cert.narkotikaLakemedel.provtagningBehovs">
+                                <span message key="common.yes"></span></label>
+                              <label class="radio">
+                                <input name="narkotikalakemedelb2" type="radio" ng-value="false"
+                                       ng-model="cert.narkotikaLakemedel.provtagningBehovs">
+                                <span message key="common.no"></span></label>
+                            </p>
+                            <div class="alert alert-info" data-ng-show="cert.narkotikaLakemedel.provtagningBehovs">
+                              <span message key="ts-bas.helptext.alkohol-narkotika.provtagning" />
+                            </div>
                         </td>
                       </tr>
+
                       <tr>
                         <td><input name="narkotikalakemedelc" type="radio" ng-value="true"
                                    ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
