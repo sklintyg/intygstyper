@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import com.itextpdf.text.pdf.*;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -52,11 +53,6 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfGenerator {
 
@@ -439,7 +435,12 @@ public class PdfGenerator {
         Vardenhet vardenhet = utlatande.getGrundData().getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
         String adressOrt = String.format("%s, %s, %s", vardenhet.getPostort(), vardenhet.getPostadress(), vardenhet.getPostnummer());
-        ADRESS_OCH_ORT.setField(fields, adressOrt);
+        if (ADRESS_OCH_ORT.fieldFits(fields, adressOrt)) {
+            ADRESS_OCH_ORT.setField(fields, adressOrt);
+        } else {
+            adressOrt = String.format("%s, %s", vardenhet.getPostort(), vardenhet.getPostadress());
+            ADRESS_OCH_ORT.setField(fields, adressOrt);
+        }
         TELEFON.setField(fields, vardenhet.getTelefonnummer());
         NAMNFORTYDLIGANDE.setField(fields, utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
 
@@ -537,6 +538,44 @@ public class PdfGenerator {
             if (value != null) {
                 fields.setField(field, value);
             }
+        }
+
+        public boolean fieldFits(AcroFields fields, String value) throws IOException, DocumentException {
+            List<AcroFields.FieldPosition> positions = fields.getFieldPositions(field);
+            if (positions.size() > 0) {
+                AcroFields.FieldPosition position = positions.get(0);
+                float fieldWidth = position.position.getWidth();
+
+                PdfDictionary dict = fields.getFieldItem(field).getMerged(0);
+                if (dict == null) {
+                    return true;
+                }
+                PdfDictionary dr = dict.getAsDict(PdfName.DR);
+                if (dr == null) {
+                    return true;
+                }
+                PdfDictionary font = dr.getAsDict(PdfName.FONT);
+                if (font == null) {
+                    return true;
+                }
+
+                Object[] fontInfo = AcroFields.splitDAelements(dict.getAsString(PdfName.DA).toString());
+                if (fontInfo.length >= 2) {
+                    String fontName = (String) fontInfo[0];
+                    float fontSize = (((Float) fontInfo[1]).floatValue());
+
+                    PdfIndirectReference fontRef = font.getAsIndirectObject(new PdfName(fontName));
+                    if (fontRef != null) {
+                        BaseFont fieldFont = BaseFont.createFont((PRIndirectReference) fontRef);
+                        if (fieldFont != null) {
+                            if (fieldFont.getWidthPoint(value, fontSize) > fieldWidth) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }
