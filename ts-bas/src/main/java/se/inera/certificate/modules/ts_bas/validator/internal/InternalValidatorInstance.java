@@ -70,29 +70,28 @@ public class InternalValidatorInstance {
 
             context = new ValidationContext(utlatande);
 
-            validateBedomning(utlatande.getBedomning());
-            validateDiabetes(utlatande.getDiabetes());
-            validateFunktionsnedsattning(utlatande.getFunktionsnedsattning());
-            validateHjartKarl(utlatande.getHjartKarl());
-            validateHorselBalans(utlatande.getHorselBalans());
-
-            validateHoSPersonal(utlatande.getGrundData().getSkapadAv());
-
+            // OBS! Utökas formuläret i framtiden, lägg in validering i rätt ordning nedan.
+            validatePatient(utlatande.getGrundData().getPatient());
             validateIntygAvser(utlatande.getIntygAvser());
             validateIdentitetStyrkt(utlatande.getVardkontakt());
+            validateSyn(utlatande.getSyn()); // 1.
+            validateHorselBalans(utlatande.getHorselBalans());  // 2.
+            validateFunktionsnedsattning(utlatande.getFunktionsnedsattning()); // 3.
+            validateHjartKarl(utlatande.getHjartKarl()); // 4.
+            validateDiabetes(utlatande.getDiabetes());  // 5.
+            validateNeurologi(utlatande.getNeurologi()); // 6.
+            validateMedvetandestorning(utlatande.getMedvetandestorning());  // 7.
+            validateNjurar(utlatande.getNjurar()); // 8.
+            validateKognitivt(utlatande.getKognitivt()); // 9.
+            validateSomnVakenhet(utlatande.getSomnVakenhet()); // 10.
+            validateNarkotikaLakemedel(utlatande.getNarkotikaLakemedel()); // 11.
+            validatePsykiskt(utlatande.getPsykiskt()); // 12.
+            validateUtvecklingsstorning(utlatande.getUtvecklingsstorning()); // 13.
+            validateSjukhusvard(utlatande.getSjukhusvard()); // 14.
+            validateMedicinering(utlatande.getMedicinering()); // 15.
+            validateBedomning(utlatande.getBedomning());
+            validateHoSPersonal(utlatande.getGrundData().getSkapadAv());
 
-            validateKognitivt(utlatande.getKognitivt());
-            validateMedicinering(utlatande.getMedicinering());
-            validateMedvetandestorning(utlatande.getMedvetandestorning());
-            validateSyn(utlatande.getSyn());
-            validateNarkotikaLakemedel(utlatande.getNarkotikaLakemedel());
-            validateSjukhusvard(utlatande.getSjukhusvard());
-            validateNeurologi(utlatande.getNeurologi());
-            validateNjurar(utlatande.getNjurar());
-            validateSomnVakenhet(utlatande.getSomnVakenhet());
-            validatePsykiskt(utlatande.getPsykiskt());
-            validateUtvecklingsstorning(utlatande.getUtvecklingsstorning());
-            validatePatient(utlatande.getGrundData().getPatient());
         }
 
         ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);
@@ -371,6 +370,10 @@ public class InternalValidatorInstance {
             return;
         }
 
+        if (narkotikaLakemedel.getForemalForVardinsats() == null) {
+            addValidationError("narkotikaLakemedel.vardinsats", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.vardinsats-bas.missing");
+        }
+
         if (narkotikaLakemedel.getTeckenMissbruk() == null) {
             addValidationError("narkotikaLakemedel.teckenMissbruk", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.teckenmissbruk.missing");
 
@@ -380,9 +383,7 @@ public class InternalValidatorInstance {
             }
         }
 
-        if (narkotikaLakemedel.getForemalForVardinsats() == null) {
-            addValidationError("narkotikaLakemedel.vardinsats", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.vardinsats-bas.missing");
-        }
+
 
         if (narkotikaLakemedel.getLakarordineratLakemedelsbruk() == null) {
             addValidationError("narkotikaLakemedel.lakarordineratLakemedelsbruk", ValidationMessageType.EMPTY,
