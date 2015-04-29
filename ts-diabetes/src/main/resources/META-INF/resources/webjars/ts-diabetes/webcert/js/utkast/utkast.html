@@ -39,7 +39,8 @@
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
-                  <li ng-repeat="message in viewState.common.validationSections"><span message key="ts-diabetes.label.{{message}}"></span></li>
+                  <li ng-repeat="message in viewState.common.validationSections">
+                    <a><span ng-click="scrollTo(message)" message key="ts-diabetes.label.{{message}}"></span></a></li>
                 </ul>
               </div>
 
@@ -294,9 +295,9 @@
                   </div>
 
                   <!-- 3. Synintyg -->
-                  <div wc-field field-label="ts-diabetes.label.synintyg" field-has-errors="testerror" ng-form
-                       name="synForm" id="synForm">
 
+                  <div wc-field field-label="ts-diabetes.label.synintyg" field-has-errors="viewState.common.validationMessagesGrouped.syn" ng-form
+                       name="synForm" id="synForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.syn" id="validationMessages_syn">
                         <td colspan="3">
@@ -408,6 +409,7 @@
                       </tr>
                     </table>
                   </div>
+                  <a name="anchor.syn"></a>
 
                   <!-- 4. Bedömning -->
                   <div wc-field field-label="ts-diabetes.label.bedomning" field-help-text="ts-diabetes.helptext.intyget-avser" id="bedomningForm">
