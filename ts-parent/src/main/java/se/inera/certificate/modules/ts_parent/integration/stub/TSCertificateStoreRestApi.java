@@ -16,7 +16,7 @@ public class TSCertificateStoreRestApi {
     @Autowired
     private TSCertificateStore certificateStore;
     
-    @Autowired
+    @Autowired(required=false)
     private RegisterCertificateResponderStub stub; 
 
     @GET
