@@ -8,11 +8,11 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.send.body': '',
         'ts-diabetes.label.intygavser': 'Intyget avser',
         'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
-        'ts-diabetes.label.allmant': '1. Allmänt',
+        'ts-diabetes.label.diabetes': '1. Allmänt',
         'ts-diabetes.label.hypoglykemier': '2. Hypoglykemier (lågt blodsocker)',
         'ts-diabetes.label.synintyg': '3. Synintyg',
         'ts-diabetes.label.bedomning': '4. Bedömning',
-        'ts-diabetes.label.unit': 'Vårdenhet',
+        'ts-diabetes.label.vardenhet': 'Vårdenhet',
         'ts-diabetes.label.korkort.am': 'AM',
         'ts-diabetes.label.korkort.a1': 'A1',
         'ts-diabetes.label.korkort.a2': 'A2',
@@ -51,7 +51,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.helptext.identitet-styrkt-genom.pass': '**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.',
 
         // Visa ts-diabetes
-        'ts-diabetes.label.patientadress': 'Patientens adressuppgifter',
+        'ts-diabetes.label.patient': 'Patientens adressuppgifter',
 
         'ts-diabetes.label.syn': '3. Synintyg',
         'ts-diabetes.label.ovrigkommentar': 'Övriga upplysningar och kommentarer',

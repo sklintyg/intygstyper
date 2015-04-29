@@ -56,14 +56,14 @@ public class InternalValidatorInstance {
         } else {
 
             context = new ValidationContext(utlatande);
-            validateBedomning(utlatande.getBedomning());
-            validateDiabetes(utlatande.getDiabetes());
-            validateHoSPersonal(utlatande.getGrundData().getSkapadAv());
+            validatePatient(utlatande.getGrundData().getPatient());
             validateIntygAvser(utlatande.getIntygAvser());
             validateIdentitetStyrkt(utlatande.getVardkontakt());
-            validateSyn(utlatande.getSyn());
+            validateDiabetes(utlatande.getDiabetes());
             validateHypoglykemi(utlatande.getHypoglykemier());
-            validatePatient(utlatande.getGrundData().getPatient());
+            validateSyn(utlatande.getSyn());
+            validateBedomning(utlatande.getBedomning());
+            validateHoSPersonal(utlatande.getGrundData().getSkapadAv());
         }
 
         ValidateDraftResponse response = new ValidateDraftResponse(getValidationStatus(), validationMessages);

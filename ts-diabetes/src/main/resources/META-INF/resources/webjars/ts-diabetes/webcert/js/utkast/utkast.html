@@ -39,7 +39,7 @@
                    style="margin-right: 20px">
                 <h3><span message key="draft.saknar-uppgifter"></span></h3>
                 <ul>
-                  <li ng-repeat="message in viewState.common.validationMessages"><span message key="{{message.message}}"></span></li>
+                  <li ng-repeat="message in viewState.common.validationSections"><span message key="ts-diabetes.label.{{message}}"></span></li>
                 </ul>
               </div>
 
@@ -125,7 +125,7 @@
                   </div>
 
                   <!-- 1. Allmänt -->
-                  <div wc-field field-label="ts-diabetes.label.allmant" class="print-pagebreak-after" id="allmantForm">
+                  <div wc-field field-label="ts-diabetes.label.diabetes" class="print-pagebreak-after" id="allmantForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.diabetes"><span message
@@ -479,7 +479,7 @@
 
                   <div class="body-row clearfix" id="vardenhetForm">
                     <h3 class="title">
-                      <span message key="ts-diabetes.label.unit"></span>
+                      <span message key="ts-diabetes.label.vardenhet"></span>
                     </h3>
 
                     <div class="text">
