@@ -22,7 +22,7 @@ public class TSDiabetesCertificateMetaTypeConverter {
         //metaData.setValidTo(intygMeta.getValidTo());
         metaData.setIssuerName(tsDiabetesIntyg.getGrundData().getSkapadAv().getFullstandigtNamn());
         metaData.setFacilityName(tsDiabetesIntyg.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        //metaData.setSignDate(LocalDateTime.parse(tsDiabetesIntyg.getGrundData().getSigneringsTidstampel()));
+        metaData.setSignDate(LocalDateTime.parse(tsDiabetesIntyg.getGrundData().getSigneringsTidstampel()));
         metaData.setAdditionalInfo(intygMeta.getAdditionalInfo());
         metaData.setAvailable(intygMeta.getAvailable().toLowerCase().equals("true"));
         List<Status> statuses = toStatusList(intygMeta.getStatus());
