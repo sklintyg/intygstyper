@@ -102,9 +102,9 @@ public class InternalValidatorInstance {
         if (patient == null) {
             return;
         }
-        assertDescriptionNotEmpty(patient.getPostadress(), "patient.postadress", "ts-bas.validation.patient.postadress.missing");
-        assertDescriptionNotEmpty(patient.getPostnummer(), "patient.postnummer", "ts-bas.validation.patient.postnummer.missing");
-        assertDescriptionNotEmpty(patient.getPostort(), "patient.postort", "ts-bas.validation.patient.postort.missing");
+        assertDescriptionNotEmpty(patient.getPostadress(), "patientadress.postadress", "ts-bas.validation.patient.postadress.missing");
+        assertDescriptionNotEmpty(patient.getPostnummer(), "patientadress.postnummer", "ts-bas.validation.patient.postnummer.missing");
+        assertDescriptionNotEmpty(patient.getPostort(), "patientadress.postort", "ts-bas.validation.patient.postort.missing");
     }
 
     private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {

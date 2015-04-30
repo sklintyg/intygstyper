@@ -290,7 +290,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             $scope.scrollTo = function(message) {
                 anchorScrollService.scrollTo('anchor.' + message);
-            }
+            };
 
             /**************************************************************************
              * Load certificate and setup form
