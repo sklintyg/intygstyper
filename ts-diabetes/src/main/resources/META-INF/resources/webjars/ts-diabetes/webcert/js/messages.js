@@ -121,8 +121,8 @@ var tsDiabetesMessages = {
 
         // Validation messages
         'ts-diabetes.validation.patient.postadress.missing': 'Postadress saknas.',
-        'ts-diabetes.validation.patient.postnummer.missing': 'Postnummer saknas',
-        'ts-diabetes.validation.patient.postort.missing': 'Postort saknas',
+        'ts-diabetes.validation.patient.postnummer.missing': 'Postnummer saknas.',
+        'ts-diabetes.validation.patient.postort.missing': 'Postort saknas.',
 
         'ts-diabetes.validation.utlatande.missing': 'Utlatande saknas',
 
@@ -148,8 +148,8 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing': 'd) Antal episoder måste anges.',
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.missing': 'e) Ett alternativ måste anges.',
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing': 'e) Uppgifter om episoder måste anges.',
-        'ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing': 'f) Ett alternativ måste anges för högre körkortsbehörigheter.', // 2f
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing': 'g) Ett alternativ måste anges för högre körkortsbehörigheter.', // 2g
+        'ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing': 'f) Ett alternativ måste anges.', // 2f
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing': 'g) Ett alternativ måste anges.', // 2g
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing': 'Tidpunkt för allvarlig hypoglykemi under vaken tid saknas',
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd, och vara tidigare än dagens datum.',
 
@@ -175,7 +175,7 @@ var tsDiabetesMessages = {
 
         'ts-diabetes.validation.bedomning.missing': 'Bedömning saknas',
         'ts-diabetes.validation.bedomning.must-choose-one': 'Minst en körkortsbehörighet, eller "Kan inte ta ställning", måste väljas.',
-        'ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing': 'Ställning behöver tas till om patienten är lämpad för högre körkortsbehörighet',
+        'ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing': 'Ett alternativ måste anges för om patienten är lämpad för högre körkortsbehörighet (C1 eller högre).',
 
         'ts-diabetes.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
         'ts-diabetes.validation.vardenhet.postnummer.missing': 'Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt',

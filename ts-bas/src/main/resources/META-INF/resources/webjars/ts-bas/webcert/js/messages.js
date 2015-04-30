@@ -177,8 +177,8 @@ var tsBasMessages = {
         'ts-bas.validation.utlatande.missing': 'Utlatande saknas',
 
         'ts-bas.validation.patient.postadress.missing': 'Postadress saknas.',
-        'ts-bas.validation.patient.postnummer.missing': 'Postnummer saknas',
-        'ts-bas.validation.patient.postort.missing': 'Postort saknas',
+        'ts-bas.validation.patient.postnummer.missing': 'Postnummer saknas.',
+        'ts-bas.validation.patient.postort.missing': 'Postort saknas.',
 
         'ts-bas.validation.intygavser.missing': 'Intyget avser körkortsbehörighet saknas',
         'ts-bas.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet, eller "Annat", måste väljas.',
@@ -207,13 +207,13 @@ var tsBasMessages = {
         'ts-bas.validation.syn.binokulart.medkorrektion.out-of-bounds': 'Värdet för binokulär synskärpa med korrektion måste ligga i intervallet 0,0 till 2,0.',
 
         'ts-bas.validation.horselbalans.missing': 'Hörsel och balanssinne saknas',
-        'ts-bas.validation.horselbalans.balansrubbningar.missing': 'Ett alternativ måste anges.',
-        'ts-bas.validation.horselbalans.uppfattasamtal4meter.missing': 'Svårt att uppfatta samtal på fyra meters avstånd måste anges för innehav av behörigheterna D1, D1E, D, DE eller Taxi',
+        'ts-bas.validation.horselbalans.balansrubbningar.missing': 'a) Ett alternativ måste anges.',
+        'ts-bas.validation.horselbalans.uppfattasamtal4meter.missing': 'b) Ett alternativ måste anges.',
 
         'ts-bas.validation.funktionsnedsattning.missing': 'Funktionsnedsättning saknas',
-        'ts-bas.validation.funktionsnedsattning.funktionsnedsattning.missing': 'Ett alternativ måste anges.',
+        'ts-bas.validation.funktionsnedsattning.funktionsnedsattning.missing': 'a) Ett alternativ måste anges.',
         'ts-bas.validation.funktionsnedsattning.beskrivning.missing': 'Beskrivning av funktionsnedsättning saknas.',
-        'ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing': 'För innehav av behörighet D1, D1E, D, DE eller Taxi måste rörelseförmaga att hjälpa passagerar anges',
+        'ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing': 'b) Ett alternativ måste anges.',
 
         'ts-bas.validation.hjartkarl.missing': 'Hjärt- och kärlsjukdomar saknas',
         'ts-bas.validation.hjartkarl.hjartkarlsjukdom.missing': 'a) Ett alternativ måste anges.',
