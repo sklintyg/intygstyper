@@ -33,18 +33,25 @@ public class InternalDraftValidator {
     public ValidateDraftResponse validateDraft(Utlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
+        // intyget baseras på
+        validateVardkontakter(utlatande, validationMessages);
+        validateReferenser(utlatande, validationMessages);
+        // fält 2
         validateDiagnose(utlatande, validationMessages);
         // Falt 4
         validateFunktionsnedsattning(utlatande, validationMessages);
         // Falt 5
         validateAktivitetsbegransning(utlatande, validationMessages);
+        // fält 8
         validateArbetsformaga(utlatande, validationMessages);
-        validateRessatt(utlatande, validationMessages);
-        validateKommentar(utlatande, validationMessages);
-        validateVardenhet(utlatande, validationMessages);
+        // fält 6a
         validateOvrigaRekommendationer(utlatande, validationMessages);
-        validateReferenser(utlatande, validationMessages);
-        validateVardkontakter(utlatande, validationMessages);
+        // fält 11
+        validateRessatt(utlatande, validationMessages);
+        // fält 13
+        validateKommentar(utlatande, validationMessages);
+        // vårdenhet
+        validateVardenhet(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
@@ -61,6 +68,18 @@ public class InternalDraftValidator {
     }
 
     private void validateReferenser(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+
+        // Fält 4b - höger Check that we at least got one field set regarding
+        // what the certificate is based on if not smittskydd
+        if (!utlatande.isAvstangningSmittskydd()) {
+
+            if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
+                    && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
+                addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
+                        "fk7263.validation.intyg-baserat-pa.missing");
+            }
+        }
+
         if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.referenser", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.intyg-baserat-pa.annan.incorrect_format");
@@ -197,18 +216,6 @@ public class InternalDraftValidator {
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(funktionsnedsattning)) {
             addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
                     "fk7263.validation.funktionsnedsattning.missing");
-        }
-
-        // Fält 4 - höger Check that we at least got one field set regarding
-        // what the certificate is based on if not smittskydd
-        if (!utlatande.isAvstangningSmittskydd()) {
-
-            if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
-                    && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-                addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
-                        "fk7263.validation.intyg-baserat-pa.missing");
-            }
-
         }
     }
 
