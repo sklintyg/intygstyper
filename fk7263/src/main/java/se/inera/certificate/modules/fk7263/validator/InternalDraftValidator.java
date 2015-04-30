@@ -96,25 +96,25 @@ public class InternalDraftValidator {
 
     private void validateVardenhet(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
-            addValidationError(validationMessages, "vardperson.postadress", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.postadress", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postadress.missing");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardperson.postnummer", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postnummer.missing");
         } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardperson.postnummer", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postnummer.incorrect-format");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
-            addValidationError(validationMessages, "vardperson.postort", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.postort", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postort.missing");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
-            addValidationError(validationMessages, "vardperson.telefonnummer", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.telefonnummer.missing");
         }
     }

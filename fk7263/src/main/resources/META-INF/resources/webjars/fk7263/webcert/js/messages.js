@@ -67,7 +67,7 @@ var fk7263Messages = {
         'fk7263.label.atgarder': 'Åtgärder',
         'fk7263.label.rekommendationer.fk': 'Rekommendationer till Försäkringskassan',
         'fk7263.label.fk-kontakt': 'Kontakt',
-        'fk7263.label.vardenhet.adress': 'Vårdenhetens kontaktuppgifter',
+        'fk7263.label.vardenhet': 'Vårdenhetens kontaktuppgifter',
         'fk7263.label.makulera.confirmation': 'Läkarintyg FK 7263 utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'fk7263.label.valjkodverk': 'Välj kodverk:',
         'fk7263.label.spara-utkast': 'Spara',

@@ -23,7 +23,7 @@ var tsBasMessages = {
         'ts-bas.label.medicinering': '15. Övrig medicinering',
         'ts-bas.label.ovrigkommentar': '16. Övrig kommentar',
         'ts-bas.label.bedomning': 'Bedömning',
-        'ts-bas.label.unit': 'Vårdenhet',
+        'ts-bas.label.vardenhet': 'Vårdenhet',
         'ts-bas.label.send': 'Skicka intyg till Transportstyrelsen',
         'ts-bas.label.send.body': '',
         'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
