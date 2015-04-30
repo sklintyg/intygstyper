@@ -44,7 +44,7 @@ var tsBasMessages = {
         'ts-bas.helptext.identitet-styrkt-genom.forsakran-enl18kap4': '*** Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
         'ts-bas.helptext.identitet-styrkt-genom.pass': '**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.',
 
-        //Körkortsbehörigheter
+        // Körkortsbehörigheter
         'ts-bas.label.korkort.c1': 'C1',
         'ts-bas.label.korkort.c1e': 'C1E',
         'ts-bas.label.korkort.c': 'C',

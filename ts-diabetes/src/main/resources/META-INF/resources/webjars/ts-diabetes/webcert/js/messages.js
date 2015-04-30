@@ -175,7 +175,7 @@ var tsDiabetesMessages = {
 
         'ts-diabetes.validation.bedomning.missing': 'Bedömning saknas',
         'ts-diabetes.validation.bedomning.must-choose-one': 'Minst en körkortsbehörighet, eller "Kan inte ta ställning", måste väljas.',
-        'ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing': 'Ett alternativ måste anges för om patienten är lämpad för högre körkortsbehörighet (C1 eller högre).',
+        'ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing': 'Ett alternativ måste anges för om patienten är lämplig för högre körkortsbehörighet (C1 eller högre).',
 
         'ts-diabetes.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
         'ts-diabetes.validation.vardenhet.postnummer.missing': 'Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt',
