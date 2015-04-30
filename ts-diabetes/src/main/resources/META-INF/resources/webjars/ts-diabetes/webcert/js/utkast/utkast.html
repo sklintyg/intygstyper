@@ -40,6 +40,7 @@
               <div id="certificate" class="row certificate">
                 <div class="col-md-12 cert-body">
 
+                  <a id="anchor.patient" name="anchor.patient"></a>
                   <div wc-field field-label="ts-bas.label.patientadress" id="patientForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient" id="validationMessages_patient">
                       <ul>
@@ -76,6 +77,7 @@
                     </div>
                   </div>
 
+                  <a id="anchor.intygavser" name="anchor.intygavser"></a>
                   <div wc-field field-label="ts-diabetes.label.intygavser"
                        field-help-text="ts-diabetes.helptext.intyget-avser" id="intygetAvserForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser" id="validationMessages_intygavser">
@@ -93,6 +95,7 @@
                     </div>
                   </div>
 
+                  <a id="anchor.identitet" name="anchor.identitet"></a>
                   <div wc-field field-label="ts-diabetes.label.identitet" id="identitetForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet" id="validationMessages_identitet">
                       <ul>
@@ -119,6 +122,7 @@
                   </div>
 
                   <!-- 1. Allmänt -->
+                  <a id="anchor.diabetes" name="anchor.diabetes"></a>
                   <div wc-field field-label="ts-diabetes.label.diabetes" class="print-pagebreak-after" id="allmantForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
                       <ul>
@@ -178,6 +182,7 @@
                   </div>
 
                   <!-- 2. Hypoglykemier (lågt blodsocker)-->
+                  <a id="anchor.hypoglykemier" name="anchor.hypoglykemier"></a>
                   <div wc-field field-label="ts-diabetes.label.hypoglykemier" id="hypoglykemierForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.hypoglykemier" id="validationMessages_hypoglykemier">
                       <ul>
@@ -288,7 +293,7 @@
                   </div>
 
                   <!-- 3. Synintyg -->
-
+                  <a id="anchor.syn" name="anchor.syn"></a>
                   <div wc-field field-label="ts-diabetes.label.synintyg" field-has-errors="viewState.common.validationMessagesGrouped.syn" ng-form
                        name="synForm" id="synForm">
                     <table class="table table-form">
@@ -402,9 +407,9 @@
                       </tr>
                     </table>
                   </div>
-                  <a name="anchor.syn"></a>
 
                   <!-- 4. Bedömning -->
+                  <a id="anchor.bedomning" name="anchor.bedomning"></a>
                   <div wc-field field-label="ts-diabetes.label.bedomning" field-help-text="ts-diabetes.helptext.intyget-avser" id="bedomningForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning" id="validationMessages_bedomning">
                       <ul>
