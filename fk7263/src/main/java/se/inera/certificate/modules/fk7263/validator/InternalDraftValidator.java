@@ -96,7 +96,7 @@ public class InternalDraftValidator {
 
     private void validateVardenhet(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
-            addValidationError(validationMessages, "vardenhet.postadress", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postadress.missing");
         }
 
