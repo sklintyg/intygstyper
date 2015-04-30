@@ -40,11 +40,11 @@
               <div id="certificate" class="row certificate">
                 <div class="col-md-12 cert-body">
 
-                  <a id="anchor.patient" name="anchor.patient"></a>
-                  <div wc-field field-label="ts-bas.label.patientadress" id="patientForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient" id="validationMessages_patient">
+                  <a id="anchor.patientadress" name="anchor.patientadress"></a>
+                  <div wc-field field-label="ts-bas.label.patientadress" field-has-errors="viewState.common.validationMessagesGrouped.patientadress" id="patientForm">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient" id="validationMessages_patientadress">
                       <ul>
-                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.patient"><span message
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.patientadress"><span message
                                                                                                             key="{{message.message}}"></span>
                         </li>
                       </ul>
@@ -78,7 +78,7 @@
                   </div>
 
                   <a id="anchor.intygavser" name="anchor.intygavser"></a>
-                  <div wc-field field-label="ts-bas.label.intygavser" field-help-text="ts-bas.helptext.intyg-avser" id="intygetAvserForm">
+                  <div wc-field field-label="ts-bas.label.intygavser" field-help-text="ts-bas.helptext.intyg-avser" field-has-errors="viewState.common.validationMessagesGrouped.intygavser" id="intygetAvserForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser" id="validationMessages_intygavser">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygavser"><span message
@@ -102,7 +102,7 @@
                   </div>
 
                   <a id="anchor.identitet" name="anchor.identitet"></a>
-                  <div wc-field field-label="ts-bas.label.identitet" id="identitetForm">
+                  <div wc-field field-label="ts-bas.label.identitet"  field-has-errors="viewState.common.validationMessagesGrouped.identitet" id="identitetForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet"id="validationMessages_identitet">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.identitet"><span message
@@ -130,7 +130,7 @@
 
                   <!-- 1. Syn -->
                   <a id="anchor.syn" name="anchor.syn"></a>
-                  <div wc-field field-label="ts-bas.label.syn" field-has-errors="viewState.testerror" ng-form
+                  <div wc-field field-label="ts-bas.label.syn"  field-has-errors="viewState.common.validationMessagesGrouped.syn" ng-form
                        name="synForm" id="synForm">
 
                     <table class="table table-form">
@@ -255,7 +255,7 @@
 
                   <!-- 2 -->
                   <a id="anchor.horselbalans" name="anchor.horselbalans"></a>
-                  <div wc-field field-label="ts-bas.label.horselbalans" id="horselBalansForm">
+                  <div wc-field field-label="ts-bas.label.horselbalans"  field-has-errors="viewState.common.validationMessagesGrouped.horselbalans" id="horselBalansForm">
 
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.horselbalans" id="validationMessages_horselbalans">
@@ -293,7 +293,7 @@
 
                   <!-- 3 -->
                   <a id="anchor.funktionsnedsattning" name="anchor.funktionsnedsattning"></a>
-                  <div wc-field field-label="ts-bas.label.funktionsnedsattning" id="funktionsnedsattningForm">
+                  <div wc-field field-label="ts-bas.label.funktionsnedsattning"  field-has-errors="viewState.common.validationMessagesGrouped.funktionsnedsattning" id="funktionsnedsattningForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.funktionsnedsattning" id="validationMessages_funktionsnedsattning">
                         <td colspan="3">
@@ -339,7 +339,7 @@
 
                   <!-- 4 -->
                   <a id="anchor.hjartkarl" name="anchor.hjartkarl"></a>
-                  <div wc-field field-label="ts-bas.label.hjartkarl" id="hjartkartForm">
+                  <div wc-field field-label="ts-bas.label.hjartkarl" field-has-errors="viewState.common.validationMessagesGrouped.hjartkarl" id="hjartkartForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.hjartkarl" id="validationMessages_hjartkarl">
                         <td colspan="3">
@@ -391,7 +391,7 @@
 
                   <!-- 5. -->
                   <a id="anchor.diabetes" name="anchor.diabetes"></a>
-                  <div wc-field field-label="ts-bas.label.diabetes" id="diabetesForm">
+                  <div wc-field field-label="ts-bas.label.diabetes" field-has-errors="viewState.common.validationMessagesGrouped.diabetes" id="diabetesForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
                         <td colspan="3">
@@ -453,7 +453,7 @@
 
                   <!-- 6. -->
                   <a id="anchor.neurologi" name="anchor.neurologi"></a>
-                  <div wc-field field-label="ts-bas.label.neurologi" id="neurologiForm">
+                  <div wc-field field-label="ts-bas.label.neurologi" field-has-errors="viewState.common.validationMessagesGrouped.neurologi" id="neurologiForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.neurologi" id="validationMessages_neurologi">
                         <td colspan="3">
@@ -485,7 +485,7 @@
 
                   <!-- 7. -->
                   <a id="anchor.medvetandestorning" name="anchor.medvetandestorning"></a>
-                  <div wc-field field-label="ts-bas.label.medvetandestorning" id="medvetandestorningForm">
+                  <div wc-field field-label="ts-bas.label.medvetandestorning" field-has-errors="viewState.common.validationMessagesGrouped.medvetandestorning" id="medvetandestorningForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.medvetandestorning" id="validationMessages_medvetandestorning">
                         <td colspan="3">
@@ -525,7 +525,7 @@
 
                   <!-- 8. -->
                   <a id="anchor.njurar" name="anchor.njurar"></a>
-                  <div wc-field field-label="ts-bas.label.njurar" id="njurarForm">
+                  <div wc-field field-label="ts-bas.label.njurar" field-has-errors="viewState.common.validationMessagesGrouped.njurar" id="njurarForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.njurar" id="validationMessages_njurar">
                         <td colspan="3">
@@ -555,7 +555,7 @@
 
                   <!-- 9. -->
                   <a id="anchor.kognitivt" name="anchor.kognitivt"></a>
-                  <div wc-field field-label="ts-bas.label.kognitivt" id="kognitivtForm">
+                  <div wc-field field-label="ts-bas.label.kognitivt" field-has-errors="viewState.common.validationMessagesGrouped.kognitivt" id="kognitivtForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.kognitivt" id="validationMessages_kognitivt">
                         <td colspan="3">
@@ -585,7 +585,7 @@
 
                   <!-- 10. -->
                   <a id="anchor.somnvakenhet" name="anchor.somnvakenhet"></a>
-                  <div wc-field field-label="ts-bas.label.somnvakenhet" id="somnvakenhetForm">
+                  <div wc-field field-label="ts-bas.label.somnvakenhet" field-has-errors="viewState.common.validationMessagesGrouped.somnvakenhet" id="somnvakenhetForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.somnvakenhet" id="validationMessages_somnvakenhet">
                         <td colspan="3">
@@ -615,7 +615,7 @@
 
                   <!-- 11. -->
                   <a id="anchor.narkotikalakemedel" name="anchor.narkotikalakemedel"></a>
-                  <div wc-field field-label="ts-bas.label.narkotikalakemedel" id="narkotikaLakemedelForm">
+                  <div wc-field field-label="ts-bas.label.narkotikalakemedel" field-has-errors="viewState.common.validationMessagesGrouped.narkotikalakemedel" id="narkotikaLakemedelForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.narkotikalakemedel" id="validationMessages_narkotikalakemedel">
                         <td colspan="3">
@@ -689,7 +689,7 @@
 
                   <!-- 12. -->
                   <a id="anchor.psykiskt" name="anchor.psykiskt"></a>
-                  <div wc-field field-label="ts-bas.label.psykiskt" id="psykisktForm">
+                  <div wc-field field-label="ts-bas.label.psykiskt" field-has-errors="viewState.common.validationMessagesGrouped.psykiskt" id="psykisktForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.psykiskt" id="validationMessages_psykiskt">
                         <td colspan="3">
@@ -719,7 +719,7 @@
 
                   <!-- 13. -->
                   <a id="anchor.utvecklingsstorning" name="anchor.utvecklingsstorning"></a>
-                  <div wc-field field-label="ts-bas.label.utvecklingsstorning" id="utvecklingsstorningForm">
+                  <div wc-field field-label="ts-bas.label.utvecklingsstorning" field-has-errors="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="utvecklingsstorningForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="validationMessages_utvecklingsstorning">
                         <td colspan="3">
@@ -757,7 +757,7 @@
 
                   <!-- 14. -->
                   <a id="anchor.sjukhusvard" name="anchor.sjukhusvard"></a>
-                  <div wc-field field-label="ts-bas.label.sjukhusvard" id="sjukhusvardForm">
+                  <div wc-field field-label="ts-bas.label.sjukhusvard" field-has-errors="viewState.common.validationMessagesGrouped.sjukhusvard" id="sjukhusvardForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.sjukhusvard" id="validationMessages_sjukhusvard">
                         <td colspan="3">
@@ -820,7 +820,7 @@
 
                   <!-- 15. -->
                   <a id="anchor.medicinering" name="anchor.medicinering"></a>
-                  <div wc-field field-label="ts-bas.label.medicinering" id="medicineringForm">
+                  <div wc-field field-label="ts-bas.label.medicinering" field-has-errors="viewState.common.validationMessagesGrouped.medicinering" id="medicineringForm">
                     <table class="table table-form">
                       <tr ng-if="viewState.common.validationMessagesGrouped.medicinering" id="validationMessages_medicinering">
                         <td colspan="3">
@@ -866,7 +866,7 @@
                   <!-- Bedomning -->
                   <a id="anchor.bedomning" name="anchor.bedomning"></a>
                   <div wc-field field-label="ts-bas.label.bedomning" class="print-pagebreak-after"
-                       field-help-text="ts-bas.helptext.intyg-avser" id="bedomningForm">
+                       field-help-text="ts-bas.helptext.intyg-avser"  field-has-errors="viewState.common.validationMessagesGrouped.bedomning" id="bedomningForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning" id="validationMessages_bedomning">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.bedomning"><span message
