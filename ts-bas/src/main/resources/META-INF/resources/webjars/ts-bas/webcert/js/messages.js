@@ -268,11 +268,11 @@ var tsBasMessages = {
         'ts-bas.validation.bedomning.missing': 'Bedömning saknas',
         'ts-bas.validation.bedomning.must-choose-one': 'Minst en behörighet, "Annat" eller "Kan inte ta ställning" måste anges.',
 
-        'ts-bas.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-bas.validation.vardenhet.postnummer.missing': 'Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt',
+        'ts-bas.validation.vardenhet.postadress.missing': 'Postadressen för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-bas.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
         'ts-bas.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',
-        'ts-bas.validation.vardenhet.postort.missing': 'Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-bas.validation.vardenhet.telefonnummer.missing': 'Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt',
+        'ts-bas.validation.vardenhet.postort.missing': 'Postost för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-bas.validation.vardenhet.telefonnummer.missing': 'Telefonnummer till vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
 
         'ts-bas.form.postadress': 'Postadress',
         'ts-bas.form.postnummer': 'Postnummer',

@@ -177,11 +177,11 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.bedomning.must-choose-one': 'Minst en körkortsbehörighet, eller "Kan inte ta ställning", måste väljas.',
         'ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing': 'Ett alternativ måste anges för om patienten är lämplig för högre körkortsbehörighet (C1 eller högre).',
 
-        'ts-diabetes.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-diabetes.validation.vardenhet.postnummer.missing': 'Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt',
+        'ts-diabetes.validation.vardenhet.postadress.missing': 'Postadressen för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-diabetes.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
         'ts-diabetes.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',
-        'ts-diabetes.validation.vardenhet.postort.missing': 'Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-diabetes.validation.vardenhet.telefonnummer.missing': 'Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt'
+        'ts-diabetes.validation.vardenhet.postort.missing': 'Postort för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-diabetes.validation.vardenhet.telefonnummer.missing': 'Telefonnummer till vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.'
     },
     'en': {
         'view.label.pagetitle': 'Show Certificate'
