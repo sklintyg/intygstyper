@@ -40,6 +40,9 @@ public enum UtlatandeKod  {
 
     private final String description;
 
+    private final String EXTERNAL_NAME = "TSTRK1031";
+
+
     private UtlatandeKod(String code, String tsUtgava, String tsVersion, String desc) {
         this.code = code;
         this.tsUtgava = tsUtgava;
@@ -75,6 +78,9 @@ public enum UtlatandeKod  {
         return tsVersion;
     }
 
+    public String getTypForTransportConvertion() {
+        return EXTERNAL_NAME + " (U" + this.tsUtgava + ", V" + this.tsVersion + ")";
+    }
 
     public void assertVersion(String tsUtgava, String tsVersion) {
         if (!this.tsUtgava.equals(tsUtgava)) {
