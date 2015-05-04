@@ -87,7 +87,10 @@ public class TsBasTransformerXpathTest {
         String xmlContent = FileUtils.readFileToString(file);
         TSBasIntyg utlatande = JAXB.unmarshal(file, RegisterTSBasType.class).getIntyg();
         String transformed = transformer.transform(xmlContent);
+        performTests(transformed, utlatande);
+    }
 
+    private void performTests(String transformed, TSBasIntyg utlatande) throws ParserConfigurationException, JAXBException, SAXException, IOException, TransformerException, XPathExpressionException {
         // Create an xPath evaluator that operates on the transport model.
         XPathEvaluator xPath = createXPathEvaluator(transformed);
 
@@ -164,18 +167,18 @@ public class TsBasTransformerXpathTest {
         // Aktiviteter
         boolean harGlasStyrkaOver8Dioptrier = utlatande.getSynfunktion().isHarGlasStyrkaOver8Dioptrier();
         assertEquals("8 dioptrier", harGlasStyrkaOver8Dioptrier,
-                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT17")));
+                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT17", harGlasStyrkaOver8Dioptrier)));
 
         boolean harVardInsats = utlatande.getAlkoholNarkotikaLakemedel().isHarVardinsats();
         assertEquals("Har vårdinsats för missbruk", harVardInsats,
-                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT15")));
+                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT15", harVardInsats)));
 
         boolean provtagningBehovs = utlatande.getAlkoholNarkotikaLakemedel().isHarVardinsatsProvtagningBehov();
         assertEquals("provtagning narkotika", provtagningBehovs,
-                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT14")));
+                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT14", provtagningBehovs)));
 
         assertEquals("Sjukhusvård eller läkarkontakt", utlatande.getSjukhusvard().isHarSjukhusvardEllerLakarkontakt(),
-                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT19")));
+                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "AKT19", utlatande.getSjukhusvard().isHarSjukhusvardEllerLakarkontakt())));
 
         assertEquals("Sjukhusvård eller läkarkontakt - datum", utlatande.getSjukhusvard().getSjukhusvardEllerLakarkontaktDatum(),
                 xPath.evaluate(XPathExpressions.VARD_PA_SJUKHUS_TID_XPATH));
@@ -189,19 +192,20 @@ public class TsBasTransformerXpathTest {
         // Observationer
         // Synobservationer
         boolean synfaltsdefekter = utlatande.getSynfunktion().isHarSynfaltsdefekt();
-        assertEquals("Synfältsdefekter", synfaltsdefekter, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.4")));
+        assertEquals("Synfältsdefekter", synfaltsdefekter, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.4", synfaltsdefekter)));
 
         boolean nattblindhet = utlatande.getSynfunktion().isHarNattblindhet();
-        assertEquals("Nattblindhet", nattblindhet, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.6")));
+        assertEquals("Nattblindhet", nattblindhet, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.6", nattblindhet)));
 
         boolean progressivOgonsjukdom = utlatande.getSynfunktion().isHarProgressivOgonsjukdom();
-        assertEquals("Progressiv ögonsjukdom", progressivOgonsjukdom, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS1")));
+        assertEquals("Progressiv ögonsjukdom", progressivOgonsjukdom,
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS1", progressivOgonsjukdom)));
 
         boolean diplopi = utlatande.getSynfunktion().isHarDiplopi();
-        assertEquals("Diplopi", diplopi, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.2")));
+        assertEquals("Diplopi", diplopi, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.2", diplopi)));
 
         boolean nystagmus = utlatande.getSynfunktion().isHarNystagmus();
-        assertEquals("Nystagmus", nystagmus, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H55.9")));
+        assertEquals("Nystagmus", nystagmus, xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H55.9", nystagmus)));
 
         SynskarpaUtanKorrektion utanKorr = utlatande.getSynfunktion().getSynskarpaUtanKorrektion();
 
@@ -240,43 +244,43 @@ public class TsBasTransformerXpathTest {
         // Hörsel & balans
         HorselBalanssinne horselBalans = utlatande.getHorselBalanssinne();
         assertEquals("Balansrubbningar", horselBalans.isHarBalansrubbningYrsel(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS2")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS2", horselBalans.isHarBalansrubbningYrsel())));
 
         assertEquals("Svårt uppfatta samtal 4 meter", horselBalans.isHarSvartUppfattaSamtal4Meter(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS3")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS3", horselBalans.isHarSvartUppfattaSamtal4Meter())));
 
         // Rörelseorganens förmåga
         RorelseorganenFunktioner rorelse = utlatande.getRorelseorganensFunktioner();
 
         assertEquals("Har rörelsebegränsning", rorelse.isHarRorelsebegransning(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS4")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS4", rorelse.isHarRorelsebegransning())));
 
         assertEquals("Rörelsebegränsning beskrivning", rorelse.getRorelsebegransningBeskrivning(),
-                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS4")));
+                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS4", rorelse.getRorelsebegransningBeskrivning())));
 
         assertEquals("Otillräcklig rörelseförmåga passagerare", rorelse.isHarOtillrackligRorelseformagaPassagerare(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS5")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS5", rorelse.isHarOtillrackligRorelseformagaPassagerare())));
 
         // Hjärt & kärlsjukdom
         HjartKarlSjukdomar hjartKarl = utlatande.getHjartKarlSjukdomar();
 
         assertEquals("Risk försämrad hjärnfunktion", hjartKarl.isHarRiskForsamradHjarnFunktion(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS6")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS6", hjartKarl.isHarRiskForsamradHjarnFunktion())));
 
         assertEquals("Tecken på hjärnskada", hjartKarl.isHarHjarnskadaICNS(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS8")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS8", hjartKarl.isHarHjarnskadaICNS())));
 
         assertEquals("Riskfaktorer för stroke", hjartKarl.isHarRiskfaktorerStroke(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS7")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS7", hjartKarl.isHarRiskfaktorerStroke())));
 
         assertEquals("Riskfaktorer stroke - beskrivning", hjartKarl.getRiskfaktorerStrokeBeskrivning(),
-                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS7")));
+                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS7", hjartKarl.getRiskfaktorerStrokeBeskrivning())));
 
         // Diabetes
         DiabetesTypBas diabetes = utlatande.getDiabetes();
 
         assertEquals("Har diabetes", diabetes.isHarDiabetes(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "73211009")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "73211009", diabetes.isHarDiabetes())));
 
         if (diabetes.getDiabetesTyp().name().equals("TYP1")) {
             assertEquals("Diabetes typ1", diabetes.getDiabetesTyp().name(),
@@ -287,72 +291,82 @@ public class TsBasTransformerXpathTest {
                     xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "E11")));
         }
 
-        assertEquals("Diabetes kostbehandling", diabetes.isHarBehandlingKost() != null ? diabetes.isHarBehandlingKost() : false,
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS9")));
+        assertEquals(
+                "Diabetes kostbehandling",
+                diabetes.isHarBehandlingKost() != null ? diabetes.isHarBehandlingKost() : false,
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS9",
+                        diabetes.isHarBehandlingKost() != null ? diabetes.isHarBehandlingKost() : false)));
 
-        assertEquals("Diabetes insulinbehandling", diabetes.isHarBehandlingInsulin() != null ? diabetes.isHarBehandlingInsulin() : false,
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006")));
+        assertEquals(
+                "Diabetes insulinbehandling",
+                diabetes.isHarBehandlingInsulin() != null ? diabetes.isHarBehandlingInsulin() : false,
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006",
+                        diabetes.isHarBehandlingInsulin() != null ? diabetes.isHarBehandlingInsulin() : false)));
 
-        assertEquals("Diabetes tablettbehandling", diabetes.isHarBehandlingTabletter() != null ? diabetes.isHarBehandlingTabletter() : false,
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170746002")));
+        assertEquals(
+                "Diabetes tablettbehandling",
+                diabetes.isHarBehandlingTabletter() != null ? diabetes.isHarBehandlingTabletter() : false,
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170746002",
+                        diabetes.isHarBehandlingTabletter() != null ? diabetes.isHarBehandlingTabletter() : false)));
 
         // Neurologi
         assertEquals("Tecken på neurologisk sjukdom", utlatande.isNeurologiskaSjukdomar(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "407624006")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "407624006", utlatande.isNeurologiskaSjukdomar())));
 
         // Medvetandestörning
         Medvetandestorning medvetande = utlatande.getMedvetandestorning();
         assertEquals("Har medvetandestörning", medvetande.isHarMedvetandestorning(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "G40.9")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "G40.9", medvetande.isHarMedvetandestorning())));
 
         assertEquals("Medvetandestörning - beskrivning", medvetande.getMedvetandestorningBeskrivning(),
-                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "G40.9")));
+                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "G40.9", medvetande.getMedvetandestorningBeskrivning())));
 
         assertEquals("Har medvetandestörning", utlatande.isHarNjurSjukdom(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS11")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS11", utlatande.isHarNjurSjukdom())));
 
         // Sviktande kognitiv förmåga
         assertEquals("kognitiv förmåga", utlatande.isHarKognitivStorning(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS12")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS12", utlatande.isHarKognitivStorning())));
 
         // Somn vakenhet
         assertEquals("Somn vakenhet", utlatande.isHarSomnVakenhetStorning(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS13")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS13", utlatande.isHarSomnVakenhetStorning())));
 
         // alkohol och narkotika
         AlkoholNarkotikaLakemedel alkNark = utlatande.getAlkoholNarkotikaLakemedel();
 
         assertEquals("Tecken på missbruk", alkNark.isHarTeckenMissbruk(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS14")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS14", alkNark.isHarTeckenMissbruk())));
 
         assertEquals("Läkemedelsbruk", alkNark.isHarLakarordineratLakemedelsbruk(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS15")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS15", alkNark.isHarLakarordineratLakemedelsbruk())));
 
         assertEquals("Läkemedelsbruk - beskrivning", alkNark.getLakarordineratLakemedelOchDos(),
                 xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS15")));
 
         // Psykisk sjukdom
         assertEquals("Läkemedelsbruk", utlatande.isHarPsykiskStorning(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS16")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS16", utlatande.isHarPsykiskStorning())));
 
         // Utvecklingsstörning
         Utvecklingsstorning utvecklingsstorning = utlatande.getUtvecklingsstorning();
         assertEquals("Har psykisk utvecklingsstörning", utvecklingsstorning.isHarPsykiskUtvecklingsstorning(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "129104009")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "129104009", utvecklingsstorning.isHarPsykiskUtvecklingsstorning())));
 
         assertEquals("Har ADHD eller damp", utvecklingsstorning.isHarAndrayndrom(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS17")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS17", utvecklingsstorning.isHarAndrayndrom())));
 
         // Stadigvarande medicinering
         OvrigMedicinering medicinering = utlatande.getOvrigMedicinering();
         assertEquals("Har stadigvarande medicinering", medicinering.isHarStadigvarandeMedicinering(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS18")));
+                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS18", medicinering.isHarStadigvarandeMedicinering())));
 
         assertEquals("Har stadigvarande medicinering- beskrivning", medicinering.getStadigvarandeMedicineringBeskrivning(),
                 xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS18")));
 
         // Rekommendationer
-        assertTrue("Rekommendation REK8", xPath.evaluate(new BooleanXPathExpression("utlatande/p:rekommendation/p:rekommendationskod/@code = 'REK8'")));
+        assertTrue("Rekommendation REK8",
+                xPath.evaluate(new BooleanXPathExpression("utlatande/p:rekommendation/p:rekommendationskod/@code = 'REK8'")));
 
         for (KorkortsbehorighetTsBas t : utlatande.getBedomning().getKorkortstyp()) {
             KorkortsKodToIntygAvserMapping k = KorkortsKodToIntygAvserMapping.valueOf(t.name());
@@ -365,10 +379,10 @@ public class TsBasTransformerXpathTest {
         }
 
         if (utlatande.getBedomning().getBehovAvLakareSpecialistKompetens() != null) {
-            assertEquals(String.format("REK9 med beskrivning  %s", utlatande.getBedomning().getBehovAvLakareSpecialistKompetens()), utlatande.getBedomning().getBehovAvLakareSpecialistKompetens(),
+            assertEquals(String.format("REK9 med beskrivning  %s", utlatande.getBedomning().getBehovAvLakareSpecialistKompetens()), utlatande
+                    .getBedomning().getBehovAvLakareSpecialistKompetens(),
                     xPath.evaluate(stringXPath(REKOMMENDATION_BESKRIVNING_TEMPLATE, "REK9")));
         }
-
     }
 
     private XPathEvaluator createXPathEvaluator(String xml) throws ParserConfigurationException,
