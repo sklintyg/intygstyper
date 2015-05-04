@@ -229,21 +229,21 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert();
-                ManageCertView.save($scope, $scope.certMeta.intygType);
+                ManageCertView.save($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
+                ManageCertView.discard($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
+                ManageCertView.signera($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**

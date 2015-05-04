@@ -715,21 +715,21 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.save = function(autoSave) {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert($scope);
-                return ManageCertView.save($scope, $scope.certMeta.intygType, autoSave);
+                return ManageCertView.save($scope, $scope.certMeta.intygType, $scope.certMeta.version, autoSave);
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
+                ManageCertView.discard($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
+                ManageCertView.signera($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
