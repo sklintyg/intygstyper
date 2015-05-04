@@ -167,6 +167,7 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
          */
         DateRangeGroupsService.prototype.checkArbetsformagaDatesRange = function checkArbetsformagaDatesRange(startMoment) {
             this.datesOutOfRange = (dateUtils.olderThanAWeek(startMoment) || dateUtils.isDateOutOfRange(startMoment));
+            this._$scope.datesOutOfRange = this.datesOutOfRange;
         };
 
         /**
@@ -175,6 +176,7 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.DateRangeGroupsService',
          */
         DateRangeGroupsService.prototype.checkArbetsformagaDatesPeriodLength = function checkArbetsformagaDatesPeriodLength(startMoment, endMoment) {
             this.datesPeriodTooLong = !dateUtils.areDatesWithinMonthRange(startMoment, endMoment);
+            this._$scope.datesPeriodTooLong = this.datesPeriodTooLong;
         };
 
         DateRangeGroupsService.prototype.onChangeWorkStateCheck = function(nedsattModelName) {
