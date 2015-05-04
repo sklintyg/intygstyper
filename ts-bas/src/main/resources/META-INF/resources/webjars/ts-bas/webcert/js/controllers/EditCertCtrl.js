@@ -8,6 +8,8 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              **********************************************************************************/
 
             // init state
+
+
             $scope.user = User;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
@@ -15,7 +17,17 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 hasError: false,
                 showComplete: false,
                 collapsedHeader: false,
-                hasInfoMissing: false
+                hasInfoMissing: false,
+                error : {
+                    saveErrorCode : undefined,
+                    saveErrorMessageKey :undefined,
+                    saveErrorMessage:undefined,
+                    reset: function(){
+                        this.saveErrorCode = null;
+                        this.saveErrorMessageKey = null;
+                        this.saveErrorMessage = null;
+                    }
+                }
             };
 
             // intyg state

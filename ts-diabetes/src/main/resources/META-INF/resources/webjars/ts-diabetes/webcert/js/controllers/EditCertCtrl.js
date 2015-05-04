@@ -9,6 +9,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              **********************************************************************************/
 
                 // Page state
+
             $scope.user = User;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
@@ -16,7 +17,17 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 hasError: false,
                 showComplete: false,
                 collapsedHeader: false,
-                hsaInfoMissing: false
+                hsaInfoMissing: false,
+                error : {
+                    saveErrorCode : undefined,
+                    saveErrorMessageKey :undefined,
+                    saveErrorMessage:undefined,
+                    reset: function(){
+                    this.saveErrorCode = null;
+                    this.saveErrorMessageKey = null;
+                    this.saveErrorMessage = null;
+                }
+            }
             };
 
             // Intyg state

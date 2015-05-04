@@ -14,8 +14,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**********************************************************************************
              * Default state
              **********************************************************************************/
-            // the below state needs to be moved to models xxxx
-                // Page states
+
+            // Page states
+
             $scope.user = UserModel;
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
@@ -30,7 +31,17 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 hasInfoMissing: false,
                 vidarebefordraInProgress: false,
                 hospName: $routeParams.hospName,
-                deleted: false
+                deleted: false,
+                error : {
+                    saveErrorCode : undefined,
+                    saveErrorMessageKey :undefined,
+                    saveErrorMessage:undefined,
+                    reset: function(){
+                    this.saveErrorCode = null;
+                    this.saveErrorMessageKey = null;
+                    this.saveErrorMessage = null;
+                }
+            }
             };
 
             // Intyg state
