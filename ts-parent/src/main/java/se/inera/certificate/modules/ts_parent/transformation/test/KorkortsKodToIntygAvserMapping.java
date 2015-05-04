@@ -34,9 +34,9 @@ public enum KorkortsKodToIntygAvserMapping {
 
     AM("IAV11", "VAR12"),
 
-    A1("IAV12", "VAR13"),
+    A_1("IAV12", "VAR13"),
 
-    A2("IAV13", "VAR14"),
+    A_2("IAV13", "VAR14"),
 
     A("IAV14", "VAR15"),
 

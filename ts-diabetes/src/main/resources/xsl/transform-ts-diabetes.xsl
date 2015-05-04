@@ -20,7 +20,7 @@
       <reg:utlatande>
 
         <xsl:call-template name="utlatandeHeader">
-          <xsl:with-param name="displayName" select="'TSTRK1031 (U06)'"/>
+          <xsl:with-param name="displayName" select="'TSTRK1031 (U06, V02)'"/>
         </xsl:call-template>
 
         <xsl:call-template name="grundData">
@@ -63,6 +63,24 @@
             </xsl:otherwise>
           </xsl:choose>
         </p:rekommendation>
+
+        <xsl:if test="ns1:bedomning/ns1:behovAvLakareSpecialistKompetens">
+          <p:rekommendation>
+            <p:rekommendationskod code="REK9" codeSystem="{$id_kv_rekommendation_intyg}" codeSystemName="kv_rekommendation_intyg"/>
+            <p:beskrivning>
+              <xsl:value-of select="ns1:bedomning/ns1:behovAvLakareSpecialistKompetens"/>
+            </p:beskrivning>
+          </p:rekommendation>
+        </xsl:if>
+
+        <xsl:if test="ns1:bedomning/ns1:lamplighetInnehaBehorighetSpecial">
+          <p:rekommendation>
+            <p:rekommendationskod code="REK10" codeSystem="{$id_kv_rekommendation_intyg}" codeSystemName="kv_rekommendation_intyg"/>
+            <p2:varde>
+              <xsl:value-of select="ns1:bedomning/ns1:lamplighetInnehaBehorighetSpecial"/>
+            </p2:varde>
+          </p:rekommendation>
+        </xsl:if>
 
         <!-- Diabetes typ1 or typ2 -->
         <p:observation>
