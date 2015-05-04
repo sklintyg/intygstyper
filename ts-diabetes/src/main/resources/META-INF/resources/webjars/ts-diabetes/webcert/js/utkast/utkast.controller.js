@@ -284,7 +284,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             };
 
             $scope.sign = function() {
-                ManageCertView.signera(viewState.common.intyg.type);
+                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version);
             };
 
             /**************************************************************************
