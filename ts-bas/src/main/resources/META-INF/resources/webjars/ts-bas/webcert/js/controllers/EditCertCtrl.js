@@ -27,7 +27,8 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-bas',
-                vidarebefordrad: false
+                vidarebefordrad: false,
+                version : undefined
             };
 
             // form model (extends intyg model where necessary)

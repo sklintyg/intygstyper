@@ -28,7 +28,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-diabetes',
-                vidarebefordrad: false
+                vidarebefordrad: false,
+                version : undefined
             };
 
             // form model (extends intyg model where necessary)

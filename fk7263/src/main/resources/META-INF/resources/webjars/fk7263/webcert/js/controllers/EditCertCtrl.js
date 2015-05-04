@@ -42,7 +42,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'fk7263',
-                vidarebefordrad: false
+                vidarebefordrad: false,
+                version: undefined
             };
 
             // Keeps track of in-form interactions which is converted to internal model on save,
