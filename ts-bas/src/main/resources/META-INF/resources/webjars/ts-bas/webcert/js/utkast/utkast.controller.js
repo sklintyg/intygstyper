@@ -240,7 +240,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             };
 
             $scope.sign = function() {
-                ManageCertView.signera(viewState.common.intyg.type);
+                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version);
             };
 
             $scope.scrollTo = function(message) {
