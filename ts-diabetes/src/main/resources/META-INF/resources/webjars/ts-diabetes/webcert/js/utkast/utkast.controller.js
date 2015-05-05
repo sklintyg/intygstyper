@@ -1,8 +1,9 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
-    ['$anchorScroll', '$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
+    ['$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
         'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
-        function($anchorScroll, $location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
-                 intygNotifyService, IntygModel, viewState, dateUtils) {
+        'common.anchorScrollService',
+        function($location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
+                 intygNotifyService, IntygModel, viewState, dateUtils, anchorScrollService) {
             'use strict';
 
             /**********************************************************************************
@@ -285,6 +286,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             $scope.sign = function() {
                 ManageCertView.signera(viewState.common.intyg.type);
+            };
+
+            $scope.scrollTo = function(message) {
+                anchorScrollService.scrollTo('anchor.' + message);
             };
 
             /**************************************************************************

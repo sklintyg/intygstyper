@@ -33,18 +33,25 @@ public class InternalDraftValidator {
     public ValidateDraftResponse validateDraft(Utlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
+        // intyget baseras på
+        validateVardkontakter(utlatande, validationMessages);
+        validateReferenser(utlatande, validationMessages);
+        // fält 2
         validateDiagnose(utlatande, validationMessages);
         // Falt 4
         validateFunktionsnedsattning(utlatande, validationMessages);
         // Falt 5
         validateAktivitetsbegransning(utlatande, validationMessages);
+        // fält 8
         validateArbetsformaga(utlatande, validationMessages);
-        validateRessatt(utlatande, validationMessages);
-        validateKommentar(utlatande, validationMessages);
-        validateVardenhet(utlatande, validationMessages);
+        // fält 6a
         validateOvrigaRekommendationer(utlatande, validationMessages);
-        validateReferenser(utlatande, validationMessages);
-        validateVardkontakter(utlatande, validationMessages);
+        // fält 11
+        validateRessatt(utlatande, validationMessages);
+        // fält 13
+        validateKommentar(utlatande, validationMessages);
+        // vårdenhet
+        validateVardenhet(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
@@ -61,9 +68,25 @@ public class InternalDraftValidator {
     }
 
     private void validateReferenser(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+
+        // Fält 4b - höger Check that we at least got one field set regarding
+        // what the certificate is based on if not smittskydd
+        if (!utlatande.isAvstangningSmittskydd()) {
+
+            if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
+                    && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
+                addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
+                        "fk7263.validation.intyg-baserat-pa.missing");
+            }
+        }
+
         if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.referenser", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.intyg-baserat-pa.annan.incorrect_format");
+        }
+        if (utlatande.getAnnanReferens() != null && StringUtils.isBlank(utlatande.getAnnanReferensBeskrivning())) {
+            addValidationError(validationMessages, "intygbaseratpa.annat", ValidationMessageType.EMPTY,
+                    "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
         }
         if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
@@ -73,25 +96,25 @@ public class InternalDraftValidator {
 
     private void validateVardenhet(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
-            addValidationError(validationMessages, "vardperson.postadress", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postadress.missing");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardperson.postnummer", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postnummer.missing");
         } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardperson.postnummer", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postnummer.incorrect-format");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
-            addValidationError(validationMessages, "vardperson.postort", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.postort", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.postort.missing");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
-            addValidationError(validationMessages, "vardperson.telefonnummer", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.telefonnummer.missing");
         }
     }
@@ -100,10 +123,6 @@ public class InternalDraftValidator {
         // Fält 13 - Upplysningar - optional
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
-        if (utlatande.getAnnanReferens() != null && StringUtils.isBlank(utlatande.getAnnanReferensBeskrivning())) {
-            addValidationError(validationMessages, "intygbaseratpa.annat", ValidationMessageType.EMPTY,
-                    "fk7263.validation.intyg-baserat-pa.annat.beskrivning.missing");
-        }
         if (utlatande.getPrognosBedomning() == PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma
             && StringUtils.isBlank(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
             addValidationError(validationMessages, "prognos", ValidationMessageType.EMPTY,
@@ -137,13 +156,13 @@ public class InternalDraftValidator {
 
         // validate 8b - regardless of smittskydd
         if (utlatande.getTjanstgoringstid() != null && !STRING_VALIDATOR.validateStringIsNumber(utlatande.getTjanstgoringstid())) {
-            addValidationError(validationMessages, "arbetsformaga", ValidationMessageType.OTHER,
-                    "fk7263.validation.arbetsformaga.tjanstgoringstid");
+            addValidationError(validationMessages, "nedsattning", ValidationMessageType.OTHER,
+                    "fk7263.validation.nedsattning.tjanstgoringstid");
         }
 
         // Check that from and tom is valid in all present intervals before doing more checks
         if (isValidDateInIntervals(validationMessages, utlatande)) {
-            validateIntervals(validationMessages, "arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+            validateIntervals(validationMessages, "nedsattning", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
                     utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
         }
     }
@@ -153,30 +172,30 @@ public class InternalDraftValidator {
         InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
         if (allNulls(intervals)) {
-            addValidationError(validationMessages, "arbetsformaga", ValidationMessageType.EMPTY,
-                    "fk7263.validation.arbetsformaga.choose-at-least-one");
+            addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY,
+                    "fk7263.validation.nedsattning.choose-at-least-one");
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
         // use independent conditions to check this to be able to give specific validation errors for each case
         if (intervals[0] != null && !intervals[0].isValid()) {
-            addValidationError(validationMessages, "arbetsformaga.nedsattMed100", ValidationMessageType.INVALID_FORMAT,
-                    "fk7263.validation.arbetsformaga.nedsattmed100.incorrect-format");
+            addValidationError(validationMessages, "nedsattning.nedsattMed100", ValidationMessageType.INVALID_FORMAT,
+                    "fk7263.validation.nedsattning.nedsattmed100.incorrect-format");
             success = false;
         }
         if (intervals[1] != null && !intervals[1].isValid()) {
-            addValidationError(validationMessages, "arbetsformaga.nedsattMed75", ValidationMessageType.INVALID_FORMAT,
-                    "fk7263.validation.arbetsformaga.nedsattmed75.incorrect-format");
+            addValidationError(validationMessages, "nedsattning.nedsattMed75", ValidationMessageType.INVALID_FORMAT,
+                    "fk7263.validation.nedsattning.nedsattmed75.incorrect-format");
             success = false;
         }
         if (intervals[2] != null && !intervals[2].isValid()) {
-            addValidationError(validationMessages, "arbetsformaga.nedsattMed50", ValidationMessageType.INVALID_FORMAT,
-                    "fk7263.validation.arbetsformaga.nedsattmed50.incorrect-format");
+            addValidationError(validationMessages, "nedsattning.nedsattMed50", ValidationMessageType.INVALID_FORMAT,
+                    "fk7263.validation.nedsattning.nedsattmed50.incorrect-format");
             success = false;
         }
         if (intervals[3] != null && !intervals[3].isValid()) {
-            addValidationError(validationMessages, "arbetsformaga.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
-                    "fk7263.validation.arbetsformaga.nedsattmed25.incorrect-format");
+            addValidationError(validationMessages, "nedsattning.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
+                    "fk7263.validation.nedsattning.nedsattmed25.incorrect-format");
             success = false;
         }
         return success;
@@ -197,18 +216,6 @@ public class InternalDraftValidator {
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(funktionsnedsattning)) {
             addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
                     "fk7263.validation.funktionsnedsattning.missing");
-        }
-
-        // Fält 4 - höger Check that we at least got one field set regarding
-        // what the certificate is based on if not smittskydd
-        if (!utlatande.isAvstangningSmittskydd()) {
-
-            if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
-                    && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-                addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
-                        "fk7263.validation.intyg-baserat-pa.missing");
-            }
-
         }
     }
 

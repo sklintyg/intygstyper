@@ -2,10 +2,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.CertificateService', 'common.ManageCertView', 'common.UserModel',
         'common.intygNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
-        'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
+        'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             CertificateService, ManageCertView, UserModel, intygNotifyService, diagnosService,
-            dateUtils, utils, IntygModel, viewState) {
+            dateUtils, utils, IntygModel, viewState, anchorScrollService) {
             'use strict';
 
             /**********************************************************************************
@@ -81,6 +81,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              */
             $scope.sign = function() {
                 ManageCertView.signera(viewState.common.intyg.type);
+            };
+
+            $scope.scrollTo = function(message) {
+                anchorScrollService.scrollTo('anchor.' + message);
             };
 
             /**************************************************************************

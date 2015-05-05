@@ -33,6 +33,7 @@ describe('EditCertCtrl', function() {
         $provide.value('common.diagnosService', {});
         $provide.value('common.DateUtilsService', {});
         $provide.value('common.UtilsService', {});
+        $provide.value('common.anchorScrollService', {});
     }));
 
     // Get references to the object we want to test from the context.

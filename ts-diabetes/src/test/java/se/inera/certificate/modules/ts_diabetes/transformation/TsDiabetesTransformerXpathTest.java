@@ -265,9 +265,8 @@ public class TsDiabetesTransformerXpathTest {
         else if (diabetes.getDiabetesTyp().get(0).equals("TYP2")) {
             assertEquals("Diabetes typ2", diabetes.getDiabetesTyp().get(0).equals("TYP2"),
                     xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "E11", diabetes.getDiabetesTyp().get(0).equals("TYP2"))));
-            assertEquals("Diabetes typ2 från år", diabetes.getDebutArDiabetes(), 
+            assertEquals("Diabetes typ2 från år", diabetes.getDebutArDiabetes(),
                     xPath.evaluate(new StringXPathExpression("utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='E11')]")));
-            
         }
 
         assertEquals(
@@ -281,7 +280,6 @@ public class TsDiabetesTransformerXpathTest {
                 diabetes.isHarBehandlingInsulin() != null ? diabetes.isHarBehandlingInsulin() : false,
                 xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006",
                         diabetes.isHarBehandlingInsulin() != null ? diabetes.isHarBehandlingInsulin() : false)));
-
         if (diabetes.getInsulinBehandlingSedanAr() != null) {
             assertEquals("Insulin sedan år", diabetes.getInsulinBehandlingSedanAr(),
                     xPath.evaluate(new StringXPathExpression("utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='170747006')]")));

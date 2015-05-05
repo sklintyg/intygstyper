@@ -2,9 +2,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
     [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
         'common.ManageCertView', 'common.UserModel',
         'common.intygNotifyService', 'ts-bas.Domain.IntygModel',
-        'ts-bas.UtkastController.ViewStateService',
+        'ts-bas.UtkastController.ViewStateService', 'common.anchorScrollService',
         function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
-            ManageCertView, UserModel, intygNotifyService, IntygModel, viewState) {
+            ManageCertView, UserModel, intygNotifyService, IntygModel, viewState, anchorScrollService) {
             'use strict';
 
             /**********************************************************************************
@@ -241,6 +241,10 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 
             $scope.sign = function() {
                 ManageCertView.signera(viewState.common.intyg.type);
+            };
+
+            $scope.scrollTo = function(message) {
+                anchorScrollService.scrollTo('anchor.' + message);
             };
 
             /**************************************************************************

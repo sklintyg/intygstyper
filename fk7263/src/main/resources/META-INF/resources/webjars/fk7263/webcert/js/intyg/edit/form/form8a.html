@@ -1,6 +1,7 @@
-<div wc-field field-label="fk7263.label.arbete" field-number="8a"
+<a id="anchor.sysselsattning" name="anchor.sysselsattning"></a>
+<div wc-field field-label="fk7263.label.sysselsattning" field-number="8a"
      field-help-text="fk7263.helptext.sysselsattning" ng-hide="viewState.avstangningSmittskydd()"
-     class="field-fade" id="arbeteForm">
+     class="field-fade" field-has-errors="viewState.common.validationMessagesGrouped.sysselsattning" id="arbeteForm">
   <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.sysselsattning" id="validationMessages_sysselsattning">
     <ul>
       <li ng-repeat="message in viewState.common.validationMessagesGrouped.sysselsattning"><span message

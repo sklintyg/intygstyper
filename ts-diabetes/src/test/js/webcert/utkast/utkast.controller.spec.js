@@ -8,6 +8,7 @@ describe('ts-diabetes.UtkastController', function() {
     var ModelAttr;
     var IntygModel;
     var viewState;
+    var anchorScrollService;
 
     beforeEach(angular.mock.module('common', 'ts-diabetes', function($provide) {
         ManageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'load' ]);
@@ -19,6 +20,7 @@ describe('ts-diabetes.UtkastController', function() {
         $provide.value('common.intygNotifyService', intygNotifyService);
         $provide.value('common.UtkastViewStateService',{intyg:{}, reset: function() {}});
         $provide.value('common.DateUtilsService', {});
+        $provide.value('common.anchorScrollService', anchorScrollService);
     }));
 
     beforeEach(angular.mock.inject([

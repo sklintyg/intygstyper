@@ -6,6 +6,7 @@ describe('ts-bas.UtkastController', function() {
     var wcFocus;
     var intygNotifyService;
     var viewState;
+    var anchorScrollService;
 
 
     beforeEach(angular.mock.module('common','ts-bas', function($provide) {
@@ -16,6 +17,7 @@ describe('ts-bas.UtkastController', function() {
         $provide.value('common.UserModel', User);
         $provide.value('common.wcFocus', wcFocus);
         $provide.value('common.intygNotifyService', intygNotifyService);
+        $provide.value('common.anchorScrollService', anchorScrollService);
     }));
 
     var $scope, ctrl;
