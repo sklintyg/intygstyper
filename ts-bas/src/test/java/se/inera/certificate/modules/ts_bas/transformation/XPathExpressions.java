@@ -80,11 +80,11 @@ public final class XPathExpressions {
 
     public static final String ID_KONTROLL_TEMPLATE = "utlatande/p:vardkontakt/p:idKontroll/@code = '%s'";
 
-    public static final String AKTIVITET_FOREKOMST_TEMPLATE = "utlatande/p:aktivitet/p:forekomst[parent::p:aktivitet/p:aktivitetskod/@code='%s']/text()";
+    public static final String AKTIVITET_FOREKOMST_TEMPLATE = "utlatande/p:aktivitet/p:forekomst[parent::p:aktivitet/p:aktivitetskod/@code='%s'] = '%s'";
 
     public static final String AKTIVITET_BESKRIVNING_TEMPLATE = "utlatande/p:aktivitet/p:beskrivning[(parent::p:aktivitet/p:aktivitetskod/@code='%s')]";
 
-    public static final String OBSERVATION_FOREKOMST_TEMPLATE = "utlatande/p:observation/p:forekomst[parent::p:observation/p:observationskod/@code='%s']/text()";
+    public static final String OBSERVATION_FOREKOMST_TEMPLATE = "utlatande/p:observation/p:forekomst[parent::p:observation/p:observationskod/@code='%s'] = '%s'";
 
     public static final String OBSERVATION_VARDE_CODE_LATERALITET = "utlatande/p:observation/p:varde[(parent::p:observation/p:observationskod/@code='%s') and (parent::p:observation/p2:lateralitet/@code='%s')]/@value";
 
