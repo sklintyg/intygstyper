@@ -598,8 +598,8 @@
 
                 <div class="text">
                   <span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-                  <span class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
-                  <span class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
+                  <span id="lakareSpecialKompetens" class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+                  <span id="lakareSpecialKompetensEjAngivet" class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </div>
               </div>
 
@@ -615,7 +615,7 @@
                       <span id="physician-name-id" class="text">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br />
                       <!-- <span id="caregiver-name-id" class="text">{{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}} ({{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarid}})</span><br/> -->
                       <span ng-if="befattningar.length > 0" id="physician-position" class="text">Befattning: {{befattningar}}<br /></span>
-                      <span ng-if="specialiteter.length > 0" id="physician-speciality" class="text">Specialistkompetens i: <span id="lakareSpecialKompetens">{{specialiteter}}</span><br /><br /></span>
+                      <span ng-if="specialiteter.length > 0" id="physician-speciality" class="text">Specialistkompetens i: {{specialiteter}}<br /><br /></span>
 
                       <span id="careunit-name-id" class="text">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br />
             					<span id="careunit-postal_address" class="text">{{cert.grundData.skapadAv.vardenhet.postadress}}</span><br />
