@@ -45,6 +45,9 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
             Utlatande utlatande = TransportToInternal.convert(request.getLakarutlatande());
             String id = utlatande.getId();
 
+            if ("error".equals(id)) {
+                throw new RuntimeException("A runtime exception");
+            }
             Map<String, String> props = new HashMap<>();
             props.put("Personnummer", utlatande.getGrundData().getPatient().getPersonId());
             props.put("Makulerad", "NEJ");
