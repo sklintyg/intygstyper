@@ -8,6 +8,8 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              **********************************************************************************/
 
             // init state
+
+
             $scope.user = User;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
@@ -15,7 +17,17 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
                 hasError: false,
                 showComplete: false,
                 collapsedHeader: false,
-                hasInfoMissing: false
+                hasInfoMissing: false,
+                error : {
+                    saveErrorCode : undefined,
+                    saveErrorMessageKey :undefined,
+                    saveErrorMessage:undefined,
+                    reset: function(){
+                        this.saveErrorCode = null;
+                        this.saveErrorMessageKey = null;
+                        this.saveErrorMessage = null;
+                    }
+                }
             };
 
             // intyg state
@@ -27,7 +39,8 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-bas',
-                vidarebefordrad: false
+                vidarebefordrad: false,
+                version : undefined
             };
 
             // form model (extends intyg model where necessary)
@@ -280,14 +293,14 @@ angular.module('ts-bas').controller('ts-bas.EditCertCtrl',
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
+                ManageCertView.discard($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
+                ManageCertView.signera($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**

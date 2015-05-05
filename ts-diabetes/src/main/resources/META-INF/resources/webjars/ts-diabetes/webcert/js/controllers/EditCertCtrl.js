@@ -9,6 +9,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
              **********************************************************************************/
 
                 // Page state
+
             $scope.user = User;
             $scope.focusFirstInput = true;
             $scope.widgetState = {
@@ -16,7 +17,17 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
                 hasError: false,
                 showComplete: false,
                 collapsedHeader: false,
-                hsaInfoMissing: false
+                hsaInfoMissing: false,
+                error : {
+                    saveErrorCode : undefined,
+                    saveErrorMessageKey :undefined,
+                    saveErrorMessage:undefined,
+                    reset: function(){
+                    this.saveErrorCode = null;
+                    this.saveErrorMessageKey = null;
+                    this.saveErrorMessage = null;
+                }
+            }
             };
 
             // Intyg state
@@ -28,7 +39,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'ts-diabetes',
-                vidarebefordrad: false
+                vidarebefordrad: false,
+                version : undefined
             };
 
             // form model (extends intyg model where necessary)
@@ -217,21 +229,21 @@ angular.module('ts-diabetes').controller('ts-diabetes.EditCertCtrl',
             $scope.save = function() {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert();
-                ManageCertView.save($scope, $scope.certMeta.intygType);
+                ManageCertView.save($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
+                ManageCertView.discard($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
+                ManageCertView.signera($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**

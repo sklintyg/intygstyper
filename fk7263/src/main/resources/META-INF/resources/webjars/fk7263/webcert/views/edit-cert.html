@@ -61,9 +61,9 @@
 
               <!-- Show save errors here to spare user from retyping everything for intermittent errors -->
               <div class="row">
-                <div ng-show="widgetState.saveErrorMessageKey != null" class="col-md-7">
+                <div ng-show="widgetState.error.saveErrorCode != null" class="col-md-7">
                   <div class="alert alert-danger">
-                    <span message key="{{widgetState.saveErrorMessageKey}}"></span>
+                    <span id='alertSaveErrorMessage' ng-bind-html="widgetState.error.saveErrorMessage"></span>
                   </div>
                 </div>
               </div>

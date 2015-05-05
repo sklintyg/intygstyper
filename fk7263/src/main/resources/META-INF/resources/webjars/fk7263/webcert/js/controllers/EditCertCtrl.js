@@ -14,8 +14,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**********************************************************************************
              * Default state
              **********************************************************************************/
-            // the below state needs to be moved to models xxxx
-                // Page states
+
+            // Page states
+
             $scope.user = UserModel;
             $scope.today = new Date();
             $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
@@ -30,7 +31,17 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 hasInfoMissing: false,
                 vidarebefordraInProgress: false,
                 hospName: $routeParams.hospName,
-                deleted: false
+                deleted: false,
+                error : {
+                    saveErrorCode : undefined,
+                    saveErrorMessageKey :undefined,
+                    saveErrorMessage:undefined,
+                    reset: function(){
+                    this.saveErrorCode = null;
+                    this.saveErrorMessageKey = null;
+                    this.saveErrorMessage = null;
+                }
+            }
             };
 
             // Intyg state
@@ -42,7 +53,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.certMeta = {
                 intygId: null,
                 intygType: 'fk7263',
-                vidarebefordrad: false
+                vidarebefordrad: false,
+                version: undefined
             };
 
             // Keeps track of in-form interactions which is converted to internal model on save,
@@ -703,21 +715,21 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.save = function(autoSave) {
                 $scope.hasSavedThisSession = true;
                 convertFormToCert($scope);
-                return ManageCertView.save($scope, $scope.certMeta.intygType, autoSave);
+                return ManageCertView.save($scope, $scope.certMeta.intygType, $scope.certMeta.version, autoSave);
             };
 
             /**
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                ManageCertView.discard($scope, $scope.certMeta.intygType);
+                ManageCertView.discard($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera($scope, $scope.certMeta.intygType);
+                ManageCertView.signera($scope, $scope.certMeta.intygType, $scope.certMeta.version);
             };
 
             /**
