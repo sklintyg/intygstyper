@@ -49,11 +49,11 @@
                    filled="{{cert.sjukdomsforlopp!=null}}"><div id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</div>
               </div>
 
-              <div wc-field field-number="4" field-label="fk7263.label.funktionsnedsattningar"
+              <div wc-field field-number="4" field-label="fk7263.label.funktionsnedsattning"
                    filled="{{cert.funktionsnedsattning!=null}}"><div id="funktionsnedsattning" class="multiline">{{cert.funktionsnedsattning}}</div>
               </div>
 
-              <div wc-field field-number="4b" field-label="fk7263.label.intyg-baserat-pa" id="field4b"
+              <div wc-field field-number="4b" field-label="fk7263.label.intygbaseratpa" id="field4b"
                    filled="{{cert.undersokningAvPatienten!=null || cert.telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null}}">
                 <ul class="padded-list" id="baseratPaList">
                   <li ng-show="cert.undersokningAvPatienten!=null"><span message

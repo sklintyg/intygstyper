@@ -11,7 +11,7 @@
             <div class="cert-body">
 
               <!-- Patientens uppgifter -->
-              <div wc-field field-label="ts-diabetes.label.patientadress" filled="true">
+              <div wc-field field-label="ts-diabetes.label.patient" filled="true">
                 <span class="cert-answer"><span id="patientpostadress">{{cert.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.grundData.patient.postnummer}}</span> <span id="patientpostort">{{cert.grundData.patient.postort}}</span></span>
               </div>
 
@@ -26,7 +26,7 @@
               </div>
 
               <!-- 1. Allmänt diabetes -->
-              <div wc-field field-label="ts-diabetes.label.allmant" filled="true">
+              <div wc-field field-label="ts-diabetes.label.diabetes" filled="true">
                 <p>
                   <span message key="ts-diabetes.label.diabetes.vilket-ar"></span><br>
                   <span id="observationsperiod"><span class="cert-answer">{{cert.diabetes.observationsperiod}}</span></span>

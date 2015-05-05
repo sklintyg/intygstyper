@@ -31,7 +31,6 @@
 
         <form name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)">
           <div ng-hide="viewState.common.error.activeErrorMessageKey">
-
             <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
                  show-content="viewState.common.doneLoading">
 
@@ -41,7 +40,7 @@
                 <div class="col-md-12 cert-body">
 
                   <a id="anchor.patient" name="anchor.patient"></a>
-                  <div wc-field field-label="ts-bas.label.patientadress" field-has-errors="viewState.common.validationMessagesGrouped.patient" id="patientForm">
+                  <div wc-field field-label="ts-diabetes.label.patient" field-has-errors="viewState.common.validationMessagesGrouped.patient" id="patientForm">
                     <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient" id="validationMessages_patient">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.patient"><span message
