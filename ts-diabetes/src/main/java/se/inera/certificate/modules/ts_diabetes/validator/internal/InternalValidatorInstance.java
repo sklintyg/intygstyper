@@ -257,10 +257,6 @@ public class InternalValidatorInstance {
                 addValidationError("syn.provningUtanAnmarkning", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.provning-utan-anmarkning.missing");
             }
 
-            if (syn.getDiplopi() == null) {
-                addValidationError("syn.diplopi", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.diplopi.missing");
-            }
-
             if (syn.getHoger() == null || syn.getHoger().getUtanKorrektion() == null) {
                 addValidationError("syn.hoger.utanKorrektion", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.hoger.utanKorrektion.missing");
 
@@ -311,6 +307,10 @@ public class InternalValidatorInstance {
                                 "ts-diabetes.validation.syn.binokulart.medkorrektion.out-of-bounds");
                     }
                 }
+            }
+
+            if (syn.getDiplopi() == null) {
+                addValidationError("syn.diplopi", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.diplopi.missing");
             }
         }
     }

@@ -70,7 +70,7 @@ public class InternalValidatorTest {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
-            assertEquals(String.format("Error in test: %s",scenario.getName()), ValidationStatus.INVALID, validationResponse.getStatus());
+            assertEquals(String.format("Error in test: %s", scenario.getName()), ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
 
@@ -80,6 +80,19 @@ public class InternalValidatorTest {
         ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("syn.vanster.medKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
+    }
+
+    @Test
+    public void testInvalidOgonlakarintygSaknasCorrectSortOrder() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-ogonlakarintyg").asInternalModel();
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        assertEquals(5, validationResponse.getValidationErrors().size());
+        int index = 0;
+        assertEquals("syn.provningUtanAnmarkning", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.hoger.utanKorrektion", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.vanster.utanKorrektion", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.binokulart.utanKorrektion", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.diplopi", validationResponse.getValidationErrors().get(index++).getField());
     }
 
     @Test
