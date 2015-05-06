@@ -104,7 +104,7 @@
                       </ul>
                     </div>
                     <div class="form-group clearfix">
-                      <label class="radio checkbox-columns col-md-6" ng-repeat="v in form.identity"><input
+                      <label class="radio checkbox-columns col-md-6" ng-repeat="v in viewState.identitet"><input
                           id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
                           ng-model="cert.vardkontakt.idkontroll">
                         {{v.label}}</label>
@@ -256,14 +256,14 @@
                           </div>
                         </td>
                       </tr>
-                      <tr data-ng-show="form.korkortd">
+                      <tr data-ng-show="viewState.korkortd">
                         <td></td>
                         <td></td>
                         <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och
                           taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
                       </tr>
                       <!-- 2f -->
-                      <tr data-ng-show="form.korkortd">
+                      <tr data-ng-show="viewState.korkortd">
                         <td><input id="hypofy" name="hypof" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
                         <td><input id="hypofn" name="hypof" type="radio" ng-value="false"
@@ -272,7 +272,7 @@
                       </tr>
 
                       <!-- 2g -->
-                      <tr data-ng-show="form.korkortd">
+                      <tr data-ng-show="viewState.korkortd">
                         <td><input id="hypogy" name="hypog" type="radio" ng-value="true"
                                    ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
                         <td><input id="hypogn" name="hypog" type="radio" ng-value="false"
@@ -431,27 +431,27 @@
                             Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>.</p>
 
                           <div class="form-group">
-                            <label class="radio"><input name="behorighet" type="radio" ng-value="true"
-                                                        ng-model="form.behorighet"> Någon av följande
+                            <label class="radio"><input name="behorighet" type="radio" ng-value="'BEDOMNING'"
+                                                        ng-model="viewState.behorighet"> Någon av följande
                               behörigheter</label>
-                            <div class="form-group clearfix indent" data-ng-show="form.behorighet">
+                            <div class="form-group clearfix indent" data-ng-show="viewState.behorighet == 'BEDOMNING'">
                               <label class="checkbox checkbox-columns col-xs-2"
                                      ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input
                                   id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
                                   ng-model="typ.selected"> <span message
                                                                  key="ts-diabetes.label.korkort.{{typ.type}}"></span></label>
                             </div>
-                            <label class="radio"><input name="behorighet" type="radio" ng-value="false"
-                                                        ng-model="form.behorighet"> Kan inte ta ställning</label>
+                            <label class="radio"><input name="behorighet" type="radio" ng-value="'KANINTETASTALLNING'"
+                                                        ng-model="viewState.behorighet"> Kan inte ta ställning</label>
                           </div>
                         </td>
                       </tr>
-                      <tr data-ng-show="form.korkortd">
+                      <tr data-ng-show="viewState.korkortd">
                         <th><span message key="common.yes"></span></th>
                         <th><span message key="common.no"></span></th>
                         <th class="maxwidth"></th>
                       </tr>
-                      <tr data-ng-show="form.korkortd">
+                      <tr data-ng-show="viewState.korkortd">
                         <td><input id="bedomningy" name="bedomning" type="radio" ng-value="true"
                                    ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
                         <td><input id="bedomningn" name="bedomning" type="radio" ng-value="false"
@@ -490,6 +490,10 @@
                       ({{cert.grundData.skapadAv.vardenhet.enhetsid}}),
                       {{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
+                    <div id="hsaInfo" class="alert alert-info" ng-show="viewState.common.hsaInfoMissing">
+                      Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
+                      frågor om HSA att uppdatera informationen.
+                    </div>
 
                     <div class="form-horizontal">
                       <div class="form-group">

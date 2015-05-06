@@ -17,69 +17,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             // Page state
             $scope.user = UserModel;
-            $scope.focusFirstInput = true; // TODO: to common viewstate
-            $scope.tomorrowDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); // TODO: to viewstate
-
-            // Intyg state
-            $scope.tomorrowDate = moment().format('YYYY-MM-DD');
-
-            // form model (extends intyg model where necessary)
-            $scope.form = {
-                'identity': [
-                    {label: 'ID-kort *', id: 'ID_KORT'},
-                    {label: 'Företagskort eller tjänstekort **', id: 'FORETAG_ELLER_TJANSTEKORT'},
-                    {label: 'Svenskt körkort', id: 'KORKORT'},
-                    {label: 'Personlig kännedom', id: 'PERS_KANNEDOM'},
-                    {label: 'Försäkran enligt 18 kap. 4§ ***', id: 'FORSAKRAN_KAP18'},
-                    {label: 'Pass ****', id: 'PASS'}
-                ],
-                'korkorttypselected': false,
-                'behorighet': true
-            };
-
-            $scope.testerror = false;
 
             /******************************************************************************************
              * Private support functions
              ******************************************************************************************/
 
-            function convertCertToForm($scope) {
-
-                // check if all info is available from HSA. If not, display the info message that someone needs to update it
-                if (viewState.intygModel.grundData.skapadAv.vardenhet.postadress === undefined ||
-                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === undefined ||
-                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === undefined ||
-                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === undefined ||
-                    viewState.intygModel.grundData.skapadAv.vardenhet.postadress === '' ||
-                    viewState.intygModel.grundData.skapadAv.vardenhet.postnummer === '' ||
-                    viewState.intygModel.grundData.skapadAv.vardenhet.postort === '' ||
-                    viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer === '') {
-                    viewState.common.hsaInfoMissing = true;
-                } else {
-                    viewState.common.hsaInfoMissing = false;
-                }
-            }
-
-            /**
-             * Convert form data to internal model
-             */
-            function convertFormToCert() {
-
-                // 2g. if entered date is valid, convert it to string so backend validation is happy.
-                // otherwise leave it as an invalid Date so backend sends back a validation error
-                if($scope.certForm && $scope.certForm.allvarligForekomstVakenTidObservationstid){
-                    viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid =
-                        $scope.certForm.allvarligForekomstVakenTidObservationstid.$viewValue;
-                }
-
-                if(!viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion) {
-                    viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
-                    viewState.intygModel.hypoglykemier.allvarligForekomst = undefined;
-                    viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = undefined;
-                }
-            }
-
-            /******************************************************************************************
+           /******************************************************************************************
              * Watches
              ******************************************************************************************/
 
@@ -98,7 +41,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                             }
                         }
                     }
-                    $scope.form.korkortd = visaKorkortd;
+                    $scope.viewState.korkortd = visaKorkortd;
                     if (visaKorkortd) {
                         $scope.cert.restoreFromAttic('hypoglykemier.egenkontrollBlodsocker');
                         $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstVakenTid');
@@ -200,24 +143,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                     }
                 }
             }, true);
-            $scope.$watch('form.behorighet', function(uppfyllerKravForBehorighet, oldVal) {
-                if(uppfyllerKravForBehorighet === oldVal){
-                    return;
-                }
-                //console.log('----- newval : ' + uppfyllerKravForBehorighet + ', oldVal:' + oldVal);
-
-                if ($scope.cert.bedomning) {
-                    $scope.cert.bedomning.kanInteTaStallning = !uppfyllerKravForBehorighet;
-                    if (!uppfyllerKravForBehorighet) {
-                        //console.log('-- update, clear');
-                        $scope.cert.updateToAttic('bedomning.korkortstyp');
-                        $scope.cert.clear('bedomning.korkortstyp');
-                    } else {
-                        //console.log('-- restore');
-                        $scope.cert.restoreFromAttic('bedomning.korkortstyp');
-                    }
-                }
-            });
 
             // ---------------------------------------------------------------------------------------------------------
 
@@ -255,6 +180,38 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 }
                 $scope.specialiteter = result;
             }, true);
+
+            $scope.$watch('viewState.behorighet', function (behorighet) {
+                if (!$scope.cert.bedomning) {
+                    $scope.cert.bedomning = {
+                        korkortstyp: {},
+                        kanInteTaStallning: false
+                    };
+                }
+
+                if (behorighet === 'KANINTETASTALLNING') {
+                    $scope.cert.bedomning.kanInteTaStallning = true;
+                } else if(behorighet === 'BEDOMNING') {
+                    $scope.cert.bedomning.kanInteTaStallning = false;
+                } else if(behorighet === null) {
+                    $scope.cert.bedomning.kanInteTaStallning = null;
+                } else {
+                    $scope.cert.bedomning.kanInteTaStallning = undefined;
+                }
+            });
+
+            $scope.$watch('cert.bedomning.kanInteTaStallning', function (kanInteTaStallning) {
+                if (kanInteTaStallning) {
+                    viewState.behorighet = 'KANINTETASTALLNING';
+                    $scope.cert.updateToAttic('bedomning.korkortstyp');
+                    $scope.cert.clear('bedomning.korkortstyp');
+                } else if(kanInteTaStallning === false) {
+                    $scope.cert.restoreFromAttic('bedomning.korkortstyp');
+                    viewState.behorighet = 'BEDOMNING';
+                } else if (kanInteTaStallning === null) {
+                    viewState.behorighet = 'BEDOMNING';
+                }
+            });
 
             /******************************************************************************************
              * Exposed interaction

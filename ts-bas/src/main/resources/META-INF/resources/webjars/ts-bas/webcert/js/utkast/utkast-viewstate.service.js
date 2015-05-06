@@ -36,7 +36,6 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
 
             this.reset = function() {
                 this.focusFirstInput = true;
-                this.testerror = false;
                 this.korkortd = false;
                 this.identitet = [
                     {label: 'ID-kort *', id: 'ID_KORT'},
@@ -46,7 +45,7 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                     {label: 'Försäkran enligt 18 kap. 4§ ***', id: 'FORSAKRAN_KAP18'},
                     {label: 'Pass ****', id: 'PASS'}
                 ];
-                this.behorighet = 'BEDOMNING';
+                this.behorighet = null;
                 this.kravYtterligareUnderlag = false; // if any field is set to JA this should be true to show info.
 
                 CommonViewState.reset();
