@@ -184,14 +184,14 @@ public class InternalValidatorInstance {
             return;
         }
 
-        if (diabetes.getDiabetestyp() == null) {
-            addValidationError("diabetes.diabetesTyp", ValidationMessageType.EMPTY, "ts-diabetes.validation.diabetes.diabetesTyp.missing");
-        }
-
         if (diabetes.getObservationsperiod() == null) {
             addValidationError("diabetes.observationsperiod", ValidationMessageType.EMPTY, "ts-diabetes.validation.diabetes.observationsperiod.missing");
         } else if (!STRING_VALIDATOR.validateStringIsYear(diabetes.getObservationsperiod())) {
             addValidationError("diabetes.observationsperiod", ValidationMessageType.INVALID_FORMAT, "ts-diabetes.validation.diabetes.observationsperiod.incorrect-format");
+        }
+
+        if (diabetes.getDiabetestyp() == null) {
+            addValidationError("diabetes.diabetesTyp", ValidationMessageType.EMPTY, "ts-diabetes.validation.diabetes.diabetesTyp.missing");
         }
 
         boolean annanBehandling = diabetes.getAnnanBehandlingBeskrivning() != null
