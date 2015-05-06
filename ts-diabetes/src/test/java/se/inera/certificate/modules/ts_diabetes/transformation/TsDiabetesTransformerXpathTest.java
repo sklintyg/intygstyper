@@ -81,25 +81,20 @@ public class TsDiabetesTransformerXpathTest {
     @Test
     public void testMaximaltIntyg() throws IOException, ParserConfigurationException, JAXBException, XPathExpressionException, SAXException,
             TransformerException {
-        File file = new ClassPathResource("scenarios/transport/valid-maximal.xml").getFile();
-        String xmlContent = FileUtils.readFileToString(file);
-        TSDiabetesIntyg utlatande = JAXB.unmarshal(file, RegisterTSDiabetesType.class).getIntyg();
-        String transformed = transformer.transform(xmlContent);
-        performTest(transformed, utlatande);
+        performTest(new ClassPathResource("scenarios/transport/valid-maximal.xml").getFile());
     }
 
     @Test
     public void testMinimaltIntyg() throws IOException, ParserConfigurationException, JAXBException, XPathExpressionException, SAXException,
             TransformerException {
-        File file = new ClassPathResource("scenarios/transport/valid-minimal.xml").getFile();
+        performTest(new ClassPathResource("scenarios/transport/valid-minimal.xml").getFile());
+    }
+
+    private void performTest(File file) throws ParserConfigurationException, JAXBException, SAXException,
+            IOException, TransformerException, XPathExpressionException {
         String xmlContent = FileUtils.readFileToString(file);
         TSDiabetesIntyg utlatande = JAXB.unmarshal(file, RegisterTSDiabetesType.class).getIntyg();
         String transformed = transformer.transform(xmlContent);
-        performTest(transformed, utlatande);
-    }
-
-    private void performTest(String transformed, TSDiabetesIntyg utlatande) throws ParserConfigurationException, JAXBException, SAXException,
-            IOException, TransformerException, XPathExpressionException {
         // Create an xPath evaluator that operates on the transport model.
         XPathEvaluator xPath = createXPathEvaluator(transformed);
 
@@ -175,45 +170,47 @@ public class TsDiabetesTransformerXpathTest {
                 utlatande.getIdentitetStyrkt().getIdkontroll().value())));
 
         // Aktiviteter
-        assertEquals("Egenkontroll av blodsocker", utlatande.getHypoglykemier().isGenomforEgenkontrollBlodsocker(),
+        assertTrue("Egenkontroll av blodsocker",
                 xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "308113006", utlatande.getHypoglykemier()
                         .isGenomforEgenkontrollBlodsocker())));
 
         SynfunktionDiabetes synfunktion = utlatande.getSynfunktion();
         if (synfunktion != null) {
-            assertEquals("Synfältsprövning", synfunktion.isFinnsSynfaltsprovning(),
+            assertTrue("Synfältsprövning",
                     xPath.evaluate(booleanXPath("utlatande/p:aktivitet/p:aktivitetskod/@code='86944008'", synfunktion.isFinnsSynfaltsprovning())));
 
-            assertEquals("Prövning av ögats rörlighet", synfunktion.isFinnsProvningOgatsRorlighet(),
+            assertTrue("Prövning av ögats rörlighet",
                     xPath.evaluate(booleanXPath("utlatande/p:aktivitet/p:aktivitetskod/@code='AKT18'", synfunktion.isFinnsProvningOgatsRorlighet())));
         }
         // Observationer
         // Hypoglykemier
         Hypoglykemier hypoglykemier = utlatande.getHypoglykemier();
 
-        assertEquals("Kunskap om åtgärder", hypoglykemier.isHarKunskapOmAtgarder(),
+        assertTrue("Kunskap om åtgärder", 
                 xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS19", hypoglykemier.isHarKunskapOmAtgarder())));
 
         assertTrue("Hypoglykemi nedsatt hjärnfunktion",
                 xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS20", hypoglykemier.isHarTeckenNedsattHjarnfunktion())));
 
-        assertEquals("Saknar känna förmåga varningstecken", hypoglykemier.isSaknarFormagaKannaVarningstecken(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS21", hypoglykemier.isSaknarFormagaKannaVarningstecken())));
+        if (hypoglykemier.isHarTeckenNedsattHjarnfunktion()) {
+            assertTrue("Saknar känna förmåga varningstecken",
+                    xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS21", hypoglykemier.isSaknarFormagaKannaVarningstecken())));
 
-        assertEquals("Allvarlig hypoglykemi senaste året", hypoglykemier.isHarAllvarligForekomst(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS22", hypoglykemier.isHarAllvarligForekomst())));
-        assertEquals("Allvarlig hypoglykemi senaste året - beskrivning", hypoglykemier.getAllvarligForekomstBeskrivning() == null ? ""
-                : hypoglykemier.getAllvarligForekomstBeskrivning(),
-                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS22")));
+            assertTrue("Allvarlig hypoglykemi senaste året",
+                    xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS22", hypoglykemier.isHarAllvarligForekomst())));
+            assertEquals("Allvarlig hypoglykemi senaste året - beskrivning", hypoglykemier.getAllvarligForekomstBeskrivning() == null ? ""
+                    : hypoglykemier.getAllvarligForekomstBeskrivning(),
+                    xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS22")));
 
-        assertEquals("Allvarlig förekomst i trafiken senaste året", hypoglykemier.isHarAllvarligForekomstTrafiken(),
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS23", hypoglykemier.isHarAllvarligForekomstTrafiken())));
-        assertEquals("Allvarlig förekomst trafiken senaste året - beskrivning", hypoglykemier.getAllvarligForekomstTrafikBeskrivning() == null ? ""
-                : hypoglykemier.getAllvarligForekomstTrafikBeskrivning(),
-                xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS23")));
+            assertTrue("Allvarlig förekomst i trafiken senaste året",
+                    xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS23", hypoglykemier.isHarAllvarligForekomstTrafiken())));
+            assertEquals("Allvarlig förekomst trafiken senaste året - beskrivning", hypoglykemier.getAllvarligForekomstTrafikBeskrivning() == null ? ""
+                    : hypoglykemier.getAllvarligForekomstTrafikBeskrivning(),
+                    xPath.evaluate(stringXPath(OBSERVATION_BESKRIVNING_TEMPLATE, "OBS23")));
+        }
 
         if (hypoglykemier.isHarAllvarligForekomstVakenTid() != null) {
-            assertEquals("Allvarlig förekomst vaken tid senaste året", hypoglykemier.isHarAllvarligForekomstVakenTid(),
+            assertTrue("Allvarlig förekomst vaken tid senaste året",
                     xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS24", hypoglykemier.isHarAllvarligForekomstVakenTid())));
             assertEquals("Allvarlig förekomst vaken tid senaste året - observationstid", hypoglykemier.getAllvarligForekomstVakenTidAr() == null ? ""
                     : hypoglykemier.getAllvarligForekomstVakenTidAr(),
@@ -221,10 +218,10 @@ public class TsDiabetesTransformerXpathTest {
         }
         // Syn
         if (synfunktion != null) {
-            assertEquals("Synfältsprovning utan anmärkning", synfunktion.isSynfaltsprovningUtanAnmarkning(),
+            assertTrue("Synfältsprovning utan anmärkning",
                     xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS25", synfunktion.isSynfaltsprovningUtanAnmarkning())));
 
-            assertEquals("Diplopi", synfunktion.isHarDiplopi(),
+            assertTrue("Diplopi",
                     xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "H53.2", synfunktion.isHarDiplopi())));
 
             SynskarpaUtanKorrektion utanKorr = synfunktion.getSynskarpaUtanKorrektion();
@@ -259,37 +256,39 @@ public class TsDiabetesTransformerXpathTest {
         Diabetes diabetes = utlatande.getDiabetes();
 
         if (diabetes.getDiabetesTyp().get(0).equals("TYP1")) {
-            assertEquals("Diabetes typ1", diabetes.getDiabetesTyp().get(0).equals("TYP1"),
+            assertTrue("Diabetes typ1",
                     xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "E10", diabetes.getDiabetesTyp().get(0).equals("TYP1"))));
         }
         else if (diabetes.getDiabetesTyp().get(0).equals("TYP2")) {
-            assertEquals("Diabetes typ2", diabetes.getDiabetesTyp().get(0).equals("TYP2"),
+            assertTrue("Diabetes typ2",
                     xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "E11", diabetes.getDiabetesTyp().get(0).equals("TYP2"))));
             assertEquals("Diabetes typ2 från år", diabetes.getDebutArDiabetes(),
                     xPath.evaluate(new StringXPathExpression("utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='E11')]")));
         }
 
-        assertEquals(
-                "Diabetes kostbehandling",
-                diabetes.isHarBehandlingKost() != null ? diabetes.isHarBehandlingKost() : false,
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170745003",
-                        diabetes.isHarBehandlingKost() != null ? diabetes.isHarBehandlingKost() : false)));
-
-        assertEquals(
-                "Diabetes insulinbehandling",
-                diabetes.isHarBehandlingInsulin() != null ? diabetes.isHarBehandlingInsulin() : false,
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006",
-                        diabetes.isHarBehandlingInsulin() != null ? diabetes.isHarBehandlingInsulin() : false)));
-        if (diabetes.getInsulinBehandlingSedanAr() != null) {
-            assertEquals("Insulin sedan år", diabetes.getInsulinBehandlingSedanAr(),
-                    xPath.evaluate(new StringXPathExpression("utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='170747006')]")));
+        if (diabetes.isHarBehandlingKost() != null) {
+            assertTrue(
+                    "Diabetes kostbehandling",
+                    xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170745003", diabetes.isHarBehandlingKost())));
         }
 
-        assertEquals(
-                "Diabetes tablettbehandling",
-                diabetes.isHarBehandlingTabletter() != null ? diabetes.isHarBehandlingTabletter() : false,
-                xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_VARDE_TEMPLATE, "170746002",
-                        diabetes.isHarBehandlingTabletter() != null ? diabetes.isHarBehandlingTabletter() : false)));
+        if (diabetes.isHarBehandlingInsulin() != null) {
+            assertTrue(
+                    "Diabetes insulinbehandling",
+                    xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "170747006", diabetes.isHarBehandlingInsulin())));
+
+            if (diabetes.getInsulinBehandlingSedanAr() != null) {
+                assertEquals("Insulin sedan år", diabetes.getInsulinBehandlingSedanAr(),
+                        xPath.evaluate(new StringXPathExpression("utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='170747006')]")));
+            }
+        }
+        
+
+        if (diabetes.isHarBehandlingTabletter() != null) {
+            assertTrue(
+                    "Diabetes tablettbehandling",
+                    xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_VARDE_TEMPLATE, "170746002", diabetes.isHarBehandlingTabletter())));
+        }
 
         if (diabetes.getAnnanBehandlingBeskrivning() != null) {
             assertEquals("Diabetes annan behandling beskrivning", diabetes.getAnnanBehandlingBeskrivning(),
@@ -320,7 +319,7 @@ public class TsDiabetesTransformerXpathTest {
         }
 
         if (utlatande.getBedomning().isLamplighetInnehaBehorighetSpecial() != null) {
-            assertEquals("Rekommendation lämplighet inneha behörighet", utlatande.getBedomning().isLamplighetInnehaBehorighetSpecial(),
+            assertTrue("Rekommendation lämplighet inneha behörighet",
                     xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_BOOL_TEMPLATE, "REK10", utlatande.getBedomning()
                             .isLamplighetInnehaBehorighetSpecial())));
         }

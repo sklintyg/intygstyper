@@ -62,9 +62,9 @@
     <harDiplopi>false</harDiplopi>
     <harNystagmus>false</harNystagmus>
     <synskarpaUtanKorrektion>
-      <hogerOga>0</hogerOga>
-      <vansterOga>0</vansterOga>
-      <binokulart>0</binokulart>
+      <hogerOga>0.0</hogerOga>
+      <vansterOga>0.0</vansterOga>
+      <binokulart>0.0</binokulart>
     </synskarpaUtanKorrektion>
     <synskarpaMedKorrektion>
       <harKontaktlinsHogerOga>false</harKontaktlinsHogerOga>
