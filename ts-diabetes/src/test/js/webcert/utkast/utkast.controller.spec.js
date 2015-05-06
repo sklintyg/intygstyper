@@ -126,52 +126,52 @@ describe('ts-diabetes.UtkastController', function() {
     it('should show extra fields when some "korkortstyp"-options are selected', function() {
         getCheckboxForKorkortstyp('C1').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('C1').selected = false;
 
         getCheckboxForKorkortstyp('C1E').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('C1E').selected = false;
 
         getCheckboxForKorkortstyp('C').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('C').selected = false;
 
         getCheckboxForKorkortstyp('CE').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('CE').selected = false;
 
         getCheckboxForKorkortstyp('D1').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('D1').selected = false;
 
         getCheckboxForKorkortstyp('D1E').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('D1E').selected = false;
 
         getCheckboxForKorkortstyp('D').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('D').selected = false;
 
         getCheckboxForKorkortstyp('DE').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('DE').selected = false;
 
         getCheckboxForKorkortstyp('TAXI').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeTruthy();
+        expect($scope.viewState.korkortd).toBeTruthy();
         getCheckboxForKorkortstyp('TAXI').selected = false;
 
         getCheckboxForKorkortstyp('B').selected = true;
         $scope.$digest();
-        expect($scope.form.korkortd).toBeFalsy();
+        expect($scope.viewState.korkortd).toBeFalsy();
         getCheckboxForKorkortstyp('B').selected = false;
     });
 
@@ -356,7 +356,7 @@ describe('ts-diabetes.UtkastController', function() {
         //$scope.$digest();
 
         //console.log('*** 2 behoriget true');
-        $scope.form.behorighet = true;
+        $scope.viewState.behorighet = 'BEDOMNING';
         $scope.$digest();
         expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
 
@@ -365,7 +365,7 @@ describe('ts-diabetes.UtkastController', function() {
         });
 
         //console.log('*** 3 behoriget false');
-        $scope.form.behorighet = false;
+        $scope.viewState.behorighet = 'KANINTETASTALLNING';
         $scope.$digest();
 
         expect($scope.cert.bedomning.kanInteTaStallning).toBeTruthy();
@@ -375,7 +375,7 @@ describe('ts-diabetes.UtkastController', function() {
 
         //// When reenabled the previously selected values should be remembered
         //console.log('*** 4. behoriget true');
-        $scope.form.behorighet = true;
+        $scope.viewState.behorighet = 'BEDOMNING';
         $scope.$digest();
 
         expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
