@@ -189,12 +189,12 @@ public class InternalValidatorInstance {
         }
 
         if (sjukhusvard.getSjukhusEllerLakarkontakt()) {
-            assertDescriptionNotEmpty(sjukhusvard.getAnledning(), "sjukhusvard.anledning",
-                    "ts-bas.validation.sjukhusvard.anledning.missing");
             assertDescriptionNotEmpty(sjukhusvard.getTidpunkt(), "sjukhusvard.tidpunkt",
                     "ts-bas.validation.sjukhusvard.tidpunkt.missing");
             assertDescriptionNotEmpty(sjukhusvard.getVardinrattning(), "sjukhusvard.vardinrattning",
                     "ts-bas.validation.sjukhusvard.vardinrattning.missing");
+            assertDescriptionNotEmpty(sjukhusvard.getAnledning(), "sjukhusvard.anledning",
+                    "ts-bas.validation.sjukhusvard.anledning.missing");
         }
     }
 

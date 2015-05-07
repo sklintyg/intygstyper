@@ -32,6 +32,7 @@ import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
 
 public class InternalValidatorTest {
@@ -109,6 +110,21 @@ public class InternalValidatorTest {
         assertEquals("identitet", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
     }
+
+    @Test
+    public void testSjukhusvardValidationOrder() throws ScenarioNotFoundException {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-sjukhusvard").asInternalModel();
+        utlatande.getSjukhusvard().setAnledning(null);
+        utlatande.getSjukhusvard().setVardinrattning(null);
+        utlatande.getSjukhusvard().setTidpunkt(null);
+
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        int index = 0;
+        assertEquals("sjukhusvard.tidpunkt", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("sjukhusvard.vardinrattning", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("sjukhusvard.anledning", validationResponse.getValidationErrors().get(index++).getField());
+    }
+
 
     /**
      * Utility method for getting a single element from a collection.
