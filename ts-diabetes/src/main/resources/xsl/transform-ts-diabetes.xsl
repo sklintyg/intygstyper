@@ -173,7 +173,7 @@
               <xsl:value-of select="ns1:hypoglykemier/ns1:allvarligForekomstBeskrivning"/>
             </p:beskrivning>
             <p:forekomst>
-              <xsl:value-of select="ns1:hypoglykemier/ns1:harKunskapOmAtgarder"/>
+              <xsl:value-of select="ns1:hypoglykemier/ns1:harAllvarligForekomst"/>
             </p:forekomst>
           </p:observation>
 

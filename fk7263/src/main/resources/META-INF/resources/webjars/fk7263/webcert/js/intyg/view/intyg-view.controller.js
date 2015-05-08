@@ -47,25 +47,13 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         if ($stateParams.signed) {
                             ViewState.common.activeErrorMessageKey = 'common.error.signed_but_not_ready';
                         } else {
-                            ViewState.common.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
+                            ViewState.common.activeErrorMessageKey = 'common.error.could_not_load_cert';
                         }
                     }
                     $scope.intygBackup.showBackupInfo = false;
                 }, function(error) {
                     ViewState.common.doneLoading = true;
-                    if (error.errorCode === 'DATA_NOT_FOUND') {
-                        ViewState.common.activeErrorMessageKey = 'fk7263.error.data_not_found';
-                    } else if (error.errorCode === 'AUTHORIZATION_PROBLEM') {
-                        ViewState.common.activeErrorMessageKey = 'common.error.authorization_problem';
-                    } else {
-                        if ($stateParams.signed) {
-                            ViewState.common.activeErrorMessageKey = 'common.error.signed_but_not_ready';
-                        } else {
-                            ViewState.common.activeErrorMessageKey = 'fk7263.error.could_not_load_cert';
-                        }
-                    }
-                    $log.debug('Got error while loading cert');
-                    $log.debug(error.message);
+                    ViewState.common.updateActiveError(error, $stateParams.signed);
                     $scope.intygBackup.showBackupInfo = true;
                 });
             }

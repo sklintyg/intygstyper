@@ -190,7 +190,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                 $scope.specialiteter = result;
             }, true);
 
-            $scope.$watch('viewState.behorighet', function (behorighet) {
+            $scope.$watch('cert.bedomning.kanInteTaStallning', function (behorighet) {
                 if (!$scope.cert.bedomning) {
                     $scope.cert.bedomning = {
                         korkortstyp: {},
@@ -198,27 +198,15 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                     };
                 }
 
-                if (behorighet === 'KANINTETASTALLNING') {
-                    $scope.cert.bedomning.kanInteTaStallning = true;
-                } else if(behorighet === 'BEDOMNING') {
-                    $scope.cert.bedomning.kanInteTaStallning = false;
-                } else if(behorighet === null) {
-                    $scope.cert.bedomning.kanInteTaStallning = null;
-                } else {
+                if(behorighet === undefined){
                     $scope.cert.bedomning.kanInteTaStallning = undefined;
-                }
-            });
-
-            $scope.$watch('cert.bedomning.kanInteTaStallning', function (kanInteTaStallning) {
-                if (kanInteTaStallning) {
-                    viewState.behorighet = 'KANINTETASTALLNING';
+                } else if (behorighet) {
+                    $scope.cert.bedomning.kanInteTaStallning = true;
                     $scope.cert.updateToAttic('bedomning.korkortstyp');
                     $scope.cert.clear('bedomning.korkortstyp');
-                } else if(kanInteTaStallning === false) {
+                } else {
                     $scope.cert.restoreFromAttic('bedomning.korkortstyp');
-                    viewState.behorighet = 'BEDOMNING';
-                } else if (kanInteTaStallning === null) {
-                    viewState.behorighet = 'BEDOMNING';
+                    $scope.cert.bedomning.kanInteTaStallning = false;
                 }
             });
 

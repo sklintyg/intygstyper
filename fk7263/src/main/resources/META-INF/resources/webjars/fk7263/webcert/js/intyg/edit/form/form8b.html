@@ -7,7 +7,7 @@
          id="validationMessages_arbetsformaga">
       <ul>
         <li ng-repeat="message in viewState.common.validationMessagesGrouped.nedsattning"><span message
-                                                                                                            key="{{message.message}}"></span>
+                                                                                                key="{{message.message}}"></span>
         </li>
       </ul>
     </div>
@@ -31,11 +31,11 @@
         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="model.nedsattMed25.from"
                             on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25from"
-                            invalid="field8b.nedsattMed25.nedsattInvalidFrom"></span>
+                            invalid="!field8b.nedsattMed25.from.viewValid"></span>
       <span>till</span>
                       <span wc-date-picker-field target-model="model.nedsattMed25.tom"
                             on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"
-                            invalid="field8b.nedsattMed25.nedsattInvalidTom"></span>
+                            invalid="!field8b.nedsattMed25.to.viewValid"></span>
       <div class="indent pad10" ng-if="field8b.nedsattMed25.workState">
         <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
           Arbetstid timmar/vecka: <strong id="arbetstid25">{{model.tjanstgoringstid * 0.75 |
@@ -49,9 +49,10 @@
                                                   ng-change="viewState.limitOtherField('nedsattMed25Beskrivning')"
                                                   wc-disable-key-down>
         <span class="counter">Tecken kvar:  {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}</span>
-        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
-          blanketten.
+        <div class="info-transfer">
+          <span message key="fk7263.label.transfertoovrigt"></span>
         </div>
+
       </div>
     </div>
 
@@ -64,11 +65,11 @@
         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="model.nedsattMed50.from"
                             on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50from"
-                            invalid="field8b.nedsattMed50.nedsattInvalidFrom"></span>
+                            invalid="!field8b.nedsattMed50.from.viewValid"></span>
       <span>till</span>
                       <span wc-date-picker-field target-model="model.nedsattMed50.tom"
                             on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50tom"
-                            invalid="field8b.nedsattMed50.nedsattInvalidTom"></span>
+                            invalid="!field8b.nedsattMed50.to.viewValid"></span>
       <div class="indent pad10" ng-if="field8b.nedsattMed50.workState">
         <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
           Arbetstid timmar/vecka: <strong id="arbetstid50">{{model.tjanstgoringstid * 0.5 |
@@ -81,8 +82,8 @@
                                                   ng-change="viewState.limitOtherField('nedsattMed50Beskrivning')"
                                                   wc-disable-key-down>
         <span class="counter">Tecken kvar:  {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}</span>
-        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
-          blanketten.
+        <div class="info-transfer">
+          <span message key="fk7263.label.transfertoovrigt"></span>
         </div>
       </div>
     </div>
@@ -96,25 +97,25 @@
         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="model.nedsattMed75.from"
                             on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75from"
-                            invalid="field8b.nedsattMed75.nedsattInvalidFrom"></span>
+                            invalid="!field8b.nedsattMed75.from.viewValid"></span>
       <span>till</span>
                       <span wc-date-picker-field target-model="model.nedsattMed75.tom"
                             on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75tom"
-                            invalid="field8b.nedsattMed75.nedsattInvalidTom"></span>
+                            invalid="!field8b.nedsattMed75.to.viewValid"></span>
       <div class="indent pad10" ng-if="field8b.nedsattMed75.workState">
         <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
           Arbetstid timmar/vecka: <strong id="arbetstid75">{{model.tjanstgoringstid * 0.25 |
           number}}</strong>
         </div>
-        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.ovrigt.nedsattMed75Beskrivning"
+        Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.nedsattMed75Beskrivning"
                                                   id="nedsattMed75beskrivning"
                                                   name="capacityForWork.rec75LongerWorkingHours" value=""
                                                   class='form-control otherInformation'
                                                   ng-change="viewState.limitOtherField('nedsattMed75Beskrivning')"
                                                   wc-disable-key-down>
         <span class="counter">Tecken kvar:  {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}</span>
-        <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
-          blanketten.
+        <div class="info-transfer">
+          <span message key="fk7263.label.transfertoovrigt"></span>
         </div>
       </div>
     </div>
@@ -128,22 +129,22 @@
         nedsatt arbetsförmåga från</label>
                       <span wc-date-picker-field target-model="model.nedsattMed100.from"
                             on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100from"
-                            invalid="field8b.nedsattMed100.nedsattInvalidFrom"></span>
+                            invalid="!field8b.nedsattMed100.from.viewValid"></span>
       <span>till</span>
                       <span wc-date-picker-field target-model="model.nedsattMed100.tom"
                             on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100tom"
-                            invalid="field8b.nedsattMed100.nedsattInvalidTom"></span>
+                            invalid="!field8b.nedsattMed100.to.viewValid"></span>
     </div>
 
-    <div ng-show="totalCertDays">
-      <p>Detta intyg motsvarar en period på: <span id="totalCertDays">{{totalCertDays}}</span> <span
-          ng-show="totalCertDays > 1">dagar</span><span ng-show="totalCertDays == 1">dag</span></p>
+    <div ng-show="field8b.info.totalCertDays">
+      <p>Detta intyg motsvarar en period på: <span id="totalCertDays">{{field8b.info.totalCertDays}}</span> <span
+          ng-show="field8b.info.totalCertDays > 1">dagar</span><span ng-show="field8b.info.totalCertDays == 1">dag</span></p>
     </div>
-    <div class="alert alert-warning" ng-show="datesOutOfRange">
+    <div class="alert alert-warning" ng-show="field8b.info.datesOutOfRange">
       De datum du angett är <strong>mer än en vecka före dagens datum eller mer än 6 månader framåt i
       tiden</strong>. Du bör kontrollera att tidsperioderna är korrekta.
     </div>
-    <div class="alert alert-warning" ng-show="datesPeriodTooLong">
+    <div class="alert alert-warning" ng-show="field8b.info.datesPeriodTooLong">
       De datum du angett innebär <strong>en period på mer än 6 månader</strong>. Du bör kontrollera att
       tidsperioderna är korrekta.
     </div>

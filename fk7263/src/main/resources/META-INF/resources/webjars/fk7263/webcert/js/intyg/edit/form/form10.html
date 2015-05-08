@@ -43,8 +43,8 @@
                             ng-change="viewState.limitOtherField('arbetsformagaPrognosGarInteAttBedomaBeskrivning')"> <span
         id="prognosis-counter">Tecken kvar:
                         {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}</span>
-      <div class="info-transfer">Informationen överförs till "Övriga upplysningar" vid PDF-utskrift av
-        blanketten.
+      <div class="info-transfer">
+        <span message key="fk7263.label.transfertoovrigt"></span>
       </div>
     </div>
   </div>

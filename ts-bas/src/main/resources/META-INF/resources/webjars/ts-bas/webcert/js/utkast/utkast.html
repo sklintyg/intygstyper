@@ -42,7 +42,7 @@
 
                   <a id="anchor.patientadress" name="anchor.patientadress"></a>
                   <div wc-field field-label="ts-bas.label.patientadress" field-has-errors="viewState.common.validationMessagesGrouped.patientadress" id="patientForm">
-                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patient" id="validationMessages_patientadress">
+                    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patientadress" id="validationMessages_patientadress">
                       <ul>
                         <li ng-repeat="message in viewState.common.validationMessagesGrouped.patientadress"><span message
                                                                                                             key="{{message.message}}"></span>
@@ -878,19 +878,19 @@
                     <p><span message key="ts-bas.label.bedomning-info-alt-1"></span></p>
 
                     <div class="form-group">
-                      <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="'BEDOMNING'"
-                                                  ng-model="viewState.behorighet">
+                      <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false"
+                                                  ng-model="cert.bedomning.kanInteTaStallning">
                         <span message key="ts-bas.label.nagon-av-foljande-behorigheter"></span></label>
 
-                      <div class="form-group clearfix indent" data-ng-show="viewState.behorighet == 'BEDOMNING'">
+                      <div class="form-group clearfix indent" data-ng-show="!cert.bedomning.kanInteTaStallning">
                         <label class="checkbox checkbox-columns col-xs-2"
                                ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input
                             id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
                             ng-model="typ.selected"> <span message
                                                            key="ts-bas.label.korkort.{{typ.type}}"></span></label>
                       </div>
-                      <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="'KANINTETASTALLNING'"
-                                                  ng-model="viewState.behorighet">
+                      <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
+                                                  ng-model="cert.bedomning.kanInteTaStallning">
                         <span message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></label>
                     </div>
 
