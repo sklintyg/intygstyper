@@ -181,35 +181,12 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 $scope.specialiteter = result;
             }, true);
 
-            $scope.$watch('viewState.behorighet', function (behorighet) {
-                if (!$scope.cert.bedomning) {
-                    $scope.cert.bedomning = {
-                        korkortstyp: {},
-                        kanInteTaStallning: false
-                    };
-                }
-
-                if (behorighet === 'KANINTETASTALLNING') {
-                    $scope.cert.bedomning.kanInteTaStallning = true;
-                } else if(behorighet === 'BEDOMNING') {
-                    $scope.cert.bedomning.kanInteTaStallning = false;
-                } else if(behorighet === null) {
-                    $scope.cert.bedomning.kanInteTaStallning = null;
-                } else {
-                    $scope.cert.bedomning.kanInteTaStallning = undefined;
-                }
-            });
-
             $scope.$watch('cert.bedomning.kanInteTaStallning', function (kanInteTaStallning) {
                 if (kanInteTaStallning) {
-                    viewState.behorighet = 'KANINTETASTALLNING';
                     $scope.cert.updateToAttic('bedomning.korkortstyp');
                     $scope.cert.clear('bedomning.korkortstyp');
-                } else if(kanInteTaStallning === false) {
+                } else {
                     $scope.cert.restoreFromAttic('bedomning.korkortstyp');
-                    viewState.behorighet = 'BEDOMNING';
-                } else if (kanInteTaStallning === null) {
-                    viewState.behorighet = 'BEDOMNING';
                 }
             });
 

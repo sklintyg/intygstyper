@@ -431,18 +431,18 @@
                             Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>.</p>
 
                           <div class="form-group">
-                            <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="'BEDOMNING'"
-                                                        ng-model="viewState.behorighet"> Någon av följande
+                            <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false"
+                                                        ng-model="cert.bedomning.kanInteTaStallning"> Någon av följande
                               behörigheter</label>
-                            <div class="form-group clearfix indent" data-ng-show="viewState.behorighet == 'BEDOMNING'">
+                            <div class="form-group clearfix indent" data-ng-show="!cert.bedomning.kanInteTaStallning">
                               <label class="checkbox checkbox-columns col-xs-2"
                                      ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input
                                   id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
                                   ng-model="typ.selected"> <span message
                                                                  key="ts-diabetes.label.korkort.{{typ.type}}"></span></label>
                             </div>
-                            <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="'KANINTETASTALLNING'"
-                                                        ng-model="viewState.behorighet"> Kan inte ta ställning</label>
+                            <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
+                                                        ng-model="cert.bedomning.kanInteTaStallning"> Kan inte ta ställning</label>
                           </div>
                         </td>
                       </tr>
