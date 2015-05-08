@@ -54,6 +54,14 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                 this.setDraftModel(IntygModel._members.build());
             };
 
+            this.setBehorighet = function(model){
+                if (model.bedomning && model.bedomning.kanInteTaStallning) {
+                    this.behorighet = 'KANINTETASTALLNING';
+                } else {
+                    this.behorighet = 'BEDOMNING';
+                }
+            }
+
             // This is not so pretty, but necessary? Can it be improved?
             this.updateKravYtterligareUnderlag = function() {
                 

@@ -10,6 +10,7 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
         var TsBasModel = BaseAtticModel._extend({
             init: function init() {
                 var grundData = GrundData.build();
+                var self = this;
                 init._super.call(this, 'TsBasModel', {
                     id: undefined,
                     typ: undefined, // NOT intygtyp, this is TS-intyg type.
@@ -134,7 +135,7 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                             {'type': 'TAXI', 'selected': false},
                             {'type': 'ANNAT', 'selected': false}
                         ]}),
-                        'kanInteTaStallning': undefined,
+                        'kanInteTaStallning': false,
                         'lakareSpecialKompetens': undefined
                     }
                 });
