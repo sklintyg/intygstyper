@@ -356,7 +356,7 @@ describe('ts-diabetes.UtkastController', function() {
         //$scope.$digest();
 
         //console.log('*** 2 behoriget true');
-        $scope.viewState.behorighet = 'BEDOMNING';
+        $scope.cert.bedomning.kanInteTaStallning = false;
         $scope.$digest();
         expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
 
@@ -365,7 +365,7 @@ describe('ts-diabetes.UtkastController', function() {
         });
 
         //console.log('*** 3 behoriget false');
-        $scope.viewState.behorighet = 'KANINTETASTALLNING';
+        $scope.cert.bedomning.kanInteTaStallning = true;
         $scope.$digest();
 
         expect($scope.cert.bedomning.kanInteTaStallning).toBeTruthy();
@@ -375,7 +375,7 @@ describe('ts-diabetes.UtkastController', function() {
 
         //// When reenabled the previously selected values should be remembered
         //console.log('*** 4. behoriget true');
-        $scope.viewState.behorighet = 'BEDOMNING';
+        $scope.cert.bedomning.kanInteTaStallning = false;
         $scope.$digest();
 
         expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
