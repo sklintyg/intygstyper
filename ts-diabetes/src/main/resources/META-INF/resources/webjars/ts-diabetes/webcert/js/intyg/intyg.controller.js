@@ -66,14 +66,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                     }
                 }, function(error) {
                     ViewState.common.doneLoading = true;
-                    $log.debug('got error' + error.message);
-                    if (error.errorCode === 'DATA_NOT_FOUND') {
-                        ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
-                    } else if (error.errorCode === 'AUTHORIZATION_PROBLEM') {
-                        ViewState.common.activeErrorMessageKey = 'common.error.authorization_problem';
-                    } else {
-                        ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
-                    }
+                    ViewState.common.updateActiveError(error, $stateParams.signed);
                 });
             }
 
