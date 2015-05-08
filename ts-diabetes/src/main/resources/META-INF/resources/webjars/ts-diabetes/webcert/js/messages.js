@@ -133,12 +133,12 @@ var tsDiabetesMessages = {
         'ts-diabetes.validation.identitet.missing': 'Ett alternativ måste anges.',
 
         'ts-diabetes.validation.diabetes.observationsperiod.missing': 'År då diabetesdiagnos ställdes måste anges.',
-        'ts-diabetes.validation.diabetes.observationsperiod.incorrect-format': 'År måste anges på formatet ÅÅÅÅ, och får inte vara senare än innevarande år.',
+        'ts-diabetes.validation.diabetes.observationsperiod.incorrect-format': 'År måste anges på formatet ÅÅÅÅ. Det får inte vara senare än innevarande år, och måste vara senare än 1899.',
         'ts-diabetes.validation.diabetes.missing': 'Diabetes saknas',
         'ts-diabetes.validation.diabetes.diabetestyp.missing': 'Diabetestyp måste anges.',
         'ts-diabetes.validation.diabetes.behandling.missing': 'Minst en behandling måste väljas.',
         'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing' : 'År då behandling med insulin påbörjades måste anges.',
-        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.incorrect-format' : 'År måste anges på formatet ÅÅÅÅ, och får inte vara senare än innevarande år.',
+        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.incorrect-format' : 'År måste anges på formatet ÅÅÅÅ. Det får inte vara senare än innevarande år, och måste vara senare än 1899.',
 
         'ts-diabetes.validation.hypoglykemier.missing': 'Hypoglykemier saknas',
         'ts-diabetes.validation.hypoglykemier.kunskap-om-atgarder.missing': 'a)	Ett alternativ måste anges.',
