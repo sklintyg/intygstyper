@@ -219,7 +219,13 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             };
 
             $scope.sign = function() {
-                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version);
+                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version).then(
+                    function(result) {
+                        if (result.newVersion) {
+                            viewState.draftModel.version = result.newVersion;
+                        }
+                    }
+                );
             };
 
             $scope.scrollTo = function(message) {

@@ -80,7 +80,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Action to sign the certificate draft and return to Webcert again.
              */
             $scope.sign = function() {
-                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version);
+                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version).then(
+                    function(result) {
+                        if (result.newVersion) {
+                            viewState.draftModel.version = result.newVersion;
+                        }
+                    }
+                );
             };
 
             $scope.scrollTo = function(message) {
