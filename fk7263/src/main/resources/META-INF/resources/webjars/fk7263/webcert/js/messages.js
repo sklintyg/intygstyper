@@ -166,6 +166,7 @@ var fk7263Messages = {
         'fk7263.validation.nedsattning.nedsattmed25.incorrect-format' : 'Datum för nedsatt med 25% har angetts med felaktigt format (Fält 8b)',
 
         'fk7263.validation.nedsattning.overlapping-date-interval': 'Två datuminterval med överlappande datum har angetts. (Fält 8b)',
+
         'fk7263.validation.nedsattning.prognos.choose-one': 'Max ett alternativ kan väljas (Fält 10)',
 
         'fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing': 'Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under \'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete\' måste fyllas i. (Fält 10)',

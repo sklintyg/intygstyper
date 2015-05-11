@@ -323,7 +323,7 @@ public class InternalDraftValidator {
     protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
             addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
-                    "fk7263.validation.arbetsformaga.choose-at-least-one");
+                    "fk7263.validation.nedsattning.choose-at-least-one");
             return false;
         }
 
@@ -332,7 +332,7 @@ public class InternalDraftValidator {
                 Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
                 if (oneInterval == null) {
                     addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                            "fk7263.validation.arbetsformaga.incorrect-date-interval");
+                            "fk7263.validation.nedsattning.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
@@ -340,14 +340,14 @@ public class InternalDraftValidator {
                         Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
                         if (anotherInterval == null) {
                             addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "fk7263.validation.arbetsformaga.incorrect-date-interval");
+                                    "fk7263.validation.nedsattning.incorrect-date-interval");
                             return false;
                         }
                         // Overlap OR abuts(one intervals tom day== another's
                         // from day) is considered invalid
                         if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
                             addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "fk7263.validation.arbetsformaga.overlapping-date-interval");
+                                    "fk7263.validation.nedsattning.overlapping-date-interval");
                             return false;
                         }
                     }
