@@ -48,7 +48,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 cert : { kommentar : ''}
             };
 
-
             /****************************************************************************
              * Exposed interaction functions to view
              ****************************************************************************/
