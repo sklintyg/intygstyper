@@ -75,7 +75,16 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                                 'prognosBedomning'],
 
                         form11:['ressattTillArbeteAktuellt',
-                                'ressattTillArbeteEjAktuellt'],
+                                'ressattTillArbeteEjAktuellt', new ModelAttr('ressattTillArbete', {
+                                linkedProperty:{
+                                    props:['ressattTillArbeteAktuellt','ressattTillArbeteEjAktuellt'],
+                                    update: function(model, props){
+                                        console.log(JSON.stringify(props));
+                                    },
+                                    set: function(value){
+
+                                    }
+                                }})],
 
                         form12:['kontaktMedFk'],
 

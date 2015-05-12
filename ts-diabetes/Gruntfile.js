@@ -79,6 +79,12 @@ module.exports = function(grunt) {
             webcert: {
                 configFile: 'src/test/resources/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
+            },
+            webcert_continous: {
+                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                reporters: [ 'mocha' ],
+                autoWatch: true,
+                singleRun: false
             }
         },
 
@@ -120,4 +126,5 @@ module.exports = function(grunt) {
     grunt.registerTask('test-minaintyg', [ 'karma:minaintyg' ]);
     grunt.registerTask('test-webcert', [ 'karma:webcert' ]);
     grunt.registerTask('test', [ 'karma' ]);
+    grunt.registerTask('testwc', [ 'karma:webcert_continous' ]);
 };
