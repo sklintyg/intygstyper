@@ -64,7 +64,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/web/webjars/ts-bas/minaintyg/js/module";
         case WEBCERT:
-            return "/web/webjars/ts-bas/webcert/js/module";
+            return "/web/webjars/ts-bas/webcert/module";
         default:
             return null;
         }
@@ -76,7 +76,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/web/webjars/ts-bas/minaintyg/js/module-deps.json";
         case WEBCERT:
-            return "/web/webjars/ts-bas/webcert/js/module-deps.json";
+            return "/web/webjars/ts-bas/webcert/module-deps.json";
         default:
             return null;
         }

@@ -2,7 +2,7 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/js/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/views/';
     var TEST_DIR = 'src/test/js/webcert/';
     var WEBJAR_DIR = '../target/webjardependencies/';
 

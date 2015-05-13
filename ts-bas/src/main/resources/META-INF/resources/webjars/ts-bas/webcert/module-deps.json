@@ -1,0 +1,10 @@
+[
+    "/web/webjars/ts-bas/webcert/templates.js",
+    "/web/webjars/ts-bas/webcert/views/router.js",
+    "/web/webjars/ts-bas/webcert/views/messages.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/utkast.model.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/utkast.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/utkast-viewstate.service.js",
+    "/web/webjars/ts-bas/webcert/views/intyg/intyg.controller.js",
+    "/web/webjars/ts-bas/webcert/views/intyg/intyg-viewstate.service.js"
+]

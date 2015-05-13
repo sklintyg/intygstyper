@@ -8,7 +8,7 @@ angular.module('ts-bas').config(function($stateProvider) {
             url : '/ts-bas/edit/:certificateId',
             views : {
                 '': {
-                    templateUrl: '/web/webjars/ts-bas/webcert/js/utkast/utkast.html',
+                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/utkast.html',
                     controller: 'ts-bas.UtkastController' },
 
                 'header@ts-bas-edit': {
