@@ -53,7 +53,38 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                         form6b:['atgardInomSjukvarden',
                                 'annanAtgard'],
 
-                        form7: ['rehabilitering'],
+                        form7: ['rehabilitering',
+                                new ModelAttr('rehab', {
+                                    trans : true, // we don't want this going back to the server!!
+                                    linkedProperty:{
+                                        props:['rehabilitering'],
+                                        update:function(model, props){
+                                            if(props.rehabilitering === 'rehabiliteringAktuell'){
+                                                return 'JA';
+                                            } else if(props.rehabilitering === 'rehabiliteringEjAktuell'){
+                                                return 'NEJ';
+                                            } else if(props.rehabilitering === 'rehabiliteringGarInteAttBedoma'){
+                                                return 'GAREJ';
+                                            } else {
+                                                return '';
+                                            }
+                                        },
+                                        set : function(value){ // this is the model
+                                            switch (value) {
+                                            case 'JA':
+                                                this.rehabilitering = 'rehabiliteringAktuell';
+                                                break;
+                                            case 'NEJ':
+                                                this.rehabilitering = 'rehabiliteringEjAktuell';
+                                                break;
+                                            case 'GAREJ':
+                                                this.rehabilitering = 'rehabiliteringGarInteAttBedoma';
+                                                break;
+                                            default :
+                                                this.rehabilitering = undefined;
+                                            }
+                                        }
+                                    }})],
 
                         form8a:['arbetsloshet',
                                 'foraldrarledighet',
@@ -76,13 +107,21 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
 
                         form11:['ressattTillArbeteAktuellt',
                                 'ressattTillArbeteEjAktuellt', new ModelAttr('ressattTillArbete', {
+                                trans : true, // we don't want this going back to the server!!
                                 linkedProperty:{
                                     props:['ressattTillArbeteAktuellt','ressattTillArbeteEjAktuellt'],
-                                    update: function(model, props){
-                                        console.log(JSON.stringify(props));
+                                    update:function(model, props){
+                                        if(props.ressattTillArbeteAktuellt){
+                                            return 'JA';
+                                        } else if(props.ressattTillArbeteEjAktuellt){
+                                            return 'NEJ';
+                                        } else {
+                                            return '';
+                                        }
                                     },
-                                    set: function(value){
-
+                                    set : function(value){
+                                        this.ressattTillArbeteAktuellt = value === 'JA';
+                                        this.ressattTillArbeteEjAktuellt = value === 'NEJ';
                                     }
                                 }})],
 
