@@ -21,9 +21,7 @@ package se.inera.certificate.modules.fk7263.integration;
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.INFO;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
@@ -157,6 +155,38 @@ public class GetCertificateResponderImplTest {
         assertNull(response.getCertificate());
         assertEquals(INFO, response.getResult().getResultCode());
         assertEquals("Certificate '123456' has been revoked", response.getResult().getInfoText());
+    }
+
+    @Test
+    public void getCertificateWithNullCertificateId() {
+        GetCertificateRequestType request = createGetCertificateRequest("", null);
+        GetCertificateResponseType response = responder.getCertificate(null, request);
+        assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
+        verifyZeroInteractions(moduleRestApi);
+    }
+
+    @Test
+    public void getCertificateWithBlankCertificateId() {
+        GetCertificateRequestType request = createGetCertificateRequest("", "");
+        GetCertificateResponseType response = responder.getCertificate(null, request);
+        assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
+        verifyZeroInteractions(moduleRestApi);
+    }
+
+    @Test
+    public void getCertificateWithNullIdentityNumber() {
+        GetCertificateRequestType request = createGetCertificateRequest(null, certificateId);
+        GetCertificateResponseType response = responder.getCertificate(null, request);
+        assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
+        verifyZeroInteractions(moduleRestApi);
+    }
+
+    @Test
+    public void getCertificateWithBlankIdentityNumber() {
+        GetCertificateRequestType request = createGetCertificateRequest("", certificateId);
+        GetCertificateResponseType response = responder.getCertificate(null, request);
+        assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
+        verifyZeroInteractions(moduleRestApi);
     }
 
     private GetCertificateRequestType createGetCertificateRequest(String civicRegistrationNumber, String certificateId) {
