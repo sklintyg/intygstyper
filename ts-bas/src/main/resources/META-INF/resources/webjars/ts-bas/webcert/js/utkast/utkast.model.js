@@ -57,7 +57,7 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                             'utanKorrektion': undefined,
                             'medKorrektion': undefined
                         },
-                        'korrektionsglasensStyrka': undefined
+                        'korrektionsglasensStyrka': false
                     },
                     horselBalans: {
                         'balansrubbningar': undefined,
