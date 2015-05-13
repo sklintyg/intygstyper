@@ -97,6 +97,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
             response.setLakarutlatande(jaxbObject.getLakarutlatande());
 
         } catch (Exception e) {
+            LOGGER.error("Error while converting in getMedicalCertificate for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
             Throwables.propagate(e);
         }
     }
