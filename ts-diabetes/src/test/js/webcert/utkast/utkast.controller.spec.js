@@ -4,7 +4,7 @@ describe('ts-diabetes.UtkastController', function() {
     var ManageCertView;
     var UserModel;
     var wcFocus;
-    var intygNotifyService;
+    var utkastNotifyService;
     var ModelAttr;
     var IntygModel;
     var viewState;
@@ -17,7 +17,7 @@ describe('ts-diabetes.UtkastController', function() {
         $provide.value('common.ManageCertView', ManageCertView);
         $provide.value('common.UserModel', UserModel);
         $provide.value('common.wcFocus', wcFocus);
-        $provide.value('common.intygNotifyService', intygNotifyService);
+        $provide.value('common.utkastNotifyService', utkastNotifyService);
         $provide.value('common.UtkastViewStateService',{intyg:{}, reset: function() {}});
         $provide.value('common.DateUtilsService', {});
         $provide.value('common.anchorScrollService', anchorScrollService);

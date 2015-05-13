@@ -1,9 +1,9 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
-        'common.intygNotifyService', 'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
+        'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
         'common.anchorScrollService',
         function($location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
-                 intygNotifyService, IntygModel, viewState, dateUtils, anchorScrollService) {
+            IntygModel, viewState, dateUtils, anchorScrollService) {
             'use strict';
 
             /**********************************************************************************
@@ -201,21 +201,31 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              */
             $scope.openMailDialog = function() {
 
+                ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
+                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
+
+                //ManageCertView.utkastNotify(viewState);
+/*
                 var utkastNotifyRequest = {
                     intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
                     vidarebefordrad: viewState.draftModel.vidarebefordrad
+                    inProgress: viewState.common.vidarebefordraInProgress
                 };
-                intygNotifyService.forwardIntyg(utkastNotifyRequest);
+                utkastNotifyService.forwardIntyg(utkastNotifyRequest);*/
             };
 
             $scope.onVidarebefordradChange = function() {
-                var utkastNotifyRequest = {
+
+                ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
+                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
+
+/*                var utkastNotifyRequest = {
                     intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
                     vidarebefordrad: viewState.draftModel.vidarebefordrad
                 };
-                intygNotifyService.onForwardedChange(utkastNotifyRequest);
+                utkastNotifyService.onForwardedChange(utkastNotifyRequest);*/
             };
 
             $scope.sign = function() {

@@ -4,7 +4,7 @@ describe('ts-bas.UtkastController', function() {
     var ManageCertView;
     var User;
     var wcFocus;
-    var intygNotifyService;
+    var utkastNotifyService;
     var viewState;
     var anchorScrollService;
 
@@ -16,7 +16,7 @@ describe('ts-bas.UtkastController', function() {
         $provide.value('common.ManageCertView', ManageCertView);
         $provide.value('common.UserModel', User);
         $provide.value('common.wcFocus', wcFocus);
-        $provide.value('common.intygNotifyService', intygNotifyService);
+        $provide.value('common.utkastNotifyService', utkastNotifyService);
         $provide.value('common.anchorScrollService', anchorScrollService);
     }));
 

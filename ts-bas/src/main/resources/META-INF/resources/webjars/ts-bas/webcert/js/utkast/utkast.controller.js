@@ -1,10 +1,10 @@
 angular.module('ts-bas').controller('ts-bas.UtkastController',
     [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
         'common.ManageCertView', 'common.UserModel',
-        'common.intygNotifyService', 'ts-bas.Domain.IntygModel',
+        'common.utkastNotifyService', 'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService', 'common.anchorScrollService',
         function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
-            ManageCertView, UserModel, intygNotifyService, IntygModel, viewState, anchorScrollService) {
+            ManageCertView, UserModel, utkastNotifyService, IntygModel, viewState, anchorScrollService) {
             'use strict';
 
             /**********************************************************************************
@@ -220,23 +220,13 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              * @param cert
              */
             $scope.openMailDialog = function() {
-
-                var certMeta = {
-                    intygId: viewState.intygModel.id,
-                    intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
-                };
-
-                intygNotifyService.forwardIntyg(certMeta);
+                ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
+                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
             };
 
             $scope.onVidarebefordradChange = function() {
-                var certMeta = {
-                    intygId: viewState.intygModel.id,
-                    intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
-                };
-                intygNotifyService.onForwardedChange(certMeta);
+                ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
+                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
             };
 
             $scope.sign = function() {

@@ -29,7 +29,7 @@ describe('EditCertCtrl', function() {
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
         $provide.value('common.wcFocus', {});
-        $provide.value('common.intygNotifyService', {});
+        $provide.value('common.utkastNotifyService', {});
         $provide.value('common.diagnosService', {});
         $provide.value('common.DateUtilsService', {});
         $provide.value('common.UtilsService', {});
