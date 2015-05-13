@@ -5,7 +5,7 @@ module.exports = {
     tsdiabetes: {
         cwd: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert',
         src: ['**/*.html'],
-        dest: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/js/templates.js',
+        dest: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/templates.js',
         options:{
             module: 'ts-diabetes',
             url: function(url) {
