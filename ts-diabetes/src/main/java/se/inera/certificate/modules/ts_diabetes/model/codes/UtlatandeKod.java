@@ -18,13 +18,15 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
+import se.inera.certificate.modules.ts_diabetes.support.TsDiabetesEntryPoint;
+
 
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
  */
 public enum UtlatandeKod  {
 
-    TS_DIABETES_U06_V02("ts-diabetes", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    TS_DIABETES_U06_V02("06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
     private static final String CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
 
@@ -32,7 +34,7 @@ public enum UtlatandeKod  {
 
     private static final String CODE_SYSTEM_VERSION = null;
 
-    private final String code;
+    private static final String code = TsDiabetesEntryPoint.MODULE_ID;
 
     private final String tsUtgava;
 
@@ -43,8 +45,7 @@ public enum UtlatandeKod  {
     private final String EXTERNAL_NAME = "TSTRK1031";
 
 
-    private UtlatandeKod(String code, String tsUtgava, String tsVersion, String desc) {
-        this.code = code;
+    private UtlatandeKod(String tsUtgava, String tsVersion, String desc) {
         this.tsUtgava = tsUtgava;
         this.tsVersion = tsVersion;
         this.description = desc;

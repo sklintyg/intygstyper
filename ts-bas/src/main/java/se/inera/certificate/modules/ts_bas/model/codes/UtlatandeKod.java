@@ -18,29 +18,31 @@
  */
 package se.inera.certificate.modules.ts_bas.model.codes;
 
+import se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint;
+
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
  */
 public enum UtlatandeKod {
 
-    TS_BAS_U07_V06("ts-bas", "07", "06",
+    TS_BAS_U07_V06("07", "06",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
-    TS_BAS_U06_V06("ts-bas", "06", "06",
+    TS_BAS_U06_V06("06", "06",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
 
     // NOTE: USED FOR TESTING ONLY
     // Yes it's ugly but we really wants to test that the utgava and version handling is working as expected and its
     // extremely hard to mock an enum for a test.
-    TS_BAS_OLD_KOD("ts-bas", "old-utgava", "old-version",
+    TS_BAS_OLD_KOD("old-utgava", "old-version",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen");
 
-    private static String codeSystemName = "kv_utlåtandetyp_intyg";
+    private static final String codeSystemName = "kv_utlåtandetyp_intyg";
 
-    private static String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    private static final String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
-    private static String codeSystemVersion = null;
+    private static final String codeSystemVersion = null;
 
-    private final String code;
+    private static final String code = TsBasEntryPoint.MODULE_ID;
 
     private final String tsUtgava;
 
@@ -50,8 +52,7 @@ public enum UtlatandeKod {
 
     private final String EXTERNAL_NAME = "TSTRK1007";
 
-    private UtlatandeKod(String code, String tsUtgava, String tsVersion, String desc) {
-        this.code = code;
+    private UtlatandeKod(String tsUtgava, String tsVersion, String desc) {
         this.tsUtgava = tsUtgava;
         this.tsVersion = tsVersion;
         this.description = desc;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import se.inera.certificate.common.enumerations.Recipients;
 import se.inera.certificate.common.util.StringUtil;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.InternalLocalDateInterval;
@@ -232,7 +233,7 @@ public class PdfGenerator {
     private boolean isCertificateSentToFK(List<Status> statuses) {
         if (statuses != null) {
             for (Status status : statuses) {
-                if (status.getTarget().equals("FK") && status.getType() == CertificateState.SENT) {
+                if (status.getTarget().equals(Recipients.FK.toString()) && status.getType() == CertificateState.SENT) {
                     return true;
                 }
             }
