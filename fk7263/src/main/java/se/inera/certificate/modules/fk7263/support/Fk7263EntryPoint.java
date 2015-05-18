@@ -70,7 +70,7 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/web/webjars/fk7263/minaintyg/js/module";
         case WEBCERT:
-            return "/web/webjars/fk7263/webcert/js/module";
+            return "/web/webjars/fk7263/webcert/module";
         default:
             return null;
         }
@@ -82,7 +82,7 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/web/webjars/fk7263/minaintyg/js/module-deps.json";
         case WEBCERT:
-            return "/web/webjars/fk7263/webcert/js/module-deps.json";
+            return "/web/webjars/fk7263/webcert/module-deps.json";
         default:
             return null;
         }

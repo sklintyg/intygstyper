@@ -15,7 +15,7 @@ angular.module('fk7263').directive('qaPanel',
                 restrict: 'A',
                 transclude: true,
                 replace: true,
-                templateUrl: '/web/webjars/fk7263/webcert/js/directives/qaPanel.html',
+                templateUrl: '/web/webjars/fk7263/webcert/views/intyg/fragasvar/fragasvarPanel.directive.html',
                 scope: {
                     panelId: '@',
                     qa: '=',

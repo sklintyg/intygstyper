@@ -24,10 +24,10 @@ module.exports = function(grunt) {
     });
     minaintyg = [SRC_DIR + 'webjars/fk7263/minaintyg/js/module.js'].concat(minaintyg);
 
-    var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/fk7263/webcert/js/module-deps.json').map(function(file) {
+    var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/fk7263/webcert/module-deps.json').map(function(file) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
-    webcert = [SRC_DIR + 'webjars/fk7263/webcert/js/module.js'].concat(webcert);
+    webcert = [SRC_DIR + 'webjars/fk7263/webcert/module.js'].concat(webcert);
 
 
     grunt.initConfig({
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
             },
             webcert: {
                 src: webcert,
-                dest: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js'
+                dest: DEST_DIR + 'webjars/fk7263/webcert/module.min.js'
             }
         },
 
@@ -89,8 +89,8 @@ module.exports = function(grunt) {
                 dest: DEST_DIR + 'webjars/fk7263/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js',
-                dest: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js'
+                src: DEST_DIR + 'webjars/fk7263/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/fk7263/webcert/module.min.js'
             }
         },
 
@@ -103,8 +103,8 @@ module.exports = function(grunt) {
                 dest: DEST_DIR + 'webjars/fk7263/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js',
-                dest: DEST_DIR + 'webjars/fk7263/webcert/js/module.min.js'
+                src: DEST_DIR + 'webjars/fk7263/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/fk7263/webcert/module.min.js'
             }
         },
 
