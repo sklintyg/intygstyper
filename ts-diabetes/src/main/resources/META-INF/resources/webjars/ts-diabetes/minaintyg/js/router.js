@@ -13,7 +13,8 @@ angular.module('ts-diabetes').config(function($stateProvider) {
         state('ts-diabetes-recipients', {
             url :'/ts-diabetes/recipients',
             templateUrl: '/web/webjars/ts-diabetes/minaintyg/views/recipients.html',
-            controller: 'common.SendCertWizardCtrl'
+            controller: 'common.SendCertWizardCtrl',
+            data: { title: 'Skicka intyg till mottagare' }
         }).
         state('ts-diabetes-summary', {
             url : '/ts-diabetes/summary',

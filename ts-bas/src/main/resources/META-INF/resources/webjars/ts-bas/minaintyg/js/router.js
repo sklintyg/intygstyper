@@ -13,7 +13,8 @@ angular.module('ts-bas').config(function($stateProvider) {
         state('ts-bas-recipients', {
             url : '/ts-bas/recipients',
             templateUrl: '/web/webjars/ts-bas/minaintyg/views/recipients.html',
-            controller: 'common.SendCertWizardCtrl'
+            controller: 'common.SendCertWizardCtrl',
+            data: { title: 'Skicka intyg till mottagare' }
         }).
         state('ts-bas-summary', {
             url :'/ts-bas/summary',
