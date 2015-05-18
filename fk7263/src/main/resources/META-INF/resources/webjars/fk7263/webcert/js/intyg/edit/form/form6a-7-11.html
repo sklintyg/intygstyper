@@ -19,10 +19,10 @@
     <div class="form-group form-inline" id="rekommendationRessattRadioGroup">
       <label class="radio-inline">
         <input type="radio" id="rekommendationRessatt" name="recommendationsToFkTravel" value="JA"
-               ng-model="radioGroups.ressattTillArbete" ng-change="onTravelChange()"> Ja</label>
+               ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('JA')"> Ja</label>
       <label class="radio-inline">
         <input type="radio" id="rekommendationRessattEj" name="recommendationsToFkTravel" value="NEJ"
-               ng-model="radioGroups.ressattTillArbete" ng-change="onTravelChange()"> Nej</label>
+               ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('NEJ')"> Nej</label>
     </div>
 
     <!-- 6a, 7 -->
@@ -67,20 +67,20 @@
       <div class="form-group">
         <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion"
                                            value="JA"
-                                           ng-model="radioGroups.rehab" id="rehabYes" ng-change="onRehabChange()"> Ja</label>
+                                           ng-model="model.rehab" id="rehabYes" ng-change="model.setrehab('JA')"> Ja</label>
       </div>
 
       <!-- NO -->
       <div class="form-group">
         <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
-                                           value="NEJ" ng-model="radioGroups.rehab" id="rehabNo" ng-change="onRehabChange()">
+                                           value="NEJ" ng-model="model.rehab" id="rehabNo" ng-change="model.setrehab('NEJ')">
           Nej</label>
       </div>
 
       <!-- GÅR EJ ATT BEDÖMA -->
       <div class="form-group">
         <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
-                                           value="GAREJ" ng-model="radioGroups.rehab" id="garej" ng-change="onRehabChange()"> Går inte
+                                           value="GAREJ" ng-model="model.rehab" id="garej" ng-change="model.setrehab('GAREJ')"> Går inte
           att bedöma</label>
       </div>
     </span>

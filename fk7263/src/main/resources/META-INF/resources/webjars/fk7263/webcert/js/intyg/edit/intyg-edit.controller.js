@@ -11,6 +11,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**********************************************************************************
              * Default state
              **********************************************************************************/
+
             // create a new intyg model and reset all viewStates
             viewState.reset();
             $scope.viewState = viewState;
