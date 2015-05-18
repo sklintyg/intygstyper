@@ -14,8 +14,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
                 if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        $scope.radioGroups.ressattTillArbete = travelStates.NULL;
-                        $scope.radioGroups.rehab = rehabStates.NULL;
                         model.atticUpdateForm6a711();
                         model.clearForm6a711();
                     } else {
@@ -28,9 +26,20 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
             // once we've doneLoading we can set the radion buttons to the model state.
             $scope.$watch('viewState.common.doneLoading', function(newVal) {
                 if(newVal) {
-                    //updateFormFromModel();
+                    updateFormFromModel();
                 }
             });
+
+            function updateFormFromModel(){
+                if(!model.rehabilitering){
+                    model.rehabilitering = 'rehabiliteringEjAktuell';
+                }
+
+                if(!model.ressattTillArbeteAktuellt && !model.ressattTillArbeteEjAktuellt){
+                    model.ressattTillArbeteAktuellt = false;
+                    model.ressattTillArbeteEjAktuellt = true;
+                }
+            }
 
             $scope.onOvrigtChange = function(){
                 if(!model.rekommendationOvrigtCheck){

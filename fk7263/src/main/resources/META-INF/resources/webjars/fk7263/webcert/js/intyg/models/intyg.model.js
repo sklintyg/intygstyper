@@ -56,6 +56,7 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                         form7: ['rehabilitering',
                                 new ModelAttr('rehab', {
                                     trans : true, // we don't want this going back to the server!!
+                                    defaultValue : 'rehabiliteringEjAktuell',
                                     linkedProperty:{
                                         props:['rehabilitering'],
                                         update:function(model, props){
@@ -106,23 +107,26 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                                 'prognosBedomning'],
 
                         form11:['ressattTillArbeteAktuellt',
-                                'ressattTillArbeteEjAktuellt', new ModelAttr('ressattTillArbete', {
-                                trans : true, // we don't want this going back to the server!!
-                                linkedProperty:{
-                                    props:['ressattTillArbeteAktuellt','ressattTillArbeteEjAktuellt'],
-                                    update:function(model, props){
-                                        if(props.ressattTillArbeteAktuellt){
-                                            return 'JA';
-                                        } else if(props.ressattTillArbeteEjAktuellt){
-                                            return 'NEJ';
-                                        } else {
-                                            return '';
+                                'ressattTillArbeteEjAktuellt',
+                                new ModelAttr('ressattTillArbete', {
+                                    trans : true, // we don't want this going back to the server!!
+                                    linkedProperty:{
+                                        props:['ressattTillArbeteAktuellt','ressattTillArbeteEjAktuellt'],
+                                        update:function(model, props){
+                                            if(props.ressattTillArbeteAktuellt){
+                                                return 'JA';
+                                            } else if(props.ressattTillArbeteEjAktuellt){
+                                                return 'NEJ';
+                                            } else {
+                                                return '';
+                                            }
+                                        },
+                                        set : function(value){ // 'this' is the model
+                                            this.ressattTillArbeteAktuellt = value === 'JA';
+                                            this.ressattTillArbeteEjAktuellt = value === 'NEJ';
+
+                                            this.updateToAttic(['ressattTillArbete', 'ressattTillArbeteAktuellt', 'ressattTillArbeteEjAktuellt']);
                                         }
-                                    },
-                                    set : function(value){
-                                        this.ressattTillArbeteAktuellt = value === 'JA';
-                                        this.ressattTillArbeteEjAktuellt = value === 'NEJ';
-                                    }
                                 }})],
 
                         form12:['kontaktMedFk'],
