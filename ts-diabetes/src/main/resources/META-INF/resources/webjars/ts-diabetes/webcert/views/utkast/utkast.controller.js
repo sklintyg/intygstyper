@@ -200,32 +200,13 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * @param cert
              */
             $scope.openMailDialog = function() {
-
                 ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
-
-                //ManageCertView.utkastNotify(viewState);
-/*
-                var utkastNotifyRequest = {
-                    intygId : viewState.intygModel.id,
-                    intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
-                    inProgress: viewState.common.vidarebefordraInProgress
-                };
-                utkastNotifyService.forwardIntyg(utkastNotifyRequest);*/
+                    viewState.draftModel.vidarebefordrad, viewState.common);
             };
 
             $scope.onVidarebefordradChange = function() {
-
                 ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
-
-/*                var utkastNotifyRequest = {
-                    intygId : viewState.intygModel.id,
-                    intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
-                };
-                utkastNotifyService.onForwardedChange(utkastNotifyRequest);*/
+                    viewState.draftModel.vidarebefordrad, viewState.common);
             };
 
             $scope.sign = function() {

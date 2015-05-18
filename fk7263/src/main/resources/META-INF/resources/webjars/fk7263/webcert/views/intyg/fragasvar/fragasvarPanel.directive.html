@@ -28,8 +28,8 @@
             </p>
             <div wc-feature-not-active feature="franJournalsystem" class="form-inline"
                  ng-show="!certProperties.isRevoked">
-              <label for="{{panelId}}-mark-as-forwarded-{{qa.internReferens}}" class="checkbox-inline">
-                <input id="{{panelId}}-mark-as-forwarded-{{qa.internReferens}}" type="checkbox"
+              <label for="{{panelId}}-mark-as-notified-{{qa.internReferens}}" class="checkbox-inline">
+                <input id="{{panelId}}-mark-as-notified-{{qa.internReferens}}" type="checkbox"
                        ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad"
                        ng-change="onVidareBefordradChange(qa)" /> Vidarebefordrad</label> <span
                 ng-if="qa.forwardInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
