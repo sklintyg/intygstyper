@@ -51,32 +51,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Exposed interaction functions to view
              ****************************************************************************/
 
-            /**
-             * Handle vidarebefordra dialog
-             */
-            $scope.vidarebefordraUtkast = function() {
-                ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel, viewState.common);
-            };
-
-            $scope.onVidarebefordradChange = function() {
-                ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel, viewState.common);
-            };
-
-            /**
-             * Action to sign the certificate draft and return to Webcert again.
-             */
-            $scope.sign = function() {
-                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version).then(
-                    function(result) {
-                        if (result.newVersion) {
-                            viewState.draftModel.version = result.newVersion;
-                        }
-                    }
-                );
-            };
-
             $scope.scrollTo = function(message) {
                 anchorScrollService.scrollTo('anchor.' + message);
             };

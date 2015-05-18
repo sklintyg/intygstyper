@@ -12,12 +12,17 @@ angular.module('fk7263').config(function($stateProvider) {
                     templateUrl: '/web/webjars/fk7263/webcert/views/utkast/utkast.html',
                     controller: 'fk7263.EditCertCtrl'
                 },
-                
+
                 'header@fk7263-edit' : {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
                     controller: 'common.UtkastHeader'
                 },
-            
+
+                'footer@fk7263-edit' : {
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkast-footer.html',
+                    controller: 'common.UtkastFooter'
+                },
+
                 'form1@fk7263-edit' : {
                     templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form1.html',
                     controller: 'fk7263.EditCert.Form1Ctrl'

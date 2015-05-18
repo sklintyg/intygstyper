@@ -14,6 +14,10 @@ angular.module('ts-bas').config(function($stateProvider) {
                 'header@ts-bas-edit': {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
                     controller: 'common.UtkastHeader'
+                },
+                'footer@ts-bas-edit' : {
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkast-footer.html',
+                    controller: 'common.UtkastFooter'
                 }
             }
         });

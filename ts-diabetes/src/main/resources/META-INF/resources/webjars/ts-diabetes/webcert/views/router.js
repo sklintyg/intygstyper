@@ -14,6 +14,10 @@ angular.module('ts-diabetes').config(function($stateProvider) {
                 'header@ts-diabetes-edit': {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
                     controller: 'common.UtkastHeader'
+                },
+                'footer@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkast-footer.html',
+                    controller: 'common.UtkastFooter'
                 }
             }
         });
