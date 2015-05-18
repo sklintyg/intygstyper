@@ -12,7 +12,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             viewState.reset();
             $scope.viewState = viewState;
-            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
             $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
 
             // Page state
@@ -199,14 +198,14 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              *
              * @param cert
              */
-            $scope.openMailDialog = function() {
+            $scope.vidarebefordraUtkast = function() {
                 ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common);
+                    viewState.draftModel, viewState.common);
             };
 
             $scope.onVidarebefordradChange = function() {
                 ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common);
+                    viewState.draftModel, viewState.common);
             };
 
             $scope.sign = function() {

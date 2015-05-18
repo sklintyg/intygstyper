@@ -25,8 +25,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Intyg state
             $scope.cert = viewState.intygModel;
-            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
-
 
             // TODO : see if the below can be removed
             // Keeps track of in-form interactions which is converted to internal model on save,
@@ -56,14 +54,14 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**
              * Handle vidarebefordra dialog
              */
-            $scope.openMailDialog = function() {
+            $scope.vidarebefordraUtkast = function() {
                 ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
+                    viewState.draftModel, viewState.common);
             };
 
             $scope.onVidarebefordradChange = function() {
                 ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
+                    viewState.draftModel, viewState.common);
             };
 
             /**

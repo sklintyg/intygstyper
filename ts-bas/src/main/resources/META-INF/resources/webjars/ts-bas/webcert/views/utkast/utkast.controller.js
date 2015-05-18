@@ -219,14 +219,14 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              *
              * @param cert
              */
-            $scope.openMailDialog = function() {
+            $scope.vidarebefordraUtkast = function() {
                 ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
+                    viewState.draftModel, viewState.common);
             };
 
             $scope.onVidarebefordradChange = function() {
                 ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel.vidarebefordrad, viewState.common.vidarebefordraInProgress);
+                    viewState.draftModel, viewState.common);
             };
 
             $scope.sign = function() {

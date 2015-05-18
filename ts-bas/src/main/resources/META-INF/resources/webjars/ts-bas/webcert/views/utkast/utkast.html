@@ -993,23 +993,22 @@
                         <span message key="draft.onlydoctorscansign"></span>
                       </div>
 
-                      <h4>Notifiera läkare</h4>
                       <div class="form-group">
                         <button id="vidarebefordraEjHanterad"
                                 class="btn"
-                                ng-class="{'btn-info': !notifieringVidarebefordrad, 'btn-default btn-secondary' : notifieringVidarebefordrad}"
+                                ng-class="{'btn-info': !viewState.draftModel.vidarebefordrad, 'btn-default btn-secondary' : viewState.draftModel.vidarebefordrad}"
                                 title="Skicka mejl med en länk till utkastet för att informera den läkare som ska signera det."
-                                ng-click="openMailDialog()">
-                          <img ng-if="!notifieringVidarebefordrad" src="/img/mail.png"> <img ng-if="notifieringVidarebefordrad" src="/img/mail_dark.png">
+                                ng-click="vidarebefordraUtkast()">
+                          <img ng-if="!viewState.draftModel.vidarebefordrad" src="/img/mail.png"> <img ng-if="viewState.draftModel.vidarebefordrad" src="/img/mail_dark.png">
                         </button>
                       </div>
 
                       <label for="mark-as-vidarebefordrad" class="checkbox-inline">
                         <input id="mark-as-vidarebefordrad" type="checkbox"
-                               ng-disabled="viewState.common.notifieraInProgress"
-                               ng-model="notifieringVidarebefordrad"
+                               ng-disabled="viewState.common.vidarebefordraInProgress"
+                               ng-model="viewState.draftModel.vidarebefordrad"
                                ng-change="onVidarebefordradChange()" /> Vidarebefordrad
-                      </label> <span ng-if="viewState.common.notifieraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
+                      </label> <span ng-if="viewState.common.vidarebefordraInProgress"> <img src="/img/ajax-loader-kit-16x16.gif"></span>
                     </div>
 
                     <button id="signera-utkast-button" class="btn btn-success" ng-disabled="!viewState.common.intyg.isComplete || certForm.$dirty"
