@@ -19,7 +19,6 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
     public static final String MODULE_NAME = "Läkarintyg FK 7263";
     public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
 
-
     @Autowired
     private Fk7263ModuleApi moduleApi;
 

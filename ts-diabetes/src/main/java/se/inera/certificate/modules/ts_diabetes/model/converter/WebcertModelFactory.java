@@ -27,8 +27,8 @@ import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_diabetes.support.TsDiabetesEntryPoint;
 
 /**
  * Factory for creating a editable model.
@@ -55,8 +55,7 @@ public class WebcertModelFactory {
             LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
         }
         template.setId(newDraftData.getCertificateId());
-        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created.
-        template.setTyp(UtlatandeKod.getCurrentVersion().name());
+        template.setTyp(TsDiabetesEntryPoint.MODULE_ID);
 
         populateWithSkapadAv(template, newDraftData.getSkapadAv());
         populateWithPatientInfo(template, newDraftData.getPatient());
