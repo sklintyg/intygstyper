@@ -1,7 +1,7 @@
 angular.module('ts-bas').controller('ts-bas.UtkastController',
     [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
         'common.ManageCertView', 'common.UserModel',
-        'common.utkastNotifyService', 'ts-bas.Domain.IntygModel',
+e        'common.utkastNotifyService', 'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService', 'common.anchorScrollService',
         function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
             ManageCertView, UserModel, utkastNotifyService, IntygModel, viewState, anchorScrollService) {
