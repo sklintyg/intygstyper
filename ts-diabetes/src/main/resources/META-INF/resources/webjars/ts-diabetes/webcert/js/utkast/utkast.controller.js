@@ -12,7 +12,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             viewState.reset();
             $scope.viewState = viewState;
-            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
             $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
 
             // Page state
@@ -204,7 +203,14 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 var utkastNotifyRequest = {
                     intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                    intygVersion: viewState.draftModel.version,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad,
+                    updateFunc: function(vidarebefordrad, version) {
+                        viewState.draftModel.vidarebefordrad = vidarebefordrad;
+                        if (version) {
+                            viewState.draftModel.version = version;
+                        }
+                    }
                 };
                 intygNotifyService.forwardIntyg(utkastNotifyRequest);
             };
@@ -213,7 +219,14 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 var utkastNotifyRequest = {
                     intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                    intygVersion: viewState.draftModel.version,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad,
+                    updateFunc: function(vidarebefordrad, version) {
+                        viewState.draftModel.vidarebefordrad = vidarebefordrad;
+                        if (version) {
+                            viewState.draftModel.version = version;
+                        }
+                    }
                 };
                 intygNotifyService.onForwardedChange(utkastNotifyRequest);
             };

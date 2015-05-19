@@ -24,7 +24,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Intyg state
             $scope.cert = viewState.intygModel;
-            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. maybe move this to viewState?
 
 
             // TODO : see if the below can be removed
@@ -58,9 +57,16 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.openMailDialog = function() {
 
                 var utkastNotifyRequest = {
-                    intygId : intygModel.id,
+                    intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                    intygVersion: viewState.draftModel.version,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad,
+                    updateFunc: function(vidarebefordrad, version) {
+                        viewState.draftModel.vidarebefordrad = vidarebefordrad;
+                        if (version) {
+                           viewState.draftModel.version = version;
+                        }
+                    }
                 };
                 intygNotifyService.forwardIntyg(utkastNotifyRequest);
             };
@@ -68,9 +74,16 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.onVidarebefordradChange = function() {
 
                 var utkastNotifyRequest = {
-                    intygId : intygModel.id,
+                    intygId : viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                    intygVersion: viewState.draftModel.version,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad,
+                    updateFunc: function(vidarebefordrad, version) {
+                        viewState.draftModel.vidarebefordrad = vidarebefordrad;
+                        if (version) {
+                            viewState.draftModel.version = version;
+                        }
+                    }
                 };
                 intygNotifyService.onForwardedChange(utkastNotifyRequest);
             };

@@ -14,7 +14,6 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             // TODO: make all this one line: $scope.viewState = viewState.reset();
             viewState.reset();
             $scope.viewState = viewState;
-            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. let view take from viewstate
             $scope.cert = viewState.intygModel; // TODO: remove cert completely
 
             $scope.user = UserModel;
@@ -224,7 +223,14 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                 var certMeta = {
                     intygId: viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                    intygVersion: viewState.draftModel.version,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad,
+                    updateFunc: function(vidarebefordrad, version) {
+                        viewState.draftModel.vidarebefordrad = vidarebefordrad;
+                        if (version) {
+                            viewState.draftModel.version = version;
+                        }
+                    }
                 };
 
                 intygNotifyService.forwardIntyg(certMeta);
@@ -234,7 +240,14 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                 var certMeta = {
                     intygId: viewState.intygModel.id,
                     intygType: viewState.common.intyg.type,
-                    vidarebefordrad: viewState.draftModel.vidarebefordrad
+                    intygVersion: viewState.draftModel.version,
+                    vidarebefordrad: viewState.draftModel.vidarebefordrad,
+                    updateFunc: function(vidarebefordrad, version) {
+                        viewState.draftModel.vidarebefordrad = vidarebefordrad;
+                        if (version) {
+                            viewState.draftModel.version = version;
+                        }
+                    }
                 };
                 intygNotifyService.onForwardedChange(certMeta);
             };
