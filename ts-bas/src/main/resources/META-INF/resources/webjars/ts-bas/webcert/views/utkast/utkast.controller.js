@@ -214,31 +214,6 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              * Exposed interaction functions to view
              ****************************************************************************/
 
-            /**
-             * Handle vidarebefordra dialog
-             *
-             * @param cert
-             */
-            $scope.vidarebefordraUtkast = function() {
-                ManageCertView.notifyUtkast(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel, viewState.common);
-            };
-
-            $scope.onVidarebefordradChange = function() {
-                ManageCertView.onNotifyChange(viewState.intygModel.id, viewState.common.intyg.type,
-                    viewState.draftModel, viewState.common);
-            };
-
-            $scope.sign = function() {
-                ManageCertView.signera(viewState.common.intyg.type, viewState.draftModel.version).then(
-                    function(result) {
-                        if (result.newVersion) {
-                            viewState.draftModel.version = result.newVersion;
-                        }
-                    }
-                );
-            };
-
             $scope.scrollTo = function(message) {
                 anchorScrollService.scrollTo('anchor.' + message);
             };
