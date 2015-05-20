@@ -1,10 +1,61 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-<meta charset="UTF-8">
-<title></title>
-</head>
-<body>
+<a id="anchor.sjukhusvard" name="anchor.sjukhusvard"></a>
+<div wc-field field-label="ts-bas.label.sjukhusvard" field-has-errors="viewState.common.validationMessagesGrouped.sjukhusvard" id="sjukhusvardForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.sjukhusvard" id="validationMessages_sjukhusvard">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.sjukhusvard"><span message
+                                                                                                    key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input name="sjukhusvarda" type="radio" ng-value="true"
+                 ng-model="cert.sjukhusvard.sjukhusEllerLakarkontakt"></td>
+      <td><input name="sjukhusvarda" type="radio" ng-value="false"
+                 ng-model="cert.sjukhusvard.sjukhusEllerLakarkontakt"></td>
+      <td>
+        <p><span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span></p>
 
-</body>
-</html>
+        <table data-ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+          <tr>
+            <td class="col-md-6"><span message key="ts-bas.label.sjukhusvard.tidpunkt"></span></td>
+            <td class="col-md-6 table-padding-top"><input id="tidpunkt" name="tidpunkt"
+                                                          class="form-control" type="text"
+                                                          data-ng-model="cert.sjukhusvard.tidpunkt"
+                                                          wc-maxlength ng-trim="false"
+                                                          maxlength="{{viewState.inputLimits.sjukhusvardtidpunkt}}">
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-6"><span message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
+            </td>
+            <td class="col-md-6 table-padding-top"><input id="vardinrattning" name="vardinrattning"
+                                                          class="form-control" type="text"
+                                                          data-ng-model="cert.sjukhusvard.vardinrattning"
+                                                          wc-maxlength ng-trim="false"
+                                                          maxlength="{{viewState.inputLimits.sjukhusvardvardinrattning}}">
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-6"><span message key="ts-bas.label.sjukhusvard.anledning"></span></td>
+            <td class="col-md-6 table-padding-top"><input id="anledning" name="anledning"
+                                                          class="form-control" type="text"
+                                                          data-ng-model="cert.sjukhusvard.anledning"
+                                                          wc-maxlength ng-trim="false"
+                                                          maxlength="{{viewState.inputLimits.sjukhusvardanledning}}">
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>

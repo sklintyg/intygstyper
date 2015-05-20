@@ -1,0 +1,36 @@
+<a id="anchor.patientadress" name="anchor.patientadress"></a>
+<div wc-field field-label="ts-bas.label.patientadress" field-has-errors="viewState.common.validationMessagesGrouped.patientadress" id="patientForm">
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.patientadress" id="validationMessages_patientadress">
+    <ul>
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.patientadress"><span message
+                                                                                                key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label class="col-xs-3 control-label"><span message key="ts-bas.form.postadress"></span></label>
+      <div class="col-xs-9">
+        <input type="text" class="form-control input-full" id="patientPostadress"
+               name="cert.grundData.patient.postadress" ng-model="cert.grundData.patient.postadress" maxlength="50" wc-focus-on="viewState.focusFirstInput">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label"><span message key="ts-bas.form.postnummer"></span></label>
+      <div class="col-xs-9">
+        <input type="text" class="form-control input-5" id="patientPostnummer"
+               name="cert.grundData.patient.postnummer" ng-model="cert.grundData.patient.postnummer" maxlength="6">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-3 control-label"><span message key="ts-bas.form.postort"></span></label>
+      <div class="col-xs-9">
+        <input type="text" class="form-control" id="patientPostort" name="cert.grundData.patient.postort"
+               ng-model="cert.grundData.patient.postort" maxlength="25">
+      </div>
+    </div>
+  </div>
+</div>

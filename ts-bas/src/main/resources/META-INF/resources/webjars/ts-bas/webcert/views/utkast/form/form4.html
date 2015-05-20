@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-<meta charset="UTF-8">
-<title></title>
-</head>
-<body>
+<a id="anchor.hjartkarl" name="anchor.hjartkarl"></a>
+<div wc-field field-label="ts-bas.label.hjartkarl" field-has-errors="viewState.common.validationMessagesGrouped.hjartkarl" id="hjartkartForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.hjartkarl" id="validationMessages_hjartkarl">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.hjartkarl"><span message
+                                                                                                  key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input id="hjartkarlay" name="hjartkarla" type="radio" ng-value="true"
+                 ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
+      <td><input id="hjartkarlan" name="hjartkarla" type="radio" ng-value="false"
+                 ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
+      <td><span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span></td>
+    </tr>
+    <tr>
+      <td><input id="hjartkarlby" name="hjartkarlb" type="radio" ng-value="true"
+                 ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
+      <td><input id="hjartkarlbn" name="hjartkarlb" type="radio" ng-value="false"
+                 ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
+      <td><span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span></td>
+    </tr>
+    <tr>
+      <td><input id="hjartkarlcy" name="hjartkarlc" type="radio" ng-value="true"
+                 ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
+      <td><input id="hjartkarlcn" name="hjartkarlc" type="radio" ng-value="false"
+                 ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
+      <td><p><span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span></p>
 
-</body>
-</html>
+        <div ng-show="cert.hjartKarl.riskfaktorerStroke">
+          <p><span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span></p>
+                            <textarea class="form-control" ng-model="cert.hjartKarl.beskrivningRiskfaktorer"
+                                      wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.beskrivningRiskfaktorer}}"
+                                      id="beskrivningRiskfaktorer" rows="4"></textarea>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-<meta charset="UTF-8">
-<title></title>
-</head>
-<body>
+<a id="anchor.horselbalans" name="anchor.horselbalans"></a>
+<div wc-field field-label="ts-bas.label.horselbalans"  field-has-errors="viewState.common.validationMessagesGrouped.horselbalans" id="horselBalansForm">
 
-</body>
-</html>
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.horselbalans" id="validationMessages_horselbalans">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.horselbalans"><span message
+                                                                                                     key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input id="horselbalansay" name="horselbalansa" type="radio" ng-value="true"
+                 ng-model="cert.horselBalans.balansrubbningar"></td>
+      <td><input id="horselbalansan" name="horselbalansa" type="radio" ng-value="false"
+                 ng-model="cert.horselBalans.balansrubbningar"></td>
+      <td><span message key="ts-bas.label.horselbalans.balansrubbningar"></span></td>
+    </tr>
+    <tr ng-show="viewState.korkortd">
+      <td><input id="horselbalansby" name="horselbalansb" type="radio" ng-value="true"
+                 ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
+      <td><input id="horselbalansbn" name="horselbalansb" type="radio" ng-value="false"
+                 ng-model="cert.horselBalans.svartUppfattaSamtal4Meter"></td>
+      <td><span message key="ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma"></span></td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,12 @@
+<div class="body-row clearfix">
+  <div ng-if="specialiteter && specialiteter != ''">
+    <h4><span message key="ts-bas.label.specialkompetens"></span></h4>
+    <span> {{specialiteter}}</span><br />
+  </div>
+  <br />
+  <div ng-if="befattningar && befattningar.length > 0">
+    <h4><span message key="ts-bas.label.befattningar"></span></h4>
+    <span ng-repeat="befattning in befattningar"></span>
+  </div>
+  <br />
+</div>

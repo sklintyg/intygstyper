@@ -1,10 +1,72 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-<meta charset="UTF-8">
-<title></title>
-</head>
-<body>
+<a id="anchor.narkotikalakemedel" name="anchor.narkotikalakemedel"></a>
+<div wc-field field-label="ts-bas.label.narkotikalakemedel" field-has-errors="viewState.common.validationMessagesGrouped.narkotikalakemedel" id="narkotikaLakemedelForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.narkotikalakemedel" id="validationMessages_narkotikalakemedel">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.narkotikalakemedel"><span message
+                                                                                                           key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input name="narkotikalakemedela" type="radio" ng-value="true"
+                 ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
+      <td><input name="narkotikalakemedela" type="radio" ng-value="false"
+                 ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
+      <td><span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span></td>
+    </tr>
+    <tr>
+      <td><input name="narkotikalakemedelb" type="radio" ng-value="true"
+                 ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
+      <td><input name="narkotikalakemedelb" type="radio" ng-value="false"
+                 ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
+      <td><span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span></td>
+    </tr>
 
-</body>
-</html>
+    <tr data-ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
+      <td colspan="2"></td>
+      <td>
+        <p>
+        <div style="margin-bottom:12px;" message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></div>
+        <label class="radio">
+          <input name="narkotikalakemedelb2" type="radio" ng-value="true"
+                 ng-model="cert.narkotikaLakemedel.provtagningBehovs">
+          <span message key="common.yes"></span></label>
+        <label class="radio">
+          <input name="narkotikalakemedelb2" type="radio" ng-value="false"
+                 ng-model="cert.narkotikaLakemedel.provtagningBehovs">
+          <span message key="common.no"></span></label>
+        </p>
+        <div class="alert alert-info" data-ng-show="cert.narkotikaLakemedel.provtagningBehovs">
+          <span message key="ts-bas.helptext.alkohol-narkotika.provtagning" />
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td><input name="narkotikalakemedelc" type="radio" ng-value="true"
+                 ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
+      <td><input name="narkotikalakemedelc" type="radio" ng-value="false"
+                 ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
+      <td>
+        <p><span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+        </p>
+
+        <div data-ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
+          <p><span message key="ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos"></span></p>
+                            <textarea class="form-control" data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos"
+                                      id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.lakemedelOchDos}}" rows="3"></textarea>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

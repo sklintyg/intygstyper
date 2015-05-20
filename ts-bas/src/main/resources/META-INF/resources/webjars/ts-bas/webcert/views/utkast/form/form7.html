@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-<meta charset="UTF-8">
-<title></title>
-</head>
-<body>
+<a id="anchor.medvetandestorning" name="anchor.medvetandestorning"></a>
+<div wc-field field-label="ts-bas.label.medvetandestorning" field-has-errors="viewState.common.validationMessagesGrouped.medvetandestorning" id="medvetandestorningForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.medvetandestorning" id="validationMessages_medvetandestorning">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.medvetandestorning"><span message
+                                                                                                           key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input id="medvetandestorningay" name="medvetandestorninga" type="radio" ng-value="true"
+                 ng-model="cert.medvetandestorning.medvetandestorning"></td>
+      <td><input id="medvetandestorningan" name="medvetandestorninga" type="radio" ng-value="false"
+                 ng-model="cert.medvetandestorning.medvetandestorning"></td>
+      <td>
+        <p><span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span></p>
 
-</body>
-</html>
+        <div data-ng-show="cert.medvetandestorning.medvetandestorning">
+          <p><span message
+                   key="ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak"></span>
+          </p>
+                            <textarea class="form-control" rows="4" data-ng-model="cert.medvetandestorning.beskrivning"
+                                      id="beskrivningMedvetandestorning" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.medvetandestorning}}"></textarea>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
