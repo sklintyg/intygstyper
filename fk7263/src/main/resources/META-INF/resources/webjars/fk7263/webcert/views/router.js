@@ -14,12 +14,12 @@ angular.module('fk7263').config(function($stateProvider) {
                 },
 
                 'header@fk7263-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'
                 },
 
                 'footer@fk7263-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkast-footer.html',
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkastFooter.html',
                     controller: 'common.UtkastFooter'
                 },
 

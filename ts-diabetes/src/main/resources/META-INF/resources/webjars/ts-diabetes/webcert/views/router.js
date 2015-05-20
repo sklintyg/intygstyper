@@ -12,11 +12,11 @@ angular.module('ts-diabetes').config(function($stateProvider) {
                     controller: 'ts-diabetes.UtkastController'
                 },
                 'header@ts-diabetes-edit': {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkast-header.html',
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'
                 },
                 'footer@ts-diabetes-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkast-footer.html',
+                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkastFooter.html',
                     controller: 'common.UtkastFooter'
                 }
             }
