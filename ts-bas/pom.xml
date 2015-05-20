@@ -20,7 +20,7 @@
     <dependency>
       <groupId>se.inera.intyg.intygstyper</groupId>
       <artifactId>ts-parent</artifactId>
-      <version>${ts-parent.version}</version>
+      <version>${project.version}</version>
    </dependency>
 
     <!-- Intyg Schemas -->

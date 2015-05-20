@@ -37,10 +37,6 @@
     <intyg-transportstyrelsen.version>0-SNAPSHOT</intyg-transportstyrelsen.version>
     <intyg-transportstyrelsen.version.range>(,1.0.0]</intyg-transportstyrelsen.version.range>
 
-    <!-- Modules -->
-    <ts-parent.version>0-SNAPSHOT</ts-parent.version>
-    <ts-parent.version.range>(,1.0.0]</ts-parent.version.range>
-
     <!-- Netcare -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
 
@@ -227,8 +223,7 @@
             common.version,
             intyg-clinicalprocess.version,
             intyg-insuranceprocess.version,
-            intyg-transportstyrelsen.version,
-            ts-parent.version
+            intyg-transportstyrelsen.version
           </includeProperties>
           <properties>
             <property>
@@ -246,10 +241,6 @@
             <property>
               <name>intyg-transportstyrelsen.version</name>
               <version>${intyg-transportstyrelsen.version.range}</version>
-            </property>
-            <property>
-              <name>ts-parent.version</name>
-              <version>${ts-parent.version.range}</version>
             </property>
           </properties>
         </configuration>
