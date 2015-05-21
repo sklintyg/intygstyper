@@ -15,6 +15,42 @@ angular.module('ts-diabetes').config(function($stateProvider) {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'
                 },
+
+                'patient@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/patient.html'
+                },
+                'intention@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/intention.html'
+                },
+                'identity@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/identity.html'
+                },
+                'alert@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/alert.html'
+                },
+
+                'form1@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form1.html'
+                },
+                'form2@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form2.html'
+                },
+                'form3@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form3.html'
+                },
+                'form4@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form4.html'
+                },
+                'form5@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form5.html'
+                },
+                'form6@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form6.html'
+                },
+                'form7@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form7.html'
+                },
+
                 'footer@ts-diabetes-edit' : {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkastFooter.html',
                     controller: 'common.UtkastFooter'

@@ -1,0 +1,17 @@
+<a id="anchor.intygavser" name="anchor.intygavser"></a>
+<div wc-field field-label="ts-diabetes.label.intygavser"
+     field-help-text="ts-diabetes.helptext.intyget-avser" field-has-errors="viewState.common.validationMessagesGrouped.intygavser" id="intygetAvserForm">
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser" id="validationMessages_intygavser">
+    <ul>
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygavser"><span message
+                                                                                             key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+  <div class="form-group clearfix">
+    <label class="checkbox checkbox-columns col-xs-2"
+           ng-repeat="typ in cert.intygAvser.korkortstyp track by $index"><input
+        id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected">
+      <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span></label>
+  </div>
+</div>
