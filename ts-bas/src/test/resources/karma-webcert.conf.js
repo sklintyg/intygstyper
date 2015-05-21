@@ -35,6 +35,7 @@ module.exports = function(config) {
 
             { pattern: SRC_DIR + '**/*' },
             { pattern: SRC_DIR + '**/*.spec.js' },
+            { pattern: TEST_DIR + '**/*.data.js' },
             { pattern: TEST_DIR + '**/*.spec.js' },
             { pattern: TEST_DIR + '**/*Spec.js' }
         ],

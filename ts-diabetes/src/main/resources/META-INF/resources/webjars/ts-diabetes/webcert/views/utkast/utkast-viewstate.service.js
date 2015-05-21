@@ -38,6 +38,7 @@ angular.module('ts-diabetes').service('ts-diabetes.UtkastController.ViewStateSer
                 CommonViewState.reset();
                 CommonViewState.intyg.type = 'ts-diabetes';
                 this.setDraftModel(IntygModel._members.build());
+                return this;
             };
 
             this.reset();

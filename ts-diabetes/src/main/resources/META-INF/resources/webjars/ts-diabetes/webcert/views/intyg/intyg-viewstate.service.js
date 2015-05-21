@@ -12,6 +12,7 @@ angular.module('ts-diabetes').service('ts-diabetes.IntygController.ViewStateServ
 
                 this.intygAvser = ''; // holds built list of selected körkortstyper for intyg avser
                 this.bedomning = ''; // holds built list of selected körkortstyper for bedomning
+                return this;
             };
 
             this.reset();

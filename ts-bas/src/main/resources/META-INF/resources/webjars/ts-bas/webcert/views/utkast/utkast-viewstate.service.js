@@ -51,6 +51,7 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                 CommonViewState.reset();
                 CommonViewState.intyg.type = 'ts-bas';
                 this.setDraftModel(IntygModel._members.build());
+                return this;
             };
 
             this.setBehorighet = function(model){
@@ -62,6 +63,9 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
             }
 
             // This is not so pretty, but necessary? Can it be improved?
+            // this could be moved into the model as a linked property, although thats alot of properties ...
+            // maybe introduce an after update so the update of the linked property happens at
+            // the end of update cycle instead of each individual property change.
             this.updateKravYtterligareUnderlag = function() {
                 
                 if (!this.intygModel ||
