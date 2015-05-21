@@ -20,7 +20,8 @@ angular.module('ts-diabetes').config(function($stateProvider) {
                     templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/patient.html'
                 },
                 'intention@ts-diabetes-edit' : {
-                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/intention.html'
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/intention.html',
+                    controller: 'ts-diabetes.Utkast.IntentionController'
                 },
                 'identity@ts-diabetes-edit' : {
                     templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/identity.html'
@@ -30,16 +31,20 @@ angular.module('ts-diabetes').config(function($stateProvider) {
                 },
 
                 'form1@ts-diabetes-edit' : {
-                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form1.html'
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form1.html',
+                    controller: 'ts-diabetes.Utkast.Form1Controller'
                 },
                 'form2@ts-diabetes-edit' : {
-                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form2.html'
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form2.html',
+                    controller: 'ts-diabetes.Utkast.Form2Controller'
                 },
                 'form3@ts-diabetes-edit' : {
-                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form3.html'
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form3.html',
+                    controller: 'ts-diabetes.Utkast.Form3Controller'
                 },
                 'form4@ts-diabetes-edit' : {
-                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form4.html'
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form4.html',
+                    controller: 'ts-diabetes.Utkast.Form4Controller'
                 },
                 'form5@ts-diabetes-edit' : {
                     templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form5.html'
@@ -49,6 +54,11 @@ angular.module('ts-diabetes').config(function($stateProvider) {
                 },
                 'form7@ts-diabetes-edit' : {
                     templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/form7.html'
+                },
+
+                'messages@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/form/messages.html',
+                    controller: 'ts-diabetes.Utkast.MessagesController'
                 },
 
                 'footer@ts-diabetes-edit' : {
