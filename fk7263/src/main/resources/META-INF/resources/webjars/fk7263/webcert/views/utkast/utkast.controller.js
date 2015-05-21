@@ -1,10 +1,10 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.CertificateService', 'common.ManageCertView', 'common.UserModel',
-        'common.utkastNotifyService', 'fk7263.diagnosService', 'common.DateUtilsService', 'common.UtilsService',
-        'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
+        'common.UtkastService', 'common.UserModel', 'common.utkastNotifyService', 'fk7263.diagnosService',
+        'common.DateUtilsService', 'common.UtilsService', 'fk7263.Domain.IntygModel',
+        'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            CertificateService, ManageCertView, UserModel, utkastNotifyService, diagnosService,
+            UtkastService, UserModel, utkastNotifyService, diagnosService,
             dateUtils, utils, IntygModel, viewState, anchorScrollService) {
             'use strict';
 
@@ -60,7 +60,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState);
+            UtkastService.load(viewState);
 
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();

@@ -1,8 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
-    ['$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.ManageCertView', 'common.UserModel',
+    ['$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.UtkastService', 'common.UserModel',
         'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
         'common.anchorScrollService',
-        function($location, $log, $q, $rootScope, $scope, $timeout, $window, ManageCertView, UserModel,
+        function($location, $log, $q, $rootScope, $scope, $timeout, $window, UtkastService, UserModel,
             IntygModel, viewState, dateUtils, anchorScrollService) {
             'use strict';
 
@@ -44,7 +44,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState);
+            UtkastService.load(viewState);
 
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();

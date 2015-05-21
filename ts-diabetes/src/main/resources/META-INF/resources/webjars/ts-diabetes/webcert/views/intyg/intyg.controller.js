@@ -1,9 +1,9 @@
 angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.UserModel','common.IntygCopyRequestModel',
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore',
+        'common.IntygService', 'common.messageService','common.UserModel','common.IntygCopyRequestModel',
         'ts-diabetes.IntygController.ViewStateService',
-        function($location, $log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, UserModel, IntygCopyRequestModel, ViewState) {
+        function($location, $log, $rootScope, $stateParams, $scope, $cookieStore, IntygService,
+            messageService, UserModel, IntygCopyRequestModel, ViewState) {
             'use strict';
 
             /*********************************************************************
@@ -42,7 +42,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
+                IntygService.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
@@ -51,8 +51,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                         ViewState.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
 
                         $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result);
-                        ViewState.common.intyg.isSent = ManageCertView.isSentToTarget(result.statuses, 'TS');
-                        ViewState.common.intyg.isRevoked = ManageCertView.isRevoked(result.statuses);
+                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'TS');
+                        ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
                         if(ViewState.common.intyg.isRevoked) {
                             ViewState.common.printStatus = 'revoked';
                         } else {

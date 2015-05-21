@@ -1,11 +1,13 @@
 describe('ts-diabetes.IntygController', function() {
     'use strict';
 
-    var certificateService, user;
+    var IntygService, user;
 
     beforeEach(angular.mock.module('common', 'ts-diabetes', function($provide) {
-        certificateService = {
-            getCertificate : function(id, type, onSuccess, onError) {
+        IntygService = {
+            isSentToTarget: function() {},
+            isRevoked: function() {},
+            getIntyg : function(id, type, onSuccess, onError) {
                 onSuccess({
                     contents: {
                         'id': '987654321',
@@ -132,11 +134,9 @@ describe('ts-diabetes.IntygController', function() {
                 });
             }
         };
-        //certificateService = jasmine.createSpyObj('common.CertificateService', [ 'getCertificate' ]);
-        $provide.value('common.CertificateService', certificateService);
+        $provide.value('common.IntygService', IntygService);
         user = jasmine.createSpyObj('common.User', [ 'getUserContext' ]);
         $provide.value('common.User', {});
-        $provide.value('webcert.ManageCertificate', {});
     }));
 
     var $scope, ctrl;

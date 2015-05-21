@@ -1,4 +1,4 @@
-describe('EditCertCtrl', function() {
+describe('UtkastController', function() {
     'use strict';
 
     var $httpBackend;
@@ -6,9 +6,8 @@ describe('EditCertCtrl', function() {
     var $scope;
     var $q;
     var $rootScope;
-    var _manageCertView;
     var viewState;
-    var intygModel;
+    var $controller;
 
     beforeEach(angular.mock.module('common', function($provide) {
 
@@ -16,7 +15,7 @@ describe('EditCertCtrl', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
-        featureService = {
+/*        featureService = {
             features:{
                 HANTERA_INTYGSUTKAST: 'hanteraIntygsutkast'
             },
@@ -29,21 +28,23 @@ describe('EditCertCtrl', function() {
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
         $provide.value('common.wcFocus', {});
-        $provide.value('common.utkastNotifyService', {});
         $provide.value('common.diagnosService', {});
         $provide.value('common.DateUtilsService', {});
         $provide.value('common.UtilsService', {});
-        $provide.value('common.anchorScrollService', {});
+        $provide.value('common.anchorScrollService', {});*/
+        $provide.value('common.UtkastProxy', {});
+        $provide.value('common.utkastNotifyService', {});
     }));
 
     // Get references to the object we want to test from the context.
 
     beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend',
-        function( $controller, _$rootScope_, _$q_, _$httpBackend_) {
+        function( _$controller_, _$rootScope_, _$q_, _$httpBackend_) {
+
+            $controller = _$controller_;
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
 
-            $controller('fk7263.EditCertCtrl' , { $scope: $scope, viewState:viewState });
             $q = _$q_;
             $httpBackend = _$httpBackend_;
 
@@ -54,6 +55,7 @@ describe('EditCertCtrl', function() {
     describe('#testEvents', function() {
         it('on some event', function(){
 
+            //$controller('fk7263.EditCertCtrl', { $scope: $scope, viewState:viewState });
             // ----- arrange
             // spies, mocks
 

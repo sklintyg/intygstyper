@@ -1,10 +1,10 @@
 angular.module('ts-bas').controller('ts-bas.UtkastController',
     [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
-        'common.ManageCertView', 'common.UserModel',
+        'common.UtkastService', 'common.UserModel',
         'common.utkastNotifyService', 'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService', 'common.anchorScrollService',
         function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
-            ManageCertView, UserModel, utkastNotifyService, IntygModel, viewState, anchorScrollService) {
+            UtkastService, UserModel, utkastNotifyService, IntygModel, viewState, anchorScrollService) {
             'use strict';
 
             /**********************************************************************************
@@ -43,7 +43,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            ManageCertView.load(viewState);
+            UtkastService.load(viewState);
 
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();

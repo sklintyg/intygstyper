@@ -1,9 +1,9 @@
 angular.module('ts-bas').controller('ts-bas.IntygController',
-    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate','common.User',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore',
+        'common.IntygService', 'common.messageService','common.User',
         'ts-bas.IntygController.ViewStateService',
-        function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, User, ViewState) {
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService,
+            messageService, User, ViewState) {
             'use strict';
 
             /*********************************************************************
@@ -48,7 +48,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
             }
 
             function loadCertificate() {
-                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
+                IntygService.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.contents;
@@ -60,8 +60,8 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                         ViewState.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
 
                         $rootScope.$emit('ts-bas.ViewCertCtrl.load', result);
-                        ViewState.common.intyg.isSent = ManageCertView.isSentToTarget(result.statuses, 'TS');
-                        ViewState.common.intyg.isRevoked = ManageCertView.isRevoked(result.statuses);
+                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'TS');
+                        ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
                         if(ViewState.common.intyg.isRevoked) {
                             ViewState.common.printStatus = 'revoked';
                         } else {
