@@ -1,9 +1,8 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.CertificateService',
-        'common.ManageCertView', 'common.messageService', 'webcert.ManageCertificate', 'common.UserModel',
-        'fk7263.IntygController.ViewStateService',
-        function($log, $rootScope, $stateParams, $scope, $cookieStore, CertificateService, ManageCertView,
-            messageService, ManageCertificate, UserModel, ViewState) {
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.IntygService',
+        'common.messageService', 'common.UserModel', 'fk7263.IntygController.ViewStateService',
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService,
+            messageService, UserModel, ViewState) {
             'use strict';
 
             ViewState.reset();
@@ -23,15 +22,15 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             /**
              * Private
              */
-            function loadCertificate() {
+            function loadIntyg() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                CertificateService.getCertificate($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
+                IntygService.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;
 
-                        ViewState.common.intyg.isSent = ManageCertView.isSentToTarget(result.statuses, 'FK');
-                        ViewState.common.intyg.isRevoked = ManageCertView.isRevoked(result.statuses);
+                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FK');
+                        ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
                         if (ViewState.common.intyg.isRevoked) {
                             ViewState.common.intyg.printStatus = 'revoked';
                         } else {
@@ -58,7 +57,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 });
             }
 
-            loadCertificate();
+            loadIntyg();
 
             /**
              * Event response from QACtrl which sends its intyg-info here in case intyg couldn't be loaded but QA info could.
@@ -70,5 +69,5 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             });
             $scope.$on('$destroy', unbindFastEventFail);
 
-            $scope.$on('loadCertificate', loadCertificate);
+            $scope.$on('loadCertificate', loadIntyg);
         }]);
