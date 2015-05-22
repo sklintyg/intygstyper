@@ -5,11 +5,16 @@ angular.module('ts-diabetes').config(function($stateProvider) {
     'use strict';
     $stateProvider.
         state('ts-diabetes-edit', {
+            data: { defaultActive : 'index' },
             url: '/ts-diabetes/edit/:certificateId',
             views : {
-                '': {
+                'content@': {
                     templateUrl: '/web/webjars/ts-diabetes/webcert/views/utkast/utkast.html',
                     controller: 'ts-diabetes.UtkastController'
+                },
+                'wcHeader@ts-diabetes-edit' : {
+                    templateUrl: '/web/webjars/common/webcert/gui/headers/wcHeader.partial.html',
+                    controller: 'common.wcHeaderController'
                 },
                 'header@ts-diabetes-edit': {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',

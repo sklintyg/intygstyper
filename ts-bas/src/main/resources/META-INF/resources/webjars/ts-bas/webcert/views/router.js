@@ -5,12 +5,17 @@ angular.module('ts-bas').config(function($stateProvider) {
     'use strict';
     $stateProvider.
         state('ts-bas-edit', {
+            data: { defaultActive : 'index' },
             url : '/ts-bas/edit/:certificateId',
             views : {
-                '': {
+                'content@': {
                     templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/utkast.html',
-                    controller: 'ts-bas.UtkastController' },
-
+                    controller: 'ts-bas.UtkastController'
+                },
+                'wcHeader@ts-bas-edit' : {
+                    templateUrl: '/web/webjars/common/webcert/gui/headers/wcHeader.partial.html',
+                    controller: 'common.wcHeaderController'
+                },
                 'header@ts-bas-edit': {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'

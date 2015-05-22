@@ -6,11 +6,17 @@ angular.module('fk7263').config(function($stateProvider) {
 
     $stateProvider.
         state('fk7263-edit', {
+            data: { defaultActive : 'index' },
             url : '/fk7263/edit/:certificateId?:patientId&:hospName',
             views : {
-                '' : {
+                'content@' : {
                     templateUrl: '/web/webjars/fk7263/webcert/views/utkast/utkast.html',
                     controller: 'fk7263.EditCertCtrl'
+                },
+
+                'wcHeader@fk7263-edit' : {
+                    templateUrl: '/web/webjars/common/webcert/gui/headers/wcHeader.partial.html',
+                    controller: 'common.wcHeaderController'
                 },
 
                 'header@fk7263-edit' : {
