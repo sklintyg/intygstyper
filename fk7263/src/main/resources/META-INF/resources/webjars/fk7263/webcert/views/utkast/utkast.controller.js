@@ -1,10 +1,10 @@
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.UtkastService', 'common.UserModel', 'common.utkastNotifyService', 'fk7263.diagnosService',
+        'common.UtkastService', 'common.UserModel', 'fk7263.diagnosService',
         'common.DateUtilsService', 'common.UtilsService', 'fk7263.Domain.IntygModel',
         'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, utkastNotifyService, diagnosService,
+            UtkastService, UserModel, diagnosService,
             dateUtils, utils, IntygModel, viewState, anchorScrollService) {
             'use strict';
 

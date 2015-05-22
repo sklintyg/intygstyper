@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore', 'common.IntygService',
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore','common.IntygService','common.IntygProxy',
         'common.messageService', 'common.UserModel', 'fk7263.IntygController.ViewStateService',
-        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService,
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService, IntygProxy,
             messageService, UserModel, ViewState) {
             'use strict';
 
@@ -24,7 +24,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
              */
             function loadIntyg() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                IntygService.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         $scope.cert = result.contents;

@@ -1,8 +1,8 @@
 angular.module('ts-bas').controller('ts-bas.IntygController',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore',
-        'common.IntygService', 'common.messageService','common.User',
+        'common.IntygService', 'common.IntygProxy', 'common.messageService','common.User',
         'ts-bas.IntygController.ViewStateService',
-        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService,
+        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService, IntygProxy,
             messageService, User, ViewState) {
             'use strict';
 
@@ -48,7 +48,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
             }
 
             function loadCertificate() {
-                IntygService.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.contents;
