@@ -5,7 +5,7 @@ describe('IntygController', function() {
     var $scope;
     var $q;
     var $rootScope;
-    var IntygService;
+    var IntygProxy;
     var viewState;
     var $controller;
 
@@ -15,23 +15,8 @@ describe('IntygController', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
-/*        featureService = {
-            features:{
-                HANTERA_INTYGSUTKAST: 'hanteraIntygsutkast'
-            },
-            isFeatureActive: jasmine.createSpy('isFeatureActive')
-        };
-        $provide.value('common.CertificateService',{});
-
-        $provide.value('common.User', {});
-        $provide.value('common.wcFocus', {});
-        $provide.value('common.utkastNotifyService', {});
-        $provide.value('common.diagnosService', {});
-        $provide.value('common.DateUtilsService', {});
-        $provide.value('common.UtilsService', {});
-        $provide.value('common.anchorScrollService', {});*/
-        IntygService = jasmine.createSpyObj('common.IntygService', [ 'getIntyg', 'load' ]);
-        $provide.value('common.IntygService',IntygService);
+        IntygProxy = jasmine.createSpyObj('common.IntygProxy', [ 'getIntyg', 'load' ]);
+        $provide.value('common.IntygProxy', IntygProxy);
         $provide.value('common.UserModel', { userContext: { lakare: false }});
     }));
 
@@ -55,7 +40,7 @@ describe('IntygController', function() {
 
             $controller('fk7263.ViewCertCtrl' , { $scope: $scope, viewState:viewState });
 
-            expect(IntygService.getIntyg).toHaveBeenCalled();
+            expect(IntygProxy.getIntyg).toHaveBeenCalled();
         });
 
     });
