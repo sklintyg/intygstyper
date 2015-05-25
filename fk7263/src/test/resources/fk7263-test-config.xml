@@ -25,7 +25,6 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<import resource="fk7263-beans.xml" />
-	<import resource="fk7263-model-config.xml" />
   <import resource="it-module-cxf-servlet.xml" />
 	
 </beans>

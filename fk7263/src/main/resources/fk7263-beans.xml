@@ -27,4 +27,8 @@
 
   <bean id="Fk7263EntryPoint" class="se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint" />
 
+  <bean id="fk7263-objectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper"/>
+  
+  <bean class="se.inera.certificate.modules.fk7263.integration.stub.FkMedicalCertificatesStore"/>
+
 </beans>

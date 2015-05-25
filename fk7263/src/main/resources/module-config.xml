@@ -16,14 +16,10 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-  <import resource="fk7263-beans.xml" />
-
-  <import resource="fk7263-model-config.xml" />
-
-  <import resource="fk7263-ws-stub.xml" />
-
   <context:annotation-config />
 
-  <context:component-scan base-package="se.inera.certificate.modules.fk7263" />
+  <import resource="fk7263-beans.xml" />
+
+  <import resource="fk7263-ws-stub.xml" />
 
 </beans>
