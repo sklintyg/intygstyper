@@ -28,7 +28,8 @@ var tsBasMessages = {
         'ts-bas.label.send.body': '',
         'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
 
-        'ts-bas.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
+        'ts-bas.label.status.sent': 'Intyget är signerat och har skickats till Transportstyrelsens system.',
+        'ts-bas.label.status.recieved': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
         'ts-bas.label.status.signed': 'Intyget är signerat och är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
         'ts-bas.label.kopiera.text': 'Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information. I de fall patienten har ändrat namn eller adress så uppdateras den informationen. Uppgifterna i intygsutkastet går att ändra innan det signeras.',
 
