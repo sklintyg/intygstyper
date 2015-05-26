@@ -1,7 +1,6 @@
 package se.inera.certificate.modules.fk7263.integration.stub;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.ws.WebServiceProvider;
@@ -15,13 +14,12 @@ import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.validator.ProgrammaticTransportValidator;
 import se.inera.certificate.validate.CertificateValidationException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
-
+import se.skl.skltpservices.adapter.fk.regmedcert.Vard2FkValidator;
 
 /**
  * @author par.wenaker
@@ -31,6 +29,8 @@ import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.Resu
 public class RegisterMedicalCertificateResponderStub implements RegisterMedicalCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
+    
+    private Vard2FkValidator validator = new Vard2FkValidator();
     
     @Autowired
     private FkMedicalCertificatesStore fkMedicalCertificatesStore;
@@ -66,9 +66,10 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
     }
 
     protected void validateTransport(RegisterMedicalCertificateType registerMedicalCertificate) throws CertificateValidationException {
-        List<String> validationErrors = new ProgrammaticTransportValidator(registerMedicalCertificate.getLakarutlatande()).validate();
-        if (!validationErrors.isEmpty()) {
-            throw new CertificateValidationException(validationErrors);
+        try {
+            validator.validateRequest(registerMedicalCertificate);
+        } catch (Exception e) {
+            throw new CertificateValidationException(e.getMessage());
         }
     }
 
