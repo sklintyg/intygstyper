@@ -44,7 +44,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
                     } else {
                         if ($stateParams.signed) {
-                            ViewState.common.activeErrorMessageKey = 'common.error.signed_but_not_ready';
+                            ViewState.common.activeErrorMessageKey = 'common.error.sign.not_ready_yet';
                         } else {
                             ViewState.common.activeErrorMessageKey = 'common.error.could_not_load_cert';
                         }
