@@ -227,11 +227,15 @@ public class InternalValidatorInstance {
                 addValidationError("diabetes.diabetesTyp", ValidationMessageType.EMPTY, "ts-bas.validation.diabetes.diabetesTyp.missing");
 
             } else if (diabetes.getDiabetesTyp().equals(DiabetesKod.DIABETES_TYP_2.name())) {
-                if (diabetes.getInsulin() == null && diabetes.getKost() == null && diabetes.getTabletter() == null) {
+                if (isNullOrFalse(diabetes.getInsulin()) && isNullOrFalse(diabetes.getKost()) && isNullOrFalse(diabetes.getTabletter())) {
                     addValidationError("diabetes.diabetesTyp", ValidationMessageType.EMPTY, "ts-bas.validation.diabetes.diabetesTyp.must-choose-one");
                 }
             }
         }
+    }
+
+    private boolean isNullOrFalse(Boolean insulin) {
+        return insulin == null || insulin == false; 
     }
 
     private void validateFunktionsnedsattning(final Funktionsnedsattning funktionsnedsattning) {
