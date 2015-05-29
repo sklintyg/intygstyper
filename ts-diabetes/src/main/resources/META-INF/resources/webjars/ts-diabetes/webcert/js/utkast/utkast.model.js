@@ -112,7 +112,7 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
                                 { type: 'DE', selected: false },
                                 { type: 'TAXI', selected: false }
                             ]}),
-                        kanInteTaStallning: undefined,
+                        kanInteTaStallning:false,
                         lakareSpecialKompetens: undefined,
                         lamplighetInnehaBehorighet: undefined
                     }
