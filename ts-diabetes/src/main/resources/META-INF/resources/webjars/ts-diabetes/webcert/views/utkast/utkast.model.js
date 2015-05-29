@@ -112,26 +112,7 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
                                 { type: 'DE', selected: false },
                                 { type: 'TAXI', selected: false }
                             ]}),
-                        kanInteTaStallning: new ModelAttr('kanInteTaStallning', {
-                                trans : false, // we don't want this going back to the server!!
-                                linkedProperty:{
-                                    props:['korkortstyp'],
-                                    update:function(model, props){
-                                        if(model.kanInteTaStallning === true){
-
-                                        }
-                                        if(props.korkortstyp){
-                                            return false;
-                                        } else {
-                                            return undefined;
-                                        }
-                                    },
-                                    set : function(value){ // 'this' is the model
-                                        if(value){
-                                            this.kanInteTaStallning = false;
-                                        }
-                                    }
-                                }}),
+                        kanInteTaStallning:false,
                         lakareSpecialKompetens: undefined,
                         lamplighetInnehaBehorighet: undefined
                     }
