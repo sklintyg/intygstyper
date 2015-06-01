@@ -218,7 +218,7 @@ public class TsBasModuleApi implements ModuleApi {
                 throw new ExternalServiceCallException(contents.getBody().getFault().getTextContent());
             }
         } catch (Exception e) {
-            LOG.error("Error in sendCertificateToRecipient with msg: {} and stacktrace: {}", e.getMessage(), e.getStackTrace());
+            LOG.error("Error in sendCertificateToRecipient with msg: " + e.getMessage(), e);
             throw new ModuleException("Error in sendCertificateToRecipient.", e);
         }
     }
@@ -272,7 +272,7 @@ public class TsBasModuleApi implements ModuleApi {
             xmlString = writer.toString();
 
         } catch (ConverterException | JAXBException | IOException e) {
-            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            LOG.error("Error occured while marshalling", e);
             throw new ModuleException(e);
         }
         return xmlString;

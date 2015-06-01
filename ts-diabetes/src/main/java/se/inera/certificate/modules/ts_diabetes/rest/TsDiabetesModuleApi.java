@@ -204,7 +204,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
                 throw new ExternalServiceCallException(contents.getBody().getFault().getTextContent());
             }
         } catch (Exception e) {
-            LOG.error("Error in sendCertificateToRecipient with msg: {} and stacktrace: {}", e.getMessage(), e.getStackTrace());
+            LOG.error("Error in sendCertificateToRecipient with msg: " + e.getMessage(), e);
             throw new ModuleException("Error in sendCertificateToRecipient.", e);
         }
     }
@@ -250,7 +250,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
             xmlString = writer.toString();
 
         } catch (JAXBException | IOException e) {
-            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            LOG.error("Error occured while marshalling", e);
             throw new ModuleException(e);
         }
         return xmlString;
