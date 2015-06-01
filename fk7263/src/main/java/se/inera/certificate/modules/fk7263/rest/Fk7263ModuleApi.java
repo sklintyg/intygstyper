@@ -393,7 +393,7 @@ public class Fk7263ModuleApi implements ModuleApi {
                 String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
                         ? response.getResult().getInfoText()
                         : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-                LOG.error("Error of occured when sending certificate '{}': {}",
+                LOG.error("Error occured when sending certificate '{}': {}",
                         request.getLakarutlatande() != null ? request.getLakarutlatande().getLakarutlatandeId() : null,
                         message);
                 throw new ExternalServiceCallException(message);
