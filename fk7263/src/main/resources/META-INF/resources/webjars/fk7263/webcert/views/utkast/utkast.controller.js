@@ -65,7 +65,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
                 var intygState = {
-                    viewState     : viewState,
+                    viewState : viewState,
                     formFail : function(){
                         $scope.certForm.$setDirty();
                     }
