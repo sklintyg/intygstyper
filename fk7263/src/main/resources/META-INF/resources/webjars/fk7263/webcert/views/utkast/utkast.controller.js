@@ -19,33 +19,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             // Page states
             $scope.user = UserModel;
 
-            $scope.today = new Date(); // TODO: to viewstate
-            $scope.today.setHours(0, 0, 0, 0); // reset time to increase comparison accuracy (using new Date() also sets time)
-            $scope.focusFirstInput = false; // TODO: to common viewstate
-
             // Intyg state
             $scope.cert = viewState.intygModel;
-
-            // TODO : see if the below can be removed
-            // Keeps track of in-form interactions which is converted to internal model on save,
-            // and converted from internal model on load
-            $scope.form = {
-                arbete: true,
-                prognos: 'YES',
-                rehab: 'NEJ',
-                ressattTillArbeteAktuellt: undefined,
-                ovrigt: {
-                    'annanReferensBeskrivning': null,
-                    'nedsattMed25Beskrivning': null,
-                    'nedsattMed50Beskrivning': null,
-                    'nedsattMed75Beskrivning': null,
-                    'arbetsformagaPrognosGarInteAttBedomaBeskrivning': null
-                }
-            };
-
-            $scope.stash = {
-                cert : { kommentar : ''}
-            };
 
             /****************************************************************************
              * Exposed interaction functions to view

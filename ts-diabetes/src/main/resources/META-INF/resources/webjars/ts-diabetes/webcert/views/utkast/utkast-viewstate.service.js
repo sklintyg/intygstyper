@@ -21,7 +21,6 @@ angular.module('ts-diabetes').service('ts-diabetes.UtkastController.ViewStateSer
             };
 
             this.reset = function() {
-                this.focusFirstInput = true;
                 this.korkortd = false;
                 this.tomorrowDate = moment().format('YYYY-MM-DD');
 

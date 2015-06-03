@@ -35,7 +35,6 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
             };
 
             this.reset = function() {
-                this.focusFirstInput = true;
                 this.korkortd = false;
                 this.identitet = [
                     {label: 'ID-kort *', id: 'ID_KORT'},
