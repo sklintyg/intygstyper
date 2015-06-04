@@ -380,14 +380,13 @@ public class InternalValidatorInstance {
 
         if (narkotikaLakemedel.getTeckenMissbruk() == null) {
             addValidationError("narkotikaLakemedel.teckenMissbruk", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.teckenmissbruk.missing");
+        }
 
-        } else if (narkotikaLakemedel.getTeckenMissbruk()) {
+        if (narkotikaLakemedel.getTeckenMissbruk() || narkotikaLakemedel.getForemalForVardinsats()) {
             if (narkotikaLakemedel.getProvtagningBehovs() == null) {
                 addValidationError("narkotikaLakemedel.provtagningBehovs", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing");
             }
         }
-
-
 
         if (narkotikaLakemedel.getLakarordineratLakemedelsbruk() == null) {
             addValidationError("narkotikaLakemedel.lakarordineratLakemedelsbruk", ValidationMessageType.EMPTY,

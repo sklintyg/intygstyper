@@ -244,7 +244,7 @@ var tsBasMessages = {
         'ts-bas.validation.narkotikalakemedel.missing': 'Alkohol, narkotika och läkemedel saknas',
         'ts-bas.validation.narkotikalakemedel.teckenmissbruk.missing': 'a) Ett alternativ måste anges.',
         'ts-bas.validation.narkotikalakemedel.vardinsats-bas.missing': ' b)	Ett alternativ måste anges.',
-        'ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing': 'Om tecken på missbruk föreligger måste ett alternativ anges för följdfrågan.',
+        'ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing': 'Om 11a) eller 11b) besvarats med Ja så måste ett alternativ anges för följdfrågan.',
         'ts-bas.validation.narkotikalakemedel.lakarordineratlakemedelsbruk.missing': 'c) Ett alternativ måste anges.',
         'ts-bas.validation.narkotikalakemedel.lakemedelochdos.missing': 'Läkemedel och dos måste anges.',
 
