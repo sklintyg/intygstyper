@@ -85,7 +85,7 @@
         <allvarligForekomstBeskrivning>Beskrivning</allvarligForekomstBeskrivning>
         <harAllvarligForekomstTrafiken>true</harAllvarligForekomstTrafiken>
         <allvarligForekomstTrafikBeskrivning>Beskrivning</allvarligForekomstTrafikBeskrivning>
-        <genomforEgenkontrollBlodsocker>true</genomforEgenkontrollBlodsocker>
+        <genomforEgenkontrollBlodsocker>false</genomforEgenkontrollBlodsocker>
         <harAllvarligForekomstVakenTid>true</harAllvarligForekomstVakenTid>
         <allvarligForekomstVakenTidAr>2012-12-12</allvarligForekomstVakenTidAr>
     </hypoglykemier>
