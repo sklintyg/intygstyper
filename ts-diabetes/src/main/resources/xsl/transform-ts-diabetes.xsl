@@ -31,10 +31,12 @@
         <xsl:call-template name="vardKontakt"/>
 
         <!-- Egenkontroll av blodsocker -->
-        <xsl:if test="ns1:hypoglykemier/ns1:genomforEgenkontrollBlodsocker = 'true' or ns1:hypoglykemier/ns1:genomforEgenkontrollBlodsocker = '1'">
+        <xsl:if test="ns1:hypoglykemier/ns1:genomforEgenkontrollBlodsocker">
           <p:aktivitet>
             <p:aktivitetskod code="308113006" codeSystem="{$id_snomed-ct}" codeSystemName="SNOMED-CT"/>
-            <p:forekomst>true</p:forekomst>
+            <p:forekomst>
+              <xsl:value-of select="ns1:hypoglykemier/ns1:genomforEgenkontrollBlodsocker"/>
+            </p:forekomst>
           </p:aktivitet>
         </xsl:if>
 
