@@ -97,6 +97,15 @@ describe('ts-bas.Utkast.Form17Controller', function() {
 
         expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeTruthy();
         expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeTruthy();
+
+        // Check that 2b and 3b still are selected if you select another high körkortstyp after it already is set to high.
+        $scope.cert.horselBalans.svartUppfattaSamtal4Meter = true;
+        $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = true;
+        getCheckboxForKorkortstyp('D1E').selected = true;
+        $scope.$digest();
+
+        expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeTruthy();
+        expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeTruthy();
     });
     // --- intention
 

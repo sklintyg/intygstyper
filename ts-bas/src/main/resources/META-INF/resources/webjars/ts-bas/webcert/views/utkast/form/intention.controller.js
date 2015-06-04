@@ -14,10 +14,12 @@ angular.module('ts-bas').controller('ts-bas.Utkast.IntentionController',
                         $scope.cert.restoreFromAttic('horselBalans.svartUppfattaSamtal4Meter');
                         $scope.cert.restoreFromAttic('funktionsnedsattning.otillrackligRorelseformaga');
                     } else {
-                        $scope.cert.updateToAttic('horselBalans.svartUppfattaSamtal4Meter');
-                        $scope.cert.updateToAttic('funktionsnedsattning.otillrackligRorelseformaga');
-                        $scope.cert.horselBalans.svartUppfattaSamtal4Meter = undefined;
-                        $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = undefined;
+                        if($scope.viewState.korkortd === false){
+                            $scope.cert.updateToAttic('horselBalans.svartUppfattaSamtal4Meter');
+                            $scope.cert.updateToAttic('funktionsnedsattning.otillrackligRorelseformaga');
+                            $scope.cert.horselBalans.svartUppfattaSamtal4Meter = undefined;
+                            $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = undefined;
+                        }
                     }
                 }
             }, true);
