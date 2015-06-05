@@ -9,8 +9,6 @@ angular.module('ts-diabetes').service('ts-diabetes.UtkastController.ViewStateSer
             this.draftModel = undefined;
 
             this.clearModel = function(){
-                CommonViewState.intygModel = undefined;
-                CommonViewState.draftModel = undefined;
                 this.intygModel = undefined;
                 this.draftModel = undefined;
             };

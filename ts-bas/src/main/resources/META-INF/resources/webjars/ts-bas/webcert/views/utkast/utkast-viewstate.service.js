@@ -9,8 +9,6 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
             this.draftModel = undefined;
 
             this.clearModel = function() {
-                CommonViewState.intygModel = undefined;
-                CommonViewState.draftModel = undefined;
                 this.intygModel = undefined;
                 this.draftModel = undefined;
             };

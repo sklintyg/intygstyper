@@ -38,8 +38,6 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
             };
 
             this.clearModel = function(){
-                CommonViewState.intygModel = undefined;
-                CommonViewState.draftModel = undefined;
                 this.intygModel = undefined;
                 this.draftModel = undefined;
             };
