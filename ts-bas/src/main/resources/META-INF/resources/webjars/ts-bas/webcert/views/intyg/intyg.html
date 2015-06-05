@@ -112,7 +112,7 @@
                   <span id="horselBalansbalansrubbningar"><span class="cert-answer" message
                         key="{{cert.horselBalans.balansrubbningar | BoolToTextFilter}}"></span></span>
                 </p>
-                <p ng-show="cert.horselBalans.svartUppfattaSamtal4Meter">
+                <p ng-show="cert.horselBalans.svartUppfattaSamtal4Meter != null">
                   <span message key="ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma"></span>
                   <span id="horselBalanssvartUppfattaSamtal4Meter"><span class="cert-answer" message
                         key="{{cert.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span></span>
@@ -134,7 +134,7 @@
                 </p>
 
                 <!-- b -->
-                <p ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
+                <p ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga != null">
                   <span message key="ts-bas.label.funktionsnedsattning.rorelsformaga"></span>
             			<span id="funktionsnedsattningotillrackligRorelseformaga"><span class="cert-answer" message
                         key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span></span>
