@@ -37,7 +37,7 @@
                             on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"
                             invalid="!field8b.nedsattMed25.to.viewValid"></span>
       <div class="indent pad10" ng-if="field8b.nedsattMed25.workState">
-        <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
+        <div class="workHoursPerWeek" wc-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
           Arbetstid timmar/vecka: <strong id="arbetstid25">{{model.tjanstgoringstid * 0.75 |
           number}}</strong>
         </div>
@@ -71,7 +71,7 @@
                             on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50tom"
                             invalid="!field8b.nedsattMed50.to.viewValid"></span>
       <div class="indent pad10" ng-if="field8b.nedsattMed50.workState">
-        <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
+        <div class="workHoursPerWeek" wc-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
           Arbetstid timmar/vecka: <strong id="arbetstid50">{{model.tjanstgoringstid * 0.5 |
           number}}</strong>
         </div>
@@ -103,7 +103,7 @@
                             on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75tom"
                             invalid="!field8b.nedsattMed75.to.viewValid"></span>
       <div class="indent pad10" ng-if="field8b.nedsattMed75.workState">
-        <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
+        <div class="workHoursPerWeek" wc-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
           Arbetstid timmar/vecka: <strong id="arbetstid75">{{model.tjanstgoringstid * 0.25 |
           number}}</strong>
         </div>
@@ -136,11 +136,11 @@
                             invalid="!field8b.nedsattMed100.to.viewValid"></span>
     </div>
 
-    <div ng-show="field8b.info.totalCertDays">
+    <div wc-show="field8b.info.totalCertDays">
       <p>Detta intyg motsvarar en period på: <span id="totalCertDays">{{field8b.info.totalCertDays}}</span> <span
-          ng-show="field8b.info.totalCertDays > 1">dagar</span><span ng-show="field8b.info.totalCertDays == 1">dag</span></p>
+          wc-show="field8b.info.totalCertDays > 1">dagar</span><span wc-show="field8b.info.totalCertDays == 1">dag</span></p>
     </div>
-    <div class="alert alert-warning" ng-show="field8b.info.datesOutOfRange">
+    <div class="alert alert-warning" wc-show="field8b.info.datesOutOfRange">
       Det startdatum du angett är mer än <strong>en vecka före dagens datum</strong>. Du bör kontrollera att tidsperioderna är korrekta.
     </div>
   </div>

@@ -45,9 +45,9 @@
         Dölj vad som behöver kompletteras
       </button>
     </div>
-    <div ng-show="certForm.$pristine && isComplete"><strong>Status:</strong> Intyget är sparat.</div>
-    <div ng-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
-    <div ng-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
+    <div wc-show="certForm.$pristine && isComplete"><strong>Status:</strong> Intyget är sparat.</div>
+    <div wc-show="certForm.$pristine && !isComplete"><strong>Status:</strong> Intyget är sparat, men inte komplett</div>
+    <div wc-show="certForm.$dirty"><strong>Status:</strong> Intyget är <strong>inte</strong> sparat.</div>
   </div>
 </div><!-- top end -->
 
@@ -56,7 +56,7 @@
 
   <form name="certForm" novalidate autocomplete="off">
 
-    <div class="alert alert-danger" ng-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
+    <div class="alert alert-danger" wc-show="widgetState.showComplete && !isComplete" style="margin-right: 20px">
       <h3>Följande fält behöver kompletteras:</h3>
       <ul>
         <li ng-repeat="message in validationMessages"><span message key="{{message.message}}"></span></li>

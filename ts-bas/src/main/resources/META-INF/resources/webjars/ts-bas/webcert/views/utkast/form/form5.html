@@ -25,7 +25,7 @@
       <td>
         <p><span message key="ts-bas.label.diabetes.har-diabetes"></span></p>
 
-        <div data-ng-show="cert.diabetes.harDiabetes">
+        <div wc-show="cert.diabetes.harDiabetes">
           <p><span message key="ts-bas.label.diabetes.diabetestyp"></span>
             <label class="radio"><input id="diabetestyp1" name="diabetestyp" type="radio" value="DIABETES_TYP_1"
                                         ng-model="cert.diabetes.diabetesTyp"><span message
@@ -35,7 +35,7 @@
                                                                                    key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_2"></span></label>
           </p>
 
-          <div data-ng-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
+          <div wc-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
             <span message key="ts-bas.label.diabetes.behandling"></span>
             <label class="checkbox"><input id="diabetestreat1" name="diabetestreat1" type="checkbox"
                                            ng-model="cert.diabetes.kost"><span message
@@ -48,7 +48,7 @@
                                                                                   key="ts-bas.label.diabetes.behandling.insulin"></span></label>
 
             <div class="alert alert-info"
-                 data-ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
+                 wc-show="cert.diabetes.tabletter || cert.diabetes.insulin">
               <span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
             </div>
 

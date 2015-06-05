@@ -7,12 +7,12 @@
 
   <div ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
 
-    <div class="qa-panel" id="qa{{panelId}}-{{qa.internReferens}}" ng-show="!qa.proxyMessage">
+    <div class="qa-panel" id="qa{{panelId}}-{{qa.internReferens}}" wc-show="!qa.proxyMessage">
 
       <div ng-if="handledPanel">
         <h3 class="inline-block">
           Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span
-            id="fkMeddelandeRubrik-{{qa.internReferens}}" ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
+            id="fkMeddelandeRubrik-{{qa.internReferens}}" wc-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
         </h3>
       </div>
 
@@ -21,13 +21,13 @@
           <div class="status-header">
             <h3 class="inline-block">
               Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span
-                id="fkMeddelandeRubrik-{{qa.internReferens}}" ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
+                id="fkMeddelandeRubrik-{{qa.internReferens}}" wc-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
             </h3>
             <p>
               Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
             </p>
             <div wc-feature-not-active feature="franJournalsystem" class="form-inline"
-                 ng-show="!certProperties.isRevoked">
+                 wc-show="!certProperties.isRevoked">
               <label for="{{panelId}}-mark-as-notified-{{qa.internReferens}}" class="checkbox-inline">
                 <input id="{{panelId}}-mark-as-notified-{{qa.internReferens}}" type="checkbox"
                        ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad"
@@ -42,7 +42,7 @@
           <button id="{{panelId}}-vidarebefordraEjHanterad" class="btn pull-right"
                   ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"
                   title="Skicka mejl med en länk till intyget för att informera den som ska hantera frågan-svaret."
-                  ng-click="openMailDialog(qa)" ng-show="!certProperties.isRevoked">
+                  ng-click="openMailDialog(qa)" wc-show="!certProperties.isRevoked">
             <img ng-if="!qa.vidarebefordrad" src="/img/mail.png"> <img ng-if="qa.vidarebefordrad"
                                                                        src="/img/mail_dark.png">
           </button>
@@ -111,7 +111,7 @@
       <!-- KNAPPAR HANTERADE FRÅGOR -->
       <div ng-if="handledPanel">
         <!-- error message occuring when inteacting with server for this FragaSvar-->
-        <div id="{{panelId}}-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-danger">
+        <div id="{{panelId}}-{{qa.internReferens}}-svarsText-load-error" wc-show="qa.activeErrorMessageKey" class="alert alert-danger">
           <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
         </div>
         <div class="form-group">
@@ -120,7 +120,7 @@
             <button class="btn btn-default btn-secondary" ng-click="updateAsUnHandled(qa)"
                     wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
                     id="markAsUnhandledBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
-              <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som ej hanterad
+              <img src="/img/loader-small.gif" wc-show="qa.updateHandledStateInProgress"> Markera som ej hanterad
             </button>
           </div>
         </div>
@@ -129,34 +129,34 @@
       <div ng-if="!handledPanel">
         <div class="form-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
           <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
-          <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>
+          <label class="control-label" wc-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>
           <div class="controls">
-            <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
+            <div class="alert alert-info" wc-show="qa.answerDisabled && qa.answerDisabledReason">
               {{qa.answerDisabledReason}}
             </div>
-            <div class="form-group" ng-show="!qa.answerDisabled && !certProperties.isRevoked">
+            <div class="form-group" wc-show="!qa.answerDisabled && !certProperties.isRevoked">
               <textarea wc-maxlength ng-trim="false" rows="13" maxlength="5000" class="form-control col-md-9 qa-block-wc" ng-model="qa.svarsText"
                         id="answerText-{{qa.internReferens}}"></textarea>
             </div>
             <div class="webcert-top-padding-section">
               <!-- error message occuring when inteacting with server for this FragaSvar-->
-              <div id="internal-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
+              <div id="internal-{{qa.internReferens}}-svarsText-load-error" wc-show="qa.activeErrorMessageKey"
                    class="alert alert-danger">
                 <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
               </div>
               <button class="btn btn-success" ng-click="sendAnswer(qa)"
                       ng-disabled="!qa.svarsText || qa.updateInProgress"
-                      ng-show="!qa.answerDisabled && !certProperties.isRevoked" wc-check-vardenhet
+                      wc-show="!qa.answerDisabled && !certProperties.isRevoked" wc-check-vardenhet
                       vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
                       id="sendAnswerBtn-{{qa.internReferens}}">
-                <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
+                <img src="/img/loader-small-green.gif" wc-show="qa.updateInProgress"> Skicka svar
               </button>
               <button class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"
                       id="markAsHandledFkOriginBtn-{{qa.internReferens}}"
                       ng-disabled="qa.updateHandledStateInProgress" wc-check-vardenhet
                       vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}"
                       title="När frågan-svaret markeras som hanterad kommer den att anses som avslutad. Frågan-svaret flyttas till ’Hanterade frågor och svar’ och visas inte längre i vårdenhetens översikt över ej hanterade frågor och svar.">
-                <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
+                <img src="/img/loader-small.gif" wc-show="qa.updateHandledStateInProgress"> Markera som hanterad
               </button>
             </div>
           </div>
@@ -164,7 +164,7 @@
         <div class="form-group" ng-if="qa.status == 'PENDING_EXTERNAL_ACTION' || qa.status == 'ANSWERED'">
           <!--  fått svar eller väntar på svar från FK, skall kunna klarmarkera manuellt ändå -->
           <!-- error message occuring when inteacting with server for this FragaSvar-->
-          <div id="external-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
+          <div id="external-{{qa.internReferens}}-svarsText-load-error" wc-show="qa.activeErrorMessageKey"
                class="alert alert-danger">
             <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
           </div>
@@ -173,7 +173,7 @@
                     id="markAsHandledWcOriginBtn-{{qa.internReferens}}"
                     ng-disabled="qa.updateHandledStateInProgress"
                     title="När frågan-svaret markeras som hanterad kommer den att anses som avslutad. Frågan-svaret flyttas till ’Hanterade frågor och svar’ och visas inte längre i vårdenhetens översikt över ej hanterade frågor och svar.">
-              <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
+              <img src="/img/loader-small.gif" wc-show="qa.updateHandledStateInProgress"> Markera som hanterad
             </button>
           </div>
         </div>
