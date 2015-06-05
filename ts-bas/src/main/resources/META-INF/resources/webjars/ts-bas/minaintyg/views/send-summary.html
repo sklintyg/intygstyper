@@ -35,7 +35,7 @@
 		                    <span message key="ts-bas.inbox.complementaryinfo"></span>
 		                  </h3>
 		                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
-	                        <span message key="ts-bas.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
+	                        <span message key="ts-bas.label.korkort.{{typ.type}}"></span><span wc-show="filtered.korkortstyp.length > 1">, </span>
 	                  	  </label>
 		                </div>
 		            </div>
@@ -84,7 +84,7 @@
 	      <p class="btn-row-desc no-padding">
 	        <span message key="ts-bas.confirm.label.verifytext"></span>
 	      </p>
-	      <div class="send-warning" ng-show="alreadySentToRecipient()">
+	      <div class="send-warning" wc-show="alreadySentToRecipient()">
 	        <span id="already-sent-to-recipient-message" class="alert warning" message key="ts-bas.confirm.message.alreadysent"></span>
 	      </div>
 	      <p class="btn-row">

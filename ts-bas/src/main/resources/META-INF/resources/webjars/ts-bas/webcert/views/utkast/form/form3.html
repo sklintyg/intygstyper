@@ -24,7 +24,7 @@
                  ng-value="false" ng-model="cert.funktionsnedsattning.funktionsnedsattning"></td>
       <td><p><span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span></p>
 
-        <div data-ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+        <div wc-show="cert.funktionsnedsattning.funktionsnedsattning">
           <p><span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span></p>
                             <textarea id="funktionsnedsattning" class="form-control" name="funktionsnedsattning"
                                       rows='5' wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.funktionsnedsattning}}"
@@ -32,7 +32,7 @@
         </div>
       </td>
     </tr>
-    <tr ng-show="viewState.korkortd">
+    <tr wc-show="viewState.korkortd">
       <td><input id="funktionsnedsattningby" name="funktionsnedsattningb" type="radio"
                  ng-value="true" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
       <td><input id="funktionsnedsattningbn" name="funktionsnedsattningb" type="radio"

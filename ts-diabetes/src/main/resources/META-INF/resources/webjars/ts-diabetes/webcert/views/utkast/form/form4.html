@@ -24,7 +24,7 @@
           <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false"
                                       ng-model="cert.bedomning.kanInteTaStallning"> Någon av följande
             behörigheter</label>
-          <div class="form-group clearfix indent" data-ng-show="!cert.bedomning.kanInteTaStallning">
+          <div class="form-group clearfix indent" wc-show="!cert.bedomning.kanInteTaStallning">
             <label class="checkbox checkbox-columns col-xs-2"
                    ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input
                 id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
@@ -36,12 +36,12 @@
         </div>
       </td>
     </tr>
-    <tr data-ng-show="viewState.korkortd">
+    <tr wc-show="viewState.korkortd">
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
       <th class="maxwidth"></th>
     </tr>
-    <tr data-ng-show="viewState.korkortd">
+    <tr wc-show="viewState.korkortd">
       <td><input id="bedomningy" name="bedomning" type="radio" ng-value="true"
                  ng-model="cert.bedomning.lamplighetInnehaBehorighet"></td>
       <td><input id="bedomningn" name="bedomning" type="radio" ng-value="false"
