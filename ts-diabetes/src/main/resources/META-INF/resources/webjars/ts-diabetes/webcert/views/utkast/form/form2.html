@@ -28,7 +28,7 @@
       <td><span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
       </td>
     </tr>
-    <tr wc-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
+    <tr ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypocy" name="hypoc" type="radio" ng-value="true"
                  ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
       <td><input id="hypocn" name="hypoc" type="radio" ng-value="false"
@@ -36,14 +36,14 @@
       <td><span message
                 key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span></td>
     </tr>
-    <tr wc-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
+    <tr ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypody" name="hypod" type="radio" ng-value="true"
                  ng-model="cert.hypoglykemier.allvarligForekomst"></td>
       <td><input id="hypodn" name="hypod" type="radio" ng-value="false"
                  ng-model="cert.hypoglykemier.allvarligForekomst"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
 
-        <div class="controls" wc-show="cert.hypoglykemier.allvarligForekomst == true">
+        <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomst == true">
           <label for="allvarligForekomstBeskrivning">
                               <span message
                                     key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
@@ -55,13 +55,13 @@
         </div>
       </td>
     </tr>
-    <tr wc-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
+    <tr ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypoey" name="hypoe" type="radio" ng-value="true"
                  ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
       <td><input id="hypoen" name="hypoe" type="radio" ng-value="false"
                  ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
-        <div class="controls" wc-show="cert.hypoglykemier.allvarligForekomstTrafiken == true">
+        <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomstTrafiken == true">
           <label for="allvarligForekomstTrafikBeskrivning">
                               <span message
                                     key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
@@ -73,14 +73,14 @@
         </div>
       </td>
     </tr>
-    <tr wc-show="viewState.korkortd">
+    <tr ng-show="viewState.korkortd">
       <td></td>
       <td></td>
       <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och
         taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
     </tr>
     <!-- 2f -->
-    <tr wc-show="viewState.korkortd">
+    <tr ng-show="viewState.korkortd">
       <td><input id="hypofy" name="hypof" type="radio" ng-value="true"
                  ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
       <td><input id="hypofn" name="hypof" type="radio" ng-value="false"
@@ -89,13 +89,13 @@
     </tr>
 
     <!-- 2g -->
-    <tr wc-show="viewState.korkortd">
+    <tr ng-show="viewState.korkortd">
       <td><input id="hypogy" name="hypog" type="radio" ng-value="true"
                  ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
       <td><input id="hypogn" name="hypog" type="radio" ng-value="false"
                  ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
-        <div class="controls form-inline webcert-top-padding-section" wc-show="cert.hypoglykemier.allvarligForekomstVakenTid">
+        <div class="controls form-inline webcert-top-padding-section" ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
           <label class="control-label"><span message key="common.when"></span></label>
                             <span wc-date-picker-field target-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid"
                                   dom-id="allvarligForekomstVakenTidObservationstid"

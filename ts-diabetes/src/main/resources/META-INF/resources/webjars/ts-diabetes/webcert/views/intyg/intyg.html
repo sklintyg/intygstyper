@@ -4,7 +4,7 @@
 
     <div ui-view="header"></div>
 
-    <div wc-show="!viewState.common.activeErrorMessageKey">
+    <div ng-show="!viewState.common.activeErrorMessageKey">
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : viewState.common.intyg.isRevoked}">
         <div class="row">
           <div class="col-md-12">
@@ -48,7 +48,7 @@
                   <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
                   <span id="insulin"><span class="cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span></span><br>
                   <br>
-                  <span wc-show="cert.diabetes.insulinBehandlingsperiod.length > 0">
+                  <span ng-show="cert.diabetes.insulinBehandlingsperiod.length > 0">
                     <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span><br>
                     <span class="cert-answer" id="insulinBehandlingsperiod">{{cert.diabetes.insulinBehandlingsperiod}}</span>
                   </span>
@@ -56,10 +56,10 @@
                 <p>
                   <span message key="ts-diabetes.label.diabetes.behandling.annan"></span><br>
                   <span id="annanBehandlingBeskrivning">
-                    <span wc-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
+                    <span ng-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
                       <span class="cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
                     </span>
-                    <span class="cert-answer" wc-show="!cert.diabetes.annanBehandlingBeskrivning">
+                    <span class="cert-answer" ng-show="!cert.diabetes.annanBehandlingBeskrivning">
                       <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                     </span>
                   </span>
@@ -96,7 +96,7 @@
                   <span id="allvarligForekomst"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span></span>
                 </div>
-                <div class="form-group indent" wc-show="cert.hypoglykemier.allvarligForekomstBeskrivning">
+                <div class="form-group indent" ng-show="cert.hypoglykemier.allvarligForekomstBeskrivning">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
                   <span id="allvarligForekomstBeskrivning"><span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstBeskrivning}}</span></span><br>
                 </div>
@@ -108,7 +108,7 @@
                         key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span></span>
                 </div>
                 <div class="form-group indent"
-                     wc-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
+                     ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
                   <span id="allvarligForekomstTrafikBeskrivning"><span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span></span>
                 </div>
@@ -125,7 +125,7 @@
                   <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
                   <span id="allvarligForekomstVakenTid"><span class="cert-answer" message
                         key="{{cert.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span></span><br>
-                  <p wc-show="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid.length > 0">
+                  <p ng-show="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid.length > 0">
                     <span message key="common.when"></span>
                     <span id="allvarligForekomstVakenTidObservationstid"><span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span></span>
                   </p>
@@ -183,13 +183,13 @@
               <!-- 4 bedomning -->
               <div wc-field field-label="ts-diabetes.label.bedomning" filled="true">
 
-                <div wc-show="!cert.bedomning.kanInteTaStallning">
+                <div ng-show="!cert.bedomning.kanInteTaStallning">
                   <span message key="ts-diabetes.label.bedomning-info-alt-1"></span>
                   <p>
                     <span id="bedomning"><span class="cert-answer">{{viewState.bedomning}}</span></span>
                   </p>
                 </div>
-                <div wc-show="cert.bedomning.kanInteTaStallning">
+                <div ng-show="cert.bedomning.kanInteTaStallning">
                   <span id="bedomningKanInteTaStallning"><span class="cert-answer" message
                         key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span></span><br><br>
                 </div>
@@ -204,10 +204,10 @@
 
               <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
                 <div id="kommentar">
-                  <span wc-show="cert.kommentar.length > 0">
+                  <span ng-show="cert.kommentar.length > 0">
                     <span class="cert-answer">{{cert.kommentar}}</span>
                   </span>
-                  <span wc-show="!cert.kommentar">
+                  <span ng-show="!cert.kommentar">
                     <span class="cert-answer" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                   </span>
                 </div>
@@ -216,10 +216,10 @@
               <div wc-field field-label="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"
                    filled="true">
                 <div id="lakareSpecialKompetens">
-                  <span wc-show="cert.bedomning.lakareSpecialKompetens.length > 0">
+                  <span ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">
                     <span class="cert-answer">{{cert.bedomning.lakareSpecialKompetens}}</span><br>
                   </span>
-                  <span class="cert-answer" wc-show="!cert.bedomning.lakareSpecialKompetens" message
+                  <span class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
                           key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                 </div>
               </div>

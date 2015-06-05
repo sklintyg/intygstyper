@@ -16,7 +16,7 @@
                                 ng-model="cert.bedomning.kanInteTaStallning">
       <span message key="ts-bas.label.nagon-av-foljande-behorigheter"></span></label>
 
-    <div class="form-group clearfix indent" wc-show="!cert.bedomning.kanInteTaStallning">
+    <div class="form-group clearfix indent" ng-show="!cert.bedomning.kanInteTaStallning">
       <label class="checkbox checkbox-columns col-xs-2"
              ng-repeat="typ in cert.bedomning.korkortstyp track by $index"><input
           id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
@@ -28,15 +28,15 @@
       <span message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></label>
   </div>
 
-  <p wc-show="viewState.kravYtterligareUnderlag">
+  <p ng-show="viewState.kravYtterligareUnderlag">
     <span message key="ts-bas.helptext.bedomning.info"></span>
   </p>
 
-  <p wc-show="cert.syn.korrektionsglasensStyrka == true">
+  <p ng-show="cert.syn.korrektionsglasensStyrka == true">
     <span message key="ts-bas.helptext.synfunktioner.8-dioptrier-valt"></span>
   </p>
 
-  <p wc-show="cert.diabetes.tabletter || cert.diabetes.insulin">
+  <p ng-show="cert.diabetes.tabletter || cert.diabetes.insulin">
     <span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
   </p>
 

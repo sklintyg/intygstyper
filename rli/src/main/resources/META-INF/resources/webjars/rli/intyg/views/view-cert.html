@@ -28,7 +28,7 @@
     </p>
   </div>
 
-  <div wc-show="doneLoading">
+  <div ng-show="doneLoading">
     <!-- Modals: visibility defined by $scope.doneLoading -->
     <div modal="shouldBeOpen" close="close()" options="opts">
       <div class="modal-header">
@@ -75,17 +75,17 @@
           <span message key="view.label.latestevent"></span>
         </h2>
         <!--  Show if no events to show -->
-        <p wc-show="!cert.status">
+        <p ng-show="!cert.status">
           <span message key="view.label.latestevent.noevents"></span></a>
         </p>
 
         <!-- Show first status in list if any viable status exist-->
-        <p id="lastest-certificate-event" wc-show="cert.status.length>0">
+        <p id="lastest-certificate-event" ng-show="cert.status.length>0">
           {{cert.status[0].timestamp | date:'shortDate'}} <span message key="rli.status.{{cert.status[0].type}}"></span> <span message
             key="rli.target.{{cert.status[0].target}}"></span>
         </p>
         <!-- Show if more than 1 viable status exists -->
-        <p wc-show="cert.status.length>1">
+        <p ng-show="cert.status.length>1">
           <a class="statusHistoryLink" href ng-click="showStatusHistory()"><span message key="view.label.latestevent.showall"></span></a>
         </p>
       </div>
@@ -152,7 +152,7 @@
 	                <span ng-switch-when="REK7" class="text">Jag avråder ej från resa. Patientens = anhörig till resenären, tillstånd utgör inget hinder för resenären att resa.</span>	                
 	              </div>
 	              
-	              <div class="body-row" wc-show="cert.undersokning.orsakforavbokning == 'RESENAR_GRAVID'">
+	              <div class="body-row" ng-show="cert.undersokning.orsakforavbokning == 'RESENAR_GRAVID'">
 	              	<h3>Förlossningsdetaljer</h3>
 	              	<span class="title">Beräknat födelsedatum</span>
 	              	<span class="text">Barnet beräknas födas {{cert.undersokning.graviditet.beraknatForlossningsdatum}}</span>
@@ -161,16 +161,16 @@
 	              
 	              <div class="body-row">
 	              	<h3>Om den akutella sjukdomen/komplikationen</h3>
-			<div wc-show="cert.undersokning.forstaUndersokningsdatum">
+			<div ng-show="cert.undersokning.forstaUndersokningsdatum">
 	                  <span class="title">Datum för första undersökning</span> <span id="examination-first-date" class="text">{{cert.undersokning.forstaUndersokningsdatum | date:'longDate'}}</span><br/></div>
-			<div wc-show="cert.undersoking.forstaUndersokningsplats">
+			<div ng-show="cert.undersoking.forstaUndersokningsplats">
 	                  <span class="title">Plats för första undersökning</span> <span id="examination-first-place" class="text">{{cert.undersokning.forstaUndersokningsplats}}</span>
 			</div><br/>             
 	                <span class="title">Datum för undersökning</span> <span id="examination-date" class="text">{{cert.undersokning.undersokningsdatum | date:'longDate'}}</span><br/>
 	                <span class="title">Plats för undersökning</span> <span id="examination-place" class="text">{{cert.undersokning.utforsVid.enhetsnamn}}</span>
 	              </div>
 	              
-	              <div class="body-row" wc-show="cert.rekommendation.sjukdomskannedom != 'SJK4'" ng-switch on="cert.rekommendation.sjukdomskannedom">
+	              <div class="body-row" ng-show="cert.rekommendation.sjukdomskannedom != 'SJK4'" ng-switch on="cert.rekommendation.sjukdomskannedom">
 	              	<h3>Sjukdomskännedom</h3>
 	              	<span class="title">Beskrivning</span>
 	                <span ng-switch-when="SJK1" class="text">Sjukdomen/komplikationen var okänd vid bokningstillfället.</span>
@@ -178,7 +178,7 @@
 	                <span ng-switch-when="SJK3" class="text">Patientens sjukdom/komplikation är kronisk, var känd vid inbokningstillfället och utgjorde då inget hinder för resan. Tillståndet har nu förvärrats på ett sätt som vid bokningstillfället var möjligt att förutse</span>
 	              </div>
 	              
-	              <div class="body-row" wc-show="cert.rekommendation.sjukdomskannedom == 'SJK4'">
+	              <div class="body-row" ng-show="cert.rekommendation.sjukdomskannedom == 'SJK4'">
 	              	<h3>Sjukdomskännedom</h3>
 	              	<span class="title">Beskrivning</span>
 	              	<span class="text">{{cert.rekommendation.beskrivning}}</span>

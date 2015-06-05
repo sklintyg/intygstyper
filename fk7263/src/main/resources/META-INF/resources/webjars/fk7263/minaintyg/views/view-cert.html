@@ -45,14 +45,14 @@
         </h2>
 
         <!-- Show if no events to show -->
-        <div wc-show="cert.filteredStatuses.length<1">
+        <div ng-show="cert.filteredStatuses.length<1">
         	<p>
         		<span message key="fk7263.label.latestevent.noevents"></span>
         	</p>
         </div>
 
 		<!-- Show if more than one event exists -->
-   		  <div wc-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
+   		  <div ng-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
             <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
             <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span><span>s system</span>
             <span class="certificate-event-timestamp pull-right">{{cert.filteredStatuses[0].timestamp | date:'short'}}</span>
@@ -60,13 +60,13 @@
               <div ng-repeat="status in cert.filteredStatuses" ng-switch on="$index > 0">
                 <div ng-switch-when="true">
                   <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
-                  <span wc-show="status.type == 'SENT'"><span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>s system</span>
+                  <span ng-show="status.type == 'SENT'"><span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>s system</span>
                   <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'short'}}</span><br>
                 </div>
               </div>
             </div>
             <p>
-              <button class="btn-link btn-link-link" wc-show="cert.filteredStatuses.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse">
+              <button class="btn-link btn-link-link" ng-show="cert.filteredStatuses.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse">
                 <span message key="fk7263.label.showevents.{{!isCollapsedCertEvents}}"></span>
               </button>
             </p>
@@ -187,10 +187,10 @@
             <div class="cert-body">
 
               <div mi-field field-label="fk7263.label.smittskydd" filled="true">
-                <span wc-show="cert.avstangningSmittskydd">
+                <span ng-show="cert.avstangningSmittskydd">
                   <span id="smittskydd-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span wc-show="!cert.avstangningSmittskydd">
+                <span ng-show="!cert.avstangningSmittskydd">
                   <span id="smittskydd-no" message key="fk7263.label.no"></span>
                 </span>
               </div>
@@ -203,7 +203,7 @@
                   <span id="diagnosKod">{{cert.diagnosKod}}</span>
                 </div>
 
-                <div class="form-group" wc-show="cert.diagnosBeskrivning">
+                <div class="form-group" ng-show="cert.diagnosBeskrivning">
                   <label class="control-label bold">
                     <span message key="fk7263.label.diagnosfortydligande"></span>
                   </label>
@@ -224,22 +224,22 @@
 
               <div mi-field field-label="fk7263.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
                 <ul class="padded-list">
-                  <li wc-show="cert.undersokningAvPatienten!=null">
+                  <li ng-show="cert.undersokningAvPatienten!=null">
                     <div id="undersokningAvPatienten">
                       <span message key="fk7263.vardkontakt.undersokning"></span><span> {{cert.undersokningAvPatienten | date:'longDate' }}</span>
                     </div>
                   </li>
-                  <li wc-show="cert.telefonkontaktMedPatienten!=null">
+                  <li ng-show="cert.telefonkontaktMedPatienten!=null">
                     <div id="telefonkontaktMedPatienten">
                       <span message key="fk7263.vardkontakt.telefonkontakt"></span><span> {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
                     </div>
                   </li>
-                  <li wc-show="cert.journaluppgifter!=null">
+                  <li ng-show="cert.journaluppgifter!=null">
                     <div id="journaluppgifter">
                       <span message key="fk7263.referens.journal"></span><span> {{cert.journaluppgifter | date:'longDate' }}</span>
                     </div>
                   </li>
-                  <li wc-show="cert.annanReferens!=null">
+                  <li ng-show="cert.annanReferens!=null">
                     <div id="annanReferns">
                       <span message key="fk7263.referens.annat"></span><span> {{cert.annanReferens | date:'longDate' }}</span>
                     </div>
@@ -253,11 +253,11 @@
 
               <div mi-field field-label="fk7263.label.recommendations" filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
                 <ul class="padded-list">
-                  <li wc-show="cert.rekommendationKontaktArbetsformedlingen">
+                  <li ng-show="cert.rekommendationKontaktArbetsformedlingen">
                     <span id="rekommendationKontaktArbetsformedlingen" message key="fk7263.label.recommendations.contact.jobcenter"></span></li>
-                  <li wc-show="cert.rekommendationKontaktForetagshalsovarden">
+                  <li ng-show="cert.rekommendationKontaktForetagshalsovarden">
                     <span id="rekommendationKontaktForetagshalsovarden" message key="fk7263.label.recommendations.contact.healthdepartment"></span></li>
-                  <li wc-show="cert.rekommendationOvrigt.length > 0">
+                  <li ng-show="cert.rekommendationOvrigt.length > 0">
                     <span message key="fk7263.label.recommendations.contact.other"></span>
                     <div id="rekommendationOvrigt" class="multiline">{{cert.rekommendationOvrigt}}</div>
                   </li>
@@ -266,36 +266,36 @@
 
               <div mi-field field-label="fk7263.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
                 <ul class="padded-list">
-                  <li wc-show="cert.atgardInomSjukvarden != null">
+                  <li ng-show="cert.atgardInomSjukvarden != null">
                     <span message key="fk7263.label.plannedtreatment.healthcare"></span>
                     <div id="atgardSjukvard" class="multiline">{{cert.atgardInomSjukvarden}}</div></li>
-                  <li wc-show="cert.annanAtgard != null">
+                  <li ng-show="cert.annanAtgard != null">
                     <span message key="fk7263.label.plannedtreatment.other"></span>
                     <div id="atgardAnnan" class="multiline">{{cert.annanAtgard}}</div></li>
                 </ul>
               </div>
 
               <div mi-field field-label="fk7263.label.workrehab" filled="cert.rehabilitering">
-                <span wc-show="cert.rehabilitering == 'rehabiliteringAktuell'">
+                <span ng-show="cert.rehabilitering == 'rehabiliteringAktuell'">
                   <span id="rehabilitering-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span wc-show="cert.rehabilitering == 'rehabiliteringEjAktuell'">
+                <span ng-show="cert.rehabilitering == 'rehabiliteringEjAktuell'">
                   <span id="rehabilitering-no" message key="fk7263.label.no"></span>
                 </span>
-                <span wc-show="cert.rehabilitering == 'rehabiliteringGarInteAttBedoma'">
+                <span ng-show="cert.rehabilitering == 'rehabiliteringGarInteAttBedoma'">
                   <span id="rehabilitering-unjudgeable" message key="fk7263.label.unjudgeable"></span>
                 </span>
               </div>
 
               <div mi-field field-label="fk7263.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
                 <ul class="padded-list">
-                  <li wc-show="cert.nuvarandeArbetsuppgifter">
+                  <li ng-show="cert.nuvarandeArbetsuppgifter">
                     <span message key="fk7263.label.patientworkcapacity.currentwork"></span>
                     <div id="nuvarandeArbetsuppgifter" class="multiline">{{cert.nuvarandeArbetsuppgifter}}</div></li>
-                  <li wc-show="cert.arbetsloshet">
+                  <li ng-show="cert.arbetsloshet">
                     <span id="arbetslos" message key="fk7263.label.patientworkcapacity.unemployed"></span>
                   </li>
-                  <li wc-show="cert.foraldrarledighet">
+                  <li ng-show="cert.foraldrarledighet">
                     <span id="foraldraledig" message key="fk7263.label.patientworkcapacity.parentalleave"></span>
                   </li>
                 </ul>
@@ -306,41 +306,41 @@
               </div>
 
               <div mi-field field-label="fk7263.label.prognosis" filled="cert.prognosBedomning">
-                <span wc-show="cert.prognosBedomning == 'arbetsformagaPrognosJa'">
+                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJa'">
                   <span id="arbetsformagaPrognos-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span wc-show="cert.prognosBedomning == 'arbetsformagaPrognosJaDelvis'">
+                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJaDelvis'">
                   <span id="arbetsformagaPrognos-partialyes" message key="fk7263.label.partialyes"></span>
                 </span>
-                <span wc-show="cert.prognosBedomning == 'arbetsformagaPrognosNej'">
+                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosNej'">
                   <span id="arbetsformagaPrognos-no" message key="fk7263.label.no"></span>
                 </span>
-                <span wc-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'">
+                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'">
                   <span id="arbetsformagaPrognos-unjudgeable" message key="fk7263.label.unjudgeable"></span>
                 </span>
               </div>
 
               <div mi-field field-label="fk7263.label.othertransport" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
-                <span wc-show="cert.ressattTillArbeteAktuellt">
+                <span ng-show="cert.ressattTillArbeteAktuellt">
                   <span id="resaTillArbetet-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span wc-show="cert.ressattTillArbeteEjAktuellt">
+                <span ng-show="cert.ressattTillArbeteEjAktuellt">
                   <span id="resaTillArbetet-no" message key="fk7263.label.no"></span>
                 </span>
               </div>
 
               <div mi-field field-label="fk7263.label.fkcontact" filled="true">
-                <span wc-show="cert.kontaktMedFk">
+                <span ng-show="cert.kontaktMedFk">
                   <span id="kontaktFk-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span wc-show="!cert.kontaktMedFk">
+                <span ng-show="!cert.kontaktMedFk">
                   <span id="kontaktFk-no" message key="fk7263.label.no"></span>
                 </span>
               </div>
 
               <div mi-field field-label="fk7263.label.otherinformation" filled="cert.kommentar">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div id="kommentar" class="tag multiline" wc-show="cert.kommentar.length > 0">{{cert.kommentar}}</div>
+                <div id="kommentar" class="tag multiline" ng-show="cert.kommentar.length > 0">{{cert.kommentar}}</div>
               </div>
 
               <div mi-field field-label="fk7263.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">

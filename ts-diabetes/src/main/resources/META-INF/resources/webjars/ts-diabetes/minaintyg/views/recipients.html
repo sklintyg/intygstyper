@@ -35,7 +35,7 @@
 	                    <span message key="ts-diabetes.inbox.complementaryinfo"></span>
 	                  </h3>
 	                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
-                        <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span><span wc-show="filtered.korkortstyp.length > 1">, </span>
+                        <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
                   	  </label>
 	                </div>
 	            </div>
@@ -76,7 +76,7 @@
 	  	</p>
   	</div>
     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-      <div class="alert alert-warning" id="already-sent-to-recipient-message" wc-show="alreadySentToRecipient()">
+      <div class="alert alert-warning" id="already-sent-to-recipient-message" ng-show="alreadySentToRecipient()">
         <span message key="ts-diabetes.confirm.message.alreadysent"></span> <span>{{getRecipientName(selectedRecipientId)}} {{cert.filteredStatuses[0].timestamp | date:'yyyy-MM-dd HH:mm'}}</span>
       </div>
     </div>

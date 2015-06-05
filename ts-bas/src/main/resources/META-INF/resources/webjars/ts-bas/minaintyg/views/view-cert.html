@@ -30,7 +30,7 @@
     </p>
   </div>
 
-  <div wc-show="doneLoading">
+  <div ng-show="doneLoading">
     <div id="backnav" class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <a class="backlink" href="/web/start/#/">
         <message key="ts-bas.button.goback" />
@@ -74,14 +74,14 @@
         </h2>
 
         <!-- Show if no events to show -->
-        <div wc-show="cert.status.length<1">
+        <div ng-show="cert.status.length<1">
           <p>
             <span message key="ts-bas.label.latestevent.noevents"></span>
           </p>
         </div>
 
         <!-- Show if more than one event exists -->
-        <div wc-show="cert.status.length>0" id="latest-certificate-event">
+        <div ng-show="cert.status.length>0" id="latest-certificate-event">
           <span message key="ts-bas.status.{{cert.status[0].type}}"></span>
           <span message key="ts-bas.target.{{cert.status[0].target}}"></span><span>s system</span>
           <span class="certificate-event-timestamp pull-right">{{cert.status[0].timestamp | date:'short'}}</span>
@@ -95,7 +95,7 @@
             </div>
           </div>
           <p>
-            <button class="btn-link btn-link-link" wc-show="cert.status.length>1"
+            <button class="btn-link btn-link-link" ng-show="cert.status.length>1"
                     ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse">
               <span message key="ts-bas.label.showevents.{{!isCollapsedCertEvents }}"></span>
             </button>
@@ -209,7 +209,7 @@
                         key="{{cert.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span>
                 </span>
 
-                <span class="text no-padding-bottom" wc-show="achelptext == true">
+                <span class="text no-padding-bottom" ng-show="achelptext == true">
                   <div class="alert alert-info">
                     <span message key="ts-bas.helptext.synfunktioner.a-c"></span>
                   </div>
@@ -260,7 +260,7 @@
                   <h3><span message key="ts-bas.label.syn.korrektionsglasens-styrka"></span></h3>
                   <span message key="ts-bas.label.syn.8-dioptrier"></span>
                   <span id="korrektionsglasensStyrka" class="cert-answer" message key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
-                  <div class="alert alert-info" wc-show="cert.syn.korrektionsglasensStyrka == true">
+                  <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
                     <span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
                   </div>
                 </span>
@@ -277,12 +277,12 @@
                         key="{{cert.horselBalans.balansrubbningar | BoolToTextFilter}}"></span>
             		</span>
 
-            		<span class="text" wc-show="cert.horselBalans.svartUppfattaSamtal4Meter">
+            		<span class="text" ng-show="cert.horselBalans.svartUppfattaSamtal4Meter">
             			<span message key="ts-bas.label.horselbalans.samtal4meter"></span>
             			<span id="horselBalanssvartUppfattaSamtal4Meter" class="cert-answer"
-                        wc-show="cert.horselBalans.svartUppfattaSamtal4Meter" message
+                        ng-show="cert.horselBalans.svartUppfattaSamtal4Meter" message
                         key="{{cert.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span>
-            			<span wc-show="!cert.horselBalans.svartUppfattaSamtal4Meter" class="cert-answer" message
+            			<span ng-show="!cert.horselBalans.svartUppfattaSamtal4Meter" class="cert-answer" message
                         key="ts-diabetes.label.ej-angivet"></span>
             		</span>
 
@@ -300,18 +300,18 @@
             		</span>
 
                 <div class="indent">
-                  <span class="text" wc-show="cert.funktionsnedsattning.funktionsnedsattning">
+                  <span class="text" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
                     <span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span><br />
                     <span id="funktionsnedsattningbeskrivning" class="cert-answer">{{cert.funktionsnedsattning.beskrivning}}</span>
                   </span>
                 </div>
 
-            		<span class="text" wc-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
+            		<span class="text" ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
             			<span message key="ts-bas.label.funktionsnedsattning.otillracklig-rorelseformaga"></span>
             			<span id="funktionsnedsattningotillrackligRorelseformaga"
-                        wc-show="cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
+                        ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
                         key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span>
-            			<span wc-show="!cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
+            			<span ng-show="!cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
                         key="ts-diabetes.label.ej-angivet"></span>
             		</span>
 
@@ -338,7 +338,7 @@
                         key="{{cert.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
             		</span>
                 <div class="indent">
-                  <span class="text" wc-show="cert.hjartKarl.riskfaktorerStroke">
+                  <span class="text" ng-show="cert.hjartKarl.riskfaktorerStroke">
                     <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
                     <span id="beskrivningRiskfaktorer" class="cert-answer">{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
                   </span>
@@ -357,22 +357,22 @@
             			<span message key="ts-bas.label.diabetes.har-diabetes"></span><br>
             			<span id="harDiabetes" class="cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span>
             		</span>
-                <div wc-show="cert.diabetes.harDiabetes">
+                <div ng-show="cert.diabetes.harDiabetes">
                   <span class="text">
                     <span message key="ts-bas.label.diabetes.diabetestyp"></span><br>
                     <span id="diabetesTyp" class="cert-answer" message
                           key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
                   </span>
-                  <span class="text" wc-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
+                  <span class="text" ng-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
                     <span message key="ts-bas.label.diabetes.behandling"></span><br>
-                    <span id="kost" class="cert-answer" wc-show="cert.diabetes.kost" message
+                    <span id="kost" class="cert-answer" ng-show="cert.diabetes.kost" message
                           key="ts-bas.label.diabetes.behandling.kost"></span>
-                    <span id="tabletter" class="cert-answer" wc-show="cert.diabetes.tabletter" message
+                    <span id="tabletter" class="cert-answer" ng-show="cert.diabetes.tabletter" message
                           key="ts-bas.label.diabetes.behandling.tabletter"></span>
-                    <span id="insulin" class="cert-answer" wc-show="cert.diabetes.insulin" message
+                    <span id="insulin" class="cert-answer" ng-show="cert.diabetes.insulin" message
                           key="ts-bas.label.diabetes.behandling.insulin"></span>
                   </span>
-                  <span class="text" wc-show="cert.diabetes.insulin || cert.diabetes.tabletter">
+                  <span class="text" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
                       <div class="alert alert-info">
                         <span message key="ts-bas.helptext.diabetes.behandling"></span>
                       </div>
@@ -404,7 +404,7 @@
             		</span>
 
                 <div class="indent">
-                  <span class="text" wc-show="cert.medvetandestorning.medvetandestorning">
+                  <span class="text" ng-show="cert.medvetandestorning.medvetandestorning">
                     <span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br />
                     <span id="medvetandestorningbeskrivning" class="cert-answer">
                       {{cert.medvetandestorning.beskrivning}}</span>
@@ -466,7 +466,7 @@
                         key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span>
             		</span>
 
-                <div wc-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
+                <div ng-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
 	            		<span class="text no-padding-bottom">
 	            			<span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
 	            			<span id="provtagningBehovs" class="cert-answer" message
@@ -486,7 +486,7 @@
             		</span>
 
                 <div class="indent">
-                  <span class="text" wc-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
+                  <span class="text" ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
                     <span message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
                     <span id="lakemedelOchDos" class="cert-answer">{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
                   </span>
@@ -532,7 +532,7 @@
                           key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span>
             		</span>
                 <div class="indent">
-                  <span class="text" wc-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+                  <span class="text" ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
                     <span message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
                     <span class="cert-answer">{{cert.sjukhusvard.tidpunkt}}</span><br />
 
@@ -557,7 +557,7 @@
             		</span>
 
                 <div class="indent">
-                  <span class="text" wc-show="cert.medicinering.stadigvarandeMedicinering">
+                  <span class="text" ng-show="cert.medicinering.stadigvarandeMedicinering">
                     <span message key="ts-bas.label.medicinering.beskrivning"></span><br />
                     <span id="medicineringbeskrivning" class="cert-answer">{{cert.medicinering.beskrivning}}</span>
                   </span>
@@ -571,11 +571,11 @@
                   <span message key="ts-bas.label.ovrigkommentar"></span>
                 </h3>
 
-             		<span class="text" wc-show="cert.kommentar.length > 0">
+             		<span class="text" ng-show="cert.kommentar.length > 0">
            		    <span id="kommentar" class="cert-answer">{{cert.kommentar}}</span>
             		</span>
 
-             		<span class="text" wc-show="!cert.kommentar">
+             		<span class="text" ng-show="!cert.kommentar">
            		    <span id="kommentarEjAngivet" class="cert-answer" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
             		</span>
               </div>
@@ -586,20 +586,20 @@
                   <span message key="ts-bas.label.bedomning">{{ts-bas.label.bedomning}}</span>
                 </h3>
 
-                <div wc-show="!cert.bedomning.kanInteTaStallning">
+                <div ng-show="!cert.bedomning.kanInteTaStallning">
                   <span class="text no-padding-bottom" message key="ts-bas.label.bedomning-info-alt-1"></span>
                   <span class="text no-padding-bottom">
                       <span id="bedomning" class="cert-answer">{{view.bedomning}}</span>
                   </span>
                 </div>
-                <div wc-show="cert.bedomning.kanInteTaStallning">
+                <div ng-show="cert.bedomning.kanInteTaStallning">
                   <span id="bedomningKanInteTaStallning" class="text no-padding-bottom cert-answer" message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span>
                 </div>
 
                 <div class="text">
                   <span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-                  <span id="lakareSpecialKompetens" class="cert-answer" wc-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
-                  <span id="lakareSpecialKompetensEjAngivet" class="cert-answer" wc-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
+                  <span id="lakareSpecialKompetens" class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+                  <span id="lakareSpecialKompetensEjAngivet" class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </div>
               </div>
 

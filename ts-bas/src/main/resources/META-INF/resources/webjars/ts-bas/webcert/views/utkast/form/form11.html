@@ -32,7 +32,7 @@
       <td><span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span></td>
     </tr>
 
-    <tr wc-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
+    <tr ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
       <td colspan="2"></td>
       <td>
         <p>
@@ -46,7 +46,7 @@
                  ng-model="cert.narkotikaLakemedel.provtagningBehovs">
           <span message key="common.no"></span></label>
         </p>
-        <div class="alert alert-info" wc-show="cert.narkotikaLakemedel.provtagningBehovs">
+        <div class="alert alert-info" ng-show="cert.narkotikaLakemedel.provtagningBehovs">
           <span message key="ts-bas.helptext.alkohol-narkotika.provtagning" />
         </div>
       </td>
@@ -61,7 +61,7 @@
         <p><span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
         </p>
 
-        <div wc-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
+        <div ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
           <p><span message key="ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos"></span></p>
                             <textarea class="form-control" data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos"
                                       id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.lakemedelOchDos}}" rows="3"></textarea>

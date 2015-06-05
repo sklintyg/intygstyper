@@ -4,11 +4,11 @@
     <div wc-spinner label="fk7263.info.loading.existing.qa" show-spinner="!widgetState.doneLoading"
          show-content="widgetState.doneLoading">
 
-      <div class="webcert-bottom-padding-section" wc-show="certProperties.isLoaded">
+      <div class="webcert-bottom-padding-section" ng-show="certProperties.isLoaded">
 
         <!-- Question button -->
         <div
-            wc-show="!certProperties.isRevoked && !widgetState.newQuestionOpen && (certProperties.isSent || qaList.length>0)"
+            ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen && (certProperties.isSent || qaList.length>0)"
             wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}">
           <div class="form-group">
             <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till
@@ -29,7 +29,7 @@
         </div>
 
         <!-- New question form -->
-        <div wc-show="widgetState.newQuestionOpen">
+        <div ng-show="widgetState.newQuestionOpen">
           <div class="form-group">
             <label class="control-label">Fråga</label>
             <textarea wc-maxlength ng-trim="false" maxlength="2000" rows="13" class="form-control"
@@ -45,7 +45,7 @@
           </div>
 
           <!-- error message occuring when inteacting with server for this FragaSvar-->
-          <div id="newQuestion-load-error" wc-show="newQuestion.activeErrorMessageKey" class="alert alert-danger">
+          <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-danger">
             <span message key="fk7263.error.{{newQuestion.activeErrorMessageKey}}"></span>
           </div>
 
@@ -54,7 +54,7 @@
             <button class="btn btn-success" ng-click="sendQuestion(newQuestion)"
                     ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}"
                     id="sendQuestionBtn">
-              <img src="/img/loader-small-green.gif" wc-show="newQuestion.updateInProgress"> Skicka till
+              <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till
               Försäkringskassan
             </button>
             <button class="btn btn-default btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt
@@ -73,13 +73,13 @@
         </div>
 
         <!-- error message -->
-        <div id="qa-list-load-error" wc-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
+        <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
              class="alert alert-danger">
           <span message key="fk7263.error.{{widgetState.activeErrorMessageKey}}"></span>
         </div>
       </div>
 
-      <div class="webcert-col-section qa-list-section" wc-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
+      <div class="webcert-col-section qa-list-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
 
         <h2 class="col-head">Ej hanterade frågor och svar</h2>
         <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
@@ -94,7 +94,7 @@
 
     <!-- ------------------------- HANTERADE FRÅGOR --------------------------------------------- -->
 
-    <div class="webcert-col-section qa-list-section" wc-show="(qaList | filter:closedIssuesFilter).length > 0">
+    <div class="webcert-col-section qa-list-section" ng-show="(qaList | filter:closedIssuesFilter).length > 0">
 
       <h2 class="col-head">Hanterade frågor och svar</h2>
       <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
