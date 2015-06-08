@@ -8,7 +8,7 @@
 
         <!-- Question button -->
         <div
-            ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen && (certProperties.isSent || qaList.length>0)"
+            ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen && (viewState.isIntygOnSendQueue || certProperties.isSent || qaList.length>0)"
             wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}">
           <div class="form-group">
             <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till
@@ -16,7 +16,7 @@
             </button>
           </div>
         </div>
-        <div ng-if="certProperties.isSent === false && (qaList.length<1)" wc-check-vardenhet
+        <div ng-if="viewState.isIntygOnSendQueue === false && certProperties.isSent === false && (qaList.length<1)" wc-check-vardenhet
              vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}" class="alert alert-info"
              id="certificate-is-not-sent-to-fk-message-text">
           <strong>Intyget är inte skickat till Försäkringskassan.</strong><br> Det går därför inte att ställa frågor om
