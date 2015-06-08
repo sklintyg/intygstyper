@@ -31,6 +31,7 @@ describe('QACtrl', function() {
         fragaSvarService = jasmine.createSpyObj('fk7263.fragaSvarService',
             [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled', 'saveNewQuestion', 'saveAnswer']);
         $provide.value('fk7263.fragaSvarService', fragaSvarService);
+        $provide.value('common.IntygViewStateService', {});
         deferred = jasmine.createSpyObj('def', ['resolve']);
     }));
 
