@@ -5,7 +5,6 @@ describe('ts-bas.Utkast.Form4Controller', function() {
     var User;
     var wcFocus;
     var utkastNotifyService;
-    var viewState;
     var anchorScrollService;
 
 
@@ -25,37 +24,30 @@ describe('ts-bas.Utkast.Form4Controller', function() {
     beforeEach(angular.mock.inject([
         '$controller',
         '$rootScope',
+        'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService',
-        function($controller, $rootScope, _viewState_) {
+        function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        viewState = _viewState_;
 
         ctrl = $controller('ts-bas.Utkast.Form4Controller', { $scope: $scope });
-
-            var cert = testData.cert;
-
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(cert);
-
-        $scope.$digest();
     }]));
 
     // --- form4
     it('should reset hidden fields when "riskfaktorerStroke" is set to false', function() {
-        $scope.cert.hjartKarl.riskfaktorerStroke = true;
+        $scope.viewState.intygModel.hjartKarl.riskfaktorerStroke = true;
         $scope.$digest();
 
-        $scope.cert.hjartKarl.beskrivningRiskfaktorer = 'Hello';
-        $scope.cert.hjartKarl.riskfaktorerStroke = false;
+        $scope.viewState.intygModel.hjartKarl.beskrivningRiskfaktorer = 'Hello';
+        $scope.viewState.intygModel.hjartKarl.riskfaktorerStroke = false;
         $scope.$digest();
 
-        expect($scope.cert.hjartKarl.beskrivningRiskfaktorer).toBe('');
+        expect($scope.viewState.intygModel.hjartKarl.beskrivningRiskfaktorer).toBe('');
 
         // Attic
-        $scope.cert.hjartKarl.riskfaktorerStroke = true;
+        $scope.viewState.intygModel.hjartKarl.riskfaktorerStroke = true;
         $scope.$digest();
 
-        expect($scope.cert.hjartKarl.beskrivningRiskfaktorer).toBe('Hello');
+        expect($scope.viewState.intygModel.hjartKarl.beskrivningRiskfaktorer).toBe('Hello');
     });
     // --- form4
 });

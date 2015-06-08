@@ -19,9 +19,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             // Page states
             $scope.user = UserModel;
 
-            // Intyg state
-            $scope.cert = viewState.intygModel;
-
             /****************************************************************************
              * Exposed interaction functions to view
              ****************************************************************************/

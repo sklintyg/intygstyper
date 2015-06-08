@@ -5,7 +5,6 @@ describe('ts-bas.Utkast.Form11Controller', function() {
     var User;
     var wcFocus;
     var utkastNotifyService;
-    var viewState;
     var anchorScrollService;
 
 
@@ -25,72 +24,65 @@ describe('ts-bas.Utkast.Form11Controller', function() {
     beforeEach(angular.mock.inject([
         '$controller',
         '$rootScope',
+        'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService',
-        function($controller, $rootScope, _viewState_) {
+        function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        viewState = _viewState_;
 
         ctrl = $controller('ts-bas.Utkast.Form11Controller', { $scope: $scope });
-
-            var cert = testData.cert;
-
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(cert);
-
-        $scope.$digest();
     }]));
 
     // --- form11
     it('should reset hidden fields when "teckenMissbruk" and "foremalForVardinsats" is set to false', function() {
-        $scope.cert.narkotikaLakemedel.teckenMissbruk = true;
-        $scope.cert.narkotikaLakemedel.foremalForVardinsats = true;
+        $scope.viewState.intygModel.narkotikaLakemedel.teckenMissbruk = true;
+        $scope.viewState.intygModel.narkotikaLakemedel.foremalForVardinsats = true;
         $scope.$digest();
 
         // Set provtagning
-        $scope.cert.narkotikaLakemedel.provtagningBehovs = true;
+        $scope.viewState.intygModel.narkotikaLakemedel.provtagningBehovs = true;
 
         // One true, nothing changes
-        $scope.cert.narkotikaLakemedel.teckenMissbruk = false;
+        $scope.viewState.intygModel.narkotikaLakemedel.teckenMissbruk = false;
         $scope.$digest();
 
-        expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
+        expect($scope.viewState.intygModel.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
 
         // Still one true, nothing changes
-        $scope.cert.narkotikaLakemedel.teckenMissbruk = true;
-        $scope.cert.narkotikaLakemedel.foremalForVardinsats = false;
+        $scope.viewState.intygModel.narkotikaLakemedel.teckenMissbruk = true;
+        $scope.viewState.intygModel.narkotikaLakemedel.foremalForVardinsats = false;
         $scope.$digest();
 
-        expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
+        expect($scope.viewState.intygModel.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
 
         // Both false, provtagning = true will be saved and cleared because field is invisible
-        $scope.cert.narkotikaLakemedel.teckenMissbruk = false;
+        $scope.viewState.intygModel.narkotikaLakemedel.teckenMissbruk = false;
         $scope.$digest();
 
-        expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeUndefined();
+        expect($scope.viewState.intygModel.narkotikaLakemedel.provtagningBehovs).toBeUndefined();
 
         // Attic
         // One true again, provtagning = true should be restored from attic
-        $scope.cert.narkotikaLakemedel.teckenMissbruk = true;
+        $scope.viewState.intygModel.narkotikaLakemedel.teckenMissbruk = true;
         $scope.$digest();
 
-        expect($scope.cert.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
+        expect($scope.viewState.intygModel.narkotikaLakemedel.provtagningBehovs).toBeTruthy();
     });
 
     it('should reset hidden fields when "lakarordineratLakemedelsbruk" is set to false', function() {
-        $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk = true;
+        $scope.viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk = true;
         $scope.$digest();
 
-        $scope.cert.narkotikaLakemedel.lakemedelOchDos = 'Hello';
-        $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk = false;
+        $scope.viewState.intygModel.narkotikaLakemedel.lakemedelOchDos = 'Hello';
+        $scope.viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk = false;
         $scope.$digest();
 
-        expect($scope.cert.narkotikaLakemedel.lakemedelOchDos).toBe('');
+        expect($scope.viewState.intygModel.narkotikaLakemedel.lakemedelOchDos).toBe('');
 
         // Attic
-        $scope.cert.narkotikaLakemedel.lakarordineratLakemedelsbruk = true;
+        $scope.viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk = true;
         $scope.$digest();
 
-        expect($scope.cert.narkotikaLakemedel.lakemedelOchDos).toBe('Hello');
+        expect($scope.viewState.intygModel.narkotikaLakemedel.lakemedelOchDos).toBe('Hello');
     });
     // --- form11
 });

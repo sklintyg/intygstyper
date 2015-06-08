@@ -13,7 +13,6 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 
             $scope.viewState = viewState.reset();
             $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. let view take from viewstate
-            $scope.cert = viewState.intygModel; // TODO: remove cert completely
             $scope.user = UserModel;
 
             /***************************************************************************
@@ -25,7 +24,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
              *************************************************************************/
 
-            $scope.$watch('cert', function() {
+            $scope.$watch('viewState.intygModel', function() {
                 viewState.updateKravYtterligareUnderlag();
             }, true);
 

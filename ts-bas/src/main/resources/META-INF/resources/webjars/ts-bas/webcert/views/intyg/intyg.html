@@ -12,7 +12,7 @@
 
               <!-- Patientens adressuppgifter -->
               <div wc-field field-label="ts-bas.label.patientadress" filled="true">
-                <span class="cert-answer"><span id="patientpostadress">{{cert.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{cert.grundData.patient.postnummer}}</span> <span id="patientpostort">{{cert.grundData.patient.postort}}</span></span>
+                <span class="cert-answer"><span id="patientpostadress">{{viewState.intygModel.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{viewState.intygModel.grundData.patient.postnummer}}</span> <span id="patientpostort">{{viewState.intygModel.grundData.patient.postort}}</span></span>
               </div>
 
               <!-- Intyget avser -->
@@ -22,7 +22,7 @@
 
               <!-- Identitet -->
               <div wc-field field-label="ts-bas.label.identitet" filled="true">
-                <span id="identitet"><span class="cert-answer" message key="ts-bas.label.identitet.{{cert.vardkontakt.idkontroll}}"></span></span>
+                <span id="identitet"><span class="cert-answer" message key="ts-bas.label.identitet.{{viewState.intygModel.vardkontakt.idkontroll}}"></span></span>
               </div>
 
               <!-- 1 syn -->
@@ -30,19 +30,19 @@
                 <!-- a -->
                 <p>
                   <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
-                  <span id="synfaltsdefekter"><span class="cert-answer" message key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span></span>
+                  <span id="synfaltsdefekter"><span class="cert-answer" message key="{{viewState.intygModel.syn.synfaltsdefekter | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- b -->
                 <p>
                   <span message key="ts-bas.label.syn.nattblindhet"></span>
-                  <span id="nattblindhet"><span class="cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span></span>
+                  <span id="nattblindhet"><span class="cert-answer" message key="{{viewState.intygModel.syn.nattblindhet | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- c -->
                 <p>
                   <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
-                  <span id="progressivOgonsjukdom"><span class="cert-answer" message key="{{cert.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span></span>
+                  <span id="progressivOgonsjukdom"><span class="cert-answer" message key="{{viewState.intygModel.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- a-c message -->
@@ -53,14 +53,14 @@
                 <!-- d -->
                 <p>
                   <span message key="ts-bas.label.syn.diplopi"></span>
-                  <span id="diplopi"><span class="cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span></span>
+                  <span id="diplopi"><span class="cert-answer" message key="{{viewState.intygModel.syn.diplopi | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- e -->
                 <p>
                   <span message key="ts-bas.label.syn.nystagmus"></span>
-                  <span id="nystagmus"><span class="cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span></span>
-                </p>
+                  <span id="nystagmus"><span class="cert-answer" message key="{{viewState.intygModel.syn.nystagmus | BoolToTextFilter}}"></span></span>
+                  viewState.intygModel
 
                 <!-- f -->
                 <p>
@@ -76,22 +76,22 @@
                   </tr>
                   <tr>
                     <td>Höger öga</td>
-                    <td id="hogerOgautanKorrektion">{{cert.syn.hogerOga.utanKorrektion | number : 1}}</td>
-                    <td id="hogerOgamedKorrektion">{{cert.syn.hogerOga.medKorrektion | number : 1}}</td>
-                    <td id="hogerOgakontaktlins"><span message key="{{cert.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span>
+                    <td id="hogerOgautanKorrektion">{{viewState.intygModel.syn.hogerOga.utanKorrektion | number : 1}}</td>
+                    <td id="hogerOgamedKorrektion">{{viewState.intygModel.syn.hogerOga.medKorrektion | number : 1}}</td>
+                    <td id="hogerOgakontaktlins"><span message key="{{viewState.intygModel.syn.hogerOga.kontaktlins | BoolToTextFilter}}"></span>
                     </td>
                   </tr>
                   <tr>
                     <td>Vänster öga</td>
-                    <td id="vansterOgautanKorrektion">{{cert.syn.vansterOga.utanKorrektion | number : 1}}</td>
-                    <td id="vansterOgamedKorrektion">{{cert.syn.vansterOga.medKorrektion | number : 1}}</td>
-                    <td id="vansterOgakontaktlins"><span message key="{{cert.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span>
+                    <td id="vansterOgautanKorrektion">{{viewState.intygModel.syn.vansterOga.utanKorrektion | number : 1}}</td>
+                    <td id="vansterOgamedKorrektion">{{viewState.intygModel.syn.vansterOga.medKorrektion | number : 1}}</td>
+                    <td id="vansterOgakontaktlins"><span message key="{{viewState.intygModel.syn.vansterOga.kontaktlins | BoolToTextFilter}}"></span>
                     </td>
                   </tr>
                   <tr>
                     <td>Binokulärt</td>
-                    <td id="binokulartutanKorrektion">{{cert.syn.binokulart.utanKorrektion | number : 1}}</td>
-                    <td id="binokulartmedKorrektion">{{cert.syn.binokulart.medKorrektion | number : 1}}</td>
+                    <td id="binokulartutanKorrektion">{{viewState.intygModel.syn.binokulart.utanKorrektion | number : 1}}</td>
+                    <td id="binokulartmedKorrektion">{{viewState.intygModel.syn.binokulart.medKorrektion | number : 1}}</td>
                     <td></td>
                   </tr>
                 </table>
@@ -99,8 +99,8 @@
                 <h3>Korrektionsglasens styrka</h3>
                 <span message key="ts-bas.label.syn.8-dioptrier"></span>
                 <span id="korrektionsglasensStyrka"><span class="cert-answer" message
-                      key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span></span>
-                <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+                      key="{{viewState.intygModel.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span></span>
+                <div class="alert alert-info" ng-show="viewState.intygModel.syn.korrektionsglasensStyrka == true">
                   <span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
                 </div>
               </div>
@@ -110,12 +110,12 @@
                 <p>
                   <span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
                   <span id="horselBalansbalansrubbningar"><span class="cert-answer" message
-                        key="{{cert.horselBalans.balansrubbningar | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.horselBalans.balansrubbningar | BoolToTextFilter}}"></span></span>
                 </p>
-                <p ng-show="cert.horselBalans.svartUppfattaSamtal4Meter != null">
+                <p ng-show="viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter != null">
                   <span message key="ts-bas.label.horselbalans.uppfatta-vanlig-samtalsstamma"></span>
                   <span id="horselBalanssvartUppfattaSamtal4Meter"><span class="cert-answer" message
-                        key="{{cert.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span></span>
                 </p>
               </div>
 
@@ -126,18 +126,18 @@
                 <p>
                   <span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
             			<span id="funktionsnedsattning"><span class="cert-answer" message
-                        key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span></span>
                 </p>
-                <p class="indent" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+                <p class="indent" ng-show="viewState.intygModel.funktionsnedsattning.funktionsnedsattning">
                   <span message key="ts-bas.label.view.funktionsnedsattning.beskrivning"></span><br />
-                  <span id="funktionsnedsattningbeskrivning"><span class="cert-answer">{{cert.funktionsnedsattning.beskrivning}}</span></span>
+                  <span id="funktionsnedsattningbeskrivning"><span class="cert-answer">{{viewState.intygModel.funktionsnedsattning.beskrivning}}</span></span>
                 </p>
 
                 <!-- b -->
-                <p ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga != null">
+                <p ng-show="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga != null">
                   <span message key="ts-bas.label.funktionsnedsattning.rorelsformaga"></span>
             			<span id="funktionsnedsattningotillrackligRorelseformaga"><span class="cert-answer" message
-                        key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span></span>
                 </p>
 
               </div>
@@ -147,21 +147,21 @@
                 <p>
                   <span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span><br>
             			<span id="hjartKarlSjukdom"><span class="cert-answer" message
-                        key="{{cert.hjartKarl.hjartKarlSjukdom | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.hjartKarl.hjartKarlSjukdom | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span><br>
             			<span id="hjarnskadaEfterTrauma"><span class="cert-answer" message
-                        key="{{cert.hjartKarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.hjartKarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span><br>
             			<span id="riskfaktorerStroke"><span class="cert-answer" message
-                        key="{{cert.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span></span>
                 </p>
-                <p class="indent" ng-show="cert.hjartKarl.riskfaktorerStroke">
+                <p class="indent" ng-show="viewState.intygModel.hjartKarl.riskfaktorerStroke">
                   <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
-                  <span id="beskrivningRiskfaktorer"><span class="cert-answer">{{cert.hjartKarl.beskrivningRiskfaktorer}}</span></span>
+                  <span id="beskrivningRiskfaktorer"><span class="cert-answer">{{viewState.intygModel.hjartKarl.beskrivningRiskfaktorer}}</span></span>
                 </p>
 
               </div>
@@ -170,24 +170,24 @@
               <div wc-field field-label="ts-bas.label.diabetes" filled="true">
                 <p>
                   <span message key="ts-bas.label.diabetes.har-diabetes"></span>
-                  <span id="harDiabetes"><span class="cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span></span>
+                  <span id="harDiabetes"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.harDiabetes | BoolToTextFilter}}"></span></span>
                 </p>
-                <div ng-show="cert.diabetes.harDiabetes">
+                <div ng-show="viewState.intygModel.diabetes.harDiabetes">
                   <p>
                     <span message key="ts-bas.label.diabetes.diabetestyp"></span>
             			  <span id="diabetesTyp"><span class="cert-answer" message
-                            key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span></span>
+                            key="ts-bas.label.diabetes.diabetestyp.{{viewState.intygModel.diabetes.diabetesTyp}}"></span></span>
                   </p>
-                  <p ng-show="cert.diabetes.kost || cert.diabetes.tabletter || cert.diabetes.insulin">
+                  <p ng-show="viewState.intygModel.diabetes.kost || viewState.intygModel.diabetes.tabletter || viewState.intygModel.diabetes.insulin">
                     <span message key="ts-bas.label.diabetes.view.behandling"></span><br>
-                    <span id="kost"><span class="cert-answer" ng-show="cert.diabetes.kost" message
+                    <span id="kost"><span class="cert-answer" ng-show="viewState.intygModel.diabetes.kost" message
                           key="ts-bas.label.diabetes.behandling.kost"></span></span>
-                    <span id="tabletter"><span class="cert-answer" ng-show="cert.diabetes.tabletter" message
+                    <span id="tabletter"><span class="cert-answer" ng-show="viewState.intygModel.diabetes.tabletter" message
                           key="ts-bas.label.diabetes.behandling.tabletter"></span></span>
-                    <span id="insulin"><span class="cert-answer" ng-show="cert.diabetes.insulin" message
+                    <span id="insulin"><span class="cert-answer" ng-show="viewState.intygModel.diabetes.insulin" message
                           key="ts-bas.label.diabetes.behandling.insulin"></span></span>
                   </p>
-                  <div class="alert alert-info" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
+                  <div class="alert alert-info" ng-show="viewState.intygModel.diabetes.insulin || viewState.intygModel.diabetes.tabletter">
                     <span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
                   </div>
                 </div>
@@ -199,7 +199,7 @@
                 <p>
                   <span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
             			<span id="neurologiskSjukdom"><span class="cert-answer" message
-                        key="{{cert.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span></span>
                 </p>
 
               </div>
@@ -209,12 +209,12 @@
                 <p>
                   <span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
             			<span id="medvetandestorning"><span class="cert-answer" message
-                        key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span></span>
                 </p>
 
-                <p class="indent" ng-show="cert.medvetandestorning.medvetandestorning">
+                <p class="indent" ng-show="viewState.intygModel.medvetandestorning.medvetandestorning">
                   <span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br />
-                  <span id="medvetandestorningbeskrivning"><span class="cert-answer">{{cert.medvetandestorning.beskrivning}}</span></span>
+                  <span id="medvetandestorningbeskrivning"><span class="cert-answer">{{viewState.intygModel.medvetandestorning.beskrivning}}</span></span>
                 </p>
               </div>
 
@@ -222,7 +222,7 @@
               <div wc-field field-label="ts-bas.label.njurar" filled="true">
                 <span message key="ts-bas.label.njurar.nedsatt-njurfunktion"></span>
                 <span id="nedsattNjurfunktion"><span class="cert-answer" message
-                      key="{{cert.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span></span>
+                      key="{{viewState.intygModel.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span></span>
 
               </div>
 
@@ -230,7 +230,7 @@
               <div wc-field field-label="ts-bas.label.kognitivt" filled="true">
                 <span message key="ts-bas.label.kognitivt.sviktande-kognitiv-funktion"></span>
                 <span id="sviktandeKognitivFunktion"><span class="cert-answer" message
-                      key="{{cert.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span></span>
+                      key="{{viewState.intygModel.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span></span>
 
               </div>
 
@@ -238,7 +238,7 @@
               <div wc-field field-label="ts-bas.label.somnvakenhet" filled="true">
                 <span message key="ts-bas.label.somn-vakenhet.tecken-somnstorningar"></span>
                 <span id="teckenSomnstorningar"><span class="cert-answer" message
-                      key="{{cert.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span></span>
+                      key="{{viewState.intygModel.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span></span>
 
               </div>
 
@@ -247,20 +247,20 @@
                 <p>
                   <span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
             			<span id="teckenMissbruk"><span class="cert-answer" message
-                        key="{{cert.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <p>
                   <span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
             			<span id="foremalForVardinsats"><span class="cert-answer" message
-                        key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span></span>
                 </p>
 
-                <div ng-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
+                <div ng-show="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats || viewState.intygModel.narkotikaLakemedel.teckenMissbruk">
                   <p>
                     <span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
 	            			<span id="provtagningBehovs"><span class="cert-answer" message
-                          key="{{cert.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span></span>
+                          key="{{viewState.intygModel.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span></span>
                   </p>
                   <p>
                   <div class="alert alert-info">
@@ -272,12 +272,12 @@
                 <p>
                   <span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
             			<span id="lakarordineratLakemedelsbruk"><span class="cert-answer" message
-                        key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span></span>
                 </p>
 
-                <p class="indent" ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
+                <p class="indent" ng-show="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk">
                   <span message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
-                  <span id="lakemedelOchDos"><span class="cert-answer">{{cert.narkotikaLakemedel.lakemedelOchDos}}</span></span>
+                  <span id="lakemedelOchDos"><span class="cert-answer">{{viewState.intygModel.narkotikaLakemedel.lakemedelOchDos}}</span></span>
                 </p>
 
               </div>
@@ -285,7 +285,7 @@
               <!-- 12 -->
               <div wc-field field-label="ts-bas.label.psykiskt" filled="true">
                 <span message key="ts-bas.label.psykiskt.psykisksjukdom"></span>
-                <span id="psykiskSjukdom"><span class="cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span></span>
+                <span id="psykiskSjukdom"><span class="cert-answer" message key="{{viewState.intygModel.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span></span>
               </div>
 
               <!-- 13 -->
@@ -293,12 +293,12 @@
                 <p>
                   <span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
             			<span id="psykiskUtvecklingsstorning"><span class="cert-answer" message
-                        key="{{cert.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span>
             			<span id="harSyndrom"><span class="cert-answer" message
-                        key="{{cert.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span></span>
+                        key="{{viewState.intygModel.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span></span>
                 </p>
               </div>
 
@@ -307,17 +307,17 @@
                 <p>
                   <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
             		  <span id="sjukhusEllerLakarkontakt"><span class="cert-answer" message
-                          key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span></span>
+                          key="{{viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span></span>
                 </p>
-                <p class="indent" ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
+                <p class="indent" ng-show="viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt">
                   <span message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
-                  <span class="cert-answer" id="tidpunkt">{{cert.sjukhusvard.tidpunkt}}</span><br />
+                  <span class="cert-answer" id="tidpunkt">{{viewState.intygModel.sjukhusvard.tidpunkt}}</span><br />
 
                   <span message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
-                  <span class="cert-answer" id="vardinrattning">{{cert.sjukhusvard.vardinrattning}}</span><br />
+                  <span class="cert-answer" id="vardinrattning">{{viewState.intygModel.sjukhusvard.vardinrattning}}</span><br />
 
                   <span message key="ts-bas.label.sjukhusvard.anledning"></span>
-                  <span class="cert-answer" id="sjukhusvardanledning">{{cert.sjukhusvard.anledning}}</span><br />
+                  <span class="cert-answer" id="sjukhusvardanledning">{{viewState.intygModel.sjukhusvard.anledning}}</span><br />
                 </p>
               </div>
 
@@ -326,28 +326,28 @@
                 <p>
                   <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
             		  <span id="stadigvarandeMedicinering"><span class="cert-answer" message
-                          key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span></span>
+                          key="{{viewState.intygModel.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span></span>
                 </p>
-                <p class="indent" ng-show="cert.medicinering.stadigvarandeMedicinering">
+                <p class="indent" ng-show="viewState.intygModel.medicinering.stadigvarandeMedicinering">
                   <span message key="ts-bas.label.medicinering.beskrivning"></span><br />
-                  <span id="medicineringbeskrivning"><span class="cert-answer">{{cert.medicinering.beskrivning}}</span></span>
+                  <span id="medicineringbeskrivning"><span class="cert-answer">{{viewState.intygModel.medicinering.beskrivning}}</span></span>
                 </p>
               </div>
 
               <!-- 16 ovrigt -->
               <div wc-field field-label="ts-bas.label.ovrigkommentar" filled="true">
-                <p ng-show="cert.kommentar.length > 0">
-                  <span id="kommentar"><span class="cert-answer">{{cert.kommentar}}</span></span>
+                <p ng-show="viewState.intygModel.kommentar.length > 0">
+                  <span id="kommentar"><span class="cert-answer">{{viewState.intygModel.kommentar}}</span></span>
                 </p>
 
-                <p class="cert-answer" ng-show="!cert.kommentar" id="kommentarEjAngivet">
+                <p class="cert-answer" ng-show="!viewState.intygModel.kommentar" id="kommentarEjAngivet">
                   <span message key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </p>
               </div>
 
               <!-- Bedomning -->
               <div wc-field field-label="ts-bas.label.bedomning" filled="true">
-                <div ng-show="!cert.bedomning.kanInteTaStallning">
+                <div ng-show="!viewState.intygModel.bedomning.kanInteTaStallning">
                   <span message key="ts-bas.label.bedomning-info-alt-1"></span>
 
                   <p>
@@ -355,14 +355,14 @@
                   </p>
                 </div>
 
-                <div ng-show="cert.bedomning.kanInteTaStallning">
+                <div ng-show="viewState.intygModel.bedomning.kanInteTaStallning">
                   <span id="bedomningKanInteTaStallning"><span class="cert-answer" message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></span><br><br>
                 </div>
 
                 <div>
                   <span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-                  <span class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0" id="lakareSpecialKompetens">{{cert.bedomning.lakareSpecialKompetens}}</span>
-                  <span id="lakareSpecialKompetensEjAngivet"><span class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
+                  <span class="cert-answer" ng-show="viewState.intygModel.bedomning.lakareSpecialKompetens.length > 0" id="lakareSpecialKompetens">{{viewState.intygModel.bedomning.lakareSpecialKompetens}}</span>
+                  <span id="lakareSpecialKompetensEjAngivet"><span class="cert-answer" ng-show="!viewState.intygModel.bedomning.lakareSpecialKompetens" message
                         key="ts-bas.label.bedomning-info-ej-angivet"></span></span>
                 </div>
               </div>
@@ -375,15 +375,15 @@
                 <h4>
                   <span message key="common.date"></span>
                 </h4>
-                <p id="signeringsdatum">{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
+                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date:'longDate'}}</p>
                 <h4>
                   <span message key="ts-bas.label.kontakt-info"></span>
                 </h4>
-                <span id="vardperson_namn">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br>
-                <span id="vardperson_enhetsnamn">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
-                <span id="vardenhet_postadress">{{cert.grundData.skapadAv.vardenhet.postadress}}</span><br>
-                <span id="vardenhet_postnummer">{{cert.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardenhet_postort">{{cert.grundData.skapadAv.vardenhet.postort}}</span><br>
-                <span id="vardenhet_telefonnummer">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
+                <span id="vardperson_namn">{{viewState.intygModel.grundData.skapadAv.fullstandigtNamn}}</span><br>
+                <span id="vardperson_enhetsnamn">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                <span id="vardenhet_postadress">{{viewState.intygModel.grundData.skapadAv.vardenhet.postadress}}</span><br>
+                <span id="vardenhet_postnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardenhet_postort">{{viewState.intygModel.grundData.skapadAv.vardenhet.postort}}</span><br>
+                <span id="vardenhet_telefonnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
               </div>
 
             </div>

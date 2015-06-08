@@ -3,26 +3,25 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form17Controller',
         'ts-bas.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
-            $scope.$watch('cert.bedomning.kanInteTaStallning', function (behorighet) {
-                if (!$scope.cert.bedomning) {
-                    $scope.cert.bedomning = {
+            $scope.$watch('viewState.intygModel.bedomning.kanInteTaStallning', function (behorighet) {
+                if (!viewState.intygModel.bedomning) {
+                    viewState.intygModel.bedomning = {
                         korkortstyp: {},
                         kanInteTaStallning: false
                     };
                 }
 
                 if(behorighet === undefined){
-                    $scope.cert.bedomning.kanInteTaStallning = undefined;
+                    viewState.intygModel.bedomning.kanInteTaStallning = undefined;
                 } else if (behorighet) {
-                    $scope.cert.bedomning.kanInteTaStallning = true;
-                    $scope.cert.updateToAttic('bedomning.korkortstyp');
-                    $scope.cert.clear('bedomning.korkortstyp');
+                    viewState.intygModel.bedomning.kanInteTaStallning = true;
+                    viewState.intygModel.updateToAttic('bedomning.korkortstyp');
+                    viewState.intygModel.clear('bedomning.korkortstyp');
                 } else {
-                    $scope.cert.restoreFromAttic('bedomning.korkortstyp');
-                    $scope.cert.bedomning.kanInteTaStallning = false;
+                    viewState.intygModel.restoreFromAttic('bedomning.korkortstyp');
+                    viewState.intygModel.bedomning.kanInteTaStallning = false;
                 }
             });
             

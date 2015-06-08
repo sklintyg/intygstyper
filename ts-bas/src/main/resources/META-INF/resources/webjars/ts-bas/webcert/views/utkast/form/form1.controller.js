@@ -3,7 +3,6 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form1Controller',
         'ts-bas.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
 

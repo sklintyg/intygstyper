@@ -14,7 +14,6 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
             $scope.viewState = ViewState;
 
             $scope.user = { lakare: User.getUserContext().lakare };
-            $scope.cert = {};
 
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = '/moduleapi/intyg/ts-bas/' + $stateParams.certificateId + '/pdf';
@@ -51,13 +50,13 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                 IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null) {
-                        $scope.cert = result.contents;
-                        if ($scope.cert.syn.synfaltsdefekter === true || $scope.cert.syn.nattblindhet === true ||
-                            $scope.cert.syn.progressivOgonsjukdom === true) {
+                        ViewState.intygModel = result.contents;
+                        if (ViewState.intygModel.syn.synfaltsdefekter === true || ViewState.intygModel.syn.nattblindhet === true ||
+                            ViewState.intygModel.syn.progressivOgonsjukdom === true) {
                             $scope.achelptext = true;
                         }
-                        ViewState.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
-                        ViewState.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
+                        ViewState.intygAvser = createKorkortstypListString(ViewState.intygModel.intygAvser.korkortstyp);
+                        ViewState.bedomning = createKorkortstypListString(ViewState.intygModel.bedomning.korkortstyp);
 
                         $rootScope.$emit('ts-bas.ViewCertCtrl.load', result);
                         ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'TS');
@@ -68,7 +67,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                             ViewState.common.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/ts-bas/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/ts-bas/' + ViewState.intygModel.id + '/pdf';
 
                     } else {
                         $log.debug('Got error while loading cert - invalid data');

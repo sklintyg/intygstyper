@@ -16,8 +16,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             // Page setup
             $scope.user = { lakare: UserModel.userContext.lakare };
 
-            $scope.cert = {};
-            $scope.cert.filledAlways = true;
+            ViewState.intygModel = {};
+            ViewState.intygModel.filledAlways = true;
 
             /**
              * Private
@@ -27,7 +27,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
-                        $scope.cert = result.contents;
+                        ViewState.intygModel = result.contents;
 
                         ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FK');
                         ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
@@ -37,10 +37,10 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                             ViewState.common.intyg.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', $scope.cert, ViewState.common.intyg);
-                        $rootScope.$broadcast('intyg.loaded', $scope.cert);
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
+                        $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
                         if ($stateParams.signed) {

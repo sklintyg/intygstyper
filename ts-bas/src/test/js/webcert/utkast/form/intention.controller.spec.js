@@ -5,7 +5,6 @@ describe('ts-bas.Utkast.Form17Controller', function() {
     var User;
     var wcFocus;
     var utkastNotifyService;
-    var viewState;
     var anchorScrollService;
 
 
@@ -25,19 +24,10 @@ describe('ts-bas.Utkast.Form17Controller', function() {
     beforeEach(angular.mock.inject([
         '$controller',
         '$rootScope',
-        'ts-bas.UtkastController.ViewStateService',
-        function($controller, $rootScope, _viewState_) {
+        function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        viewState = _viewState_;
 
         ctrl = $controller('ts-bas.Utkast.IntentionController', { $scope: $scope });
-
-            var cert = testData.cert;
-
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(cert);
-
-        $scope.$digest();
     }]));
 
     // --- intention
@@ -83,29 +73,29 @@ describe('ts-bas.Utkast.Form17Controller', function() {
         getCheckboxForKorkortstyp('D1').selected = true;
         $scope.$digest();
 
-        $scope.cert.horselBalans.svartUppfattaSamtal4Meter = true;
-        $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = true;
+        $scope.viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter = true;
+        $scope.viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga = true;
         getCheckboxForKorkortstyp('D1').selected = false;
         $scope.$digest();
 
-        expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeUndefined();
-        expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeUndefined();
+        expect($scope.viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter).toBeUndefined();
+        expect($scope.viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga).toBeUndefined();
 
         // Attic
         getCheckboxForKorkortstyp('D1').selected = true;
         $scope.$digest();
 
-        expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeTruthy();
-        expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeTruthy();
+        expect($scope.viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter).toBeTruthy();
+        expect($scope.viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga).toBeTruthy();
 
         // Check that 2b and 3b still are selected if you select another high körkortstyp after it already is set to high.
-        $scope.cert.horselBalans.svartUppfattaSamtal4Meter = true;
-        $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = true;
+        $scope.viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter = true;
+        $scope.viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga = true;
         getCheckboxForKorkortstyp('D1E').selected = true;
         $scope.$digest();
 
-        expect($scope.cert.horselBalans.svartUppfattaSamtal4Meter).toBeTruthy();
-        expect($scope.cert.funktionsnedsattning.otillrackligRorelseformaga).toBeTruthy();
+        expect($scope.viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter).toBeTruthy();
+        expect($scope.viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga).toBeTruthy();
     });
     // --- intention
 
@@ -113,9 +103,9 @@ describe('ts-bas.Utkast.Form17Controller', function() {
     // Helper methods
 
     function getCheckboxForKorkortstyp(typ) {
-        for (var i = 0; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
-            if ($scope.cert.intygAvser.korkortstyp[i].type === typ) {
-                return $scope.cert.intygAvser.korkortstyp[i];
+        for (var i = 0; i < $scope.viewState.intygModel.intygAvser.korkortstyp.length; i++) {
+            if ($scope.viewState.intygModel.intygAvser.korkortstyp[i].type === typ) {
+                return $scope.viewState.intygModel.intygAvser.korkortstyp[i];
             }
         }
         return null;

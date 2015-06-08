@@ -19,34 +19,34 @@
     </tr>
     <tr>
       <td><input name="narkotikalakemedela" type="radio" ng-value="true"
-                 ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
+                 ng-model="viewState.intygModel.narkotikaLakemedel.teckenMissbruk"></td>
       <td><input name="narkotikalakemedela" type="radio" ng-value="false"
-                 ng-model="cert.narkotikaLakemedel.teckenMissbruk"></td>
+                 ng-model="viewState.intygModel.narkotikaLakemedel.teckenMissbruk"></td>
       <td><span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span></td>
     </tr>
     <tr>
       <td><input name="narkotikalakemedelb" type="radio" ng-value="true"
-                 ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
+                 ng-model="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats"></td>
       <td><input name="narkotikalakemedelb" type="radio" ng-value="false"
-                 ng-model="cert.narkotikaLakemedel.foremalForVardinsats"></td>
+                 ng-model="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats"></td>
       <td><span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span></td>
     </tr>
 
-    <tr ng-show="cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats">
+    <tr ng-show="viewState.intygModel.narkotikaLakemedel.teckenMissbruk || viewState.intygModel.narkotikaLakemedel.foremalForVardinsats">
       <td colspan="2"></td>
       <td>
         <p>
         <div style="margin-bottom:12px;" message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></div>
         <label class="radio">
           <input name="narkotikalakemedelb2" type="radio" ng-value="true"
-                 ng-model="cert.narkotikaLakemedel.provtagningBehovs">
+                 ng-model="viewState.intygModel.narkotikaLakemedel.provtagningBehovs">
           <span message key="common.yes"></span></label>
         <label class="radio">
           <input name="narkotikalakemedelb2" type="radio" ng-value="false"
-                 ng-model="cert.narkotikaLakemedel.provtagningBehovs">
+                 ng-model="viewState.intygModel.narkotikaLakemedel.provtagningBehovs">
           <span message key="common.no"></span></label>
         </p>
-        <div class="alert alert-info" ng-show="cert.narkotikaLakemedel.provtagningBehovs">
+        <div class="alert alert-info" ng-show="viewState.intygModel.narkotikaLakemedel.provtagningBehovs">
           <span message key="ts-bas.helptext.alkohol-narkotika.provtagning" />
         </div>
       </td>
@@ -54,16 +54,16 @@
 
     <tr>
       <td><input name="narkotikalakemedelc" type="radio" ng-value="true"
-                 ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
+                 ng-model="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
       <td><input name="narkotikalakemedelc" type="radio" ng-value="false"
-                 ng-model="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
+                 ng-model="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
       <td>
         <p><span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
         </p>
 
-        <div ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
+        <div ng-show="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
           <p><span message key="ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos"></span></p>
-                            <textarea class="form-control" data-ng-model="cert.narkotikaLakemedel.lakemedelOchDos"
+                            <textarea class="form-control" data-ng-model="viewState.intygModel.narkotikaLakemedel.lakemedelOchDos"
                                       id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.lakemedelOchDos}}" rows="3"></textarea>
         </div>
       </td>

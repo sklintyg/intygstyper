@@ -3,21 +3,20 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form14Controller',
         'ts-bas.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
-            $scope.$watch('cert.sjukhusvard.sjukhusEllerLakarkontakt', function(vardatsPaSjukhus) {
-                if (!vardatsPaSjukhus && $scope.cert.sjukhusvard) {
-                    $scope.cert.updateToAttic('sjukhusvard.tidpunkt');
-                    $scope.cert.updateToAttic('sjukhusvard.vardinrattning');
-                    $scope.cert.updateToAttic('sjukhusvard.anledning');
-                    $scope.cert.sjukhusvard.tidpunkt = '';
-                    $scope.cert.sjukhusvard.vardinrattning = '';
-                    $scope.cert.sjukhusvard.anledning = '';
+            $scope.$watch('viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt', function(vardatsPaSjukhus) {
+                if (!vardatsPaSjukhus && viewState.intygModel.sjukhusvard) {
+                    viewState.intygModel.updateToAttic('sjukhusvard.tidpunkt');
+                    viewState.intygModel.updateToAttic('sjukhusvard.vardinrattning');
+                    viewState.intygModel.updateToAttic('sjukhusvard.anledning');
+                    viewState.intygModel.sjukhusvard.tidpunkt = '';
+                    viewState.intygModel.sjukhusvard.vardinrattning = '';
+                    viewState.intygModel.sjukhusvard.anledning = '';
                 } else {
-                    $scope.cert.restoreFromAttic('sjukhusvard.tidpunkt');
-                    $scope.cert.restoreFromAttic('sjukhusvard.vardinrattning');
-                    $scope.cert.restoreFromAttic('sjukhusvard.anledning');
+                    viewState.intygModel.restoreFromAttic('sjukhusvard.tidpunkt');
+                    viewState.intygModel.restoreFromAttic('sjukhusvard.vardinrattning');
+                    viewState.intygModel.restoreFromAttic('sjukhusvard.anledning');
                 }
             }, true);
         }]);

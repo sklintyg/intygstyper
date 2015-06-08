@@ -19,28 +19,28 @@
     </tr>
     <tr>
       <td><input id="hjartkarlay" name="hjartkarla" type="radio" ng-value="true"
-                 ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
+                 ng-model="viewState.intygModel.hjartKarl.hjartKarlSjukdom"></td>
       <td><input id="hjartkarlan" name="hjartkarla" type="radio" ng-value="false"
-                 ng-model="cert.hjartKarl.hjartKarlSjukdom"></td>
+                 ng-model="viewState.intygModel.hjartKarl.hjartKarlSjukdom"></td>
       <td><span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span></td>
     </tr>
     <tr>
       <td><input id="hjartkarlby" name="hjartkarlb" type="radio" ng-value="true"
-                 ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
+                 ng-model="viewState.intygModel.hjartKarl.hjarnskadaEfterTrauma"></td>
       <td><input id="hjartkarlbn" name="hjartkarlb" type="radio" ng-value="false"
-                 ng-model="cert.hjartKarl.hjarnskadaEfterTrauma"></td>
+                 ng-model="viewState.intygModel.hjartKarl.hjarnskadaEfterTrauma"></td>
       <td><span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span></td>
     </tr>
     <tr>
       <td><input id="hjartkarlcy" name="hjartkarlc" type="radio" ng-value="true"
-                 ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
+                 ng-model="viewState.intygModel.hjartKarl.riskfaktorerStroke"></td>
       <td><input id="hjartkarlcn" name="hjartkarlc" type="radio" ng-value="false"
-                 ng-model="cert.hjartKarl.riskfaktorerStroke"></td>
+                 ng-model="viewState.intygModel.hjartKarl.riskfaktorerStroke"></td>
       <td><p><span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span></p>
 
-        <div ng-show="cert.hjartKarl.riskfaktorerStroke">
+        <div ng-show="viewState.intygModel.hjartKarl.riskfaktorerStroke">
           <p><span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span></p>
-                            <textarea class="form-control" ng-model="cert.hjartKarl.beskrivningRiskfaktorer"
+                            <textarea class="form-control" ng-model="viewState.intygModel.hjartKarl.beskrivningRiskfaktorer"
                                       wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.beskrivningRiskfaktorer}}"
                                       id="beskrivningRiskfaktorer" rows="4"></textarea>
         </div>

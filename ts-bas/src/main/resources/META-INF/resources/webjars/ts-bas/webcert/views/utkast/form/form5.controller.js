@@ -3,30 +3,29 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form5Controller',
         'ts-bas.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
-            $scope.$watch('cert.diabetes.harDiabetes', function(harDiabetes) {
-                if (!harDiabetes && $scope.cert.hjartKarl) {
-                    $scope.cert.updateToAttic('diabetes.diabetesTyp');
-                    $scope.cert.diabetes.diabetesTyp = undefined;
+            $scope.$watch('viewState.intygModel.diabetes.harDiabetes', function(harDiabetes) {
+                if (!harDiabetes && viewState.intygModel.hjartKarl) {
+                    viewState.intygModel.updateToAttic('diabetes.diabetesTyp');
+                    viewState.intygModel.diabetes.diabetesTyp = undefined;
                 } else {
-                    $scope.cert.restoreFromAttic('diabetes.diabetesTyp');
+                    viewState.intygModel.restoreFromAttic('diabetes.diabetesTyp');
                 }
             }, true);
 
-            $scope.$watch('cert.diabetes.diabetesTyp', function(diabetesTyp) {
-                if (diabetesTyp !== 'DIABETES_TYP_2' && $scope.cert.diabetes) {
-                    $scope.cert.updateToAttic('diabetes.kost');
-                    $scope.cert.updateToAttic('diabetes.tabletter');
-                    $scope.cert.updateToAttic('diabetes.insulin');
-                    $scope.cert.diabetes.kost = undefined;
-                    $scope.cert.diabetes.tabletter = undefined;
-                    $scope.cert.diabetes.insulin = undefined;
+            $scope.$watch('viewState.intygModel.diabetes.diabetesTyp', function(diabetesTyp) {
+                if (diabetesTyp !== 'DIABETES_TYP_2' && viewState.intygModel.diabetes) {
+                    viewState.intygModel.updateToAttic('diabetes.kost');
+                    viewState.intygModel.updateToAttic('diabetes.tabletter');
+                    viewState.intygModel.updateToAttic('diabetes.insulin');
+                    viewState.intygModel.diabetes.kost = undefined;
+                    viewState.intygModel.diabetes.tabletter = undefined;
+                    viewState.intygModel.diabetes.insulin = undefined;
                 } else {
-                    $scope.cert.restoreFromAttic('diabetes.kost');
-                    $scope.cert.restoreFromAttic('diabetes.tabletter');
-                    $scope.cert.restoreFromAttic('diabetes.insulin');
+                    viewState.intygModel.restoreFromAttic('diabetes.kost');
+                    viewState.intygModel.restoreFromAttic('diabetes.tabletter');
+                    viewState.intygModel.restoreFromAttic('diabetes.insulin');
                 }
             }, true);
             

@@ -34,33 +34,33 @@
     </tr>
     <tr>
       <td><input id="synay" name="syna" type="radio" ng-value="true"
-                 ng-model="cert.syn.separatOgonlakarintyg"></td>
+                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
-                 ng-model="cert.syn.separatOgonlakarintyg"></td>
+                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
       <td><span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span></td>
     </tr>
-    <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
       <td></td>
       <td><h5 class="inline-heading">Alternativ 2: (frågorna b-d besvaras)</h5></td>
     </tr>
-    <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
       <td></td>
       <td>Om ögonläkarintyg inte krävs kan behandlande specialistkompetent läkare med god kännedom om
         patientens sjukdom här avge intyg om synfunktionen.
       </td>
     </tr>
-    <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td><input id="synby" name="synb" type="radio" ng-value="true"
-                 ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning"></td>
       <td><input id="synbn" name="synb" type="radio" ng-value="false"
-                 ng-model="cert.syn.synfaltsprovningUtanAnmarkning"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning"></td>
       <td>
         <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
       </td>
     </tr>
-    <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
       <td></td>
       <td>
@@ -83,30 +83,30 @@
           <tr>
             <td>Höger öga</td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaUtanKorrektion" ng-model="cert.syn.hoger.utanKorrektion" maxlength="4"></td>
+                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hoger.utanKorrektion" maxlength="4"></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaMedKorrektion" ng-model="cert.syn.hoger.medKorrektion" maxlength="4"></td>
+                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hoger.medKorrektion" maxlength="4"></td>
           </tr>
           <tr>
             <td>Vänster öga</td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaUtanKorrektion" ng-model="cert.syn.vanster.utanKorrektion" maxlength="4"></td>
+                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vanster.utanKorrektion" maxlength="4"></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaMedKorrektion" ng-model="cert.syn.vanster.medKorrektion" maxlength="4"></td>
+                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vanster.medKorrektion" maxlength="4"></td>
           </tr>
           <tr>
             <td>Binokulärt</td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartUtanKorrektion" ng-model="cert.syn.binokulart.utanKorrektion" maxlength="4"></td>
+                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4"></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartMedKorrektion" ng-model="cert.syn.binokulart.medKorrektion" maxlength="4"></td>
+                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4"></td>
           </tr>
         </table>
     </tr>
-    <tr data-ng-hide="cert.syn.separatOgonlakarintyg">
-      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="cert.syn.diplopi">
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
+      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi">
       </td>
-      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="cert.syn.diplopi">
+      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
       </td>
       <td>d) Förekommer dubbelseende?</td>
     </tr>

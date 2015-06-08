@@ -5,7 +5,6 @@ describe('ts-bas.Utkast.Form3Controller', function() {
     var User;
     var wcFocus;
     var utkastNotifyService;
-    var viewState;
     var anchorScrollService;
 
 
@@ -26,36 +25,28 @@ describe('ts-bas.Utkast.Form3Controller', function() {
         '$controller',
         '$rootScope',
         'ts-bas.UtkastController.ViewStateService',
-        function($controller, $rootScope, _viewState_) {
+        function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        viewState = _viewState_;
 
         ctrl = $controller('ts-bas.Utkast.Form3Controller', { $scope: $scope });
-
-            var cert = testData.cert;
-
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(cert);
-
-        $scope.$digest();
     }]));
 
     // --- form3
     it('should reset hidden fields when "funktionsnedsattning" is set to false', function() {
-        $scope.cert.funktionsnedsattning.funktionsnedsattning = true;
+        $scope.viewState.intygModel.funktionsnedsattning.funktionsnedsattning = true;
         $scope.$digest();
 
-        $scope.cert.funktionsnedsattning.beskrivning = 'Hello';
-        $scope.cert.funktionsnedsattning.funktionsnedsattning = false;
+        $scope.viewState.intygModel.funktionsnedsattning.beskrivning = 'Hello';
+        $scope.viewState.intygModel.funktionsnedsattning.funktionsnedsattning = false;
         $scope.$digest();
 
-        expect($scope.cert.funktionsnedsattning.beskrivning).toBe('');
+        expect($scope.viewState.intygModel.funktionsnedsattning.beskrivning).toBe('');
 
         // Attic
-        $scope.cert.funktionsnedsattning.funktionsnedsattning = true;
+        $scope.viewState.intygModel.funktionsnedsattning.funktionsnedsattning = true;
         $scope.$digest();
 
-        expect($scope.cert.funktionsnedsattning.beskrivning).toBe('Hello');
+        expect($scope.viewState.intygModel.funktionsnedsattning.beskrivning).toBe('Hello');
     });
     // --- form3
 });

@@ -3,22 +3,21 @@ angular.module('ts-bas').controller('ts-bas.Utkast.IntentionController',
         'ts-bas.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
-            $scope.$watch('cert.intygAvser.korkortstyp', function(valdaKorkortstyper) {
-                if ($scope.cert.intygAvser && $scope.cert.intygAvser.korkortstyp) {
+            $scope.$watch('viewState.intygModel.intygAvser.korkortstyp', function(valdaKorkortstyper) {
+                if (viewState.intygModel.intygAvser && viewState.intygModel.intygAvser.korkortstyp) {
                     var prev = $scope.viewState.korkortd;
                     $scope.viewState.korkortd = isHighlevelKorkortChecked(valdaKorkortstyper);
                     if ($scope.viewState.korkortd && $scope.viewState.korkortd !== prev) {
-                        $scope.cert.restoreFromAttic('horselBalans.svartUppfattaSamtal4Meter');
-                        $scope.cert.restoreFromAttic('funktionsnedsattning.otillrackligRorelseformaga');
+                        viewState.intygModel.restoreFromAttic('horselBalans.svartUppfattaSamtal4Meter');
+                        viewState.intygModel.restoreFromAttic('funktionsnedsattning.otillrackligRorelseformaga');
                     } else {
                         if($scope.viewState.korkortd === false){
-                            $scope.cert.updateToAttic('horselBalans.svartUppfattaSamtal4Meter');
-                            $scope.cert.updateToAttic('funktionsnedsattning.otillrackligRorelseformaga');
-                            $scope.cert.horselBalans.svartUppfattaSamtal4Meter = undefined;
-                            $scope.cert.funktionsnedsattning.otillrackligRorelseformaga = undefined;
+                            viewState.intygModel.updateToAttic('horselBalans.svartUppfattaSamtal4Meter');
+                            viewState.intygModel.updateToAttic('funktionsnedsattning.otillrackligRorelseformaga');
+                            viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter = undefined;
+                            viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga = undefined;
                         }
                     }
                 }

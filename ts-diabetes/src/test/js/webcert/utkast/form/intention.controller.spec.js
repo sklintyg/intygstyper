@@ -40,16 +40,8 @@ describe('ts-diabetes.Utkast.IntentionController', function() {
         viewState = _viewState_;
         $scope = $rootScope.$new();
         ctrl = $controller('ts-diabetes.Utkast.IntentionController', { $scope: $scope });
-            form2 = $controller('ts-diabetes.Utkast.Form2Controller', { $scope: $scope });
-            form4 = $controller('ts-diabetes.Utkast.Form4Controller', { $scope: $scope });
-        var cert = testData.cert;
-
-        var draftModel = IntygModel._members.build();
-            draftModel.update(cert);
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(draftModel.content);
-        $scope.cert = draftModel.content;
-        $scope.$digest();
+        form2 = $controller('ts-diabetes.Utkast.Form2Controller', { $scope: $scope });
+        form4 = $controller('ts-diabetes.Utkast.Form4Controller', { $scope: $scope });
     }]));
 
     // intention
@@ -113,40 +105,40 @@ describe('ts-diabetes.Utkast.IntentionController', function() {
         $scope.$digest();
 
         // set some values
-        $scope.cert.hypoglykemier.egenkontrollBlodsocker = true;
+        $scope.viewState.intygModel.hypoglykemier.egenkontrollBlodsocker = true;
         // this is watched so we should call digest
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid = true;
         $scope.$digest();
 
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = '2014-10-10';
-        $scope.cert.bedomning.lamplighetInnehaBehorighet = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid = '2014-10-10';
+        $scope.viewState.intygModel.bedomning.lamplighetInnehaBehorighet = true;
         $scope.$digest();
 
         // set korkort to false, - update attic
         getCheckboxForKorkortstyp('C1').selected = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBeUndefined();
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBeUndefined();
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe(undefined);
-        expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBeUndefined();
+        expect($scope.viewState.intygModel.hypoglykemier.egenkontrollBlodsocker).toBeUndefined();
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid).toBeUndefined();
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe(undefined);
+        expect($scope.viewState.intygModel.bedomning.lamplighetInnehaBehorighet).toBeUndefined();
 
         // re-enable korkot - restore attic, previous values should be visible
         getCheckboxForKorkortstyp('C1').selected = true;
         $scope.$digest();
 
         // this one works in the live but not here.. look on monday.
-        expect($scope.cert.hypoglykemier.egenkontrollBlodsocker).toBe(true);
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTid).toBe(true);
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('2014-10-10');
-        expect($scope.cert.bedomning.lamplighetInnehaBehorighet).toBe(true);
+        expect($scope.viewState.intygModel.hypoglykemier.egenkontrollBlodsocker).toBe(true);
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid).toBe(true);
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('2014-10-10');
+        expect($scope.viewState.intygModel.bedomning.lamplighetInnehaBehorighet).toBe(true);
     });
 
     // Helper methods
     function getCheckboxForKorkortstyp(typ) {
-        for (var i = 0; i < $scope.cert.intygAvser.korkortstyp.length; i++) {
-            if ($scope.cert.intygAvser.korkortstyp[i].type === typ) {
-                return $scope.cert.intygAvser.korkortstyp[i];
+        for (var i = 0; i < $scope.viewState.intygModel.intygAvser.korkortstyp.length; i++) {
+            if ($scope.viewState.intygModel.intygAvser.korkortstyp[i].type === typ) {
+                return $scope.viewState.intygModel.intygAvser.korkortstyp[i];
             }
         }
         return null;

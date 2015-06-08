@@ -21,45 +21,45 @@
     </tr>
     <tr>
       <td><input id="synay" name="syna" type="radio" ng-value="true"
-                 ng-model="cert.syn.synfaltsdefekter"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
-                 ng-model="cert.syn.synfaltsdefekter"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
       <td><span message key="ts-bas.label.syn.synfaltsdefekter"></span></td>
     </tr>
     <tr>
       <td><input id="synby" name="synb" type="radio" ng-value="true"
-                 ng-model="cert.syn.nattblindhet"></td>
+                 ng-model="viewState.intygModel.syn.nattblindhet"></td>
       <td><input id="synbn" name="synb" type="radio" ng-value="false"
-                 ng-model="cert.syn.nattblindhet"></td>
+                 ng-model="viewState.intygModel.syn.nattblindhet"></td>
       <td><span message key="ts-bas.label.syn.nattblindhet"></span></td>
     </tr>
     <tr>
       <td><input id="syncy" name="sync" type="radio" ng-value="true"
-                 ng-model="cert.syn.progressivOgonsjukdom">
+                 ng-model="viewState.intygModel.syn.progressivOgonsjukdom">
       </td>
       <td><input id="syncn" name="sync" type="radio" ng-value="false"
-                 ng-model="cert.syn.progressivOgonsjukdom">
+                 ng-model="viewState.intygModel.syn.progressivOgonsjukdom">
       </td>
       <td>
         <p><span message key="ts-bas.label.syn.progressivogonsjukdom"></span></p>
 
         <div class="alert alert-info"
-             ng-if="cert.syn.progressivOgonsjukdom || cert.syn.nattblindhet || cert.syn.synfaltsdefekter">
+             ng-if="viewState.intygModel.syn.progressivOgonsjukdom || viewState.intygModel.syn.nattblindhet || viewState.intygModel.syn.synfaltsdefekter">
           <span message key="ts-bas.helptext.synfunktioner.om-nagon-av-a-c"></span>
         </div>
       </td>
     </tr>
     <tr>
-      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="cert.syn.diplopi">
+      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi">
       </td>
-      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="cert.syn.diplopi">
+      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
       </td>
       <td><span message key="ts-bas.label.syn.diplopi"></span></td>
     </tr>
     <tr>
-      <td><input id="syney" name="syne" type="radio" ng-value="true" ng-model="cert.syn.nystagmus">
+      <td><input id="syney" name="syne" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.nystagmus">
       </td>
-      <td><input id="synen" name="syne" type="radio" ng-value="false" ng-model="cert.syn.nystagmus">
+      <td><input id="synen" name="syne" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.nystagmus">
       </td>
       <td><span message key="ts-bas.label.syn.nystagmus"></span></td>
     </tr>
@@ -85,35 +85,35 @@
           <tr>
             <td><span message key="ts-bas.label.syn.hoger-oga"></span></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaUtanKorrektion" ng-model="cert.syn.hogerOga.utanKorrektion" maxlength="4"></td>
+                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hogerOga.utanKorrektion" maxlength="4"></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaMedKorrektion" ng-model="cert.syn.hogerOga.medKorrektion" maxlength="4"></td>
-            <td><input type="checkbox" id="synHogerOgaKontaktlins" ng-model="cert.syn.hogerOga.kontaktlins" maxlength="4"></td>
+                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hogerOga.medKorrektion" maxlength="4"></td>
+            <td><input type="checkbox" id="synHogerOgaKontaktlins" ng-model="viewState.intygModel.syn.hogerOga.kontaktlins" maxlength="4"></td>
           </tr>
           <tr>
             <td><span message key="ts-bas.label.syn.vanster-oga"></span></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaUtanKorrektion" ng-model="cert.syn.vansterOga.utanKorrektion" maxlength="4"></td>
+                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vansterOga.utanKorrektion" maxlength="4"></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaMedKorrektion" ng-model="cert.syn.vansterOga.medKorrektion" maxlength="4"></td>
-            <td><input type="checkbox" id="synVasterOgaKontaktlins" ng-model="cert.syn.vansterOga.kontaktlins" maxlength="4"></td>
+                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vansterOga.medKorrektion" maxlength="4"></td>
+            <td><input type="checkbox" id="synVasterOgaKontaktlins" ng-model="viewState.intygModel.syn.vansterOga.kontaktlins" maxlength="4"></td>
           </tr>
           <tr>
             <td><span message key="ts-bas.label.syn.binokulart"></span></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartUtanKorrektion" ng-model="cert.syn.binokulart.utanKorrektion" maxlength="4"></td>
+                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4"></td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartMedKorrektion" ng-model="cert.syn.binokulart.medKorrektion" maxlength="4"></td>
+                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4"></td>
             <td></td>
           </tr>
         </table>
 
         <h4><span message key="ts-bas.label.syn.korrektionsglasens-styrka"></span></h4>
         <label class="checkbox"><input name="dioptrier" type="checkbox" id="dioptrier"
-                                       ng-model="cert.syn.korrektionsglasensStyrka"><span message
+                                       ng-model="viewState.intygModel.syn.korrektionsglasensStyrka"><span message
                                                                                           key="ts-bas.label.syn.8-dioptrier"></span></label>
 
-        <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
+        <div class="alert alert-info" ng-show="viewState.intygModel.syn.korrektionsglasensStyrka == true">
           <span message key="ts-bas.helptext.synfunktioner.info-8-dioptrier"></span>
         </div>
 

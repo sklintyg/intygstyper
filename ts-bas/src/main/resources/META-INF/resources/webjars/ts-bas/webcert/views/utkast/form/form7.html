@@ -19,17 +19,17 @@
     </tr>
     <tr>
       <td><input id="medvetandestorningay" name="medvetandestorninga" type="radio" ng-value="true"
-                 ng-model="cert.medvetandestorning.medvetandestorning"></td>
+                 ng-model="viewState.intygModel.medvetandestorning.medvetandestorning"></td>
       <td><input id="medvetandestorningan" name="medvetandestorninga" type="radio" ng-value="false"
-                 ng-model="cert.medvetandestorning.medvetandestorning"></td>
+                 ng-model="viewState.intygModel.medvetandestorning.medvetandestorning"></td>
       <td>
         <p><span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span></p>
 
-        <div ng-show="cert.medvetandestorning.medvetandestorning">
+        <div ng-show="viewState.intygModel.medvetandestorning.medvetandestorning">
           <p><span message
                    key="ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak"></span>
           </p>
-                            <textarea class="form-control" rows="4" data-ng-model="cert.medvetandestorning.beskrivning"
+                            <textarea class="form-control" rows="4" data-ng-model="viewState.intygModel.medvetandestorning.beskrivning"
                                       id="beskrivningMedvetandestorning" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.medvetandestorning}}"></textarea>
         </div>
       </td>

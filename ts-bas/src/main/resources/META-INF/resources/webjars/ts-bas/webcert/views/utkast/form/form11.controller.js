@@ -3,25 +3,24 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form11Controller',
         'ts-bas.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
-            $scope.$watch('cert.narkotikaLakemedel.teckenMissbruk || cert.narkotikaLakemedel.foremalForVardinsats',
+            $scope.$watch('viewState.intygModel.narkotikaLakemedel.teckenMissbruk || viewState.intygModel.narkotikaLakemedel.foremalForVardinsats',
                 function(shown) {
                     if (shown) {
-                        $scope.cert.restoreFromAttic('narkotikaLakemedel.provtagningBehovs');
+                        viewState.intygModel.restoreFromAttic('narkotikaLakemedel.provtagningBehovs');
                     } else {
-                        $scope.cert.updateToAttic('narkotikaLakemedel.provtagningBehovs');
-                        $scope.cert.narkotikaLakemedel.provtagningBehovs = undefined;
+                        viewState.intygModel.updateToAttic('narkotikaLakemedel.provtagningBehovs');
+                        viewState.intygModel.narkotikaLakemedel.provtagningBehovs = undefined;
                     }
                 }, true);
 
-            $scope.$watch('cert.narkotikaLakemedel.lakarordineratLakemedelsbruk', function(anvanderOrdineradNarkotika) {
-                if (!anvanderOrdineradNarkotika && $scope.cert.narkotikaLakemedel) {
-                    $scope.cert.updateToAttic('narkotikaLakemedel.lakemedelOchDos');
-                    $scope.cert.narkotikaLakemedel.lakemedelOchDos = '';
+            $scope.$watch('viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk', function(anvanderOrdineradNarkotika) {
+                if (!anvanderOrdineradNarkotika && viewState.intygModel.narkotikaLakemedel) {
+                    viewState.intygModel.updateToAttic('narkotikaLakemedel.lakemedelOchDos');
+                    viewState.intygModel.narkotikaLakemedel.lakemedelOchDos = '';
                 } else {
-                    $scope.cert.restoreFromAttic('narkotikaLakemedel.lakemedelOchDos');
+                    viewState.intygModel.restoreFromAttic('narkotikaLakemedel.lakemedelOchDos');
                 }
             }, true);
             

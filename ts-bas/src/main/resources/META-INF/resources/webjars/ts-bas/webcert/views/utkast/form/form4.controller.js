@@ -3,15 +3,14 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form4Controller',
         'ts-bas.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
-            $scope.$watch('cert.hjartKarl.riskfaktorerStroke', function(foreliggerRiskfaktorerStroke) {
-                if (!foreliggerRiskfaktorerStroke && $scope.cert.hjartKarl) {
-                    $scope.cert.updateToAttic('hjartKarl.beskrivningRiskfaktorer');
-                    $scope.cert.hjartKarl.beskrivningRiskfaktorer = '';
+            $scope.$watch('viewState.intygModel.hjartKarl.riskfaktorerStroke', function(foreliggerRiskfaktorerStroke) {
+                if (!foreliggerRiskfaktorerStroke && viewState.intygModel.hjartKarl) {
+                    viewState.intygModel.updateToAttic('hjartKarl.beskrivningRiskfaktorer');
+                    viewState.intygModel.hjartKarl.beskrivningRiskfaktorer = '';
                 } else {
-                    $scope.cert.restoreFromAttic('hjartKarl.beskrivningRiskfaktorer');
+                    viewState.intygModel.restoreFromAttic('hjartKarl.beskrivningRiskfaktorer');
                 }
             }, true);
             

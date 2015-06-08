@@ -7,9 +7,9 @@
       </li>
     </ul>
   </div>
-  <label class="control-label">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}
-    ({{cert.grundData.skapadAv.vardenhet.enhetsid}}),
-    {{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
+  <label class="control-label">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}
+    ({{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}),
+    {{viewState.intygModel.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
 
   <div id="hsaInfo" class="alert alert-info" ng-show="viewState.common.hsaInfoMissing">
     Information om vårdenheten saknas i HSA-katalogen. Be den på vårdenheten som är ansvarig för
@@ -23,7 +23,7 @@
 
       <div class="col-xs-9">
         <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
-               name="clinicInfo.postalAddress" ng-model="cert.grundData.skapadAv.vardenhet.postadress"
+               name="clinicInfo.postalAddress" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postadress"
                maxlength="70">
       </div>
     </div>
@@ -33,7 +33,7 @@
 
       <div class="col-xs-9">
         <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
-               name="clinicInfo.postalCode" ng-model="cert.grundData.skapadAv.vardenhet.postnummer"
+               name="clinicInfo.postalCode" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postnummer"
                maxlength="6">
       </div>
     </div>
@@ -42,7 +42,7 @@
 
       <div class="col-xs-9">
         <input type="text" class="form-control" id="clinicInfoPostalCity"
-               name="clinicInfo.postalCity" ng-model="cert.grundData.skapadAv.vardenhet.postort"
+               name="clinicInfo.postalCity" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postort"
                maxlength="30">
       </div>
     </div>
@@ -52,7 +52,7 @@
 
       <div class="col-xs-9">
         <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
-               ng-model="cert.grundData.skapadAv.vardenhet.telefonnummer" maxlength="20">
+               ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer" maxlength="20">
       </div>
     </div>
   </div>

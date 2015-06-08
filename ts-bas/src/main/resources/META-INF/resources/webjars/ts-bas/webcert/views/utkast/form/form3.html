@@ -19,24 +19,24 @@
     </tr>
     <tr>
       <td><input id="funktionsnedsattningay" name="funktionsnedsattninga" type="radio"
-                 ng-value="true" ng-model="cert.funktionsnedsattning.funktionsnedsattning"></td>
+                 ng-value="true" ng-model="viewState.intygModel.funktionsnedsattning.funktionsnedsattning"></td>
       <td><input id="funktionsnedsattningan" name="funktionsnedsattninga" type="radio"
-                 ng-value="false" ng-model="cert.funktionsnedsattning.funktionsnedsattning"></td>
+                 ng-value="false" ng-model="viewState.intygModel.funktionsnedsattning.funktionsnedsattning"></td>
       <td><p><span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span></p>
 
-        <div ng-show="cert.funktionsnedsattning.funktionsnedsattning">
+        <div ng-show="viewState.intygModel.funktionsnedsattning.funktionsnedsattning">
           <p><span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span></p>
                             <textarea id="funktionsnedsattning" class="form-control" name="funktionsnedsattning"
                                       rows='5' wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.funktionsnedsattning}}"
-                                      ng-model="cert.funktionsnedsattning.beskrivning"></textarea>
+                                      ng-model="viewState.intygModel.funktionsnedsattning.beskrivning"></textarea>
         </div>
       </td>
     </tr>
     <tr ng-show="viewState.korkortd">
       <td><input id="funktionsnedsattningby" name="funktionsnedsattningb" type="radio"
-                 ng-value="true" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga"></td>
+                 ng-value="true" ng-model="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga"></td>
       <td><input id="funktionsnedsattningbn" name="funktionsnedsattningb" type="radio"
-                 ng-value="false" ng-model="cert.funktionsnedsattning.otillrackligRorelseformaga">
+                 ng-value="false" ng-model="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga">
       </td>
       <td><span message key="ts-bas.label.funktionsnedsattning.rorelsformaga"></span></td>
     </tr>

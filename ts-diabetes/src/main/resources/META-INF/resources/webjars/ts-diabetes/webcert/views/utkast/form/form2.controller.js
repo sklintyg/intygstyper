@@ -3,41 +3,40 @@ angular.module('ts-diabetes').controller('ts-diabetes.Utkast.Form2Controller',
         'ts-diabetes.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
             // --- form2
-            $scope.$watch('cert.hypoglykemier.teckenNedsattHjarnfunktion',
+            $scope.$watch('viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion',
                 function(forekommerTeckenNedsattHjarnfunktion) {
-                    if (!forekommerTeckenNedsattHjarnfunktion && $scope.cert.hypoglykemier) {
-                        $scope.cert.updateToAttic('hypoglykemier.saknarFormagaKannaVarningstecken');
-                        $scope.cert.updateToAttic('hypoglykemier.allvarligForekomst');
-                        $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstTrafiken');
+                    if (!forekommerTeckenNedsattHjarnfunktion && viewState.intygModel.hypoglykemier) {
+                        viewState.intygModel.updateToAttic('hypoglykemier.saknarFormagaKannaVarningstecken');
+                        viewState.intygModel.updateToAttic('hypoglykemier.allvarligForekomst');
+                        viewState.intygModel.updateToAttic('hypoglykemier.allvarligForekomstTrafiken');
 
-                        $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
-                        $scope.cert.hypoglykemier.allvarligForekomst = undefined;
-                        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = undefined;
+                        viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = undefined;
+                        viewState.intygModel.hypoglykemier.allvarligForekomst = undefined;
+                        viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = undefined;
                     } else {
-                        $scope.cert.restoreFromAttic('hypoglykemier.saknarFormagaKannaVarningstecken');
-                        $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomst');
-                        $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstTrafiken');
+                        viewState.intygModel.restoreFromAttic('hypoglykemier.saknarFormagaKannaVarningstecken');
+                        viewState.intygModel.restoreFromAttic('hypoglykemier.allvarligForekomst');
+                        viewState.intygModel.restoreFromAttic('hypoglykemier.allvarligForekomstTrafiken');
                     }
                 }, true);
 
-            $scope.$watch('cert.hypoglykemier.allvarligForekomst', function(haftAllvarligForekomst) {
-                if (!haftAllvarligForekomst && $scope.cert.hypoglykemier) {
-                    $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstBeskrivning');
-                    $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = undefined;
+            $scope.$watch('viewState.intygModel.hypoglykemier.allvarligForekomst', function(haftAllvarligForekomst) {
+                if (!haftAllvarligForekomst && viewState.intygModel.hypoglykemier) {
+                    viewState.intygModel.updateToAttic('hypoglykemier.allvarligForekomstBeskrivning');
+                    viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning = undefined;
                 } else {
-                    $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstBeskrivning');
+                    viewState.intygModel.restoreFromAttic('hypoglykemier.allvarligForekomstBeskrivning');
                 }
             }, true);
-            $scope.$watch('cert.hypoglykemier.allvarligForekomstTrafiken', function(haftAllvarligForekomstTrafiken) {
-                if (!haftAllvarligForekomstTrafiken && $scope.cert.hypoglykemier) {
-                    $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstTrafikBeskrivning');
-                    $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = undefined;
+            $scope.$watch('viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken', function(haftAllvarligForekomstTrafiken) {
+                if (!haftAllvarligForekomstTrafiken && viewState.intygModel.hypoglykemier) {
+                    viewState.intygModel.updateToAttic('hypoglykemier.allvarligForekomstTrafikBeskrivning');
+                    viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning = undefined;
                 } else {
-                    $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstTrafikBeskrivning');
+                    viewState.intygModel.restoreFromAttic('hypoglykemier.allvarligForekomstTrafikBeskrivning');
                 }
             }, true);
 
@@ -46,17 +45,17 @@ angular.module('ts-diabetes').controller('ts-diabetes.Utkast.Form2Controller',
                 if(form && form.allvarligForekomstVakenTidObservationstid){
                     var formElement = form.allvarligForekomstVakenTidObservationstid;
                     formElement.$parsers.push(function(viewValue) {
-                        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
+                        viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
                         return viewValue;
                     });
                 }
             };
-            $scope.$watch('cert.hypoglykemier.allvarligForekomstVakenTid', function(haftAllvarligForekomstVakenTid) {
-                if (!haftAllvarligForekomstVakenTid && $scope.cert.hypoglykemier) {
-                    $scope.cert.updateToAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
-                    $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = undefined;
+            $scope.$watch('viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid', function(haftAllvarligForekomstVakenTid) {
+                if (!haftAllvarligForekomstVakenTid && viewState.intygModel.hypoglykemier) {
+                    viewState.intygModel.updateToAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
+                    viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid = undefined;
                 } else {
-                    $scope.cert.restoreFromAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
+                    viewState.intygModel.restoreFromAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');
                 }
             }, true);
             // --- form2

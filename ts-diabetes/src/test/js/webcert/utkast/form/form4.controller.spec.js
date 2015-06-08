@@ -40,14 +40,6 @@ describe('ts-diabetes.Utkast.Form4Controller', function() {
         viewState = _viewState_;
         $scope = $rootScope.$new();
         ctrl = $controller('ts-diabetes.Utkast.Form4Controller', { $scope: $scope });
-        var cert = testData.cert;
-
-        var draftModel = IntygModel._members.build();
-            draftModel.update(cert);
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(draftModel.content);
-        $scope.cert = draftModel.content;
-        $scope.$digest();
     }]));
 
     // form 4
@@ -59,30 +51,30 @@ describe('ts-diabetes.Utkast.Form4Controller', function() {
         //$scope.$digest();
 
         //console.log('*** 2 behoriget true');
-        $scope.cert.bedomning.kanInteTaStallning = false;
+        $scope.viewState.intygModel.bedomning.kanInteTaStallning = false;
         $scope.$digest();
-        expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
+        expect($scope.viewState.intygModel.bedomning.kanInteTaStallning).toBeFalsy();
 
-        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
+        angular.forEach($scope.viewState.intygModel.bedomning.korkortstyp, function(korkortstyp) {
             korkortstyp.selected = true;
         });
 
         //console.log('*** 3 behoriget false');
-        $scope.cert.bedomning.kanInteTaStallning = true;
+        $scope.viewState.intygModel.bedomning.kanInteTaStallning = true;
         $scope.$digest();
 
-        expect($scope.cert.bedomning.kanInteTaStallning).toBeTruthy();
-        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
+        expect($scope.viewState.intygModel.bedomning.kanInteTaStallning).toBeTruthy();
+        angular.forEach($scope.viewState.intygModel.bedomning.korkortstyp, function(korkortstyp) {
             expect(korkortstyp.selected).toBeFalsy();
         });
 
         //// When reenabled the previously selected values should be remembered
         //console.log('*** 4. behoriget true');
-        $scope.cert.bedomning.kanInteTaStallning = false;
+        $scope.viewState.intygModel.bedomning.kanInteTaStallning = false;
         $scope.$digest();
 
-        expect($scope.cert.bedomning.kanInteTaStallning).toBeFalsy();
-        angular.forEach($scope.cert.bedomning.korkortstyp, function(korkortstyp) {
+        expect($scope.viewState.intygModel.bedomning.kanInteTaStallning).toBeFalsy();
+        angular.forEach($scope.viewState.intygModel.bedomning.korkortstyp, function(korkortstyp) {
             expect(korkortstyp.selected).toBeTruthy();
         });
     });

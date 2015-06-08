@@ -5,7 +5,6 @@ describe('ts-bas.Utkast.Form5Controller', function() {
     var User;
     var wcFocus;
     var utkastNotifyService;
-    var viewState;
     var anchorScrollService;
 
 
@@ -25,60 +24,51 @@ describe('ts-bas.Utkast.Form5Controller', function() {
     beforeEach(angular.mock.inject([
         '$controller',
         '$rootScope',
-        'ts-bas.UtkastController.ViewStateService',
-        function($controller, $rootScope, _viewState_) {
+        function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        viewState = _viewState_;
 
         ctrl = $controller('ts-bas.Utkast.Form5Controller', { $scope: $scope });
-
-            var cert = testData.cert;
-
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(cert);
-
-        $scope.$digest();
     }]));
 
     // --- form5
     it('should reset hidden fields when "harDiabetes" is set to false', function() {
-        $scope.cert.diabetes.harDiabetes = true;
+        $scope.viewState.intygModel.diabetes.harDiabetes = true;
         $scope.$digest();
 
-        $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_1';
-        $scope.cert.diabetes.harDiabetes = false;
+        $scope.viewState.intygModel.diabetes.diabetesTyp = 'DIABETES_TYP_1';
+        $scope.viewState.intygModel.diabetes.harDiabetes = false;
         $scope.$digest();
 
-        expect($scope.cert.diabetes.diabetesTyp).toBeUndefined();
+        expect($scope.viewState.intygModel.diabetes.diabetesTyp).toBeUndefined();
 
         // Attic
-        $scope.cert.diabetes.harDiabetes = true;
+        $scope.viewState.intygModel.diabetes.harDiabetes = true;
         $scope.$digest();
 
-        expect($scope.cert.diabetes.diabetesTyp).toBe('DIABETES_TYP_1');
+        expect($scope.viewState.intygModel.diabetes.diabetesTyp).toBe('DIABETES_TYP_1');
     });
 
     it('should reset hidden fields when "diabetesTyp" is not "DIABETES_TYP_2"', function() {
-        $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_2';
+        $scope.viewState.intygModel.diabetes.diabetesTyp = 'DIABETES_TYP_2';
         $scope.$digest();
 
-        $scope.cert.diabetes.kost = true;
-        $scope.cert.diabetes.tabletter = true;
-        $scope.cert.diabetes.insulin = true;
-        $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_1';
+        $scope.viewState.intygModel.diabetes.kost = true;
+        $scope.viewState.intygModel.diabetes.tabletter = true;
+        $scope.viewState.intygModel.diabetes.insulin = true;
+        $scope.viewState.intygModel.diabetes.diabetesTyp = 'DIABETES_TYP_1';
         $scope.$digest();
 
-        expect($scope.cert.diabetes.kost).toBeUndefined();
-        expect($scope.cert.diabetes.tabletter).toBeUndefined();
-        expect($scope.cert.diabetes.insulin).toBeUndefined();
+        expect($scope.viewState.intygModel.diabetes.kost).toBeUndefined();
+        expect($scope.viewState.intygModel.diabetes.tabletter).toBeUndefined();
+        expect($scope.viewState.intygModel.diabetes.insulin).toBeUndefined();
 
         // Attic
-        $scope.cert.diabetes.diabetesTyp = 'DIABETES_TYP_2';
+        $scope.viewState.intygModel.diabetes.diabetesTyp = 'DIABETES_TYP_2';
         $scope.$digest();
 
-        expect($scope.cert.diabetes.kost).toBeTruthy();
-        expect($scope.cert.diabetes.tabletter).toBeTruthy();
-        expect($scope.cert.diabetes.insulin).toBeTruthy();
+        expect($scope.viewState.intygModel.diabetes.kost).toBeTruthy();
+        expect($scope.viewState.intygModel.diabetes.tabletter).toBeTruthy();
+        expect($scope.viewState.intygModel.diabetes.insulin).toBeTruthy();
     });
     // --- form5
 });

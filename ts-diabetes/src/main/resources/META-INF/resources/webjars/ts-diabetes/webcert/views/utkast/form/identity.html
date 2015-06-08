@@ -11,7 +11,7 @@
   <div class="form-group clearfix">
     <label class="radio checkbox-columns col-md-6" ng-repeat="v in viewState.identitet"><input
         id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
-        ng-model="cert.vardkontakt.idkontroll">
+        ng-model="viewState.intygModel.vardkontakt.idkontroll">
       {{v.label}}</label>
   </div>
   <div class="alert alert-info">

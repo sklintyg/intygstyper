@@ -5,7 +5,6 @@ describe('ts-bas.Utkast.Form7Controller', function() {
     var User;
     var wcFocus;
     var utkastNotifyService;
-    var viewState;
     var anchorScrollService;
 
 
@@ -25,37 +24,30 @@ describe('ts-bas.Utkast.Form7Controller', function() {
     beforeEach(angular.mock.inject([
         '$controller',
         '$rootScope',
+        'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService',
-        function($controller, $rootScope, _viewState_) {
+        function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        viewState = _viewState_;
 
         ctrl = $controller('ts-bas.Utkast.Form7Controller', { $scope: $scope });
-
-            var cert = testData.cert;
-
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(cert);
-
-        $scope.$digest();
     }]));
 
     // --- form7
     it('should reset hidden fields when "medvetandestorning" is set to false', function() {
-        $scope.cert.medvetandestorning.medvetandestorning = true;
+        $scope.viewState.intygModel.medvetandestorning.medvetandestorning = true;
         $scope.$digest();
 
-        $scope.cert.medvetandestorning.beskrivning = 'Hello';
-        $scope.cert.medvetandestorning.medvetandestorning = false;
+        $scope.viewState.intygModel.medvetandestorning.beskrivning = 'Hello';
+        $scope.viewState.intygModel.medvetandestorning.medvetandestorning = false;
         $scope.$digest();
 
-        expect($scope.cert.medvetandestorning.beskrivning).toBe('');
+        expect($scope.viewState.intygModel.medvetandestorning.beskrivning).toBe('');
 
         // Attic
-        $scope.cert.medvetandestorning.medvetandestorning = true;
+        $scope.viewState.intygModel.medvetandestorning.medvetandestorning = true;
         $scope.$digest();
 
-        expect($scope.cert.medvetandestorning.beskrivning).toBe('Hello');
+        expect($scope.viewState.intygModel.medvetandestorning.beskrivning).toBe('Hello');
     });
     // --- form7
 });

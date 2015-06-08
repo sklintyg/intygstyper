@@ -3,7 +3,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.Utkast.MessagesController'
         'ts-diabetes.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
             //Make a printable list of Befattningar (which as of yet consists of un-readable codes...)

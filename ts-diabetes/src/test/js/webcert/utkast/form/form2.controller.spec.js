@@ -40,85 +40,77 @@ describe('ts-diabetes.Utkast.Form2Controller', function() {
         viewState = _viewState_;
         $scope = $rootScope.$new();
         ctrl = $controller('ts-diabetes.Utkast.Form2Controller', { $scope: $scope });
-        var cert = testData.cert;
-
-        var draftModel = IntygModel._members.build();
-            draftModel.update(cert);
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(draftModel.content);
-        $scope.cert = draftModel.content;
-        $scope.$digest();
     }]));
 
     it('should reset hidden fields when "teckenNedsattHjarnfunktion" is set to false', function() {
-        $scope.cert.hypoglykemier.teckenNedsattHjarnfunktion = true;
+        $scope.viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion = true;
         $scope.$digest();
 
-        $scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken = true;
-        $scope.cert.hypoglykemier.allvarligForekomst = true;
-        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = true;
+        $scope.viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomst = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = true;
 
-        $scope.cert.hypoglykemier.teckenNedsattHjarnfunktion = false;
+        $scope.viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken).toBeUndefined();
-        expect($scope.cert.hypoglykemier.allvarligForekomst).toBeUndefined();
-        expect($scope.cert.hypoglykemier.allvarligForekomstTrafiken).toBeUndefined();
+        expect($scope.viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken).toBeUndefined();
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomst).toBeUndefined();
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken).toBeUndefined();
 
         // When reenabled the previously selected values should be remembered
-        $scope.cert.hypoglykemier.teckenNedsattHjarnfunktion = true;
+        $scope.viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion = true;
         $scope.$digest();
-        expect($scope.cert.hypoglykemier.saknarFormagaKannaVarningstecken).toBe(true);
-        expect($scope.cert.hypoglykemier.allvarligForekomst).toBe(true);
-        expect($scope.cert.hypoglykemier.allvarligForekomstTrafiken).toBe(true);
+        expect($scope.viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken).toBe(true);
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomst).toBe(true);
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken).toBe(true);
     });
 
     it('should reset hidden fields when "allvarligForekomst" is set to false', function() {
-        $scope.cert.hypoglykemier.allvarligForekomst = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomst = true;
         $scope.$digest();
 
-        $scope.cert.hypoglykemier.allvarligForekomstBeskrivning = 'Hello';
-        $scope.cert.hypoglykemier.allvarligForekomst = false;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning = 'Hello';
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomst = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.allvarligForekomstBeskrivning).toBe(undefined);
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning).toBe(undefined);
 
         // When reenabled the previously selected values should be remembered
-        $scope.cert.hypoglykemier.allvarligForekomst = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomst = true;
         $scope.$digest();
-        expect($scope.cert.hypoglykemier.allvarligForekomstBeskrivning).toBe('Hello');
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning).toBe('Hello');
     });
 
     it('should reset hidden fields when "allvarligForekomstTrafiken" is set to false', function() {
-        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = true;
         $scope.$digest();
 
-        $scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning = 'Hello';
-        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = false;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning = 'Hello';
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning).toBe(undefined);
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning).toBe(undefined);
 
         // When reenabled the previously selected values should be remembered
-        $scope.cert.hypoglykemier.allvarligForekomstTrafiken = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken = true;
         $scope.$digest();
-        expect($scope.cert.hypoglykemier.allvarligForekomstTrafikBeskrivning).toBe('Hello');
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning).toBe('Hello');
     });
 
     it('should reset hidden fields when "allvarligForekomstVakenTid" is set to false', function() {
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid = true;
         $scope.$digest();
 
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid = 'Hello';
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = false;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid = 'Hello';
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid = false;
         $scope.$digest();
 
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe(undefined);
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe(undefined);
 
         // When reenabled the previously selected values should be remembered
-        $scope.cert.hypoglykemier.allvarligForekomstVakenTid = true;
+        $scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid = true;
         $scope.$digest();
-        expect($scope.cert.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('Hello');
+        expect($scope.viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid).toBe('Hello');
     });
 
 });

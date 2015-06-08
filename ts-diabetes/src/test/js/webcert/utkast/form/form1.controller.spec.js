@@ -40,41 +40,33 @@ describe('ts-diabetes.Utkast.Form1Controller', function() {
         viewState = _viewState_;
         $scope = $rootScope.$new();
         ctrl = $controller('ts-diabetes.Utkast.Form1Controller', { $scope: $scope });
-        var cert = testData.cert;
-
-        var draftModel = IntygModel._members.build();
-            draftModel.update(cert);
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(draftModel.content);
-        $scope.cert = draftModel.content;
-        $scope.$digest();
     }]));
     
     it('should reset hidden fields when "diabetes.insulin" is set to false', function() {
-        $scope.cert.diabetes.insulin = true;
+        $scope.viewState.intygModel.diabetes.insulin = true;
         $scope.$digest();
 
-        $scope.cert.diabetes.insulinBehandlingsperiod = '2014-10-10';
-        $scope.cert.diabetes.insulin = false;
+        $scope.viewState.intygModel.diabetes.insulinBehandlingsperiod = '2014-10-10';
+        $scope.viewState.intygModel.diabetes.insulin = false;
         $scope.$digest();
 
-        expect($scope.cert.diabetes.insulinBehandlingsperiod).toBeNull();
+        expect($scope.viewState.intygModel.diabetes.insulinBehandlingsperiod).toBeNull();
 
         // When reenabled the previously selected values should be remembered
-        $scope.cert.diabetes.insulin = true;
+        $scope.viewState.intygModel.diabetes.insulin = true;
         $scope.$digest();
-        expect($scope.cert.diabetes.insulinBehandlingsperiod).toBe('2014-10-10');
+        expect($scope.viewState.intygModel.diabetes.insulinBehandlingsperiod).toBe('2014-10-10');
     });
 
     it('should reset hidden fields when "diabetes.insulin" is set to false', function() {
-        $scope.cert.diabetes.insulin = true;
-        $scope.cert.diabetes.insulinBehandlingsperiod = '2014-10-10';
+        $scope.viewState.intygModel.diabetes.insulin = true;
+        $scope.viewState.intygModel.diabetes.insulinBehandlingsperiod = '2014-10-10';
         $scope.$digest();
 
-        $scope.cert.diabetes.insulin = false;
+        $scope.viewState.intygModel.diabetes.insulin = false;
         $scope.$digest();
 
-        expect($scope.cert.diabetes.insulinBehandlingsperiod).toBeNull();
+        expect($scope.viewState.intygModel.diabetes.insulinBehandlingsperiod).toBeNull();
     });
 
 });

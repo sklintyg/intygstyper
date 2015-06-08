@@ -5,7 +5,6 @@ describe('ts-bas.Utkast.Form14Controller', function() {
     var User;
     var wcFocus;
     var utkastNotifyService;
-    var viewState;
     var anchorScrollService;
 
 
@@ -25,43 +24,36 @@ describe('ts-bas.Utkast.Form14Controller', function() {
     beforeEach(angular.mock.inject([
         '$controller',
         '$rootScope',
+        'ts-bas.Domain.IntygModel',
         'ts-bas.UtkastController.ViewStateService',
-        function($controller, $rootScope, _viewState_) {
+        function($controller, $rootScope) {
         $scope = $rootScope.$new();
-        viewState = _viewState_;
 
         ctrl = $controller('ts-bas.Utkast.Form14Controller', { $scope: $scope });
-
-            var cert = testData.cert;
-
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(cert);
-
-        $scope.$digest();
     }]));
 
     // --- form14
     it('should reset hidden fields when "sjukhusEllerLakarkontakt" is set to false', function() {
-        $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt = true;
+        $scope.viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt = true;
         $scope.$digest();
 
-        $scope.cert.sjukhusvard.tidpunkt = 'Förra veckan';
-        $scope.cert.sjukhusvard.vardinrattning = 'Sahlgrenska';
-        $scope.cert.sjukhusvard.anledning = 'Allt';
-        $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt = false;
+        $scope.viewState.intygModel.sjukhusvard.tidpunkt = 'Förra veckan';
+        $scope.viewState.intygModel.sjukhusvard.vardinrattning = 'Sahlgrenska';
+        $scope.viewState.intygModel.sjukhusvard.anledning = 'Allt';
+        $scope.viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt = false;
         $scope.$digest();
 
-        expect($scope.cert.sjukhusvard.tidpunkt).toBe('');
-        expect($scope.cert.sjukhusvard.vardinrattning).toBe('');
-        expect($scope.cert.sjukhusvard.anledning).toBe('');
+        expect($scope.viewState.intygModel.sjukhusvard.tidpunkt).toBe('');
+        expect($scope.viewState.intygModel.sjukhusvard.vardinrattning).toBe('');
+        expect($scope.viewState.intygModel.sjukhusvard.anledning).toBe('');
 
         // Attic
-        $scope.cert.sjukhusvard.sjukhusEllerLakarkontakt = true;
+        $scope.viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt = true;
         $scope.$digest();
 
-        expect($scope.cert.sjukhusvard.tidpunkt).toBe('Förra veckan');
-        expect($scope.cert.sjukhusvard.vardinrattning).toBe('Sahlgrenska');
-        expect($scope.cert.sjukhusvard.anledning).toBe('Allt');
+        expect($scope.viewState.intygModel.sjukhusvard.tidpunkt).toBe('Förra veckan');
+        expect($scope.viewState.intygModel.sjukhusvard.vardinrattning).toBe('Sahlgrenska');
+        expect($scope.viewState.intygModel.sjukhusvard.anledning).toBe('Allt');
     });
     // --- form14
 });

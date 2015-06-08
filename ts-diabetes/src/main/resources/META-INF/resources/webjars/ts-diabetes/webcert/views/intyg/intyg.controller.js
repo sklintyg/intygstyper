@@ -14,7 +14,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
             $scope.viewState = ViewState;
 
             $scope.user = UserModel.userContext;
-            $scope.cert = {};
 
             /*********************************************************************
              * Private support functions
@@ -45,10 +44,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                 IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
-                        $scope.cert = result.contents;
+                        ViewState.intygModel = result.contents;
 
-                        ViewState.intygAvser = createKorkortstypListString($scope.cert.intygAvser.korkortstyp);
-                        ViewState.bedomning = createKorkortstypListString($scope.cert.bedomning.korkortstyp);
+                        ViewState.intygAvser = createKorkortstypListString(ViewState.intygModel.intygAvser.korkortstyp);
+                        ViewState.bedomning = createKorkortstypListString(ViewState.intygModel.bedomning.korkortstyp);
 
                         $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result);
                         ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'TS');
@@ -59,7 +58,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                             ViewState.common.printStatus = 'signed';
                         }
 
-                        $scope.pdfUrl = '/moduleapi/intyg/ts-diabetes/' + $scope.cert.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/ts-diabetes/' + ViewState.intygModel.id + '/pdf';
 
                     } else {
                         ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';

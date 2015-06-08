@@ -3,30 +3,29 @@ angular.module('ts-diabetes').controller('ts-diabetes.Utkast.Form3Controller',
         'ts-diabetes.UtkastController.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
-            $scope.cert = viewState.intygModel;
             $scope.viewState = viewState;
 
             // --- form3
-            $scope.$watch('cert.syn.separatOgonlakarintyg', function(separatOgonlakarintyg) {
+            $scope.$watch('viewState.intygModel.syn.separatOgonlakarintyg', function(separatOgonlakarintyg) {
                 if(separatOgonlakarintyg !== undefined) {
-                    if (separatOgonlakarintyg && $scope.cert.syn) {
-                        $scope.cert.updateToAttic('syn.synfaltsprovningUtanAnmarkning');
-                        $scope.cert.updateToAttic('syn.hoger');
-                        $scope.cert.updateToAttic('syn.vanster');
-                        $scope.cert.updateToAttic('syn.binokulart');
-                        $scope.cert.updateToAttic('syn.diplopi');
+                    if (separatOgonlakarintyg && viewState.intygModel.syn) {
+                        viewState.intygModel.updateToAttic('syn.synfaltsprovningUtanAnmarkning');
+                        viewState.intygModel.updateToAttic('syn.hoger');
+                        viewState.intygModel.updateToAttic('syn.vanster');
+                        viewState.intygModel.updateToAttic('syn.binokulart');
+                        viewState.intygModel.updateToAttic('syn.diplopi');
 
-                        $scope.cert.clear('syn.synfaltsprovningUtanAnmarkning');
-                        $scope.cert.clear('syn.hoger');
-                        $scope.cert.clear('syn.vanster');
-                        $scope.cert.clear('syn.binokulart');
-                        $scope.cert.clear('syn.diplopi');
+                        viewState.intygModel.clear('syn.synfaltsprovningUtanAnmarkning');
+                        viewState.intygModel.clear('syn.hoger');
+                        viewState.intygModel.clear('syn.vanster');
+                        viewState.intygModel.clear('syn.binokulart');
+                        viewState.intygModel.clear('syn.diplopi');
                     } else {
-                        $scope.cert.restoreFromAttic('syn.synfaltsprovningUtanAnmarkning');
-                        $scope.cert.restoreFromAttic('syn.hoger');
-                        $scope.cert.restoreFromAttic('syn.vanster');
-                        $scope.cert.restoreFromAttic('syn.binokulart');
-                        $scope.cert.restoreFromAttic('syn.diplopi');
+                        viewState.intygModel.restoreFromAttic('syn.synfaltsprovningUtanAnmarkning');
+                        viewState.intygModel.restoreFromAttic('syn.hoger');
+                        viewState.intygModel.restoreFromAttic('syn.vanster');
+                        viewState.intygModel.restoreFromAttic('syn.binokulart');
+                        viewState.intygModel.restoreFromAttic('syn.diplopi');
                     }
                 }
             }, true);

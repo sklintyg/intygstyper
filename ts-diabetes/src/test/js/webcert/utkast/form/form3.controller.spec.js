@@ -40,54 +40,46 @@ describe('ts-diabetes.Utkast.Form3Controller', function() {
         viewState = _viewState_;
         $scope = $rootScope.$new();
         ctrl = $controller('ts-diabetes.Utkast.Form3Controller', { $scope: $scope });
-        var cert = testData.cert;
-
-        var draftModel = IntygModel._members.build();
-            draftModel.update(cert);
-        spyOn(viewState, 'setDraftModel');
-        spyOn(viewState, 'intygModel').and.returnValue(draftModel.content);
-        $scope.cert = draftModel.content;
-        $scope.$digest();
     }]));
 
     // form 3
     it('should reset hidden fields when "separatOgonlakarintyg" is set to true', function() {
 
-        $scope.cert.syn.separatOgonlakarintyg = true;
+        $scope.viewState.intygModel.syn.separatOgonlakarintyg = true;
         $scope.$digest();
 
-        $scope.cert.syn.separatOgonlakarintyg = false;
+        $scope.viewState.intygModel.syn.separatOgonlakarintyg = false;
         $scope.$digest();
 
-        $scope.cert.syn.hoger.utanKorrektion = '2.0';
-        $scope.cert.syn.hoger.medKorrektion = '2.0';
-        $scope.cert.syn.vanster.utanKorrektion = '2.0';
-        $scope.cert.syn.vanster.medKorrektion = '2.0';
-        $scope.cert.syn.binokulart.utanKorrektion = '2.0';
-        $scope.cert.syn.binokulart.medKorrektion = '2.0';
-        $scope.cert.syn.diplopi = false;
+        $scope.viewState.intygModel.syn.hoger.utanKorrektion = '2.0';
+        $scope.viewState.intygModel.syn.hoger.medKorrektion = '2.0';
+        $scope.viewState.intygModel.syn.vanster.utanKorrektion = '2.0';
+        $scope.viewState.intygModel.syn.vanster.medKorrektion = '2.0';
+        $scope.viewState.intygModel.syn.binokulart.utanKorrektion = '2.0';
+        $scope.viewState.intygModel.syn.binokulart.medKorrektion = '2.0';
+        $scope.viewState.intygModel.syn.diplopi = false;
 
-        $scope.cert.syn.separatOgonlakarintyg = true;
+        $scope.viewState.intygModel.syn.separatOgonlakarintyg = true;
         $scope.$digest();
 
-        expect($scope.cert.syn.hoger.utanKorrektion).toBeUndefined();
-        expect($scope.cert.syn.hoger.medKorrektion).toBeUndefined();
-        expect($scope.cert.syn.vanster.utanKorrektion).toBeUndefined();
-        expect($scope.cert.syn.vanster.medKorrektion).toBeUndefined();
-        expect($scope.cert.syn.binokulart.utanKorrektion).toBeUndefined();
-        expect($scope.cert.syn.binokulart.medKorrektion).toBeUndefined();
-        expect($scope.cert.syn.diplopi).toBeUndefined();
+        expect($scope.viewState.intygModel.syn.hoger.utanKorrektion).toBeUndefined();
+        expect($scope.viewState.intygModel.syn.hoger.medKorrektion).toBeUndefined();
+        expect($scope.viewState.intygModel.syn.vanster.utanKorrektion).toBeUndefined();
+        expect($scope.viewState.intygModel.syn.vanster.medKorrektion).toBeUndefined();
+        expect($scope.viewState.intygModel.syn.binokulart.utanKorrektion).toBeUndefined();
+        expect($scope.viewState.intygModel.syn.binokulart.medKorrektion).toBeUndefined();
+        expect($scope.viewState.intygModel.syn.diplopi).toBeUndefined();
 
         // When reenabled the previously selected values should be remembered
-        $scope.cert.syn.separatOgonlakarintyg = false;
+        $scope.viewState.intygModel.syn.separatOgonlakarintyg = false;
         $scope.$digest();
-        expect($scope.cert.syn.hoger.utanKorrektion).toBe('2.0');
-        expect($scope.cert.syn.hoger.utanKorrektion).toBe('2.0');
-        expect($scope.cert.syn.vanster.utanKorrektion).toBe('2.0');
-        expect($scope.cert.syn.vanster.medKorrektion).toBe('2.0');
-        expect($scope.cert.syn.binokulart.utanKorrektion).toBe('2.0');
-        expect($scope.cert.syn.binokulart.medKorrektion).toBe('2.0');
-        expect($scope.cert.syn.diplopi).toBe(false);
+        expect($scope.viewState.intygModel.syn.hoger.utanKorrektion).toBe('2.0');
+        expect($scope.viewState.intygModel.syn.hoger.utanKorrektion).toBe('2.0');
+        expect($scope.viewState.intygModel.syn.vanster.utanKorrektion).toBe('2.0');
+        expect($scope.viewState.intygModel.syn.vanster.medKorrektion).toBe('2.0');
+        expect($scope.viewState.intygModel.syn.binokulart.utanKorrektion).toBe('2.0');
+        expect($scope.viewState.intygModel.syn.binokulart.medKorrektion).toBe('2.0');
+        expect($scope.viewState.intygModel.syn.diplopi).toBe(false);
     });
 
 });

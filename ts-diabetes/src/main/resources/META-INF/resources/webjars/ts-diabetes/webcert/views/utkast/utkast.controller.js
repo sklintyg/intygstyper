@@ -12,7 +12,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             viewState.reset();
             $scope.viewState = viewState;
-            $scope.cert = viewState.intygModel; // keep cert as a shortcut to viewState.intyModel?
 
             // Page state
             $scope.user = UserModel;

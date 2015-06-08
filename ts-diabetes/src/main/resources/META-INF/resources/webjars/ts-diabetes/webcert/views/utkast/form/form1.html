@@ -11,37 +11,37 @@
     <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
     <div class="controls">
       <input id="diabetesyear" class="form-control input-year" type="text" maxlength="4"
-             ng-model="cert.diabetes.observationsperiod" />
+             ng-model="viewState.intygModel.diabetes.observationsperiod" />
     </div>
   </div>
   <div class="form-group">
-    Patienten har diabetes {{cert.diabetes.diabetesTyp}}
+    Patienten har diabetes {{viewState.intygModel.diabetes.diabetesTyp}}
     <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_1"
-                                ng-model="cert.diabetes.diabetestyp">Typ 1</label>
+                                ng-model="viewState.intygModel.diabetes.diabetestyp">Typ 1</label>
     <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_2"
-                                ng-model="cert.diabetes.diabetestyp">Typ 2</label>
+                                ng-model="viewState.intygModel.diabetes.diabetestyp">Typ 2</label>
   </div>
   <div class="form-group">
     Behandling
     <label class="checkbox"><input id="diabetestreat1" name="diabetestreat1" type="checkbox"
-                                   ng-model="cert.diabetes.endastKost">
+                                   ng-model="viewState.intygModel.diabetes.endastKost">
       <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
     </label>
     <label class="checkbox"><input id="diabetestreat2" name="diabetestreat2" type="checkbox"
-                                   ng-model="cert.diabetes.tabletter">
+                                   ng-model="viewState.intygModel.diabetes.tabletter">
       <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
     </label>
     <label class="checkbox"><input id="diabetestreat3" name="diabetestreat3" type="checkbox"
-                                   ng-model="cert.diabetes.insulin">
+                                   ng-model="viewState.intygModel.diabetes.insulin">
       <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
     </label>
-    <div class="form-group indent" ng-show="cert.diabetes.insulin">
+    <div class="form-group indent" ng-show="viewState.intygModel.diabetes.insulin">
       <label for="insulinBehandlingsperiod"><span message
                                                   key="ts-diabetes.label.diabetes.behandling.insulin-period"></span></label>
       <div class="controls">
         <input id="insulinBehandlingsperiod" class="form-control input-year"
                name="insulinBehandlingsperiod" type="text"
-               ng-model="cert.diabetes.insulinBehandlingsperiod" maxlength="4" />
+               ng-model="viewState.intygModel.diabetes.insulinBehandlingsperiod" maxlength="4" />
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
     <div class="controls">
       <input id="annanBehandlingBeskrivning" class="form-control input-full"
              name="annanBehandlingBeskrivning" type="text"
-             ng-model="cert.diabetes.annanBehandlingBeskrivning" wc-maxlength
+             ng-model="viewState.intygModel.diabetes.annanBehandlingBeskrivning" wc-maxlength
              ng-trim="false" maxlength="53" />
     </div>
   </div>

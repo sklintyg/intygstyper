@@ -15,60 +15,60 @@
     </tr>
     <tr>
       <td><input id="hypoay" name="hypoa" type="radio" ng-value="true"
-                 ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder"></td>
       <td><input id="hypoan" name="hypoa" type="radio" ng-value="false"
-                 ng-model="cert.hypoglykemier.kunskapOmAtgarder"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span></td>
     </tr>
     <tr>
       <td><input id="hypoby" name="hypob" type="radio" ng-value="true"
-                 ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion"></td>
       <td><input id="hypobn" name="hypob" type="radio" ng-value="false"
-                 ng-model="cert.hypoglykemier.teckenNedsattHjarnfunktion"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
       </td>
     </tr>
-    <tr ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
+    <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypocy" name="hypoc" type="radio" ng-value="true"
-                 ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
       <td><input id="hypocn" name="hypoc" type="radio" ng-value="false"
-                 ng-model="cert.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
       <td><span message
                 key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span></td>
     </tr>
-    <tr ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
+    <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypody" name="hypod" type="radio" ng-value="true"
-                 ng-model="cert.hypoglykemier.allvarligForekomst"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst"></td>
       <td><input id="hypodn" name="hypod" type="radio" ng-value="false"
-                 ng-model="cert.hypoglykemier.allvarligForekomst"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
 
-        <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomst == true">
+        <div class="controls" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomst == true">
           <label for="allvarligForekomstBeskrivning">
                               <span message
                                     key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
           </label>
           <input id="allvarligForekomstBeskrivning" class="form-control input-full"
                  name="allvarligForekomstBeskrivning" type="text"
-                 ng-model="cert.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning" wc-maxlength
                  ng-trim="false" maxlength="40" />
         </div>
       </td>
     </tr>
-    <tr ng-show="cert.hypoglykemier.teckenNedsattHjarnfunktion">
+    <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypoey" name="hypoe" type="radio" ng-value="true"
-                 ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken"></td>
       <td><input id="hypoen" name="hypoe" type="radio" ng-value="false"
-                 ng-model="cert.hypoglykemier.allvarligForekomstTrafiken"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
-        <div class="controls" ng-show="cert.hypoglykemier.allvarligForekomstTrafiken == true">
+        <div class="controls" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken == true">
           <label for="allvarligForekomstTrafikBeskrivning">
                               <span message
                                     key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
           </label>
           <input id="allvarligForekomstTrafikBeskrivning" class="form-control input-full"
                  name="allvarligForekomstTrafikBeskrivning" type="text"
-                 ng-model="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning" wc-maxlength
                  ng-trim="false" maxlength="35" />
         </div>
       </td>
@@ -82,22 +82,22 @@
     <!-- 2f -->
     <tr ng-show="viewState.korkortd">
       <td><input id="hypofy" name="hypof" type="radio" ng-value="true"
-                 ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker"></td>
       <td><input id="hypofn" name="hypof" type="radio" ng-value="false"
-                 ng-model="cert.hypoglykemier.egenkontrollBlodsocker"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span></td>
     </tr>
 
     <!-- 2g -->
     <tr ng-show="viewState.korkortd">
       <td><input id="hypogy" name="hypog" type="radio" ng-value="true"
-                 ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid"></td>
       <td><input id="hypogn" name="hypog" type="radio" ng-value="false"
-                 ng-model="cert.hypoglykemier.allvarligForekomstVakenTid"></td>
+                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid"></td>
       <td><span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
-        <div class="controls form-inline webcert-top-padding-section" ng-show="cert.hypoglykemier.allvarligForekomstVakenTid">
+        <div class="controls form-inline webcert-top-padding-section" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid">
           <label class="control-label"><span message key="common.when"></span></label>
-                            <span wc-date-picker-field target-model="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid"
+                            <span wc-date-picker-field target-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid"
                                   dom-id="allvarligForekomstVakenTidObservationstid"
                                   invalid="false"
                                   max-date="{{tomorrowDate}}"></span>
