@@ -3,23 +3,22 @@ package se.inera.certificate.modules.fk7263.rest;
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.List;
-
-import javax.xml.bind.JAXB;
-import javax.xml.ws.soap.SOAPFaultException;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.annotations.VisibleForTesting;
+import iso.v21090.dt.v1.CD;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.fk7263.model.converter.*;
+import se.inera.certificate.modules.fk7263.model.converter.ArbetsformagaToGiltighet;
+import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
+import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
+import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
+import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.model.util.ModelCompareUtil;
@@ -57,9 +56,11 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertifica
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.annotations.VisibleForTesting;
-import iso.v21090.dt.v1.CD;
+import javax.xml.bind.JAXB;
+import javax.xml.ws.soap.SOAPFaultException;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.List;
 
 
 /**
