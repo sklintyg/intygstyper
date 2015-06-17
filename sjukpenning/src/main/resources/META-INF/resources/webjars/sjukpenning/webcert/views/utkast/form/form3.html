@@ -1,0 +1,8 @@
+<div wc-field field-label="sjukpenning.label.aktuellt-sjukdomsforlopp" field-number="3" wc-detect-animation
+     field-help-text="sjukpenning.helptext.aktuellt-sjukdomsforlopp" ng-hide="viewState.avstangningSmittskydd()" class="field-fade">
+                    <textarea id="diseaseCause" class="form-control" name="diseaseCause" rows='5'
+                              ng-model="model.sjukdomsforlopp"
+                              wc-maxlength ng-trim="false"
+                              maxlength="{{viewState.inputLimits.sjukdomsforlopp}}"></textarea>
+
+</div>
