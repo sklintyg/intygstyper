@@ -65,12 +65,12 @@
     <repository>
       <id>inera-release-repository</id>
       <name>inera-release-repository</name>
-      <url>https://jenkins.inera.nordicmedtest.se/nexus/content/repositories/releases/</url>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/</url>
     </repository>
     <snapshotRepository>
       <id>inera-snapshot-repository</id>
       <name>inera-snapshot-repository</name>
-      <url>https://jenkins.inera.nordicmedtest.se/nexus/content/repositories/snapshots/</url>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/</url>
     </snapshotRepository>
   </distributionManagement>
 
