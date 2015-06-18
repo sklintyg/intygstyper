@@ -29,6 +29,7 @@ import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 
@@ -43,6 +44,7 @@ public class PdfGeneratorTest {
     private static File fk7263Json;
     private static File fk7263falt9bortaJson;
     private static File expectedPdfContent;
+    private static File expectedPdfContentEmployer;
 
     @Autowired
     private ObjectMapper mapper;
@@ -53,6 +55,7 @@ public class PdfGeneratorTest {
         fk7263Json = new ClassPathResource("PdfGeneratorTest/utlatande.json").getFile();
         fk7263falt9bortaJson = new ClassPathResource("PdfGeneratorTest/falt9borta.json").getFile();
         expectedPdfContent = new ClassPathResource("PdfGeneratorTest/expectedPdfContent.json").getFile();
+        expectedPdfContentEmployer = new ClassPathResource("PdfGeneratorTest/expectedPdfContentEmployer.json").getFile();
     }
 
     @Test
@@ -64,7 +67,7 @@ public class PdfGeneratorTest {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
 
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), false, ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), false, ApplicationOrigin.WEBCERT, false).getBytes();
         AcroFields expectedFields = readExpectedFields();
 
         // read expected PDF fields
@@ -73,8 +76,6 @@ public class PdfGeneratorTest {
 
         // compare expected field values with field values in generated PDF
         for (String fieldKey : expectedFields.getFields().keySet()) {
-            //System.out.println('"' + fieldKey +'"' + " : " + '"' + generatedFields.getField(fieldKey) + '"');
-
             assertEquals("Value for field " + fieldKey + " is not the expected",
                     pdfContent.get(fieldKey), generatedFields.getField(fieldKey));
         }
@@ -85,7 +86,7 @@ public class PdfGeneratorTest {
 
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.MINA_INTYG).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.MINA_INTYG, false).getBytes();
         writePdfToFile(generatorResult, "Mina-intyg");
     }
 
@@ -93,7 +94,7 @@ public class PdfGeneratorTest {
     public void testPdfGenerationFromWebcert() throws Exception {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, false).getBytes();
         writePdfToFile(generatorResult, "Webcert");
     }
 
@@ -101,14 +102,14 @@ public class PdfGeneratorTest {
     public void testPdfGenerationFromWebcertWidthFalt9Borta() throws Exception {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263falt9bortaJson, Utlatande.class);
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, false).getBytes();
         writePdfToFile(generatorResult, "Webcert");
     }
 
     @Test
     public void pdfGenerationRemovesFormFields() throws IOException, PdfGeneratorException {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
-        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, false).getBytes();
 
         PdfReader reader = new PdfReader(generatorResult);
         AcroFields generatedFields = reader.getAcroFields();
@@ -125,10 +126,40 @@ public class PdfGeneratorTest {
     @Test
     public void testGeneratePdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            byte[] pdf = new PdfGenerator(scenario.asInternalModel(), new ArrayList<Status>(), ApplicationOrigin.WEBCERT).getBytes();
+            byte[] pdf = new PdfGenerator(scenario.asInternalModel(), new ArrayList<Status>(), ApplicationOrigin.WEBCERT, false).getBytes();
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf, scenario);
         }
+    }
+
+    @Test
+    public void testGenerateEmployerCopy() throws Exception {
+        @SuppressWarnings("unchecked")
+        Map<String, String> pdfContent = mapper.readValue(expectedPdfContentEmployer, Map.class);
+
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+
+        // generate PDF
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), false, ApplicationOrigin.WEBCERT, true).getBytes();
+        AcroFields expectedFields = readExpectedFields();
+
+        // read expected PDF fields
+        PdfReader reader = new PdfReader(generatorResult);
+        AcroFields generatedFields = reader.getAcroFields();
+
+        // compare expected field values with field values in generated PDF
+        for (String fieldKey : expectedFields.getFields().keySet()) {
+            assertEquals("Value for field " + fieldKey + " is not the",
+                    pdfContent.get(fieldKey), generatedFields.getField(fieldKey));
+        }
+    }
+
+    @Test
+    public void testPdfGenerationFromWebcertEmployerCopy() throws Exception {
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        // generate PDF
+        byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, true).getBytes();
+        writePdfToFile(generatorResult, "WebcertEmployer");
     }
 
     /**
@@ -140,19 +171,19 @@ public class PdfGeneratorTest {
      */
     @Test
     public void whenIntygIsSignedButNotSentToFKThenGeneratePDF() throws Exception {
-        //Given
+        // Given
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
 
         List<Status> statuses = new ArrayList<Status>();
         statuses.add(new Status(CertificateState.RECEIVED, null, LocalDateTime.now()));
 
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, statuses , ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, statuses, ApplicationOrigin.WEBCERT, false).getBytes();
         writePdfToFile(generatorResult, "Webcert");
     }
 
     /**
-     * This test assert that a user can print a Intyg of type FK7263 after it ahs been sent to FK.
+     * This test assert that a user can print a Intyg of type FK7263 after it has been sent to FK.
      * - The target property of a Status object is FK in this scenario.
      * - The type property of a Status object is CertificateState.SENT
      *
@@ -160,14 +191,14 @@ public class PdfGeneratorTest {
      */
     @Test
     public void whenIntygIsSignedAndSentToFKThenGeneratePDF() throws Exception {
-        //Given
+        // Given
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
 
         List<Status> statuses = new ArrayList<Status>();
         statuses.add(new Status(CertificateState.SENT, Recipients.FK.toString(), LocalDateTime.now()));
 
         // generate PDF
-        byte[] generatorResult = new PdfGenerator(intyg, statuses , ApplicationOrigin.WEBCERT).getBytes();
+        byte[] generatorResult = new PdfGenerator(intyg, statuses, ApplicationOrigin.WEBCERT, false).getBytes();
         writePdfToFile(generatorResult, "Webcert");
     }
 

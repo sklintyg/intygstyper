@@ -185,11 +185,13 @@ public class PdfGenerator {
     private ByteArrayOutputStream outputStream;
     private AcroFields fields;
 
-    public PdfGenerator(Utlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
-        this(intyg, statuses, true, applicationOrigin);
+    public PdfGenerator(Utlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin, boolean isEmployerCopy)
+            throws PdfGeneratorException {
+        this(intyg, statuses, true, applicationOrigin, isEmployerCopy);
     }
 
-    public PdfGenerator(Utlatande intyg, List<Status> statuses, boolean flatten, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
+    public PdfGenerator(Utlatande intyg, List<Status> statuses, boolean flatten, ApplicationOrigin applicationOrigin, boolean isEmployerCopy)
+            throws PdfGeneratorException {
         try {
             this.intyg = intyg;
 
@@ -199,7 +201,7 @@ public class PdfGenerator {
             PdfStamper pdfStamper = new PdfStamper(pdfReader, this.outputStream);
             fields = pdfStamper.getAcroFields();
 
-            generatePdf();
+            generatePdf(isEmployerCopy);
 
             // Decorate PDF depending on the origin of the pdf-call
             switch (applicationOrigin) {
@@ -209,7 +211,7 @@ public class PdfGenerator {
                 createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), MINA_INTYG_MARGIN_TEXT);
                 break;
             case WEBCERT:
-                if (isCertificateSentToFK(statuses)) {
+                if (isEmployerCopy || isCertificateSentToFK(statuses)) {
                     maskSendToFkInformation(pdfStamper);
                     markAsElectronicCopy(pdfStamper, WATERMARK_TEXT);
                 }
@@ -340,41 +342,36 @@ public class PdfGenerator {
         return outputStream.toByteArray();
     }
 
-    private void generatePdf() {
+    private void generatePdf(boolean isEmployerCopy) {
+        // Mandatory fields
         fillPatientDetails();
+        fillRecommendationsWork();
+        fillCapacityRelativeTo();
+        fillCapacity();
+        fillArbetsformaga();
+        fillTravel();
+        fillOther();
         fillSignerNameAndAddress();
 
-        fillSignerCodes();
+        // Fields not suitable for employer
+        if (!isEmployerCopy) {
+            fillRecommendationsOther();
+            fillDiagnose();
+            fillDiseaseCause();
+            fillSignerCodes();
+            fillPrognose();
+            fillIsSuspenseDueToInfection();
+            fillBasedOn();
+            fillDisability();
+            fillActivityLimitation();
+            fillMeasures();
+            fillRehabilitation();
+            fillFkContact();
+        }
+    }
 
-        fillIsSuspenseDueToInfection();
-
-        fillDiagnose();
-
-        fillDiseaseCause();
-
-        fillBasedOn();
-
-        fillDisability();
-
-        fillActivityLimitation();
-
-        fillRecommendations();
-
-        fillMeasures();
-
-        fillRehabilitation();
-
-        fillCapacityRelativeTo();
-
-        fillCapacity();
-
-        fillTravel();
-
+    private void fillFkContact() {
         setField(CONTACT_WITH_FK, intyg.isKontaktMedFk());
-
-        fillPrognose();
-
-        fillOther();
     }
 
     private void fillPatientDetails() {
@@ -419,6 +416,9 @@ public class PdfGenerator {
             default:
             }
         }
+    }
+
+    private void fillArbetsformaga() {
         fillText(WORK_CAPACITY_TEXT, stripNewlines(intyg.getArbetsformagaPrognos()));
     }
 
@@ -469,9 +469,12 @@ public class PdfGenerator {
         }
     }
 
-    private void fillRecommendations() {
-        setField(RECOMMENDATIONS_CONTACT_AF, intyg.isRekommendationKontaktArbetsformedlingen());
+    private void fillRecommendationsWork() {
         setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommendationKontaktForetagshalsovarden());
+    }
+
+    private void fillRecommendationsOther() {
+        setField(RECOMMENDATIONS_CONTACT_AF, intyg.isRekommendationKontaktArbetsformedlingen());
         if (intyg.getRekommendationOvrigt() != null) {
             checkField(RECOMMENDATIONS_OTHER);
             fillText(RECOMMENDATIONS_OTHER_TEXT, stripNewlines(intyg.getRekommendationOvrigt()));
