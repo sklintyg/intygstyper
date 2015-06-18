@@ -98,7 +98,7 @@ public class ModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            moduleApi.pdf(createInternalHolder(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
+            moduleApi.pdf(createInternalHolder(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG, false);
 
         }
     }

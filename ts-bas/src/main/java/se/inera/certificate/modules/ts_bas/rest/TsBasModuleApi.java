@@ -174,7 +174,7 @@ public class TsBasModuleApi implements ModuleApi {
     }
 
     @Override
-    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, boolean isEmployerCopy) throws ModuleException {
         try {
             return new PdfResponse(pdfGenerator.generatePDF(getInternal(internalModel), applicationOrigin),
                     pdfGenerator.generatePdfFilename(getInternal(internalModel)));
