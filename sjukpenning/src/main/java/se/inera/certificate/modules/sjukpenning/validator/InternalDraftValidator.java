@@ -11,7 +11,7 @@ import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.service.WebcertModuleService;
 import se.inera.certificate.modules.sjukpenning.model.internal.PrognosBedomning;
-import se.inera.certificate.modules.sjukpenning.model.internal.Utlatande;
+import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
@@ -30,7 +30,7 @@ public class InternalDraftValidator {
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
-    public ValidateDraftResponse validateDraft(Utlatande utlatande) {
+    public ValidateDraftResponse validateDraft(SjukpenningUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // intyget baseras på
@@ -56,7 +56,7 @@ public class InternalDraftValidator {
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-    private void validateVardkontakter(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateVardkontakter(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", ValidationMessageType.INVALID_FORMAT,
                     "sjukpenning.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
@@ -67,7 +67,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateReferenser(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateReferenser(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         // Fält 4b - höger Check that we at least got one field set regarding
         // what the certificate is based on if not smittskydd
@@ -94,7 +94,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateVardenhet(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateVardenhet(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
             addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
                     "sjukpenning.validation.vardenhet.postadress.missing");
@@ -119,7 +119,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateKommentar(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateKommentar(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 13 - Upplysningar - optional
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
@@ -130,7 +130,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateRessatt(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateRessatt(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 11 - optional
         boolean inForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
         boolean inEjForandratRessatt = utlatande.isRessattTillArbeteEjAktuellt();
@@ -142,7 +142,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateArbetsformaga(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateArbetsformaga(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
             if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
@@ -167,7 +167,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, Utlatande utlatande) {
+    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, SjukpenningUtlatande utlatande) {
         boolean success = true;
         InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
@@ -201,7 +201,7 @@ public class InternalDraftValidator {
         return success;
     }
 
-    private void validateAktivitetsbegransning(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateAktivitetsbegransning(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(aktivitetsbegransning)) {
@@ -210,7 +210,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateFunktionsnedsattning(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateFunktionsnedsattning(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(funktionsnedsattning)) {
@@ -219,7 +219,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateDiagnose(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateDiagnose(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         // Fält 3 - always optional regardless of smittskydd
 
@@ -274,7 +274,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateOvrigaRekommendationer(Utlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateOvrigaRekommendationer(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 6a - If Övrigt is checked, something must be entered.
         if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isBlank(utlatande.getRekommendationOvrigt())) {
             addValidationError(validationMessages, "rekommendationer", ValidationMessageType.EMPTY,
@@ -291,8 +291,7 @@ public class InternalDraftValidator {
      *         {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#INVALID} otherwise
      */
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
-        return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
-                : se.inera.certificate.modules.support.api.dto.ValidationStatus.INVALID;
+        return (validationMessages.isEmpty()) ? ValidationStatus.VALID :  ValidationStatus.INVALID;
     }
 
     /**

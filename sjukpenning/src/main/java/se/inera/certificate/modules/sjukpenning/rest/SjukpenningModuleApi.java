@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.sjukpenning.model.internal.Utlatande;
+import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
 import se.inera.certificate.modules.sjukpenning.validator.InternalDraftValidator;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
@@ -76,7 +76,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     @Override
     public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template) throws ModuleException {
         try {
-            Utlatande internal = getInternal(template);
+            SjukpenningUtlatande internal = getInternal(template);
             return toInteralModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
@@ -136,12 +136,12 @@ public class SjukpenningModuleApi implements ModuleApi {
         return xmlString;
     }
 
-    private se.inera.certificate.modules.sjukpenning.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
+    private SjukpenningUtlatande getInternal(InternalModelHolder internalModel)
             throws ModuleException {
 
         try {
-            se.inera.certificate.modules.sjukpenning.model.internal.Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
-                    se.inera.certificate.modules.sjukpenning.model.internal.Utlatande.class);
+            SjukpenningUtlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
+                    SjukpenningUtlatande.class);
 
             // Explicitly populate the giltighet interval since it is information derived from
             // the arbetsformaga but needs to be serialized into the Utkast model.
@@ -156,7 +156,7 @@ public class SjukpenningModuleApi implements ModuleApi {
 
     private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
         try {
-            Utlatande intyg = getInternal(internalModel);
+            SjukpenningUtlatande intyg = getInternal(internalModel);
             webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInteralModelResponse(intyg);
         } catch (ModuleException e) {
@@ -165,7 +165,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     }
 
     private InternalModelResponse toInteralModelResponse(
-            se.inera.certificate.modules.sjukpenning.model.internal.Utlatande internalModel) throws ModuleException {
+            SjukpenningUtlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);

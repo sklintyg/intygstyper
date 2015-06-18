@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
-import se.inera.certificate.modules.sjukpenning.model.internal.Utlatande;
+import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
@@ -23,14 +23,14 @@ public class WebcertModelFactory {
      *
      * @param newDraftData
      *            {@link CreateNewDraftHolder}
-     * @return {@link Utlatande} or throws a ConverterException if something unforeseen happens
+     * @return {@link SjukpenningUtlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
+    public SjukpenningUtlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
         LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
-        Utlatande template = new Utlatande();
+        SjukpenningUtlatande template = new SjukpenningUtlatande();
 
         populateWithId(template, newDraftData.getCertificateId());
 
@@ -51,7 +51,7 @@ public class WebcertModelFactory {
         return template;
     }
 
-    public Utlatande createCopy(CreateDraftCopyHolder copyData, Utlatande template) throws ConverterException {
+    public SjukpenningUtlatande createCopy(CreateDraftCopyHolder copyData, SjukpenningUtlatande template) throws ConverterException {
 
         LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
 
@@ -71,11 +71,11 @@ public class WebcertModelFactory {
         return template;
     }
 
-    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+    private void populateWithNewPersonnummer(SjukpenningUtlatande template, String newPersonnummer) {
         template.getGrundData().getPatient().setPersonId(newPersonnummer);
     }
 
-    private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
+    private void populateWithId(SjukpenningUtlatande utlatande, String utlatandeId) throws ConverterException {
 
         if (utlatandeId == null) {
             throw new ConverterException("No certificateID found");
@@ -84,7 +84,7 @@ public class WebcertModelFactory {
         utlatande.setId(utlatandeId);
     }
 
-    private void populateWithPatientInfo(Utlatande utlatande, Patient patient) throws ConverterException {
+    private void populateWithPatientInfo(SjukpenningUtlatande utlatande, Patient patient) throws ConverterException {
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
@@ -92,7 +92,7 @@ public class WebcertModelFactory {
         utlatande.getGrundData().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
-    private void populateWithSkapadAv(Utlatande utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
+    private void populateWithSkapadAv(SjukpenningUtlatande utlatande, HoSPersonal hoSPersonal)
             throws ConverterException {
         if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
@@ -101,11 +101,11 @@ public class WebcertModelFactory {
         utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
     }
 
-    private void resetDataInCopy(Utlatande utlatande) {
+    private void resetDataInCopy(SjukpenningUtlatande utlatande) {
         utlatande.getGrundData().setSigneringsdatum(null);
     }
 
-    public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
+    public void updateSkapadAv(SjukpenningUtlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
         utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
         utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
         utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());

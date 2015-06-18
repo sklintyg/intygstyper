@@ -6,8 +6,9 @@ import static se.inera.certificate.common.util.StringUtil.join;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.common.internal.Utlatande;
 
-public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
+public class SjukpenningUtlatande extends Utlatande {
 
     private LocalDateInterval giltighet;
 
