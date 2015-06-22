@@ -16,15 +16,27 @@
 
   <dependencies>
 
+    <!-- RIVTA Schemas -->
+    <dependency>
+      <groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
+      <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.riv.insuranceprocess.healthreporting</groupId>
+      <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
+    </dependency>
+
+    <!-- Intyg Schemas -->
+    <dependency>
+      <groupId>se.inera.intyg.clinicalprocess.healthcond.certificate</groupId>
+      <artifactId>intyg-clinicalprocess-healthcond-certificate-schemas</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.inera.intyg.insuranceprocess.healthreporting</groupId>
+      <artifactId>intyg-insuranceprocess-healthreporting-schemas</artifactId>
+    </dependency>
+
     <!-- Common -->
-    <dependency>
-      <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
-      <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
-    </dependency>
     <dependency>
       <groupId>se.inera.intyg.common</groupId>
       <artifactId>common-support</artifactId>
@@ -37,13 +49,12 @@
       <groupId>se.inera.intyg.common</groupId>
       <artifactId>integration-util</artifactId>
     </dependency>
-
-    <!-- Schemas -->
     <dependency>
-      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
+      <groupId>se.inera.intyg.common</groupId>
+      <artifactId>common-schemas</artifactId>
     </dependency>
 
+    <!-- Schemas -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -205,6 +216,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
+        <inherited>false</inherited>
         <executions>
           <execution>
             <id>unpack-build-tools</id>
@@ -224,6 +236,7 @@
           </execution>
         </executions>
       </plugin>
+
 
     </plugins>
   </build>

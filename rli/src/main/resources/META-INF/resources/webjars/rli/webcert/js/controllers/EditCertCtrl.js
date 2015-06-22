@@ -1,8 +1,8 @@
 define(['angular'], function(angular) {
     'use strict';
 
-    return [ '$scope', '$location', '$anchorScroll', 'rli.certificateService', '$routeParams',
-        function($scope, $location, $anchorScroll, certificateService, $routeParams) {
+    return [ '$scope', '$location', '$anchorScroll', 'rli.certificateService', '$stateParams',
+        function($scope, $location, $anchorScroll, certificateService, $stateParams) {
             $scope.cert = {};
 
             $scope.messages = [];
@@ -71,7 +71,7 @@ define(['angular'], function(angular) {
 
             // Get the certificate draft from the server.
             // TODO: Hide the form until the draft has been loaded.
-            certificateService.getDraft($routeParams.certificateId, function(data) {
+            certificateService.getDraft($stateParams.certificateId, function(data) {
                 $scope.cert = data.content;
             }, function() {
                 // TODO: Show error message.
@@ -81,7 +81,7 @@ define(['angular'], function(angular) {
              * Action to save the certificate draft to the server.
              */
             $scope.save = function() {
-                certificateService.saveDraft($routeParams.certificateId, $scope.cert, function(data) {
+                certificateService.saveDraft($stateParams.certificateId, $scope.cert, function(data) {
 
                     $scope.certForm.$setPristine();
 
@@ -118,7 +118,7 @@ define(['angular'], function(angular) {
              * Action to discard the certificate draft and return to WebCert again.
              */
             $scope.discard = function() {
-                certificateService.discardDraft($routeParams.certificateId, function() {
+                certificateService.discardDraft($stateParams.certificateId, function() {
                     // TODO: Redirect back to start page.
                 }, function() {
                     // TODO: Show error message.

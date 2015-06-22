@@ -1,5 +1,9 @@
 [
+    "/web/webjars/ts-bas/webcert/js/router.js",
     "/web/webjars/ts-bas/webcert/js/messages.js",
-    "/web/webjars/ts-bas/webcert/js/controllers/EditCertCtrl.js",
-    "/web/webjars/ts-bas/webcert/js/controllers/ViewCertCtrl.js"
+    "/web/webjars/ts-bas/webcert/js/utkast/utkast.model.js",
+    "/web/webjars/ts-bas/webcert/js/utkast/utkast.controller.js",
+    "/web/webjars/ts-bas/webcert/js/utkast/utkast-viewstate.service.js",
+    "/web/webjars/ts-bas/webcert/js/intyg/intyg.controller.js",
+    "/web/webjars/ts-bas/webcert/js/intyg/intyg-viewstate.service.js"
 ]

@@ -18,24 +18,21 @@
  */
 package se.inera.certificate.modules.ts_bas.model.codes;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
-
-import static se.inera.certificate.modules.ts_bas.model.codes.Kodverk.ID_KONTROLL;
+import se.inera.certificate.modules.ts_parent.codes.Kodverk;
+import static se.inera.certificate.modules.ts_parent.codes.Kodverk.ID_KONTROLL;
 
 /**
  * Represents the code used by this module to define id-kontroll,
  * Needs to be updated when proper codes are delivered..
  */
-public enum IdKontrollKod implements CodeSystem {
+public enum IdKontrollKod {
 
-    ID_KORT("IDK1", "SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.", ID_KONTROLL),
-    FORETAG_ELLER_TJANSTEKORT("IDK2", "SIS-märkt företagskort eller tjänstekort.", ID_KONTROLL),
-    KORKORT("IDK3", "Svenskt körkort", ID_KONTROLL),
-    PERS_KANNEDOM("IDK4", "Personlig kännedom", ID_KONTROLL),
-    FORSAKRAN_KAP18("IDK5", "Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)", ID_KONTROLL),
-    PASS("IDK6", "Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.", ID_KONTROLL);
+    ID_KORT("IDK_1", "SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.", ID_KONTROLL),
+    FORETAG_ELLER_TJANSTEKORT("IDK_2", "SIS-märkt företagskort eller tjänstekort.", ID_KONTROLL),
+    KORKORT("IDK_3", "Svenskt körkort", ID_KONTROLL),
+    PERS_KANNEDOM("IDK_4", "Personlig kännedom", ID_KONTROLL),
+    FORSAKRAN_KAP18("IDK_5", "Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2)", ID_KONTROLL),
+    PASS("IDK_6", "Svenskt EU-pass, annat EU-pass utfärdade från och med 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.", ID_KONTROLL);
 
     private final String codeSystemName;
 
@@ -63,23 +60,16 @@ public enum IdKontrollKod implements CodeSystem {
         return description;
     }
 
-    @Override
     public String getCodeSystem() {
         return codeSystem;
     }
 
-    @Override
     public String getCodeSystemName() {
         return codeSystemName;
     }
 
-    @Override
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
 
-    @Override
-    public boolean matches(Kod kod) {
-        return CodeConverter.matches(this, kod);
-    }
 }

@@ -18,16 +18,15 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.codes;
 
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.common.codes.CodeConverter;
-import se.inera.certificate.model.common.codes.CodeSystem;
+import se.inera.certificate.modules.ts_diabetes.support.TsDiabetesEntryPoint;
+
 
 /**
  * Represents the code used by this module to define the Utlåtandetyp.
  */
-public enum UtlatandeKod implements CodeSystem {
+public enum UtlatandeKod  {
 
-    TS_DIABETES_U06_V02("ts-diabetes", "06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
+    TS_DIABETES_U06_V02("06", "02", "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.");
 
     private static final String CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
 
@@ -35,7 +34,7 @@ public enum UtlatandeKod implements CodeSystem {
 
     private static final String CODE_SYSTEM_VERSION = null;
 
-    private final String code;
+    private static final String code = TsDiabetesEntryPoint.MODULE_ID;
 
     private final String tsUtgava;
 
@@ -43,8 +42,10 @@ public enum UtlatandeKod implements CodeSystem {
 
     private final String description;
 
-    private UtlatandeKod(String code, String tsUtgava, String tsVersion, String desc) {
-        this.code = code;
+    private final String EXTERNAL_NAME = "TSTRK1031";
+
+
+    private UtlatandeKod(String tsUtgava, String tsVersion, String desc) {
         this.tsUtgava = tsUtgava;
         this.tsVersion = tsVersion;
         this.description = desc;
@@ -58,17 +59,14 @@ public enum UtlatandeKod implements CodeSystem {
         return description;
     }
 
-    @Override
     public String getCodeSystem() {
         return CODE_SYSTEM;
     }
 
-    @Override
     public String getCodeSystemName() {
         return CODE_SYSTEM_NAME;
     }
 
-    @Override
     public String getCodeSystemVersion() {
         return CODE_SYSTEM_VERSION;
     }
@@ -81,9 +79,8 @@ public enum UtlatandeKod implements CodeSystem {
         return tsVersion;
     }
 
-    @Override
-    public boolean matches(Kod kod) {
-        return CodeConverter.matches(this, kod);
+    public String getTypForTransportConvertion() {
+        return EXTERNAL_NAME + " (U" + this.tsUtgava + ", V" + this.tsVersion + ")";
     }
 
     public void assertVersion(String tsUtgava, String tsVersion) {

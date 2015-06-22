@@ -5,13 +5,14 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.empty': '',
         'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg, diabetes',
         'ts-diabetes.label.send': 'Skicka intyg till Transportstyrelsen',
+        'ts-diabetes.label.send.body': '',
         'ts-diabetes.label.intygavser': 'Intyget avser',
         'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
-        'ts-diabetes.label.allmant': '1. Allmänt',
+        'ts-diabetes.label.diabetes': '1. Allmänt',
         'ts-diabetes.label.hypoglykemier': '2. Hypoglykemier (lågt blodsocker)',
         'ts-diabetes.label.synintyg': '3. Synintyg',
         'ts-diabetes.label.bedomning': '4. Bedömning',
-        'ts-diabetes.label.unit': 'Vårdenhet',
+        'ts-diabetes.label.vardenhet': 'Vårdenhet',
         'ts-diabetes.label.korkort.am': 'AM',
         'ts-diabetes.label.korkort.a1': 'A1',
         'ts-diabetes.label.korkort.a2': 'A2',
@@ -30,9 +31,12 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.korkort.taxi': 'Taxi',
         'ts-diabetes.label.korkort.annat': 'Annat',
         'ts-diabetes.label.makulera.confirmation': 'Transportstyrelsens läkarintyg, diabetes, utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
-
+        'ts-diabetes.label.spara-utkast': 'Spara',
+        'ts-diabetes.label.ta-bort-utkast': 'Ta bort utkast',
+        'ts-diabetes.label.skriv-ut-utkast': 'Skriv ut',
         'ts-diabetes.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
-        'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
+        'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
+        'ts-diabetes.label.kopiera.text': 'Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information. I de fall patienten har ändrat namn eller adress så uppdateras den informationen. Uppgifterna i intygsutkastet går att ändra innan det signeras.',
 
         // Identitet styrkt genom
         'ts-diabetes.label.identitet.id_kort': 'ID-kort',
@@ -46,8 +50,8 @@ var tsDiabetesMessages = {
         'ts-diabetes.helptext.identitet-styrkt-genom.forsakran-enl18kap4': '*** Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
         'ts-diabetes.helptext.identitet-styrkt-genom.pass': '**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.',
 
-
         // Visa ts-diabetes
+        'ts-diabetes.label.patient': 'Patientens adressuppgifter',
 
         'ts-diabetes.label.syn': '3. Synintyg',
         'ts-diabetes.label.ovrigkommentar': 'Övriga upplysningar och kommentarer',
@@ -76,7 +80,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.diabetes.behandling.insulin': 'Insulin',
         'ts-diabetes.label.diabetes.behandling.insulin-period': 'Insulin sedan år',
         'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
-        'ts-diabetes.label.diabetes.behandling.annan-beskrivning': 'Annan behandling, vilken? (ej obligatorisk)',
+        'ts-diabetes.label.diabetes.behandling.annan-beskrivning': 'Annan behandling, vilken?',
 
         'ts-diabetes.label.hypoglykemier.har-patient-kannedom': 'a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?',
         'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
@@ -106,7 +110,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.helptext.narkotika-lakemedel.provtagning': 'Om ja på ovanstående ska resultatet redovisas separat.',
 
         // Help texts
-        'ts-diabetes.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.<br/>Se: <a href="http://www.transportstyrelsen.se" target="_blank">http://www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".',
+        'ts-diabetes.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.<br/>Se: <a href="http://www.transportstyrelsen.se" target="_blank">http://www.transportstyrelsen.se</a>.',
         'ts-diabetes.helptext.intyget-avser': '<span style="text-align:left">AM = moped klass I<br/>A1 = lätt motorcykel<br/>A2 = mellanstor motorcykel<br/>A = motorcykel<br/>B = personbil, lätt lastbil och enbart ett lätt släpfordon<br/>BE = personbil, lätt lastbil och ett eller flera släpfordon. Släpens totalvikt får inte överstiga 3,5 ton.<br/>C1 = medeltung lastbil och enbart ett lätt släpfordon<br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C = tung lastbil och enbart ett lätt släpfordon<br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 = mellanstor buss och enbart ett lätt släpfordon<br/>D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D = buss och enbart ett lätt släpfordon<br/>DE = buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation</span>',
 
         'ts-diabetes.helptext.identitet-styrkt-genom': 'ID-kort = SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.<br/> Företagskort eller tjänstekort = SIS-märkt företagskort eller tjänstekort.<br/> Försäkran enligt 18 kap. 4 § = Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.<br/> Pass = Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 200<br/>',
@@ -117,73 +121,67 @@ var tsDiabetesMessages = {
 
         // Validation messages
         'ts-diabetes.validation.patient.postadress.missing': 'Postadress saknas.',
-        'ts-diabetes.validation.patient.postnummer.missing': 'Postnummer saknas',
-        'ts-diabetes.validation.patient.postort.missing': 'Postort saknas',
+        'ts-diabetes.validation.patient.postnummer.missing': 'Postnummer saknas.',
+        'ts-diabetes.validation.patient.postort.missing': 'Postort saknas.',
 
         'ts-diabetes.validation.utlatande.missing': 'Utlatande saknas',
 
-        'ts-diabetes.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-diabetes.validation.vardenhet.postnummer.missing': 'Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-diabetes.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',
-        'ts-diabetes.validation.vardenhet.postort.missing': 'Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-diabetes.validation.vardenhet.telefonnummer.missing': 'Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt',
+        'ts-diabetes.validation.intygavser.missing': 'Intyget avser körkortsbehörighet saknas.',
+        'ts-diabetes.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet måste väljas.',
 
-        'ts-diabetes.validation.sjukhusvard.missing': 'Objektet sjukhusvård saknas',
-        'ts-diabetes.validation.sjukhusvard.sjukhusellerlakarkontakt.missing': 'Sjukhus eller läkarkontakt saknas',
-        'ts-diabetes.validation.sjukhusvard.anledning.missing': 'Anledning till sjukhusvård saknas',
-        'ts-diabetes.validation.sjukhusvard.tidpunkt.missing': 'Tidpunkt för sjukhusvård saknas',
-        'ts-diabetes.validation.sjukhusvard.vardinrattning.missing': 'Vårdinrättningens namn och klinik saknas',
+        // 'ts-diabetes.validation.identitet': 'Identiteten är styrkt genom', // Use ex ts-diabetes.label.identitet for validation summary headings
+        'ts-diabetes.validation.identitet.missing': 'Ett alternativ måste anges.',
 
-        'ts-diabetes.validation.bedomning.missing': 'Bedömning saknas',
-        'ts-diabetes.validation.bedomning.must-choose-one': 'En körkortstyp eller Kan inte ta ställning måste väljas',
-        'ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing': 'Ställning behöver tas till om patienten är lämpad för högre körkortsbehörighet',
-
+        'ts-diabetes.validation.diabetes.observationsperiod.missing': 'År då diabetesdiagnos ställdes måste anges.',
+        'ts-diabetes.validation.diabetes.observationsperiod.incorrect-format': 'År måste anges enligt formatet ÅÅÅÅ. Det går inte att ange årtal som är senare än innevarande år eller tidigare än år 1900.',
         'ts-diabetes.validation.diabetes.missing': 'Diabetes saknas',
-        'ts-diabetes.validation.diabetes.diabetestyp.missing': 'Diabetestyp måste anges',
-        'ts-diabetes.validation.diabetes.observationsperiod.missing': 'År då diabetesdiagnos ställdes måste anges',
-        'ts-diabetes.validation.diabetes.observationsperiod.incorrect-format': 'År måste anges i formatet ÅÅÅÅ och inte vara senare än i år.',
-        'ts-diabetes.validation.diabetes.behandling.missing': 'Minst en behandling måste väljas',
-        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing' : 'Insulin sedan år måste anges',
-        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.incorrect-format' : 'Insulin sedan år måste anges i formatet ÅÅÅÅ och inte vara senare än i år.',
-
-        'ts-diabetes.validation.intygavser.missing': 'Intyget avser körkortsbehörighet saknas',
-        'ts-diabetes.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet måste väljas',
-
-        'ts-diabetes.validation.syn.missing': 'Synfunktioner saknas',
-        'ts-diabetes.validation.syn.diplopi.missing': 'Förekommer dubbelseende saknas',
-        'ts-diabetes.validation.syn.provning-utan-anmarkning.missing': 'Måste anges om synfältsprövning enligt Donders konfrontationsmetod är utan anmärkning',
-        'ts-diabetes.validation.syn.separat-ogonlakarintyg.missing': 'Om ögonläkarintyg bifogas separat eller ej måste anges',
-        'ts-diabetes.validation.syn.hoger.missing': 'Synfunktioner relaterade till höger öga saknas',
-        'ts-diabetes.validation.syn.hoger.utankorrektion.missing': 'Höger öga utan korrektion saknas',
-        'ts-diabetes.validation.syn.hoger.utankorrektion.out-of-bounds': 'Korrektionsvärdet för höger öga utan korrektion måste ligga i intervallet 0,0 till 2,0',
-        'ts-diabetes.validation.syn.hoger.medkorrektion.out-of-bounds': 'Korrektionsvärdet för höger öga med korrektion måste ligga i intervallet 0,0 till 2,0',
-
-        'ts-diabetes.validation.syn.vanster.missing': 'Synfunktioner relaterade till vänster öga saknas',
-        'ts-diabetes.validation.syn.vanster.utankorrektion.missing': 'Vänster öga utan korrektion saknas',
-        'ts-diabetes.validation.syn.vanster.utankorrektion.out-of-bounds': 'Korrektionsvärdet för vänster öga utan korrektion måste ligga i intervallet 0,0 till 2,0',
-        'ts-diabetes.validation.syn.vanster.medkorrektion.out-of-bounds': 'Korrektionsvärdet för vänster öga med korrektion måste ligga i intervallet 0,0 till 2,0',
-
-        'ts-diabetes.validation.syn.binokulart.missing': 'Binokulära synfunktioner saknas',
-        'ts-diabetes.validation.syn.binokulart.utankorrektion.missing': 'Binokulärt utan korrektion saknas',
-        'ts-diabetes.validation.syn.binokulart.utankorrektion.out-of-bounds': 'Korrektionsvärdet för binokulärt utan korrektion måste ligga i intervallet 0,0 till 2,0',
-        'ts-diabetes.validation.syn.binokulart.medkorrektion.out-of-bounds': 'Korrektionsvärdet för binokulärt med korrektion måste ligga i intervallet 0,0 till 2,0',
-
-        'ts-diabetes.validation.identitet.missing': 'Identitet styrkt saknas',
-        'ts-diabetes.validation.vardkontakt.missing': 'Identitet styrkt saknas',
+        'ts-diabetes.validation.diabetes.diabetestyp.missing': 'Diabetestyp måste anges.',
+        'ts-diabetes.validation.diabetes.behandling.missing': 'Minst en behandling måste väljas.',
+        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing' : 'År då behandling med insulin påbörjades måste anges.',
+        'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.incorrect-format' : 'År måste anges enligt formatet ÅÅÅÅ. Det går inte att ange årtal som är senare än innevarande år eller tidigare än år 1900.',
 
         'ts-diabetes.validation.hypoglykemier.missing': 'Hypoglykemier saknas',
-        'ts-diabetes.validation.hypoglykemier.kunskap-om-atgarder.missing': 'Patienten har kunskap om åtgärder vid hypoglykemi saknas',
-        'ts-diabetes.validation.hypoglykemier.tecken-nedsatt-hjarnfunktion.missing': 'Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion saknas',
-        'ts-diabetes.validation.hypoglykemier.saknar-formaga-kanna-varningstecken.missing': 'Saknar patienten förmåga att känna varningstecken på hypoglykemi saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.missing': 'Har patienten haft allvarlig hypoglykemi i trafiken under det senaste året saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst.missing': 'Har patienten haft allvarlig hypoglykemi saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing': 'Antal episoder med allvarlig hypoglykemi saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing': 'Information om episoder med allvarlig hypoglykemi i trafiken saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing': 'Allvarlig hypoglykemi under vaken tid saknas',
+        'ts-diabetes.validation.hypoglykemier.kunskap-om-atgarder.missing': 'a)	Ett alternativ måste anges.',
+        'ts-diabetes.validation.hypoglykemier.tecken-nedsatt-hjarnfunktion.missing': 'b) Ett alternativ måste anges.',
+        'ts-diabetes.validation.hypoglykemier.saknar-formaga-kanna-varningstecken.missing': 'c) Ett alternativ måste anges.',
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst.missing': 'd) Ett alternativ måste anges.',
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing': 'd) Antal episoder måste anges.',
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.missing': 'e) Ett alternativ måste anges.',
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing': 'e) Uppgifter om episoder måste anges.',
+        'ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing': 'f) Ett alternativ måste anges.', // 2f
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing': 'g) Ett alternativ måste anges.', // 2g
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing': 'Tidpunkt för allvarlig hypoglykemi under vaken tid saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd, och vara tidigare än dagens datum.',
-        'ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing': 'Genomför patienten egenkontroll av blodsocker måste anges för högre körkortsbehörigheter'
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd, och får inte vara senare än dagens datum.',
 
+        'ts-diabetes.validation.syn.missing': 'Synfunktioner saknas',
+        'ts-diabetes.validation.syn.separat-ogonlakarintyg.missing': 'a) Ett alternativ måste anges.',
+        'ts-diabetes.validation.syn.provning-utan-anmarkning.missing': 'b) Ett alternativ måste anges.',
+        'ts-diabetes.validation.syn.hoger.missing': 'Synfunktioner relaterade till höger öga saknas',
+        'ts-diabetes.validation.syn.hoger.utankorrektion.missing': 'c) Värden för synskärpa utan korrektion måste anges för: Höger öga', // combine these missing messages later
+        'ts-diabetes.validation.syn.hoger.utankorrektion.out-of-bounds': 'Värdet för höger öga utan korrektion måste ligga i intervallet 0,0 till 2,0.',
+        'ts-diabetes.validation.syn.hoger.medkorrektion.out-of-bounds': 'Värdet för höger öga med korrektion måste ligga i intervallet 0,0 till 2,0.',
+
+        'ts-diabetes.validation.syn.vanster.missing': 'Synfunktioner relaterade till vänster öga saknas',
+        'ts-diabetes.validation.syn.vanster.utankorrektion.missing': 'c) Värden för synskärpa utan korrektion måste anges för: Vänster öga', // combine these missing messages later
+        'ts-diabetes.validation.syn.vanster.utankorrektion.out-of-bounds': 'Värdet för vänster öga utan korrektion måste ligga i intervallet 0,0 till 2,0.',
+        'ts-diabetes.validation.syn.vanster.medkorrektion.out-of-bounds': 'Värdet för vänster öga med korrektion måste ligga i intervallet 0,0 till 2,0.',
+
+        'ts-diabetes.validation.syn.binokulart.missing': 'Binokulära synfunktioner saknas',
+        'ts-diabetes.validation.syn.binokulart.utankorrektion.missing': 'c)	Värden för synskärpa utan korrektion måste anges för: Binokulärt', // combine these missing messages later
+        'ts-diabetes.validation.syn.binokulart.utankorrektion.out-of-bounds': 'Värdet för binokulär synskärpa utan korrektion måste ligga i intervallet 0,0 till 2,0.',
+        'ts-diabetes.validation.syn.binokulart.medkorrektion.out-of-bounds': 'Värdet för binokulär synskärpa med korrektion måste ligga i intervallet 0,0 till 2,0.',
+
+        'ts-diabetes.validation.syn.diplopi.missing': 'd) Ett alternativ måste anges.',
+
+        'ts-diabetes.validation.bedomning.missing': 'Bedömning saknas',
+        'ts-diabetes.validation.bedomning.must-choose-one': 'Minst en körkortsbehörighet, eller "Kan inte ta ställning", måste väljas.',
+        'ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing': 'Ett alternativ måste anges för om patienten är lämplig för högre körkortsbehörighet (C1 eller högre).',
+
+        'ts-diabetes.validation.vardenhet.postadress.missing': 'Postadressen för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-diabetes.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-diabetes.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',
+        'ts-diabetes.validation.vardenhet.postort.missing': 'Postort för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-diabetes.validation.vardenhet.telefonnummer.missing': 'Telefonnummer till vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.'
     },
     'en': {
         'view.label.pagetitle': 'Show Certificate'

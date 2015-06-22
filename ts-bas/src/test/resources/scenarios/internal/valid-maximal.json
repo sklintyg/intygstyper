@@ -1,12 +1,11 @@
 {
-    "id": "987654321",
-    "typ": "TS_BAS_U06_V06",
+    "id": "intygsId0",
+    "typ": "ts-bas",
     "grundData": {
         "signeringsdatum": "2013-08-12T15:57:00.000",
         "skapadAv": {
             "personId": "SE0000000000-1333",
             "fullstandigtNamn": "Doktor Thompson",
-            "specialiteter": ["SPECIALITET"],
             "vardenhet": {
                 "enhetsid": "SE0000000000-1337",
                 "enhetsnamn": "Vårdenhet Väst",
@@ -19,7 +18,8 @@
                     "vardgivarnamn": "Vårdgivarnamn"
                 }
             },
-            "befattningar": ["ST_LAKARE"]
+            "befattningar": ["ST_LAKARE"],
+            "specialiteter" : ["SPECIALITET"]
         },
         "patient": {
             "personId": "19121212-1212",
@@ -91,7 +91,7 @@
     	"hjartKarlSjukdom" : true,
     	"hjarnskadaEfterTrauma" : true,
     	"riskfaktorerStroke" : true,
-    	"beskrivningRiskfaktorer" : "Förkärlek för Elivsmackor"
+    	"beskrivningRiskfaktorer" : "Förkärlek för Elvismackor"
     },
     
     "diabetes" : {
@@ -163,6 +163,7 @@
             {"type": "TAXI", "selected": true},
             {"type": "ANNAT", "selected": true}
         ],
+        "kanInteTaStallning" : false,
         "lakareSpecialKompetens" : "Spektralanalys"
     }
     

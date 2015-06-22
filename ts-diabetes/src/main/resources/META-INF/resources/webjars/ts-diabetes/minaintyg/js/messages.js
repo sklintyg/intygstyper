@@ -7,7 +7,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.hypoglykemier': '2. Hypoglykemier (lågt blodsocker)',
         'ts-diabetes.label.syn': '3. Synintyg',
         'ts-diabetes.label.bedomning': '4. Bedömning',
-        'ts-diabetes.label.ovrigkommentar': '5. Övrig kommentar',
+        'ts-diabetes.label.ovrigkommentar': 'Övriga upplysningar och kommentarer',
         'ts-diabetes.label.unit': 'Vårdenhet',
 
         'ts-diabetes.label.korkort.a': 'A',

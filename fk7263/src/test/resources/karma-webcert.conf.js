@@ -14,6 +14,21 @@ module.exports = function(config) {
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
+        // generate js files from html templates to expose them during testing.
+        preprocessors: {
+            'src/main/resources/META-INF/resources/webjars/fk7263/webcert/js/**/*.html': ['ng-html2js']
+        },
+
+        ngHtml2JsPreprocessor: {
+            // If your build process changes the path to your templates,
+            // use stripPrefix and prependPrefix to adjust it.
+            stripPrefix: 'src/main/resources/META-INF/resources/',
+            prependPrefix: '/web/',
+
+            // the name of the Angular module to create
+            moduleName: 'htmlTemplates'
+        },
+
         // list of files / patterns to load in the browser
         files: [
 
@@ -22,10 +37,11 @@ module.exports = function(config) {
                 WEBJAR_DIR + 'angularjs/angular-mocks.js',
                 WEBJAR_DIR + 'angularjs/1.2.27/angular-locale_sv-se.js',
                 WEBJAR_DIR + 'angularjs/angular-cookies.js',
-                WEBJAR_DIR + 'angularjs/angular-route.js',
+                WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
                 WEBJAR_DIR + 'angularjs/angular-sanitize.js',
                 WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
                 WEBJAR_DIR + 'momentjs/moment.js',
+                WEBJAR_DIR + 'common/webcert/module.min.js',
 
 
             // Load these first
@@ -33,6 +49,8 @@ module.exports = function(config) {
                 TEST_DIR + 'module-test.js',
 
             { pattern: SRC_DIR + '**/*' },
+            { pattern: SRC_DIR + '**/*.spec.js' },
+            { pattern: TEST_DIR + '**/*.spec.js' },
             { pattern: TEST_DIR + '**/*Spec.js' }
         ],
 
@@ -46,7 +64,7 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_WARN,
 
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
@@ -72,7 +90,8 @@ module.exports = function(config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
-            'karma-mocha-reporter'
+            'karma-mocha-reporter',
+            'karma-ng-html2js-preprocessor'
         ],
 
         reporters: [ 'progress' ]

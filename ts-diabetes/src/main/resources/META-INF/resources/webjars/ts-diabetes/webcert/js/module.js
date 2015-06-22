@@ -1,15 +1,5 @@
 /* global tsDiabetesMessages */
-angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ngRoute', 'ngSanitize', 'common' ]);
-
-angular.module('ts-diabetes').config(function($routeProvider) {
-    'use strict';
-
-    $routeProvider.
-        when('/ts-diabetes/edit/:certificateId', {
-            templateUrl: '/web/webjars/ts-diabetes/webcert/views/edit-cert.html',
-            controller: 'ts-diabetes.EditCertCtrl'
-        });
-});
+angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
 
 // Inject language resources
 angular.module('ts-diabetes').run([ 'common.messageService',

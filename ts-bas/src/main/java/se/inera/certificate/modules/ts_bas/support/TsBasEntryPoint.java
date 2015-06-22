@@ -8,34 +8,32 @@ import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
-import se.inera.certificate.modules.ts_bas.rest.ModuleService;
+import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
 
 public class TsBasEntryPoint implements ModuleEntryPoint {
 
     private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
 
+    public static final String MODULE_ID = "ts-bas";
+    public static final String MODULE_NAME = "Transportstyrelsens läkarintyg";
+    public static final String MODULE_DESCRIPTION = "Läkarintyg - avseende högre körkortsbehörigheter eller taxiförarlegitimation - på begäran av Transportstyrelsen";
+
     @Autowired
-    private ModuleService moduleService;
+    private TsBasModuleApi moduleService;
 
     @Override
     public String getModuleId() {
-        return "ts-bas";
+        return MODULE_ID;
     }
 
     @Override
     public String getModuleName() {
-        return "Transportstyrelsens läkarintyg";
+        return MODULE_NAME;
     }
 
     @Override
     public String getModuleDescription() {
-        // TODO
-        return "Läkarintyg - avseende högre körkortsberhörigheter eller taxiförarlegitimation - på begäran från Transportstyrelsen";
-    }
-
-    @Override
-    public String getDefaultRecieverLogicalAddress() {
-        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
+        return MODULE_DESCRIPTION;
     }
 
     @Override
@@ -82,5 +80,10 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
         default:
             return null;
         }
+    }
+
+    @Override
+    public String getDefaultRecipient() {
+        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
     }
 }

@@ -2,12 +2,12 @@ package se.inera.certificate.modules.fk7263.rest;
 
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
-import iso.v21090.dt.v1.CD;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.bind.JAXB;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.joda.time.LocalDateTime;
@@ -17,10 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
 
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
-import se.inera.certificate.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
@@ -50,17 +46,24 @@ import se.inera.certificate.modules.support.api.exception.ModuleConverterExcepti
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
-import se.inera.certificate.schema.util.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
+import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.annotations.VisibleForTesting;
+import iso.v21090.dt.v1.CD;
+
 
 /**
  * @author andreaskaltenbach, marced
@@ -104,7 +107,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     private ModuleContainerApi moduleContainer;
 
-    // This method seem to be here just for test purpose. Isn't used in real code
+    @VisibleForTesting
     public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
         this.registerMedicalCertificateClient = registerMedicalCertificateClient;
     }
@@ -176,14 +179,6 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        sendCertificateToRecipient(internalModel, logicalAddress, null);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
 
         // Check that we got any data at all
@@ -238,7 +233,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        sendCertificateToRecipient(internalModel, logicalAddress);
+        sendCertificateToRecipient(internalModel, logicalAddress, null);
     }
 
     @Override
@@ -297,14 +292,14 @@ public class Fk7263ModuleApi implements ModuleApi {
 
         if (!inSmittskydd) {
             // Check that we got a medicinsktTillstand element
-            if (isNull(lakarutlatande.getMedicinsktTillstand())) {
+            if (lakarutlatande.getMedicinsktTillstand() == null) {
                 throw new ModuleException("No medicinsktTillstand element found in request data. Cannot set codeSystemName to 'ICD-10'!");
             }
 
             MedicinsktTillstandType medicinsktTillstand = lakarutlatande.getMedicinsktTillstand();
 
             // Check that we got a tillstandskod element
-            if (isNull(medicinsktTillstand.getTillstandskod())) {
+            if (medicinsktTillstand.getTillstandskod() == null) {
                 throw new ModuleException("No tillstandskod element found in request data. Cannot set codeSystemName to 'ICD-10'!");
             }
 
@@ -329,6 +324,23 @@ public class Fk7263ModuleApi implements ModuleApi {
         return request;
     }
 
+    @Override
+    public String marshall(String jsonString) throws ModuleException {
+        String xmlString = null;
+        try {
+            Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
+            RegisterMedicalCertificateType external = InternalToTransport.getJaxbObject(internal);
+            StringWriter writer = new StringWriter();
+            JAXB.marshal(external, writer);
+            xmlString = writer.toString();
+
+        } catch (IOException | ConverterException e) {
+            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            throw new ModuleException(e);
+        }
+        return xmlString;
+    }
+
     // - - - - - Private scope - - - - - //
 
     private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {
@@ -348,8 +360,8 @@ public class Fk7263ModuleApi implements ModuleApi {
         try {
             if (aktiviteter != null) {
                 for (int i = 0; i < aktiviteter.size(); i++) {
-                    AktivitetType listAktivitet = (AktivitetType) aktiviteter.get(i);
-                    if (!isNull(listAktivitet.getAktivitetskod()) && listAktivitet.getAktivitetskod().compareTo(aktivitetskod) == 0) {
+                    AktivitetType listAktivitet = aktiviteter.get(i);
+                    if (listAktivitet.getAktivitetskod() != null && listAktivitet.getAktivitetskod().compareTo(aktivitetskod) == 0) {
                         foundAktivitet = listAktivitet;
                         break;
                     }
@@ -360,10 +372,6 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
 
         return foundAktivitet;
-    }
-
-    private boolean isNull(Object obj) {
-        return obj == null;
     }
 
     private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId) throws ModuleException {

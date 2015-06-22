@@ -1,0 +1,10 @@
+<div wc-field field-label="fk7263.label.ovrigt" field-number="13"
+     field-help-text="fk7263.helptext.ovrigt" class="print-pagebreak-after">
+                    <textarea id="otherInformation" name="otherInformation" rows='10'
+                              class='form-control otherInformation' ng-model="model.kommentar"
+                              ng-change="viewState.limitOtherField('kommentar')"></textarea>
+  <div class="counter">Tecken kvar: {{teckenKvar()}}</div>
+  <div class="info-transfer">
+    Informationen från fält 4b, 8b och 10 överförs till detta fält vid signering. Tecken kvar påverkas av antalet tecken tillförda i samtliga fält.
+  </div>
+</div>

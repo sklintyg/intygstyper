@@ -8,14 +8,15 @@ import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
-import se.inera.certificate.modules.ts_diabetes.rest.ModuleService;
+import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
 
 public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
+    public static final String MODULE_ID = "ts-diabetes";
 
     @Autowired
-    private ModuleService tsDiabetesModuleService;
+    private TsDiabetesModuleApi tsDiabetesModuleService;
 
     @Override
     public String getModuleId() {
@@ -32,10 +33,10 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
         return "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.";
     }
 
-    @Override
+    /*@Override
     public String getDefaultRecieverLogicalAddress() {
         return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
-    }
+    }*/
 
     @Override
     public ModuleApi getModuleApi() {
@@ -82,4 +83,9 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
             return null;
         }
     }
+
+	@Override
+	public String getDefaultRecipient() {
+		return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
+	}
 }

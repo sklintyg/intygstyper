@@ -23,11 +23,9 @@ import se.inera.certificate.xml.SchemaValidatorBuilder;
 
 public class DomainTransportModelValidatorTest {
 
-    private static final String COMMON_UTLATANDE_SCHEMA = "/schemas/clinicalprocess_healthcond_certificate/core_components/clinicalprocess_healthcond_certificate_0.9.xsd";
+    private static final String COMMON_UTLATANDE_SCHEMA = "/core_components/clinicalprocess_healthcond_certificate_0.9.xsd";
 
-    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/schemas/clinicalprocess_healthcond_certificate/core_components/clinicalprocess_healthcond_types_0.9.xsd";
-
-    private static final String COMMON_UTLATANDE_ISO_SCHEMA = "/schemas/clinicalprocess_healthcond_certificate/core_components/iso_dt_subset_1.0.xsd";
+    private static final String COMMON_UTLATANDE_TYPES_SCHEMA = "/core_components/clinicalprocess_healthcond_types_0.9.xsd";
 
     private static Schema commonSchema;
 
@@ -35,7 +33,6 @@ public class DomainTransportModelValidatorTest {
     public static void initCommonSchema() throws Exception {
         SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
         Source rootSource = schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_SCHEMA);
-        schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_ISO_SCHEMA);
         schemaValidatorBuilder.registerResource(COMMON_UTLATANDE_TYPES_SCHEMA);
 
         commonSchema = schemaValidatorBuilder.build(rootSource);

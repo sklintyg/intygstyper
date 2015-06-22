@@ -1,0 +1,126 @@
+<div ng-form="form2">
+  <a id="anchor.diagnos" name="anchor.diagnos"></a>
+<div wc-field field-label="fk7263.label.diagnos" field-number="2" wc-detect-animation
+     field-help-text="fk7263.helptext.diagnos" ng-hide="viewState.avstangningSmittskydd()"
+     class="print-pagebreak-after field-fade" field-has-errors="viewState.common.validationMessagesGrouped.diagnos" id="diagnoseForm">
+
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnos" id="validationMessages_diagnos">
+    <ul>
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnos"><span message
+                                                                         key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+  <div class="row bottom-padding-small">
+    <div class='col-xs-12'>
+      <div class='divider'>
+        <span message key="fk7263.label.valjkodverk"></span>
+        <label class="radio-inline">
+          <input type="radio" id="diagnoseKodverk_ICD_10_SE" name="diagnosKodverk" value="ICD_10_SE"
+                 ng-model="viewModel.diagnosKodverk" checked="checked" ng-change="onChangeKodverk()"><span message key="fk7263.label.diagnoskodverk.icd_10_se"></span>
+        </label>
+        <label class="radio-inline">
+          <input type="radio" id="diagnoseKodverk_KSH_97_P" name="diagnosKodverk" value="KSH_97_P"
+                 ng-model="viewModel.diagnosKodverk" ng-change="onChangeKodverk()"><span message key="fk7263.label.diagnoskodverk.ksh_97_p"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row bottom-padding-small">
+    <div class='col-xs-3'>
+      <label class="control-label unbreakable">ICD-10</label>
+      <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
+             class='diagnose-code col-xs-11 form-control' ng-model="model.diagnosKod"
+             typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+             typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
+             typeahead-template-url="/web/webjars/fk7263/webcert/js/intyg/edit/form/form2.diagnoseTemplate.html"
+             wc-to-uppercase
+          >
+    </div>
+    <div class='col-xs-9'>
+      <label class="control-label">Diagnos</label>
+      <input type="text" class="form-control maxwidth" id="diagnoseDescription"
+             class="col-xs-12 form-control" name="diagnose.description" value=""
+             ng-model="model.diagnosBeskrivning1"
+             typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+             typeahead-on-select="onDiagnoseDescription1Select($item)"
+             typeahead-template-url="/web/webjars/fk7263/webcert/js/intyg/edit/form/form2.diagnoseTemplate.html"
+             typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning1')">
+      <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+    </div>
+  </div>
+  <div class="row bottom-padding-tiny">
+    <div class='col-xs-3'>
+      <label class="control-label unbreakable">ICD-10</label>
+      <div class="controls">
+        <div class="bottom-padding-small clearfix">
+          <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
+                 ng-model="model.diagnosKod2" class="col-xs-11 form-control"
+                 typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+                 typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
+                 typeahead-template-url="/web/webjars/fk7263/webcert/js/intyg/edit/form/form2.diagnoseTemplate.html"
+                 ng-change="limitDiagnosBeskrivningField('diagnosKod2')" wc-to-uppercase>
+        </div>
+      </div>
+    </div>
+    <div class='col-xs-9'>
+      <label class="control-label inline-block"><span message
+                                                      key="fk7263.label.ytterligarediagnoser"></span>
+        (frivilligt)</label><span wc-enable-tooltip class="absolute"
+                                  field-help-text="fk7263.helptext.diagnos.ytterligare"></span>
+      <div class="bottom-padding-small clearfix">
+        <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
+               ng-model="model.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
+               typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+               typeahead-on-select="onDiagnoseDescription2Select($item)"
+               typeahead-template-url="/web/webjars/fk7263/webcert/js/intyg/edit/form/form2.diagnoseTemplate.html"
+               typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning2')">
+        <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row bottom-padding-small">
+    <div class='col-xs-3'>
+      <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
+             ng-model="model.diagnosKod3" class="col-xs-11 form-control"
+             typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+             typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
+             typeahead-template-url="/web/webjars/fk7263/webcert/js/intyg/edit/form/form2.diagnoseTemplate.html"
+             ng-change="limitDiagnosBeskrivningField('diagnosKod3')" wc-to-uppercase>
+    </div>
+    <div class='col-xs-9'>
+      <div class="controls">
+        <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
+               ng-model="model.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
+               typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+               typeahead-on-select="onDiagnoseDescription3Select($item)"
+               typeahead-template-url="/web/webjars/fk7263/webcert/js/intyg/edit/form/form2.diagnoseTemplate.html"
+               typeahead-wait-ms="100"
+               ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning3')">
+        <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div>
+      <label class="control-label"><span message key="fk7263.label.diagnosfortydligande"></span></label>
+      <span wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
+    </div>
+                      <textarea id="diagnoseClarification" class="form-control" name="diagnose.clarification" rows='5'
+                                ng-model="model.diagnosBeskrivning" ng-trim="false"
+                                ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning')"></textarea>
+    <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
+  </div>
+
+  <div class="form-group form-inline">
+    <label class="checkbox">
+      <input type="checkbox" id="diagnoseMultipleDiagnoses" name="diagnose.multipleDiagnoses"
+             ng-model="model.samsjuklighet"
+             ng-change="limitDiagnosBeskrivningField('samsjuklighet')">
+      Samsjuklighet föreligger</label><span wc-enable-tooltip
+                                            field-help-text="fk7263.helptext.diagnos.samsjuklighet"></span>
+  </div>
+</div>
+
+</div>

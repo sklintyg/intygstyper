@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.common.util.StringUtil;
 import se.inera.certificate.model.common.internal.HoSPersonal;
@@ -16,6 +17,7 @@ import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
@@ -43,14 +45,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 public final class InternalToTransport {
 
     private static final String SAMSJUKLIGHET_FORELIGGER = "Samsjuklighet föreligger";
-    private static final String FK7263 = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
-    private static final String PERS_ID_ROOT = "1.2.752.129.2.1.3.1";
-    private static final String HSA_ID_ROOT = "1.2.752.129.2.1.4.1";
-    private static final String ARBETSPLATSKOD_ROOT = "1.2.752.29.4.71";
-
-    public static final int FORMOGA_3_4 = 75;
-    public static final int FORMOGA_1_2 = 50;
-    public static final int FORMOGA_1_4 = 25;
 
     private InternalToTransport() {
     }
@@ -61,7 +55,7 @@ public final class InternalToTransport {
         if (source.getId() != null) {
             register.getLakarutlatande().setLakarutlatandeId(source.getId());
         }
-        register.getLakarutlatande().setTypAvUtlatande(FK7263);
+        register.getLakarutlatande().setTypAvUtlatande(Fk7263EntryPoint.MODULE_DESCRIPTION);
 
         register.getLakarutlatande().setKommentar(buildKommentar(source));
 
@@ -467,12 +461,12 @@ public final class InternalToTransport {
 
         II arbetsplatskod = new II();
         arbetsplatskod.setExtension(source.getArbetsplatsKod());
-        arbetsplatskod.setRoot(ARBETSPLATSKOD_ROOT);
+        arbetsplatskod.setRoot(Constants.ARBETSPLATS_KOD_OID);
         enhet.setArbetsplatskod(arbetsplatskod);
 
         II id = new II();
         id.setExtension(source.getEnhetsid());
-        id.setRoot(HSA_ID_ROOT);
+        id.setRoot(Constants.HSA_ID_OID);
         enhet.setEnhetsId(id);
 
         enhet.setVardgivare(vardgivareToJaxb(source.getVardgivare()));
@@ -488,7 +482,7 @@ public final class InternalToTransport {
         vardgivare.setVardgivarnamn(source.getVardgivarnamn());
         II id = new II();
         id.setExtension(source.getVardgivarid());
-        id.setRoot(HSA_ID_ROOT);
+        id.setRoot(Constants.HSA_ID_OID);
         vardgivare.setVardgivareId(id);
         return vardgivare;
     }
@@ -499,7 +493,7 @@ public final class InternalToTransport {
         personal.setFullstandigtNamn(skapadAv.getFullstandigtNamn());
         II id = new II();
         id.setExtension(skapadAv.getPersonId());
-        id.setRoot(HSA_ID_ROOT);
+        id.setRoot(Constants.HSA_ID_OID);
         personal.setPersonalId(id);
         personal.setEnhet(vardenhetToTransportJaxb(skapadAv.getVardenhet()));
 
@@ -510,7 +504,7 @@ public final class InternalToTransport {
         PatientType patient = new PatientType();
         patient.setFullstandigtNamn(source.getFullstandigtNamn());
         II id = new II();
-        id.setRoot(PERS_ID_ROOT);
+        id.setRoot(Constants.PERSON_ID_OID);
         id.setExtension(source.getPersonId());
         patient.setPersonId(id);
         return patient;

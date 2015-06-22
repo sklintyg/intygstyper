@@ -1,6 +1,8 @@
 package se.inera.certificate.modules.ts_diabetes.utils;
 
-import se.inera.certificate.ts_diabetes.model.v1.Utlatande;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
+
+
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
@@ -29,17 +31,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    Utlatande asTransportModel() throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a external model.
-     * 
-     * @return The scenario as a external model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    se.inera.certificate.modules.ts_diabetes.model.external.Utlatande asExternalModel()
-            throws ScenarioNotFoundException;
+    RegisterTSDiabetesType asTransportModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

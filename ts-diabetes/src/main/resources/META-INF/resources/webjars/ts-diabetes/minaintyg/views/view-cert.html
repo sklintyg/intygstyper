@@ -32,7 +32,7 @@
 
   <div ng-show="doneLoading">
     <div id="backnav" class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <a class="backlink" href="/web/start">
+      <a class="backlink" href="/web/start/#/">
         <message key="ts-diabetes.button.goback" />
       </a>
     </div>
@@ -158,7 +158,7 @@
                 <div
                     class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 margin-top-5px">
                   <span class="tag"><message key="ts-diabetes.label.identitet" /></span>
-                  <span id="patient-crn" message
+                  <span id="identitet" message
                         key="ts-diabetes.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
                 </div>
               </div>
@@ -175,7 +175,7 @@
                   <span class="tag"><message key="ts-diabetes.label.intygavser" /></span>
 
                   <span class="text no-padding-bottom">
-                      <span class="cert-answer">{{view.intygAvser}}</span>
+                      <span id="intygAvser" class="cert-answer">{{view.intygAvser}}</span>
                   </span>
 
                 </div>
@@ -197,31 +197,32 @@
                 </h3>
                     <span class="text no-padding-bottom">
                         <span message key="ts-diabetes.label.diabetes.diagnostid"></span><br>
-                        <span class="cert-answer">{{cert.diabetes.observationsperiod}}</span>
+                        <span id="observationsperiod" class="cert-answer">{{cert.diabetes.observationsperiod}}</span>
                     </span>
 
                     <span class="text no-padding-bottom">
                         <span message key="ts-diabetes.label.diabetes.diabetestyp"></span><br>
-                        <span class="cert-answer" message
+                        <span id="diabetestyp" class="cert-answer" message
                               key="ts-diabetes.label.diabetes.diabetestyp.{{cert.diabetes.diabetestyp}}"></span>
                     </span>
 
                     <span class="text no-padding-bottom">
                         <span message key="ts-diabetes.label.diabetes.behandling"></span><br>
                         <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
-                        <span class="cert-answer" message
+                        <span id="endastKost" class="cert-answer" message
                               key="{{cert.diabetes.endastKost | BoolToTextFilter}}"></span>
                         <br>
                         <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
-                        <span class="cert-answer" message
+                        <span id="tabletter" class="cert-answer" message
                               key="{{cert.diabetes.tabletter | BoolToTextFilter}}"></span>
                         <br>
                         <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
-                        <span class="cert-answer" message key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span>
+                        <span id="insulin" class="cert-answer" message
+                              key="{{cert.diabetes.insulin | BoolToTextFilter}}"></span>
                         <br>
                         <span ng-show="cert.diabetes.insulinBehandlingsperiod.length > 0">
                           <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span>
-                          <span class="cert-answer">{{cert.diabetes.insulinBehandlingsperiod}}</span>
+                          <span id="insulinBehandlingsperiod" class="cert-answer">{{cert.diabetes.insulinBehandlingsperiod}}</span>
                         </span>
                     </span>
                     <span class="text">
@@ -232,7 +233,9 @@
                         </span>
                         <span
                             ng-show="cert.diabetes.annanBehandlingBeskrivning && cert.diabetes.annanBehandlingBeskrivning.length > 0">
-                            <span class="cert-answer">{{cert.diabetes.annanBehandlingBeskrivning}}</span>
+                            <span id="annanBehandlingBeskrivning" class="cert-answer">
+                              {{cert.diabetes.annanBehandlingBeskrivning}}
+                            </span>
                         </span>
                     </span>
 
@@ -243,61 +246,63 @@
                 </h3>
                 <span class="text no-padding-bottom">
                     <span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span>
-                    <span class="cert-answer" message
+                    <span id="kunskapOmAtgarder" class="cert-answer" message
                           key="{{cert.hypoglykemier.kunskapOmAtgarder | BoolToTextFilter}}"></span>
                 </span>
 
                 <span class="text no-padding-bottom">
                     <span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
                     <span class="cert-answer" message
+                          id="teckenNedsattHjarnfunktion"
                           key="{{cert.hypoglykemier.teckenNedsattHjarnfunktion | BoolToTextFilter}}"></span>
                 </span>
 
                 <span class="text no-padding-bottom">
                     <span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span>
-                    <span class="cert-answer" message key="{{cert.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span>
+                    <span id="saknarFormagaKannaVarningstecken" class="cert-answer" message
+                          key="{{cert.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span>
                 </span>
 
                 <span class="text no-padding-bottom">
                     <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
-                    <span class="cert-answer" message
+                    <span id="allvarligForekomst" class="cert-answer" message
                           key="{{cert.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span>
 
                     <span ng-show="cert.hypoglykemier.allvarligForekomstBeskrivning">
                         <br>
                         <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
-                        <span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstBeskrivning}}</span><br>
+                        <span id="allvarligForekomstBeskrivning" class="cert-answer">{{cert.hypoglykemier.allvarligForekomstBeskrivning}}</span><br>
                     </span>
                 </span>
 
                 <span class="text no-padding-bottom">
                     <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
-                    <span class="cert-answer" message
+                    <span id="allvarligForekomstTrafiken" class="cert-answer" message
                           key="{{cert.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span>
                     <span ng-show="cert.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
                         <br>
                         <span message
                               key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
-                        <span
+                        <span id="allvarligForekomstTrafikBeskrivning"
                             class="cert-answer">{{cert.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span>
                     </span>
                 </span>
 
                 <span class="text no-padding-bottom">
                     <span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span>
-                    <span class="cert-answer" message
+                    <span id="egenkontrollBlodsocker" class="cert-answer" message
                           key="{{cert.hypoglykemier.egenkontrollBlodsocker | BoolToTextFilter}}"></span>
                 </span>
 
                 <span class="text">
                     <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
-                    <span class="cert-answer" message
+                    <span id="allvarligForekomstVakenTid" class="cert-answer" message
                           key="{{cert.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span>
                     <span ng-show="cert.hypoglykemier.allvarligForekomstVakenTidObservationstid">
                         <br>
                         <span message
                               key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid"></span>
-                        <span class="cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span>
+                        <span id="allvarligForekomstVakenTidObservationstid" class="cert-answer">{{cert.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span>
                     </span>
                 </span>
               </div>
@@ -308,14 +313,14 @@
                 </h3>
                 <span class="text">
                     <span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span>
-                    <span class="cert-answer" message
+                    <span id="separatOgonlakarintyg" class="cert-answer" message
                           key="{{cert.syn.separatOgonlakarintyg | BoolToTextFilter}}"></span>
                 </span>
 
                 <div ng-hide="cert.syn.separatOgonlakarintyg">
                   <span class="text no-padding-bottom">
                       <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
-                      <span class="cert-answer" message
+                      <span id="synfaltsprovningUtanAnmarkning" class="cert-answer" message
                             key="{{cert.syn.synfaltsprovningUtanAnmarkning | BoolToTextFilter}}"></span>
                   </span>
                   <span class="text no-padding-bottom">
@@ -330,24 +335,24 @@
                       </tr>
                       <tr>
                         <td><span message key="ts-diabetes.label.syn.hogeroga"></span></td>
-                        <td><span class="text">{{cert.syn.hoger.utanKorrektion | number : 1}}</span></td>
-                        <td><span class="text">{{cert.syn.hoger.medKorrektion | number : 1}}</span></td>
+                        <td><span id="hogerutanKorrektion" class="text">{{cert.syn.hoger.utanKorrektion | number : 1}}</span></td>
+                        <td><span id="hogermedKorrektion" class="text">{{cert.syn.hoger.medKorrektion | number : 1}}</span></td>
                       </tr>
                       <tr>
                         <td><span message key="ts-diabetes.label.syn.vansteroga"></span></td>
-                        <td><span class="text">{{cert.syn.vanster.utanKorrektion | number : 1}}</span></td>
-                        <td><span class="text">{{cert.syn.vanster.medKorrektion | number : 1}}</span></td>
+                        <td><span id="vansterutanKorrektion" class="text">{{cert.syn.vanster.utanKorrektion | number : 1}}</span></td>
+                        <td><span id="vanstermedKorrektion" class="text">{{cert.syn.vanster.medKorrektion | number : 1}}</span></td>
                       </tr>
                       <tr>
                         <td><span message key="ts-diabetes.label.syn.binokulart"></span></td>
-                        <td><span class="text">{{cert.syn.binokulart.utanKorrektion | number : 1}}</span></td>
-                        <td><span class="text">{{cert.syn.binokulart.medKorrektion | number : 1}}</span></td>
+                        <td><span id="binokulartutanKorrektion" class="text">{{cert.syn.binokulart.utanKorrektion | number : 1}}</span></td>
+                        <td><span id="binokulartmedKorrektion" class="text">{{cert.syn.binokulart.medKorrektion | number : 1}}</span></td>
                       </tr>
                     </table>
                   </span>
                   <span class="text">
                     <span message key="ts-diabetes.label.syn.diplopi"></span>
-                    <span class="cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
+                    <span id="diplopi" class="cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
                   </span>
                 </div>
               </div>
@@ -359,24 +364,24 @@
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
                   <span class="text no-padding-bottom" message key="ts-diabetes.label.bedomning-info-alt-1"></span>
                   <span class="text no-padding-bottom">
-                      <span class="cert-answer">{{view.bedomning}}</span>
+                      <span id="bedomning" class="cert-answer">{{view.bedomning}}</span>
                   </span>
                 </div>
 
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  <span class="text cert-answer" message key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span>
+                  <span id="bedomningKanInteTaStallning" class="text cert-answer" message key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span>
                 </div>
 
            			<span class="text no-padding-bottom">
            			    <span message key="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
-           			    <span class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
-           			    <span class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
+           			    <span id="lakareSpecialKompetens" class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
+           			    <span id="lakareSpecialKompetensEjAngivet" class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message
                           key="ts-diabetes.label.ej-angivet"></span>
      			    </span>
 
                     <span class="text">
                         <span message key="ts-diabetes.label.bedomning.lamplighet-inneha"></span><br>
-                        <span class="cert-answer" message
+                        <span id="lamplighetInnehaBehorighet" class="cert-answer" message
                               key="{{cert.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span>
                     </span>
               </div>
@@ -389,7 +394,7 @@
             			</span>
                 </h3>
                     <span class="text">
-                        <span class="cert-answer">{{cert.kommentar}}</span>
+                        <span id="kommentar" class="cert-answer">{{cert.kommentar}}</span>
                     </span>
               </div>
 
@@ -398,7 +403,7 @@
                   <div class="infobox">
                     <h3><span message key="ts-diabetes.label.confirmedby">{{ts-diabetes.label.confirmedby}}</span></h3>
                     <h4><span message key="ts-diabetes.label.date">{{ts-diabetes.label.date}}</span></h4>
-                    <p>{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
+                    <p id="signeringsdatum">{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
                     <h4><span message key="ts-diabetes.label.contactinfo"></span></h4>
                     <p>
                       <span id="physician-name-id" class="text">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br />
@@ -407,14 +412,14 @@
                       <span ng-if="specialiteter.length > 0" id="physician-speciality" class="text">Specialistkompetens i: {{specialiteter}}<br /><br /></span>
 
                       <span id="careunit-name-id" class="text">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br />
-            					<span id="careunit-postal_address" class="text">{{cert.grundData.skapadAv.vardenhet.postadress}}<br />
-            					{{cert.grundData.skapadAv.vardenhet.postnummer}} {{cert.grundData.skapadAv.vardenhet.postort}}</span><br />
-                      <span id="careunit-postal_phone" class="text">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}, {{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span>
+            					<span id="careunit-postal_address" class="text">{{cert.grundData.skapadAv.vardenhet.postadress}}</span><br />
+                      <span id="careunit-postal_code" class="text">{{cert.grundData.skapadAv.vardenhet.postnummer}} </span>
+                      <span id="careunit-postal_city" class="text">{{cert.grundData.skapadAv.vardenhet.postort}}</span><br />
+                      <span id="careunit-postal_phone" class="text">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span>
                     </p>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

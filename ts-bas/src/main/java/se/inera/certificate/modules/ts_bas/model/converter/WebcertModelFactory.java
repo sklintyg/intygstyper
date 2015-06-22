@@ -18,13 +18,17 @@
  */
 package se.inera.certificate.modules.ts_bas.model.converter;
 
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
+import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint;
 
 /**
  * Factory for creating a editable model.
@@ -56,8 +60,7 @@ public class WebcertModelFactory {
 
         template.setId(newDraftData.getCertificateId());
 
-        // This is where we set the concrete tsUtgava and tsVersion of the intyg that is created.
-        template.setTyp(UtlatandeKod.getCurrentVersion().name());
+        template.setTyp(TsBasEntryPoint.MODULE_ID);
 
         populateWithSkapadAv(template, newDraftData.getSkapadAv());
         populateWithPatientInfo(template, newDraftData.getPatient());
@@ -72,7 +75,7 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
 
-        utlatande.getIntygMetadata().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
+        utlatande.getGrundData().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
     private void populateWithSkapadAv(Utlatande utlatande,
@@ -81,6 +84,47 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
 
-        utlatande.getIntygMetadata().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(skapadAv));
+        utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(skapadAv));
+    }
+
+    public Utlatande createCopy(CreateDraftCopyHolder copyData, Utlatande template) throws ConverterException {
+        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
+
+        populateWithId(template, copyData.getCertificateId());
+        populateWithSkapadAv(template, copyData.getSkapadAv());
+
+        if (copyData.hasPatient()) {
+            populateWithPatientInfo(template, copyData.getPatient());
+        }
+
+        if (copyData.hasNewPersonnummer()) {
+            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
+        }
+
+        return template;
+    }
+
+    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+        template.getGrundData().getPatient().setPersonId(newPersonnummer);
+    }
+
+    private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
+
+        if (utlatandeId == null) {
+            throw new ConverterException("No certificateID found");
+        }
+
+        utlatande.setId(utlatandeId);
+    }
+
+    public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
+        utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
+        utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
+        utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
+        utlatande.getGrundData().setSigneringsdatum(signeringsdatum);
+        utlatande.getGrundData().getSkapadAv().getBefattningar().clear();
+        if (hosPerson.getBefattning() != null) {
+            utlatande.getGrundData().getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
+        }
     }
 }

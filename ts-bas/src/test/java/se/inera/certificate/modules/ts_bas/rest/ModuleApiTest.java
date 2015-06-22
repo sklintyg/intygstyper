@@ -20,40 +20,60 @@ package se.inera.certificate.modules.ts_bas.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
+import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-
-import junit.framework.Assert;
-
+import org.apache.commons.io.FileUtils;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.Difference;
+import org.custommonkey.xmlunit.DifferenceConstants;
+import org.custommonkey.xmlunit.DifferenceListener;
+import org.custommonkey.xmlunit.ElementNameAndTextQualifier;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
+import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
+import se.inera.certificate.modules.support.api.dto.CertificateResponse;
+import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.ExternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.utils.ModelAssert;
 import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
+import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
+import se.inera.intygstjanster.ts.services.v1.IntygMeta;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,128 +86,45 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ModuleApiTest {
 
-    /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
-
-    @Autowired
-    private JAXBContext jaxbContext;
-
-    @Autowired
+    @Qualifier("tsBasObjectMapper")
     private ObjectMapper mapper;
 
-    @Test
-    public void testUnmarshallScenarios() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
-        }
-    }
+    private RegisterTSBasResponderInterface registerTSBasResponderInterface;
+    private RegisterTSBasResponseType registerResponse;
 
-    @Test
-    public void testUnmarshallBroken() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("invalid-*")) {
-            try {
-                moduleApi.unmarshall(createTransportHolder(scenario.asTransportModel()));
-            } catch (ModuleValidationException ignore) {
-            }
-        }
-    }
+    private GetTSBasResponderInterface getTSBasResponderInterface;
 
-    @Test
-    public void testMarshall() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.marshall(createExternalHolder(scenario.asExternalModel()), UTLATANDE_V1);
-        }
+    /** An HTTP client proxy wired to the test HTTP server. */
+    @Autowired
+    private TsBasModuleApi moduleApi;
 
-    }
 
-    @Test
-    public void testValidate() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-        }
-    }
+    @Autowired
+    private CustomObjectMapper objectMapper;
 
-    @Test
-    public void testValidateWithErrors() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("invalid-*")) {
-            try {
-                moduleApi.validate(createExternalHolder(scenario.asExternalModel()));
-                Assert.fail("Expected ModuleValidationException, running scenario " + scenario.getName());
-
-            } catch (ModuleValidationException e) {
-                Assert.assertFalse("Error in scenario " + scenario.getName(), e.getValidationEntries().isEmpty());
-            }
-        }
+    @Before
+    public void setUpMocks() {
+        registerTSBasResponderInterface = Mockito.mock(RegisterTSBasResponderInterface.class);
+        getTSBasResponderInterface = Mockito.mock(GetTSBasResponderInterface.class);
+        moduleApi.setRegisterTSBasResponderClient(registerTSBasResponderInterface);
+        moduleApi.setGetTSBasResponderClient(getTSBasResponderInterface);
+        registerResponse = new RegisterTSBasResponseType();
     }
 
     @Test
     public void testPdf() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            moduleApi.pdf(createExternalHolder(scenario.asExternalModel()), ApplicationOrigin.MINA_INTYG);
-
-            // String contentDisposition = getClientResponse().getHeaderString("Content-Disposition");
-            // Assert.assertTrue("Error in scenario " + scenario.getName(),
-            // contentDisposition.startsWith("filename=lakarutlatande"));
-        }
-    }
-
-    @Test
-    public void testConvertExternalToInternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getExternalScenarios("valid-*")) {
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel = scenario.asExternalModel();
-            moduleApi.convertExternalToInternal(createExternalHolder(externalModel));
-        }
-    }
-
-    @Test
-    public void testConvertInternalToExternal() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-
-            ExternalModelResponse externalModelReponse = moduleApi
-                    .convertInternalToExternal(createInternalHolder(scenario.asInternalModel()));
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande actual = mapper.readValue(
-                    externalModelReponse.getExternalModelJson(),
-                    se.inera.certificate.modules.ts_bas.model.external.Utlatande.class);
-
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande expected = scenario.asExternalModel();
-
-            // We need to issue a get in order to create an empty list (and make the test pass)
-            actual.getSkapadAv().getBefattningar();
-            actual.getSkapadAv().getSpecialiteter();
-
-            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
+            moduleApi.pdf(createInternalHolder(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
         }
     }
 
     @Test
-    public void testRegisterCertificateRoundtrip() throws Exception {
-        se.inera.certificate.modules.ts_bas.model.external.Utlatande extUtlatande;
-        Utlatande intUtlatande;
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            extUtlatande = (se.inera.certificate.modules.ts_bas.model.external.Utlatande) moduleApi.unmarshall(
-                    createTransportHolder(scenario.asTransportModel())).getExternalModel();
-            moduleApi.validate(createExternalHolder(extUtlatande));
-            String intUtlatandeString = moduleApi.convertExternalToInternal(createExternalHolder(extUtlatande))
-                    .getInternalModel();
-            intUtlatande = mapper.readValue(intUtlatandeString, Utlatande.class);
+    public void copyContainsOriginalData() throws Exception {
+        Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
+        InternalModelHolder internalHolder = createInternalHolder(scenario.asInternalModel());
 
-            Utlatande expected = scenario.asInternalModel();
-
-            // We need to issue a get in order to create an empty list (and make the test pass)
-            intUtlatande.getIntygMetadata().getSkapadAv().getBefattningar();
-            intUtlatande.getIntygMetadata().getSkapadAv().getSpecialiteter();
-
-            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, intUtlatande);
-        }
-    }
-
-    @Test
-    public void copyCreatesBlank() throws Exception {
-        Scenario scenario = ScenarioFinder.getExternalScenario("valid-korrigerad-synskarpa");
-        ExternalModelHolder internalHolder = createExternalHolder(scenario.asExternalModel());
-
-        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftHolder(), internalHolder);
+        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
 
         assertNotNull(holder);
         Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
@@ -203,6 +140,98 @@ public class ModuleApiTest {
         assertNotNull(response.getInternalModel());
     }
 
+    @Test
+    public void testRegisterCertificate() throws JsonProcessingException, ScenarioNotFoundException {
+        registerResponse.setResultat(ResultTypeUtil.okResult());
+        Mockito.when(registerTSBasResponderInterface.registerTSBas(Mockito.eq("OK"), Mockito.any(RegisterTSBasType.class)))
+                .thenReturn(registerResponse);
+
+        String logicalAddress = "OK";
+        List<String> failResults = new ArrayList<>();
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            InternalModelHolder internalModel = createInternalHolder(scenario.asInternalModel());
+            try {
+                moduleApi.registerCertificate(internalModel, logicalAddress);
+            } catch (ModuleException me) {
+                failResults.add(me.getMessage());
+            }
+        }
+        assertTrue(failResults.isEmpty());
+    }
+
+    @Test
+    public void testRegisterCertificateFailed() throws JsonProcessingException, ScenarioNotFoundException {
+        registerResponse.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "failed"));
+        Mockito.when(registerTSBasResponderInterface.registerTSBas(Mockito.eq("FAIL"), Mockito.any(RegisterTSBasType.class)))
+                .thenReturn(registerResponse);
+
+        String logicalAddress = "FAIL";
+        String failResult = "";
+        Scenario scenario = ScenarioFinder.getInternalScenario("invalid-missing-identitet");
+        InternalModelHolder internalModel = createInternalHolder(scenario.asInternalModel());
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+        } catch (ModuleException me) {
+            failResult = me.getMessage();
+        }
+        assertTrue(!failResult.isEmpty());
+    }
+
+    @Test
+    public void testGetCertificate() throws ModuleException, ScenarioNotFoundException {
+        GetTSBasResponseType result = new GetTSBasResponseType();
+        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel().getIntyg());
+        result.setMeta(createMeta());
+        result.setResultat(ResultTypeUtil.okResult());
+        Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
+            .thenReturn(result);
+
+        CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
+        assertNotNull(internal);
+    }
+
+    @Test
+    public void testMarshall() throws ScenarioNotFoundException, ModuleException, IOException, SAXException {
+        Utlatande internal = ScenarioFinder.getInternalScenario("valid-maximal").asInternalModel();
+        StringWriter writer = new StringWriter();
+        try {
+            objectMapper.writeValue(writer, internal);
+        } catch (IOException e) {
+            throw new ModuleException("Failed to serialize internal model", e);
+        }
+        String xml = writer.toString();
+        String actual = moduleApi.marshall(xml);
+        String expected = FileUtils.readFileToString(new ClassPathResource("scenarios/transport/valid-maximal.xml").getFile());
+
+        XMLUnit.setIgnoreWhitespace(true);
+        Diff diff = XMLUnit.compareXML(expected, actual);
+        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
+        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        Assert.assertTrue(diff.toString(), diff.similar());
+    }
+
+    private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
+        public int differenceFound(Difference difference) {
+            if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
+                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
+                // same
+                return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            } else {
+                return RETURN_ACCEPT_DIFFERENCE;
+            }
+        }
+
+        public void skippedComparison(Node control, Node test) {
+        }
+    }
+
+    private IntygMeta createMeta() throws ScenarioNotFoundException {
+        IntygMeta meta = new IntygMeta();
+        meta.setAdditionalInfo("C");
+        meta.setAvailable("true");
+        return meta;
+    }
+
     private CreateNewDraftHolder createNewDraftHolder() {
         Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
@@ -211,16 +240,11 @@ public class ModuleApiTest {
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
-    private TransportModelHolder createTransportHolder(se.inera.certificate.ts_bas.model.v1.Utlatande transportModel)
-            throws JAXBException {
-        StringWriter writer = new StringWriter();
-        jaxbContext.createMarshaller().marshal(transportModel, writer);
-        return new TransportModelHolder(writer.toString());
-    }
-
-    private ExternalModelHolder createExternalHolder(
-            se.inera.certificate.modules.ts_bas.model.external.Utlatande externalModel) throws JsonProcessingException {
-        return new ExternalModelHolder(mapper.writeValueAsString(externalModel));
+    private CreateDraftCopyHolder createNewDraftCopyHolder() {
+        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
+        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
+        return new CreateDraftCopyHolder("Id1", hosPersonal);
     }
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {

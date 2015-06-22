@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.ts_bas.utils;
 
-import se.inera.certificate.ts_bas.model.v1.Utlatande;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
@@ -28,16 +28,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    Utlatande asTransportModel() throws ScenarioNotFoundException;
-
-    /**
-     * Returns the scenario as a external model.
-     *
-     * @return The scenario as a external model.
-     * @throws ScenarioNotFoundException
-     *             if the scenario wasn't found.
-     */
-    se.inera.certificate.modules.ts_bas.model.external.Utlatande asExternalModel() throws ScenarioNotFoundException;
+    RegisterTSBasType asTransportModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

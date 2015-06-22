@@ -70,7 +70,7 @@ public class InternalValidatorTest {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
-            assertEquals(String.format("Error in test: %s",scenario.getName()), ValidationStatus.INVALID, validationResponse.getStatus());
+            assertEquals(String.format("Error in test: %s", scenario.getName()), ValidationStatus.INVALID, validationResponse.getStatus());
         }
     }
 
@@ -80,6 +80,42 @@ public class InternalValidatorTest {
         ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
 
         assertEquals("syn.vanster.medKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
+    }
+
+    @Test
+    public void testInvalidOgonlakarintygSaknasCorrectSortOrder() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-ogonlakarintyg").asInternalModel();
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        assertEquals(5, validationResponse.getValidationErrors().size());
+        int index = 0;
+        assertEquals("syn.provningUtanAnmarkning", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.hoger.utanKorrektion", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.vanster.utanKorrektion", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.binokulart.utanKorrektion", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("syn.diplopi", validationResponse.getValidationErrors().get(index++).getField());
+    }
+
+    @Test
+    public void testInvalidAllmanDiabetesSaknasCorrectSortOrder() throws Exception {
+        Utlatande utlatande = buildUtlatandeWithoutDiabetesFieldsSet();
+        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        assertEquals(3, validationResponse.getValidationErrors().size());
+        int index = 0;
+        assertEquals("diabetes.observationsperiod", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("diabetes.diabetesTyp", validationResponse.getValidationErrors().get(index++).getField());
+        assertEquals("diabetes", validationResponse.getValidationErrors().get(index).getField());
+    }
+
+    private Utlatande buildUtlatandeWithoutDiabetesFieldsSet() throws se.inera.certificate.modules.ts_diabetes.utils.ScenarioNotFoundException {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-insulinperiod").asInternalModel();
+        utlatande.getDiabetes().setAnnanBehandlingBeskrivning(null);
+        utlatande.getDiabetes().setDiabetestyp(null);
+        utlatande.getDiabetes().setEndastKost(null);
+        utlatande.getDiabetes().setInsulin(null);
+        utlatande.getDiabetes().setInsulinBehandlingsperiod(null);
+        utlatande.getDiabetes().setObservationsperiod(null);
+        utlatande.getDiabetes().setTabletter(null);
+        return utlatande;
     }
 
     @Test

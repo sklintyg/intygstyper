@@ -16,26 +16,14 @@
 
   <dependencies>
 
-    <!-- Common -->
+    <!-- Module -->
     <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-support</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>common-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.common</groupId>
-      <artifactId>integration-util</artifactId>
+      <groupId>se.inera.intyg.intygstyper</groupId>
+      <artifactId>ts-parent</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
-    <!-- Schemas -->
-    <dependency>
-      <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-      <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
-    </dependency>
-
+    <!-- Others -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -96,6 +84,11 @@
       <artifactId>spring-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -131,7 +124,7 @@
             </goals>
           </execution>
           <execution>
-            <id>javascript minaintyg tests</id>
+            <id>javascript ts-diabetes tests</id>
             <goals>
               <goal>karma</goal>
             </goals>
@@ -165,28 +158,6 @@
       </plugin>
 
       <plugin>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-xjc-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>xsdtojava</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <xsdOptions>
-                <xsdOption>
-                  <xsd>src/main/resources/schemas/ts-diabetes_model.xsd</xsd>
-                  <extension>true</extension>
-                  <bindingFile>${basedir}/src/main/resources/schemas/binding.xjb</bindingFile>
-                </xsdOption>
-              </xsdOptions>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -199,6 +170,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
+        <inherited>false</inherited>
         <executions>
           <execution>
             <id>unpack-build-tools</id>
@@ -218,6 +190,7 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
   </build>
 </project>

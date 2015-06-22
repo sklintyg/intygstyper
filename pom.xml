@@ -7,7 +7,7 @@
   <parent>
     <groupId>se.inera.intyg.common</groupId>
     <artifactId>common-pom</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
   </parent>
 
   <groupId>se.inera.intyg.intygstyper</groupId>
@@ -21,27 +21,33 @@
 
     <!-- Common -->
     <common.version>0-SNAPSHOT</common.version>
-    <common.version.range>(,2.1.7]</common.version.range>
+    <common.version.range>(,2.2.0]</common.version.range>
 
-    <!-- Schemas -->
-    <clinicalprocess-healthcond-certificate.version>0-SNAPSHOT</clinicalprocess-healthcond-certificate.version>
-    <clinicalprocess-healthcond-certificate.version.range>
-      (,1.0.0]
-    </clinicalprocess-healthcond-certificate.version.range>
+    <!-- RIVTA Schemas -->
+    <rivta-clinicalprocess.version>1.0.RC3.0</rivta-clinicalprocess.version>
+    <rivta-insuranceprocess.version>3.1.0.0</rivta-insuranceprocess.version>
 
-    <insuranceprocess-healthreporting.version>0-SNAPSHOT</insuranceprocess-healthreporting.version>
-    <insuranceprocess-healthreporting.version.range>(,1.0.0]</insuranceprocess-healthreporting.version.range>
+    <!-- Intyg Schemas -->
+    <intyg-clinicalprocess.version>0-SNAPSHOT</intyg-clinicalprocess.version>
+    <intyg-clinicalprocess.version.range>(,1.0.0]</intyg-clinicalprocess.version.range>
+
+    <intyg-insuranceprocess.version>0-SNAPSHOT</intyg-insuranceprocess.version>
+    <intyg-insuranceprocess.version.range>(,1.0.0]</intyg-insuranceprocess.version.range>
+
+    <intyg-transportstyrelsen.version>0-SNAPSHOT</intyg-transportstyrelsen.version>
+    <intyg-transportstyrelsen.version.range>(,1.0.0]</intyg-transportstyrelsen.version.range>
 
     <!-- Netcare -->
-    <mvkintegration.version>1.2.2</mvkintegration.version>
+    <mvkintegration.version>1.2.3</mvkintegration.version>
 
   </properties>
 
   <modules>
     <module>fk7263</module>
     <!--<module>rli</module> -->
-    <!--<module>ts-bas</module> -->
-    <!--<module>ts-diabetes</module> -->
+    <module>ts-parent</module>
+    <module>ts-bas</module>
+    <module>ts-diabetes</module>
     <module>tools/archetype</module>
   </modules>
 
@@ -58,42 +64,54 @@
         <artifactId>common-support</artifactId>
         <version>${common.version}</version>
       </dependency>
-
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>common-web</artifactId>
         <version>${common.version}</version>
       </dependency>
-
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>integration-util</artifactId>
         <version>${common.version}</version>
       </dependency>
-
       <dependency>
         <groupId>se.inera.intyg.common</groupId>
         <artifactId>logging-util</artifactId>
         <version>${common.version}</version>
       </dependency>
-
-      <!-- Schemas -->
       <dependency>
-        <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-        <artifactId>clinicalprocess-healthcond-certificate-core</artifactId>
-        <version>${clinicalprocess-healthcond-certificate.version}</version>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>common-schemas</artifactId>
+        <version>${common.version}</version>
       </dependency>
 
+      <!-- RIVTA Schemas -->
       <dependency>
-        <groupId>se.inera.intyg.schemas.clinicalprocess.healthcond.certificate.v1</groupId>
-        <artifactId>clinicalprocess-healthcond-certificate-interactions</artifactId>
-        <version>${clinicalprocess-healthcond-certificate.version}</version>
+        <groupId>se.riv.clinicalprocess.healthcond.certificate</groupId>
+        <artifactId>clinicalprocess-healthcond-certificate-schemas</artifactId>
+        <version>${rivta-clinicalprocess.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.riv.insuranceprocess.healthreporting</groupId>
+        <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
+        <version>${rivta-insuranceprocess.version}</version>
       </dependency>
 
+      <!-- Intyg Schemas -->
       <dependency>
-        <groupId>se.inera.intyg.schemas.insuranceprocess.healthreporting.v1</groupId>
-        <artifactId>insuranceprocess-healthreporting-interactions</artifactId>
-        <version>${insuranceprocess-healthreporting.version}</version>
+        <groupId>se.inera.intyg.clinicalprocess.healthcond.certificate</groupId>
+        <artifactId>intyg-clinicalprocess-healthcond-certificate-schemas</artifactId>
+        <version>${intyg-clinicalprocess.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.insuranceprocess.healthreporting</groupId>
+        <artifactId>intyg-insuranceprocess-healthreporting-schemas</artifactId>
+        <version>${intyg-insuranceprocess.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.transportstyrelsen</groupId>
+        <artifactId>intyg-transportstyrelsen-schemas</artifactId>
+        <version>${intyg-transportstyrelsen.version}</version>
       </dependency>
 
       <!-- Netcare dependencies -->
@@ -103,6 +121,14 @@
         <version>${mvkintegration.version}</version>
       </dependency>
 
+      <!-- XML -->
+      <dependency>
+        <groupId>net.sf.saxon</groupId>
+        <artifactId>Saxon-HE</artifactId>
+        <version>9.6.0-4</version>
+      </dependency>
+
+      <!-- Spring -->
       <dependency>
         <groupId>org.springframework.security</groupId>
         <artifactId>spring-security-config</artifactId>
@@ -194,7 +220,10 @@
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
           <includeProperties>
-            common.version, clinicalprocess-healthcond-certificate.version, insuranceprocess-healthreporting.version
+            common.version,
+            intyg-clinicalprocess.version,
+            intyg-insuranceprocess.version,
+            intyg-transportstyrelsen.version
           </includeProperties>
           <properties>
             <property>
@@ -202,16 +231,21 @@
               <version>${common.version.range}</version>
             </property>
             <property>
-              <name>clinicalprocess-healthcond-certificate.version</name>
-              <version>${clinicalprocess-healthcond-certificate.version.range}</version>
+              <name>intyg-clinicalprocess.version</name>
+              <version>${intyg-clinicalprocess.version.range}</version>
             </property>
             <property>
-              <name>insuranceprocess-healthreporting.version</name>
-              <version>${insuranceprocess-healthreporting.version.range}</version>
+              <name>intyg-insuranceprocess.version</name>
+              <version>${intyg-insuranceprocess.version.range}</version>
+            </property>
+            <property>
+              <name>intyg-transportstyrelsen.version</name>
+              <version>${intyg-transportstyrelsen.version.range}</version>
             </property>
           </properties>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -241,8 +275,22 @@
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.webjars</groupId>
+                  <artifactId>angular-ui-router</artifactId>
+                  <version>${angular-ui-router.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
                   <artifactId>momentjs</artifactId>
                   <version>${momentjs.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>se.inera.intyg.common</groupId>
+                  <artifactId>common-web</artifactId>
+                  <version>${common.version}</version>
                   <type>jar</type>
                   <overWrite>true</overWrite>
                 </artifactItem>
@@ -252,6 +300,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <inherited>false</inherited>

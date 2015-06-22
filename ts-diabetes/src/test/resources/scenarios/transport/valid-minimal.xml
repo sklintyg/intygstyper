@@ -1,106 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:utlatande xmlns:p="urn:riv:clinicalprocess:healthcond:certificate:1"
-  xmlns:p1="urn:iso:21090:dt:1"
-  xmlns:p2="urn:riv:clinicalprocess:healthcond:certificate:ts-diabetes:1"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="urn:riv:clinicalprocess:healthcond:certificate:1 ../../../../main/resources/schemas/transport_model.xsd ">
-
-  <p:utlatande-id root="1.2.752.129.2.1.2.1" extension="987654321" />
-
-  <p:typAvUtlatande code="ts-diabetes"
-    codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b" codeSystemName="kv_utlåtandetyp_intyg" />
-
-  <p:signeringsdatum>2013-08-12T15:57:00</p:signeringsdatum>
-
-  <p:patient>
-    <p:person-id extension="19121212-1212" root="1.2.752.129.2.1.3.1" />
-    <p:fornamn>Johnny</p:fornamn>
-    <p:efternamn>Appleseed</p:efternamn>
-    <p:postadress>Testvägen 12</p:postadress>
-    <p:postnummer>123456</p:postnummer>
-    <p:postort>Testort</p:postort>
-  </p:patient>
-
-  <p:skapadAv>
-    <p:personal-id extension="SE0000000000-1333" root="1.2.752.129.2.1.4.1" />
-    <p:fullstandigtNamn>Doktor Thompson</p:fullstandigtNamn>
-    <p:enhet>
-      <p:enhets-id extension="SE0000000000-1337" root="1.2.752.129.2.1.4.1" />
-      <p:enhetsnamn>Vårdenhet Väst</p:enhetsnamn>
-      <p:postadress>Enhetsvägen 12</p:postadress>
-      <p:postnummer>54321</p:postnummer>
-      <p:postort>Tumba</p:postort>
-      <p:telefonnummer>08-1337</p:telefonnummer>
-      <p:vardgivare>
-        <p:vardgivare-id root="1.2.752.129.2.1.4.1"
-          extension="SE0000000000-HAHAHHSAA" />
-        <p:vardgivarnamn>Vårdgivarnamn</p:vardgivarnamn>
-      </p:vardgivare>
-    </p:enhet>
-  </p:skapadAv>
-
-  <p:vardkontakt>
-    <p:vardkontakttyp code="5880005" codeSystem="1.2.752.116.2.1.1.1"
-      codeSystemName="SNOMED-CT" />
-    <p:idKontroll code="IDK6"
-      codeSystem="e7cc8f30-a353-4c42-b17a-a189b6876647" codeSystemName="kv_id_kontroll" />
-  </p:vardkontakt>
-
-  <!-- AKTIVITETER -->
-  <!-- Aktiviteter end -->
-
-  <!-- Rekommendation begin -->
-  <p:rekommendation>
-    <p:rekommendationskod code="REK8"
-      codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459" codeSystemName="kv_rekommendation_intyg" />
-    <p2:varde code="VAR13" codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
-      codeSystemName="kv_rekommendation_intyg" />
-  </p:rekommendation>
-  <!-- Rekommendation end -->
-
-  <!-- Observationer begins -->
-
-  <p:observation>
-    <p:observationskod code="E11" codeSystem="1.2.752.116.1.1.1.1.3"
-      codeSystemName="ICD-10" />
-    <p:observationsperiod>
-      <p:from>2012</p:from>
-    </p:observationsperiod>
-    <p:forekomst>true</p:forekomst>
-  </p:observation>
-
-  <p:observation>
-    <p:observationskod code="170745003" codeSystem="1.2.752.116.2.1.1.1"
-      codeSystemName="SNOMED-CT" />
-    <p:forekomst>true</p:forekomst>
-  </p:observation>
-
-  <p:observation>
-    <p:observationskod code="OBS19"
-      codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3" codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-
-  <p:observation>
-    <p:observationskod code="OBS20"
-      codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3" codeSystemName="kv_observationer_intyg" />
-    <p:forekomst>false</p:forekomst>
-  </p:observation>
-  <!-- Observationer ends -->
-
-  <!-- ObservationAktivitetRelation begin -->
-  <!-- ObservationAktivitetRelation ends -->
-
-  <p2:intygAvser code="IAV12" codeSystem="24c41b8d-258a-46bf-a08a-b90738b28770"
-    codeSystemName="kv_intyget_avser" />
-
-  <p2:bilaga>
-    <p2:bilagetyp code="BIL1" codeSystem="80595600-7477-4a6c-baeb-d2439e86b8bc"
-      codeSystemName="kv_bilaga" />
-    <p2:forekomst>true</p2:forekomst>
-  </p2:bilaga>
-
-  <p2:utgava>06</p2:utgava>
-  <p2:version>02</p2:version>
-
-</p:utlatande>
+<ns3:RegisterTSDiabetes xmlns="urn:local:se:intygstjanster:services:1"
+    xmlns:ns2="urn:local:se:intygstjanster:services:types:1"
+    xmlns:ns3="urn:local:se:intygstjanster:services:RegisterTSDiabetesResponder:1">
+    <ns3:intyg>
+    <intygsId>987654321</intygsId>
+    <intygsTyp>ts-diabetes</intygsTyp>
+    <version>02</version>
+    <utgava>06</utgava>
+    <grundData>
+        <signeringsTidstampel>2013-08-12T15:57:00</signeringsTidstampel>
+        <skapadAv>
+            <personId>
+                <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+                <ns2:extension>SE0000000000-1333</ns2:extension>
+            </personId>
+            <fullstandigtNamn>Doktor Thompson</fullstandigtNamn>
+            <vardenhet>
+                <enhetsId>
+                    <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+                    <ns2:extension>SE0000000000-1337</ns2:extension>
+                </enhetsId>
+                <enhetsnamn>Vårdenhet Väst</enhetsnamn>
+                <postadress>Enhetsvägen 12</postadress>
+                <postnummer>54321</postnummer>
+                <postort>Tumba</postort>
+                <telefonnummer>08-1337</telefonnummer>
+                <vardgivare>
+                    <vardgivarid>
+                        <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+                        <ns2:extension>SE0000000000-HAHAHHSAA</ns2:extension>
+                    </vardgivarid>
+                    <vardgivarnamn>Vårdgivarnamn</vardgivarnamn>
+                </vardgivare>
+            </vardenhet>
+        </skapadAv>
+        <patient>
+            <personId>
+                <ns2:root>1.2.752.129.2.1.3.1</ns2:root>
+                <ns2:extension>19121212-1212</ns2:extension>
+            </personId>
+            <fullstandigtNamn>Herr Dundersjuk</fullstandigtNamn>
+            <fornamn>Herr</fornamn>
+            <efternamn>Dundersjuk</efternamn>
+            <postadress>Testvägen 12</postadress>
+            <postnummer>123456</postnummer>
+            <postort>Testort</postort>
+        </patient>
+    </grundData>
+    <intygAvser>
+        <korkortstyp>A1</korkortstyp>
+    </intygAvser>
+    <identitetStyrkt>
+        <idkontroll>IDK1</idkontroll>
+    </identitetStyrkt>
+    <diabetes>
+        <debutArDiabetes>2012</debutArDiabetes>
+        <diabetesTyp>TYP1</diabetesTyp>
+        <harBehandlingKost>true</harBehandlingKost>
+    </diabetes>
+    <hypoglykemier>
+        <harKunskapOmAtgarder>true</harKunskapOmAtgarder>
+        <harTeckenNedsattHjarnfunktion>false</harTeckenNedsattHjarnfunktion>
+        <saknarFormagaKannaVarningstecken>false</saknarFormagaKannaVarningstecken>
+        <harAllvarligForekomst>false</harAllvarligForekomst>
+        <harAllvarligForekomstTrafiken>false</harAllvarligForekomstTrafiken>
+        <genomforEgenkontrollBlodsocker>true</genomforEgenkontrollBlodsocker>
+    </hypoglykemier>
+    <separatOgonLakarintygKommerSkickas>true</separatOgonLakarintygKommerSkickas>
+    <bedomning>
+        <korkortstyp>A1</korkortstyp>
+    </bedomning>
+</ns3:intyg>
+</ns3:RegisterTSDiabetes>

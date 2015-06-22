@@ -31,6 +31,7 @@ import se.inera.certificate.modules.support.api.ModuleContainerApi;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getcertificateforcare.v1.GetCertificateForCareResponseType;
 
 /**
  *
@@ -110,6 +111,13 @@ public class RegisterMedicalCertificateResponderImplTest {
 
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
         assertEquals(ResultCodeEnum.INFO, response.getResult().getResultCode());
+    }
+
+    @Test
+    public void testWithInvalidCertificate() throws Exception {
+        request.getLakarutlatande().setSkapadAvHosPersonal(null);
+        RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
+        assertEquals(ResultCodeEnum.ERROR, response.getResult().getResultCode());
     }
 
 }

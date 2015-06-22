@@ -12,13 +12,15 @@ define([
 
     var module = angular.module(moduleName, [controllers,  wcCertificateService, wcManageCertView, eyeDecimal]);
 
-    module.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-            when('/rli/edit/:certificateId', {
+    module.config(['$stateProvider', function($stateProvider) {
+        $stateProvider.
+            state('rli.edit', {
+                url : '/rli/edit/:certificateId',
                 templateUrl: '/web/webjars/rli/webcert/views/edit-cert.html',
                 controller: 'rli.EditCertCtrl'
             }).
-            when('/rli/view/:certificateId', {
+            state('rli.view', {
+                url : '/rli/view/:certificateId',
                 templateUrl: '/web/webjars/rli/common/views/view-cert.html',
                 controller: 'rli.ViewCertCtrl'
             });

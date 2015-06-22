@@ -21,12 +21,12 @@
 
   <!-- ws clients -->
   <jaxws:client id="registerMedicalCertificateClient"
-                  serviceClass="se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface"
+                  serviceClass="se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface"
                   address="${intygstjanst.registermedicalcertificate.endpoint.url}">
   </jaxws:client>
 
     <jaxws:client id="getMedicalCertificateForCareResponder"
-      serviceClass="se.inera.certificate.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface"
+      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface"
       address="${intygstjanst.getmedicalcertificateforcare.endpoint.url}">
     </jaxws:client>
 

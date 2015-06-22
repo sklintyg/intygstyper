@@ -3,8 +3,11 @@ package se.inera.certificate.modules.ts_bas.model.internal;
 import java.util.EnumSet;
 import java.util.Set;
 
-import se.inera.certificate.modules.ts_bas.json.AbstractEnumSetDeserializer;
-import se.inera.certificate.modules.ts_bas.json.AbstractEnumSetSerializer;
+
+
+
+import se.inera.certificate.modules.ts_parent.json.AbstractEnumSetDeserializer;
+import se.inera.certificate.modules.ts_parent.json.AbstractEnumSetSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

@@ -1,8 +1,8 @@
 define(['angular'], function(angular) {
     'use strict';
 
-    return [ '$scope', '$filter', '$location', '$routeParams', 'CertificateService', 'listCertService', 'dialogService', '$log', '$rootScope',
-            function($scope, $filter, $location, $routeParams, certificateService, listCertService, dialogService, $log, $rootScope) {
+    return [ '$scope', '$filter', '$location', '$stateParams', 'CertificateService', 'listCertService', 'dialogService', '$log', '$rootScope',
+            function($scope, $filter, $location, $stateParams, certificateService, listCertService, dialogService, $log, $rootScope) {
                 $scope.cert = {};
                 $rootScope.cert = {};
 
@@ -50,10 +50,11 @@ define(['angular'], function(angular) {
                     }
                 }, true);
 
-                $scope.dialog = {
+                var dialogRequestModel = {
                     acceptprogressdone: true,
                     focus: false
                 };
+
 
                 // Archive dialog
                 $scope.certToArchive = {};
@@ -61,8 +62,8 @@ define(['angular'], function(angular) {
 
                 $scope.openArchiveDialog = function(cert) {
                     $scope.certToArchive = cert;
-                    $scope.dialog.focus = true;
-                    archiveDialog = dialogService.showDialog($scope, {
+                    dialogRequestModel.focus = true;
+                    archiveDialog = dialogService.showDialog({
                         dialogId: 'archive-confirmation-dialog',
                         titleId: 'inbox.archivemodal.header',
                         bodyTextId: 'inbox.archivemodal.text',
@@ -72,12 +73,13 @@ define(['angular'], function(angular) {
                         },
                         button1id: 'archive-button',
                         button1text: 'button.archive',
-                        autoClose: false
+                        autoClose: false,
+                        dialogRequestModel: dialogRequestModel
                     });
                 };
 
                 // expose calculated static link for pdf download
-                $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $routeParams.certificateId + '/pdf';
+                $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
 
                 // Decide if helptext related to field 1.a) - 1.c)
                 $scope.achelptext = false;
@@ -106,7 +108,7 @@ define(['angular'], function(angular) {
                     return false;
                 };
 
-                certificateService.getCertificate($routeParams.certificateId, function(result) {
+                certificateService.getCertificate($stateParams.certificateId, function(result) {
                     $scope.doneLoading = true;
                     if (result !== null) {
                         $scope.cert = result.utlatande;

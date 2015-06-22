@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns3:RegisterTSDiabetes xmlns="urn:local:se:intygstjanster:services:1"
+    xmlns:ns2="urn:local:se:intygstjanster:services:types:1"
+    xmlns:ns3="urn:local:se:intygstjanster:services:RegisterTSDiabetesResponder:1">
+    <ns3:intyg>
+    <intygsId>9876543210</intygsId>
+    <intygsTyp>ts-diabetes</intygsTyp>
+    <version>02</version>
+    <utgava>06</utgava>
+    <intygAvser>
+        <korkortstyp>A1</korkortstyp>
+    </intygAvser>
+    <identitetStyrkt>
+        <idkontroll>IDK1</idkontroll>
+    </identitetStyrkt>
+    <diabetes>
+        <debutArDiabetes>2012</debutArDiabetes>
+        <diabetesTyp>TYP1</diabetesTyp>
+        <harBehandlingKost>true</harBehandlingKost>
+    </diabetes>
+    <hypoglykemier>
+        <harKunskapOmAtgarder>true</harKunskapOmAtgarder>
+        <harTeckenNedsattHjarnfunktion>false</harTeckenNedsattHjarnfunktion>
+        <saknarFormagaKannaVarningstecken>false</saknarFormagaKannaVarningstecken>
+        <harAllvarligForekomst>false</harAllvarligForekomst>
+        <harAllvarligForekomstTrafiken>false</harAllvarligForekomstTrafiken>
+        <genomforEgenkontrollBlodsocker>true</genomforEgenkontrollBlodsocker>
+    </hypoglykemier>
+    <separatOgonLakarintygKommerSkickas>true</separatOgonLakarintygKommerSkickas>
+    <bedomning>
+        <korkortstyp>A1</korkortstyp>
+    </bedomning>
+</ns3:intyg>
+</ns3:RegisterTSDiabetes>

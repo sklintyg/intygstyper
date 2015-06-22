@@ -2,15 +2,24 @@ package se.inera.certificate.modules.fk7263.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.io.StringWriter;
+
 import org.apache.commons.io.FileUtils;
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.Difference;
+import org.custommonkey.xmlunit.DifferenceConstants;
+import org.custommonkey.xmlunit.DifferenceListener;
+import org.custommonkey.xmlunit.ElementNameAndTextQualifier;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.joda.time.LocalDateTime;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +29,15 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
 import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
+import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
+import se.inera.certificate.modules.fk7263.utils.ScenarioNotFoundException;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
@@ -34,13 +48,12 @@ import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
-import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.v3.rivtabp20.RegisterMedicalCertificateResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
-import se.inera.ifv.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
+import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 
-import java.io.IOException;
-import java.io.StringWriter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author andreaskaltenbach
@@ -104,7 +117,7 @@ public class Fk7263ModuleApiTest {
 
         Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
-        
+
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
 
         assertNotNull(holder);
@@ -113,24 +126,24 @@ public class Fk7263ModuleApiTest {
         assertEquals("Kalle", creatededUtlatande.getGrundData().getPatient().getFornamn());
         assertEquals("Kula", creatededUtlatande.getGrundData().getPatient().getEfternamn());
     }
-    
+
     @Test
     public void copyContainsOriginalPersondetails() throws IOException, ModuleException {
         Utlatande utlatande = getUtlatandeFromFile();
 
         // create copyholder without Patient in it
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(null);
-        
+
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
 
         assertNotNull(holder);
         Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
         assertEquals("Test Testorsson", creatededUtlatande.getGrundData().getPatient().getEfternamn());
     }
-    
+
     @Test
     public void copyContainsNewPersonnummer() throws IOException, ModuleException {
-        
+
         String newSSN = "19121212-1414";
 
         Utlatande utlatande = getUtlatandeFromFile();
@@ -138,7 +151,7 @@ public class Fk7263ModuleApiTest {
         Patient patient = new Patient("Kalle", null, "Kula", "19121212-1212", null, null, null);
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
         copyHolder.setNewPersonnummer(newSSN);
-        
+
         InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
         assertNotNull(holder);
 
@@ -164,7 +177,7 @@ public class Fk7263ModuleApiTest {
                 any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress");
+        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress", null);
 
         // Verify
         verify(registerMedicalCertificateClient).registerMedicalCertificate(eq(address), Mockito.any(RegisterMedicalCertificateType.class));
@@ -262,6 +275,42 @@ public class Fk7263ModuleApiTest {
         request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(null);
 
         fk7263ModuleApi.whenFkIsRecipientThenSetCodeSystemToICD10(request);
+    }
+
+    @Test
+    public void testMarshall() throws ScenarioNotFoundException, ModuleException, IOException, SAXException {
+        Utlatande internal = objectMapper.readValue(new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
+        StringWriter writer = new StringWriter();
+        try {
+            objectMapper.writeValue(writer, internal);
+        } catch (IOException e) {
+            throw new ModuleException("Failed to serialize internal model", e);
+        }
+        String xml = writer.toString();
+        String actual = fk7263ModuleApi.marshall(xml);
+        String expected = FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande.xml").getFile());
+
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.setIgnoreAttributeOrder(true);
+        Diff diff = XMLUnit.compareXML(expected, actual);
+        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
+        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        Assert.assertTrue(diff.toString(), diff.similar());
+    }
+
+    private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
+        public int differenceFound(Difference difference) {
+            if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
+                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
+                // same
+                return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            } else {
+                return RETURN_ACCEPT_DIFFERENCE;
+            }
+        }
+
+        public void skippedComparison(Node control, Node test) {
+        }
     }
 
     private Utlatande getUtlatandeFromFile() throws IOException {

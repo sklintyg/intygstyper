@@ -6,7 +6,7 @@ var tsBasMessages = {
         'ts-bas.label.patientadress': 'Patientens adressuppgifter',
         'ts-bas.label.intygavser': 'Intyget avser',
         'ts-bas.label.identitet': 'Identiteten är styrkt genom',
-        'ts-bas.label.synfunktioner': '1. Synfunktioner',
+        'ts-bas.label.syn': '1. Synfunktioner',
         'ts-bas.label.horselbalans': '2. Hörsel och balanssinne',
         'ts-bas.label.funktionsnedsattning': '3. Rörelseorganens funktioner',
         'ts-bas.label.hjartkarl': '4. Hjärt- och kärlsjukdomar',
@@ -15,20 +15,22 @@ var tsBasMessages = {
         'ts-bas.label.medvetandestorning': '7. Epilepsi, epileptiskt anfall och annan medvetandestörning',
         'ts-bas.label.njurar': '8. Njursjukdomar',
         'ts-bas.label.kognitivt': '9. Demens och andra kognitiva störningar',
-        'ts-bas.label.somn-vakenhet': '10. Sömn- och vakenhetsstörningar',
-        'ts-bas.label.narkotika-lakemedel': '11. Alkohol, narkotika och läkemedel',
+        'ts-bas.label.somnvakenhet': '10. Sömn- och vakenhetsstörningar',
+        'ts-bas.label.narkotikalakemedel': '11. Alkohol, narkotika och läkemedel',
         'ts-bas.label.psykiskt': '12. Psykiska sjukdomar och störningar',
         'ts-bas.label.utvecklingsstorning': '13. ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning',
         'ts-bas.label.sjukhusvard': '14. Sjukhusvård',
         'ts-bas.label.medicinering': '15. Övrig medicinering',
         'ts-bas.label.ovrigkommentar': '16. Övrig kommentar',
         'ts-bas.label.bedomning': 'Bedömning',
-        'ts-bas.label.unit': 'Vårdenhet',
+        'ts-bas.label.vardenhet': 'Vårdenhet',
         'ts-bas.label.send': 'Skicka intyg till Transportstyrelsen',
+        'ts-bas.label.send.body': '',
         'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
 
         'ts-bas.label.status.sent': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
-        'ts-bas.label.status.signed': 'Intyget är signerat och är nu tillgängligt för invånaren i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
+        'ts-bas.label.status.signed': 'Intyget är signerat och är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
+        'ts-bas.label.kopiera.text': 'Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information. I de fall patienten har ändrat namn eller adress så uppdateras den informationen. Uppgifterna i intygsutkastet går att ändra innan det signeras.',
 
         // Identitet styrkt genom
         'ts-bas.label.identitet.id_kort': 'ID-kort',
@@ -42,7 +44,7 @@ var tsBasMessages = {
         'ts-bas.helptext.identitet-styrkt-genom.forsakran-enl18kap4': '*** Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
         'ts-bas.helptext.identitet-styrkt-genom.pass': '**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.',
 
-        //Körkortsbehörigheter
+        // Körkortsbehörigheter
         'ts-bas.label.korkort.c1': 'C1',
         'ts-bas.label.korkort.c1e': 'C1E',
         'ts-bas.label.korkort.c': 'C',
@@ -54,7 +56,8 @@ var tsBasMessages = {
         'ts-bas.label.korkort.taxi': 'Taxi',
         'ts-bas.label.korkort.annat': 'Annat',
 
-        'ts-bas.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.<br/>Se: <a href="http://www.transportstyrelsen.se" target="_blank">http://www.transportstyrelsen.se</a>. Därefter "Väg" och "Trafikmedicin".',
+        'ts-bas.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.<br/>Se: <a href="http://www.transportstyrelsen.se" target="_blank">http://www.transportstyrelsen.se</a>.',
+
         'ts-bas.helptext.intyg-avser': '<span style="text-align:left">C1 = medeltung lastbil och enbart ett lätt släpfordon<br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C = tung lastbil och enbart ett lätt släpfordon<br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 = mellanstor buss och enbart ett lätt släpfordon<br/>D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D = buss och enbart ett lätt släpfordon<br/>DE = buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation<br/>Annat = (AM,A1,A2,A,B,BE eller Traktor)</span>',
         'ts-bas.helptext.intyg-avser.grupp2-grupp3': 'Grupp II omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C och CE.<br/> Grupp III omfattar behörigheterna AM, A1, A2, A, B, BE, C1, C1E, C, CE, D1, D1E, D och DE.',
 
@@ -62,7 +65,7 @@ var tsBasMessages = {
 
         'ts-bas.helptext.synfunktioner.om-nagon-av-a-c': 'Om någon av frågorna a-c besvaras med ja eller om det bedöms sannolikt att synfältsdefekter föreligger krävs läkarintyg av ögonspecialist.',
         'ts-bas.helptext.synfunktioner.synskarpa': 'Alla bokstäver ska kunna läsas på den rad som anger synskärpa. Är synskärpan sämre än 0,1 ska den anges som 0,0<br/><br/> OBS! Uppgifterna om synskärpa och korrektion kan grundas på tidigare utförd undersökning av bland annat legitimerad optiker. Uppgifterna ska då ingå som underlag vid läkarens samlade bedömning.',
-        'ts-bas.helptext.synfunktioner.info-8-dioptrier': 'Intyg om korrektionsglasens styrka måste skickas in',
+        'ts-bas.helptext.synfunktioner.info-8-dioptrier': 'Intyg om korrektionsglasens styrka måste skickas in.',
         'ts-bas.helptext.synfunktioner.8-dioptrier-valt': 'Du har kryssat i frågan om 8 dioptrier – Glöm inte att skicka in intyg om korrektionsglasens styrka.',
         'ts-bas.helptext.synfunktioner.utan-korrektion': 'Uppgiften är obligatorisk',
         'ts-bas.helptext.synfunktioner.med-korrektion': 'Uppgiften är obligatorisk om föreskriven synskärpa endast uppnås med korrektion. Definition av föreskriven synskärpa finns i Transportstyrelsens föreskrifter.',
@@ -142,7 +145,7 @@ var tsBasMessages = {
 
         'ts-bas.label.narkotika-lakemedel.tecken-missbruk': 'a) Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk eller beroende av alkohol, narkotika eller läkemedel?',
         'ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats': 'b) Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel?',
-        'ts-bas.label.narkotika-lakemedel.behov-provtagning': 'Behövs det provtagning avseende aktuellt bruk av akohol eller narkotika?',
+        'ts-bas.label.narkotika-lakemedel.behov-provtagning': 'Om någon av frågorna 11a) eller 11b) besvaras med ja, behövs det provtagning avseende aktuellt bruk av alkohol eller narkotika?',
         'ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk': 'c) Pågår regelbundet läkarordinerat bruk av läkemedel som kan innebära en trafiksäkerhetsrisk?',
         'ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos': 'Ange läkemedel och ordinerad dos:',
         'ts-bas.label.narkotika-lakemedel.beskrivning': 'Om JA på C. Information om läkemedel och ordinerad dos:',
@@ -174,102 +177,102 @@ var tsBasMessages = {
         'ts-bas.validation.utlatande.missing': 'Utlatande saknas',
 
         'ts-bas.validation.patient.postadress.missing': 'Postadress saknas.',
-        'ts-bas.validation.patient.postnummer.missing': 'Postnummer saknas',
-        'ts-bas.validation.patient.postort.missing': 'Postort saknas',
-
-        'ts-bas.validation.vardenhet.postadress.missing': 'Kunde inte hämta postadress för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-bas.validation.vardenhet.postnummer.missing': 'Kunde inte hämta postnummer för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-bas.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',
-        'ts-bas.validation.vardenhet.postort.missing': 'Kunde inte hämta postort för vårdenheten från HSA, måste ifyllas manuellt',
-        'ts-bas.validation.vardenhet.telefonnummer.missing': 'Kunde inte hämta telefonnummer för vårdenheten från HSA, måste ifyllas manuellt',
-
-        'ts-bas.validation.sjukhusvard.missing': 'Objektet sjukhusvård saknas',
-        'ts-bas.validation.sjukhusvard.sjukhusellerlakarkontakt.missing': 'Sjukhus eller läkarkontakt saknas',
-        'ts-bas.validation.sjukhusvard.anledning.missing': 'Anledning till sjukhusvård saknas',
-        'ts-bas.validation.sjukhusvard.tidpunkt.missing': 'Tidpunkt för sjukhusvård saknas',
-        'ts-bas.validation.sjukhusvard.vardinrattning.missing': 'Vårdinrättningens namn och klinik saknas',
-
-        'ts-bas.validation.bedomning.missing': 'Bedömning saknas',
-        'ts-bas.validation.bedomning.must-choose-one': 'En körkortstyp eller Kan inte ta ställning måste väljas',
-
-        'ts-bas.validation.diabetes.missing': 'Diabetes saknas',
-        'ts-bas.validation.diabetes.hardiabetes.missing': 'Patienten har diabetes måste anges',
-        'ts-bas.validation.diabetes.diabetestyp.missing': 'Diabetestyp måste anges',
-        'ts-bas.validation.diabetes.diabetestyp.must-choose-one': 'Minst en behandling måste anges för diabetes typ 2',
-
-        'ts-bas.validation.funktionsnedsattning.missing': 'Funktionsnedsättning saknas',
-        'ts-bas.validation.funktionsnedsattning.funktionsnedsattning.missing': 'Funktionsnedsättning saknas',
-        'ts-bas.validation.funktionsnedsattning.beskrivning.missing': 'Beskrivning av funktionsnedsättning saknas',
-        'ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing': 'För innehav av behörighet D1, D1E, D, DE eller Taxi måste rörelseförmaga att hjälpa passagerar anges',
-
-        'ts-bas.validation.hjartkarl.missing': 'Hjärt- och kärlsjukdomar saknas',
-        'ts-bas.validation.hjartkarl.hjartkarlsjukdom.missing': 'Hjärt- och kärlsjukdom som kan medföra en påtaglig risk för ... måste anges',
-        'ts-bas.validation.hjartkarl.hjarnskadaeftertrauma.missing': 'Hjärnskada efter trauma måste anges',
-        'ts-bas.validation.hjartkarl.riskfaktorerstroke.missing': 'Riskfaktorer för stroke saknas',
-        'ts-bas.validation.hjartkarl.beskrivningriskfaktorer.missing': 'Beskrivning av riskfaktorer för stroke saknas',
-
-        'ts-bas.validation.horselbalans.missing': 'Hörsel och balanssinne saknas',
-        'ts-bas.validation.horselbalans.balansrubbningar.missing': 'Balansrubbningar saknas',
-        'ts-bas.validation.horselbalans.uppfattasamtal4meter.missing': 'Svårt att uppfatta samtal på fyra meters avstånd måste anges för innehav av behörigheterna D1, D1E, D, DE eller Taxi',
+        'ts-bas.validation.patient.postnummer.missing': 'Postnummer saknas.',
+        'ts-bas.validation.patient.postort.missing': 'Postort saknas.',
 
         'ts-bas.validation.intygavser.missing': 'Intyget avser körkortsbehörighet saknas',
-        'ts-bas.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet, eller Annat måste väljas',
-
-        'ts-bas.validation.kognitivt.missing': 'Demens och kognitiva störningar saknas',
-        'ts-bas.validation.kognitivt.sviktandekognitivfunktion.missing': 'Sviktande kognitiv funktion saknas',
-
-        'ts-bas.validation.medicinering.missing': 'Övrig medicinering saknas',
-        'ts-bas.validation.medicinering.stadigvarandemedicinering.missing': 'Stadigvarande medicinering saknas',
-        'ts-bas.validation.medicinering.beskrivning.missing': 'Beskrivning av medicinering saknas',
-
-        'ts-bas.validation.narkotikalakemedel.missing': 'Alkohol, narkotika och läkemedel saknas',
-        'ts-bas.validation.narkotikalakemedel.teckenmissbruk.missing': 'Finns journaluppgifter, anamnestiska uppgifter, resultat av laboratorieprover eller andra tecken på missbruk saknas',
-        'ts-bas.validation.narkotikalakemedel.vardinsats-bas.missing': ' Har patienten vid något tillfälle varit föremål för vårdinsatser för missbruk eller beroende av alkohol, narkotika eller läkemedel saknas',
-        'ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing': 'Om tecken på missbruk föreligger måste provtagning avseende aktuellt bruk av alkohol eller narkotika vara angett',
-        'ts-bas.validation.narkotikalakemedel.lakarordineratlakemedelsbruk.missing': 'Läkarordinerat läkemedelsbruk saknas',
-        'ts-bas.validation.narkotikalakemedel.lakemedelochdos.missing': 'Läkemedel och dos saknas',
-
-        'ts-bas.validation.medvetandestorning.missing': 'Epilepsi, epileptiskt anfall och annan medvetandestörning saknas',
-        'ts-bas.validation.medvetandestorning.medvetandestorning.missing': 'Epilepsi, epileptiskt anfall och annan medvetandestörning saknas',
-
-        'ts-bas.validation.syn.missing': 'Synfunktioner saknas',
-        'ts-bas.validation.syn.progressiv-ogonsjukdom.missing': 'Har patienten någon progressiv ögonsjukdom saknas',
-        'ts-bas.validation.syn.tecken-synfaltsdefekter.missing': 'Finns tecken på synfältsdefekter saknas',
-        'ts-bas.validation.syn.nattblindhet.missing': 'Framkommer anamnestiska uppgifter om begränsning av seendet vid nedsatt belysning saknas',
-        'ts-bas.validation.syn.diplopi.missing': 'Framkommer dubbelseende saknas',
-        'ts-bas.validation.syn.nystagmus.missing': 'Förekommer nystagmus saknas',
-        'ts-bas.validation.syn.hogeroga.missing': 'Synfunktioner relaterade till höger öga saknas',
-        'ts-bas.validation.syn.hogeroga.utankorrektion.missing': 'Höger öga utan korrektion saknas',
-        'ts-bas.validation.syn.hogeroga.utankorrektion.out-of-bounds': 'Korrektionsvärdet för höger öga utan korrektion måste ligga i intervallet 0,0 till 2,0',
-        'ts-bas.validation.syn.hogeroga.medkorrektion.out-of-bounds': 'Korrektionsvärdet för höger öga med korrektion måste ligga i intervallet 0,0 till 2,0',
-
-        'ts-bas.validation.syn.vansteroga.missing': 'Synfunktioner relaterade till vänster öga saknas',
-        'ts-bas.validation.syn.vansteroga.utankorrektion.missing': 'Vänster öga utan korrektion saknas',
-        'ts-bas.validation.syn.vansteroga.utankorrektion.out-of-bounds': 'Korrektionsvärdet för vänster öga utan korrektion måste ligga i intervallet 0,0 till 2,0',
-        'ts-bas.validation.syn.vansteroga.medkorrektion.out-of-bounds': 'Korrektionsvärdet för vänster öga med korrektion måste ligga i intervallet 0,0 till 2,0',
-
-        'ts-bas.validation.syn.binokulart.missing': 'Binokulära synfunktioner saknas',
-        'ts-bas.validation.syn.binokulart.utankorrektion.missing': 'Binokulärt utan korrektion saknas',
-        'ts-bas.validation.syn.binokulart.utankorrektion.out-of-bounds': 'Korrektionsvärdet för binokulärt utan korrektion måste ligga i intervallet 0,0 till 2,0',
-        'ts-bas.validation.syn.binokulart.medkorrektion.out-of-bounds': 'Korrektionsvärdet för binokulärt med korrektion måste ligga i intervallet 0,0 till 2,0',
-
-        'ts-bas.validation.utvecklingsstorning.missing': 'ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning måste anges',
-        'ts-bas.validation.utvecklingsstorning.harsyndrom.missing': 'Har patienten till exempel ADHD, ADD, DAMP, Aspergers syndrom eller Tourettes syndrom måste anges',
-        'ts-bas.validation.utvecklingsstorning.psykiskutvecklingsstorning.missing': 'Har patienten någon psykisk utvecklingsstörning måste anges',
-
-        'ts-bas.validation.psykiskt.missing': 'Psykiska sjukdomar och störningar saknas',
-        'ts-bas.validation.psykiskt.psykisksjukdom.missing': 'Har eller har patienten haft psykisk sjukdom eller störning, till exempel schizofreni, annan psykos eller bipolär (manodepressiv) sjukdom måste anges',
-
-        'ts-bas.validation.somnvakenhet.missing': 'Sömn- och vakenhetsstörningar saknas',
-        'ts-bas.validation.somnvakenhet.teckensomnstorningar.missing': 'Finns tecken på, eller anamnestiska uppgifter som talar för sömn- eller vakenhetsstörning måste anges',
-
-        'ts-bas.validation.njurar.missing': 'Njursjukdomar saknas',
-        'ts-bas.validation.njurar.nedsattnjurfunktion.missing': 'Föreligger allvarligt nedsatt njurfunktion som kan innebära en trafiksäkerhetsrisk måste anges',
-
-        'ts-bas.validation.neurologi.missing': 'Neurologiska sjukdomar saknas',
-        'ts-bas.validation.neurologi.neurologisksjukdom.missing': 'Finns tecken på neurologisk sjukdom måste anges',
+        'ts-bas.validation.intygavser.must-choose-one': 'Minst en körkortsbehörighet, eller "Annat", måste väljas.',
 
         'ts-bas.validation.identitet.missing': 'Identitet styrkt saknas',
+
+        'ts-bas.validation.syn.missing': 'Synfunktioner saknas',
+        'ts-bas.validation.syn.tecken-synfaltsdefekter.missing': 'a) Ett alternativ måste anges.',
+        'ts-bas.validation.syn.nattblindhet.missing': 'b) Ett alternativ måste anges.',
+        'ts-bas.validation.syn.progressiv-ogonsjukdom.missing': 'c) Ett alternativ måste anges.',
+        'ts-bas.validation.syn.diplopi.missing': 'd) Ett alternativ måste anges.',
+        'ts-bas.validation.syn.nystagmus.missing': 'e) Ett alternativ måste anges.',
+        'ts-bas.validation.syn.hogeroga.missing': 'Synfunktioner relaterade till höger öga saknas',
+        'ts-bas.validation.syn.hogeroga.utankorrektion.missing': 'f) Värden för synskärpa utan korrektion måste anges för: Höger öga.',
+        'ts-bas.validation.syn.hogeroga.utankorrektion.out-of-bounds': 'Värdet för vänster öga utan korrektion måste ligga i intervallet 0,0 till 2,0.',
+        'ts-bas.validation.syn.hogeroga.medkorrektion.out-of-bounds': 'Värdet för höger öga med korrektion måste ligga i intervallet 0,0 till 2,0.',
+
+        'ts-bas.validation.syn.vansteroga.missing': 'Synfunktioner relaterade till vänster öga saknas',
+        'ts-bas.validation.syn.vansteroga.utankorrektion.missing': 'f) Värden för synskärpa utan korrektion måste anges för: Vänster öga.',
+        'ts-bas.validation.syn.vansteroga.utankorrektion.out-of-bounds': 'Värdet för vänster öga utan korrektion måste ligga i intervallet 0,0 till 2,0.',
+        'ts-bas.validation.syn.vansteroga.medkorrektion.out-of-bounds': 'Värdet för vänster öga med korrektion måste ligga i intervallet 0,0 till 2,0.',
+
+        'ts-bas.validation.syn.binokulart.missing': 'Binokulära synfunktioner saknas',
+        'ts-bas.validation.syn.binokulart.utankorrektion.missing': 'f) Värden för synskärpa utan korrektion måste anges för: Binokulärt.',
+        'ts-bas.validation.syn.binokulart.utankorrektion.out-of-bounds': 'Värdet för binokulär synskärpa utan korrektion måste ligga i intervallet 0,0 till 2,0.',
+        'ts-bas.validation.syn.binokulart.medkorrektion.out-of-bounds': 'Värdet för binokulär synskärpa med korrektion måste ligga i intervallet 0,0 till 2,0.',
+
+        'ts-bas.validation.horselbalans.missing': 'Hörsel och balanssinne saknas',
+        'ts-bas.validation.horselbalans.balansrubbningar.missing': 'a) Ett alternativ måste anges.',
+        'ts-bas.validation.horselbalans.uppfattasamtal4meter.missing': 'b) Ett alternativ måste anges.',
+
+        'ts-bas.validation.funktionsnedsattning.missing': 'Funktionsnedsättning saknas',
+        'ts-bas.validation.funktionsnedsattning.funktionsnedsattning.missing': 'a) Ett alternativ måste anges.',
+        'ts-bas.validation.funktionsnedsattning.beskrivning.missing': 'Beskrivning av funktionsnedsättning saknas.',
+        'ts-bas.validation.funktionsnedsattning.otillrackligrorelseformaga.missing': 'b) Ett alternativ måste anges.',
+
+        'ts-bas.validation.hjartkarl.missing': 'Hjärt- och kärlsjukdomar saknas',
+        'ts-bas.validation.hjartkarl.hjartkarlsjukdom.missing': 'a) Ett alternativ måste anges.',
+        'ts-bas.validation.hjartkarl.hjarnskadaeftertrauma.missing': 'b) Ett alternativ måste anges.',
+        'ts-bas.validation.hjartkarl.riskfaktorerstroke.missing': 'c) Ett alternativ måste anges.',
+        'ts-bas.validation.hjartkarl.beskrivningriskfaktorer.missing': 'Beskrivning av riskfaktorer för stroke saknas.',
+
+        'ts-bas.validation.diabetes.missing': 'Diabetes saknas',
+        'ts-bas.validation.diabetes.hardiabetes.missing': 'Ett alternativ måste anges.',
+        'ts-bas.validation.diabetes.diabetestyp.missing': 'Ett alternativ måste anges.',
+        'ts-bas.validation.diabetes.diabetestyp.must-choose-one': 'Minst en behandlingstyp måste anges.',
+
+        'ts-bas.validation.neurologi.missing': 'Neurologiska sjukdomar saknas',
+        'ts-bas.validation.neurologi.neurologisksjukdom.missing': 'Ett alternativ måste anges.',
+
+        'ts-bas.validation.medvetandestorning.missing': 'Ett alternativ måste anges.',
+        'ts-bas.validation.medvetandestorning.medvetandestorning.missing': 'Ett alternativ måste anges.',
+
+        'ts-bas.validation.njurar.missing': 'Njursjukdomar saknas',
+        'ts-bas.validation.njurar.nedsattnjurfunktion.missing': 'Ett alternativ måste anges.',
+
+        'ts-bas.validation.kognitivt.missing': 'Demens och kognitiva störningar saknas',
+        'ts-bas.validation.kognitivt.sviktandekognitivfunktion.missing': 'Ett alternativ måste anges.',
+
+        'ts-bas.validation.somnvakenhet.missing': 'Sömn- och vakenhetsstörningar saknas',
+        'ts-bas.validation.somnvakenhet.teckensomnstorningar.missing': 'Ett alternativ måste anges.',
+
+        'ts-bas.validation.narkotikalakemedel.missing': 'Alkohol, narkotika och läkemedel saknas',
+        'ts-bas.validation.narkotikalakemedel.teckenmissbruk.missing': 'a) Ett alternativ måste anges.',
+        'ts-bas.validation.narkotikalakemedel.vardinsats-bas.missing': ' b)	Ett alternativ måste anges.',
+        'ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing': 'Om tecken på missbruk föreligger måste ett alternativ anges för följdfrågan.',
+        'ts-bas.validation.narkotikalakemedel.lakarordineratlakemedelsbruk.missing': 'c) Ett alternativ måste anges.',
+        'ts-bas.validation.narkotikalakemedel.lakemedelochdos.missing': 'Läkemedel och dos måste anges.',
+
+        'ts-bas.validation.psykiskt.missing': 'Psykiska sjukdomar och störningar saknas',
+        'ts-bas.validation.psykiskt.psykisksjukdom.missing': 'Ett alternativ måste anges.',
+
+        'ts-bas.validation.utvecklingsstorning.missing': 'ADHD, autismspektrumtillstånd och likartade tillstånd samt psykisk utvecklingsstörning måste anges',
+        'ts-bas.validation.utvecklingsstorning.harsyndrom.missing': 'a) Ett alternativ måste anges.',
+        'ts-bas.validation.utvecklingsstorning.psykiskutvecklingsstorning.missing': 'b) Ett alternativ måste anges.',
+
+        'ts-bas.validation.sjukhusvard.missing': 'Objektet sjukhusvård saknas',
+        'ts-bas.validation.sjukhusvard.sjukhusellerlakarkontakt.missing': 'Ett alternativ måste anges.',
+        'ts-bas.validation.sjukhusvard.anledning.missing': 'Anledning till sjukhusvård måste anges.',
+        'ts-bas.validation.sjukhusvard.tidpunkt.missing': 'Angivelse av tidpunkt måste anges.',
+        'ts-bas.validation.sjukhusvard.vardinrattning.missing': 'Vårdinrättningens namn och klinik måste anges.',
+
+        'ts-bas.validation.medicinering.missing': 'Övrig medicinering saknas',
+        'ts-bas.validation.medicinering.stadigvarandemedicinering.missing': 'Ett alternativ måste anges.',
+        'ts-bas.validation.medicinering.beskrivning.missing': 'Beskrivning av medicinering saknas.',
+
+        'ts-bas.validation.bedomning.missing': 'Bedömning saknas',
+        'ts-bas.validation.bedomning.must-choose-one': 'Minst en behörighet, "Annat" eller "Kan inte ta ställning" måste anges.',
+
+        'ts-bas.validation.vardenhet.postadress.missing': 'Postadressen för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-bas.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-bas.validation.vardenhet.postnummer.incorrect-format': 'Postnummer måste anges i formatet XXX XX eller XXXXX (exempelvis 123 45)',
+        'ts-bas.validation.vardenhet.postort.missing': 'Postost för vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
+        'ts-bas.validation.vardenhet.telefonnummer.missing': 'Telefonnummer till vårdenheten kunde inte hämtas från HSA, den måste anges manuellt.',
 
         'ts-bas.form.postadress': 'Postadress',
         'ts-bas.form.postnummer': 'Postnummer',
