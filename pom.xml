@@ -37,6 +37,9 @@
     <intyg-transportstyrelsen.version>0-SNAPSHOT</intyg-transportstyrelsen.version>
     <intyg-transportstyrelsen.version.range>(,1.0.0]</intyg-transportstyrelsen.version.range>
 
+    <intyg-fk.version>0-SNAPSHOT</intyg-fk.version>
+    <intyg-fk.version.range>(,1.0.0]</intyg-fk.version.range>
+
     <!-- Modules -->
     <ts-parent.version>0-SNAPSHOT</ts-parent.version>
     <ts-parent.version.range>(,1.0.0]</ts-parent.version.range>
@@ -117,6 +120,11 @@
         <groupId>se.inera.intyg.transportstyrelsen</groupId>
         <artifactId>intyg-transportstyrelsen-schemas</artifactId>
         <version>${intyg-transportstyrelsen.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>se.inera.intyg.fk</groupId>
+          <artifactId>intyg-forsakringskassan-schemas</artifactId>
+          <version>${intyg-fk.version}</version>
       </dependency>
 
       <!-- Netcare dependencies -->
