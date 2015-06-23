@@ -34,17 +34,6 @@ public class WebcertModelFactory {
 
         populateWithId(template, newDraftData.getCertificateId());
 
-        template.setNuvarandeArbete(true);
-        template.setArbetsloshet(false);
-
-        template.setAvstangningSmittskydd(false);
-        template.setForaldrarledighet(false);
-        template.setKontaktMedFk(false);
-        template.setRekommendationKontaktArbetsformedlingen(false);
-        template.setRekommendationKontaktForetagshalsovarden(false);
-        template.setRessattTillArbeteAktuellt(false);
-        template.setRessattTillArbeteEjAktuellt(false);
-
         populateWithSkapadAv(template, newDraftData.getSkapadAv());
         populateWithPatientInfo(template, newDraftData.getPatient());
 

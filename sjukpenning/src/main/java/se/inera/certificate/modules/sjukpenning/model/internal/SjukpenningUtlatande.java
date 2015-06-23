@@ -50,8 +50,11 @@ public class SjukpenningUtlatande extends Utlatande {
 
     private boolean nuvarandeArbete;
     private String nuvarandeArbetsuppgifter;
+    private String nuvarandeYrke;
     private boolean arbetsloshet;
-    private boolean foraldrarledighet;
+    private boolean foraldraledighet;
+    private boolean studier;
+    private boolean arbetsmarknadsProgram;
 
     private String tjanstgoringstid;
     private InternalLocalDateInterval nedsattMed25;
@@ -332,12 +335,12 @@ public class SjukpenningUtlatande extends Utlatande {
         this.arbetsloshet = arbetsloshet;
     }
 
-    public boolean isForaldrarledighet() {
-        return foraldrarledighet;
+    public boolean isForaldraledighet() {
+        return foraldraledighet;
     }
 
-    public void setForaldrarledighet(boolean foraldrarledighet) {
-        this.foraldrarledighet = foraldrarledighet;
+    public void setForaldraledighet(boolean foraldraledighet) {
+        this.foraldraledighet = foraldraledighet;
     }
 
     public InternalLocalDateInterval getNedsattMed25() {
@@ -447,5 +450,29 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setPrognosBedomning(PrognosBedomning prognosBedomning) {
         this.prognosBedomning = prognosBedomning;
+    }
+
+    public String getNuvarandeYrke() {
+        return nuvarandeYrke;
+    }
+
+    public void setNuvarandeYrke(String nuvarandeYrke) {
+        this.nuvarandeYrke = nuvarandeYrke;
+    }
+
+    public boolean isStudier() {
+        return studier;
+    }
+
+    public void setStudier(boolean studier) {
+        this.studier = studier;
+    }
+
+    public boolean isArbetsmarknadsProgram() {
+        return arbetsmarknadsProgram;
+    }
+
+    public void setArbetsmarknadsProgram(boolean arbetsmarknadsProgram) {
+        this.arbetsmarknadsProgram = arbetsmarknadsProgram;
     }
 }

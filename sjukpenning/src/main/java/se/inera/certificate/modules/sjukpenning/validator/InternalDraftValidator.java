@@ -137,7 +137,7 @@ public class InternalDraftValidator {
     private void validateArbetsformaga(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
-            if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
+            if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldraledighet()) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "sjukpenning.validation.sysselsattning.missing");
             } else if (utlatande.isNuvarandeArbete() && StringUtils.isBlank(utlatande.getNuvarandeArbetsuppgifter())) {

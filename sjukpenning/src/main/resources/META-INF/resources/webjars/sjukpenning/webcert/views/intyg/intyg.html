@@ -115,8 +115,7 @@
               <div wc-field field-number="8a" field-label="sjukpenning.label.arbetsformaga"
                    filled="{{viewState.intygModel.nuvarandeArbetsuppgifter||viewState.intygModel.arbetsloshet||viewState.intygModel.foraldrarledighet}}" id="field8">
                 <ul class="padded-list">
-                  <li ng-show="viewState.intygModel.nuvarandeArbetsuppgifter"><span message
-                                                                    key="sjukpenning.label.arbetsformaga.nuvarande-arbete"></span>
+                  <li ng-show="viewState.intygModel.nuvarandeArbetsuppgifter"><span message key="sjukpenning.label.arbetsformaga.nuvarande-arbete"></span>
                     <div id="nuvarandeArbetsuppgifter" class="multiline">{{viewState.intygModel.nuvarandeArbetsuppgifter}}</div>
                   </li>
                   <li id="arbetsloshet" ng-show="viewState.intygModel.arbetsloshet"><span message key="sjukpenning.label.arbetsformaga.arbetslos"></span></li>
