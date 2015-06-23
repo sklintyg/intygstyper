@@ -3,6 +3,7 @@ package se.inera.certificate.modules.ts_bas.validator.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -380,14 +381,13 @@ public class InternalValidatorInstance {
 
         if (narkotikaLakemedel.getTeckenMissbruk() == null) {
             addValidationError("narkotikaLakemedel.teckenMissbruk", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.teckenmissbruk.missing");
+        }
 
-        } else if (narkotikaLakemedel.getTeckenMissbruk()) {
+        if (BooleanUtils.isTrue(narkotikaLakemedel.getTeckenMissbruk()) || BooleanUtils.isTrue(narkotikaLakemedel.getForemalForVardinsats())) {
             if (narkotikaLakemedel.getProvtagningBehovs() == null) {
                 addValidationError("narkotikaLakemedel.provtagningBehovs", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikalakemedel.provtagning-behovs.missing");
             }
         }
-
-
 
         if (narkotikaLakemedel.getLakarordineratLakemedelsbruk() == null) {
             addValidationError("narkotikaLakemedel.lakarordineratLakemedelsbruk", ValidationMessageType.EMPTY,

@@ -5,7 +5,7 @@ module.exports = {
     tsbas: {
         cwd: 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert',
         src: ['**/*.html'],
-        dest: 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/js/templates.js',
+        dest: 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/templates.js',
         options:{
             module: 'ts-bas',
             url: function(url) {

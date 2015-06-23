@@ -7,7 +7,7 @@
   <parent>
     <groupId>se.inera.intyg.common</groupId>
     <artifactId>common-pom</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
   </parent>
 
   <groupId>se.inera.intyg.intygstyper</groupId>
@@ -21,7 +21,7 @@
 
     <!-- Common -->
     <common.version>0-SNAPSHOT</common.version>
-    <common.version.range>(,2.2.0]</common.version.range>
+    <common.version.range>(,2.3.0]</common.version.range>
 
     <!-- RIVTA Schemas -->
     <rivta-clinicalprocess.version>1.0.RC3.0</rivta-clinicalprocess.version>
@@ -315,6 +315,13 @@
                       to="\1/\2"/>
                   <fileset
                       dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/">
+                  </fileset>
+                </copy>
+                <copy
+                    todir="${project.build.directory}/webjardependencies/common"
+                    verbose="false">
+                  <fileset
+                      dir="${project.build.directory}/webjardependenciestemp/META-INF/resources/webjars/common">
                   </fileset>
                 </copy>
               </target>

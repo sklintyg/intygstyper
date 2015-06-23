@@ -1,0 +1,23 @@
+<!-- identity -->
+<a id="anchor.identitet" name="anchor.identitet"></a>
+<div wc-field field-label="ts-diabetes.label.identitet" field-has-errors="viewState.common.validationMessagesGrouped.identitet" id="identitetForm">
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.identitet" id="validationMessages_identitet">
+    <ul>
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.identitet"><span message
+                                                                                            key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+  <div class="form-group clearfix">
+    <label class="radio checkbox-columns col-md-6" ng-repeat="v in viewState.identitet"><input
+        id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
+        ng-model="viewState.intygModel.vardkontakt.idkontroll">
+      {{v.label}}</label>
+  </div>
+  <div class="alert alert-info">
+    <span message key="ts-diabetes.helptext.identitet-styrkt-genom.id-kort"></span><br>
+    <span message key="ts-diabetes.helptext.identitet-styrkt-genom.foretags-tjanstekort"></span><br>
+    <span message key="ts-diabetes.helptext.identitet-styrkt-genom.forsakran-enl18kap4"></span><br>
+    <span message key="ts-diabetes.helptext.identitet-styrkt-genom.pass"></span><br>
+  </div>
+</div>

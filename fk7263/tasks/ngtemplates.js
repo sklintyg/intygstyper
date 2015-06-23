@@ -5,7 +5,7 @@ module.exports = {
     fk7263: {
         cwd: 'src/main/resources/META-INF/resources/webjars/fk7263/webcert',
         src: ['**/*.html'],
-        dest: 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/js/templates.js',
+        dest: 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/templates.js',
         options:{
             module: 'fk7263',
             url: function(url) {

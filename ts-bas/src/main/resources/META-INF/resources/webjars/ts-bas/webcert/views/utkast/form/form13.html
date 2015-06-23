@@ -1,0 +1,36 @@
+<a id="anchor.utvecklingsstorning" name="anchor.utvecklingsstorning"></a>
+<div wc-field field-label="ts-bas.label.utvecklingsstorning" field-has-errors="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="utvecklingsstorningForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="validationMessages_utvecklingsstorning">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.utvecklingsstorning"><span message
+                                                                                                            key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input name="utvecklingsstorninga" type="radio" ng-value="true"
+                 ng-model="viewState.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
+      <td><input name="utvecklingsstorninga" type="radio" ng-value="false"
+                 ng-model="viewState.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
+      <td><span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+      </td>
+    </tr>
+    <tr>
+      <td><input name="utvecklingsstorningb" type="radio" ng-value="true"
+                 ng-model="viewState.intygModel.utvecklingsstorning.harSyndrom"></td>
+      <td><input name="utvecklingsstorningb" type="radio" ng-value="false"
+                 ng-model="viewState.intygModel.utvecklingsstorning.harSyndrom"></td>
+      <td><span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span></td>
+    </tr>
+  </table>
+</div>

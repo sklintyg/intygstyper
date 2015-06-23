@@ -2,7 +2,7 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/js/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/views/';
     var TEST_DIR = 'src/test/js/webcert/';
     var WEBJAR_DIR = '../target/webjardependencies/';
 
@@ -34,8 +34,9 @@ module.exports = function(config) {
                 TEST_DIR + 'module-test.js',
 
             { pattern: SRC_DIR + '**/*' },
-            { pattern: SRC_DIR + '**/*.spec.js' },
-            { pattern: TEST_DIR + '**/*.spec.js' },
+            { pattern: SRC_DIR + '**/**/*.spec.js' },
+            { pattern: TEST_DIR + '**/**/*.data.js' },
+            { pattern: TEST_DIR + '**/**/*.spec.js' },
             { pattern: TEST_DIR + '**/*Spec.js' }
         ],
 

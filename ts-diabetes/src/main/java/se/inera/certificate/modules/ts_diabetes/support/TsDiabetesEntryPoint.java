@@ -66,7 +66,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/web/webjars/ts-diabetes/minaintyg/js/module";
         case WEBCERT:
-            return "/web/webjars/ts-diabetes/webcert/js/module";
+            return "/web/webjars/ts-diabetes/webcert/module";
         default:
             return null;
         }
@@ -78,7 +78,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
         case MINA_INTYG:
             return "/web/webjars/ts-diabetes/minaintyg/js/module-deps.json";
         case WEBCERT:
-            return "/web/webjars/ts-diabetes/webcert/js/module-deps.json";
+            return "/web/webjars/ts-diabetes/webcert/module-deps.json";
         default:
             return null;
         }

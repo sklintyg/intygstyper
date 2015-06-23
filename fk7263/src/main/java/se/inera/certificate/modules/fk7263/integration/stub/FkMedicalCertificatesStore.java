@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class FkMedicalCertificatesStore {
 
     private ConcurrentHashMap<String, Map<String, String>> certificates = new ConcurrentHashMap<String, Map<String, String>>();

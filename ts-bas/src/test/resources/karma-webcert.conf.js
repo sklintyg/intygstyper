@@ -2,7 +2,7 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/js/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/views/';
     var TEST_DIR = 'src/test/js/webcert/';
     var WEBJAR_DIR = '../target/webjardependencies/';
 
@@ -35,6 +35,7 @@ module.exports = function(config) {
 
             { pattern: SRC_DIR + '**/*' },
             { pattern: SRC_DIR + '**/*.spec.js' },
+            { pattern: TEST_DIR + '**/*.data.js' },
             { pattern: TEST_DIR + '**/*.spec.js' },
             { pattern: TEST_DIR + '**/*Spec.js' }
         ],

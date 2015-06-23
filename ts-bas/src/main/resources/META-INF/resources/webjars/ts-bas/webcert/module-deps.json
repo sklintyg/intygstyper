@@ -1,0 +1,21 @@
+[
+    "/web/webjars/ts-bas/webcert/templates.js",
+    "/web/webjars/ts-bas/webcert/views/router.js",
+    "/web/webjars/ts-bas/webcert/views/messages.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/utkast.model.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/utkast.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form1.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form3.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form4.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form5.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form7.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form11.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form14.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form15.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form17.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/form19.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/form/intention.controller.js",
+    "/web/webjars/ts-bas/webcert/views/utkast/utkast-viewstate.service.js",
+    "/web/webjars/ts-bas/webcert/views/intyg/intyg.controller.js",
+    "/web/webjars/ts-bas/webcert/views/intyg/intyg-viewstate.service.js"
+]

@@ -1,0 +1,98 @@
+<!--
+
+    Copyright (C) 2013 Inera AB (http://www.inera.se)
+
+    This file is part of Inera Certificate Modules (http://code.google.com/p/inera-certificate-modules).
+
+    Inera Certificate Modules is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    Inera Certificate Modules is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<a id="top"></a>
+<div class="container-fluid" id="edit-ts-diabetes">
+  <div class="row">
+    <div class="col-md-12 webcert-col webcert-col-single">
+
+      <div ui-view="header"></div>
+
+      <!-- TS-DIABETES -->
+      <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}" wc-size-target>
+
+        <form id="certForm" name="certForm" novalidate autocomplete="off" wc-auto-save="save(true)">
+          <div ng-hide="viewState.common.error.activeErrorMessageKey">
+            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
+                 show-content="viewState.common.doneLoading">
+
+              <div wc-utkast-error-summary view-state="viewState"></div>
+
+              <div id="certificate" class="row certificate">
+                <div class="col-md-12 cert-body">
+
+                  <!-- common ts elements -->
+                  <!-- 1. patient -->
+                  <div ui-view="patient"/>
+
+                  <!-- 2. intention -->
+                  <div ui-view="intention"/>
+
+                  <!-- 3. identity -->
+                  <div ui-view="identity"/>
+
+                  <!-- 4. alert -->
+                  <div ui-view="alert"/>
+                  <!-- common ts elements end -->
+
+
+                  <!-- 1. Allmänt -->
+                  <div ui-view="form1"/>
+
+                  <!-- 2. Hypoglykemier (lågt blodsocker)  -->
+                  <div ui-view="form2"/>
+
+                  <!-- 3. Synintyg -->
+                  <div ui-view="form3"/>
+
+                  <!-- 4. Bedömning -->
+                  <div ui-view="form4"/>
+
+                  <!-- 5. Övriga upplysningar -->
+                  <div ui-view="form5"/>
+
+                  <!-- 6. Specialistkompetens -->
+                  <div ui-view="form6"/>
+
+                  <!-- 7. Vardenhet -->
+                  <div ui-view="form7"/>
+
+                  <!-- Messages -->
+                  <div ui-view="messages"/>
+
+                </div>
+                <!-- cert body -->
+
+              </div>
+              <!-- certificate -->
+
+              <div ui-view="footer"></div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <!-- span12 webcert-col-single -->
+  </div>
+  <!-- row -->
+</div> <!-- container -->

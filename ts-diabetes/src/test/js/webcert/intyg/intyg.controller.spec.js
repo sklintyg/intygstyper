@@ -1,11 +1,13 @@
 describe('ts-diabetes.IntygController', function() {
     'use strict';
 
-    var certificateService, user;
+    var IntygProxy, user, $httpBackend, $rootScope, $controller;
 
     beforeEach(angular.mock.module('common', 'ts-diabetes', function($provide) {
-        certificateService = {
-            getCertificate : function(id, type, onSuccess, onError) {
+        IntygProxy = {
+            isSentToTarget: function() {},
+            isRevoked: function() {},
+            getIntyg : function(id, type, onSuccess, onError) {
                 onSuccess({
                     contents: {
                         'id': '987654321',
@@ -132,21 +134,22 @@ describe('ts-diabetes.IntygController', function() {
                 });
             }
         };
-        //certificateService = jasmine.createSpyObj('common.CertificateService', [ 'getCertificate' ]);
-        $provide.value('common.CertificateService', certificateService);
+        $provide.value('common.IntygProxy', IntygProxy);
         user = jasmine.createSpyObj('common.User', [ 'getUserContext' ]);
         $provide.value('common.User', {});
-        $provide.value('webcert.ManageCertificate', {});
     }));
 
     var $scope, ctrl;
 
-    beforeEach(angular.mock.inject(function($controller, $rootScope) {
+    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$httpBackend', function(_$controller_, _$rootScope_, _$httpBackend_) {
+        $rootScope = _$rootScope_;
+        $controller = _$controller_;
+        $httpBackend = _$httpBackend_;
         $scope = $rootScope.$new();
         ctrl = $controller('ts-diabetes.IntygController', { $scope: $scope });
 
         $scope.$digest();
-    }));
+    }]));
 
     it('Should assemble intygavser and bedomning where selected=true and add comma as separator', function() {
         expect($scope.viewState.intygAvser).toBe('A, D, DE, TAXI');

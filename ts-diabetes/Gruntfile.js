@@ -24,10 +24,10 @@ module.exports = function(grunt) {
     });
     minaintyg = [SRC_DIR + 'webjars/ts-diabetes/minaintyg/js/module.js'].concat(minaintyg);
 
-    var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/ts-diabetes/webcert/js/module-deps.json').map(function(file) {
+    var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/ts-diabetes/webcert/module-deps.json').map(function(file) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
-    webcert = [SRC_DIR + 'webjars/ts-diabetes/webcert/js/module.js'].concat(webcert);
+    webcert = [SRC_DIR + 'webjars/ts-diabetes/webcert/module.js'].concat(webcert);
 
 
     grunt.initConfig({
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
             },
             webcert: {
                 src: webcert,
-                dest: DEST_DIR + 'webjars/ts-diabetes/webcert/js/module.min.js'
+                dest: DEST_DIR + 'webjars/ts-diabetes/webcert/module.min.js'
             }
         },
 
@@ -79,6 +79,12 @@ module.exports = function(grunt) {
             webcert: {
                 configFile: 'src/test/resources/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
+            },
+            webcert_continous: {
+                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                reporters: [ 'mocha' ],
+                autoWatch: true,
+                singleRun: false
             }
         },
 
@@ -91,8 +97,8 @@ module.exports = function(grunt) {
                 dest: DEST_DIR + 'webjars/ts-diabetes/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/ts-diabetes/webcert/js/module.min.js',
-                dest: DEST_DIR + 'webjars/ts-diabetes/webcert/js/module.min.js'
+                src: DEST_DIR + 'webjars/ts-diabetes/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/ts-diabetes/webcert/module.min.js'
             }
         },
 
@@ -105,8 +111,8 @@ module.exports = function(grunt) {
                 dest: DEST_DIR + 'webjars/ts-diabetes/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/ts-diabetes/webcert/js/module.min.js',
-                dest: DEST_DIR + 'webjars/ts-diabetes/webcert/js/module.min.js'
+                src: DEST_DIR + 'webjars/ts-diabetes/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/ts-diabetes/webcert/module.min.js'
             }
         },
 
@@ -120,4 +126,5 @@ module.exports = function(grunt) {
     grunt.registerTask('test-minaintyg', [ 'karma:minaintyg' ]);
     grunt.registerTask('test-webcert', [ 'karma:webcert' ]);
     grunt.registerTask('test', [ 'karma' ]);
+    grunt.registerTask('testwc', [ 'karma:webcert_continous' ]);
 };

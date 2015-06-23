@@ -1,0 +1,254 @@
+<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}" ng-controller="ts-diabetes.IntygController">
+  <div wc-spinner label="info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+       show-content="viewState.common.doneLoading">
+
+    <div ui-view="header"></div>
+
+    <div ng-show="!viewState.common.activeErrorMessageKey">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : viewState.common.intyg.isRevoked}">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="cert-body">
+
+              <!-- Patientens uppgifter -->
+              <div wc-field field-label="ts-diabetes.label.patient" filled="true">
+                <span class="cert-answer"><span id="patientpostadress">{{viewState.intygModel.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{viewState.intygModel.grundData.patient.postnummer}}</span> <span id="patientpostort">{{viewState.intygModel.grundData.patient.postort}}</span></span>
+              </div>
+
+              <!-- Intyget avser -->
+              <div wc-field field-label="ts-diabetes.label.intygavser" filled="true">
+                <span class="cert-answer" id="intygAvser">{{viewState.intygAvser}}</span>
+              </div>
+
+              <!-- Identiteten är styrkt genom -->
+              <div wc-field field-label="ts-diabetes.label.identitet" filled="true">
+                <span id="identitet"><span class="cert-answer" message key="ts-diabetes.label.identitet.{{viewState.intygModel.vardkontakt.idkontroll}}"></span></span>
+              </div>
+
+              <!-- 1. Allmänt diabetes -->
+              <div wc-field field-label="ts-diabetes.label.diabetes" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.diabetes.vilket-ar"></span><br>
+                  <span id="observationsperiod"><span class="cert-answer">{{viewState.intygModel.diabetes.observationsperiod}}</span></span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.diabetes.diabetestyp"></span><br>
+                  <span id="diabetestyp"><span class="cert-answer" message
+                        key="ts-diabetes.label.diabetes.diabetestyp.{{viewState.intygModel.diabetes.diabetestyp}}"></span></span>
+                </p>
+
+                <h3 message key="ts-diabetes.label.diabetes.behandling"></h3>
+                <p>
+                  <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
+                  <span id="endastKost"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.endastKost | BoolToTextFilter}}"></span></span><br>
+
+                  <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
+                  <span id="tabletter"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.tabletter | BoolToTextFilter}}"></span></span><br>
+
+                  <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
+                  <span id="insulin"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.insulin | BoolToTextFilter}}"></span></span><br>
+                  <br>
+                  <span ng-show="viewState.intygModel.diabetes.insulinBehandlingsperiod.length > 0">
+                    <span message key="ts-diabetes.label.diabetes.behandling.insulin-period"></span><br>
+                    <span class="cert-answer" id="insulinBehandlingsperiod">{{viewState.intygModel.diabetes.insulinBehandlingsperiod}}</span>
+                  </span>
+                </p>
+                <p>
+                  <span message key="ts-diabetes.label.diabetes.behandling.annan"></span><br>
+                  <span id="annanBehandlingBeskrivning">
+                    <span ng-show="viewState.intygModel.diabetes.annanBehandlingBeskrivning && viewState.intygModel.diabetes.annanBehandlingBeskrivning.length > 0">
+                      <span class="cert-answer">{{viewState.intygModel.diabetes.annanBehandlingBeskrivning}}</span>
+                    </span>
+                    <span class="cert-answer" ng-show="!viewState.intygModel.diabetes.annanBehandlingBeskrivning">
+                      <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                    </span>
+                  </span>
+                </p>
+              </div>
+
+              <!-- 2. Hypoglykemier -->
+              <div wc-field field-label="ts-diabetes.label.hypoglykemier" filled="true" class="print-pagebreak-after">
+
+                <!-- a -->
+                <p>
+                  <span message key="ts-diabetes.label.hypoglykemier.har-patient-kannedom"></span>
+                  <span id="kunskapOmAtgarder"><span class="cert-answer" message
+                        key="{{viewState.intygModel.hypoglykemier.kunskapOmAtgarder | BoolToTextFilter}}"></span></span>
+                </p>
+
+                <!-- b -->
+                <p>
+                  <span message key="ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion"></span>
+                  <span id="teckenNedsattHjarnfunktion"><span class="cert-answer" message
+                        key="{{viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion | BoolToTextFilter}}"></span></span>
+                </p>
+
+                <!-- c -->
+                <p>
+                  <span message key="ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken"></span>
+                  <span id="saknarFormagaKannaVarningstecken"><span class="cert-answer" message
+                        key="{{viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span></span>
+                </p>
+
+                <!-- d -->
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst"></span>
+                  <span id="allvarligForekomst"><span class="cert-answer" message
+                        key="{{viewState.intygModel.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span></span>
+                </div>
+                <div class="form-group indent" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning">
+                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst.beskrivning"></span>
+                  <span id="allvarligForekomstBeskrivning"><span class="cert-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning}}</span></span><br>
+                </div>
+
+                <!-- e -->
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken"></span>
+                  <span id="allvarligForekomstTrafiken"><span class="cert-answer" message
+                        key="{{viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span></span>
+                </div>
+                <div class="form-group indent"
+                     ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
+                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning"></span>
+                  <span id="allvarligForekomstTrafikBeskrivning"><span class="cert-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span></span>
+                </div>
+
+                <!-- f -->
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.hypoglykemier.egenkontroll-blodsocker"></span>
+                  <span id="egenkontrollBlodsocker"><span class="cert-answer" message
+                        key="{{viewState.intygModel.hypoglykemier.egenkontrollBlodsocker | BoolToTextFilter}}"></span></span>
+                </div>
+
+                <!-- g -->
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.hypoglykemier.allvarlig-forekomst-vaken-tid"></span>
+                  <span id="allvarligForekomstVakenTid"><span class="cert-answer" message
+                        key="{{viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span></span><br>
+                  <p ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid.length > 0">
+                    <span message key="common.when"></span>
+                    <span id="allvarligForekomstVakenTidObservationstid"><span class="cert-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span></span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- 3 -->
+              <div wc-field field-label="ts-diabetes.label.syn" filled="true">
+                <p>
+                  <span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span>
+                  <span id="separatOgonlakarintyg"><span class="cert-answer" message
+                        key="{{viewState.intygModel.syn.separatOgonlakarintyg | BoolToTextFilter}}"></span></span>
+                </p>
+
+                <div ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
+                  <p>
+                    <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
+                    <span id="synfaltsprovningUtanAnmarkning"><span class="cert-answer" message
+                          key="{{viewState.intygModel.syn.synfaltsprovningUtanAnmarkning | BoolToTextFilter}}"></span></span>
+                  </p>
+                  <p>
+                    <span message key="ts-diabetes.label.syn.synskarpa"></span>
+                  </p>
+                  <div>
+                    <table class="table table-condensed ts-table">
+                      <tr>
+                        <th></th>
+                        <th>Utan korrektion</th>
+                        <th>Med korrektion</th>
+                      </tr>
+                      <tr>
+                        <td>Höger öga</td>
+                        <td><span class="text" id="hogerutanKorrektion">{{viewState.intygModel.syn.hoger.utanKorrektion | number : 1}}</span></td>
+                        <td><span class="text" id="hogermedKorrektion">{{viewState.intygModel.syn.hoger.medKorrektion | number : 1}}</span></td>
+                      </tr>
+                      <tr>
+                        <td>Vänster öga</td>
+                        <td><span class="text" id="vansterutanKorrektion">{{viewState.intygModel.syn.vanster.utanKorrektion | number : 1}}</span></td>
+                        <td><span class="text" id="vanstermedKorrektion">{{viewState.intygModel.syn.vanster.medKorrektion | number : 1}}</span></td>
+                      </tr>
+                      <tr>
+                        <td>Binokulärt</td>
+                        <td><span class="text" id="binokulartutanKorrektion">{{viewState.intygModel.syn.binokulart.utanKorrektion | number : 1}}</span></td>
+                        <td><span class="text" id="binokulartmedKorrektion">{{viewState.intygModel.syn.binokulart.medKorrektion | number : 1}}</span></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <p>
+                    <span message key="ts-diabetes.label.syn.diplopi"></span>
+                    <span id="diplopi"><span class="cert-answer" message key="{{viewState.intygModel.syn.diplopi | BoolToTextFilter}}"></span></span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- 4 bedomning -->
+              <div wc-field field-label="ts-diabetes.label.bedomning" filled="true">
+
+                <div ng-show="!viewState.intygModel.bedomning.kanInteTaStallning">
+                  <span message key="ts-diabetes.label.bedomning-info-alt-1"></span>
+                  <p>
+                    <span id="bedomning"><span class="cert-answer">{{viewState.bedomning}}</span></span>
+                  </p>
+                </div>
+                <div ng-show="viewState.intygModel.bedomning.kanInteTaStallning">
+                  <span id="bedomningKanInteTaStallning"><span class="cert-answer" message
+                        key="ts-diabetes.label.bedomning.kan-inte-ta-stallning"></span></span><br><br>
+                </div>
+
+                <div class="form-group">
+                  <span message key="ts-diabetes.label.bedomning.lamplighet-inneha"></span><br>
+                  <span id="lamplighetInnehaBehorighet"><span class="cert-answer" message
+                        key="{{viewState.intygModel.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span></span>
+                </div>
+
+              </div>
+
+              <div wc-field field-label="ts-diabetes.label.ovrigkommentar" filled="true">
+                <div id="kommentar">
+                  <span ng-show="viewState.intygModel.kommentar.length > 0">
+                    <span class="cert-answer">{{viewState.intygModel.kommentar}}</span>
+                  </span>
+                  <span ng-show="!viewState.intygModel.kommentar">
+                    <span class="cert-answer" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                  </span>
+                </div>
+              </div>
+
+              <div wc-field field-label="ts-diabetes.label.bedomning-info-undersokas-med-specialkompetens"
+                   filled="true">
+                <div id="lakareSpecialKompetens">
+                  <span ng-show="viewState.intygModel.bedomning.lakareSpecialKompetens.length > 0">
+                    <span class="cert-answer">{{viewState.intygModel.bedomning.lakareSpecialKompetens}}</span><br>
+                  </span>
+                  <span class="cert-answer" ng-show="!viewState.intygModel.bedomning.lakareSpecialKompetens" message
+                          key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                </div>
+              </div>
+
+              <div class="infobox">
+                <h3>
+                  <span message key="common.label.ovanstaende-har-bekraftats"></span>
+                </h3>
+                <h4>
+                  <span message key="common.date"></span>
+                </h4>
+                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date:'longDate'}}</p>
+                <h4>
+                  <span message key="ts-diabetes.label.kontakt-info"></span>
+                </h4>
+                <span id="vardperson_namn">{{viewState.intygModel.grundData.skapadAv.fullstandigtNamn}}</span><br>
+                <span id="vardperson_enhetsnamn">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                <span id="vardenhet_postadress">{{viewState.intygModel.grundData.skapadAv.vardenhet.postadress}}</span><br>
+                <span id="vardenhet_postnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardenhet_postort">{{viewState.intygModel.grundData.skapadAv.vardenhet.postort}}</span><br>
+                <span id="vardenhet_telefonnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
+              </div>
+
+            </div>
+            <!-- cert body -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- entire cert -->
+  </div>
+  <!--  spinner end -->
+</div>

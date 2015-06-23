@@ -1,8 +1,8 @@
-/* global module */
+ /* global module */
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/js/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/views/';
     var TEST_DIR = 'src/test/js/webcert/';
     var WEBJAR_DIR = '../target/webjardependencies/';
 
@@ -16,7 +16,7 @@ module.exports = function(config) {
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/fk7263/webcert/js/**/*.html': ['ng-html2js']
+            'src/main/resources/META-INF/resources/webjars/fk7263/webcert/views/**/*.html': ['ng-html2js']
         },
 
         ngHtml2JsPreprocessor: {

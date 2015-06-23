@@ -9,7 +9,7 @@ angular.module('fk7263').config(function($stateProvider) {
             url :'/fk7263/view/:certificateId',
             templateUrl: '/web/webjars/fk7263/minaintyg/views/view-cert.html',
             controller: 'fk7263.ViewCertCtrl',
-            data : { title: 'Läkarintyg FK7263' }
+            data : { title: 'Läkarintyg FK7263', keepInboxTabActive: true}
         }).
         state('fk7263-recipients', {
             url : '/fk7263/recipients',

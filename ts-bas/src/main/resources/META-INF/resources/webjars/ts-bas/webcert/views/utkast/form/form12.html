@@ -1,0 +1,28 @@
+<a id="anchor.psykiskt" name="anchor.psykiskt"></a>
+<div wc-field field-label="ts-bas.label.psykiskt" field-has-errors="viewState.common.validationMessagesGrouped.psykiskt" id="psykisktForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.psykiskt" id="validationMessages_psykiskt">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.psykiskt"><span message
+                                                                                                 key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input name="psykiskta" type="radio" ng-value="true"
+                 ng-model="viewState.intygModel.psykiskt.psykiskSjukdom"></td>
+      <td><input name="psykiskta" type="radio" ng-value="false"
+                 ng-model="viewState.intygModel.psykiskt.psykiskSjukdom"></td>
+      <td><span message key="ts-bas.label.psykiskt.psykisksjukdom"></span></td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,30 @@
+<a id="anchor.neurologi" name="anchor.neurologi"></a>
+<div wc-field field-label="ts-bas.label.neurologi" field-has-errors="viewState.common.validationMessagesGrouped.neurologi" id="neurologiForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.neurologi" id="validationMessages_neurologi">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.neurologi"><span message
+                                                                                                  key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input id="neurologiay" name="neurologia" type="radio" ng-value="true"
+                 ng-model="viewState.intygModel.neurologi.neurologiskSjukdom"></td>
+      <td><input id="neurologian" name="neurologia" type="radio" ng-value="false"
+                 ng-model="viewState.intygModel.neurologi.neurologiskSjukdom"></td>
+      <td>
+        <p><span message key="ts-bas.label.neurologi.neurologisksjukdom"></span></p>
+      </td>
+    </tr>
+  </table>
+</div>

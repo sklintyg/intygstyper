@@ -1,0 +1,60 @@
+<a id="anchor.diabetes" name="anchor.diabetes"></a>
+<div wc-field field-label="ts-bas.label.diabetes" field-has-errors="viewState.common.validationMessagesGrouped.diabetes" id="diabetesForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.diabetes"><span message
+                                                                                                 key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input id="diabetesay" name="diabetesa" type="radio" ng-value="true"
+                 ng-model="viewState.intygModel.diabetes.harDiabetes"></td>
+      <td><input id="diabetesan" name="diabetesa" type="radio" ng-value="false"
+                 ng-model="viewState.intygModel.diabetes.harDiabetes"></td>
+      <td>
+        <p><span message key="ts-bas.label.diabetes.har-diabetes"></span></p>
+
+        <div ng-show="viewState.intygModel.diabetes.harDiabetes">
+          <p><span message key="ts-bas.label.diabetes.diabetestyp"></span>
+            <label class="radio"><input id="diabetestyp1" name="diabetestyp" type="radio" value="DIABETES_TYP_1"
+                                        ng-model="viewState.intygModel.diabetes.diabetesTyp"><span message
+                                                                                   key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_1"></span></label>
+            <label class="radio"><input id="diabetesty2" name="diabetestyp" type="radio" value="DIABETES_TYP_2"
+                                        ng-model="viewState.intygModel.diabetes.diabetesTyp"><span message
+                                                                                   key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_2"></span></label>
+          </p>
+
+          <div ng-show="viewState.intygModel.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
+            <span message key="ts-bas.label.diabetes.behandling"></span>
+            <label class="checkbox"><input id="diabetestreat1" name="diabetestreat1" type="checkbox"
+                                           ng-model="viewState.intygModel.diabetes.kost"><span message
+                                                                               key="ts-bas.label.diabetes.behandling.kost"></span></label>
+            <label class="checkbox"><input id="diabetestreat2" name="diabetestreat2" type="checkbox"
+                                           ng-model="viewState.intygModel.diabetes.tabletter"><span message
+                                                                                    key="ts-bas.label.diabetes.behandling.tabletter"></span></label>
+            <label class="checkbox"><input id="diabetestreat3" name="diabetestreat3" type="checkbox"
+                                           ng-model="viewState.intygModel.diabetes.insulin"><span message
+                                                                                  key="ts-bas.label.diabetes.behandling.insulin"></span></label>
+
+            <div class="alert alert-info"
+                 ng-show="viewState.intygModel.diabetes.tabletter || viewState.intygModel.diabetes.insulin">
+              <span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
+            </div>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

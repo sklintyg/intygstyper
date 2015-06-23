@@ -1,0 +1,52 @@
+<a id="anchor.bedomning" name="anchor.bedomning"></a>
+<div wc-field field-label="ts-diabetes.label.bedomning" field-help-text="ts-diabetes.helptext.intyget-avser" field-has-errors="viewState.common.validationMessagesGrouped.bedomning" id="bedomningForm">
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning" id="validationMessages_bedomning">
+    <ul>
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.bedomning"><span message
+                                                                                            key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+
+  <table class="table table-form">
+    <tr>
+      <td></td>
+      <td></td>
+      <td>
+        <p>Patienten uppfyller kraven enligt 6 kap. i Transportstyrelsens föreskrifter och allmänna
+          råd om
+          medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS
+          2013:2).
+          Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom anges i 17 kap.
+          Se <a href="http://www.transportstyrelsen.se" target="_blank">www.transportstyrelsen.se</a>.</p>
+
+        <div class="form-group">
+          <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false"
+                                      ng-model="viewState.intygModel.bedomning.kanInteTaStallning"> Någon av följande
+            behörigheter</label>
+          <div class="form-group clearfix indent" ng-show="!viewState.intygModel.bedomning.kanInteTaStallning">
+            <label class="checkbox checkbox-columns col-xs-2"
+                   ng-repeat="typ in viewState.intygModel.bedomning.korkortstyp track by $index"><input
+                id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
+                ng-model="typ.selected"> <span message
+                                               key="ts-diabetes.label.korkort.{{typ.type}}"></span></label>
+          </div>
+          <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
+                                      ng-model="viewState.intygModel.bedomning.kanInteTaStallning"> Kan inte ta ställning</label>
+        </div>
+      </td>
+    </tr>
+    <tr ng-show="viewState.korkortd">
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr ng-show="viewState.korkortd">
+      <td><input id="bedomningy" name="bedomning" type="radio" ng-value="true"
+                 ng-model="viewState.intygModel.bedomning.lamplighetInnehaBehorighet"></td>
+      <td><input id="bedomningn" name="bedomning" type="radio" ng-value="false"
+                 ng-model="viewState.intygModel.bedomning.lamplighetInnehaBehorighet"></td>
+      <td><span message key="ts-diabetes.label.bedomning.lamplighet-inneha"></span></td>
+    </tr>
+  </table>
+</div>

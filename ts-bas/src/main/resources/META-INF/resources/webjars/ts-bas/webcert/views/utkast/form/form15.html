@@ -1,0 +1,36 @@
+<a id="anchor.medicinering" name="anchor.medicinering"></a>
+<div wc-field field-label="ts-bas.label.medicinering" field-has-errors="viewState.common.validationMessagesGrouped.medicinering" id="medicineringForm">
+  <table class="table table-form">
+    <tr ng-if="viewState.common.validationMessagesGrouped.medicinering" id="validationMessages_medicinering">
+      <td colspan="3">
+        <div class="alert alert-danger">
+          <ul>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.medicinering"><span message
+                                                                                                     key="{{message.message}}"></span>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th><span message key="common.yes"></span></th>
+      <th><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr>
+      <td><input name="medicineringa" type="radio" ng-value="true"
+                 ng-model="viewState.intygModel.medicinering.stadigvarandeMedicinering"></td>
+      <td><input name="medicineringa" type="radio" ng-value="false"
+                 ng-model="viewState.intygModel.medicinering.stadigvarandeMedicinering"></td>
+      <td>
+        <p><span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span></p>
+
+        <div ng-show="viewState.intygModel.medicinering.stadigvarandeMedicinering">
+          <p><span message key="ts-bas.label.medicinering.beskrivning"></span></p>
+                            <textarea class="form-control" data-ng-model="viewState.intygModel.medicinering.beskrivning" wc-maxlength ng-trim="false"
+                                      id="beskrivningMedicinering" maxlength="{{viewState.inputLimits.medicinering}}" rows="4"></textarea>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

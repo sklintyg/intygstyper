@@ -3,22 +3,18 @@ package se.inera.certificate.modules.fk7263.rest;
 import static se.inera.certificate.common.enumerations.Recipients.FK;
 import static se.inera.certificate.common.util.StringUtil.isNullOrEmpty;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.List;
-
-import javax.xml.bind.JAXB;
-import javax.xml.ws.soap.SOAPFaultException;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.annotations.VisibleForTesting;
+import iso.v21090.dt.v1.CD;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
-
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.modules.fk7263.model.converter.ArbetsformagaToGiltighet;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
@@ -60,9 +56,11 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertifica
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.annotations.VisibleForTesting;
-import iso.v21090.dt.v1.CD;
+import javax.xml.bind.JAXB;
+import javax.xml.ws.soap.SOAPFaultException;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.List;
 
 
 /**
@@ -393,7 +391,7 @@ public class Fk7263ModuleApi implements ModuleApi {
                 String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
                         ? response.getResult().getInfoText()
                         : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-                LOG.error("Error of occured when sending certificate '{}': {}",
+                LOG.error("Error occured when sending certificate '{}': {}",
                         request.getLakarutlatande() != null ? request.getLakarutlatande().getLakarutlatandeId() : null,
                         message);
                 throw new ExternalServiceCallException(message);
@@ -411,8 +409,13 @@ public class Fk7263ModuleApi implements ModuleApi {
             throws ModuleException {
 
         try {
-            return objectMapper.readValue(internalModel.getInternalModel(),
+            se.inera.certificate.modules.fk7263.model.internal.Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
                     se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
+
+            // Explicitly populate the giltighet interval since it is information derived from
+            // the arbetsformaga but needs to be serialized into the Utkast model.
+            utlatande.setGiltighet(ArbetsformagaToGiltighet.getGiltighetFromUtlatande(utlatande));
+            return utlatande;
 
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to deserialize internal model", e);

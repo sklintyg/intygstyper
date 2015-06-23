@@ -1,0 +1,47 @@
+<a id="anchor.bedomning" name="anchor.bedomning"></a>
+<div wc-field field-label="ts-bas.label.bedomning" class="print-pagebreak-after"
+     field-help-text="ts-bas.helptext.intyg-avser"  field-has-errors="viewState.common.validationMessagesGrouped.bedomning" id="bedomningForm">
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.bedomning" id="validationMessages_bedomning">
+    <ul>
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.bedomning"><span message
+                                                                                            key="{{message.message}}"></span>
+      </li>
+    </ul>
+  </div>
+
+  <p><span message key="ts-bas.label.bedomning-info-alt-1"></span></p>
+
+  <div class="form-group">
+    <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false"
+                                ng-model="viewState.intygModel.bedomning.kanInteTaStallning">
+      <span message key="ts-bas.label.nagon-av-foljande-behorigheter"></span></label>
+
+    <div class="form-group clearfix indent" ng-show="!viewState.intygModel.bedomning.kanInteTaStallning">
+      <label class="checkbox checkbox-columns col-xs-2"
+             ng-repeat="typ in viewState.intygModel.bedomning.korkortstyp track by $index"><input
+          id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
+          ng-model="typ.selected"> <span message
+                                         key="ts-bas.label.korkort.{{typ.type}}"></span></label>
+    </div>
+    <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
+                                ng-model="viewState.intygModel.bedomning.kanInteTaStallning">
+      <span message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span></label>
+  </div>
+
+  <p ng-show="viewState.kravYtterligareUnderlag">
+    <span message key="ts-bas.helptext.bedomning.info"></span>
+  </p>
+
+  <p ng-show="viewState.intygModel.syn.korrektionsglasensStyrka == true">
+    <span message key="ts-bas.helptext.synfunktioner.8-dioptrier-valt"></span>
+  </p>
+
+  <p ng-show="viewState.intygModel.diabetes.tabletter || viewState.intygModel.diabetes.insulin">
+    <span message key="ts-bas.helptext.diabetes.tabletter-eller-insulin"></span>
+  </p>
+
+  <p><span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span></p>
+                    <textarea name="specialist" class="form-control" rows='3'
+                              id="specialist" ng-model="viewState.intygModel.bedomning.lakareSpecialKompetens" wc-maxlength ng-trim="false"
+                              maxlength="{{viewState.inputLimits.lakareSpecialKompetens}}"></textarea>
+</div>
