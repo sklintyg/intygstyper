@@ -49,28 +49,5 @@
           dom-id="journaluppgifterDate"></span>
   </div>
 
-  <!-- Annat -->
-  <div class="form-group form-inline">
-    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                         id="basedOnOther"
-                                                                         name="informationBasedOn.other"
-                                                                         ng-model="basedOnState.check.annanReferens"
-                                                                         ng-change="toggleBaseradPaDate('annanReferens')">
-      Annat<span wc-enable-tooltip field-help-text="sjukpenning.helptext.intyg-baserat-pa.annat"></span>
-    </label>
-    <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate"></span>
-  </div>
-  <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
-    <span>Ange vad:</span><br>
-    <textarea id="informationBasedOnOtherText" name="informationBasedOn.otherText" rows='2'
-              class='form-control otherInformation' ng-model="model.annanReferensBeskrivning"
-              ng-change="viewState.limitOtherField('annanReferensBeskrivning')"></textarea>
-    <div class="counter">
-      Tecken kvar: {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}
-    </div>
-    <div class="info-transfer">
-      <span message key="sjukpenning.label.transfertoovrigt"></span>
-    </div>
-  </div>
 </div>
 </div>

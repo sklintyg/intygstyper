@@ -50,14 +50,12 @@ angular.module('sjukpenning').service('sjukpenning.EditCertCtrl.ViewStateService
 
                 var totalOvrigtLength = 0;
                 var hasNedsatt = this.intygModel.kommentar ||
-                    this.intygModel.annanReferensBeskrivning ||
                     this.intygModel.nedsattMed25Beskrivning ||
                     this.intygModel.nedsattMed50Beskrivning ||
                     this.intygModel.nedsattMed75Beskrivning ||
                     this.intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
                 if(hasNedsatt) {
                     totalOvrigtLength += helper.getLengthOrZero(this.intygModel.kommentar) +
-                    helper.getLengthOrZero(this.intygModel.annanReferensBeskrivning) +
                     helper.getLengthOrZero(this.intygModel.nedsattMed25Beskrivning) +
                     helper.getLengthOrZero(this.intygModel.nedsattMed50Beskrivning) +
                     helper.getLengthOrZero(this.intygModel.nedsattMed75Beskrivning) +

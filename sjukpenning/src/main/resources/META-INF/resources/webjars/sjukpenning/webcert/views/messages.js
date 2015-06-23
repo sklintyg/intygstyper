@@ -39,6 +39,7 @@ var sjukpenningMessages = {
         'sjukpenning.label.aktuellt-sjukdomsforlopp': 'Aktuellt sjukdomsförlopp',
         'sjukpenning.label.funktionsnedsattning': 'Funktionsnedsättning - observationer, undersökningsfynd och utredningsresultat',
         'sjukpenning.label.intygbaseratpa': 'Intyget baseras på',
+        'sjukpenning.label.sysselsattning': 'I relation till vilken sysselsättning gör du den medicinska bedömningen?',
         'sjukpenning.label.kommentar': 'Kommentar:',
         'sjukpenning.label.sysselsattning': 'Arbete',
         'sjukpenning.label.aktivitetsbegransning': 'Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning',

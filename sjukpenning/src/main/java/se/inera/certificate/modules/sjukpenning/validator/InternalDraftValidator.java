@@ -74,20 +74,12 @@ public class InternalDraftValidator {
         if (!utlatande.isAvstangningSmittskydd()) {
 
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
-                    && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
+                    && utlatande.getJournaluppgifter() == null) {
                 addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
                         "sjukpenning.validation.intyg-baserat-pa.missing");
             }
         }
 
-        if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.referenser", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.intyg-baserat-pa.annan.incorrect_format");
-        }
-        if (utlatande.getAnnanReferens() != null && StringUtils.isBlank(utlatande.getAnnanReferensBeskrivning())) {
-            addValidationError(validationMessages, "intygbaseratpa.annat", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.intyg-baserat-pa.annat.beskrivning.missing");
-        }
         if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
                     "sjukpenning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");

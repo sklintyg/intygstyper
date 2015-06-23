@@ -35,9 +35,6 @@ public class SjukpenningUtlatande extends Utlatande {
     private InternalDate undersokningAvPatienten;
     private InternalDate telefonkontaktMedPatienten;
     private InternalDate journaluppgifter;
-    private InternalDate annanReferens;
-
-    private String annanReferensBeskrivning;
 
     private String aktivitetsbegransning;
 
@@ -247,14 +244,6 @@ public class SjukpenningUtlatande extends Utlatande {
         this.journaluppgifter = journaluppgifter;
     }
 
-    public InternalDate getAnnanReferens() {
-        return annanReferens;
-    }
-
-    public void setAnnanReferens(InternalDate annanReferens) {
-        this.annanReferens = annanReferens;
-    }
-
     public String getAktivitetsbegransning() {
         return aktivitetsbegransning;
     }
@@ -450,14 +439,6 @@ public class SjukpenningUtlatande extends Utlatande {
     public void setArbetsformagaPrognosGarInteAttBedomaBeskrivning(
             String arbetsformagaPrognosGarInteAttBedomaBeskrivning) {
         this.arbetsformagaPrognosGarInteAttBedomaBeskrivning = arbetsformagaPrognosGarInteAttBedomaBeskrivning;
-    }
-
-    public String getAnnanReferensBeskrivning() {
-        return annanReferensBeskrivning;
-    }
-
-    public void setAnnanReferensBeskrivning(String annanReferensBeskrivning) {
-        this.annanReferensBeskrivning = annanReferensBeskrivning;
     }
 
     public PrognosBedomning getPrognosBedomning() {

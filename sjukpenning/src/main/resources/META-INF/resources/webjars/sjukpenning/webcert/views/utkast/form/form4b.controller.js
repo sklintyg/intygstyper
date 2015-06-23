@@ -14,7 +14,6 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
                     undersokningAvPatienten: false,
                     telefonkontaktMedPatienten: false,
                     journaluppgifter: false,
-                    annanReferens: false
                 }
             };
 
@@ -22,7 +21,6 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
                 undersokningAvPatienten: null,
                 telefonkontaktMedPatienten: null,
                 journaluppgifter: null,
-                annanReferens: null
             };
 
             // once we've doneLoading we can set the radion buttons to the model state.
@@ -59,21 +57,18 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
                 $scope.basedOnState.check.undersokningAvPatienten = false;
                 $scope.basedOnState.check.telefonkontaktMedPatienten = false;
                 $scope.basedOnState.check.journaluppgifter = false;
-                $scope.basedOnState.check.annanReferens = false;
             }
 
             function setBaserasPa() {
                 $scope.basedOnState.check.undersokningAvPatienten = model.undersokningAvPatienten !== undefined;
                 $scope.basedOnState.check.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten !== undefined;
                 $scope.basedOnState.check.journaluppgifter = model.journaluppgifter !== undefined;
-                $scope.basedOnState.check.annanReferens = model.annanReferens !== undefined;
             }
 
             function transferModelToForm() {
                 $scope.dates.undersokningAvPatienten = $scope.model.undersokningAvPatienten;
                 $scope.dates.telefonkontaktMedPatienten = $scope.model.telefonkontaktMedPatienten;
                 $scope.dates.journaluppgifter = $scope.model.journaluppgifter;
-                $scope.dates.annanReferens = $scope.model.annanReferens;
             }
 
 
@@ -106,8 +101,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
 
             function registerDateParsersFor4b(_$scope) {
                 // Register parse function for 4b date pickers
-                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter',
-                    'annanReferens'];
+                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter'];
                 addParsers(_$scope.form4b, baserasPaTypes, _$scope.onChangeBaserasPaDate);
             }
 

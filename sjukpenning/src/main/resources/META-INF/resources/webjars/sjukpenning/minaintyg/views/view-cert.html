@@ -222,7 +222,7 @@
                 <div id="funktionsnedsattning" class="multiline">{{cert.funktionsnedsattning}}</div>
               </div>
 
-              <div mi-field field-label="sjukpenning.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
+              <div mi-field field-label="sjukpenning.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null">
                 <ul class="padded-list">
                   <li ng-show="cert.undersokningAvPatienten!=null">
                     <div id="undersokningAvPatienten">
@@ -237,11 +237,6 @@
                   <li ng-show="cert.journaluppgifter!=null">
                     <div id="journaluppgifter">
                       <span message key="sjukpenning.referens.journal"></span><span> {{cert.journaluppgifter | date:'longDate' }}</span>
-                    </div>
-                  </li>
-                  <li ng-show="cert.annanReferens!=null">
-                    <div id="annanReferns">
-                      <span message key="sjukpenning.referens.annat"></span><span> {{cert.annanReferens | date:'longDate' }}</span>
                     </div>
                   </li>
                 </ul>

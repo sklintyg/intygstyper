@@ -54,7 +54,7 @@
               </div>
 
               <div wc-field field-number="4b" field-label="sjukpenning.label.intygbaseratpa" id="field4b"
-                   filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.telefonkontaktMedPatienten!=null || viewState.intygModel.journaluppgifter!=null || viewState.intygModel.annanReferens!=null}}">
+                   filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.telefonkontaktMedPatienten!=null || viewState.intygModel.journaluppgifter!=null}}">
                 <ul class="padded-list" id="baseratPaList">
                   <li ng-show="viewState.intygModel.undersokningAvPatienten!=null"><span message
                                                                          key="sjukpenning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten
@@ -66,12 +66,6 @@
                   </li>
                   <li ng-show="viewState.intygModel.journaluppgifter!=null"><span message key="sjukpenning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter
                     | date:'longDate' }}</span>
-                  </li>
-
-                  <li ng-show="viewState.intygModel.annanReferens!=null">
-                    <!-- Annat -->
-                    <span message key="sjukpenning.referens.annat"></span> <span id="annanReferens">{{viewState.intygModel.annanReferens | date:'longDate'}}</span>:
-                    <div id="annanReferensBeskrivning" class="multiline">{{viewState.intygModel.annanReferensBeskrivning}}</div>
                   </li>
                 </ul>
               </div>

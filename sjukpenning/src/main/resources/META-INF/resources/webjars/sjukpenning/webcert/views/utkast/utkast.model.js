@@ -37,9 +37,7 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
                         form4:  ['funktionsnedsattning'],
 
-                        form4b:['annanReferens',
-                                'annanReferensBeskrivning',
-                                'journaluppgifter',
+                        form4b:['journaluppgifter',
                                 'telefonkontaktMedPatienten',
                                 'undersokningAvPatienten'],
 
