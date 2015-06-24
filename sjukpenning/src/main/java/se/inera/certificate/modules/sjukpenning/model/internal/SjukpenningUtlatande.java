@@ -42,6 +42,14 @@ public class SjukpenningUtlatande extends Utlatande {
     private String pagaendeBehandling;
     private String planeradBehandling;
 
+    private InternalLocalDateInterval nedsattMed25;
+    private InternalLocalDateInterval nedsattMed50;
+    private InternalLocalDateInterval nedsattMed75;
+    private InternalLocalDateInterval nedsattMed100;
+
+    private boolean ressattTillArbeteAktuellt;
+    private boolean rekommendationOverSocialstyrelsensBeslutsstod;
+
     // ==================================================================================================
 
     private String sjukdomsforlopp;
@@ -54,11 +62,6 @@ public class SjukpenningUtlatande extends Utlatande {
     private Rehabilitering rehabilitering;
 
     private String tjanstgoringstid;
-    private InternalLocalDateInterval nedsattMed25;
-    private InternalLocalDateInterval nedsattMed50;
-    private InternalLocalDateInterval nedsattMed75;
-    private InternalLocalDateInterval nedsattMed100;
-
     private String nedsattMed25Beskrivning;
     private String nedsattMed50Beskrivning;
     private String nedsattMed75Beskrivning;
@@ -69,7 +72,6 @@ public class SjukpenningUtlatande extends Utlatande {
 
     private String arbetsformagaPrognosGarInteAttBedomaBeskrivning;
 
-    private boolean ressattTillArbeteAktuellt;
     private boolean ressattTillArbeteEjAktuellt;
 
     private boolean kontaktMedFk;
@@ -457,5 +459,13 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setArbetsmarknadsProgram(boolean arbetsmarknadsProgram) {
         this.arbetsmarknadsProgram = arbetsmarknadsProgram;
+    }
+
+    public boolean isRekommendationOverSocialstyrelsensBeslutsstod() {
+        return rekommendationOverSocialstyrelsensBeslutsstod;
+    }
+
+    public void setRekommendationOverSocialstyrelsensBeslutsstod(boolean rekommendationOverSocialstyrelsensBeslutsstod) {
+        this.rekommendationOverSocialstyrelsensBeslutsstod = rekommendationOverSocialstyrelsensBeslutsstod;
     }
 }

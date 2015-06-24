@@ -16,7 +16,7 @@ var sjukpenningMessages = {
         //Labels
         'sjukpenning.label.field': 'Fält',
         'sjukpenning.label.blank': '- ej ifyllt',
-        'sjukpenning.label.nedsattning': 'Jag bedömer att arbetsförmåga är',
+        'sjukpenning.label.nedsattning': 'Din bedömning av patientens behov av sjukskrivning (Arbetsgivare 1)',
         'sjukpenning.label.patientnamn': 'Patientens namn',
         'sjukpenning.label.utfardat': 'Utfärdat',
         'sjukpenning.label.personnummer': 'Personnummer',
@@ -63,7 +63,8 @@ var sjukpenningMessages = {
         'sjukpenning.label.arbetsformaga.foraldrarledighet': 'Föräldraledighet med föräldrapenning - att vårda sitt barn',
         'sjukpenning.label.arbetsformaga.bedomning': 'Patientens arbetsförmåga bedöms nedsatt längre tid än den som det försäkringsmedicinska beslutsstödet anger, därför att:',
         'sjukpenning.label.prognos': 'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete? (Gäller inte arbetslösa)',
-        'sjukpenning.label.resor-till-arbetet': 'Kan resor till och från arbetet med annat färdsätt än normalt göra det möjligt för patienten att återgå i arbete?',
+        'sjukpenning.label.resor-till-arbetet': 'Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten att återgå till arbete under sjukskrivningsperioden.',
+        'sjukpenning.label.rekommendation-overskrider-beslutsstod': 'Min rekommendation av sjukskrivningens längd överskrider Socialstyrelsens försäkringsmedicinska beslutsstöd',
         'sjukpenning.label.kontakt-med-fk': 'Kontakt önskas med Försäkringskassan',
         'sjukpenning.label.arbetsplatskod': 'Förskrivarkod och arbetsplatskod',
         'sjukpenning.label.rekommendationer.kontakt.arbetsformedlingen': 'Kontakt med Arbetsförmedlingen',
