@@ -65,6 +65,9 @@ public class SjukpenningUtlatande extends Utlatande {
     private boolean atgardForetagshalsovard;
     private boolean atgardOvrigt;
 
+    private String kommentar;
+    private boolean kontaktMedFk;
+
     // ==================================================================================================
 
     private String sjukdomsforlopp;
@@ -88,10 +91,6 @@ public class SjukpenningUtlatande extends Utlatande {
     private String arbetsformagaPrognosGarInteAttBedomaBeskrivning;
 
     private boolean ressattTillArbeteEjAktuellt;
-
-    private boolean kontaktMedFk;
-
-    private String kommentar;
 
     private LocalDateInterval giltighet;
 
