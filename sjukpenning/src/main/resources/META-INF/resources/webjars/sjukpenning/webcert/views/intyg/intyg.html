@@ -91,15 +91,15 @@
               </div>
 
               <div wc-field field-number="6b" field-label="sjukpenning.label.planerad-atgard"
-                   filled="{{viewState.intygModel.atgardInomSjukvarden!=null||viewState.intygModel.annanAtgard!=null}}" id="field6b">
+                   filled="{{viewState.intygModel.pagaendeBehandling!=null||viewState.intygModel.planeradBehandling!=null}}" id="field6b">
                 <ul class="padded-list">
-                  <li ng-show="viewState.intygModel.atgardInomSjukvarden != null">
+                  <li ng-show="viewState.intygModel.pagaendeBehandling != null">
                     <span message key="sjukpenning.label.planerad-atgard.sjukvarden"></span>
-                    <div id="atgardInomSjukvarden" class="multiline">{{viewState.intygModel.atgardInomSjukvarden}}</div>
+                    <div id="pagaendeBehandling" class="multiline">{{viewState.intygModel.pagaendeBehandling}}</div>
                   </li>
-                  <li ng-show="viewState.intygModel.annanAtgard != null">
+                  <li ng-show="viewState.intygModel.planeradBehandling != null">
                     <span message key="sjukpenning.label.planerad-atgard.annat"></span>
-                    <div id="annanAtgard" class="multiline">{{viewState.intygModel.annanAtgard}}</div>
+                    <div id="planeradBehandling" class="multiline">{{viewState.intygModel.planeradBehandling}}</div>
                   </li>
                 </ul>
               </div>

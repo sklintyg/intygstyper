@@ -259,14 +259,14 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="sjukpenning.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
+              <div mi-field field-label="sjukpenning.label.plannedtreatment" filled="cert.pagaendeBehandling||cert.planeradBehandling">
                 <ul class="padded-list">
-                  <li ng-show="cert.atgardInomSjukvarden != null">
+                  <li ng-show="cert.pagaendeBehandling != null">
                     <span message key="sjukpenning.label.plannedtreatment.healthcare"></span>
-                    <div id="atgardSjukvard" class="multiline">{{cert.atgardInomSjukvarden}}</div></li>
-                  <li ng-show="cert.annanAtgard != null">
+                    <div id="atgardSjukvard" class="multiline">{{cert.pagaendeBehandling}}</div></li>
+                  <li ng-show="cert.planeradBehandling != null">
                     <span message key="sjukpenning.label.plannedtreatment.other"></span>
-                    <div id="atgardAnnan" class="multiline">{{cert.annanAtgard}}</div></li>
+                    <div id="atgardAnnan" class="multiline">{{cert.planeradBehandling}}</div></li>
                 </ul>
               </div>
 

@@ -39,6 +39,9 @@ public class SjukpenningUtlatande extends Utlatande {
     private String funktionsnedsattning;
     private String aktivitetsbegransning;
 
+    private String pagaendeBehandling;
+    private String planeradBehandling;
+
     // ==================================================================================================
 
     private String sjukdomsforlopp;
@@ -47,9 +50,6 @@ public class SjukpenningUtlatande extends Utlatande {
     private boolean rekommendationKontaktForetagshalsovarden;
     private boolean rekommendationOvrigtCheck;
     private String rekommendationOvrigt;
-
-    private String atgardInomSjukvarden;
-    private String annanAtgard;
 
     private Rehabilitering rehabilitering;
 
@@ -270,20 +270,20 @@ public class SjukpenningUtlatande extends Utlatande {
         this.rekommendationOvrigt = rekommendationOvrigt;
     }
 
-    public String getAtgardInomSjukvarden() {
-        return atgardInomSjukvarden;
+    public String getPagaendeBehandling() {
+        return pagaendeBehandling;
     }
 
-    public void setAtgardInomSjukvarden(String atgardInomSjukvarden) {
-        this.atgardInomSjukvarden = atgardInomSjukvarden;
+    public void setPagaendeBehandling(String pagaendeBehandling) {
+        this.pagaendeBehandling = pagaendeBehandling;
     }
 
-    public String getAnnanAtgard() {
-        return annanAtgard;
+    public String getPlaneradBehandling() {
+        return planeradBehandling;
     }
 
-    public void setAnnanAtgard(String annanAtgard) {
-        this.annanAtgard = annanAtgard;
+    public void setPlaneradBehandling(String planeradBehandling) {
+        this.planeradBehandling = planeradBehandling;
     }
 
     public Rehabilitering getRehabilitering() {

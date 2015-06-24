@@ -49,6 +49,8 @@ var sjukpenningMessages = {
         'sjukpenning.label.sysselsattning.studier': 'Studier',
         'sjukpenning.label.sysselsattning.program': 'Deltar i arbetsmarknadspolitiskt program',
         'sjukpenning.label.aktivitetsbegransning': 'Vad kan patienten inte göra på grund av sin sjukdom? (aktivitetsbegränsning)',
+        'sjukpenning.label.behandling.pagaende': 'Pågående medicinska behandlingar/åtgärder och beskriv ansvarig vårdenhet.',
+        'sjukpenning.label.behandling.planerad': 'Planerade medicinska behandlingar/åtgärder. Beskriv om möjligt tidplan och ansvarig enhet.',
         'sjukpenning.label.rekommendationer': 'Rekommendationer',
         'sjukpenning.label.planerad-atgard': 'Planerad eller pågående behandling eller åtgärd',
         'sjukpenning.label.planerad-atgard.sjukvarden': 'Inom sjukvården:',
