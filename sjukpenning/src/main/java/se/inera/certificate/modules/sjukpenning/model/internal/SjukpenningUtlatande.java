@@ -10,15 +10,24 @@ import se.inera.certificate.model.common.internal.Utlatande;
 
 public class SjukpenningUtlatande extends Utlatande {
 
-    private LocalDateInterval giltighet;
-
     private boolean avstangningSmittskydd;
 
-    private String diagnosKod;
-    private String diagnosKodsystem1;
-    private String diagnosBeskrivning;
+    private InternalDate undersokningAvPatienten;
+    private InternalDate telefonkontaktMedPatienten;
+    private InternalDate journaluppgifter;
 
+    private boolean nuvarandeArbete;
+    private String nuvarandeArbetsuppgifter;
+    private String nuvarandeYrke;
+    private boolean arbetsloshet;
+    private boolean foraldraledighet;
+    private boolean studier;
+    private boolean arbetsmarknadsProgram;
+
+    private String diagnosKod1;
+    private String diagnosKodsystem1;
     private String diagnosBeskrivning1;
+
     private String diagnosKod2;
     private String diagnosKodsystem2;
     private String diagnosBeskrivning2;
@@ -26,15 +35,12 @@ public class SjukpenningUtlatande extends Utlatande {
     private String diagnosKod3;
     private String diagnosKodsystem3;
     private String diagnosBeskrivning3;
-    private Boolean samsjuklighet;
+
+    // ==================================================================================================
 
     private String sjukdomsforlopp;
 
     private String funktionsnedsattning;
-
-    private InternalDate undersokningAvPatienten;
-    private InternalDate telefonkontaktMedPatienten;
-    private InternalDate journaluppgifter;
 
     private String aktivitetsbegransning;
 
@@ -47,14 +53,6 @@ public class SjukpenningUtlatande extends Utlatande {
     private String annanAtgard;
 
     private Rehabilitering rehabilitering;
-
-    private boolean nuvarandeArbete;
-    private String nuvarandeArbetsuppgifter;
-    private String nuvarandeYrke;
-    private boolean arbetsloshet;
-    private boolean foraldraledighet;
-    private boolean studier;
-    private boolean arbetsmarknadsProgram;
 
     private String tjanstgoringstid;
     private InternalLocalDateInterval nedsattMed25;
@@ -78,6 +76,8 @@ public class SjukpenningUtlatande extends Utlatande {
     private boolean kontaktMedFk;
 
     private String kommentar;
+
+    private LocalDateInterval giltighet;
 
     public String getTjanstgoringstid() {
         return tjanstgoringstid;
@@ -119,28 +119,28 @@ public class SjukpenningUtlatande extends Utlatande {
         this.avstangningSmittskydd = avstangningSmittskydd;
     }
 
-    public String getDiagnosKod() {
-        return diagnosKod;
+    public String getDiagnosKod1() {
+        return diagnosKod1;
     }
 
-    public void setDiagnosKod(String diagnosKod) {
-        this.diagnosKod = diagnosKod;
+    public void setDiagnosKod1(String diagnosKod) {
+        this.diagnosKod1 = diagnosKod;
     }
 
-    public String getDiagnosBeskrivning() {
-        return diagnosBeskrivning;
+    public String getDiagnosKodsystem1() {
+        return diagnosKodsystem1;
     }
 
-    public void setDiagnosBeskrivning(String diagnosBeskrivning) {
-        this.diagnosBeskrivning = diagnosBeskrivning;
+    public void setDiagnosKodsystem1(String diagnosKodsystem1) {
+        this.diagnosKodsystem1 = diagnosKodsystem1;
     }
 
     public String getDiagnosBeskrivning1() {
         return diagnosBeskrivning1;
     }
 
-    public void setDiagnosBeskrivning1(String diagnosBeskrivning1) {
-        this.diagnosBeskrivning1 = diagnosBeskrivning1;
+    public void setDiagnosBeskrivning1(String diagnosBeskrivning) {
+        this.diagnosBeskrivning1 = diagnosBeskrivning;
     }
 
     public String getDiagnosKod2() {
@@ -175,14 +175,6 @@ public class SjukpenningUtlatande extends Utlatande {
         this.diagnosBeskrivning3 = diagnosBeskrivning3;
     }
 
-    public String getDiagnosKodsystem1() {
-        return diagnosKodsystem1;
-    }
-
-    public void setDiagnosKodsystem1(String diagnosKodsystem1) {
-        this.diagnosKodsystem1 = diagnosKodsystem1;
-    }
-
     public String getDiagnosKodsystem2() {
         return diagnosKodsystem2;
     }
@@ -197,14 +189,6 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setDiagnosKodsystem3(String diagnosKodsystem3) {
         this.diagnosKodsystem3 = diagnosKodsystem3;
-    }
-
-    public Boolean getSamsjuklighet() {
-        return samsjuklighet;
-    }
-
-    public void setSamsjuklighet(Boolean samsjuklighet) {
-        this.samsjuklighet = samsjuklighet;
     }
 
     public String getSjukdomsforlopp() {

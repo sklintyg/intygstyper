@@ -59,7 +59,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
              *  Remove choices related to diagnoskoder when the choice changes to make sure
              */
             $scope.onChangeKodverk = function() {
-                $scope.model.diagnosKod = undefined;
+                $scope.model.diagnosKod1 = undefined;
                 $scope.model.diagnosBeskrivning1 = undefined;
                 $scope.model.diagnosKod2 = undefined;
                 $scope.model.diagnosBeskrivning2 = undefined;
@@ -201,8 +201,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
              */
             $scope.getTotalDiagnosBeskrivningLength = function() {
                 var totalLength;
-                totalLength = helper.getLengthOrZero($scope.model.diagnosBeskrivning) +
-                helper.getLengthOrZero($scope.model.diagnosKod2) +
+                totalLength = helper.getLengthOrZero($scope.model.diagnosKod2) +
                 helper.getLengthOrZero($scope.model.diagnosKod3) +
                 helper.getLengthOrZero($scope.model.diagnosBeskrivning1) +
                 helper.getLengthOrZero($scope.model.diagnosBeskrivning2) +

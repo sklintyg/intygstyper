@@ -27,7 +27,7 @@ var sjukpenningMessages = {
         'sjukpenning.label.yes': 'Ja',
         'sjukpenning.label.no': 'Nej',
         'sjukpenning.label.delvis': 'Ja, delvis',
-        'sjukpenning.label.diagnos': 'Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga',
+        'sjukpenning.label.diagnos': 'Sjukdom som orsakar nedsatt arbetsförmåga',
         'sjukpenning.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
         'sjukpenning.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
         'sjukpenning.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',

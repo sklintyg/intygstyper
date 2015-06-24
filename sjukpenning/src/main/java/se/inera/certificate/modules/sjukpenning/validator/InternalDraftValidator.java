@@ -220,13 +220,13 @@ public class InternalDraftValidator {
             return;
         }
 
-        if (!StringUtils.isBlank(utlatande.getDiagnosKod())) {
+        if (!StringUtils.isBlank(utlatande.getDiagnosKod1())) {
             String kodsystem = utlatande.getDiagnosKodsystem1();
             if (StringUtils.isBlank(kodsystem)) {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
-            validateDiagnosKod(utlatande.getDiagnosKod(), kodsystem, "diagnos", "sjukpenning.validation.diagnos.invalid", validationMessages);
+            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukpenning.validation.diagnos.invalid", validationMessages);
         } else {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     "sjukpenning.validation.diagnos.missing");
