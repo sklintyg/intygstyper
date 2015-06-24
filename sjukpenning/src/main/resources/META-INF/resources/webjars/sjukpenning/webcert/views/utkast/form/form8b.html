@@ -139,6 +139,14 @@
       </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.overskrider"></span>
     </div>
 
+    <label class="control-label title-single"><span message key="sjukpenning.label.kan-gora"/></label>
+    <textarea id="kanGora" class="form-control" name="kanGora" rows='10'
+            ng-model="model.vadPatientenKanGora" ng-trim="false" />
+
+    <label class="control-label title-single"><span message key="sjukpenning.label.prognos"/></label>
+    <textarea id="prognos" class="form-control" name="prognos" rows='10'
+              ng-model="model.prognosNarPatientKanAterga" ng-trim="false" />
+
     <div class="alert alert-warning" ng-show="field8b.info.datesOutOfRange">
       Det startdatum du angett är mer än <strong>en vecka före dagens datum</strong>. Du bör kontrollera att tidsperioderna är korrekta.
     </div>

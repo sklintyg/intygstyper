@@ -50,6 +50,9 @@ public class SjukpenningUtlatande extends Utlatande {
     private boolean ressattTillArbeteAktuellt;
     private boolean rekommendationOverSocialstyrelsensBeslutsstod;
 
+    private String vadPatientenKanGora;
+    private String prognosNarPatientKanAterga;
+
     // ==================================================================================================
 
     private String sjukdomsforlopp;
@@ -467,5 +470,21 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setRekommendationOverSocialstyrelsensBeslutsstod(boolean rekommendationOverSocialstyrelsensBeslutsstod) {
         this.rekommendationOverSocialstyrelsensBeslutsstod = rekommendationOverSocialstyrelsensBeslutsstod;
+    }
+
+    public String getVadPatientenKanGora() {
+        return vadPatientenKanGora;
+    }
+
+    public void setVadPatientenKanGora(String vadPatientenKanGora) {
+        this.vadPatientenKanGora = vadPatientenKanGora;
+    }
+
+    public String getPrognosNarPatientKanAterga() {
+        return prognosNarPatientKanAterga;
+    }
+
+    public void setPrognosNarPatientKanAterga(String prognosNarPatientKanAterga) {
+        this.prognosNarPatientKanAterga = prognosNarPatientKanAterga;
     }
 }
