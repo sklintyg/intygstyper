@@ -102,7 +102,13 @@ angular.module('sjukpenning').config(function($stateProvider) {
                 'form15@sjukpenning-edit' : {
                     templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form15.html',
                     controller: 'sjukpenning.EditCert.Form15Ctrl'
+                },
+
+                'form16@sjukpenning-edit' : {
+                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form16.html',
+                    controller: 'sjukpenning.EditCert.Form16Ctrl'
                 }
+
             }
         });
 });

@@ -13,14 +13,14 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
                 check: {
                     undersokningAvPatienten: false,
                     telefonkontaktMedPatienten: false,
-                    journaluppgifter: false,
+                    journaluppgifter: false
                 }
             };
 
             $scope.dates = {
                 undersokningAvPatienten: null,
                 telefonkontaktMedPatienten: null,
-                journaluppgifter: null,
+                journaluppgifter: null
             };
 
             // once we've doneLoading we can set the radion buttons to the model state.

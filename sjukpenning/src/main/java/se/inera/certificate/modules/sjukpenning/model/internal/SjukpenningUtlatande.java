@@ -53,6 +53,18 @@ public class SjukpenningUtlatande extends Utlatande {
     private String vadPatientenKanGora;
     private String prognosNarPatientKanAterga;
 
+    private boolean atgardInteAktuellt;
+    private boolean atgardArbetstraning;
+    private boolean atgardArbetsanpassning;
+    private boolean atgardSokaNyttArbete;
+    private boolean atgardBesokPaArbete;
+    private boolean atgardErgonomi;
+    private boolean atgardHjalpmedel;
+    private boolean atgardKonflikthantering;
+    private boolean atgardOmfordelning;
+    private boolean atgardForetagshalsovard;
+    private boolean atgardOvrigt;
+
     // ==================================================================================================
 
     private String sjukdomsforlopp;
@@ -486,5 +498,93 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setPrognosNarPatientKanAterga(String prognosNarPatientKanAterga) {
         this.prognosNarPatientKanAterga = prognosNarPatientKanAterga;
+    }
+
+    public boolean isAtgardInteAktuellt() {
+        return atgardInteAktuellt;
+    }
+
+    public void setAtgardInteAktuellt(boolean atgardInteAktuellt) {
+        this.atgardInteAktuellt = atgardInteAktuellt;
+    }
+
+    public boolean isAtgardArbetstraning() {
+        return atgardArbetstraning;
+    }
+
+    public boolean isAtgardArbetsanpassning() {
+        return atgardArbetsanpassning;
+    }
+
+    public void setAtgardArbetsanpassning(boolean atgardArbetsanpassning) {
+        this.atgardArbetsanpassning = atgardArbetsanpassning;
+    }
+
+    public boolean isAtgardSokaNyttArbete() {
+        return atgardSokaNyttArbete;
+    }
+
+    public void setAtgardSokaNyttArbete(boolean atgardSokaNyttArbete) {
+        this.atgardSokaNyttArbete = atgardSokaNyttArbete;
+    }
+
+    public boolean isAtgardBesokPaArbete() {
+        return atgardBesokPaArbete;
+    }
+
+    public void setAtgardBesokPaArbete(boolean atgardBesokPaArbete) {
+        this.atgardBesokPaArbete = atgardBesokPaArbete;
+    }
+
+    public boolean isAtgardErgonomi() {
+        return atgardErgonomi;
+    }
+
+    public void setAtgardErgonomi(boolean atgardErgonomi) {
+        this.atgardErgonomi = atgardErgonomi;
+    }
+
+    public boolean isAtgardHjalpmedel() {
+        return atgardHjalpmedel;
+    }
+
+    public void setAtgardHjalpmedel(boolean atgardHjalpmedel) {
+        this.atgardHjalpmedel = atgardHjalpmedel;
+    }
+
+    public boolean isAtgardKonflikthantering() {
+        return atgardKonflikthantering;
+    }
+
+    public void setAtgardKonflikthantering(boolean atgardKonflikthantering) {
+        this.atgardKonflikthantering = atgardKonflikthantering;
+    }
+
+    public boolean isAtgardOmfordelning() {
+        return atgardOmfordelning;
+    }
+
+    public void setAtgardOmfordelning(boolean atgardOmfordelning) {
+        this.atgardOmfordelning = atgardOmfordelning;
+    }
+
+    public boolean isAtgardForetagshalsovard() {
+        return atgardForetagshalsovard;
+    }
+
+    public void setAtgardForetagshalsovard(boolean atgardForetagshalsovard) {
+        this.atgardForetagshalsovard = atgardForetagshalsovard;
+    }
+
+    public boolean isAtgardOvrigt() {
+        return atgardOvrigt;
+    }
+
+    public void setAtgardOvrigt(boolean atgardOvrigt) {
+        this.atgardOvrigt = atgardOvrigt;
+    }
+
+    public void setAtgardArbetstraning(boolean atgardArbetstraning) {
+        this.atgardArbetstraning = atgardArbetstraning;
     }
 }

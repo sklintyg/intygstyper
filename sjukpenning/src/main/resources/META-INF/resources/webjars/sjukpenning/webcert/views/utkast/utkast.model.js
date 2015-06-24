@@ -131,6 +131,8 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
                         form13:['kommentar'],
 
+                        form16:['kommentar'],
+
                         misc:  ['forskrivarkodOchArbetsplatskod',
                                 'namnfortydligandeOchAdress', 'id',
                                 new ModelAttr('grundData', {defaultValue: grundData})]
