@@ -36,13 +36,12 @@ public class SjukpenningUtlatande extends Utlatande {
     private String diagnosKodsystem3;
     private String diagnosBeskrivning3;
 
+    private String funktionsnedsattning;
+    private String aktivitetsbegransning;
+
     // ==================================================================================================
 
     private String sjukdomsforlopp;
-
-    private String funktionsnedsattning;
-
-    private String aktivitetsbegransning;
 
     private boolean rekommendationKontaktArbetsformedlingen;
     private boolean rekommendationKontaktForetagshalsovarden;
