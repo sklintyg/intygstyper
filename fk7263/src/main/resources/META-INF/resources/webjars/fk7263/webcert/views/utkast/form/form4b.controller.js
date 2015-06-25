@@ -26,11 +26,13 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             };
 
             // once we've doneLoading we can set the radion buttons to the model state.
+            var doneLoading = false;
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
-                if(newVal === oldVal){
+                if (doneLoading) {
                     return;
                 }
                 if (newVal) {
+                    doneLoading = true;
                     registerDateParsersFor4b($scope);
                     setBaserasPa();
                     // I really hate this but needs to be done because the datepicker doesn't accept non dates!!

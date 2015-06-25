@@ -46,7 +46,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             var doneLoading = false;
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
-                if(newVal === oldVal || doneLoading){
+                if (doneLoading) {
                     return;
                 }
                 if (newVal) {
