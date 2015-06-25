@@ -5,7 +5,12 @@ import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlata
 import se.inera.intygstjanster.fk.services.v1.SjukpenningIntyg;
 
 public class TransportToInternal {
-    public static SjukpenningUtlatande convert(SjukpenningIntyg intyg) throws ConverterException {
+    public static SjukpenningUtlatande convert(SjukpenningIntyg source) throws ConverterException {
+        SjukpenningUtlatande utlatande = new SjukpenningUtlatande();
+        utlatande.setAktivitetsbegransning(source.getKonsekvenser().getBegransning());
+        utlatande.setFunktionsnedsattning(source.getKonsekvenser().getKonsekvens());
+
+        //utlatande.setJournaluppgifter(source.getVardKontakter().getVardkontakt().);
         // TODO
         return null;
     }

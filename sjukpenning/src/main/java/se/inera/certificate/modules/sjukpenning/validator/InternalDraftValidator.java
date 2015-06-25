@@ -44,10 +44,6 @@ public class InternalDraftValidator {
         validateAktivitetsbegransning(utlatande, validationMessages);
         // fält 8
         validateArbetsformaga(utlatande, validationMessages);
-        // fält 6a
-        validateOvrigaRekommendationer(utlatande, validationMessages);
-        // fält 11
-        validateRessatt(utlatande, validationMessages);
         // fält 13
         validateKommentar(utlatande, validationMessages);
         // vårdenhet
@@ -119,18 +115,6 @@ public class InternalDraftValidator {
             && StringUtils.isBlank(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
             addValidationError(validationMessages, "prognos", ValidationMessageType.EMPTY,
                     "sjukpenning.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
-        }
-    }
-
-    private void validateRessatt(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        // Fält 11 - optional
-        boolean inForandratRessatt = utlatande.isRessattTillArbeteAktuellt();
-        boolean inEjForandratRessatt = utlatande.isRessattTillArbeteEjAktuellt();
-
-        // Fält 11 - If set only one should be set
-        if (inForandratRessatt && inEjForandratRessatt) {
-            addValidationError(validationMessages, "forandrat-ressatt", ValidationMessageType.OTHER,
-                    "sjukpenning.validation.forandrat-ressatt.choose-one");
         }
     }
 
@@ -263,14 +247,6 @@ public class InternalDraftValidator {
 
         if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
             addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
-        }
-    }
-
-    private void validateOvrigaRekommendationer(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        // Fält 6a - If Övrigt is checked, something must be entered.
-        if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isBlank(utlatande.getRekommendationOvrigt())) {
-            addValidationError(validationMessages, "rekommendationer", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.rekommendationer.ovriga");
         }
     }
 

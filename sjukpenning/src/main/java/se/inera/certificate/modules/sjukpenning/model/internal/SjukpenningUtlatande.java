@@ -70,61 +70,7 @@ public class SjukpenningUtlatande extends Utlatande {
 
     // ==================================================================================================
 
-    private String sjukdomsforlopp;
-
-    private boolean rekommendationKontaktArbetsformedlingen;
-    private boolean rekommendationKontaktForetagshalsovarden;
-    private boolean rekommendationOvrigtCheck;
-    private String rekommendationOvrigt;
-
-    private Rehabilitering rehabilitering;
-
-    private String tjanstgoringstid;
-    private String nedsattMed25Beskrivning;
-    private String nedsattMed50Beskrivning;
-    private String nedsattMed75Beskrivning;
-
-    private String arbetsformagaPrognos;
-
-    private PrognosBedomning prognosBedomning;
-
-    private String arbetsformagaPrognosGarInteAttBedomaBeskrivning;
-
-    private boolean ressattTillArbeteEjAktuellt;
-
     private LocalDateInterval giltighet;
-
-    public String getTjanstgoringstid() {
-        return tjanstgoringstid;
-    }
-
-    public void setTjanstgoringstid(String tjanstgoringstid) {
-        this.tjanstgoringstid = tjanstgoringstid;
-    }
-
-    public String getNedsattMed25Beskrivning() {
-        return nedsattMed25Beskrivning;
-    }
-
-    public void setNedsattMed25Beskrivning(String nedsattMed25Beskrivning) {
-        this.nedsattMed25Beskrivning = nedsattMed25Beskrivning;
-    }
-
-    public String getNedsattMed50Beskrivning() {
-        return nedsattMed50Beskrivning;
-    }
-
-    public void setNedsattMed50Beskrivning(String nedsattMed50Beskrivning) {
-        this.nedsattMed50Beskrivning = nedsattMed50Beskrivning;
-    }
-
-    public String getNedsattMed75Beskrivning() {
-        return nedsattMed75Beskrivning;
-    }
-
-    public void setNedsattMed75Beskrivning(String nedsattMed75Beskrivning) {
-        this.nedsattMed75Beskrivning = nedsattMed75Beskrivning;
-    }
 
     public boolean isAvstangningSmittskydd() {
         return avstangningSmittskydd;
@@ -206,14 +152,6 @@ public class SjukpenningUtlatande extends Utlatande {
         this.diagnosKodsystem3 = diagnosKodsystem3;
     }
 
-    public String getSjukdomsforlopp() {
-        return sjukdomsforlopp;
-    }
-
-    public void setSjukdomsforlopp(String sjukdomsforlopp) {
-        this.sjukdomsforlopp = sjukdomsforlopp;
-    }
-
     public String getFunktionsnedsattning() {
         return funktionsnedsattning;
     }
@@ -254,38 +192,6 @@ public class SjukpenningUtlatande extends Utlatande {
         this.aktivitetsbegransning = aktivitetsbegransning;
     }
 
-    public boolean isRekommendationKontaktArbetsformedlingen() {
-        return rekommendationKontaktArbetsformedlingen;
-    }
-
-    public void setRekommendationKontaktArbetsformedlingen(boolean rekommendationKontaktArbetsformedlingen) {
-        this.rekommendationKontaktArbetsformedlingen = rekommendationKontaktArbetsformedlingen;
-    }
-
-    public boolean isRekommendationKontaktForetagshalsovarden() {
-        return rekommendationKontaktForetagshalsovarden;
-    }
-
-    public void setRekommendationKontaktForetagshalsovarden(boolean rekommendationKontaktForetagshalsovarden) {
-        this.rekommendationKontaktForetagshalsovarden = rekommendationKontaktForetagshalsovarden;
-    }
-
-    public boolean isRekommendationOvrigtCheck() {
-        return rekommendationOvrigtCheck;
-    }
-
-    public void setRekommendationOvrigtCheck(boolean rekommendationOvrigtCheck) {
-        this.rekommendationOvrigtCheck = rekommendationOvrigtCheck;
-    }
-
-    public String getRekommendationOvrigt() {
-        return rekommendationOvrigt;
-    }
-
-    public void setRekommendationOvrigt(String rekommendationOvrigt) {
-        this.rekommendationOvrigt = rekommendationOvrigt;
-    }
-
     public String getPagaendeBehandling() {
         return pagaendeBehandling;
     }
@@ -300,14 +206,6 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setPlaneradBehandling(String planeradBehandling) {
         this.planeradBehandling = planeradBehandling;
-    }
-
-    public Rehabilitering getRehabilitering() {
-        return this.rehabilitering;
-    }
-
-    public void setRehabilitering(Rehabilitering rehabilitering) {
-        this.rehabilitering = rehabilitering;
     }
 
     public boolean isNuvarandeArbete() {
@@ -374,28 +272,12 @@ public class SjukpenningUtlatande extends Utlatande {
         this.nedsattMed100 = nedsattMed100;
     }
 
-    public String getArbetsformagaPrognos() {
-        return arbetsformagaPrognos;
-    }
-
-    public void setArbetsformagaPrognos(String arbetsformagaPrognos) {
-        this.arbetsformagaPrognos = arbetsformagaPrognos;
-    }
-
     public boolean isRessattTillArbeteAktuellt() {
         return ressattTillArbeteAktuellt;
     }
 
     public void setRessattTillArbeteAktuellt(boolean ressattTillArbeteAktuellt) {
         this.ressattTillArbeteAktuellt = ressattTillArbeteAktuellt;
-    }
-
-    public boolean isRessattTillArbeteEjAktuellt() {
-        return ressattTillArbeteEjAktuellt;
-    }
-
-    public void setRessattTillArbeteEjAktuellt(boolean ressattTillArbeteEjAktuellt) {
-        this.ressattTillArbeteEjAktuellt = ressattTillArbeteEjAktuellt;
     }
 
     public boolean isKontaktMedFk() {
@@ -432,23 +314,6 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setGiltighet(LocalDateInterval giltighet) {
         this.giltighet = giltighet;
-    }
-
-    public String getArbetsformagaPrognosGarInteAttBedomaBeskrivning() {
-        return arbetsformagaPrognosGarInteAttBedomaBeskrivning;
-    }
-
-    public void setArbetsformagaPrognosGarInteAttBedomaBeskrivning(
-            String arbetsformagaPrognosGarInteAttBedomaBeskrivning) {
-        this.arbetsformagaPrognosGarInteAttBedomaBeskrivning = arbetsformagaPrognosGarInteAttBedomaBeskrivning;
-    }
-
-    public PrognosBedomning getPrognosBedomning() {
-        return prognosBedomning;
-    }
-
-    public void setPrognosBedomning(PrognosBedomning prognosBedomning) {
-        this.prognosBedomning = prognosBedomning;
     }
 
     public String getNuvarandeYrke() {
