@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.sjukpenning.model.converter;
 
 import se.inera.certificate.model.InternalDate;
+import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
@@ -161,9 +162,30 @@ public class InternalToTransport {
 
     private static BedomningTyp getBedomning(SjukpenningUtlatande source) {
         BedomningTyp bedomning = new BedomningTyp();
+        List<SjukskrivningTyp> sjukskrivningar = bedomning.getSjukskrivning();
+        if (source.getNedsattMed100() != null) {
+            sjukskrivningar.add(getSjukskrivning(Nedsattningsgrad.HELT_NEDSATT, source.getNedsattMed100()));
+        }
+        if (source.getNedsattMed75() != null) {
+            sjukskrivningar.add(getSjukskrivning(Nedsattningsgrad.NEDSATT_MED_3_4, source.getNedsattMed75()));
+        }
+        if (source.getNedsattMed50() != null) {
+            sjukskrivningar.add(getSjukskrivning(Nedsattningsgrad.NEDSATT_MED_1_2, source.getNedsattMed50()));
+        }
+        if (source.getNedsattMed25() != null) {
+            sjukskrivningar.add(getSjukskrivning(Nedsattningsgrad.NEDSATT_MED_3_4, source.getNedsattMed25()));
+        }
         bedomning.setAnnatFardmedel(source.isRessattTillArbeteAktuellt());
         bedomning.setOverskridenLangd(source.isRekommendationOverSocialstyrelsensBeslutsstod());
         return bedomning;
+    }
+
+    private static SjukskrivningTyp getSjukskrivning(Nedsattningsgrad nedsattningsgrad, InternalLocalDateInterval nedsattningsperiod) {
+        SjukskrivningTyp sjukskrivning = new SjukskrivningTyp();
+        sjukskrivning.setNedsattningsgrad(nedsattningsgrad);
+        sjukskrivning.setVaraktighetFrom(nedsattningsperiod.fromAsLocalDate());
+        sjukskrivning.setVaraktighetTom(nedsattningsperiod.tomAsLocalDate());
+        return sjukskrivning;
     }
 
     private static GrundData getGrundData(se.inera.certificate.model.common.internal.GrundData sourceGrundData) {
@@ -203,6 +225,5 @@ public class InternalToTransport {
         patient.setPostnummer(sourcePatient.getPostnummer());
         return patient;
     }
-
 
 }
