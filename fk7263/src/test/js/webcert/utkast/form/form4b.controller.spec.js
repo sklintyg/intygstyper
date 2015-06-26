@@ -51,6 +51,12 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
             model.telefonkontaktMedPatienten = 'telefonkontaktMedPatienten';
             model.undersokningAvPatienten = 'undersokningAvPatienten';
 
+            $scope.form4b = {
+                undersokningAvPatientenDate: {$parsers:[]},
+                telefonkontaktMedPatienten: {$parsers:[]},
+                journaluppgifter: {$parsers:[]},
+                annanReferens: {$parsers:[]}
+            };
         });
 
         it('can restore from the attic', function(){
