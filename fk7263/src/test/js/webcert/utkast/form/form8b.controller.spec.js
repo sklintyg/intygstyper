@@ -69,7 +69,7 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
             // ----- act
             $scope.$apply();
 
-            $scope.form8b.nedsattMed100from.$setViewValue(Date(2015,5,26));
+            $scope.form8b.nedsattMed100from.$setViewValue(new Date(2015,5,26,0,0,0,0));
             $scope.$apply();
 
             // ----- assert
@@ -110,7 +110,7 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
             // ----- act
             $scope.$apply();
 
-            $scope.form8b.nedsattMed100from.$setViewValue(Date(2015,5,26));
+            $scope.form8b.nedsattMed100from.$setViewValue(new Date(2015,5,26,0,0,0,0));
             $scope.$apply();
 
             // ----- assert
