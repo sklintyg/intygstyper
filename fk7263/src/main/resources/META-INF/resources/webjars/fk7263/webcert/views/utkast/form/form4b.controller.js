@@ -26,8 +26,30 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             };
 
             // once we've doneLoading we can set the radion buttons to the model state.
+            $log.debug('--- start doneloading 4b ---');
             var doneLoading = false;
-            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+            $scope.$watch(function() {
+
+                if(viewState.common.doneLoading) {
+                    if (angular.isObject($scope.form4b.undersokningAvPatientenDate) &&
+                        angular.isObject($scope.form4b.telefonkontaktMedPatientenDate) &&
+                        angular.isObject($scope.form4b.journaluppgifterDate) &&
+                        angular.isObject($scope.form4b.annanReferensDate)) {
+                        return true;
+                    }
+                    $log.debug('--- form4b control not loaded yet ---');
+                    $log.debug('1:');
+                    $log.debug($scope.form4b.undersokningAvPatientenDate);
+                    $log.debug('2:');
+                    $log.debug($scope.form4b.telefonkontaktMedPatientenDate);
+                    $log.debug('3:');
+                    $log.debug($scope.form4b.journaluppgifterDate);
+                    $log.debug('4:');
+                    $log.debug($scope.form4b.annanReferensDate);
+                }
+                return false;
+
+            }, function(newVal, oldVal) {
                 if (doneLoading) {
                     return;
                 }
