@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
+    ['$scope', '$timeout', '$log', 'fk7263.EditCertCtrl.ViewStateService',
         'common.DateRangeService',
-        function($scope, $log, viewState, DateRangeService) {
+        function($scope, $timeout, $log, viewState, DateRangeService) {
             'use strict';
             // private vars
             //var _dateRangeGroups = DateRangeGroupsService.build(_$scope);
@@ -45,14 +45,24 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             });
 
             var doneLoading = false;
-            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
-                if(doneLoading){
-                    return;
-                }
-                if (newVal) {
-                    doneLoading = true;
-                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
-                }
-            });
+            $log.debug('--- start doneloading ---');
+            $timeout(function() {
+
+                $log.debug('--- watch loaded ---');
+                $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+                    $log.debug('--- watch called ---');
+                    if(doneLoading){
+                        $log.debug('--- bailing out. local doneLoading already set. ---');
+                        return;
+                    }
+                    $log.debug('--- doneLoading not set. ---');
+                    if (newVal) {
+                        $log.debug('--- setting doneLoading. ---');
+                        doneLoading = true;
+                        _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
+                    }
+                });
+
+            }, 3000);
 
         }]);
