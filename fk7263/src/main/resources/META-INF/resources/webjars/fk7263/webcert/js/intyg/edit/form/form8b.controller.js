@@ -46,7 +46,40 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             var doneLoading = false;
             $log.debug('--- start doneloading ---');
-            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+            //
+            $scope.$watch(function() {
+
+                if (viewState.common.doneLoading) {
+                    if(angular.isObject($scope.form8b.nedsattMed25from) &&
+                        angular.isObject($scope.form8b.nedsattMed25tom) &&
+                        angular.isObject($scope.form8b.nedsattMed50from) &&
+                        angular.isObject($scope.form8b.nedsattMed50tom) &&
+                        angular.isObject($scope.form8b.nedsattMed75from) &&
+                        angular.isObject($scope.form8b.nedsattMed75tom) &&
+                        angular.isObject($scope.form8b.nedsattMed100from) &&
+                        angular.isObject($scope.form8b.nedsattMed100tom)) {
+                        return true;
+                    }
+                    $log.debug('--- form8b control not loaded yet ---');
+                    $log.debug('25:');
+                    $log.debug($scope.form8b.nedsattMed25from);
+                    $log.debug($scope.form8b.nedsattMed25tom);
+
+                    $log.debug('50:');
+                    $log.debug($scope.form8b.nedsattMed50from);
+                    $log.debug($scope.form8b.nedsattMed50tom);
+
+                    $log.debug('75:');
+                    $log.debug($scope.form8b.nedsattMed75from);
+                    $log.debug($scope.form8b.nedsattMed75tom);
+
+                    $log.debug('100:');
+                    $log.debug($scope.form8b.nedsattMed100from);
+                    $log.debug($scope.form8b.nedsattMed100tom);
+                }
+                return false;
+
+            }, function(newVal, oldVal) {
                 $log.debug('--- watch called ---');
                 if(doneLoading){
                     $log.debug('--- bailing out. local doneLoading already set. ---');
@@ -54,9 +87,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 }
                 $log.debug('--- doneLoading not set. ---');
                 if (newVal) {
+
+                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
+
                     $log.debug('--- setting doneLoading. ---');
                     doneLoading = true;
-                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
                 }
             });
             $log.debug('--- watch loaded ---');

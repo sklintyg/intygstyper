@@ -32,6 +32,12 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
                 viewState.intygModel = model;
 
                 $scope.form8b = {};
+                $scope.form8b.nedsattMed25from = { $parsers: [] };
+                $scope.form8b.nedsattMed25tom = { $parsers: [] };
+                $scope.form8b.nedsattMed50from = { $parsers: [] };
+                $scope.form8b.nedsattMed50tom = { $parsers: [] };
+                $scope.form8b.nedsattMed75from = { $parsers: [] };
+                $scope.form8b.nedsattMed75tom = { $parsers: [] };
                 $scope.form8b.nedsattMed100from = { $parsers: [] };
                 $scope.form8b.nedsattMed100tom = { $parsers: [] };
                 $controller('fk7263.EditCert.Form8bCtrl' , { $scope: $scope, $log : $log, model : model, viewState : viewState });
@@ -79,6 +85,12 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
                 viewState.intygModel = model;
 
                 $scope.form8b = {};
+                $scope.form8b.nedsattMed25from = { $parsers: [] };
+                $scope.form8b.nedsattMed25tom = { $parsers: [] };
+                $scope.form8b.nedsattMed50from = { $parsers: [] };
+                $scope.form8b.nedsattMed50tom = { $parsers: [] };
+                $scope.form8b.nedsattMed75from = { $parsers: [] };
+                $scope.form8b.nedsattMed75tom = { $parsers: [] };
                 $scope.form8b.nedsattMed100from = { $parsers: [] };
                 $scope.form8b.nedsattMed100tom = { $parsers: [] };
                 viewState.common.doneLoading = true;
