@@ -46,23 +46,19 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             var doneLoading = false;
             $log.debug('--- start doneloading ---');
-            $timeout(function() {
-
-                $log.debug('--- watch loaded ---');
-                $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
-                    $log.debug('--- watch called ---');
-                    if(doneLoading){
-                        $log.debug('--- bailing out. local doneLoading already set. ---');
-                        return;
-                    }
-                    $log.debug('--- doneLoading not set. ---');
-                    if (newVal) {
-                        $log.debug('--- setting doneLoading. ---');
-                        doneLoading = true;
-                        _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
-                    }
-                });
-
-            }, 3000);
+            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+                $log.debug('--- watch called ---');
+                if(doneLoading){
+                    $log.debug('--- bailing out. local doneLoading already set. ---');
+                    return;
+                }
+                $log.debug('--- doneLoading not set. ---');
+                if (newVal) {
+                    $log.debug('--- setting doneLoading. ---');
+                    doneLoading = true;
+                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
+                }
+            });
+            $log.debug('--- watch loaded ---');
 
         }]);
