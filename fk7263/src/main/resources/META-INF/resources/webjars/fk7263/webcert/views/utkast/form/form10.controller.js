@@ -15,7 +15,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
 
             // lifecyle listeners --------------------------------------------------------------------------------------
 
-            // once we've doneLoading we can set the radion buttons to the model state.
+            // once we've doneLoading we can set the radio buttons to the model state.
             $scope.$on('fk7263.loaded', function() {
                 radioGroupNotSelectedCheck();
                 setPrognosGroupFromModel();
@@ -35,6 +35,26 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                         if(model.isInAttic(model.properties.form10)){
                             model.restoreFromAttic(model.properties.form10);
                         }
+                    }
+                    setPrognosGroupFromModel();
+                }
+            });
+
+            $scope.$watch('viewState.sysselsattningValue', function(newVal, oldVal) {
+                if (JSON.stringify(newVal) === JSON.stringify(oldVal)) {
+                    return;
+                }
+
+                // only do this once the page is loaded and changes come from the gui!
+                if(viewState.common.doneLoading) {
+                    // If only arbetsloshet in frpm 8a i set, then form 10 is hidden
+                    // and we need to store its state in the attic
+                    if (JSON.stringify(newVal) === JSON.stringify([false, true, false])) {
+                        model.updateToAttic(model.properties.form10);
+                        model.clear(model.properties.form10);
+                        model.prognosBedomning = undefined;
+                    } else if(model.isInAttic(model.properties.form10)){
+                        model.restoreFromAttic(model.properties.form10);
                     }
                     setPrognosGroupFromModel();
                 }
