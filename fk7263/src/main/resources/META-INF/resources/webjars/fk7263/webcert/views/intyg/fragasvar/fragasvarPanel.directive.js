@@ -31,7 +31,7 @@ angular.module('fk7263').directive('qaPanel',
                         $timeout(function() {
                             var i;
                             for(i = 0; i < qaList.length; i++){
-                                if(qaList[i].id === message.id && qaList[i].proxyMessage !== undefined) {
+                                if(qaList[i].internReferens === message.id && qaList[i].proxyMessage !== undefined) {
                                     onFound(i);
                                     break;
                                 }
@@ -44,7 +44,8 @@ angular.module('fk7263').directive('qaPanel',
                     function addListMessage(qaList, qa, messageId) {
                         var messageProxy = {}; // = angular.copy(qa);
                         messageProxy.proxyMessage = messageId;
-                        messageProxy.id = qa.id;
+                        messageProxy.id = qa.internReferens;   // .id
+                        messageProxy.internReferens = qa.internReferens;
                         messageProxy.senasteHandelseDatum = qa.senasteHandelseDatum;
                         messageProxy.messageStatus = qa.status;
                         qaList.push(messageProxy);
@@ -208,7 +209,9 @@ angular.module('fk7263').directive('qaPanel',
                             return;
                         }
                         for (var i = 0; i < $scope.qaList.length; i++) {
-                            if (qa.proxyMessage !== undefined && qa.id === $scope.qaList[i].id) {
+                            if (qa.proxyMessage !== undefined && $scope.qaList[i].proxyMessage !== undefined &&
+                                qa.internReferens === $scope.qaList[i].internReferens)
+                            {
                                 $scope.qaList.splice(i, 1);
                                 return;
                             }
