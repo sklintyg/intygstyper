@@ -1,5 +1,8 @@
 package se.inera.certificate.modules.sjukpenning.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -10,16 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.service.WebcertModuleService;
-import se.inera.certificate.modules.sjukpenning.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
 import se.inera.certificate.modules.support.api.dto.ValidationStatus;
 import se.inera.certificate.validate.StringValidator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InternalDraftValidator {
 
@@ -44,8 +43,6 @@ public class InternalDraftValidator {
         validateAktivitetsbegransning(utlatande, validationMessages);
         // fält 8
         validateArbetsformaga(utlatande, validationMessages);
-        // fält 13
-        validateKommentar(utlatande, validationMessages);
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
 
@@ -107,17 +104,6 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateKommentar(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        // Fält 13 - Upplysningar - optional
-        // If field 4 annat satt or field 10 går ej att bedömma is set then
-        // field 13 should contain data.
-        if (utlatande.getPrognosBedomning() == PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma
-            && StringUtils.isBlank(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
-            addValidationError(validationMessages, "prognos", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
-        }
-    }
-
     private void validateArbetsformaga(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
@@ -128,12 +114,6 @@ public class InternalDraftValidator {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "sjukpenning.validation.sysselsattning.arbetsuppgifter.missing");
             }
-        }
-
-        // validate 8b - regardless of smittskydd
-        if (utlatande.getTjanstgoringstid() != null && !STRING_VALIDATOR.validateStringIsNumber(utlatande.getTjanstgoringstid())) {
-            addValidationError(validationMessages, "nedsattning", ValidationMessageType.OTHER,
-                    "sjukpenning.validation.nedsattning.tjanstgoringstid");
         }
 
         // Check that from and tom is valid in all present intervals before doing more checks

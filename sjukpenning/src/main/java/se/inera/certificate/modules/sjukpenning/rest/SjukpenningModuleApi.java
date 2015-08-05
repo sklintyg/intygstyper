@@ -33,6 +33,9 @@ import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransp
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.xml.bind.JAXB;
+import javax.xml.ws.WebServiceException;
+
 public class SjukpenningModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(SjukpenningModuleApi.class);
@@ -121,7 +124,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
         // TODO
-        return null;
+        throw new WebServiceException();
     }
 
     @Override
@@ -164,6 +167,17 @@ public class SjukpenningModuleApi implements ModuleApi {
     @Override
     public String marshall(String jsonString) throws ModuleException {
         String xmlString = null;
+        try {
+            SjukpenningUtlatande internal = objectMapper.readValue(jsonString, SjukpenningUtlatande.class);
+            RegisterSjukpenningType external = InternalToTransport.convert(internal);
+            StringWriter writer = new StringWriter();
+            JAXB.marshal(external, writer);
+            xmlString = writer.toString();
+
+        } catch (IOException | ConverterException e) {
+            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
+            throw new ModuleException(e);
+        }
         return xmlString;
     }
 
