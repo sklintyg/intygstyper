@@ -190,7 +190,7 @@ public class InternalDraftValidator {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
-            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukpenning.validation.diagnos.invalid", validationMessages);
+            validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukpenning.validation.diagnos.invalid", validationMessages);
         } else {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     "sjukpenning.validation.diagnos.missing");

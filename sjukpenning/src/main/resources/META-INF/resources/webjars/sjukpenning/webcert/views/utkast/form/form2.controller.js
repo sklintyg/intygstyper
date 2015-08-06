@@ -157,7 +157,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
              * User selects a diagnose description
              */
             $scope.onDiagnoseDescription1Select = function($item) {
-                $scope.model.diagnosKod = $item.value;
+                $scope.model.diagnosKod1 = $item.value;
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
                 $scope.form2.$dirty = true;
