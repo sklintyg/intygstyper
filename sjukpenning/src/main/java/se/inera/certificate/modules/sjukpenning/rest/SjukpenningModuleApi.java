@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import javax.xml.bind.JAXB;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport;
+import se.inera.certificate.modules.sjukpenning.model.converter.TransportToInternal;
 import se.inera.certificate.modules.sjukpenning.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukpenning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
@@ -25,16 +29,16 @@ import se.inera.certificate.modules.support.api.exception.ModuleConverterExcepti
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponderInterface;
+import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponseType;
+import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningType;
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningResponderInterface;
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningResponseType;
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
+import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
 import se.inera.intygstjanster.fk.services.v1.ResultCodeType;
-import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import javax.xml.bind.JAXB;
-import javax.xml.ws.WebServiceException;
 
 public class SjukpenningModuleApi implements ModuleApi {
 
@@ -57,6 +61,9 @@ public class SjukpenningModuleApi implements ModuleApi {
 
     @Autowired
     private RegisterSjukpenningResponderInterface registerSjukpenningResponderInterface;
+
+    @Autowired
+    private GetSjukpenningResponderInterface getSjukpenningResponderInterface;
 
     /**
      * {@inheritDoc}
@@ -123,8 +130,31 @@ public class SjukpenningModuleApi implements ModuleApi {
 
     @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
-        // TODO
-        throw new WebServiceException();
+        GetSjukpenningType request = new GetSjukpenningType();
+        request.setIntygsId(certificateId);
+
+        GetSjukpenningResponseType response = getSjukpenningResponderInterface.getSjukpenning(logicalAddress, request);
+
+        switch (response.getResultat().getResultCode()) {
+        case INFO:
+        case OK:
+            return convert(response, false);
+        case ERROR:
+            ErrorIdType errorId = response.getResultat().getErrorId();
+            String resultText = response.getResultat().getResultText();
+            switch (errorId) {
+            case REVOKED:
+                return convert(response, true);
+            default:
+                LOG.error("Error of type {} occured when retrieving certificate '{}': {}", errorId, certificateId, resultText);
+                throw new ModuleException("Error of type " + errorId + " occured when retrieving certificate " + certificateId + ", " + resultText);
+            }
+        default:
+            LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResultat().getResultText());
+            throw new ModuleException("An unidentified error occured when retrieving certificate " + certificateId + ", "
+                    + response.getResultat().getResultText());
+        }
+
     }
 
     @Override
@@ -179,6 +209,17 @@ public class SjukpenningModuleApi implements ModuleApi {
             throw new ModuleException(e);
         }
         return xmlString;
+    }
+
+    private CertificateResponse convert(GetSjukpenningResponseType response, boolean revoked) throws ModuleException {
+        try {
+            SjukpenningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
+            String internalModel = objectMapper.writeValueAsString(utlatande);
+            CertificateMetaData metaData = TransportToInternal.getMetaData(response.getIntyg());
+            return new CertificateResponse(internalModel, utlatande, metaData, revoked);
+        } catch (Exception e) {
+            throw new ModuleException(e);
+        }
     }
 
     private SjukpenningUtlatande getInternal(InternalModelHolder internalModel)

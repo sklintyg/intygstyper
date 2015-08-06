@@ -16,8 +16,8 @@
     </cxf:features>
   </cxf:bus>
 
-  <!-- ws endpoints --><!--jaxws:endpoint address="/get-sjukpenning/v1.0"
-      implementor="se.inera.certificate.modules.sjukpenning.integration.GGetTSBasResponderImpl">
+  <jaxws:endpoint address="/get-sjukpenning/v1.0"
+      implementor="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean
           class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
@@ -25,9 +25,7 @@
             value="transform/se-intygstjanster-ts-services/get-ts-bas-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
-  </jaxws:endpoint -->
-
-  <bean class="se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningResponderImpl" />
+  </jaxws:endpoint>
 
   <jaxws:endpoint address="/register-sjukpenning/v1.0"
       implementor="se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningResponderImpl">
@@ -44,5 +42,9 @@
       <jaxws:schemaLocation>classpath:/interactions/RegisterSjukpenningInteraction/RegisterSjukpenningResponder_1.0.xsd</jaxws:schemaLocation>
     </jaxws:schemaLocations>
   </jaxws:endpoint>
+
+  <bean class="se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningResponderImpl"/>
+
+  <bean class="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningResponderImpl"/>
 
 </beans>

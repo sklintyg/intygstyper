@@ -8,6 +8,8 @@ import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
+import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
+import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.intygstjanster.fk.services.v1.*;
 
 import java.util.List;
@@ -174,6 +176,18 @@ public class TransportToInternal {
 
             }
         }
+    }
+
+    public static CertificateMetaData getMetaData(SjukpenningIntyg source) {
+        CertificateMetaData metaData = new CertificateMetaData();
+        metaData.setCertificateId(source.getIntygsId());
+        metaData.setAdditionalInfo(source.getOvrigt());
+        metaData.setCertificateType(SjukpenningEntryPoint.MODULE_ID);
+        metaData.setFacilityName(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+        metaData.setIssuerName(source.getGrundData().getSkapadAv().getFullstandigtNamn());
+        metaData.setSignDate(source.getGrundData().getSigneringsTidstampel());
+
+        return metaData;
     }
 
 }
