@@ -31,9 +31,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
              * Load certificate and setup form / Constructor ...
              **************************************************************************/
 
-            // Get the certificate draft from the server.
-            UtkastService.load(viewState);
-
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
                 var intygState = {
@@ -54,5 +51,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.destroyList = function(){
                 viewState.clearModel();
             };
+
+            // Get the certificate draft from the server.
+            UtkastService.load(viewState);
 
         }]);

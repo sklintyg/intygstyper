@@ -2,9 +2,14 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
+
             var model = viewState.intygModel;
             $scope.model = model;
             $scope.viewState = viewState;
+
+            $scope.onSysselsattningChange = function(){
+                viewState.sysselsattningValue = [model.nuvarandeArbete, model.arbetsloshet, model.foraldrarledighet];
+            };
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
                 if(newVal === oldVal){

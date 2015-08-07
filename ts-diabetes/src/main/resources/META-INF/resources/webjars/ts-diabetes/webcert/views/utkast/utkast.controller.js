@@ -42,9 +42,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Load certificate and setup form
              **************************************************************************/
 
-            // Get the certificate draft from the server.
-            UtkastService.load(viewState);
-
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
                 var intygState = {
@@ -72,4 +69,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                     dateUtils.addDateParserFormatter(formElement);
                 }
             });
+
+            // Sätt upp lyssnare för 'intyg.loaded' innan load anropas, säkerställer att lyssnaren hunnit registreras när load körs.
+            // Get the certificate draft from the server.
+            UtkastService.load(viewState);
+
         }]);

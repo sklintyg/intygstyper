@@ -73,4 +73,40 @@ describe('fk7263.EditCertCtrl.Form10Ctrl', function() {
 
     });
 
+    describe('#change in sysselsattning to Arbetsloshet should trigger an update in the attic', function() {
+        beforeEach(function(){
+
+            model.prognosBedomning = 'prognosBedomning';
+            model.arbetsformagaPrognosGarInteAttBedomaBeskrivning = 'arbetsformagaPrognosGarInteAttBedomaBeskrivning';
+
+        });
+
+        it('can restore from the attic', function(){
+            // ----- arrange
+            viewState.common.doneLoading = true;
+
+            // ----- act
+            $scope.$apply(); // register false on avstangningSmittskydd
+
+
+            // set sysselsattning to Arbetsloshet only
+            viewState.sysselsattningValue = [false, true, false];
+            $scope.$apply();
+
+            // ----- assert
+            expect(model.prognosBedomning).toBe(undefined);
+            expect(model.arbetsformagaPrognosGarInteAttBedomaBeskrivning).toBe(undefined);
+
+            // ----- act
+            viewState.sysselsattningValue = [true, false, false]; // this should trigger the watch event
+            $scope.$apply();
+
+            // ----- assert
+            // expects
+            // restore from attic
+            model.prognosBedomning = 'prognosBedomning';
+            model.arbetsformagaPrognosGarInteAttBedomaBeskrivning = 'arbetsformagaPrognosGarInteAttBedomaBeskrivning';
+        });
+
+    });
 });

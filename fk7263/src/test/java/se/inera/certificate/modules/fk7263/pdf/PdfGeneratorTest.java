@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
@@ -18,7 +19,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import se.inera.certificate.common.enumerations.Recipients;
 import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
@@ -126,6 +129,46 @@ public class PdfGeneratorTest {
             assertNotNull("Error in scenario " + scenario.getName(), pdf);
             writePdfToFile(pdf, scenario);
         }
+    }
+
+    /**
+     * This test assert that a user can print a Intyg of type FK7263 even if it hasn't yet been sent to FK.
+     * - The target property of a Status object is null in this scenario.
+     * - The type property of a Status object is anything but CertificateState.SENT
+     *
+     * @throws Exception
+     */
+    @Test
+    public void whenIntygIsSignedButNotSentToFKThenGeneratePDF() throws Exception {
+        //Given
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+
+        List<Status> statuses = new ArrayList<Status>();
+        statuses.add(new Status(CertificateState.RECEIVED, null, LocalDateTime.now()));
+
+        // generate PDF
+        byte[] generatorResult = new PdfGenerator(intyg, statuses , ApplicationOrigin.WEBCERT).getBytes();
+        writePdfToFile(generatorResult, "Webcert");
+    }
+
+    /**
+     * This test assert that a user can print a Intyg of type FK7263 after it ahs been sent to FK.
+     * - The target property of a Status object is FK in this scenario.
+     * - The type property of a Status object is CertificateState.SENT
+     *
+     * @throws Exception
+     */
+    @Test
+    public void whenIntygIsSignedAndSentToFKThenGeneratePDF() throws Exception {
+        //Given
+        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+
+        List<Status> statuses = new ArrayList<Status>();
+        statuses.add(new Status(CertificateState.SENT, Recipients.FK.toString(), LocalDateTime.now()));
+
+        // generate PDF
+        byte[] generatorResult = new PdfGenerator(intyg, statuses , ApplicationOrigin.WEBCERT).getBytes();
+        writePdfToFile(generatorResult, "Webcert");
     }
 
     private void writePdfToFile(byte[] pdf, Scenario scenario) throws IOException {

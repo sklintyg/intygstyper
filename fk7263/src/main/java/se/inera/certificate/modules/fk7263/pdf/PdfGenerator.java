@@ -1,12 +1,13 @@
 package se.inera.certificate.modules.fk7263.pdf;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 import org.apache.commons.lang3.StringUtils;
-
 import se.inera.certificate.common.enumerations.Recipients;
 import se.inera.certificate.common.util.StringUtil;
 import se.inera.certificate.model.CertificateState;
@@ -15,13 +16,10 @@ import se.inera.certificate.model.Status;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.CMYKColor;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author andreaskaltenbach
@@ -233,12 +231,30 @@ public class PdfGenerator {
     private boolean isCertificateSentToFK(List<Status> statuses) {
         if (statuses != null) {
             for (Status status : statuses) {
-                if (status != null && status.getTarget().equals(Recipients.FK.toString()) && status.getType() == CertificateState.SENT) {
+                if (isTargetEqualTo(status, Recipients.FK.toString()) && isTypeEqualTo(status, CertificateState.SENT)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private boolean isTargetEqualTo(Status status, String recipient) {
+        if (!isNull(status) && !isNull(status.getTarget()) && status.getTarget().equals(recipient)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTypeEqualTo(Status status, CertificateState state) {
+        if (!isNull(status) && !isNull(status.getType()) && status.getType() == state) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isNull(Object object) {
+        return object == null;
     }
 
     private void createSignatureNotRequiredField(PdfStamper pdfStamper, int lastPage) throws DocumentException, IOException {
