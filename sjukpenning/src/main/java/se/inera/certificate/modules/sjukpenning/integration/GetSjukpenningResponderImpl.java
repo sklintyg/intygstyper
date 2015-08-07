@@ -31,8 +31,7 @@ import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpen
 import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponseType;
 import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningType;
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
-import se.inera.intygstjanster.fk.services.v1.ResultatTyp;
-import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
+import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
 
 import com.google.common.base.Throwables;
 
@@ -56,18 +55,18 @@ public class GetSjukpenningResponderImpl implements GetSjukpenningResponderInter
         try {
             CertificateHolder certificate = moduleApi.getModuleContainer().getCertificate(certificateId, null, false);
             if (certificate.isDeletedByCareGiver()) {
-                response.setResultat(errorResult(ErrorIdType.APPLICATION_ERROR,
+                response.setResultat(ResultUtil.errorResult(ErrorIdType.APPLICATION_ERROR,
                         String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
                 attachCertificateDocument(certificate, response);
                 if (certificate.isRevoked()) {
-                    response.setResultat(errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
+                    response.setResultat(ResultUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
                 } else {
-                    response.setResultat(okResult());
+                    response.setResultat(ResultUtil.okResult());
                 }
             }
         } catch (InvalidCertificateException e) {
-            response.setResultat(errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
+            response.setResultat(ResultUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
         }
 
         return response;
@@ -81,21 +80,6 @@ public class GetSjukpenningResponderImpl implements GetSjukpenningResponderInter
             LOGGER.error("Error while converting in getSjukpenning for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
             Throwables.propagate(e);
         }
-    }
-
-    private ResultatTyp okResult() {
-        // TODO
-        return null;
-    }
-
-    private ResultatTyp infoResult(String message) {
-        // TODO
-        return null;
-    }
-
-    private ResultatTyp errorResult(ErrorIdType errorIdtype, String message) {
-        // TODO
-        return null;
     }
 
 }

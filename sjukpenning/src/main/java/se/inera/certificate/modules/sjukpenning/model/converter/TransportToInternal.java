@@ -6,6 +6,7 @@ import se.inera.certificate.model.common.internal.GrundData;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
+import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
 import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
@@ -21,16 +22,34 @@ public class TransportToInternal {
         utlatande.setId(source.getIntygsId());
         utlatande.setTyp(source.getIntygsTyp());
         setGrundData(utlatande, source.getGrundData());
-        setVardkontakter(utlatande, source.getVardKontakter().getVardkontakt());
-        setSysselsattning(utlatande, source.getSysselsattning());
-        setSjukdomar(utlatande, source.getSjukdomar().getDiagnos());
-        setBehandling(utlatande, source.getBehandling());
-        setBedomning(utlatande, source.getBedomning());
-        setAtgarder(utlatande, source.getForslagAtgarder().getAtgard());
-        utlatande.setAktivitetsbegransning(source.getKonsekvenser().getBegransning());
-        utlatande.setFunktionsnedsattning(source.getKonsekvenser().getKonsekvens());
-        utlatande.setVadPatientenKanGora(source.getKanGora());
-        utlatande.setPrognosNarPatientKanAterga(source.getPrognosAterga());
+        if (source.getVardKontakter() != null) {
+            setVardkontakter(utlatande, source.getVardKontakter().getVardkontakt());
+        }
+        if (source.getSysselsattning() != null) {
+            setSysselsattning(utlatande, source.getSysselsattning());
+        }
+        if (source.getSjukdomar() != null) {
+            setSjukdomar(utlatande, source.getSjukdomar().getDiagnos());
+        }
+        if (source.getBehandling() != null) {
+            setBehandling(utlatande, source.getBehandling());
+        }
+        if (source.getBedomning() != null) {
+            setBedomning(utlatande, source.getBedomning());
+        }
+        if (source.getForslagAtgarder() != null) {
+            setAtgarder(utlatande, source.getForslagAtgarder().getAtgard());
+        }
+        if (source.getKonsekvenser() != null) {
+            utlatande.setAktivitetsbegransning(source.getKonsekvenser().getBegransning());
+            utlatande.setFunktionsnedsattning(source.getKonsekvenser().getKonsekvens());
+        }
+        if (source.getKanGora() != null) {
+            utlatande.setVadPatientenKanGora(source.getKanGora());
+        }
+        if (source.getPrognosAterga() != null) {
+            utlatande.setPrognosNarPatientKanAterga(source.getPrognosAterga());
+        }
         utlatande.setKommentar(source.getOvrigt());
         utlatande.setKontaktMedFk(source.getOnskarKontakt().isOnskarKontakt());
         return utlatande;
@@ -87,8 +106,8 @@ public class TransportToInternal {
     }
 
     private static void setBehandling(SjukpenningUtlatande utlatande, BehandlingTyp behandling) {
-        utlatande.setPlaneradBehandling(behandling.getPlanerade());
-        utlatande.setPagaendeBehandling(behandling.getPagaende());
+        utlatande.setPlaneradBehandling(behandling.getPlanerade() != null ? behandling.getPlanerade() : null);
+        utlatande.setPagaendeBehandling(behandling.getPagaende() != null ? behandling.getPagaende() : null);
     }
 
     private static void setSjukdomar(SjukpenningUtlatande utlatande, List<SjukdomTyp> diagnoser) {
@@ -146,7 +165,16 @@ public class TransportToInternal {
         vardenhet.setPostnummer(sourceVardenhet.getPostnummer());
         vardenhet.setPostadress(sourceVardenhet.getPostadress());
         vardenhet.setPostort(sourceVardenhet.getPostort());
+        vardenhet.setTelefonnummer(sourceVardenhet.getTelefonnummer());
+        setVardgivare(vardenhet, sourceVardenhet.getVardgivare());
         hosPersonal.setVardenhet(vardenhet);
+    }
+
+    private static void setVardgivare(Vardenhet vardenhet, se.inera.intygstjanster.fk.services.v1.Vardgivare sourceVardgivare) {
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid(sourceVardgivare.getVardgivarid());
+        vardgivare.setVardgivarnamn(sourceVardgivare.getVardgivarnamn());
+        vardenhet.setVardgivare(vardgivare);
     }
 
     private static void setPatient(GrundData grundData, se.inera.intygstjanster.fk.services.v1.Patient sourcePatient) {

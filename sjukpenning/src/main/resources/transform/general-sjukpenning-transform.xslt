@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-                xmlns:hr="urn:riv:insuranceprocess:healthreporting:2">
+                xmlns:cr="urn:local:se:intygstjanster:services:fk:1">
 
   <!-- Copy all XML nodes, if no more specific template matches. -->
   <xsl:template match="@*|node()">
@@ -21,27 +21,26 @@
 
   <!-- Transform <faultcode> and <faultstring> elements to <resultCode>, <errorId> and <errorText> -->
   <xsl:template name="result">
-    <hr:resultCode>ERROR</hr:resultCode>
+    <cr:resultCode>ERROR</cr:resultCode>
 
     <xsl:choose>
       <xsl:when test="contains(faultstring/text(), 'Unmarshalling Error')">
         <!-- Schema validation errors are transformed to VALIDATION_ERROR -->
-        <hr:errorId>VALIDATION_ERROR</hr:errorId>
+        <cr:errorId>VALIDATION_ERROR</cr:errorId>
       </xsl:when>
       <xsl:when test="contains(faultcode/text(), 'soap:Client')">
         <!-- 'soap:Client' is transformed to VALIDATION_ERROR -->
-        <hr:errorId>VALIDATION_ERROR</hr:errorId>
+        <cr:errorId>VALIDATION_ERROR</cr:errorId>
       </xsl:when>
       <xsl:otherwise>
         <!-- 'soap:Server' is transformed to APPLICATION_ERROR -->
-        <hr:errorId>APPLICATION_ERROR</hr:errorId>
+        <cr:errorId>APPLICATION_ERROR</cr:errorId>
       </xsl:otherwise>
     </xsl:choose>
 
-    <hr:errorText>
+    <cr:resultText>
       <xsl:value-of select="faultstring/text()"/>
-    </hr:errorText>
+    </cr:resultText>
   </xsl:template>
-
 
 </xsl:stylesheet>

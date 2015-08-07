@@ -28,7 +28,6 @@ import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.Regis
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
 import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
 import se.inera.intygstjanster.fk.services.v1.ObjectFactory;
-import se.inera.intygstjanster.fk.services.v1.ResultatTyp;
 import se.inera.intygstjanster.fk.services.v1.SjukpenningIntyg;
 
 import com.google.common.base.Throwables;
@@ -69,21 +68,21 @@ public class RegisterSjukpenningResponderImpl implements RegisterSjukpenningResp
 
             moduleApi.getModuleContainer().certificateReceived(certificateHolder);
 
-            response.setResultat(okResult());
+            response.setResultat(ResultUtil.okResult());
             LOGGER.debug("Registered intyg with id: {}",registerSjukpenning.getIntyg().getIntygsId());
 
         } catch (CertificateAlreadyExistsException e) {
-            response.setResultat(infoResult("Certificate already exists"));
+            response.setResultat(ResultUtil.infoResult("Certificate already exists"));
             String certificateId = registerSjukpenning.getIntyg().getIntygsId();
             String issuedBy = registerSjukpenning.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");
        
         } catch (CertificateValidationException e) {
-            response.setResultat(errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
+            response.setResultat(ResultUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
             LOGGER.error(LogMarkers.VALIDATION, e.getMessage());
 
         } catch (ConverterException e) {
-            response.setResultat(errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
+            response.setResultat(ResultUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
             LOGGER.error(LogMarkers.VALIDATION, e.getMessage());
 
         } catch (JAXBException e) {
@@ -96,21 +95,6 @@ public class RegisterSjukpenningResponderImpl implements RegisterSjukpenningResp
         }
 
         return response;
-    }
-
-    private ResultatTyp okResult() {
-        // TODO
-        return null;
-    }
-
-    private ResultatTyp infoResult(String message) {
-        // TODO
-        return null;
-    }
-
-    private ResultatTyp errorResult(ErrorIdType errorIdtype, String message) {
-        // TODO
-        return null;
     }
 
     private String xmlToString(SjukpenningIntyg sjukpenningIntyg) throws JAXBException {

@@ -1,17 +1,14 @@
 package se.inera.certificate.modules.sjukpenning.model.converter;
 
+import java.util.List;
+
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.common.internal.*;
+import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
 import se.inera.intygstjanster.fk.services.v1.*;
-import se.inera.intygstjanster.fk.services.v1.GrundData;
-import se.inera.intygstjanster.fk.services.v1.Patient;
-import se.inera.intygstjanster.fk.services.v1.Vardenhet;
-
-import java.util.List;
 
 public class InternalToTransport {
 
@@ -27,8 +24,8 @@ public class InternalToTransport {
 
     private static SjukpenningIntyg getIntyg(SjukpenningUtlatande source) {
         SjukpenningIntyg sjukpenningIntyg = new SjukpenningIntyg();
-        sjukpenningIntyg.setIntygsId(source.getId());
         sjukpenningIntyg.setIntygsTyp(source.getTyp());
+        sjukpenningIntyg.setIntygsId(source.getId());
         sjukpenningIntyg.setGrundData(getGrundData(source.getGrundData()));
         sjukpenningIntyg.setBedomning(getBedomning(source));
         sjukpenningIntyg.setBehandling(getBehandling(source));
@@ -76,14 +73,15 @@ public class InternalToTransport {
         if (source.isForaldraledighet()) {
             return SysselsattningTyp.FORALDRALEDIGHET;
         }
-        // TODO
-        throw new IllegalArgumentException();
+        return SysselsattningTyp.OKAND;
     }
 
     private static SjukdomarTyp getSjukdomar(SjukpenningUtlatande source) {
         SjukdomarTyp sjukdomar = new SjukdomarTyp();
         List<SjukdomTyp> sjukdomList = sjukdomar.getDiagnos();
-        sjukdomList.add(getSjukdom(source.getDiagnosKodsystem1(), source.getDiagnosKod1(), source.getDiagnosBeskrivning1()));
+        if (source.getDiagnosKod1() != null) {
+            sjukdomList.add(getSjukdom(source.getDiagnosKodsystem1(), source.getDiagnosKod1(), source.getDiagnosBeskrivning1()));
+        }
         if (source.getDiagnosKod2() != null) {
             sjukdomList.add(getSjukdom(source.getDiagnosKodsystem2(), source.getDiagnosKod2(), source.getDiagnosBeskrivning2()));
         }
@@ -96,7 +94,7 @@ public class InternalToTransport {
     private static SjukdomTyp getSjukdom(String diagnosKodsystem, String diagnosKod, String diagnosBeskrivning) {
         SjukdomTyp sjukdom = new SjukdomTyp();
         sjukdom.setCodeSystemCode(diagnosKodsystem);
-        sjukdom.setCodeSystemCode(diagnosKod);
+        sjukdom.setCodeSystemId(diagnosKod);
         sjukdom.setDescription(diagnosBeskrivning);
         return sjukdom;
     }
@@ -108,10 +106,13 @@ public class InternalToTransport {
     }
 
     private static KonsekvensTyp getKonsekvenser(SjukpenningUtlatande source) {
-        KonsekvensTyp konsekvens = new KonsekvensTyp();
-        konsekvens.setBegransning(source.getAktivitetsbegransning());
-        konsekvens.setKonsekvens(source.getFunktionsnedsattning());
-        return konsekvens;
+        if (source.getAktivitetsbegransning() != null || source.getFunktionsnedsattning() != null) {
+            KonsekvensTyp konsekvens = new KonsekvensTyp();
+            konsekvens.setBegransning(source.getAktivitetsbegransning());
+            konsekvens.setKonsekvens(source.getFunktionsnedsattning());
+            return konsekvens;
+        }
+        return null;
     }
 
     private static AtgarderTyp getAtgarder(SjukpenningUtlatande source) {
@@ -150,14 +151,20 @@ public class InternalToTransport {
         if (source.isAtgardOvrigt()) {
             atgardList.add(AtgardTyp.OVRIGT);
         }
-        return atgarder;
+        if (atgardList.size() > 0) {
+            return atgarder;
+        }
+        return null;
     }
 
     private static BehandlingTyp getBehandling(SjukpenningUtlatande source) {
-        BehandlingTyp behandling = new BehandlingTyp();
-        behandling.setPagaende(source.getPagaendeBehandling());
-        behandling.setPlanerade(source.getPlaneradBehandling());
-        return behandling;
+        if (source.getPagaendeBehandling() != null || source.getPlaneradBehandling() != null) {
+            BehandlingTyp behandling = new BehandlingTyp();
+            behandling.setPagaende(source.getPagaendeBehandling());
+            behandling.setPlanerade(source.getPlaneradBehandling());
+            return behandling;
+        }
+        return null;
     }
 
     private static BedomningTyp getBedomning(SjukpenningUtlatande source) {
@@ -211,7 +218,16 @@ public class InternalToTransport {
         vardenhet.setPostnummer(sourceVardenhet.getPostnummer());
         vardenhet.setPostadress(sourceVardenhet.getPostadress());
         vardenhet.setPostort(sourceVardenhet.getPostort());
+        vardenhet.setTelefonnummer(sourceVardenhet.getTelefonnummer());
+        vardenhet.setVardgivare(getVardgivare(sourceVardenhet.getVardgivare()));
         return vardenhet;
+    }
+
+    private static Vardgivare getVardgivare(se.inera.certificate.model.common.internal.Vardgivare sourceVardgivare) {
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid(sourceVardgivare.getVardgivarid());
+        vardgivare.setVardgivarnamn(sourceVardgivare.getVardgivarnamn());
+        return vardgivare;
     }
 
     private static Patient getPatient(se.inera.certificate.model.common.internal.Patient sourcePatient) {

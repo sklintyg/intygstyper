@@ -41,9 +41,6 @@ public class ConverterUtil {
         certificateHolder.setCivicRegistrationNumber(utlatande.getGrundData().getPatient().getPersonId());
         certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
         certificateHolder.setType(SjukpenningEntryPoint.MODULE_ID);
-        certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
-        certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());
-        certificateHolder.setAdditionalInfo(utlatande.getGiltighet().getFrom().toString() + " - " + utlatande.getGiltighet().getTom().toString());
         certificateHolder.setDocument(document);
         return certificateHolder;
     }
