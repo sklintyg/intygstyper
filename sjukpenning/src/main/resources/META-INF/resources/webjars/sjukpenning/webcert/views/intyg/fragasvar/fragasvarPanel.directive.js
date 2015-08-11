@@ -5,7 +5,7 @@
 /**
  * qaPanel directive. Common directive for both unhandled and handled questions/answers
  */
-angular.module('sjukpenning').directive('qaPanel',
+angular.module('sjukpenning').directive('qaPanelsp',
     [ '$window', '$log', '$timeout', 'common.User', 'common.fragaSvarCommonService', 'sjukpenning.fragaSvarService',
         'common.statService', 'common.dialogService','sjukpenning.QACtrl.Helper',
         function($window, $log, $timeout, User, fragaSvarCommonService, fragaSvarService, statService, dialogService, qaHelper) {

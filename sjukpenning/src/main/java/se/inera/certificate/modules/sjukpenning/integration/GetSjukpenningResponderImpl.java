@@ -32,6 +32,7 @@ import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpen
 import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningType;
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
 import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
+import se.inera.intygstjanster.fk.services.v1.IntygMeta;
 
 import com.google.common.base.Throwables;
 
@@ -59,6 +60,7 @@ public class GetSjukpenningResponderImpl implements GetSjukpenningResponderInter
                         String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
                 attachCertificateDocument(certificate, response);
+                attachMeta(certificate, response);
                 if (certificate.isRevoked()) {
                     response.setResultat(ResultUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
                 } else {
@@ -76,6 +78,16 @@ public class GetSjukpenningResponderImpl implements GetSjukpenningResponderInter
         try {
             RegisterSjukpenningType jaxbObject = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument()));
             response.setIntyg(jaxbObject.getIntyg());
+        } catch (Exception e) {
+            LOGGER.error("Error while converting in getSjukpenning for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
+            Throwables.propagate(e);
+        }
+    }
+
+    protected void attachMeta(CertificateHolder certificate, GetSjukpenningResponseType response) {
+        try {
+            IntygMeta intygMeta = InternalToTransport.getMeta(certificate);
+            response.setMeta(intygMeta);
         } catch (Exception e) {
             LOGGER.error("Error while converting in getSjukpenning for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
             Throwables.propagate(e);

@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.sjukpenning.model.converter;
 
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.GrundData;
@@ -12,7 +13,9 @@ import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlata
 import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.intygstjanster.fk.services.v1.*;
+import se.inera.certificate.model.Status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TransportToInternal {
@@ -22,6 +25,7 @@ public class TransportToInternal {
         utlatande.setId(source.getIntygsId());
         utlatande.setTyp(source.getIntygsTyp());
         setGrundData(utlatande, source.getGrundData());
+        utlatande.setAvstangningSmittskydd(source.isAvstangningSmitta());
         if (source.getVardKontakter() != null) {
             setVardkontakter(utlatande, source.getVardKontakter().getVardkontakt());
         }
@@ -206,7 +210,7 @@ public class TransportToInternal {
         }
     }
 
-    public static CertificateMetaData getMetaData(SjukpenningIntyg source) {
+    public static CertificateMetaData getMetaData(SjukpenningIntyg source, IntygMeta meta) {
         CertificateMetaData metaData = new CertificateMetaData();
         metaData.setCertificateId(source.getIntygsId());
         metaData.setAdditionalInfo(source.getOvrigt());
@@ -214,6 +218,12 @@ public class TransportToInternal {
         metaData.setFacilityName(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
         metaData.setIssuerName(source.getGrundData().getSkapadAv().getFullstandigtNamn());
         metaData.setSignDate(source.getGrundData().getSigneringsTidstampel());
+
+        List<Status> statuses = new ArrayList<>();
+        for (IntygStatus sourceStatus : meta.getStatus()) {
+            statuses.add(new Status(CertificateState.valueOf(sourceStatus.getType().value()), sourceStatus.getTarget(), sourceStatus.getTimestamp()));
+        }
+        metaData.setStatus(statuses);
 
         return metaData;
     }

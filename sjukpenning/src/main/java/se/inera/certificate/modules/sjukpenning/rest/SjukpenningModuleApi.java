@@ -215,7 +215,7 @@ public class SjukpenningModuleApi implements ModuleApi {
         try {
             SjukpenningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
-            CertificateMetaData metaData = TransportToInternal.getMetaData(response.getIntyg());
+            CertificateMetaData metaData = TransportToInternal.getMetaData(response.getIntyg(), response.getMeta());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
         } catch (Exception e) {
             throw new ModuleException(e);

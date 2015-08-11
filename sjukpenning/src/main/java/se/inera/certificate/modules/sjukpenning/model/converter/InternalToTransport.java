@@ -7,6 +7,8 @@ import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
+import se.inera.certificate.modules.support.api.CertificateHolder;
+import se.inera.certificate.modules.support.api.CertificateStateHolder;
 import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
 import se.inera.intygstjanster.fk.services.v1.*;
 
@@ -27,6 +29,7 @@ public class InternalToTransport {
         sjukpenningIntyg.setIntygsTyp(source.getTyp());
         sjukpenningIntyg.setIntygsId(source.getId());
         sjukpenningIntyg.setGrundData(getGrundData(source.getGrundData()));
+        sjukpenningIntyg.setAvstangningSmitta(source.isAvstangningSmittskydd());
         sjukpenningIntyg.setBedomning(getBedomning(source));
         sjukpenningIntyg.setBehandling(getBehandling(source));
         sjukpenningIntyg.setForslagAtgarder(getAtgarder(source));
@@ -242,4 +245,16 @@ public class InternalToTransport {
         return patient;
     }
 
+    public static IntygMeta getMeta(CertificateHolder certHolder) {
+        IntygMeta intygMeta = new IntygMeta();
+        List<IntygStatus> statuses = intygMeta.getStatus();
+        for (CertificateStateHolder certificateState : certHolder.getCertificateStates()) {
+            IntygStatus intygStatus = new IntygStatus();
+            intygStatus.setTarget(certificateState.getTarget());
+            intygStatus.setTimestamp(certificateState.getTimestamp());
+            intygStatus.setType(Status.fromValue(certificateState.getState().name()));
+            statuses.add(intygStatus);
+        }
+        return intygMeta;
+    }
 }
