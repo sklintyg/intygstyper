@@ -261,6 +261,13 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.webjars</groupId>
+                  <artifactId>jquery</artifactId>
+                  <version>${jquery.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
                   <artifactId>angularjs</artifactId>
                   <version>${angularjs.version}</version>
                   <type>jar</type>
