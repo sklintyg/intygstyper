@@ -31,7 +31,8 @@
         nedsatt arbetsförmåga från och med</label>
                       <span wc-date-picker-field target-model="model.nedsattMed25.from"
                             on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25from"
-                            invalid="!field8b.nedsattMed25.from.viewValid"></span>
+                            invalid="!field8b.nedsattMed25.from.viewValid" override-render="true"
+                          format=''></span>
       <span>till och med</span>
                       <span wc-date-picker-field target-model="model.nedsattMed25.tom"
                             on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"

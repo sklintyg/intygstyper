@@ -82,7 +82,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                     return;
                 }
                 if (newVal) {
-                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
+                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel, $scope);
                     doneLoading = true;
                 }
             });
