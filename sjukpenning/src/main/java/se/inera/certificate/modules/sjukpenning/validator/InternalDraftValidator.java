@@ -62,8 +62,6 @@ public class InternalDraftValidator {
 
     private void validateReferenser(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        // Fält 4b - höger Check that we at least got one field set regarding
-        // what the certificate is based on if not smittskydd
         if (!utlatande.isAvstangningSmittskydd()) {
 
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null

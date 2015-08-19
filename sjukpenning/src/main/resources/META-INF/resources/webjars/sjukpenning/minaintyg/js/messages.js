@@ -76,7 +76,7 @@ var sjukpenningMessages = {
         'sjukpenning.label.samsjuklighet': 'Samsjuklighet föreligger',
         'sjukpenning.label.progressofdesease': 'Aktuellt sjukdomförlopp (fält 3)',
         'sjukpenning.label.disabilities': 'Funktionsnedsättning - observationer, undersökningsfynd och utredningsresultat (fält 4)',
-        'sjukpenning.label.basedon': 'Intyget baseras på (fält 4b)',
+        'sjukpenning.label.basedon': 'Intyget baseras på (fält 2)',
         'sjukpenning.label.comment': 'Kommentar:',
         'sjukpenning.label.limitation': 'Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning (fält 5)',
         'sjukpenning.label.recommendations': 'Rekommendationer (fält 6a)',

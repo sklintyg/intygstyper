@@ -15,24 +15,22 @@
                 <span ng-show="!viewState.intygModel.avstangningSmittskydd"> <span message key="sjukpenning.label.no"></span></span>
               </div>
 
-              <div wc-field field-number="4b" field-label="sjukpenning.label.intygbaseratpa" id="field4b"
+              <div wc-field field-number="2" field-label="sjukpenning.label.intygbaseratpa" id="field4b"
                    filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.telefonkontaktMedPatienten!=null || viewState.intygModel.journaluppgifter!=null}}">
                 <ul class="padded-list" id="baseratPaList">
-                  <li ng-show="viewState.intygModel.undersokningAvPatienten!=null"><span message
-                                                                                         key="sjukpenning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten
-                    | date:'longDate' }}</span>
+                  <li ng-show="viewState.intygModel.undersokningAvPatienten!=null">
+                    <span message key="sjukpenning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten | date:'longDate' }}</span>
                   </li>
-                  <li ng-show="viewState.intygModel.telefonkontaktMedPatienten!=null"><span message
-                                                                                            key="sjukpenning.vardkontakt.telefonkontakt"></span><span id="telefonkontaktMedPatienten">{{viewState.intygModel.telefonkontaktMedPatienten
-                    | date:'longDate' }}</span>
+                  <li ng-show="viewState.intygModel.telefonkontaktMedPatienten!=null">
+                    <span message key="sjukpenning.vardkontakt.telefonkontakt"></span><span id="telefonkontaktMedPatienten">{{viewState.intygModel.telefonkontaktMedPatienten | date:'longDate' }}</span>
                   </li>
-                  <li ng-show="viewState.intygModel.journaluppgifter!=null"><span message key="sjukpenning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter
-                    | date:'longDate' }}</span>
+                  <li ng-show="viewState.intygModel.journaluppgifter!=null">
+                    <span message key="sjukpenning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter | date:'longDate' }}</span>
                   </li>
                 </ul>
               </div>
 
-              <div wc-field field-number="8a" field-label="sjukpenning.label.arbetsformaga"
+              <div wc-field field-number="3" field-label="sjukpenning.label.arbetsformaga"
                    filled="{{viewState.intygModel.nuvarandeArbetsuppgifter||viewState.intygModel.arbetsloshet||viewState.intygModel.foraldraledighet}}" id="field8">
                 <ul class="padded-list">
                   <li ng-show="viewState.intygModel.nuvarandeArbetsuppgifter"><span message key="sjukpenning.label.arbetsformaga.nuvarande-arbete"></span>
@@ -44,7 +42,7 @@
                 </ul>
               </div>
 
-              <div wc-field field-number="2" field-label="sjukpenning.label.diagnos" filled="{{viewState.intygModel.diagnosKod1!=null}}" id="field2">
+              <div wc-field field-number="4" field-label="sjukpenning.label.diagnos" filled="{{viewState.intygModel.diagnosKod1!=null}}" id="field2">
                 <div class="form-group">
                   <span message key="sjukpenning.label.diagnoskod.icd"></span>
                   <span id="diagnosKod">{{viewState.intygModel.diagnosKod1}}</span> <span id="diagnosBeskrivning1">{{viewState.intygModel.diagnosBeskrivning1}}</span>
@@ -73,15 +71,15 @@
                 </div>
               </div>
 
-              <div wc-field field-number="4" field-label="sjukpenning.label.funktionsnedsattning"
+              <div wc-field field-number="5" field-label="sjukpenning.label.funktionsnedsattning"
                    filled="{{viewState.intygModel.funktionsnedsattning!=null}}"><div id="funktionsnedsattning" class="multiline">{{viewState.intygModel.funktionsnedsattning}}</div>
               </div>
 
-              <div wc-field field-number="5" field-label="sjukpenning.label.aktivitetsbegransning"
+              <div wc-field field-number="6" field-label="sjukpenning.label.aktivitetsbegransning"
                    filled="{{viewState.intygModel.aktivitetsbegransning!=null}}"><div id="aktivitetsbegransning" class="multiline">{{viewState.intygModel.aktivitetsbegransning}}</div>
               </div>
 
-              <div wc-field field-number="6b" field-label="sjukpenning.label.planerad-atgard"
+              <div wc-field field-number="7" field-label="sjukpenning.label.planerad-atgard"
                    filled="{{viewState.intygModel.pagaendeBehandling!=null||viewState.intygModel.planeradBehandling!=null}}" id="field6b">
                 <ul class="padded-list">
                   <li ng-show="viewState.intygModel.pagaendeBehandling != null">
@@ -95,7 +93,7 @@
                 </ul>
               </div>
 
-              <div wc-field field-number="8b" field-label="sjukpenning.label.nedsattning"
+              <div wc-field field-number="8" field-label="sjukpenning.label.nedsattning"
                    filled="{{viewState.intygModel.nedsattMed25!=null||viewState.intygModel.nedsattMed50!=null||viewState.intygModel.nedsattMed75!=null||viewState.intygModel.nedsattMed100!=null}}"
                    id="field8b">
 
@@ -140,12 +138,12 @@
                 </div>
               </div>
 
-              <div wc-field field-number="13" field-label="sjukpenning.label.ovrigt" filled="{{viewState.intygModel.kommentar!=null&&viewState.intygModel.kommentar!=''&&viewState.intygModel.kommentar!=undefined}}"
+              <div wc-field field-number="10" field-label="sjukpenning.label.ovrigt" filled="{{viewState.intygModel.kommentar!=null&&viewState.intygModel.kommentar!=''&&viewState.intygModel.kommentar!=undefined}}"
                    id="field13">
                 <div id="kommentar" class="multiline">{{viewState.intygModel.kommentar}}</div>
               </div>
 
-              <div wc-field field-number="12" field-label="sjukpenning.label.kontakt-med-fk" filled="{{true}}" id="field12">
+              <div wc-field field-number="11" field-label="sjukpenning.label.kontakt-med-fk" filled="{{true}}" id="field12">
                 <span id="kontaktMedFk" ng-show="viewState.intygModel.kontaktMedFk"> <span message key="sjukpenning.label.yes"></span></span>
                 <span ng-show="!viewState.intygModel.kontaktMedFk"> <span message key="sjukpenning.label.no"></span></span>
               </div>
