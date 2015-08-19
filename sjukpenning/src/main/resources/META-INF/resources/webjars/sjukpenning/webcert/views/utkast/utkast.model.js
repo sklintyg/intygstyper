@@ -63,15 +63,6 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
                         form13:['kommentar'],
 
-                        form3:  ['sjukdomsforlopp'],
-
-                        form6a:['rekommendationKontaktArbetsformedlingen',
-                                'rekommendationKontaktForetagshalsovarden',
-                                'rekommendationOvrigt',
-                                'rekommendationOvrigtCheck'],
-
-                        form9: ['arbetsformagaPrognos'],
-
                         form10:['arbetsformagaPrognosGarInteAttBedomaBeskrivning',
                                 'prognosBedomning'],
 
@@ -113,20 +104,8 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                         parent.content = this;
                     }
                     update._super.call(this, content);
-                },
-
-                atticUpdateForm6a711 : function(){
-                    var props = this.properties.form6a.concat(this.properties.form7.concat(this.properties.form11));
-                    this.updateToAttic(props);
-                },
-                clearForm6a711 : function(){
-                    var props = this.properties.form6a.concat(this.properties.form7.concat(this.properties.form11));
-                    this.clear(props);
-                },
-                atticRestoreForm6a711 : function(){
-                    var props = this.properties.form6a.concat(this.properties.form7.concat(this.properties.form11));
-                    this.restoreFromAttic(props);
                 }
+
             }, {
                 build : function(){
                     //console.log('----- build *****' + DraftModel + ',' + sjukpenningModel._members);
