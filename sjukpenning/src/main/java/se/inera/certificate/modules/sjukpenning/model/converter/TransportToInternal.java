@@ -1,10 +1,14 @@
 package se.inera.certificate.modules.sjukpenning.model.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.model.Status;
+import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.common.internal.GrundData;
-import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
@@ -13,10 +17,6 @@ import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlata
 import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.intygstjanster.fk.services.v1.*;
-import se.inera.certificate.model.Status;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TransportToInternal {
 
@@ -29,8 +29,21 @@ public class TransportToInternal {
         if (source.getVardKontakter() != null) {
             setVardkontakter(utlatande, source.getVardKontakter().getVardkontakt());
         }
-        if (source.getSysselsattning() != null) {
-            setSysselsattning(utlatande, source.getSysselsattning());
+        if (source.getArbete() != null) {
+            utlatande.setNuvarandeArbete(true);
+            utlatande.setNuvarandeArbetsuppgifter(source.getArbete());
+        }
+        if (source.isArbetssokande() != null && source.isArbetssokande()) {
+            utlatande.setArbetsloshet(true);
+        }
+        if (source.isForaldraledighet() != null && source.isForaldraledighet()) {
+            utlatande.setForaldraledighet(true);
+        }
+        if (source.isStudier() != null && source.isStudier()) {
+            utlatande.setStudier(true);
+        }
+        if (source.isArbetsmarknadsatgard() != null && source.isArbetsmarknadsatgard()) {
+            utlatande.setArbetsmarknadsProgram(true);
         }
         if (source.getSjukdomar() != null) {
             setSjukdomar(utlatande, source.getSjukdomar().getDiagnos());
@@ -64,26 +77,37 @@ public class TransportToInternal {
             switch (atgard) {
             case INTE_AKTUELLT:
                 utlatande.setAtgardInteAktuellt(true);
+                break;
             case ARBETSTRANING:
                 utlatande.setAtgardArbetstraning(true);
+                break;
             case ARBETSANPASSNING:
                 utlatande.setAtgardArbetsanpassning(true);
+                break;
             case SOKA_NYTT_ARBETE:
                 utlatande.setAtgardSokaNyttArbete(true);
+                break;
             case BESOK_PA_ARBETSPLATSEN:
                 utlatande.setAtgardBesokPaArbete(true);
+                break;
             case ERGONOMISK_BEDOMNING:
                 utlatande.setAtgardErgonomi(true);
+                break;
             case HJALPMEDEL:
                 utlatande.setAtgardHjalpmedel(true);
+                break;
             case KONFLIKTHANTERING:
                 utlatande.setAtgardKonflikthantering(true);
+                break;
             case KONTAKT_MED_FORETAGSHALSOVARD:
                 utlatande.setAtgardForetagshalsovard(true);
+                break;
             case OMFORDELNING_AV_ARBETSUPPGIFTER:
                 utlatande.setAtgardOmfordelning(true);
+                break;
             case OVRIGT:
                 utlatande.setAtgardOvrigt(true);
+                break;
             }
         }
     }
@@ -94,17 +118,21 @@ public class TransportToInternal {
         for (SjukskrivningTyp sjukskrivning : bedomning.getSjukskrivning()) {
             switch (sjukskrivning.getNedsattningsgrad()) {
             case HELT_NEDSATT:
-                utlatande.setNedsattMed100(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()), new InternalDate(
-                        sjukskrivning.getVaraktighetTom())));
+                utlatande.setNedsattMed100(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()),
+                        new InternalDate(sjukskrivning.getVaraktighetTom())));
+                break;
             case NEDSATT_MED_3_4:
-                utlatande.setNedsattMed75(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()), new InternalDate(
-                        sjukskrivning.getVaraktighetTom())));
+                utlatande.setNedsattMed75(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()),
+                        new InternalDate(sjukskrivning.getVaraktighetTom())));
+                break;
             case NEDSATT_MED_1_2:
-                utlatande.setNedsattMed50(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()), new InternalDate(
-                        sjukskrivning.getVaraktighetTom())));
+                utlatande.setNedsattMed50(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()),
+                        new InternalDate(sjukskrivning.getVaraktighetTom())));
+                break;
             case NEDSATT_MED_1_4:
-                utlatande.setNedsattMed25(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()), new InternalDate(
-                        sjukskrivning.getVaraktighetTom())));
+                utlatande.setNedsattMed25(new InternalLocalDateInterval(new InternalDate(sjukskrivning.getVaraktighetFrom()),
+                        new InternalDate(sjukskrivning.getVaraktighetTom())));
+                break;
             }
         }
     }
@@ -118,31 +146,23 @@ public class TransportToInternal {
         int i = 1;
         for (SjukdomTyp sjukdom : diagnoser) {
             switch (i) {
-            case 1:
+                case 1:
                 utlatande.setDiagnosKodsystem1(sjukdom.getCodeSystemId());
                 utlatande.setDiagnosKod1(sjukdom.getCodeSystemCode());
-                utlatande.setDiagnosBeskrivning1(sjukdom.getDescription());
-            case 2:
+                    utlatande.setDiagnosBeskrivning1(sjukdom.getDescription());
+                    break;
+                case 2:
                 utlatande.setDiagnosKodsystem2(sjukdom.getCodeSystemId());
                 utlatande.setDiagnosKod2(sjukdom.getCodeSystemCode());
-                utlatande.setDiagnosBeskrivning2(sjukdom.getDescription());
-            case 3:
+                    utlatande.setDiagnosBeskrivning2(sjukdom.getDescription());
+                    break;
+                case 3:
                 utlatande.setDiagnosKodsystem3(sjukdom.getCodeSystemId());
                 utlatande.setDiagnosKod3(sjukdom.getCodeSystemCode());
                 utlatande.setDiagnosBeskrivning3(sjukdom.getDescription());
+                break;
             }
             i++;
-        }
-    }
-
-    private static void setSysselsattning(SjukpenningUtlatande utlatande, SysselsattningTyp sysselsattning) {
-        switch (sysselsattning) {
-        case ARBETSLOSHET:
-            utlatande.setArbetsloshet(true);
-        case NUVARANDE_ARBETE:
-            utlatande.setNuvarandeArbete(true);
-        case FORALDRALEDIGHET:
-            utlatande.setForaldraledighet(true);
         }
     }
 

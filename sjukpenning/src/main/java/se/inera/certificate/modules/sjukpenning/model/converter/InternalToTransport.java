@@ -39,7 +39,21 @@ public class InternalToTransport {
         sjukpenningIntyg.setOvrigt(source.getKommentar());
         sjukpenningIntyg.setPrognosAterga(source.getPrognosNarPatientKanAterga());
         sjukpenningIntyg.setSjukdomar(getSjukdomar(source));
-        sjukpenningIntyg.setSysselsattning(getSysselsattning(source));
+        if (source.isNuvarandeArbete()) {
+            sjukpenningIntyg.setArbete(source.getNuvarandeArbetsuppgifter());
+        }
+        if (source.isArbetsloshet()) {
+            sjukpenningIntyg.setArbetssokande(true);
+        }
+        if (source.isForaldraledighet()) {
+            sjukpenningIntyg.setForaldraledighet(true);
+        }
+        if (source.isStudier()) {
+            sjukpenningIntyg.setStudier(true);
+        }
+        if (source.isArbetsmarknadsProgram()) {
+            sjukpenningIntyg.setArbetsmarknadsatgard(true);
+        }
         sjukpenningIntyg.setVardKontakter(getVardkontakter(source));
         return sjukpenningIntyg;
     }
@@ -64,19 +78,6 @@ public class InternalToTransport {
         vardkontakt.setDatum(kontaktDate.asLocalDate());
         vardkontakt.setBeskrivning(vardkontaktBeskrivning);
         return vardkontakt;
-    }
-
-    private static SysselsattningTyp getSysselsattning(SjukpenningUtlatande source) {
-        if (source.isNuvarandeArbete()) {
-            return SysselsattningTyp.NUVARANDE_ARBETE;
-        }
-        if (source.isArbetsloshet()) {
-            return SysselsattningTyp.ARBETSLOSHET;
-        }
-        if (source.isForaldraledighet()) {
-            return SysselsattningTyp.FORALDRALEDIGHET;
-        }
-        return SysselsattningTyp.OKAND;
     }
 
     private static SjukdomarTyp getSjukdomar(SjukpenningUtlatande source) {

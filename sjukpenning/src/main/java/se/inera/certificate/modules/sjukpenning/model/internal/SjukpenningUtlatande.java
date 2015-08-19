@@ -1,11 +1,7 @@
 package se.inera.certificate.modules.sjukpenning.model.internal;
 
-import static se.inera.certificate.common.util.StringUtil.emptyToNull;
-import static se.inera.certificate.common.util.StringUtil.join;
-
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.LocalDateInterval;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
 
@@ -19,7 +15,7 @@ public class SjukpenningUtlatande extends Utlatande {
 
     private boolean nuvarandeArbete;
     private String nuvarandeArbetsuppgifter;
-    private String nuvarandeYrke;
+
     private boolean arbetsloshet;
     private boolean foraldraledighet;
     private boolean studier;
@@ -298,26 +294,6 @@ public class SjukpenningUtlatande extends Utlatande {
 
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
-    }
-
-    public String getForskrivarkodOchArbetsplatskod() {
-        return emptyToNull(join(" - ", getGrundData().getSkapadAv().getForskrivarKod(), getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod()));
-    }
-
-    public String getNamnfortydligandeOchAdress() {
-        return join("\n", getGrundData().getSkapadAv().getFullstandigtNamn(),
-                getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn(),
-                getGrundData().getSkapadAv().getVardenhet().getPostadress(),
-                join(" ", getGrundData().getSkapadAv().getVardenhet().getPostnummer(), getGrundData().getSkapadAv().getVardenhet().getPostort()),
-                getGrundData().getSkapadAv().getVardenhet().getTelefonnummer());
-    }
-
-    public String getNuvarandeYrke() {
-        return nuvarandeYrke;
-    }
-
-    public void setNuvarandeYrke(String nuvarandeYrke) {
-        this.nuvarandeYrke = nuvarandeYrke;
     }
 
     public boolean isStudier() {

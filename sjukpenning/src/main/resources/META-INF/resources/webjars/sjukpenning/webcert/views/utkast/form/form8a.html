@@ -15,13 +15,6 @@
       <label class="checkbox"><input type="checkbox" id="arbeteNuvarande" ng-model="model.nuvarandeArbete"><span message key="sjukpenning.label.sysselsattning.arbete"/></label>
       <span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.nuvarande"></span>
       <div class="indent" ng-if="model.nuvarandeArbete">
-        <label for="currentProfession"><span message key="sjukpenning.label.sysselsattning.yrke"/></label>
-        <div class="controls">
-          <textarea id="currentProfession" class="" name="currentProfession" rows='2'
-                    ng-model="model.nuvarandeYrke" ng-trim="false" />
-        </div>
-      </div>
-      <div class="indent" ng-if="model.nuvarandeArbete">
         <label for="currentWork"><span message key="sjukpenning.label.sysselsattning.uppgifter"/></label>
         <div class="controls">
           <textarea id="currentWork" class="" name="currentWork" rows='2'
@@ -37,9 +30,9 @@
       </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.arbetsloshet"></span>
   </div>
   <div class="form-group form-inline">
-    <label class="checkbox"><input type="checkbox" id="arbeteForaldraledig" ng-model="model.foraldrarledighet">
+    <label class="checkbox"><input type="checkbox" id="arbeteForaldraledig" ng-model="model.foraldraledighet">
       <span message key="sjukpenning.label.sysselsattning.foraldraledighet"/>
-      </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.foraldrarledighet"></span>
+      </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.foraldraledighet"></span>
   </div>
   <div class="form-group form-inline">
     <label class="checkbox"><input type="checkbox" id="arbeteStudier" ng-model="model.studier">

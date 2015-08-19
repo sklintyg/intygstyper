@@ -21,83 +21,54 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
                         form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],
 
-                        form2: ['diagnosBeskrivning',
-                                'diagnosBeskrivning1',
-                                'diagnosBeskrivning2',
-                                'diagnosBeskrivning3',
-                                'diagnosKod1',
-                                'diagnosKod2',
-                                'diagnosKod3',
-                                'diagnosKodsystem1',
-                                'diagnosKodsystem2',
-                                'diagnosKodsystem3',
-                                new ModelAttr('samsjuklighet', {defaultValue: false})],
+                        form4b:['journaluppgifter',
+                            'telefonkontaktMedPatienten',
+                            'undersokningAvPatienten'],
 
-                        form3:  ['sjukdomsforlopp'],
+                        form8a:['arbetsloshet',
+                            'foraldraledighet',
+                            'studier',
+                            'arbetsmarknadsProgram',
+                            'nuvarandeArbete',
+                            'nuvarandeArbetsuppgifter'],
+
+                        form2: ['diagnosBeskrivning1',
+                            'diagnosBeskrivning2',
+                            'diagnosBeskrivning3',
+                            'diagnosKod1',
+                            'diagnosKod2',
+                            'diagnosKod3',
+                            'diagnosKodsystem1',
+                            'diagnosKodsystem2',
+                            'diagnosKodsystem3',
+                            new ModelAttr('samsjuklighet', {defaultValue: false})],
 
                         form4:  ['funktionsnedsattning'],
 
-                        form4b:['journaluppgifter',
-                                'telefonkontaktMedPatienten',
-                                'undersokningAvPatienten'],
-
                         form5: ['aktivitetsbegransning'],
+
+                        form6b:['pagaendeBehandling',
+                            'planeradBehandling'],
+
+                        form8b:['tjanstgoringstid',
+                            new ModelAttr('nedsattMed100', {fromTransform: nedsattFromTransform}),
+                            new ModelAttr('nedsattMed25', {fromTransform: nedsattFromTransform}),
+                            'nedsattMed25Beskrivning',
+                            new ModelAttr('nedsattMed50', {fromTransform: nedsattFromTransform}),
+                            'nedsattMed50Beskrivning',
+                            new ModelAttr('nedsattMed75', {fromTransform: nedsattFromTransform}),
+                            'nedsattMed75Beskrivning', 'vadPatientenKanGora', 'prognosNarPatientKanAterga'],
+
+                        form16:['kommentar'],
+
+                        form13:['kommentar'],
+
+                        form3:  ['sjukdomsforlopp'],
 
                         form6a:['rekommendationKontaktArbetsformedlingen',
                                 'rekommendationKontaktForetagshalsovarden',
                                 'rekommendationOvrigt',
                                 'rekommendationOvrigtCheck'],
-
-                        form6b:['atgardInomSjukvarden',
-                                'annanAtgard'],
-
-                        form7: ['rehabilitering',
-                                new ModelAttr('rehab', {
-                                    trans : true, // we don't want this going back to the server!!
-                                    defaultValue : 'rehabiliteringEjAktuell',
-                                    linkedProperty:{
-                                        props:['rehabilitering'],
-                                        update:function(model, props){
-                                            if(props.rehabilitering === 'rehabiliteringAktuell'){
-                                                return 'JA';
-                                            } else if(props.rehabilitering === 'rehabiliteringEjAktuell'){
-                                                return 'NEJ';
-                                            } else if(props.rehabilitering === 'rehabiliteringGarInteAttBedoma'){
-                                                return 'GAREJ';
-                                            } else {
-                                                return '';
-                                            }
-                                        },
-                                        set : function(value){ // this is the model
-                                            switch (value) {
-                                            case 'JA':
-                                                this.rehabilitering = 'rehabiliteringAktuell';
-                                                break;
-                                            case 'NEJ':
-                                                this.rehabilitering = 'rehabiliteringEjAktuell';
-                                                break;
-                                            case 'GAREJ':
-                                                this.rehabilitering = 'rehabiliteringGarInteAttBedoma';
-                                                break;
-                                            default :
-                                                this.rehabilitering = undefined;
-                                            }
-                                        }
-                                    }})],
-
-                        form8a:['arbetsloshet',
-                                'foraldrarledighet',
-                                'nuvarandeArbete',
-                                'nuvarandeArbetsuppgifter'],
-
-                        form8b:['tjanstgoringstid',
-                                new ModelAttr('nedsattMed100', {fromTransform: nedsattFromTransform}),
-                                new ModelAttr('nedsattMed25', {fromTransform: nedsattFromTransform}),
-                                'nedsattMed25Beskrivning',
-                                new ModelAttr('nedsattMed50', {fromTransform: nedsattFromTransform}),
-                                'nedsattMed50Beskrivning',
-                                new ModelAttr('nedsattMed75', {fromTransform: nedsattFromTransform}),
-                                'nedsattMed75Beskrivning'],
 
                         form9: ['arbetsformagaPrognos'],
 
@@ -128,10 +99,6 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                                 }})],
 
                         form12:['kontaktMedFk'],
-
-                        form13:['kommentar'],
-
-                        form16:['kommentar'],
 
                         misc:  ['forskrivarkodOchArbetsplatskod',
                                 'namnfortydligandeOchAdress', 'id',

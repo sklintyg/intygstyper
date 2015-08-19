@@ -282,7 +282,7 @@
                 </span>
               </div>
 
-              <div mi-field field-label="sjukpenning.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
+              <div mi-field field-label="sjukpenning.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldraledighet">
                 <ul class="padded-list">
                   <li ng-show="cert.nuvarandeArbetsuppgifter">
                     <span message key="sjukpenning.label.patientworkcapacity.currentwork"></span>
@@ -290,7 +290,7 @@
                   <li ng-show="cert.arbetsloshet">
                     <span id="arbetslos" message key="sjukpenning.label.patientworkcapacity.unemployed"></span>
                   </li>
-                  <li ng-show="cert.foraldrarledighet">
+                  <li ng-show="cert.foraldraledighet">
                     <span id="foraldraledig" message key="sjukpenning.label.patientworkcapacity.parentalleave"></span>
                   </li>
                 </ul>
