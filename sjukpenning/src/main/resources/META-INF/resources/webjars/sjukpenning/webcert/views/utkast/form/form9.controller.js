@@ -1,4 +1,4 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCert.Form16Ctrl',
+angular.module('sjukpenning').controller('sjukpenning.EditCert.Form9Ctrl',
     ['$scope', '$log', 'sjukpenning.EditCertCtrl.ViewStateService', 'common.UtilsService',
         'common.DateUtilsService',
         function($scope, $log, viewState, utils, dateUtils) {
@@ -8,5 +8,6 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form16Ctrl',
 
             $scope.viewState = viewState;
 
-
-        }]);
+        }
+    ]
+);

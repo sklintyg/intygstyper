@@ -4,7 +4,6 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
             'use strict';
 
-
             // --- Transform functions
             var nedsattFromTransform = function(nedsatt) {
                 if (!nedsatt || (!nedsatt.from && !nedsatt.tom)) {
@@ -59,35 +58,12 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                             new ModelAttr('nedsattMed75', {fromTransform: nedsattFromTransform}),
                             'nedsattMed75Beskrivning', 'vadPatientenKanGora', 'prognosNarPatientKanAterga'],
 
-                        form16:['kommentar'],
+                        form9: ['atgardInteAktuellt', 'atgardArbetstraning', 'atgardArbetsanpassning',
+                            'atgardSokaNyttArbete', 'atgardBesokPaArbete', 'atgardErgonomi',
+                            'atgardHjalpmedel', 'atgardKonflikthantering', 'atgardOmfordelning',
+                            'atgardForetagshalsovard', 'atgardOvrigt'],
 
                         form13:['kommentar'],
-
-                        form10:['arbetsformagaPrognosGarInteAttBedomaBeskrivning',
-                                'prognosBedomning'],
-
-                        form11:['ressattTillArbeteAktuellt',
-                                'ressattTillArbeteEjAktuellt',
-                                new ModelAttr('ressattTillArbete', {
-                                    trans : true, // we don't want this going back to the server!!
-                                    linkedProperty:{
-                                        props:['ressattTillArbeteAktuellt','ressattTillArbeteEjAktuellt'],
-                                        update:function(model, props){
-                                            if(props.ressattTillArbeteAktuellt){
-                                                return 'JA';
-                                            } else if(props.ressattTillArbeteEjAktuellt){
-                                                return 'NEJ';
-                                            } else {
-                                                return '';
-                                            }
-                                        },
-                                        set : function(value){ // 'this' is the model
-                                            this.ressattTillArbeteAktuellt = value === 'JA';
-                                            this.ressattTillArbeteEjAktuellt = value === 'NEJ';
-
-                                            this.updateToAttic(['ressattTillArbete', 'ressattTillArbeteAktuellt', 'ressattTillArbeteEjAktuellt']);
-                                        }
-                                }})],
 
                         form12:['kontaktMedFk'],
 

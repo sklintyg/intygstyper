@@ -138,6 +138,22 @@
                 </div>
               </div>
 
+              <div wc-field field-number="9" field-label="sjukpenning.label.atgarder" id="field9">
+                <div>
+                  <span message key="sjukpenning.label.atgard.inte-aktuellt" ng-show="viewState.intygModel.atgardInteAktuellt" id="atgardInteAktuellt"/><br/>
+                  <span message key="sjukpenning.label.atgard.arbetstraning" ng-show="viewState.intygModel.atgardArbetstraning" id="atgardArbetstraning"/><br/>
+                  <span message key="sjukpenning.label.atgard.arbetsanpassning" ng-show="viewState.intygModel.atgardArbetsanpassning" id="atgardArbetsanpassning"/><br/>
+                  <span message key="sjukpenning.label.atgard.soka-nytt-arbete" ng-show="viewState.intygModel.atgardSokaNyttArbete" id="atgardSokaNyttArbete"/><br/>
+                  <span message key="sjukpenning.label.atgard.besok-pa-arbete" ng-show="viewState.intygModel.atgardBesokPaArbete" id="atgardBesokPaArbete"/><br/>
+                  <span message key="sjukpenning.label.atgard.ergonomi" ng-show="viewState.intygModel.atgardErgonomi" id="atgardErgonomi"/><br/>
+                  <span message key="sjukpenning.label.atgard.hjalpmedel" ng-show="viewState.intygModel.atgardHjalpmedel" id="atgardHjalpmedel"/><br/>
+                  <span message key="sjukpenning.label.atgard.konflikthantering" ng-show="viewState.intygModel.atgardKonflikthantering" id="atgardKonflikthantering"/><br/>
+                  <span message key="sjukpenning.label.atgard.omfordelning" ng-show="viewState.intygModel.atgardOmfordelning" id="atgardOmfordelning"/><br/>
+                  <span message key="sjukpenning.label.atgard.foretagshalsovard" ng-show="viewState.intygModel.atgardForetagshalsovard" id="atgardForetagshalsovard"/><br/>
+                  <span message key="sjukpenning.label.atgard.ovrigt" ng-show="viewState.intygModel.atgardOvrigt" id="atgardOvrigt"/><br/>
+                </div>
+              </div>
+
               <div wc-field field-number="10" field-label="sjukpenning.label.ovrigt" filled="{{viewState.intygModel.kommentar!=null&&viewState.intygModel.kommentar!=''&&viewState.intygModel.kommentar!=undefined}}"
                    id="field13">
                 <div id="kommentar" class="multiline">{{viewState.intygModel.kommentar}}</div>
