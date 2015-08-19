@@ -63,10 +63,15 @@
 
   <distributionManagement>
     <repository>
-      <id>cloudbees-private-release-repository</id>
-      <name>Callista Software Release Respository</name>
-      <url>dav:https://repository-callistasoftware.forge.cloudbees.com/release</url>
+      <id>inera-release-repository</id>
+      <name>inera-release-repository</name>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/</url>
     </repository>
+    <snapshotRepository>
+      <id>inera-snapshot-repository</id>
+      <name>inera-snapshot-repository</name>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <description><![CDATA[
