@@ -50,6 +50,7 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                             'planeradBehandling'],
 
                         form8b:['tjanstgoringstid',
+                            'ressattTillArbeteAktuellt', 'rekommendationOverSocialstyrelsensBeslutsstod',
                             new ModelAttr('nedsattMed100', {fromTransform: nedsattFromTransform}),
                             new ModelAttr('nedsattMed25', {fromTransform: nedsattFromTransform}),
                             'nedsattMed25Beskrivning',

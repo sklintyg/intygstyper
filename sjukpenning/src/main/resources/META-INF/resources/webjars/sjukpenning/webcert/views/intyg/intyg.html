@@ -127,6 +127,14 @@
                   <span id="nedsattMed100tom">{{viewState.intygModel.nedsattMed100.tom | date:'longDate'}}</span>
                 </div>
 
+                <div ng-show="viewState.intygModel.ressattTillArbeteAktuellt">
+                  <strong><span message key="sjukpenning.label.resor-till-arbetet"></span></strong>
+                </div>
+
+                <div ng-show="viewState.intygModel.rekommendationOverSocialstyrelsensBeslutsstod">
+                  <strong><span message key="sjukpenning.label.rekommendation-overskrider-beslutsstod"></span></strong>
+                </div>
+
                 <div>
                   <strong><span message key="sjukpenning.label.kan-gora.view"></span></strong>
                   <div id="kanGora" class="multiline">{{viewState.intygModel.vadPatientenKanGora}}</div>
