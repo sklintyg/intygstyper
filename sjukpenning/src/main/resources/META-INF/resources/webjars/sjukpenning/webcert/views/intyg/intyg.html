@@ -31,7 +31,7 @@
               </div>
 
               <div wc-field field-number="3" field-label="sjukpenning.label.arbetsformaga"
-                   filled="{{viewState.intygModel.nuvarandeArbetsuppgifter||viewState.intygModel.arbetsloshet||viewState.intygModel.foraldraledighet}}" id="field8">
+                   filled="{{viewState.intygModel.nuvarandeArbetsuppgifter||viewState.intygModel.arbetsloshet||viewState.intygModel.foraldraledighet}}" id="field3">
                 <ul class="padded-list">
                   <li ng-show="viewState.intygModel.nuvarandeArbetsuppgifter"><span message key="sjukpenning.label.arbetsformaga.nuvarande-arbete"></span>
                     <div id="nuvarandeArbetsuppgifter" class="multiline">{{viewState.intygModel.nuvarandeArbetsuppgifter}}</div>
@@ -80,7 +80,7 @@
               </div>
 
               <div wc-field field-number="7" field-label="sjukpenning.label.planerad-atgard"
-                   filled="{{viewState.intygModel.pagaendeBehandling!=null||viewState.intygModel.planeradBehandling!=null}}" id="field6b">
+                   filled="{{viewState.intygModel.pagaendeBehandling!=null||viewState.intygModel.planeradBehandling!=null}}" id="field7">
                 <ul class="padded-list">
                   <li ng-show="viewState.intygModel.pagaendeBehandling != null">
                     <span message key="sjukpenning.label.planerad-atgard.sjukvarden"></span>
@@ -163,11 +163,11 @@
               </div>
 
               <div wc-field field-number="10" field-label="sjukpenning.label.ovrigt" filled="{{viewState.intygModel.kommentar!=null&&viewState.intygModel.kommentar!=''&&viewState.intygModel.kommentar!=undefined}}"
-                   id="field13">
+                   id="field10">
                 <div id="kommentar" class="multiline">{{viewState.intygModel.kommentar}}</div>
               </div>
 
-              <div wc-field field-number="11" field-label="sjukpenning.label.kontakt-med-fk" filled="{{true}}" id="field12">
+              <div wc-field field-number="11" field-label="sjukpenning.label.kontakt-med-fk" filled="{{true}}" id="field11">
                 <span id="kontaktMedFk" ng-show="viewState.intygModel.kontaktMedFk"> <span message key="sjukpenning.label.yes"></span></span>
                 <span ng-show="!viewState.intygModel.kontaktMedFk"> <span message key="sjukpenning.label.no"></span></span>
               </div>
