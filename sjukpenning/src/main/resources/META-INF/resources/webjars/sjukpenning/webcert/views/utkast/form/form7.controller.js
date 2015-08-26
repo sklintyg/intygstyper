@@ -1,4 +1,4 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCert.Form6bCtrl',
+angular.module('sjukpenning').controller('sjukpenning.EditCert.Form7Ctrl',
     ['$scope', '$log', 'sjukpenning.EditCertCtrl.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
@@ -12,11 +12,11 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form6bCtrl',
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
                         // 6b
-                        model.updateToAttic(model.properties.form6b);
-                        model.clear(model.properties.form6b);
+                        model.updateToAttic(model.properties.form7);
+                        model.clear(model.properties.form7);
                     } else {
-                        if(model.isInAttic(model.properties.form6b)){
-                            model.restoreFromAttic(model.properties.form6b);
+                        if(model.isInAttic(model.properties.form7)){
+                            model.restoreFromAttic(model.properties.form7);
                         }
                     }
                 }

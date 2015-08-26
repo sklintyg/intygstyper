@@ -46,7 +46,7 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
                         form6: ['aktivitetsbegransning'],
 
-                        form6b: ['pagaendeBehandling',
+                        form7: ['pagaendeBehandling',
                             'planeradBehandling'],
 
                         form8b: ['tjanstgoringstid',
