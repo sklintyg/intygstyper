@@ -165,13 +165,13 @@ var sjukpenningMessages = {
 
         'sjukpenning.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)',
 
-        'sjukpenning.validation.intyg-baserat-pa.telefonkontakt.incorrect_format' : 'Fel datumformat för telefonkontakt med patient (Fält 4b)',
-        'sjukpenning.validation.intyg-baserat-pa.undersokning.incorrect_format' : 'Fel datumformat för undersökning av patient (Fält 4b)',
+        'sjukpenning.validation.intyg-baserat-pa.telefonkontakt.incorrect_format' : 'Fel datumformat för telefonkontakt med patient (Fält 2)',
+        'sjukpenning.validation.intyg-baserat-pa.undersokning.incorrect_format' : 'Fel datumformat för undersökning av patient (Fält 2)',
         
-        'sjukpenning.validation.intyg-baserat-pa.annan.incorrect_format' : 'Fel datumformat för annan referens (Fält 4b)',
-        'sjukpenning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format' : 'Fel datumformat för journaluppgifter (Fält 4b)',
+        'sjukpenning.validation.intyg-baserat-pa.annan.incorrect_format' : 'Fel datumformat för annan referens (Fält 2)',
+        'sjukpenning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format' : 'Fel datumformat för journaluppgifter (Fält 2)',
 
-        'sjukpenning.validation.intyg-baserat-pa.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 4b)',
+        'sjukpenning.validation.intyg-baserat-pa.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 2)',
         'sjukpenning.validation.intyg-baserat-pa.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
 
         'sjukpenning.validation.funktionsnedsattning.missing': 'Fältet med funktionsnedsättning måste fyllas i. (Fält 4)',

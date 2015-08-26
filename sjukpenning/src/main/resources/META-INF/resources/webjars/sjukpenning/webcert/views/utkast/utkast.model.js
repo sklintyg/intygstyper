@@ -20,7 +20,7 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
                         form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],
 
-                        form4b:['journaluppgifter',
+                        form2:['journaluppgifter',
                             'telefonkontaktMedPatienten',
                             'undersokningAvPatienten'],
 

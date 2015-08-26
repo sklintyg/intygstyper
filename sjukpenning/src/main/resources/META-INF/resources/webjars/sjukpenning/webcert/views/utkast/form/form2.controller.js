@@ -1,4 +1,4 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
+angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
     ['$scope', '$log', 'sjukpenning.EditCertCtrl.ViewStateService', 'common.UtilsService',
         'common.DateUtilsService',
         function($scope, $log, viewState, utils, dateUtils) {
@@ -8,7 +8,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
 
             $scope.viewState = viewState;
 
-            // Fält 4b. Based on handling
+            // Fält 2. Based on handling
             $scope.basedOnState = {
                 check: {
                     undersokningAvPatienten: false,
@@ -29,7 +29,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
                     return;
                 }
                 if (newVal) {
-                    registerDateParsersFor4b($scope);
+                    registerDateParsersFor2($scope);
                     setBaserasPa();
                     // I really hate this but needs to be done because the datepicker doesn't accept non dates!!
                     transferModelToForm();
@@ -42,11 +42,11 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
                 }
                 // only do this once the page is loaded and changes come from the gui!
                 if (viewState.common.doneLoading && newVal) {
-                    model.updateToAttic('form4b');
-                    model.clear('form4b');
+                    model.updateToAttic('form2');
+                    model.clear('form2');
                     clearViewState();
                 } else {
-                    model.restoreFromAttic('form4b');
+                    model.restoreFromAttic('form2');
                     transferModelToForm();
                     setBaserasPa();
                 }
@@ -73,7 +73,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
 
 
             /**
-             * 4b. Toggle dates in the Based On date pickers when checkboxes are interacted with
+             * 2. Toggle dates in the Based On date pickers when checkboxes are interacted with
              * @param modelName
              */
             $scope.toggleBaseradPaDate = function(modelName) {
@@ -92,20 +92,20 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
             };
 
             /**
-             * 4b. Update checkboxes when datepickers are interacted with
+             * 2. Update checkboxes when datepickers are interacted with
              * @param baserasPaType
              */
             $scope.onChangeBaserasPaDate = function(baserasPaType, $viewValue) {
                 $scope.basedOnState.check[baserasPaType] = utils.isValidString($viewValue);
             };
 
-            function registerDateParsersFor4b(_$scope) {
-                // Register parse function for 4b date pickers
+            function registerDateParsersFor2(_$scope) {
+                // Register parse function for 2 date pickers
                 var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter'];
-                addParsers(_$scope.form4b, baserasPaTypes, _$scope.onChangeBaserasPaDate);
+                addParsers(_$scope.form2, baserasPaTypes, _$scope.onChangeBaserasPaDate);
             }
 
-            function addParsers(form4b, attributes, fn) {
+            function addParsers(form2, attributes, fn) {
                 var modelProperty;
                 angular.forEach(attributes, function(type) {
                     modelProperty = this[type + 'Date'];
@@ -124,7 +124,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form4bCtrl',
                             return isoValue;
                         });
                     }
-                }, form4b);
+                }, form2);
             }
 
         }]);

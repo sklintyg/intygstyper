@@ -15,7 +15,7 @@
                 <span ng-show="!viewState.intygModel.avstangningSmittskydd"> <span message key="sjukpenning.label.no"></span></span>
               </div>
 
-              <div wc-field field-number="2" field-label="sjukpenning.label.intygbaseratpa" id="field4b"
+              <div wc-field field-number="2" field-label="sjukpenning.label.intygbaseratpa" id="field2"
                    filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.telefonkontaktMedPatienten!=null || viewState.intygModel.journaluppgifter!=null}}">
                 <ul class="padded-list" id="baseratPaList">
                   <li ng-show="viewState.intygModel.undersokningAvPatienten!=null">
@@ -42,7 +42,7 @@
                 </ul>
               </div>
 
-              <div wc-field field-number="4" field-label="sjukpenning.label.diagnos" filled="{{viewState.intygModel.diagnosKod1!=null}}" id="field2">
+              <div wc-field field-number="4" field-label="sjukpenning.label.diagnos" filled="{{viewState.intygModel.diagnosKod1!=null}}" id="field4">
                 <div class="form-group">
                   <span message key="sjukpenning.label.diagnoskod.icd"></span>
                   <span id="diagnosKod">{{viewState.intygModel.diagnosKod1}}</span> <span id="diagnosBeskrivning1">{{viewState.intygModel.diagnosBeskrivning1}}</span>
