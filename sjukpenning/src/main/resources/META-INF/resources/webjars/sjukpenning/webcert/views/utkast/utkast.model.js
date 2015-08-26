@@ -64,9 +64,9 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                             'atgardHjalpmedel', 'atgardKonflikthantering', 'atgardOmfordelning',
                             'atgardForetagshalsovard', 'atgardOvrigt'],
 
-                        form13: ['kommentar'],
+                        form10: ['kommentar'],
 
-                        form12: ['kontaktMedFk'],
+                        form11: ['kontaktMedFk'],
 
                         misc: ['forskrivarkodOchArbetsplatskod',
                                 'namnfortydligandeOchAdress', 'id',

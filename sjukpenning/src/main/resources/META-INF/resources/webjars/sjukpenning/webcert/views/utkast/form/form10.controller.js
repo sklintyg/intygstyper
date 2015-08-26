@@ -1,4 +1,4 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCert.Form13Ctrl',
+angular.module('sjukpenning').controller('sjukpenning.EditCert.Form10Ctrl',
     ['$scope', '$log', 'sjukpenning.EditCertCtrl.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';

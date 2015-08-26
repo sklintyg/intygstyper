@@ -59,6 +59,11 @@ angular.module('sjukpenning').config(function($stateProvider) {
                     controller: 'sjukpenning.EditCert.Form6Ctrl'
                 },
 
+                'form7@sjukpenning-edit' : {
+                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form7.html',
+                    controller: 'sjukpenning.EditCert.Form7Ctrl'
+                },
+
                 'form8b@sjukpenning-edit' : {
                     templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form8b.html',
                     controller: 'sjukpenning.EditCert.Form8bCtrl'
@@ -69,19 +74,14 @@ angular.module('sjukpenning').config(function($stateProvider) {
                     controller: 'sjukpenning.EditCert.Form9Ctrl'
                 },
 
-                'form7@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form7.html',
-                    controller: 'sjukpenning.EditCert.Form7Ctrl'
+                'form10@sjukpenning-edit' : {
+                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form10.html',
+                    controller: 'sjukpenning.EditCert.Form10Ctrl'
                 },
 
-                'form12@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form12.html',
-                    controller: 'sjukpenning.EditCert.Form12Ctrl'
-                },
-
-                'form13@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form13.html',
-                    controller: 'sjukpenning.EditCert.Form13Ctrl'
+                'form11@sjukpenning-edit' : {
+                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form11.html',
+                    controller: 'sjukpenning.EditCert.Form11Ctrl'
                 },
 
                 'form15@sjukpenning-edit' : {

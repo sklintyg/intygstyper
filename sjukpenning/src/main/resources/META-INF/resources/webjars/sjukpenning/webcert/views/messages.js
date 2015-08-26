@@ -52,7 +52,7 @@ var sjukpenningMessages = {
         'sjukpenning.label.behandling.pagaende': 'Pågående medicinska behandlingar/åtgärder och ansvarig vårdenhet.',
         'sjukpenning.label.behandling.planerad': 'Planerade medicinska behandlingar/åtgärder. Ange om möjligt tidplan och ansvarig enhet.',
         'sjukpenning.label.rekommendationer': 'Rekommendationer',
-        'sjukpenning.label.planerad-atgard': 'Pågående behandling',
+        'sjukpenning.label.planerad-atgard': 'Medicinsk behandling',
         'sjukpenning.label.planerad-atgard.sjukvarden': 'Pågående behandling',
         'sjukpenning.label.planerad-atgard.annat': 'Planerad behandling:',
         'sjukpenning.label.rehabilitering-aktuell': 'Är arbetslivsinriktad rehabilitering aktuell?',
