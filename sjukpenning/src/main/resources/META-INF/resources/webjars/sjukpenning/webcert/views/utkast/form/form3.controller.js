@@ -1,4 +1,4 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
+angular.module('sjukpenning').controller('sjukpenning.EditCert.Form3Ctrl',
     ['$scope', '$log', 'sjukpenning.EditCertCtrl.ViewStateService', 'sjukpenning.diagnosService',
         'sjukpenning.EditCertCtrl.Helper',
         function($scope, $log, viewState, diagnosService, helper) {
@@ -22,11 +22,11 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
                 if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        model.updateToAttic(model.properties.form2);
-                        model.clear(model.properties.form2);
+                        model.updateToAttic(model.properties.form3);
+                        model.clear(model.properties.form3);
                     } else {
-                        if(model.isInAttic(model.properties.form2)){
-                            model.restoreFromAttic(model.properties.form2);
+                        if(model.isInAttic(model.properties.form3)){
+                            model.restoreFromAttic(model.properties.form3);
                             if(!model.diagnosKodsystem1){
                                 setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );
                             }
@@ -134,23 +134,23 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-                $scope.form2.$dirty = true;
-                $scope.form2.$pristine = false;
-                model.updateToAttic(model.properties.form2);
+                $scope.form3.$dirty = true;
+                $scope.form3.$pristine = false;
+                model.updateToAttic(model.properties.form3);
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-                $scope.form2.$dirty = true;
-                $scope.form2.$pristine = false;
-                model.updateToAttic(model.properties.form2);
+                $scope.form3.$dirty = true;
+                $scope.form3.$pristine = false;
+                model.updateToAttic(model.properties.form3);
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-                $scope.form2.$dirty = true;
-                $scope.form2.$pristine = false;
-                model.updateToAttic(model.properties.form2);
+                $scope.form3.$dirty = true;
+                $scope.form3.$pristine = false;
+                model.updateToAttic(model.properties.form3);
             };
 
             /**
@@ -160,25 +160,25 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod1 = $item.value;
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-                $scope.form2.$dirty = true;
-                $scope.form2.$pristine = false;
-                model.updateToAttic(model.properties.form2);
+                $scope.form3.$dirty = true;
+                $scope.form3.$pristine = false;
+                model.updateToAttic(model.properties.form3);
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.model.diagnosKod2 = $item.value;
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-                $scope.form2.$dirty = true;
-                $scope.form2.$pristine = false;
-                model.updateToAttic(model.properties.form2);
+                $scope.form3.$dirty = true;
+                $scope.form3.$pristine = false;
+                model.updateToAttic(model.properties.form3);
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.model.diagnosKod3 = $item.value;
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-                $scope.form2.$dirty = true;
-                $scope.form2.$pristine = false;
-                model.updateToAttic(model.properties.form2);
+                $scope.form3.$dirty = true;
+                $scope.form3.$pristine = false;
+                model.updateToAttic(model.properties.form3);
             };
 
 

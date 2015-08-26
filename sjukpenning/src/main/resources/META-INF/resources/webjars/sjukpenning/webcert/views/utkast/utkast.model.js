@@ -31,7 +31,7 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                             'nuvarandeArbete',
                             'nuvarandeArbetsuppgifter'],
 
-                        form2: ['diagnosBeskrivning1',
+                        form3: ['diagnosBeskrivning1',
                             'diagnosBeskrivning2',
                             'diagnosBeskrivning3',
                             'diagnosKod1',

@@ -1,4 +1,4 @@
-<div ng-form="form2">
+<div ng-form="form3">
   <a id="anchor.diagnos" name="anchor.diagnos"></a>
   <div wc-field field-label="sjukpenning.label.diagnos" field-number="4" wc-detect-animation
      field-help-text="sjukpenning.helptext.diagnos" ng-hide="viewState.avstangningSmittskydd()"
@@ -19,7 +19,7 @@
              class='diagnose-code col-xs-11 form-control' ng-model="model.diagnosKod1"
              typeahead="d.value as d.label for d in getDiagnoseCodes(model.diagnosKodsystem1, $viewValue) | filter:$viewValue | limitTo:10"
              typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
-             typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+             typeahead-template-url="/web/webjars/sjukpenning/webcert/views/utkast/form/form3.diagnoseTemplate.html"
              wc-to-uppercase
           >
     </div>
@@ -30,7 +30,7 @@
              ng-model="model.diagnosBeskrivning1"
              typeahead="d.value as d.label for d in searchDiagnoseByDescription(model.diagnosKodsystem1, $viewValue) | filter:$viewValue "
              typeahead-on-select="onDiagnoseDescription1Select($item)"
-             typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+             typeahead-template-url="/web/webjars/sjukpenning/webcert/views/utkast/form/form3.diagnoseTemplate.html"
              typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning1')">
     </div>
   </div>
@@ -43,7 +43,7 @@
                  ng-model="model.diagnosKod2" class="col-xs-11 form-control"
                  typeahead="d.value as d.label for d in getDiagnoseCodes(model.diagnosKodsystem1, $viewValue) | filter:$viewValue | limitTo:10"
                  typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
-                 typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+                 typeahead-template-url="/web/webjars/sjukpenning/webcert/views/utkast/form/form3.diagnoseTemplate.html"
                  ng-change="limitDiagnosBeskrivningField('diagnosKod2')" wc-to-uppercase>
         </div>
       </div>
@@ -58,7 +58,7 @@
                ng-model="model.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
                typeahead="d.value as d.label for d in searchDiagnoseByDescription(model.diagnosKodsystem1, $viewValue) | filter:$viewValue "
                typeahead-on-select="onDiagnoseDescription2Select($item)"
-               typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+               typeahead-template-url="/web/webjars/sjukpenning/webcert/views/utkast/form/form3.diagnoseTemplate.html"
                typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning2')">
       </div>
     </div>
@@ -69,7 +69,7 @@
              ng-model="model.diagnosKod3" class="col-xs-11 form-control"
              typeahead="d.value as d.label for d in getDiagnoseCodes(model.diagnosKodsystem1, $viewValue) | filter:$viewValue | limitTo:10"
              typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
-             typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+             typeahead-template-url="/web/webjars/sjukpenning/webcert/views/utkast/form/form3.diagnoseTemplate.html"
              ng-change="limitDiagnosBeskrivningField('diagnosKod3')" wc-to-uppercase>
     </div>
     <div class='col-xs-9'>
@@ -78,7 +78,7 @@
                ng-model="model.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
                typeahead="d.value as d.label for d in searchDiagnoseByDescription(model.diagnosKodsystem1, $viewValue) | filter:$viewValue "
                typeahead-on-select="onDiagnoseDescription3Select($item)"
-               typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+               typeahead-template-url="/web/webjars/sjukpenning/webcert/views/utkast/form/form3.diagnoseTemplate.html"
                typeahead-wait-ms="100"
                ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning3')">
       </div>
