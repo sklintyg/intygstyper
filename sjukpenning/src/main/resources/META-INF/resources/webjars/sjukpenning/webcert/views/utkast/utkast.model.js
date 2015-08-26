@@ -20,18 +20,18 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
                         form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],
 
-                        form2:['journaluppgifter',
+                        form2: ['journaluppgifter',
                             'telefonkontaktMedPatienten',
                             'undersokningAvPatienten'],
 
-                        form8a:['arbetsloshet',
+                        form3: ['arbetsloshet',
                             'foraldraledighet',
                             'studier',
                             'arbetsmarknadsProgram',
                             'nuvarandeArbete',
                             'nuvarandeArbetsuppgifter'],
 
-                        form3: ['diagnosBeskrivning1',
+                        form4: ['diagnosBeskrivning1',
                             'diagnosBeskrivning2',
                             'diagnosBeskrivning3',
                             'diagnosKod1',
@@ -42,14 +42,14 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                             'diagnosKodsystem3',
                             new ModelAttr('samsjuklighet', {defaultValue: false})],
 
-                        form4:  ['funktionsnedsattning'],
+                        form5: ['funktionsnedsattning'],
 
-                        form5: ['aktivitetsbegransning'],
+                        form6: ['aktivitetsbegransning'],
 
-                        form6b:['pagaendeBehandling',
+                        form6b: ['pagaendeBehandling',
                             'planeradBehandling'],
 
-                        form8b:['tjanstgoringstid',
+                        form8b: ['tjanstgoringstid',
                             'ressattTillArbeteAktuellt', 'rekommendationOverSocialstyrelsensBeslutsstod',
                             new ModelAttr('nedsattMed100', {fromTransform: nedsattFromTransform}),
                             new ModelAttr('nedsattMed25', {fromTransform: nedsattFromTransform}),
@@ -64,11 +64,11 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                             'atgardHjalpmedel', 'atgardKonflikthantering', 'atgardOmfordelning',
                             'atgardForetagshalsovard', 'atgardOvrigt'],
 
-                        form13:['kommentar'],
+                        form13: ['kommentar'],
 
-                        form12:['kontaktMedFk'],
+                        form12: ['kontaktMedFk'],
 
-                        misc:  ['forskrivarkodOchArbetsplatskod',
+                        misc: ['forskrivarkodOchArbetsplatskod',
                                 'namnfortydligandeOchAdress', 'id',
                                 new ModelAttr('grundData', {defaultValue: grundData})]
 

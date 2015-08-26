@@ -1,18 +1,16 @@
-<a id="anchor.aktivitetsbegransning" name="anchor.aktivitetsbegransning"></a>
-<div wc-field field-label="sjukpenning.label.aktivitetsbegransning" field-number="6" wc-detect-animation
-     field-help-text="sjukpenning.helptext.aktivitetsbegransning" ng-hide="viewState.avstangningSmittskydd()"
-     field-has-errors="viewState.common.validationMessagesGrouped.aktivitetsbegransning" class="print-pagebreak-after field-fade">
-
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.aktivitetsbegransning" id="validationMessages_aktivitetsbegransning">
+<a id="anchor.funktionsnedsattning" name="anchor.funktionsnedsattning"></a>
+<div wc-field field-label="sjukpenning.label.funktionsnedsattning" field-number="5" wc-detect-animation
+     field-help-text="sjukpenning.helptext.funktionsnedsattning" ng-hide="viewState.avstangningSmittskydd()"
+     field-has-errors="viewState.common.validationMessagesGrouped.funktionsnedsattning" class="field-fade">
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.funktionsnedsattning" id="validationMessages_funktionsnedsattning">
     <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.aktivitetsbegransning">
-        <span message key="{{message.message}}"></span>
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.funktionsnedsattning">
+        <span message key="{{message.message}}"/>
       </li>
     </ul>
   </div>
 
-  <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10'
-            ng-model="model.aktivitetsbegransning" ng-trim="false"
-            maxlength="{{viewState.inputLimits.aktivitetsbegransning}}"/>
-
+  <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
+            ng-model="model.funktionsnedsattning" ng-trim="false"
+            maxlength="{{viewState.inputLimits.funktionsnedsattning}}"></textarea>
 </div>

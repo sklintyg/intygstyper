@@ -54,9 +54,9 @@ angular.module('sjukpenning').config(function($stateProvider) {
                     controller: 'sjukpenning.EditCert.Form5Ctrl'
                 },
 
-                'form8a@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form8a.html',
-                    controller: 'sjukpenning.EditCert.Form8aCtrl'
+                'form6@sjukpenning-edit' : {
+                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form6.html',
+                    controller: 'sjukpenning.EditCert.Form6Ctrl'
                 },
 
                 'form8b@sjukpenning-edit' : {

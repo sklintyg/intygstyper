@@ -4,7 +4,6 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form5Ctrl',
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
-
             $scope.viewState = viewState;
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
@@ -15,12 +14,12 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form5Ctrl',
                 if(viewState.common.doneLoading) {
                     // Remove defaults not applicable when smittskydd is active
                     if (newVal === true) {
-                        // 5. funktionsnedsättning
                         model.updateToAttic(model.properties.form5);
                         model.clear(model.properties.form5);
-                    } else if(model.isInAttic(model.properties.form5)){
+                    } else {
                         model.restoreFromAttic(model.properties.form5);
                     }
                 }
             });
+
         }]);
