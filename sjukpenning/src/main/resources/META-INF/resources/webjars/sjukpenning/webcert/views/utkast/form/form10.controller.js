@@ -6,10 +6,7 @@ angular.module('sjukpenning').controller('sjukpenning.EditCert.Form10Ctrl',
             $scope.viewState = viewState;
 
             $scope.inputLimits = {
-                ovrigt: 360 // = combined field 13 (and dependencies that end up in field 13) limit
-            };
-            $scope.teckenKvar = function(){
-                return viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength();
+                ovrigt: 360
             };
 
         }]);

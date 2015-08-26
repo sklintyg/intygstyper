@@ -27,7 +27,7 @@ angular.module('sjukpenning').service('sjukpenning.EditCertCtrl.ViewStateService
                 funktionsnedsattning: 450,
                 sjukdomsforlopp: 270,
                 diagnosBeskrivning :220,
-                ovrigt: 360 // = combined field 13 (and dependencies that end up in field 13) limit
+                ovrigt: 360
             };
 
             this.reset = function() {
@@ -40,47 +40,6 @@ angular.module('sjukpenning').service('sjukpenning.EditCertCtrl.ViewStateService
             this.clearModel = function(){
                 this.intygModel = undefined;
                 this.draftModel = undefined;
-            };
-
-            /**
-             * Calculate total length of all fields ending up in Övrigt in the external model
-             * @returns {*}
-             */
-            this.getTotalOvrigtLength = function() {
-
-                var totalOvrigtLength = 0;
-                var hasNedsatt = this.intygModel.kommentar ||
-                    this.intygModel.nedsattMed25Beskrivning ||
-                    this.intygModel.nedsattMed50Beskrivning ||
-                    this.intygModel.nedsattMed75Beskrivning ||
-                    this.intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
-                if(hasNedsatt) {
-                    totalOvrigtLength += helper.getLengthOrZero(this.intygModel.kommentar) +
-                    helper.getLengthOrZero(this.intygModel.nedsattMed25Beskrivning) +
-                    helper.getLengthOrZero(this.intygModel.nedsattMed50Beskrivning) +
-                    helper.getLengthOrZero(this.intygModel.nedsattMed75Beskrivning) +
-                    helper.getLengthOrZero(this.intygModel.arbetsformagaPrognosGarInteAttBedomaBeskrivning);
-                }
-                return totalOvrigtLength;
-            };
-
-            /**
-             * Limit length of field dependent on field 13 in the external model
-             * @param field
-             */
-            this.limitOtherField = function(field) {
-                if (this.intygModel[field]) {
-                    this.intygModel[field] = this.limitOvrigtLength(this.intygModel[field]);
-                }
-            };
-
-            this.limitOvrigtLength = function (val) {
-                var totalOvrigtLength = this.getTotalOvrigtLength();
-                if (totalOvrigtLength > this.inputLimits.ovrigt) {
-                    // Remove characters over limit from current field
-                    return val.substr(0, val.length - (totalOvrigtLength - this.inputLimits.ovrigt));
-                }
-                return val;
             };
 
             this.reset();
