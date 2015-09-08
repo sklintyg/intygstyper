@@ -7,7 +7,7 @@
     <parent>
         <groupId>se.inera.intyg.intygstyper</groupId>
         <artifactId>intygstyper</artifactId>
-        <version>2.3.0</version>
+        <version>0-SNAPSHOT</version>
     </parent>
 
     <artifactId>ts-parent</artifactId>
