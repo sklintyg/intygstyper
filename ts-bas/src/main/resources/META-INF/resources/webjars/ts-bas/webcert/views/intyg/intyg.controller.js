@@ -13,7 +13,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
             ViewState.reset();
             $scope.viewState = ViewState;
 
-            $scope.user = { lakare: User.getUserContext().lakare };
+            $scope.user = { lakare: User.getUser().lakare };
 
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = '/moduleapi/intyg/ts-bas/' + $stateParams.certificateId + '/pdf';

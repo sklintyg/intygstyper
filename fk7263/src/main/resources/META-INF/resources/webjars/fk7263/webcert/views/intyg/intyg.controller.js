@@ -14,7 +14,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             }
 
             // Page setup
-            $scope.user = { lakare: UserModel.userContext.lakare };
+            $scope.user = { lakare: UserModel.user.lakare };
 
             ViewState.intygModel = {};
             ViewState.intygModel.filledAlways = true;
