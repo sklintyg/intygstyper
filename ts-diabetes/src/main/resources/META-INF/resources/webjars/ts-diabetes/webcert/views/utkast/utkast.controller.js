@@ -14,7 +14,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             $scope.viewState = viewState;
 
             // Page state
-            $scope.user = UserModel;
+            $scope.user = UserModel.user;
 
             /******************************************************************************************
              * Private support functions

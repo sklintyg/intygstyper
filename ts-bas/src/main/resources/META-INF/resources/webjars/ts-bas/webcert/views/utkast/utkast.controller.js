@@ -13,7 +13,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 
             $scope.viewState = viewState.reset();
             $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. let view take from viewstate
-            $scope.user = UserModel;
+            $scope.user = UserModel.user;
 
             /***************************************************************************
              * Private controller support functions
