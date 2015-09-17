@@ -41,12 +41,15 @@ public class PdfGenerator {
     // Constants used for watermarking
     private static final int MARK_AS_COPY_HEIGTH = 30;
     private static final int MARK_AS_COPY_WIDTH = 250;
+    private static final int MARK_AS_EMPLOYER_HEIGTH = 30;
+    private static final int MARK_AS_EMPLOYER_WIDTH = 375;
     private static final int MARK_AS_COPY_START_X = 50;
     private static final int MARK_AS_COPY_START_Y = 690;
     private static final int WATERMARK_TEXT_PADDING = 10;
     private static final int WATERMARK_FONTSIZE = 12;
 
     private static final String WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
+    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg ämnat för arbetsgivaren";
 
     // Right margin texts
     private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
@@ -211,7 +214,10 @@ public class PdfGenerator {
                 createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), MINA_INTYG_MARGIN_TEXT);
                 break;
             case WEBCERT:
-                if (isEmployerCopy || isCertificateSentToFK(statuses)) {
+                if (isEmployerCopy) {
+                    maskSendToFkInformation(pdfStamper);
+                    markAsEmployerCopy(pdfStamper, WATERMARK_TEXT_EMPLOYER);
+                } else if (isCertificateSentToFK(statuses)) {
                     maskSendToFkInformation(pdfStamper);
                     markAsElectronicCopy(pdfStamper, WATERMARK_TEXT);
                 }
@@ -297,12 +303,28 @@ public class PdfGenerator {
 
     // Mark this document as a copy of an electronically signed document
     private void markAsElectronicCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
+        mark(pdfStamper, watermarkText, MARK_AS_COPY_HEIGTH, MARK_AS_COPY_WIDTH);
+    }
+
+    /**
+     * Marking this document as a print meant for the employer of the patient
+     * 
+     * @param pdfStamper
+     * @param watermarkText
+     * @throws DocumentException
+     * @throws IOException
+     */
+    private void markAsEmployerCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
+        mark(pdfStamper, watermarkText, MARK_AS_EMPLOYER_HEIGTH, MARK_AS_EMPLOYER_WIDTH);
+    }
+
+    private void mark(PdfStamper pdfStamper, String watermarkText, int height, int width) throws DocumentException, IOException {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(1);
         addOverlay.saveState();
         addOverlay.setColorFill(CMYKColor.WHITE);
         addOverlay.setColorStroke(CMYKColor.RED);
-        addOverlay.rectangle(MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, MARK_AS_COPY_WIDTH, MARK_AS_COPY_HEIGTH);
+        addOverlay.rectangle(MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, width, height);
         addOverlay.stroke();
         addOverlay.restoreState();
         // Do text
@@ -348,21 +370,21 @@ public class PdfGenerator {
         fillRecommendationsWork();
         fillCapacityRelativeTo();
         fillCapacity();
-        fillArbetsformaga();
         fillTravel();
-        fillOther();
+        fillSignerCodes();
         fillSignerNameAndAddress();
 
         // Fields not suitable for employer
         if (!isEmployerCopy) {
             fillRecommendationsOther();
+            fillArbetsformaga();
             fillDiagnose();
             fillDiseaseCause();
-            fillSignerCodes();
             fillPrognose();
             fillIsSuspenseDueToInfection();
             fillBasedOn();
             fillDisability();
+            fillOther();
             fillActivityLimitation();
             fillMeasures();
             fillRehabilitation();
