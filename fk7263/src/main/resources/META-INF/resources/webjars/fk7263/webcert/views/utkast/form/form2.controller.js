@@ -1,12 +1,15 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService',
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'fk7263.fmbService', 'fk7263.fmb.ViewStateService',
         'fk7263.EditCertCtrl.Helper',
-        function($scope, $log, viewState, diagnosService, helper) {
+        function($scope, $log, viewState, diagnosService, fmbService, fmbViewState, helper) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
 
             $scope.viewState = viewState;
+
+            $scope.fmb = fmbViewState.state;
+
             $scope.viewModel = {
                 diagnosKodverk : ''
             };
@@ -128,12 +131,26 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
             };
 
 
+            //What we do if the call to the FMB service is successful
+            var fmbSuccess = function fmbSuccess(formData) {
+                fmbViewState.setState(formData, $scope.model.diagnosKod, $scope.model.diagnosBeskrivning1);
+            };
+
+            var fmbReject = function fmbReject(data) {
+                $log.debug('Error searching fmb help text');
+                $log.debug(data);
+                return [];
+            };
+
             /**
              * User selects a diagnose code
              */
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
+
+                fmbService.getFMBHelpTextsByCode($scope.model.diagnosKod).then(fmbSuccess, fmbReject);
+
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
                 model.updateToAttic(model.properties.form2);

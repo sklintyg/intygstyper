@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        'common.DateRangeService',
-        function($scope, $log, viewState, DateRangeService) {
+        'common.DateRangeService', 'fk7263.fmb.ViewStateService',
+        function($scope, $log, viewState, DateRangeService, fmbViewState) {
             'use strict';
             // private vars
             //var _dateRangeGroups = DateRangeGroupsService.build(_$scope);
@@ -10,6 +10,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             // scope
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
+
+            $scope.fmb = fmbViewState.state;
 
             // 1. onload
             // 2. on check change
