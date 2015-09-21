@@ -160,7 +160,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, boolean isEmployerCopy) throws ModuleException {
+    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             return new PdfResponse(pdfGenerator.generatePDF(getInternal(internalModel), applicationOrigin),
                     pdfGenerator.generatePdfFilename(getInternal(internalModel)));
@@ -168,6 +168,11 @@ public class TsDiabetesModuleApi implements ModuleApi {
             LOG.error("Failed to generate PDF for certificate!", e);
             throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
         }
+    }
+
+    @Override
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+        throw new ModuleException("Feature not supported");
     }
 
     @Override
