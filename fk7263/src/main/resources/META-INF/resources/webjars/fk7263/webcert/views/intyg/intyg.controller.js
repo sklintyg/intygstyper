@@ -9,9 +9,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             $scope.viewState = ViewState;
 
             // Check if the user used the special qa-link to get here.
-            if ($stateParams.qaOnly) {
-                $scope.isQaOnly = true;
-            }
+            $scope.isQaOnly = UserModel.isLakareUthopp();
 
             // Page setup
             $scope.user = UserModel;
