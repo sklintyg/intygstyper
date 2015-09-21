@@ -17,20 +17,19 @@ describe('IntygController', function() {
     beforeEach(angular.mock.module('fk7263', function($provide) {
         IntygProxy = jasmine.createSpyObj('common.IntygProxy', [ 'getIntyg', 'load' ]);
         $provide.value('common.IntygProxy', IntygProxy);
-        $provide.value('common.UserModel', { user: { lakare: false }});
     }));
 
     // Get references to the object we want to test from the context.
 
-    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend',
-        function( _$controller_, _$rootScope_, _$q_, _$httpBackend_) {
+    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend','common.UserModel',
+        function( _$controller_, _$rootScope_, _$q_, _$httpBackend_, _UserModel_) {
             $controller = _$controller_;
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
 
             $q = _$q_;
             $httpBackend = _$httpBackend_;
-
+            _UserModel_.setUser(getTestUser({ROLE_LAKARE: 'Läkare'}));
             // arrange
             spyOn($scope, '$broadcast');
         }]));
@@ -44,5 +43,66 @@ describe('IntygController', function() {
         });
 
     });
+
+    /**
+     * Created by stephenwhite on 21/09/15.
+     */
+    function getTestUser (role){
+        return {
+            'hsaId': 'eva',
+            'namn': 'Eva Holgersson',
+            'lakare': true,
+            'forskrivarkod': '2481632',
+            'authenticationScheme': 'urn:inera:webcert:fake',
+            'vardgivare': [
+                {
+                    'id': 'vastmanland', 'namn': 'Landstinget Västmanland', 'vardenheter': [
+                    {
+                        'id': 'centrum-vast', 'namn': 'Vårdcentrum i Väst', 'arbetsplatskod': '0000000', 'mottagningar': [
+                        {'id': 'akuten', 'namn': 'Akuten', 'arbetsplatskod': '0000000'},
+                        {'id': 'dialys', 'namn': 'Dialys', 'arbetsplatskod': '0000000'}
+                    ]
+                    }
+                ]
+                },
+                {
+                    'id': 'ostergotland', 'namn': 'Landstinget Östergötland', 'vardenheter': [
+                    {
+                        'id': 'linkoping',
+                        'namn': 'Linköpings Universitetssjukhus',
+                        'arbetsplatskod': '0000000',
+                        'mottagningar': [
+                            {'id': 'lkpg-akuten', 'namn': 'Akuten', 'arbetsplatskod': '0000000'},
+                            {'id': 'lkpg-ogon', 'namn': 'Ögonmottagningen', 'arbetsplatskod': '0000000'}
+                        ]
+                    }
+                ]
+                }
+            ],
+            'specialiseringar': ['Kirurgi', 'Oftalmologi'],
+            'titel': 'Leg. Ögonläkare',
+            'legitimeradeYrkesgrupper': ['Läkare'],
+            'valdVardenhet': {
+                'id': 'centrum-vast', 'namn': 'Vårdcentrum i Väst', 'arbetsplatskod': '0000000', 'mottagningar': [
+                    {'id': 'akuten', 'namn': 'Akuten', 'arbetsplatskod': '0000000'},
+                    {'id': 'dialys', 'namn': 'Dialys', 'arbetsplatskod': '0000000'}
+                ]
+            },
+            'valdVardgivare': {
+                'id': 'vastmanland', 'namn': 'Landstinget Västmanland', 'vardenheter': [
+                    {
+                        'id': 'centrum-vast', 'namn': 'Vårdcentrum i Väst', 'arbetsplatskod': '0000000', 'mottagningar': [
+                        {'id': 'akuten', 'namn': 'Akuten', 'arbetsplatskod': '0000000'},
+                        {'id': 'dialys', 'namn': 'Dialys', 'arbetsplatskod': '0000000'}
+                    ]
+                    }
+                ]
+            },
+            'roles': role,
+            'aktivaFunktioner': ['hanteraFragor', 'hanteraFragor.fk7263'],
+            'totaltAntalVardenheter': 6
+        };
+
+    }
 
 });
