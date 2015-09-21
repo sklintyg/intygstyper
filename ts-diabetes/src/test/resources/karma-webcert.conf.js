@@ -18,6 +18,7 @@ module.exports = function(config) {
         files: [
 
             // Dependencies
+                WEBJAR_DIR + 'jquery/jquery.min.js',
                 WEBJAR_DIR + 'angularjs/angular.js',
                 WEBJAR_DIR + 'angularjs/angular-mocks.js',
                 WEBJAR_DIR + 'angularjs/1.2.27/angular-locale_sv-se.js',

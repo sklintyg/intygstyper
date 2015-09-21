@@ -17,7 +17,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.viewState = viewState;
 
             // Page states
-            $scope.user = UserModel;
+            $scope.user = UserModel.user;
 
             /****************************************************************************
              * Exposed interaction functions to view

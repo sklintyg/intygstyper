@@ -7,7 +7,7 @@
   <parent>
     <groupId>se.inera.intyg.common</groupId>
     <artifactId>common-pom</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.12</version>
   </parent>
 
   <groupId>se.inera.intyg.intygstyper</groupId>
@@ -21,7 +21,7 @@
 
     <!-- Common -->
     <common.version>0-SNAPSHOT</common.version>
-    <common.version.range>(,2.3.0]</common.version.range>
+    <common.version.range>(,2.4.0]</common.version.range>
 
     <!-- RIVTA Schemas -->
     <rivta-clinicalprocess.version>1.0.RC3.0</rivta-clinicalprocess.version>
@@ -225,6 +225,24 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>prepare-unit-test-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>generate-unit-test-report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
         <configuration>
@@ -268,6 +286,13 @@
             </goals>
             <configuration>
               <artifactItems>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>jquery</artifactId>
+                  <version>${jquery.version}</version>
+                  <type>jar</type>
+                  <overWrite>true</overWrite>
+                </artifactItem>
                 <artifactItem>
                   <groupId>org.webjars</groupId>
                   <artifactId>angularjs</artifactId>
@@ -346,6 +371,46 @@
 
   <repositories>
     <repository>
+      <id>inera-release</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>inera-nightly</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/nightly/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>inera-snapshot</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>thirdparty</id>
+      <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/thirdparty/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
       <id>callista-release</id>
       <url>http://repository-callistasoftware.forge.cloudbees.com/release/</url>
       <releases>
@@ -356,17 +421,7 @@
       </snapshots>
     </repository>
     <repository>
-      <id>callista-snapshot</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/snapshot/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>thirdparty</id>
+      <id>callista-thirdparty</id>
       <url>http://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
       <releases>
         <enabled>true</enabled>

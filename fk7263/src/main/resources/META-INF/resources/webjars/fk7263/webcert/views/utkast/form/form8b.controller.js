@@ -58,22 +58,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                         angular.isObject($scope.form8b.nedsattMed100tom)) {
                         return true;
                     }
-                    $log.debug('--- form8b control not loaded yet ---');
-                    $log.debug('25:');
-                    $log.debug($scope.form8b.nedsattMed25from);
-                    $log.debug($scope.form8b.nedsattMed25tom);
-
-                    $log.debug('50:');
-                    $log.debug($scope.form8b.nedsattMed50from);
-                    $log.debug($scope.form8b.nedsattMed50tom);
-
-                    $log.debug('75:');
-                    $log.debug($scope.form8b.nedsattMed75from);
-                    $log.debug($scope.form8b.nedsattMed75tom);
-
-                    $log.debug('100:');
-                    $log.debug($scope.form8b.nedsattMed100from);
-                    $log.debug($scope.form8b.nedsattMed100tom);
                 }
                 return false;
 
@@ -82,7 +66,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                     return;
                 }
                 if (newVal) {
-                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
+                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel, $scope);
                     doneLoading = true;
                 }
             });

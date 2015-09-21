@@ -13,7 +13,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
             ViewState.reset();
             $scope.viewState = ViewState;
 
-            $scope.user = UserModel.userContext;
+            $scope.user = UserModel.user;
 
             /*********************************************************************
              * Private support functions
