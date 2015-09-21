@@ -49,7 +49,7 @@ public class PdfGenerator {
     private static final int WATERMARK_FONTSIZE = 12;
 
     private static final String WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
-    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg ämnat för arbetsgivaren";
+    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg ämnad för arbetsgivaren";
 
     // Right margin texts
     private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
