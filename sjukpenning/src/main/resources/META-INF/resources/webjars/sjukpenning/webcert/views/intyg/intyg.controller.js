@@ -14,7 +14,7 @@ angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
             }
 
             // Page setup
-            $scope.user = { lakare: UserModel.userContext.lakare };
+            $scope.user = UserModel;
 
             ViewState.intygModel = {};
             ViewState.intygModel.filledAlways = true;
