@@ -42,14 +42,14 @@ public class PdfGenerator {
     private static final int MARK_AS_COPY_HEIGTH = 30;
     private static final int MARK_AS_COPY_WIDTH = 250;
     private static final int MARK_AS_EMPLOYER_HEIGTH = 30;
-    private static final int MARK_AS_EMPLOYER_WIDTH = 375;
+    private static final int MARK_AS_EMPLOYER_WIDTH = 410;
     private static final int MARK_AS_COPY_START_X = 50;
     private static final int MARK_AS_COPY_START_Y = 690;
     private static final int WATERMARK_TEXT_PADDING = 10;
     private static final int WATERMARK_FONTSIZE = 12;
 
     private static final String WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
-    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg ämnad för arbetsgivaren";
+    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg endast avsett för arbetsgivare.";
 
     // Right margin texts
     private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
