@@ -82,6 +82,12 @@ public class SjukpenningModuleApi implements ModuleApi {
         return null;
     }
 
+    @Override
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+        // TODO
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      */
