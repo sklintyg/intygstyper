@@ -51,6 +51,15 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 }
             });
 
+            $scope.$watch('model.diagnosKod', function(newVal, oldVal) {
+                if(newVal === oldVal){
+                    return;
+                }
+                if (!newVal) {
+                    fmbViewState.reset();
+                }
+            });
+
             function setAllDiagnosKodverk(val){
                 $scope.viewModel.diagnosKodverk = val;
                 $scope.model.diagnosKodsystem1 = val;
@@ -133,7 +142,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
 
             //What we do if the call to the FMB service is successful
             var fmbSuccess = function fmbSuccess(formData) {
-                fmbViewState.setState(formData, $scope.model.diagnosKod, $scope.model.diagnosBeskrivning1);
+                fmbViewState.setState(formData, $scope.model.diagnosKod);
             };
 
             var fmbReject = function fmbReject(data) {

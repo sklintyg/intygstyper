@@ -4,14 +4,12 @@ angular.module('fk7263').service('fk7263.fmb.ViewStateService',
 
             this.state = {
                 formData: [],
-                diagnosKod: undefined,
-                diagnosBeskrivning: undefined
+                diagnosKod: undefined
             };
 
             this.reset = function() {
                 this.state.formData = [];
                 this.state.diagnosKod = undefined;
-                this.state.diagnosBeskrivning = undefined;
                 return this;
             };
 
@@ -24,10 +22,9 @@ angular.module('fk7263').service('fk7263.fmb.ViewStateService',
                 return transformedFormData;
             };
 
-            this.setState = function(formData, diagnosKod, diagnosBeskrivning){
+            this.setState = function(formData, diagnosKod){
                 this.state.formData = transformFormData(formData);
                 this.state.diagnosKod = diagnosKod;
-                this.state.diagnosBeskrivning = diagnosBeskrivning;
             }
 
             this.reset();
