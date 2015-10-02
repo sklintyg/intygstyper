@@ -76,7 +76,7 @@ var fk7263Messages = {
         'fk7263.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
         'fk7263.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
         'fk7263.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukpenning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
-        'fk7263.label.kopiera.text': 'Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information. I de fall patienten har ändrat namn eller adress så uppdateras den informationen. Uppgifterna i intygsutkastet går att ändra innan det signeras. Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.',
+        'fk7263.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
         'fk7263.label.transfertoovrigt': 'Informationen överförs till "Övriga upplysningar" vid signering. Tecken kvar påverkas av antalet tecken tillförda i samtliga fält.',
 
         'fk7263.vardkontakt.undersokning': 'Min undersökning av patienten den ',
