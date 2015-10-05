@@ -10,8 +10,8 @@
             <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnos"
                  id="validationMessages_diagnos">
                 <ul>
-                    <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnos"><span message
-                                                                                                        key="{{message.message}}"></span>
+                    <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnos">
+                        <span message key="{{message.message}}"></span>
                     </li>
                 </ul>
             </div>
@@ -133,11 +133,11 @@
         </div>
 
     </div>
-    <div class="col-md-6">
-        <div class="col-md-8 margin-top-30">
-            <div ng-show="fmb.formData.FORM2">
-                <wc-fmb-help-display related-form-id="FALT2" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning" help-text-contents="fmb.formData.FORM2"></wc-fmb-help-display>
-            </div>
+
+    <div class="col-md-6 col-md-fmb-offset col-lg-fmb-offset">
+        <div ng-show="fmb.formData.FORM2">
+            <wc-fmb-help-display  related-form-id="FALT2" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning"
+                                 help-text-contents="fmb.formData.FORM2"></wc-fmb-help-display>
         </div>
     </div>
 </div>
