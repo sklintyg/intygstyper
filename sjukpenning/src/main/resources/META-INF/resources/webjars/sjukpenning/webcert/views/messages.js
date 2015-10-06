@@ -116,7 +116,7 @@ var sjukpenningMessages = {
         //Help texts
         'sjukpenning.helptext.smittskydd': 'Fylls i om patienten måste avstå från sitt arbete på grund av:<ul><li>Intygsskrivande läkares beslut enligt smittskyddslagen.</li><li>Läkarundersökning eller hälsokontroll som syftar till att klarlägga om hon eller han är smittad av en allmänfarlig sjukdom eller om personen har en sjukdom, en smitta, ett sår eller annan skada som gör att hon eller han inte får hantera livsmedel.</li>',
 
-        'sjukpenning.helptext.intyg-baserat-pa': 'Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.',
+        'sjukpenning.helptext.intyg-baserat-pa': 'Om underlaget är baserat utifrån annan anledning, ange de under "/Övrigt" ',
         'sjukpenning.helptext.intyg-baserat-pa.annat': 'Detta alternativ kan användas för annan professions bedömning, till exempel för kuratorsanteckning, sjukgymnastanteckning eller teamkonferens.',
 
         'sjukpenning.helptext.diagnos': 'Ange vilken eller vilka sjukdomar som medför nedsättning av arbetsförmågan.',
@@ -130,7 +130,7 @@ var sjukpenningMessages = {
 
         'sjukpenning.helptext.aktivitetsbegransning': '<p>Ge en tydlig beskrivning av hur sjukdomen begränsar patientens förmåga, liksom av hur omfattande konsekvenserna är.</p> Denna information är den mest centrala för bedömning av rätten till sjukpenning. Använd enkel svenska som är begriplig för en person utan medicinsk utbildning.',
 
-        'sjukpenning.helptext.sysselsattning': 'Ange vad du bedömt nedsättningen av arbetsförmågan mot: patientens nuvarande arbete, arbetslöshet eller föräldraledighet. Läkarintyget måste alltid innehålla information om det. Om patienten till exempel både arbetar och är föräldraledig, kan du förtydliga det under Övriga upplysningar.',
+        'sjukpenning.helptext.sysselsattning': 'Om du kryssar i flera val är det viktigt att du tydliggör under fältet "Övrigt" om sjukskrivningens omfattning eller period skiljer sig åt mellan de två sysselsättningarna. ',
         'sjukpenning.helptext.sysselsattning.nuvarande': 'Om patienten har ett arbete, ska nedsättningen av arbetsförmåga relateras till de arbetsuppgifter patienten har.',
         'sjukpenning.helptext.sysselsattning.arbetsloshet': 'Är patienten arbetslös ska bedömningen relateras till förmågan att klara ett arbete på den reguljära arbetsmarknaden. Det är viktigt att en arbetslös patient inte sjukskrivs i förhållande till det arbete han eller hon hade tidigare. Observera att arbetslösa också kan sjukskrivas på deltid.',
         'sjukpenning.helptext.sysselsattning.foraldraledighet': 'Är patienten föräldraledig ska bedömningen relateras till förmågan att ta hand om barnet.',
