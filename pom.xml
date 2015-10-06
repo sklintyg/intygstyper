@@ -37,9 +37,6 @@
     <intyg-transportstyrelsen.version>0-SNAPSHOT</intyg-transportstyrelsen.version>
     <intyg-transportstyrelsen.version.range>(,1.0.0]</intyg-transportstyrelsen.version.range>
 
-    <intyg-fk.version>0-SNAPSHOT</intyg-fk.version>
-    <intyg-fk.version.range>(,1.0.0]</intyg-fk.version.range>
-
     <!-- Netcare -->
     <mvkintegration.version>1.2.3</mvkintegration.version>
 
@@ -53,6 +50,7 @@
     <module>ts-bas</module>
     <module>ts-diabetes</module>
     <module>sjukpenning</module>
+    <module>sjukersattning</module>
     <module>tools/archetype</module>
   </modules>
 
@@ -117,11 +115,6 @@
         <groupId>se.inera.intyg.transportstyrelsen</groupId>
         <artifactId>intyg-transportstyrelsen-schemas</artifactId>
         <version>${intyg-transportstyrelsen.version}</version>
-      </dependency>
-      <dependency>
-          <groupId>se.inera.intyg.fk</groupId>
-          <artifactId>intyg-forsakringskassan-schemas</artifactId>
-          <version>${intyg-fk.version}</version>
       </dependency>
 
       <!-- Netcare dependencies -->

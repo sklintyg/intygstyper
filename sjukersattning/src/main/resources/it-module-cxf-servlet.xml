@@ -16,18 +16,23 @@
     </cxf:features>
   </cxf:bus>
 
-  <jaxws:endpoint address="/get-sjukersattning/v1.0"
-      implementor="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningResponderImpl">
+  <jaxws:endpoint address="/get-certificate-se/v2.0"
+      implementor="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningService"
+      wsdlLocation="classpath:/interactions/GetCertificateInteraction/GetCertificateInteraction_1.0_RIVTABP21.wsdl"
+      xmlns:r="urn:riv:clinicalprocess:healthcond:certificate:GetCertificate:1:rivtabp21"
+      serviceName="r:GetCertificateResponderService"
+      endpointName="r:GetCertificateResponderPort"
+      >
     <jaxws:outFaultInterceptors>
       <bean
           class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg
-            value="transform/se-intygstjanster-ts-services/get-ts-bas-transform.xslt"/>
+            value="transform/get-sjukersattning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
-  <jaxws:endpoint address="/register-certificate/v2.0"
+  <jaxws:endpoint address="/register-certificate-se/v2.0"
       implementor="se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningService"
       wsdlLocation="classpath:/interactions/RegisterCertificateInteraction/RegisterCertificateInteraction_2.0_RIVTABP21.wsdl"
       xmlns:r="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificate:2:rivtabp21"
@@ -47,9 +52,5 @@
       <jaxws:schemaLocation>classpath:/interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd</jaxws:schemaLocation>
     </jaxws:schemaLocations>
   </jaxws:endpoint>
-
-  <bean class="se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningResponderDummy"/>
-
-  <bean class="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningResponderImpl"/>
 
 </beans>

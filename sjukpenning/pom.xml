@@ -35,10 +35,6 @@
       <groupId>se.inera.intyg.insuranceprocess.healthreporting</groupId>
       <artifactId>intyg-insuranceprocess-healthreporting-schemas</artifactId>
     </dependency>
-    <dependency>
-      <groupId>se.inera.intyg.fk</groupId>
-      <artifactId>intyg-forsakringskassan-schemas</artifactId>
-    </dependency>
 
     <!-- Common -->
     <dependency>

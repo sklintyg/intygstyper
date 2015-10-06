@@ -21,8 +21,8 @@
       address="${intygstjanst.registersjukersattning.endpoint.url}">
   </jaxws:client>
 
-  <jaxws:client id="getSjukersattningClient"
-      serviceClass="se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningResponderInterface"
+  <jaxws:client id="getCertificateClient"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface"
       address="${intygstjanst.getsjukersattning.endpoint.url}">
   </jaxws:client>
 

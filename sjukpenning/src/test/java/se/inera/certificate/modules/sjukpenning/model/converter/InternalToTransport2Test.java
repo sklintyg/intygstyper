@@ -1,7 +1,5 @@
 package se.inera.certificate.modules.sjukpenning.model.converter;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 
@@ -24,7 +22,6 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Obje
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 import com.google.common.base.Charsets;
-import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLWriter;
 
 public class InternalToTransport2Test {

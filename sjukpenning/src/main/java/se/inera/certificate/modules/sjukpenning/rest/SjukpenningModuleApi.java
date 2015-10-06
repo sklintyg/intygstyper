@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateResponseType;
+import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport2;
@@ -29,13 +31,12 @@ import se.inera.certificate.modules.support.api.exception.ModuleConverterExcepti
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponderInterface;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponseType;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningType;
-import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
+import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,7 +64,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
 
     @Autowired
-    private GetSjukpenningResponderInterface getSjukpenningResponderInterface;
+    private GetCertificateResponderInterface getCertificateResponderInterface;
 
     /**
      * {@inheritDoc}
@@ -83,7 +84,8 @@ public class SjukpenningModuleApi implements ModuleApi {
     }
 
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+            throws ModuleException {
         // TODO
         return null;
     }
@@ -136,18 +138,18 @@ public class SjukpenningModuleApi implements ModuleApi {
 
     @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
-        GetSjukpenningType request = new GetSjukpenningType();
-        request.setIntygsId(certificateId);
+        GetCertificateType request = new GetCertificateType();
+        request.setIntygsId(getIntygsId(certificateId));
 
-        GetSjukpenningResponseType response = getSjukpenningResponderInterface.getSjukpenning(logicalAddress, request);
+        GetCertificateResponseType response = getCertificateResponderInterface.getCertificate(logicalAddress, request);
 
-        switch (response.getResultat().getResultCode()) {
+        switch (response.getResult().getResultCode()) {
         case INFO:
         case OK:
             return convert(response, false);
         case ERROR:
-            ErrorIdType errorId = response.getResultat().getErrorId();
-            String resultText = response.getResultat().getResultText();
+            ErrorIdType errorId = response.getResult().getErrorId();
+            String resultText = response.getResult().getResultText();
             switch (errorId) {
             case REVOKED:
                 return convert(response, true);
@@ -156,11 +158,17 @@ public class SjukpenningModuleApi implements ModuleApi {
                 throw new ModuleException("Error of type " + errorId + " occured when retrieving certificate " + certificateId + ", " + resultText);
             }
         default:
-            LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResultat().getResultText());
+            LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResult().getResultText());
             throw new ModuleException("An unidentified error occured when retrieving certificate " + certificateId + ", "
-                    + response.getResultat().getResultText());
+                    + response.getResult().getResultText());
         }
 
+    }
+
+    private IntygId getIntygsId(String certificateId) {
+        IntygId intygId = new IntygId();
+        intygId.setRoot(certificateId);
+        return intygId;
     }
 
     @Override
@@ -217,11 +225,11 @@ public class SjukpenningModuleApi implements ModuleApi {
         return xmlString;
     }
 
-    private CertificateResponse convert(GetSjukpenningResponseType response, boolean revoked) throws ModuleException {
+    private CertificateResponse convert(GetCertificateResponseType response, boolean revoked) throws ModuleException {
         try {
             SjukpenningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
-            CertificateMetaData metaData = TransportToInternal.getMetaData(response.getIntyg(), response.getMeta());
+            CertificateMetaData metaData = TransportToInternal.getMetaData(response.getIntyg());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
         } catch (Exception e) {
             throw new ModuleException(e);

@@ -16,13 +16,18 @@
     </cxf:features>
   </cxf:bus>
 
-  <jaxws:endpoint address="/get-sjukpenning/v1.0"
-      implementor="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningResponderImpl">
+  <jaxws:endpoint address="/get-certificate/v2.0"
+      implementor="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningService"
+      wsdlLocation="classpath:/interactions/GetCertificateInteraction/GetCertificateInteraction_1.0_RIVTABP21.wsdl"
+      xmlns:r="urn:riv:clinicalprocess:healthcond:certificate:GetCertificate:1:rivtabp21"
+      serviceName="r:GetCertificateResponderService"
+      endpointName="r:GetCertificateResponderPort"
+      >
     <jaxws:outFaultInterceptors>
       <bean
           class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg
-            value="transform/se-intygstjanster-ts-services/get-ts-bas-transform.xslt"/>
+            value="transform/get-sjukpenning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
@@ -43,13 +48,15 @@
       <entry key="schema-validation-enabled" value="true"/>
     </jaxws:properties>
     <jaxws:schemaLocations>
+      <!-- TODO: it might not be necessary to specify schemas -->
       <!--jaxws:schemaLocation>classpath:/core_components/se_intygstjanster_services_fk_1.0.xsd</jaxws:schemaLocation -->
       <jaxws:schemaLocation>classpath:/interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd</jaxws:schemaLocation>
     </jaxws:schemaLocations>
   </jaxws:endpoint>
 
+  <!-- TODO: these dummy implementations should be removed -->
   <bean class="se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningResponderDummy"/>
 
-  <bean class="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningResponderImpl"/>
+  <bean class="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningResponderDummy"/>
 
 </beans>
