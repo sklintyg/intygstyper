@@ -1,7 +1,7 @@
-angular.module('sjukpenning').controller('sjukpenning.QACtrl',
+angular.module('sjukersattning').controller('sjukersattning.QACtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
-        'sjukpenning.fragaSvarService', 'common.fragaSvarCommonService', 'common.statService',
-        'common.UserModel', 'sjukpenning.QACtrl.Helper', 'common.IntygViewStateService',
+        'sjukersattning.fragaSvarService', 'common.fragaSvarCommonService', 'common.statService',
+        'common.UserModel', 'sjukersattning.QACtrl.Helper', 'common.IntygViewStateService',
         function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
             fragaSvarCommonService, statService, UserModel, qaHelper, CommonViewState) {
             'use strict';
@@ -34,7 +34,7 @@ angular.module('sjukpenning').controller('sjukpenning.QACtrl',
             };
 
             // Request loading of QA's for this certificate
-            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'sjukpenning', function(result) {
+            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'sjukersattning', function(result) {
                 $log.debug('getQAForCertificate:success data:' + result);
                 $scope.widgetState.doneLoading = true;
                 $scope.widgetState.activeErrorMessageKey = null;
@@ -43,7 +43,7 @@ angular.module('sjukpenning').controller('sjukpenning.QACtrl',
 
                 // Tell viewcertctrl about the intyg in case cert load fails
                 if (result.length > 0) {
-                    $rootScope.$emit('sjukpenning.QACtrl.load', result[0].intygsReferens);
+                    $rootScope.$emit('sjukersattning.QACtrl.load', result[0].intygsReferens);
                 }
 
             }, function(errorData) {
@@ -59,7 +59,7 @@ angular.module('sjukpenning').controller('sjukpenning.QACtrl',
                 isRevoked: false
             };
 
-            var unbindFastEvent = $rootScope.$on('sjukpenning.ViewCertCtrl.load', function(event, cert, certProperties) {
+            var unbindFastEvent = $rootScope.$on('sjukersattning.ViewCertCtrl.load', function(event, cert, certProperties) {
                 $scope.cert = cert;
                 $scope.certProperties.isLoaded = true;
                 $scope.certProperties.isSent = certProperties.isSent;
@@ -94,7 +94,7 @@ angular.module('sjukpenning').controller('sjukpenning.QACtrl',
                 newQuestion.updateInProgress = true; // trigger local spinner
                 $scope.widgetState.sentMessage = false;
 
-                fragaSvarService.saveNewQuestion($stateParams.certificateId, 'sjukpenning', newQuestion,
+                fragaSvarService.saveNewQuestion($stateParams.certificateId, 'sjukersattning', newQuestion,
                     function(result) {
                         $log.debug('Got saveNewQuestion result:' + result);
                         newQuestion.updateInProgress = false;

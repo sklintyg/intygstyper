@@ -1,5 +1,5 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCert.Form5Ctrl',
-    ['$scope', '$log', 'sjukpenning.EditCertCtrl.ViewStateService',
+angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
+    ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService',
         function($scope, $log, viewState) {
             'use strict';
             var model = viewState.intygModel;

@@ -1,4 +1,4 @@
-angular.module('sjukpenning').factory('sjukpenning.EditCertCtrl.DateRangeGroupModel',
+angular.module('sjukersattning').factory('sjukersattning.EditCertCtrl.DateRangeGroupModel',
     ['common.DateUtilsService', 'common.UtilsService', function( dateUtils, utils) {
         'use strict';
 

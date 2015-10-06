@@ -1,4 +1,4 @@
-angular.module('sjukpenning').controller('sjukpenning.ErrorCtrl',
+angular.module('sjukersattning').controller('sjukersattning.ErrorCtrl',
     function($state, $stateParams, $scope) {
         'use strict';
 

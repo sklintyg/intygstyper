@@ -1,4 +1,4 @@
-angular.module('sjukpenning').factory('sjukpenning.fragaSvarService',
+angular.module('sjukersattning').factory('sjukersattning.fragaSvarService',
     function($http, $log) {
         'use strict';
 

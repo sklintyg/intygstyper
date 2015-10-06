@@ -1,8 +1,8 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCertCtrl',
+angular.module('sjukersattning').controller('sjukersattning.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.UtkastService', 'common.UserModel', 'sjukpenning.diagnosService',
-        'common.DateUtilsService', 'common.UtilsService', 'sjukpenning.Domain.IntygModel',
-        'sjukpenning.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
+        'common.UtkastService', 'common.UserModel', 'sjukersattning.diagnosService',
+        'common.DateUtilsService', 'common.UtilsService', 'sjukersattning.Domain.IntygModel',
+        'sjukersattning.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             UtkastService, UserModel, diagnosService,
             dateUtils, utils, IntygModel, viewState, anchorScrollService) {

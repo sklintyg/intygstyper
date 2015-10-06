@@ -1,92 +1,92 @@
 /**
  * Created by stephenwhite on 05/03/15.
  */
-angular.module('sjukpenning').config(function($stateProvider) {
+angular.module('sjukersattning').config(function($stateProvider) {
     'use strict';
 
     $stateProvider.
-        state('sjukpenning-edit', {
+        state('sjukersattning-edit', {
             data: { defaultActive : 'index' },
-            url : '/sjukpenning/edit/:certificateId?:patientId&:hospName',
+            url : '/sjukersattning/edit/:certificateId?:patientId&:hospName',
             views : {
                 'content@' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/utkast.html',
-                    controller: 'sjukpenning.EditCertCtrl'
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/utkast.html',
+                    controller: 'sjukersattning.EditCertCtrl'
                 },
 
-                'wcHeader@sjukpenning-edit' : {
+                'wcHeader@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/common/webcert/gui/headers/wcHeader.partial.html',
                     controller: 'common.wcHeaderController'
                 },
 
-                'header@sjukpenning-edit' : {
+                'header@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'
                 },
 
-                'footer@sjukpenning-edit' : {
+                'footer@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkastFooter.html',
                     controller: 'common.UtkastFooter'
                 },
 
-                'form1@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form1.html',
-                    controller: 'sjukpenning.EditCert.Form1Ctrl'
+                'form1@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form1.html',
+                    controller: 'sjukersattning.EditCert.Form1Ctrl'
                 },
 
-                'form2@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form2.html',
-                    controller: 'sjukpenning.EditCert.Form2Ctrl'
+                'form2@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form2.html',
+                    controller: 'sjukersattning.EditCert.Form2Ctrl'
                 },
 
-                'form3@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form3.html',
-                    controller: 'sjukpenning.EditCert.Form3Ctrl'
+                'form3@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form3.html',
+                    controller: 'sjukersattning.EditCert.Form3Ctrl'
                 },
 
-                'form4@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form4.html',
-                    controller: 'sjukpenning.EditCert.Form4Ctrl'
+                'form4@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form4.html',
+                    controller: 'sjukersattning.EditCert.Form4Ctrl'
                 },
 
-                'form5@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form5.html',
-                    controller: 'sjukpenning.EditCert.Form5Ctrl'
+                'form5@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form5.html',
+                    controller: 'sjukersattning.EditCert.Form5Ctrl'
                 },
 
-                'form6@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form6.html',
-                    controller: 'sjukpenning.EditCert.Form6Ctrl'
+                'form6@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form6.html',
+                    controller: 'sjukersattning.EditCert.Form6Ctrl'
                 },
 
-                'form7@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form7.html',
-                    controller: 'sjukpenning.EditCert.Form7Ctrl'
+                'form7@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form7.html',
+                    controller: 'sjukersattning.EditCert.Form7Ctrl'
                 },
 
-                'form8b@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form8b.html',
-                    controller: 'sjukpenning.EditCert.Form8bCtrl'
+                'form8b@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form8b.html',
+                    controller: 'sjukersattning.EditCert.Form8bCtrl'
                 },
 
-                'form9@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form9.html',
-                    controller: 'sjukpenning.EditCert.Form9Ctrl'
+                'form9@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form9.html',
+                    controller: 'sjukersattning.EditCert.Form9Ctrl'
                 },
 
-                'form10@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form10.html',
-                    controller: 'sjukpenning.EditCert.Form10Ctrl'
+                'form10@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form10.html',
+                    controller: 'sjukersattning.EditCert.Form10Ctrl'
                 },
 
-                'form11@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form11.html',
-                    controller: 'sjukpenning.EditCert.Form11Ctrl'
+                'form11@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form11.html',
+                    controller: 'sjukersattning.EditCert.Form11Ctrl'
                 },
 
-                'form15@sjukpenning-edit' : {
-                    templateUrl: '/web/webjars/sjukpenning/webcert/views/utkast/form/form15.html',
-                    controller: 'sjukpenning.EditCert.Form15Ctrl'
+                'form15@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form15.html',
+                    controller: 'sjukersattning.EditCert.Form15Ctrl'
                 }
 
             }

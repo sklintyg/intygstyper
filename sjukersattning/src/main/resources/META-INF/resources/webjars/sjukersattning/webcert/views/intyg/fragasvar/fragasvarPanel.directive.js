@@ -5,9 +5,9 @@
 /**
  * qaPanel directive. Common directive for both unhandled and handled questions/answers
  */
-angular.module('sjukpenning').directive('qaPanelsp',
-    [ '$window', '$log', '$timeout', 'common.User', 'common.fragaSvarCommonService', 'sjukpenning.fragaSvarService',
-        'common.statService', 'common.dialogService','sjukpenning.QACtrl.Helper',
+angular.module('sjukersattning').directive('qaPanelsp',
+    [ '$window', '$log', '$timeout', 'common.User', 'common.fragaSvarCommonService', 'sjukersattning.fragaSvarService',
+        'common.statService', 'common.dialogService','sjukersattning.QACtrl.Helper',
         function($window, $log, $timeout, User, fragaSvarCommonService, fragaSvarService, statService, dialogService, qaHelper) {
             'use strict';
 
@@ -15,7 +15,7 @@ angular.module('sjukpenning').directive('qaPanelsp',
                 restrict: 'A',
                 transclude: true,
                 replace: true,
-                templateUrl: '/web/webjars/sjukpenning/webcert/views/intyg/fragasvar/fragasvarPanel.directive.html',
+                templateUrl: '/web/webjars/sjukersattning/webcert/views/intyg/fragasvar/fragasvarPanel.directive.html',
                 scope: {
                     panelId: '@',
                     qa: '=',
@@ -60,13 +60,13 @@ angular.module('sjukpenning').directive('qaPanelsp',
                     $scope.sendAnswer = function sendAnswer(qa) {
                         qa.updateInProgress = true; // trigger local spinner
 
-                        fragaSvarService.saveAnswer(qa, 'sjukpenning', function(result) {
+                        fragaSvarService.saveAnswer(qa, 'sjukersattning', function(result) {
                             $log.debug('Got saveAnswer result:' + result);
                             qa.updateInProgress = false;
                             qa.activeErrorMessageKey = null;
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                addListMessage($scope.qaList, qa, 'sjukpenning.fragasvar.answer.is.sent');
+                                addListMessage($scope.qaList, qa, 'sjukersattning.fragasvar.answer.is.sent');
 
                                 // update real item
                                 angular.copy(result, qa);
@@ -83,7 +83,7 @@ angular.module('sjukpenning').directive('qaPanelsp',
                     $scope.onVidareBefordradChange = function(qa) {
                         qa.forwardInProgress = true;
 
-                        fragaSvarCommonService.setVidareBefordradState(qa.internReferens, 'sjukpenning', qa.vidarebefordrad,
+                        fragaSvarCommonService.setVidareBefordradState(qa.internReferens, 'sjukersattning', qa.vidarebefordrad,
                             function(result) {
                                 qa.forwardInProgress = false;
 
@@ -106,7 +106,7 @@ angular.module('sjukpenning').directive('qaPanelsp',
                                 if(qas) {
                                     angular.forEach(qas, function(qa) { //unused parameter , key
                                         fragaSvarCommonService.decorateSingleItem(qa);
-                                        //addListMessage(qas, qa, 'sjukpenning.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
+                                        //addListMessage(qas, qa, 'sjukersattning.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
                                     });
                                     statService.refreshStat();
                                 }
@@ -142,12 +142,12 @@ angular.module('sjukpenning').directive('qaPanelsp',
                         $log.debug('updateAsHandled:' + qa);
                         qa.updateHandledStateInProgress = true;
 
-                        fragaSvarService.closeAsHandled(qa.internReferens, 'sjukpenning', function(result) {
+                        fragaSvarService.closeAsHandled(qa.internReferens, 'sjukersattning', function(result) {
                             qa.activeErrorMessageKey = null;
                             qa.updateHandledStateInProgress = false;
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                addListMessage($scope.qaList, qa, 'sjukpenning.fragasvar.marked.as.hanterad');
+                                addListMessage($scope.qaList, qa, 'sjukersattning.fragasvar.marked.as.hanterad');
 
                                 angular.copy(result, qa);
                                 //$scope.activeQA = qa.internReferens;
@@ -172,14 +172,14 @@ angular.module('sjukpenning').directive('qaPanelsp',
                         $log.debug('updateAsUnHandled:' + qa);
                         qa.updateHandledStateInProgress = true; // trigger local
 
-                        fragaSvarService.openAsUnhandled(qa.internReferens, 'sjukpenning', function(result) {
+                        fragaSvarService.openAsUnhandled(qa.internReferens, 'sjukersattning', function(result) {
                             $log.debug('Got openAsUnhandled result:' + result);
                             qa.activeErrorMessageKey = null;
                             qa.updateHandledStateInProgress = false;
 
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                addListMessage($scope.qaList, qa, 'sjukpenning.fragasvar.marked.as.ohanterad');
+                                addListMessage($scope.qaList, qa, 'sjukersattning.fragasvar.marked.as.ohanterad');
 
                                 angular.copy(result, qa);
                                 //$scope.activeQA = qa.internReferens;

@@ -19,15 +19,15 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
-    var minaintyg = grunt.file.readJSON(SRC_DIR + 'webjars/sjukpenning/minaintyg/js/module-deps.json').map(function(file) {
+    var minaintyg = grunt.file.readJSON(SRC_DIR + 'webjars/sjukersattning/minaintyg/js/module-deps.json').map(function(file) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
-    minaintyg = [SRC_DIR + 'webjars/sjukpenning/minaintyg/js/module.js'].concat(minaintyg);
+    minaintyg = [SRC_DIR + 'webjars/sjukersattning/minaintyg/js/module.js'].concat(minaintyg);
 
-    var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/sjukpenning/webcert/module-deps.json').map(function(file) {
+    var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/sjukersattning/webcert/module-deps.json').map(function(file) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
-    webcert = [SRC_DIR + 'webjars/sjukpenning/webcert/module.js'].concat(webcert);
+    webcert = [SRC_DIR + 'webjars/sjukersattning/webcert/module.js'].concat(webcert);
 
 
     grunt.initConfig({
@@ -38,21 +38,21 @@ module.exports = function(grunt) {
                 force: true
             },
             minaintyg: {
-                src: [ SRC_DIR + 'webjars/sjukpenning/minaintyg/**/*.css' ]
+                src: [ SRC_DIR + 'webjars/sjukersattning/minaintyg/**/*.css' ]
             },
             webcert: {
-                src: [ SRC_DIR + 'webjars/sjukpenning/webcert/**/*.css' ]
+                src: [ SRC_DIR + 'webjars/sjukersattning/webcert/**/*.css' ]
             }
         },
 
         concat: {
             minaintyg: {
                 src: minaintyg,
-                dest: DEST_DIR + 'webjars/sjukpenning/minaintyg/js/module.min.js'
+                dest: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js'
             },
             webcert: {
                 src: webcert,
-                dest: DEST_DIR + 'webjars/sjukpenning/webcert/module.min.js'
+                dest: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js'
             }
         },
 
@@ -62,10 +62,10 @@ module.exports = function(grunt) {
                 force: true
             },
             minaintyg: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukpenning/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukersattning/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
             },
             webcert: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukpenning/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukersattning/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
             }
         },
 
@@ -85,12 +85,12 @@ module.exports = function(grunt) {
                 singleQuotes: true
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/sjukpenning/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/sjukpenning/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js'
             }
         },
 
@@ -99,12 +99,12 @@ module.exports = function(grunt) {
                 mangle: false
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/sjukpenning/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/sjukpenning/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js'
             }
         },
 

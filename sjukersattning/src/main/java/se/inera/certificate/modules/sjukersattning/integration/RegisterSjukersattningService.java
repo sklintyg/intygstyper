@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.integration;
+package se.inera.certificate.modules.sjukersattning.integration;
 
 import java.io.ByteArrayInputStream;
 
@@ -20,13 +20,13 @@ import com.helger.schematron.svrl.SVRLWriter;
 
 @WebServiceProvider
 @ServiceMode(value = Service.Mode.MESSAGE)
-public class RegisterSjukpenningService implements Provider<Source> {
+public class RegisterSjukersattningService implements Provider<Source> {
 
-    RegisterSjukpenningValidator validator;
+    RegisterSjukersattningValidator validator;
 
-    public RegisterSjukpenningService() {
+    public RegisterSjukersattningService() {
         try {
-            validator = new RegisterSjukpenningValidator();
+            validator = new RegisterSjukersattningValidator();
         } catch (Exception e) {
             // TODO
             e.printStackTrace();

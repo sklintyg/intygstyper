@@ -2,7 +2,7 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/sjukpenning/minaintyg/js/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/sjukersattning/minaintyg/js/';
     var TEST_DIR = 'src/test/js/minaintyg/';
     var WEBJAR_DIR = '../target/webjardependencies/';
 

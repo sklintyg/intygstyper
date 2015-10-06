@@ -1,6 +1,6 @@
 <a id="anchor.sysselsattning" name="anchor.sysselsattning"></a>
-<div wc-field field-label="sjukpenning.label.sysselsattning" field-number="3" wc-detect-animation
-     field-help-text="sjukpenning.helptext.sysselsattning" ng-hide="viewState.avstangningSmittskydd()"
+<div wc-field field-label="sjukersattning.label.sysselsattning" field-number="3" wc-detect-animation
+     field-help-text="sjukersattning.helptext.sysselsattning" ng-hide="viewState.avstangningSmittskydd()"
      class="field-fade" field-has-errors="viewState.common.validationMessagesGrouped.sysselsattning" id="arbeteForm">
   <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.sysselsattning" id="validationMessages_sysselsattning">
     <ul>
@@ -10,12 +10,12 @@
   </div>
 
   <div class="form-group form-inline">
-    <label class="control-label"><span message key="sjukpenning.label.arbetsformaga"></span></label>
+    <label class="control-label"><span message key="sjukersattning.label.arbetsformaga"></span></label>
     <div class="controls form-inline">
-      <label class="checkbox"><input type="checkbox" id="arbeteNuvarande" ng-model="model.nuvarandeArbete"><span message key="sjukpenning.label.sysselsattning.arbete"/></label>
-      <span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.nuvarande"></span>
+      <label class="checkbox"><input type="checkbox" id="arbeteNuvarande" ng-model="model.nuvarandeArbete"><span message key="sjukersattning.label.sysselsattning.arbete"/></label>
+      <span wc-enable-tooltip field-help-text="sjukersattning.helptext.sysselsattning.nuvarande"></span>
       <div class="indent" ng-if="model.nuvarandeArbete">
-        <label for="currentWork"><span message key="sjukpenning.label.sysselsattning.uppgifter"/></label>
+        <label for="currentWork"><span message key="sjukersattning.label.sysselsattning.uppgifter"/></label>
         <div class="controls">
           <textarea id="currentWork" class="" name="currentWork" rows='2'
                     ng-model="model.nuvarandeArbetsuppgifter" ng-trim="false"
@@ -26,22 +26,22 @@
   </div>
   <div class="form-group form-inline">
     <label class="checkbox"><input type="checkbox" id="arbeteArbetslos" ng-model="model.arbetsloshet">
-      <span message key="sjukpenning.label.sysselsattning.arbetslos"/>
-      </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.arbetsloshet"></span>
+      <span message key="sjukersattning.label.sysselsattning.arbetslos"/>
+      </label><span wc-enable-tooltip field-help-text="sjukersattning.helptext.sysselsattning.arbetsloshet"></span>
   </div>
   <div class="form-group form-inline">
     <label class="checkbox"><input type="checkbox" id="arbeteForaldraledig" ng-model="model.foraldraledighet">
-      <span message key="sjukpenning.label.sysselsattning.foraldraledighet"/>
-      </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.foraldraledighet"></span>
+      <span message key="sjukersattning.label.sysselsattning.foraldraledighet"/>
+      </label><span wc-enable-tooltip field-help-text="sjukersattning.helptext.sysselsattning.foraldraledighet"></span>
   </div>
   <div class="form-group form-inline">
     <label class="checkbox"><input type="checkbox" id="arbeteStudier" ng-model="model.studier">
-      <span message key="sjukpenning.label.sysselsattning.studier"/>
-    </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.studier"></span>
+      <span message key="sjukersattning.label.sysselsattning.studier"/>
+    </label><span wc-enable-tooltip field-help-text="sjukersattning.helptext.sysselsattning.studier"></span>
   </div>
   <div class="form-group form-inline">
     <label class="checkbox"><input type="checkbox" id="arbeteProgram" ng-model="model.arbetsmarknadsProgram">
-      <span message key="sjukpenning.label.sysselsattning.program"/>
-    </label><span wc-enable-tooltip field-help-text="sjukpenning.helptext.sysselsattning.program"></span>
+      <span message key="sjukersattning.label.sysselsattning.program"/>
+    </label><span wc-enable-tooltip field-help-text="sjukersattning.helptext.sysselsattning.program"></span>
   </div>
 </div>

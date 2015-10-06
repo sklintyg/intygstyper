@@ -1,5 +1,5 @@
-angular.module('sjukpenning').service('sjukpenning.EditCertCtrl.ViewStateService',
-    ['$log', 'common.UtkastViewStateService', 'sjukpenning.Domain.IntygModel', 'sjukpenning.EditCertCtrl.Helper',
+angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateService',
+    ['$log', 'common.UtkastViewStateService', 'sjukersattning.Domain.IntygModel', 'sjukersattning.EditCertCtrl.Helper',
         function($log, CommonViewState, IntygModel, helper) {
             'use strict';
 
@@ -32,7 +32,7 @@ angular.module('sjukpenning').service('sjukpenning.EditCertCtrl.ViewStateService
 
             this.reset = function() {
                 CommonViewState.reset();
-                CommonViewState.intyg.type = 'sjukpenning';
+                CommonViewState.intyg.type = 'sjukersattning';
                 this.setDraftModel(IntygModel._members.build());
                 return this;
             };

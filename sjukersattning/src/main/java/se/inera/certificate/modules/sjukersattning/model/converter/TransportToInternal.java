@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.model.converter;
+package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +13,15 @@ import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
-import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.intygstjanster.fk.services.v1.*;
 
 public class TransportToInternal {
 
-    public static SjukpenningUtlatande convert(SjukpenningIntyg source) throws ConverterException {
-        SjukpenningUtlatande utlatande = new SjukpenningUtlatande();
+    public static SjukersattningUtlatande convert(SjukersattningIntyg source) throws ConverterException {
+        SjukersattningUtlatande utlatande = new SjukersattningUtlatande();
         utlatande.setId(source.getIntygsId());
         utlatande.setTyp(source.getIntygsTyp());
         setGrundData(utlatande, source.getGrundData());
@@ -72,7 +72,7 @@ public class TransportToInternal {
         return utlatande;
     }
 
-    private static void setAtgarder(SjukpenningUtlatande utlatande, List<AtgardTyp> atgarder) {
+    private static void setAtgarder(SjukersattningUtlatande utlatande, List<AtgardTyp> atgarder) {
         for (AtgardTyp atgard : atgarder) {
             switch (atgard) {
             case INTE_AKTUELLT:
@@ -112,7 +112,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void setBedomning(SjukpenningUtlatande utlatande, BedomningTyp bedomning) {
+    private static void setBedomning(SjukersattningUtlatande utlatande, BedomningTyp bedomning) {
         utlatande.setRessattTillArbeteAktuellt(bedomning.isAnnatFardmedel());
         utlatande.setRekommendationOverSocialstyrelsensBeslutsstod(bedomning.isOverskridenLangd());
         for (SjukskrivningTyp sjukskrivning : bedomning.getSjukskrivning()) {
@@ -137,12 +137,12 @@ public class TransportToInternal {
         }
     }
 
-    private static void setBehandling(SjukpenningUtlatande utlatande, BehandlingTyp behandling) {
+    private static void setBehandling(SjukersattningUtlatande utlatande, BehandlingTyp behandling) {
         utlatande.setPlaneradBehandling(behandling.getPlanerade() != null ? behandling.getPlanerade() : null);
         utlatande.setPagaendeBehandling(behandling.getPagaende() != null ? behandling.getPagaende() : null);
     }
 
-    private static void setSjukdomar(SjukpenningUtlatande utlatande, List<SjukdomTyp> diagnoser) {
+    private static void setSjukdomar(SjukersattningUtlatande utlatande, List<SjukdomTyp> diagnoser) {
         int i = 1;
         for (SjukdomTyp sjukdom : diagnoser) {
             switch (i) {
@@ -166,7 +166,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void setGrundData(SjukpenningUtlatande utlatande, se.inera.intygstjanster.fk.services.v1.GrundData sourceGrundData) {
+    private static void setGrundData(SjukersattningUtlatande utlatande, se.inera.intygstjanster.fk.services.v1.GrundData sourceGrundData) {
         GrundData grundData = new GrundData();
         setPatient(grundData, sourceGrundData.getPatient());
         setSkapadAv(grundData, sourceGrundData.getSkapadAv());
@@ -213,7 +213,7 @@ public class TransportToInternal {
         grundData.setPatient(patient);
     }
 
-    private static void setVardkontakter(SjukpenningUtlatande utlatande, List<VardkontaktTyp> vardkontakter) {
+    private static void setVardkontakter(SjukersattningUtlatande utlatande, List<VardkontaktTyp> vardkontakter) {
         for (VardkontaktTyp vardkontakt : vardkontakter) {
             if (vardkontakt.getBeskrivning().equals(VardkontaktBeskrivningTyp.JOURNALUPPGIFTER)) {
                 utlatande.setJournaluppgifter(new InternalDate(vardkontakt.getDatum()));
@@ -230,11 +230,11 @@ public class TransportToInternal {
         }
     }
 
-    public static CertificateMetaData getMetaData(SjukpenningIntyg source, IntygMeta meta) {
+    public static CertificateMetaData getMetaData(SjukersattningIntyg source, IntygMeta meta) {
         CertificateMetaData metaData = new CertificateMetaData();
         metaData.setCertificateId(source.getIntygsId());
         metaData.setAdditionalInfo(source.getOvrigt());
-        metaData.setCertificateType(SjukpenningEntryPoint.MODULE_ID);
+        metaData.setCertificateType(SjukersattningEntryPoint.MODULE_ID);
         metaData.setFacilityName(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
         metaData.setIssuerName(source.getGrundData().getSkapadAv().getFullstandigtNamn());
         metaData.setSignDate(source.getGrundData().getSigneringsTidstampel());

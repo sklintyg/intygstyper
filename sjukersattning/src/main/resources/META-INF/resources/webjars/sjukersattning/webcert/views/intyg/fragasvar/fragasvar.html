@@ -1,7 +1,7 @@
-<div class="row weak-hidden" ng-class="{show: widgetState.showTemplate}" ng-controller="sjukpenning.QACtrl">
+<div class="row weak-hidden" ng-class="{show: widgetState.showTemplate}" ng-controller="sjukersattning.QACtrl">
   <div class="col-md-12 qa-column">
 
-    <div wc-spinner label="sjukpenning.info.loading.existing.qa" show-spinner="!widgetState.doneLoading"
+    <div wc-spinner label="sjukersattning.info.loading.existing.qa" show-spinner="!widgetState.doneLoading"
          show-content="widgetState.doneLoading">
 
       <div class="webcert-bottom-padding-section" ng-show="certProperties.isLoaded">
@@ -46,7 +46,7 @@
 
           <!-- error message occuring when inteacting with server for this FragaSvar-->
           <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-danger">
-            <span message key="sjukpenning.error.{{newQuestion.activeErrorMessageKey}}"></span>
+            <span message key="sjukersattning.error.{{newQuestion.activeErrorMessageKey}}"></span>
           </div>
 
           <!-- Form button group -->
@@ -75,7 +75,7 @@
         <!-- error message -->
         <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
              class="alert alert-danger">
-          <span message key="sjukpenning.error.{{widgetState.activeErrorMessageKey}}"></span>
+          <span message key="sjukersattning.error.{{widgetState.activeErrorMessageKey}}"></span>
         </div>
       </div>
 

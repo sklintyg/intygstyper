@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.integration;
+package se.inera.certificate.modules.sjukersattning.integration;
 
 import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
 import se.inera.intygstjanster.fk.services.v1.ResultCodeType;

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.integration;
+package se.inera.certificate.modules.sjukersattning.integration;
 
 
 import java.io.StringWriter;
@@ -16,23 +16,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.sjukpenning.model.converter.TransportToInternal;
-import se.inera.certificate.modules.sjukpenning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
-import se.inera.certificate.modules.sjukpenning.rest.SjukpenningModuleApi;
-import se.inera.certificate.modules.sjukpenning.validator.TransportValidator;
+import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternal;
+import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.rest.SjukersattningModuleApi;
+import se.inera.certificate.modules.sjukersattning.validator.TransportValidator;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.validate.CertificateValidationException;
-import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningResponderInterface;
-import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningResponseType;
-import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
+import se.inera.intygstjanster.fk.services.registersjukersattningresponder.v1.RegisterSjukersattningResponderInterface;
+import se.inera.intygstjanster.fk.services.registersjukersattningresponder.v1.RegisterSjukersattningResponseType;
+import se.inera.intygstjanster.fk.services.registersjukersattningresponder.v1.RegisterSjukersattningType;
 import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
 import se.inera.intygstjanster.fk.services.v1.ObjectFactory;
-import se.inera.intygstjanster.fk.services.v1.SjukpenningIntyg;
+import se.inera.intygstjanster.fk.services.v1.SjukersattningIntyg;
 
 import com.google.common.base.Throwables;
 
-public class RegisterSjukpenningResponderImpl implements RegisterSjukpenningResponderInterface {
+public class RegisterSjukersattningResponderImpl implements RegisterSjukersattningResponderInterface {
 
     @Autowired
     TransportValidator validator;
@@ -41,40 +41,40 @@ public class RegisterSjukpenningResponderImpl implements RegisterSjukpenningResp
     private ConverterUtil converterUtil;
 
     @Autowired 
-    private SjukpenningModuleApi moduleApi;
+    private SjukersattningModuleApi moduleApi;
 
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterSjukpenningResponderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterSjukersattningResponderImpl.class);
 
     @PostConstruct
     public void initializeJaxbContext() throws JAXBException {
-        jaxbContext = JAXBContext.newInstance(RegisterSjukpenningType.class);
+        jaxbContext = JAXBContext.newInstance(RegisterSjukersattningType.class);
         objectFactory = new ObjectFactory();
     }
 
     @Override
-    public RegisterSjukpenningResponseType registerSjukpenning(String logicalAddress, RegisterSjukpenningType registerSjukpenning) {
-        RegisterSjukpenningResponseType response = new RegisterSjukpenningResponseType();
+    public RegisterSjukersattningResponseType registerSjukersattning(String logicalAddress, RegisterSjukersattningType registerSjukersattning) {
+        RegisterSjukersattningResponseType response = new RegisterSjukersattningResponseType();
 
         try {
-            validateTransport(registerSjukpenning);
-            SjukpenningUtlatande utlatande = TransportToInternal.convert(registerSjukpenning.getIntyg());
+            validateTransport(registerSjukersattning);
+            SjukersattningUtlatande utlatande = TransportToInternal.convert(registerSjukersattning.getIntyg());
 
-            String xml = xmlToString(registerSjukpenning.getIntyg());
+            String xml = xmlToString(registerSjukersattning.getIntyg());
             CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
 
             moduleApi.getModuleContainer().certificateReceived(certificateHolder);
 
             response.setResultat(ResultUtil.okResult());
-            LOGGER.debug("Registered intyg with id: {}",registerSjukpenning.getIntyg().getIntygsId());
+            LOGGER.debug("Registered intyg with id: {}",registerSjukersattning.getIntyg().getIntygsId());
 
         } catch (CertificateAlreadyExistsException e) {
             response.setResultat(ResultUtil.infoResult("Certificate already exists"));
-            String certificateId = registerSjukpenning.getIntyg().getIntygsId();
-            String issuedBy = registerSjukpenning.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId();
+            String certificateId = registerSjukersattning.getIntyg().getIntygsId();
+            String issuedBy = registerSjukersattning.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");
        
         } catch (CertificateValidationException e) {
@@ -97,15 +97,15 @@ public class RegisterSjukpenningResponderImpl implements RegisterSjukpenningResp
         return response;
     }
 
-    private String xmlToString(SjukpenningIntyg sjukpenningIntyg) throws JAXBException {
+    private String xmlToString(SjukersattningIntyg sjukersattningIntyg) throws JAXBException {
         StringWriter stringWriter = new StringWriter();
-        JAXBElement<SjukpenningIntyg> requestElement = objectFactory.createSjukpenningIntyg(sjukpenningIntyg);
+        JAXBElement<SjukersattningIntyg> requestElement = objectFactory.createSjukersattningIntyg(sjukersattningIntyg);
         jaxbContext.createMarshaller().marshal(requestElement, stringWriter);
         return stringWriter.toString();
     }
 
-    private void validateTransport(RegisterSjukpenningType registerSjukpenning) throws CertificateValidationException {
-        List<String> validationErrors = validator.validateTransport(registerSjukpenning.getIntyg());
+    private void validateTransport(RegisterSjukersattningType registerSjukersattning) throws CertificateValidationException {
+        List<String> validationErrors = validator.validateTransport(registerSjukersattning.getIntyg());
         if (!validationErrors.isEmpty()) {
             throw new CertificateValidationException(validationErrors);
         }

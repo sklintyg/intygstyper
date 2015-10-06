@@ -1,5 +1,5 @@
-angular.module('sjukpenning').controller('sjukpenning.EditCert.Form2Ctrl',
-    ['$scope', '$log', 'sjukpenning.EditCertCtrl.ViewStateService', 'common.UtilsService',
+angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
+    ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', 'common.UtilsService',
         'common.DateUtilsService',
         function($scope, $log, viewState, utils, dateUtils) {
             'use strict';

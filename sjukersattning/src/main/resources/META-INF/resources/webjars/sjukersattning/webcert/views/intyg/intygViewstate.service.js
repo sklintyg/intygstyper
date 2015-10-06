@@ -1,4 +1,4 @@
-angular.module('sjukpenning').service('sjukpenning.IntygController.ViewStateService',
+angular.module('sjukersattning').service('sjukersattning.IntygController.ViewStateService',
     ['$log', 'common.IntygViewStateService',
         function($log, CommonViewState) {
             'use strict';
@@ -8,7 +8,7 @@ angular.module('sjukpenning').service('sjukpenning.IntygController.ViewStateServ
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'FK';
-                this.common.intyg.type = 'sjukpenning';
+                this.common.intyg.type = 'sjukersattning';
             };
 
             this.reset();

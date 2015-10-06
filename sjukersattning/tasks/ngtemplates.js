@@ -1,12 +1,12 @@
 module.exports = {
-    sjukpenning: {
-        cwd: 'src/main/resources/META-INF/resources/webjars/sjukpenning/webcert',
+    sjukersattning: {
+        cwd: 'src/main/resources/META-INF/resources/webjars/sjukersattning/webcert',
         src: ['**/*.html'],
-        dest: 'src/main/resources/META-INF/resources/webjars/sjukpenning/webcert/templates.js',
+        dest: 'src/main/resources/META-INF/resources/webjars/sjukersattning/webcert/templates.js',
         options:{
-            module: 'sjukpenning',
+            module: 'sjukersattning',
             url: function(url) {
-                return '/web/webjars/sjukpenning/webcert/' + url;
+                return '/web/webjars/sjukersattning/webcert/' + url;
             }
         }
     }

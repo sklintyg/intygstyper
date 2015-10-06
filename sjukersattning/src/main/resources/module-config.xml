@@ -7,8 +7,8 @@
 
   <context:annotation-config />
 
-  <import resource="sjukpenning-beans.xml" />
+  <import resource="sjukersattning-beans.xml" />
 
-  <import resource="sjukpenning-ws-stub.xml" />
+  <import resource="sjukersattning-ws-stub.xml" />
 
 </beans>

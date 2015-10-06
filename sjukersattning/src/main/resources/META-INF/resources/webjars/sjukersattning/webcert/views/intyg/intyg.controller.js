@@ -1,6 +1,6 @@
-angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
+angular.module('sjukersattning').controller('sjukersattning.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore','common.IntygService','common.IntygProxy',
-        'common.messageService', 'common.UserModel', 'sjukpenning.IntygController.ViewStateService',
+        'common.messageService', 'common.UserModel', 'sjukersattning.IntygController.ViewStateService',
         function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService, IntygProxy,
             messageService, UserModel, ViewState) {
             'use strict';
@@ -39,7 +39,7 @@ angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('sjukpenning.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
+                        $rootScope.$emit('sjukersattning.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
@@ -64,7 +64,7 @@ angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
              * @type {{}}
              */
             $scope.intygBackup = {intyg: null, showBackupInfo: false};
-            var unbindFastEventFail = $rootScope.$on('sjukpenning.ViewCertCtrl.load.failed', function(event, intyg) {
+            var unbindFastEventFail = $rootScope.$on('sjukersattning.ViewCertCtrl.load.failed', function(event, intyg) {
                 $scope.intygBackup.intyg = intyg;
             });
             $scope.$on('$destroy', unbindFastEventFail);

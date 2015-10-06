@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.rest;
+package se.inera.certificate.modules.sjukersattning.rest;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -14,12 +14,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport2;
-import se.inera.certificate.modules.sjukpenning.model.converter.TransportToInternal;
-import se.inera.certificate.modules.sjukpenning.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.sjukpenning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
-import se.inera.certificate.modules.sjukpenning.validator.InternalDraftValidator;
+import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport2;
+import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternal;
+import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
@@ -29,9 +29,9 @@ import se.inera.certificate.modules.support.api.exception.ModuleConverterExcepti
 import se.inera.certificate.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
 import se.inera.certificate.modules.support.api.notification.NotificationMessage;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponderInterface;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponseType;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningType;
+import se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningResponderInterface;
+import se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningResponseType;
+import se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningType;
 import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
@@ -40,9 +40,9 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class SjukpenningModuleApi implements ModuleApi {
+public class SjukersattningModuleApi implements ModuleApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SjukpenningModuleApi.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SjukersattningModuleApi.class);
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
@@ -54,7 +54,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     private ConverterUtil converterUtil;
 
     @Autowired
-    @Qualifier("sjukpenning-objectMapper")
+    @Qualifier("sjukersattning-objectMapper")
     private ObjectMapper objectMapper;
 
     private ModuleContainerApi moduleContainer;
@@ -63,7 +63,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
 
     @Autowired
-    private GetSjukpenningResponderInterface getSjukpenningResponderInterface;
+    private GetSjukersattningResponderInterface getSjukersattningResponderInterface;
 
     /**
      * {@inheritDoc}
@@ -106,7 +106,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
             throws ModuleException {
         try {
-            SjukpenningUtlatande internal = getInternal(template);
+            SjukersattningUtlatande internal = getInternal(template);
             return toInternalModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
@@ -136,10 +136,10 @@ public class SjukpenningModuleApi implements ModuleApi {
 
     @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
-        GetSjukpenningType request = new GetSjukpenningType();
+        GetSjukersattningType request = new GetSjukersattningType();
         request.setIntygsId(certificateId);
 
-        GetSjukpenningResponseType response = getSjukpenningResponderInterface.getSjukpenning(logicalAddress, request);
+        GetSjukersattningResponseType response = getSjukersattningResponderInterface.getSjukersattning(logicalAddress, request);
 
         switch (response.getResultat().getResultCode()) {
         case INFO:
@@ -204,7 +204,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     public String marshall(String jsonString) throws ModuleException {
         String xmlString = null;
         try {
-            SjukpenningUtlatande internal = objectMapper.readValue(jsonString, SjukpenningUtlatande.class);
+            SjukersattningUtlatande internal = objectMapper.readValue(jsonString, SjukersattningUtlatande.class);
             RegisterCertificateType external = InternalToTransport2.convert(internal);
             StringWriter writer = new StringWriter();
             JAXB.marshal(external, writer);
@@ -217,9 +217,9 @@ public class SjukpenningModuleApi implements ModuleApi {
         return xmlString;
     }
 
-    private CertificateResponse convert(GetSjukpenningResponseType response, boolean revoked) throws ModuleException {
+    private CertificateResponse convert(GetSjukersattningResponseType response, boolean revoked) throws ModuleException {
         try {
-            SjukpenningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
+            SjukersattningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
             CertificateMetaData metaData = TransportToInternal.getMetaData(response.getIntyg(), response.getMeta());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
@@ -228,12 +228,12 @@ public class SjukpenningModuleApi implements ModuleApi {
         }
     }
 
-    private SjukpenningUtlatande getInternal(InternalModelHolder internalModel)
+    private SjukersattningUtlatande getInternal(InternalModelHolder internalModel)
             throws ModuleException {
 
         try {
-            SjukpenningUtlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
-                    SjukpenningUtlatande.class);
+            SjukersattningUtlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
+                    SjukersattningUtlatande.class);
 
             // Explicitly populate the giltighet interval since it is information derived from
             // the arbetsformaga but needs to be serialized into the Utkast model.
@@ -249,7 +249,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         try {
-            SjukpenningUtlatande intyg = getInternal(internalModel);
+            SjukersattningUtlatande intyg = getInternal(internalModel);
             webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInternalModelResponse(intyg);
         } catch (ModuleException e) {
@@ -257,7 +257,7 @@ public class SjukpenningModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse toInternalModelResponse(SjukpenningUtlatande internalModel) throws ModuleException {
+    private InternalModelResponse toInternalModelResponse(SjukersattningUtlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);

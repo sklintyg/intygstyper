@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.model.converter;
+package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,8 +18,8 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.*;
-import se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningValidator;
-import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
+import se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningValidator;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
@@ -32,14 +32,14 @@ public class InternalToTransport2Test {
     @Test
     public void doSchematronValidation() throws Exception {
         String xmlContents = xmlToString(InternalToTransport2.convert(getUtlatande()));
-        RegisterSjukpenningValidator validator = new RegisterSjukpenningValidator();
+        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
         System.out.println(SVRLWriter.createXMLString(result));
         //assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
-    private SjukpenningUtlatande getUtlatande() {
-        SjukpenningUtlatande utlatande = new SjukpenningUtlatande();
+    private SjukersattningUtlatande getUtlatande() {
+        SjukersattningUtlatande utlatande = new SjukersattningUtlatande();
         utlatande.setId("1234567");
         utlatande.setGrundData(getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));

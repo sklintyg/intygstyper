@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.model.converter;
+package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
@@ -76,17 +76,17 @@ public class InternalToTransport2 {
     public static final String KONTAKT_ONSKAS_DELSVAR_ID = "21.1";
     public static final String SYSSELSATTNING_TYPE_SYSTEM = "KV_FKMU_0002";
 
-    public static RegisterCertificateType convert(SjukpenningUtlatande source) throws ConverterException {
+    public static RegisterCertificateType convert(SjukersattningUtlatande source) throws ConverterException {
         if (source == null) {
             throw new ConverterException("Source utlatande was null, cannot convert");
         }
 
-        RegisterCertificateType sjukpenningType = new RegisterCertificateType();
-        sjukpenningType.setIntyg(getIntyg(source));
-        return sjukpenningType;
+        RegisterCertificateType sjukersattningType = new RegisterCertificateType();
+        sjukersattningType.setIntyg(getIntyg(source));
+        return sjukersattningType;
     }
 
-    private static Intyg getIntyg(SjukpenningUtlatande source) {
+    private static Intyg getIntyg(SjukersattningUtlatande source) {
         Intyg intyg = new Intyg();
         intyg.setTyp(getTypAvIntyg(source));
         intyg.setIntygsId(getIntygsId(source));
@@ -99,7 +99,7 @@ public class InternalToTransport2 {
         return intyg;
     }
 
-    private static HosPersonal getSkapadAv(SjukpenningUtlatande source) {
+    private static HosPersonal getSkapadAv(SjukersattningUtlatande source) {
         HoSPersonal sourceSkapadAv = source.getGrundData().getSkapadAv();
         HosPersonal skapadAv = new HosPersonal();
         skapadAv.setPersonalId(anHsaId(sourceSkapadAv.getPersonId()));
@@ -142,13 +142,13 @@ public class InternalToTransport2 {
         return patient;
     }
 
-    private static IntygId getIntygsId(SjukpenningUtlatande source) {
+    private static IntygId getIntygsId(SjukersattningUtlatande source) {
         IntygId intygId = new IntygId();
         intygId.setRoot(source.getId());
         return intygId;
     }
 
-    private static TypAvIntyg getTypAvIntyg(SjukpenningUtlatande source) {
+    private static TypAvIntyg getTypAvIntyg(SjukersattningUtlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
         typAvIntyg.setCodeSystemName(INTYP_TYP_CODE_SYSTEM);
@@ -156,7 +156,7 @@ public class InternalToTransport2 {
         return typAvIntyg;
     }
 
-    private static List<Svar> getSvar(SjukpenningUtlatande source) {
+    private static List<Svar> getSvar(SjukersattningUtlatande source) {
         List<Svar> svars = new ArrayList<>();
 
         svars.add(aSvar(SMITTA_SVAR_ID).withDelsvar(SMITTA_DELSVAR_ID, Boolean.toString(source.isAvstangningSmittskydd())).build());

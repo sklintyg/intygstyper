@@ -18,12 +18,12 @@
 
   <jaxws:client id="registerCertificateClient"
       serviceClass="se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface"
-      address="${intygstjanst.registersjukpenning.endpoint.url}">
+      address="${intygstjanst.registersjukersattning.endpoint.url}">
   </jaxws:client>
 
-  <jaxws:client id="getSjukpenningClient"
-      serviceClass="se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponderInterface"
-      address="${intygstjanst.getsjukpenning.endpoint.url}">
+  <jaxws:client id="getSjukersattningClient"
+      serviceClass="se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningResponderInterface"
+      address="${intygstjanst.getsjukersattning.endpoint.url}">
   </jaxws:client>
 
 </beans>

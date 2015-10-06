@@ -1,4 +1,4 @@
-angular.module('sjukpenning').service('sjukpenning.EditCertCtrl.Helper',
+angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.Helper',
     [ function( ) {
         'use strict';
 

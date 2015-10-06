@@ -16,8 +16,8 @@
     </cxf:features>
   </cxf:bus>
 
-  <jaxws:endpoint address="/get-sjukpenning/v1.0"
-      implementor="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningResponderImpl">
+  <jaxws:endpoint address="/get-sjukersattning/v1.0"
+      implementor="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean
           class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
@@ -28,7 +28,7 @@
   </jaxws:endpoint>
 
   <jaxws:endpoint address="/register-certificate/v2.0"
-      implementor="se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningService"
+      implementor="se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningService"
       wsdlLocation="classpath:/interactions/RegisterCertificateInteraction/RegisterCertificateInteraction_2.0_RIVTABP21.wsdl"
       xmlns:r="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificate:2:rivtabp21"
       serviceName="r:RegisterCertificateResponderService"
@@ -36,7 +36,7 @@
       >
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
-        <constructor-arg value="transform/register-sjukpenning-transform.xslt"/>
+        <constructor-arg value="transform/register-sjukersattning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
     <jaxws:properties>
@@ -48,8 +48,8 @@
     </jaxws:schemaLocations>
   </jaxws:endpoint>
 
-  <bean class="se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningResponderDummy"/>
+  <bean class="se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningResponderDummy"/>
 
-  <bean class="se.inera.certificate.modules.sjukpenning.integration.GetSjukpenningResponderImpl"/>
+  <bean class="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningResponderImpl"/>
 
 </beans>

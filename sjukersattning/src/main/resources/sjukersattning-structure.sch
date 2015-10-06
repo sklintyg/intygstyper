@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://purl.oclc.org/dsdl/schematron"
     queryBinding='xslt2' schemaVersion='ISO19757-3'>
 
-  <iso:title>Schematron file for sjukpenning (fördjupat).</iso:title>
+  <iso:title>Schematron file for sjukersattning (fördjupat).</iso:title>
 
   <iso:ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
   <iso:ns prefix="rg" uri="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2"/>

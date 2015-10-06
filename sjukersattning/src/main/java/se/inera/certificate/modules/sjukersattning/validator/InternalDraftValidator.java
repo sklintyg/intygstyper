@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukpenning.validator;
+package se.inera.certificate.modules.sjukersattning.validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.common.enumerations.Diagnoskodverk;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.service.WebcertModuleService;
-import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.support.api.dto.ValidationMessage;
 import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
@@ -29,7 +29,7 @@ public class InternalDraftValidator {
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
-    public ValidateDraftResponse validateDraft(SjukpenningUtlatande utlatande) {
+    public ValidateDraftResponse validateDraft(SjukersattningUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // intyget baseras på
@@ -49,68 +49,68 @@ public class InternalDraftValidator {
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-    private void validateVardkontakter(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateVardkontakter(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
+                    "sjukersattning.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
         }
         if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.undersokning", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.intyg-baserat-pa.undersokning.incorrect_format");
+                    "sjukersattning.validation.intyg-baserat-pa.undersokning.incorrect_format");
         }
     }
 
-    private void validateReferenser(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateReferenser(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         if (!utlatande.isAvstangningSmittskydd()) {
 
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null) {
                 addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
-                        "sjukpenning.validation.intyg-baserat-pa.missing");
+                        "sjukersattning.validation.intyg-baserat-pa.missing");
             }
         }
 
         if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
             addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
+                    "sjukersattning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
         }
     }
 
-    private void validateVardenhet(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateVardenhet(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
             addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.vardenhet.postadress.missing");
+                    "sjukersattning.validation.vardenhet.postadress.missing");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
             addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.vardenhet.postnummer.missing");
+                    "sjukersattning.validation.vardenhet.postnummer.missing");
         } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
             addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.vardenhet.postnummer.incorrect-format");
+                    "sjukersattning.validation.vardenhet.postnummer.incorrect-format");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
             addValidationError(validationMessages, "vardenhet.postort", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.vardenhet.postort.missing");
+                    "sjukersattning.validation.vardenhet.postort.missing");
         }
 
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
             addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.vardenhet.telefonnummer.missing");
+                    "sjukersattning.validation.vardenhet.telefonnummer.missing");
         }
     }
 
-    private void validateArbetsformaga(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateArbetsformaga(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
             if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldraledighet()) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
-                        "sjukpenning.validation.sysselsattning.missing");
+                        "sjukersattning.validation.sysselsattning.missing");
             } else if (utlatande.isNuvarandeArbete() && StringUtils.isBlank(utlatande.getNuvarandeArbetsuppgifter())) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
-                        "sjukpenning.validation.sysselsattning.arbetsuppgifter.missing");
+                        "sjukersattning.validation.sysselsattning.arbetsuppgifter.missing");
             }
         }
 
@@ -121,59 +121,59 @@ public class InternalDraftValidator {
         }
     }
 
-    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, SjukpenningUtlatande utlatande) {
+    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, SjukersattningUtlatande utlatande) {
         boolean success = true;
         InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
         if (allNulls(intervals)) {
             addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.nedsattning.choose-at-least-one");
+                    "sjukersattning.validation.nedsattning.choose-at-least-one");
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
         // use independent conditions to check this to be able to give specific validation errors for each case
         if (intervals[0] != null && !intervals[0].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed100", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.nedsattning.nedsattmed100.incorrect-format");
+                    "sjukersattning.validation.nedsattning.nedsattmed100.incorrect-format");
             success = false;
         }
         if (intervals[1] != null && !intervals[1].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed75", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.nedsattning.nedsattmed75.incorrect-format");
+                    "sjukersattning.validation.nedsattning.nedsattmed75.incorrect-format");
             success = false;
         }
         if (intervals[2] != null && !intervals[2].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed50", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.nedsattning.nedsattmed50.incorrect-format");
+                    "sjukersattning.validation.nedsattning.nedsattmed50.incorrect-format");
             success = false;
         }
         if (intervals[3] != null && !intervals[3].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
-                    "sjukpenning.validation.nedsattning.nedsattmed25.incorrect-format");
+                    "sjukersattning.validation.nedsattning.nedsattmed25.incorrect-format");
             success = false;
         }
         return success;
     }
 
-    private void validateAktivitetsbegransning(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateAktivitetsbegransning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(aktivitetsbegransning)) {
             addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.aktivitetsbegransning.missing");
+                    "sjukersattning.validation.aktivitetsbegransning.missing");
         }
     }
 
-    private void validateFunktionsnedsattning(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateFunktionsnedsattning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(funktionsnedsattning)) {
             addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.funktionsnedsattning.missing");
+                    "sjukersattning.validation.funktionsnedsattning.missing");
         }
     }
 
-    private void validateDiagnose(SjukpenningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateDiagnose(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         // Fält 3 - always optional regardless of smittskydd
 
@@ -188,10 +188,10 @@ public class InternalDraftValidator {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
-            validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukpenning.validation.diagnos.invalid", validationMessages);
+            validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukersattning.validation.diagnos.invalid", validationMessages);
         } else {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.diagnos.missing");
+                    "sjukersattning.validation.diagnos.missing");
         }
 
         // Validate bidiagnos 1
@@ -201,7 +201,7 @@ public class InternalDraftValidator {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
-            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukpenning.validation.diagnos2.invalid", validationMessages);
+            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukersattning.validation.diagnos2.invalid", validationMessages);
         }
 
         // Validate bidiagnos 2
@@ -211,7 +211,7 @@ public class InternalDraftValidator {
                 //Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
-            validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "sjukpenning.validation.diagnos3.invalid", validationMessages);
+            validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "sjukersattning.validation.diagnos3.invalid", validationMessages);
         }
 
     }
@@ -268,7 +268,7 @@ public class InternalDraftValidator {
     protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
             addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
-                    "sjukpenning.validation.nedsattning.choose-at-least-one");
+                    "sjukersattning.validation.nedsattning.choose-at-least-one");
             return false;
         }
 
@@ -277,7 +277,7 @@ public class InternalDraftValidator {
                 Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
                 if (oneInterval == null) {
                     addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                            "sjukpenning.validation.nedsattning.incorrect-date-interval");
+                            "sjukersattning.validation.nedsattning.incorrect-date-interval");
                     return false;
                 }
                 for (int j = i + 1; j < intervals.length; j++) {
@@ -285,14 +285,14 @@ public class InternalDraftValidator {
                         Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
                         if (anotherInterval == null) {
                             addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "sjukpenning.validation.nedsattning.incorrect-date-interval");
+                                    "sjukersattning.validation.nedsattning.incorrect-date-interval");
                             return false;
                         }
                         // Overlap OR abuts(one intervals tom day== another's
                         // from day) is considered invalid
                         if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
                             addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "sjukpenning.validation.nedsattning.overlapping-date-interval");
+                                    "sjukersattning.validation.nedsattning.overlapping-date-interval");
                             return false;
                         }
                     }

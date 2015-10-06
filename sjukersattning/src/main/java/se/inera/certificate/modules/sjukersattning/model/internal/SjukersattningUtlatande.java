@@ -1,11 +1,11 @@
-package se.inera.certificate.modules.sjukpenning.model.internal;
+package se.inera.certificate.modules.sjukersattning.model.internal;
 
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.Utlatande;
-import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
+import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
-public class SjukpenningUtlatande extends Utlatande {
+public class SjukersattningUtlatande extends Utlatande {
 
     private boolean avstangningSmittskydd;
 
@@ -67,9 +67,9 @@ public class SjukpenningUtlatande extends Utlatande {
 
     // ==================================================================================================
 
-    public SjukpenningUtlatande() {
+    public SjukersattningUtlatande() {
         super();
-        setTyp(SjukpenningEntryPoint.MODULE_ID);
+        setTyp(SjukersattningEntryPoint.MODULE_ID);
     }
 
     public boolean isAvstangningSmittskydd() {

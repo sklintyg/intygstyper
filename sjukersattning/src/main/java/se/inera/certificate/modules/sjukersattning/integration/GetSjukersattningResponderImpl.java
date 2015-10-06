@@ -1,37 +1,37 @@
-package se.inera.certificate.modules.sjukpenning.integration;
+package se.inera.certificate.modules.sjukersattning.integration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.integration.module.exception.InvalidCertificateException;
-import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport;
-import se.inera.certificate.modules.sjukpenning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukpenning.rest.SjukpenningModuleApi;
+import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport;
+import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
+import se.inera.certificate.modules.sjukersattning.rest.SjukersattningModuleApi;
 import se.inera.certificate.modules.support.api.CertificateHolder;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponderInterface;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponseType;
-import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningType;
-import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
+import se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningResponderInterface;
+import se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningResponseType;
+import se.inera.intygstjanster.fk.services.getsjukersattningresponder.v1.GetSjukersattningType;
+import se.inera.intygstjanster.fk.services.registersjukersattningresponder.v1.RegisterSjukersattningType;
 import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
 import se.inera.intygstjanster.fk.services.v1.IntygMeta;
 
 import com.google.common.base.Throwables;
 
-public class GetSjukpenningResponderImpl implements GetSjukpenningResponderInterface {
+public class GetSjukersattningResponderImpl implements GetSjukersattningResponderInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetSjukpenningResponderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetSjukersattningResponderImpl.class);
 
     @Autowired
-    private SjukpenningModuleApi moduleApi;
+    private SjukersattningModuleApi moduleApi;
 
     @Autowired
     private ConverterUtil converterUtil;
 
     @Override
-    public GetSjukpenningResponseType getSjukpenning(String logicalAddress, GetSjukpenningType request) {
+    public GetSjukersattningResponseType getSjukersattning(String logicalAddress, GetSjukersattningType request) {
 
-        GetSjukpenningResponseType response = new GetSjukpenningResponseType();
+        GetSjukersattningResponseType response = new GetSjukersattningResponseType();
 
         String certificateId = request.getIntygsId();
 
@@ -56,22 +56,22 @@ public class GetSjukpenningResponderImpl implements GetSjukpenningResponderInter
         return response;
     }
 
-    protected void attachCertificateDocument(CertificateHolder certificate, GetSjukpenningResponseType response) {
+    protected void attachCertificateDocument(CertificateHolder certificate, GetSjukersattningResponseType response) {
         try {
-            RegisterSjukpenningType jaxbObject = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument()));
+            RegisterSjukersattningType jaxbObject = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument()));
             response.setIntyg(jaxbObject.getIntyg());
         } catch (Exception e) {
-            LOGGER.error("Error while converting in getSjukpenning for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
+            LOGGER.error("Error while converting in getSjukersattning for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
             Throwables.propagate(e);
         }
     }
 
-    protected void attachMeta(CertificateHolder certificate, GetSjukpenningResponseType response) {
+    protected void attachMeta(CertificateHolder certificate, GetSjukersattningResponseType response) {
         try {
             IntygMeta intygMeta = InternalToTransport.getMeta(certificate);
             response.setMeta(intygMeta);
         } catch (Exception e) {
-            LOGGER.error("Error while converting in getSjukpenning for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
+            LOGGER.error("Error while converting in getSjukersattning for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
             Throwables.propagate(e);
         }
     }

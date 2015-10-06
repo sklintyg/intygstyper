@@ -1,5 +1,5 @@
-angular.module('sjukpenning').service('sjukpenning.QACtrl.Helper',
-    ['$log', '$timeout', 'sjukpenning.fragaSvarService', 'common.fragaSvarCommonService', '$window', 'common.statService',
+angular.module('sjukersattning').service('sjukersattning.QACtrl.Helper',
+    ['$log', '$timeout', 'sjukersattning.fragaSvarService', 'common.fragaSvarCommonService', '$window', 'common.statService',
         function( $log, $timeout, fragaSvarService, fragaSvarCommonService, $window, statService) {
         'use strict';
 
@@ -43,9 +43,9 @@ angular.module('sjukpenning').service('sjukpenning.QACtrl.Helper',
                         angular.forEach(qas, function(qa) { //unused parameter , key
                             fragaSvarCommonService.decorateSingleItem(qa);
                             if(fromHandledDialog) {
-                                qa.proxyMessage = 'sjukpenning.fragasvar.marked.as.hanterad';
+                                qa.proxyMessage = 'sjukersattning.fragasvar.marked.as.hanterad';
                             } else {
-                                addListMessage(qas, qa, 'sjukpenning.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
+                                addListMessage(qas, qa, 'sjukersattning.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
                             }
                         });
                         statService.refreshStat();

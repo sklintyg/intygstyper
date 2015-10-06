@@ -112,7 +112,7 @@
       <div ng-if="handledPanel">
         <!-- error message occuring when inteacting with server for this FragaSvar-->
         <div id="{{panelId}}-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-danger">
-          <span message key="sjukpenning.error.{{qa.activeErrorMessageKey}}"></span>
+          <span message key="sjukersattning.error.{{qa.activeErrorMessageKey}}"></span>
         </div>
         <div class="form-group">
           <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen -->
@@ -142,7 +142,7 @@
               <!-- error message occuring when inteacting with server for this FragaSvar-->
               <div id="internal-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
                    class="alert alert-danger">
-                <span message key="sjukpenning.error.{{qa.activeErrorMessageKey}}"></span>
+                <span message key="sjukersattning.error.{{qa.activeErrorMessageKey}}"></span>
               </div>
               <button class="btn btn-success" ng-click="sendAnswer(qa)"
                       ng-disabled="!qa.svarsText || qa.updateInProgress"
@@ -166,7 +166,7 @@
           <!-- error message occuring when inteacting with server for this FragaSvar-->
           <div id="external-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
                class="alert alert-danger">
-            <span message key="sjukpenning.error.{{qa.activeErrorMessageKey}}"></span>
+            <span message key="sjukersattning.error.{{qa.activeErrorMessageKey}}"></span>
           </div>
           <div class="controls" wc-check-vardenhet vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}">
             <button class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"

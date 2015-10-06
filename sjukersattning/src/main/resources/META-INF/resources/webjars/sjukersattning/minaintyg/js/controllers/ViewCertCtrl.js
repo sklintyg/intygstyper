@@ -1,4 +1,4 @@
-angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
+angular.module('sjukersattning').controller('sjukersattning.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'minaintyg.listCertService',
         'common.certificateService', 'common.dialogService', 'common.messageService',
         function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService, dialogService,
@@ -13,7 +13,7 @@ angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
             $scope.doneLoading = false;
 
             $scope.send = function() {
-                $location.path('/sjukpenning/recipients').search({ module: 'sjukpenning', defaultRecipient: 'FK'});
+                $location.path('/sjukersattning/recipients').search({ module: 'sjukersattning', defaultRecipient: 'FK'});
             };
 
             $scope.visibleStatuses = [ 'SENT' ];
@@ -41,7 +41,7 @@ angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
                         $location.path('#/start');
                     } else {
                         // show error view
-                        $location.path('/sjukpenning/fel/couldnotarchivecert');
+                        $location.path('/sjukersattning/fel/couldnotarchivecert');
                     }
                 });
             };
@@ -89,11 +89,11 @@ angular.module('sjukpenning').controller('sjukpenning.ViewCertCtrl',
             };
 
             $scope.showStatusHistory = function() {
-                $location.path('/sjukpenning/statushistory');
+                $location.path('/sjukersattning/statushistory');
             };
 
             $scope.backToViewCertificate = function() {
-                $location.path('/sjukpenning/view/' + $stateParams.certificateId);
+                $location.path('/sjukersattning/view/' + $stateParams.certificateId);
             };
 
             // expose calculated static link for pdf download

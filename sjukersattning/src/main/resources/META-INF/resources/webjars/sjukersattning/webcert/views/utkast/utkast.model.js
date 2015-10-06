@@ -1,4 +1,4 @@
-angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
+angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
@@ -12,11 +12,11 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
                     return nedsatt;
                 }
             };
-            var sjukpenningModel = BaseAtticModel._extend({
+            var sjukersattningModel = BaseAtticModel._extend({
                 init: function init() {
                     //console.log('--- init fk gd' + GrundData);
                     var grundData = GrundData.build();
-                    init._super.call(this, 'sjukpenningModel', {
+                    init._super.call(this, 'sjukersattningModel', {
 
                         form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],
 
@@ -85,14 +85,14 @@ angular.module('sjukpenning').factory('sjukpenning.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    //console.log('----- build *****' + DraftModel + ',' + sjukpenningModel._members);
-                    return new DraftModel(new sjukpenningModel());
+                    //console.log('----- build *****' + DraftModel + ',' + sjukersattningModel._members);
+                    return new DraftModel(new sjukersattningModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return sjukpenningModel;
+            return sjukersattningModel;
 
         }]);
