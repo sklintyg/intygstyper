@@ -186,6 +186,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod = $item.value;
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
+
+                fmbService.getFMBHelpTextsByCode($scope.model.diagnosKod).then(fmbSuccess, fmbReject);
+                
                 $scope.form2.$dirty = true;
                 $scope.form2.$pristine = false;
                 model.updateToAttic(model.properties.form2);
