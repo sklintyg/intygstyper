@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport;
+import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport2;
 import se.inera.certificate.modules.sjukpenning.model.converter.TransportToInternal;
 import se.inera.certificate.modules.sjukpenning.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukpenning.model.converter.util.ConverterUtil;
@@ -32,11 +32,11 @@ import se.inera.certificate.modules.support.api.notification.NotificationMessage
 import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponderInterface;
 import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningResponseType;
 import se.inera.intygstjanster.fk.services.getsjukpenningresponder.v1.GetSjukpenningType;
-import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningResponderInterface;
-import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningResponseType;
-import se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningType;
 import se.inera.intygstjanster.fk.services.v1.ErrorIdType;
-import se.inera.intygstjanster.fk.services.v1.ResultCodeType;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -60,7 +60,7 @@ public class SjukpenningModuleApi implements ModuleApi {
     private ModuleContainerApi moduleContainer;
 
     @Autowired
-    private RegisterSjukpenningResponderInterface registerSjukpenningResponderInterface;
+    private RegisterCertificateResponderInterface registerCertificateResponderInterface;
 
     @Autowired
     private GetSjukpenningResponderInterface getSjukpenningResponderInterface;
@@ -165,21 +165,21 @@ public class SjukpenningModuleApi implements ModuleApi {
 
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        RegisterSjukpenningType request;
+        RegisterCertificateType request;
         try {
-            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
+            request = InternalToTransport2.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
         } catch (ConverterException e) {
             LOG.error("Failed to convert to transport format during registerTSBas", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
         }
 
-        RegisterSjukpenningResponseType response = registerSjukpenningResponderInterface.registerSjukpenning(logicalAddress, request);
+        RegisterCertificateResponseType response2 = registerCertificateResponderInterface.registerCertificate(logicalAddress, request);
 
         // check whether call was successful or not
-        if (response.getResultat().getResultCode() != ResultCodeType.OK) {
-            String message = response.getResultat().getResultCode() == ResultCodeType.INFO
-                    ? response.getResultat().getResultText()
-                    : response.getResultat().getErrorId() + " : " + response.getResultat().getResultText();
+        if (response2.getResult().getResultCode() != ResultCodeType.OK) {
+            String message = response2.getResult().getResultCode() == ResultCodeType.INFO
+                    ? response2.getResult().getResultText()
+                    : response2.getResult().getErrorId() + " : " + response2.getResult().getResultText();
             throw new ExternalServiceCallException(message);
         }
     }
@@ -205,7 +205,7 @@ public class SjukpenningModuleApi implements ModuleApi {
         String xmlString = null;
         try {
             SjukpenningUtlatande internal = objectMapper.readValue(jsonString, SjukpenningUtlatande.class);
-            RegisterSjukpenningType external = InternalToTransport.convert(internal);
+            RegisterCertificateType external = InternalToTransport2.convert(internal);
             StringWriter writer = new StringWriter();
             JAXB.marshal(external, writer);
             xmlString = writer.toString();

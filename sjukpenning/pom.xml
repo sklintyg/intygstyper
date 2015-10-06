@@ -102,6 +102,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-schematron</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <scope>test</scope>

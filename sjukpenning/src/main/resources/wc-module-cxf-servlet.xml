@@ -16,8 +16,8 @@
     </cxf:features>
   </cxf:bus>
 
-  <jaxws:client id="registerSjukpenningClient"
-      serviceClass="se.inera.intygstjanster.fk.services.registersjukpenningresponder.v1.RegisterSjukpenningResponderInterface"
+  <jaxws:client id="registerCertificateClient"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface"
       address="${intygstjanst.registersjukpenning.endpoint.url}">
   </jaxws:client>
 
