@@ -74,8 +74,8 @@ describe('fk7263.EditCertCtrl.Form6a711Ctrl', function() {
             expect(model.rekommendationOvrigt).toBe(undefined);
             expect(model.rekommendationOvrigtCheck).toBe(undefined);
 
-            expect(model.ressattTillArbeteAktuellt).toBe(undefined);
-            expect(model.ressattTillArbeteEjAktuellt).toBe(undefined);
+            expect(model.ressattTillArbeteAktuellt).toBe('ressattTillArbeteAktuellt');
+            expect(model.ressattTillArbeteEjAktuellt).toBe('ressattTillArbeteEjAktuellt');
 
             expect(model.rehabilitering).toBe(undefined);
 

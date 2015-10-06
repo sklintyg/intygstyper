@@ -148,16 +148,16 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                     update._super.call(this, content);
                 },
 
-                atticUpdateForm6a711 : function(){
-                    var props = this.properties.form6a.concat(this.properties.form7.concat(this.properties.form11));
+                atticUpdateForm6a7 : function(){
+                    var props = this.properties.form6a.concat(this.properties.form7);
                     this.updateToAttic(props);
                 },
-                clearForm6a711 : function(){
-                    var props = this.properties.form6a.concat(this.properties.form7.concat(this.properties.form11));
+                clearForm6a7 : function(){
+                    var props = this.properties.form6a.concat(this.properties.form7);
                     this.clear(props);
                 },
-                atticRestoreForm6a711 : function(){
-                    var props = this.properties.form6a.concat(this.properties.form7.concat(this.properties.form11));
+                atticRestoreForm6a7 : function(){
+                    var props = this.properties.form6a.concat(this.properties.form7);
                     this.restoreFromAttic(props);
                 }
             }, {
