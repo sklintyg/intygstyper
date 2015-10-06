@@ -1,0 +1,19 @@
+<div wc-field field-label="sjukpenning.label.atgarder" field-number="7" wc-detect-animation
+     ng-hide="viewState.avstangningSmittskydd()" field-help-text="sjukpenning.helptext.atgarder"
+     class="print-pagebreak-after field-fade">
+
+  <div class="form-group">
+    <label class="control-label"><span message key="sjukpenning.label.behandling.pagaende"/></label>
+    <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='2'
+              ng-model="model.pagaendeBehandling" ng-trim="false"
+              maxlength="{{viewState.inputLimits.pagaendeBehandling}}"/>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label"><span message key="sjukpenning.label.behandling.planerad"/></label>
+    <textarea id="measuresOther" class="form-control" name="measures.other" rows='2'
+              ng-model="model.planeradBehandling" ng-trim="false"
+              maxlength="{{viewState.inputLimits.planeradBehandling}}"/>
+  </div>
+
+</div>

@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean class="se.inera.certificate.modules.sjukpenning.model.converter.WebcertModelFactory" />
+
+  <bean class="se.inera.certificate.modules.sjukpenning.rest.SjukpenningModuleApi" />
+
+  <bean class="se.inera.certificate.modules.sjukpenning.validator.InternalDraftValidator" />
+
+  <bean class="se.inera.certificate.modules.sjukpenning.model.converter.util.ConverterUtil"/>
+
+  <bean class="se.inera.certificate.modules.sjukpenning.validator.TransportValidator"/>
+
+  <bean id="sjukpenningEntryPoint" class="se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint" />
+
+  <bean id="sjukpenning-objectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper"/>
+  
+</beans>

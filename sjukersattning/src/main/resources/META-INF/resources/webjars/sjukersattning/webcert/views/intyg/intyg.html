@@ -1,0 +1,201 @@
+<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}" ng-controller="sjukpenning.ViewCertCtrl">
+  <div wc-spinner label="sjukpenning.info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+       show-content="viewState.common.doneLoading">
+
+    <div ui-view="header"></div>
+
+    <div ng-show="!viewState.common.activeErrorMessageKey">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : $scope.viewState.common.intyg.isRevoked}">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="cert-body">
+
+              <div wc-field field-number="1" field-label="sjukpenning.label.smittskydd" filled="{{true}}">
+                <span ng-show="viewState.intygModel.avstangningSmittskydd" id="smittskydd"> <span message key="sjukpenning.label.yes"></span></span>
+                <span ng-show="!viewState.intygModel.avstangningSmittskydd"> <span message key="sjukpenning.label.no"></span></span>
+              </div>
+
+              <div wc-field field-number="2" field-label="sjukpenning.label.intygbaseratpa" id="field2"
+                   filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.telefonkontaktMedPatienten!=null || viewState.intygModel.journaluppgifter!=null}}">
+                <ul class="padded-list" id="baseratPaList">
+                  <li ng-show="viewState.intygModel.undersokningAvPatienten!=null">
+                    <span message key="sjukpenning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten | date:'longDate' }}</span>
+                  </li>
+                  <li ng-show="viewState.intygModel.telefonkontaktMedPatienten!=null">
+                    <span message key="sjukpenning.vardkontakt.telefonkontakt"></span><span id="telefonkontaktMedPatienten">{{viewState.intygModel.telefonkontaktMedPatienten | date:'longDate' }}</span>
+                  </li>
+                  <li ng-show="viewState.intygModel.journaluppgifter!=null">
+                    <span message key="sjukpenning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter | date:'longDate' }}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div wc-field field-number="3" field-label="sjukpenning.label.arbetsformaga"
+                   filled="{{viewState.intygModel.nuvarandeArbetsuppgifter||viewState.intygModel.arbetsloshet||viewState.intygModel.foraldraledighet}}" id="field3">
+                <ul class="padded-list">
+                  <li ng-show="viewState.intygModel.nuvarandeArbetsuppgifter"><span message key="sjukpenning.label.arbetsformaga.nuvarande-arbete"></span>
+                    <div id="nuvarandeArbetsuppgifter" class="multiline">{{viewState.intygModel.nuvarandeArbetsuppgifter}}</div>
+                  </li>
+                  <li id="arbetsloshet" ng-show="viewState.intygModel.arbetsloshet"><span message key="sjukpenning.label.arbetsformaga.arbetslos"></span></li>
+                  <li id="foraldraledighet" ng-show="viewState.intygModel.foraldraledighet"><span message key="sjukpenning.label.arbetsformaga.foraldraledighet"></span>
+                  </li>
+                </ul>
+              </div>
+
+              <div wc-field field-number="4" field-label="sjukpenning.label.diagnos" filled="{{viewState.intygModel.diagnosKod1!=null}}" id="field4">
+                <div class="form-group">
+                  <span message key="sjukpenning.label.diagnoskod.icd"></span>
+                  <span id="diagnosKod">{{viewState.intygModel.diagnosKod1}}</span> <span id="diagnosBeskrivning1">{{viewState.intygModel.diagnosBeskrivning1}}</span>
+                </div>
+                <div class="form-group">
+                  <label class="control-label bold"
+                         ng-show="viewState.intygModel.diagnosKod2 || viewState.intygModel.diagnosBeskrivning2 || viewState.intygModel.diagnosKod3 || viewState.intygModel.diagnosBeskrivning3">
+                    <span message key="sjukpenning.label.ytterligarediagnoser"></span>
+                  </label>
+                  <div class="controls">
+                    <p ng-show="viewState.intygModel.diagnosKod2 || viewState.intygModel.diagnosBeskrivning2 "><span id="diagnosKod2">{{viewState.intygModel.diagnosKod2}}</span>
+                      <span id="diagnosBeskrivning2">{{viewState.intygModel.diagnosBeskrivning2}}</span></p>
+                    <p ng-show="viewState.intygModel.diagnosKod3 || viewState.intygModel.diagnosBeskrivning3"><span id="diagnosKod3">{{viewState.intygModel.diagnosKod3}}</span>
+                      <span id="diagnosBeskrivning3">{{viewState.intygModel.diagnosBeskrivning3}}</span></p>
+                    <div id="samsjuklighet" ng-show="viewState.intygModel.samsjuklighet" class="bold"><span message
+                                                                         key="sjukpenning.label.samsjuklighet"></span></div>
+                  </div>
+                </div>
+                <div class="form-group" ng-show="viewState.intygModel.diagnosBeskrivning">
+                  <label class="control-label bold">
+                    <span message key="sjukpenning.label.diagnosfortydligande"></span>
+                  </label>
+                  <div class="controls">
+                    <div id="diagnosBeskrivning" class="multiline">{{viewState.intygModel.diagnosBeskrivning}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div wc-field field-number="5" field-label="sjukpenning.label.funktionsnedsattning"
+                   filled="{{viewState.intygModel.funktionsnedsattning!=null}}"><div id="funktionsnedsattning" class="multiline">{{viewState.intygModel.funktionsnedsattning}}</div>
+              </div>
+
+              <div wc-field field-number="6" field-label="sjukpenning.label.aktivitetsbegransning"
+                   filled="{{viewState.intygModel.aktivitetsbegransning!=null}}"><div id="aktivitetsbegransning" class="multiline">{{viewState.intygModel.aktivitetsbegransning}}</div>
+              </div>
+
+              <div wc-field field-number="7" field-label="sjukpenning.label.planerad-atgard"
+                   filled="{{viewState.intygModel.pagaendeBehandling!=null||viewState.intygModel.planeradBehandling!=null}}" id="field7">
+                <ul class="padded-list">
+                  <li ng-show="viewState.intygModel.pagaendeBehandling != null">
+                    <span message key="sjukpenning.label.planerad-atgard.sjukvarden"></span>
+                    <div id="pagaendeBehandling" class="multiline">{{viewState.intygModel.pagaendeBehandling}}</div>
+                  </li>
+                  <li ng-show="viewState.intygModel.planeradBehandling != null">
+                    <span message key="sjukpenning.label.planerad-atgard.annat"></span>
+                    <div id="planeradBehandling" class="multiline">{{viewState.intygModel.planeradBehandling}}</div>
+                  </li>
+                </ul>
+              </div>
+
+              <div wc-field field-number="8" field-label="sjukpenning.label.nedsattning"
+                   filled="{{viewState.intygModel.nedsattMed25!=null||viewState.intygModel.nedsattMed50!=null||viewState.intygModel.nedsattMed75!=null||viewState.intygModel.nedsattMed100!=null}}"
+                   id="field8b">
+
+                <div ng-show="viewState.intygModel.nedsattMed25 != null">
+                  <strong><span message key="sjukpenning.nedsattningsgrad.nedsatt_med_1_4"></span></strong><br> Från och med
+                  <span id="nedsattMed25from">{{viewState.intygModel.nedsattMed25.from | date:'longDate'}}</span> &ndash; längst till och med
+                  <span id="nedsattMed25tom">{{viewState.intygModel.nedsattMed25.tom | date:'longDate'}}</span>
+                  <div id="nedsattMed25Beskrivning" ng-show="viewState.intygModel.nedsattMed25Beskrivning" class="multiline">Arbetstidsförläggning: {{viewState.intygModel.nedsattMed25Beskrivning}}
+                  </div>
+                </div>
+
+                <div ng-show="viewState.intygModel.nedsattMed50 != null">
+                  <strong><span message key="sjukpenning.nedsattningsgrad.nedsatt_med_1_2"></span></strong><br> Från och med
+                  <span id="nedsattMed50from">{{viewState.intygModel.nedsattMed50.from | date:'longDate'}}</span> &ndash; längst till och med
+                  <span id="nedsattMed50tom">{{viewState.intygModel.nedsattMed50.tom | date:'longDate'}}</span>
+                  <div id="nedsattMed50Beskrivning" ng-show="viewState.intygModel.nedsattMed50Beskrivning" class="multiline">Arbetstidsförläggning: {{viewState.intygModel.nedsattMed50Beskrivning}}
+                  </div>
+                </div>
+
+                <div ng-show="viewState.intygModel.nedsattMed75 != null">
+                  <strong><span message key="sjukpenning.nedsattningsgrad.nedsatt_med_3_4"></span></strong><br> Från och med
+                  <span id="nedsattMed75from">{{viewState.intygModel.nedsattMed75.from | date:'longDate'}}</span> &ndash; längst till och med
+                  <span id="nedsattMed75tom">{{viewState.intygModel.nedsattMed75.tom | date:'longDate'}}</span>
+                  <div id="nedsattMed75Beskrivning" ng-show="viewState.intygModel.nedsattMed75Beskrivning" class="multiline">Arbetstidsförläggning: {{viewState.intygModel.nedsattMed75Beskrivning}}
+                  </div>
+                </div>
+
+                <div ng-show="viewState.intygModel.nedsattMed100 != null">
+                  <strong><span message key="sjukpenning.nedsattningsgrad.helt_nedsatt"></span></strong><br> Från och med
+                  <span id="nedsattMed100from">{{viewState.intygModel.nedsattMed100.from | date:'longDate'}}</span> &ndash; längst till och med
+                  <span id="nedsattMed100tom">{{viewState.intygModel.nedsattMed100.tom | date:'longDate'}}</span>
+                </div>
+
+                <div ng-show="viewState.intygModel.ressattTillArbeteAktuellt">
+                  <strong><span message key="sjukpenning.label.resor-till-arbetet"></span></strong>
+                </div>
+
+                <div ng-show="viewState.intygModel.rekommendationOverSocialstyrelsensBeslutsstod">
+                  <strong><span message key="sjukpenning.label.rekommendation-overskrider-beslutsstod"></span></strong>
+                </div>
+
+                <div>
+                  <strong><span message key="sjukpenning.label.kan-gora.view"></span></strong>
+                  <div id="kanGora" class="multiline">{{viewState.intygModel.vadPatientenKanGora}}</div>
+                </div>
+
+                <div>
+                  <strong><span message key="sjukpenning.label.prognos"></span></strong>
+                  <div id="prognos" class="multiline">{{viewState.intygModel.prognosNarPatientKanAterga}}</div>
+                </div>
+              </div>
+
+              <div wc-field field-number="9" field-label="sjukpenning.label.atgarder" id="field9">
+                <div>
+                  <span message key="sjukpenning.label.atgard.inte-aktuellt" ng-show="viewState.intygModel.atgardInteAktuellt" id="atgardInteAktuellt"/><br/>
+                  <span message key="sjukpenning.label.atgard.arbetstraning" ng-show="viewState.intygModel.atgardArbetstraning" id="atgardArbetstraning"/><br/>
+                  <span message key="sjukpenning.label.atgard.arbetsanpassning" ng-show="viewState.intygModel.atgardArbetsanpassning" id="atgardArbetsanpassning"/><br/>
+                  <span message key="sjukpenning.label.atgard.soka-nytt-arbete" ng-show="viewState.intygModel.atgardSokaNyttArbete" id="atgardSokaNyttArbete"/><br/>
+                  <span message key="sjukpenning.label.atgard.besok-pa-arbete" ng-show="viewState.intygModel.atgardBesokPaArbete" id="atgardBesokPaArbete"/><br/>
+                  <span message key="sjukpenning.label.atgard.ergonomi" ng-show="viewState.intygModel.atgardErgonomi" id="atgardErgonomi"/><br/>
+                  <span message key="sjukpenning.label.atgard.hjalpmedel" ng-show="viewState.intygModel.atgardHjalpmedel" id="atgardHjalpmedel"/><br/>
+                  <span message key="sjukpenning.label.atgard.konflikthantering" ng-show="viewState.intygModel.atgardKonflikthantering" id="atgardKonflikthantering"/><br/>
+                  <span message key="sjukpenning.label.atgard.omfordelning" ng-show="viewState.intygModel.atgardOmfordelning" id="atgardOmfordelning"/><br/>
+                  <span message key="sjukpenning.label.atgard.foretagshalsovard" ng-show="viewState.intygModel.atgardForetagshalsovard" id="atgardForetagshalsovard"/><br/>
+                  <span message key="sjukpenning.label.atgard.ovrigt" ng-show="viewState.intygModel.atgardOvrigt" id="atgardOvrigt"/><br/>
+                </div>
+              </div>
+
+              <div wc-field field-number="10" field-label="sjukpenning.label.ovrigt" filled="{{viewState.intygModel.kommentar!=null&&viewState.intygModel.kommentar!=''&&viewState.intygModel.kommentar!=undefined}}"
+                   id="field10">
+                <div id="kommentar" class="multiline">{{viewState.intygModel.kommentar}}</div>
+              </div>
+
+              <div wc-field field-number="11" field-label="sjukpenning.label.kontakt-med-fk" filled="{{true}}" id="field11">
+                <span id="kontaktMedFk" ng-show="viewState.intygModel.kontaktMedFk"> <span message key="sjukpenning.label.yes"></span></span>
+                <span ng-show="!viewState.intygModel.kontaktMedFk"> <span message key="sjukpenning.label.no"></span></span>
+              </div>
+
+              <div class="infobox">
+                <h3>
+                  <span message key="common.label.ovanstaende-har-bekraftats"></span>
+                </h3>
+                <h4>
+                  <span message key="sjukpenning.label.datum"></span>
+                </h4>
+                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date:'longDate'}}</p>
+                <h4>
+                  <span message key="sjukpenning.label.kontakt-info"></span>
+                </h4>
+                <p>
+                  <span class="text" id="vardperson_namn">{{viewState.intygModel.grundData.skapadAv.fullstandigtNamn}}</span><br>
+                  <span class="text" id="vardperson_enhetsnamn">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                  <span class="text" id="vardperson_postadress">{{viewState.intygModel.grundData.skapadAv.vardenhet.postadress}}</span><br>
+                  <span class="text"><span id="vardperson_postnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardperson_postort">{{viewState.intygModel.grundData.skapadAv.vardenhet.postort}}</span></span><br>
+                  <span class="text" id="vardperson_telefonnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
+                </p>
+              </div>
+
+            </div><!-- cert body -->
+          </div>
+        </div>
+      </div>
+    </div><!-- entire cert -->
+  </div><!--  spinner end -->
+</div>

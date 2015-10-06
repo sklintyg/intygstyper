@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<iso:schema xmlns="http://purl.oclc.org/dsdl/schematron" xmlns:iso="http://purl.oclc.org/dsdl/schematron"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://purl.oclc.org/dsdl/schematron"
+    queryBinding='xslt2' schemaVersion='ISO19757-3'>
+
+  <iso:title>Schematron file for sjukpenning (fördjupat).</iso:title>
+
+  <iso:ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
+  <iso:ns prefix="rg" uri="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2"/>
+  <iso:ns prefix="gn" uri="urn:riv:clinicalprocess:healthcond:certificate:2"/>
+  <iso:ns prefix="tp" uri="urn:riv:clinicalprocess:healthcond:certificate:types:2"/>
+
+  <!-- TODO: tilläggsfrågor -->
+  <!-- TODO: arbetstidsfördelning endast vid icke-100% à la Emmys mail -->
+  <!-- TODO: inga dubletter av åtgärds-id:n i enlighet med Marcus fråga -->
+  <!-- TODO: begränsa värden i alla kodverk från FK -->
+
+  <iso:pattern>
+    <iso:rule context="//rg:intyg">
+      <iso:assert test="count(gn:svar[@id='1']) = 1">
+        Ett 'intyg' måste ha en 'sysselsättning'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='3']) = 1">
+        Ett 'intyg' måste ha en 'orsak'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='4']) le 2">
+        Ett 'intyg' får inte ha fler än 2 bidiagnoser/åtgärder
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='5']) = 1">
+        Ett 'intyg' måste ha en 'aktivitetsbegränsning'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='6']) ge 1 and count(gn:svar[@id='6']) le 4">
+        Ett 'intyg' måste ha mellan en och fyra 'sjukskrivning'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='7']) = 1">
+        Ett 'intyg' måste ha ett 'förändrat resesätt'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='8']) = 1">
+        Ett 'intyg' måste ha ett 'finns skäl till förändrad arbetstidförläggning'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='10']) ge 1 and count(gn:svar[@id='10']) le 3">
+        Ett 'intyg' får inte ha mer än en tre referenser
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='11']) = 1">
+        Ett 'intyg' måste ha en 'funktionsnedsättning'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='12']) le 1">
+        Ett 'intyg' får inte ha mer än en pågående behandling
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='13']) le 1">
+        Ett 'intyg' får inte ha mer än en planerad behandling
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='14']) = 1">
+        Ett 'intyg' måste ha ett 'Överskrider FMB'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='16']) = 1">
+        Ett 'intyg' måste ha ett 'aktivitetsförmåga'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='17']) = 1">
+        Ett 'intyg' måste ha ett 'prognos'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='18']) ge 1 and count(gn:svar[@id='18']) le 10">
+        Ett 'intyg' måste ha mellan en och tio 'arbetslivsinriktad åtgärd'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='21']) = 1">
+        Ett 'intyg' måste ha ett 'önskar kontakt med FK'
+      </iso:assert>
+      <iso:assert test="count(gn:svar[@id='22']) le 1">
+        Ett 'intyg' får ha högst ett ett 'övrigt'
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='1']">
+      <iso:assert test="count(gn:delsvar[@id='1.1']) ge 1 and count(gn:delsvar[@id='1.1']) le 5"/>
+      <iso:assert test="count(gn:delsvar[@id='1.2']) le 1"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='1.1']">
+      <iso:extends rule="cv"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0002'"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <!-- TODO: check that there is NO description of work if code is NOT 1 -->
+    <iso:rule context="//gn:delsvar[@id='1.1']/tp:code[.='1']">
+      <iso:assert test="//gn:delsvar[@id='1.2']"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='1.2']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='3']">
+      <iso:assert test="count(gn:delsvar[@id='3.1']) = 1">Orsak måste ha en huvuddiagnos.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='3.1']">
+      <!-- TODO: rätt kodverk -->
+      <iso:extends rule="cv"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='4']">
+      <iso:assert test="count(gn:delsvar[@id='4.1']) = 1">Ytterligare orsak måste ha ANTINGEN bidiagnos ELLER åtgärd.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='4.1']">
+      <!-- TODO: rätt kodverk -->
+      <iso:extends rule="cv"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='5']">
+      <iso:assert test="count(gn:delsvar[@id='5.1']) = 1">Aktivitetsbegränsning måste ha en ett delsvar.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='5.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='6']">
+      <iso:assert test="count(gn:delsvar[@id='6.1']) = 1">sjukskrivning måste ha en grad.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='6.2']) = 1">sjukskrivning måste ha en period.</iso:assert>
+      <iso:assert test="not(preceding-sibling::gn:svar[@id='6']/gn:delsvar[@id='6.1']/tp:code = gn:delsvar[@id='6.1']/tp:code)">
+        Samma 'grad' kan inte användas flera gånger i samma 'sjukskrivning'.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='6.1']">
+      <iso:extends rule="cv"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0003'">'grad' kan bara ha ett av fyra värden: 100%, 75%, 50%, 25%.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='6.2']">
+      <iso:extends rule="period"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='7']">
+      <iso:assert test="count(gn:delsvar[@id='7.1']) = 1">Förändrat ressätt måste ha en ett delsvar.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='7.1']">
+      <iso:extends rule="boolean"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='8']">
+      <iso:assert test="count(gn:delsvar[@id='8.1']) = 1">Förändrad arbetstidsförläggning måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='8.2']) le 1"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='8.1']">
+      <iso:extends rule="boolean"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <!-- TODO: check that there is NO description of arbetstidsförläggning if arbetstidsförläggning is NOT true/1 -->
+    <iso:rule context="//gn:delsvar[@id='8.1' and (.='1' or .='true')]">
+      <iso:assert test="//gn:delsvar[@id='8.2']"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='8.2']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='10']">
+      <iso:assert test="count(gn:delsvar[@id='10.1']) = 1">Referens måste en referenstyp.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='10.2']) = 1">Referens måste ett referensdatum.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='10.1']">
+      <iso:extends rule="cv"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='10.2']">
+      <iso:extends rule="date"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='11']">
+      <iso:assert test="count(gn:delsvar[@id='11.1']) = 1">Funktionsnedsättning måste ha en ett delsvar.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='11.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='12']">
+      <iso:assert test="count(gn:delsvar[@id='12.1']) = 1">Pågående behandling måste ha en ett delsvar.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='12.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='13']">
+      <iso:assert test="count(gn:delsvar[@id='13.1']) = 1">Pågående behandling måste ha en ett delsvar.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='13.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='14']">
+      <iso:assert test="count(gn:delsvar[@id='14.1']) = 1">Överskrider FMB måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='14.2']) le 1"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='14.1']">
+      <iso:extends rule="boolean"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <!-- TODO: check that there is NO description of överskriden FMB if överskriden FMB is NOT true/1 -->
+    <iso:rule context="//gn:delsvar[@id='14.1' and (.='1' or .='true')]">
+      <iso:assert test="//gn:delsvar[@id='14.2']"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='14.2']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='16']">
+      <iso:assert test="count(gn:delsvar[@id='16.1']) = 1">Aktivitetsförmåga måste ha ett delsvar.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='16.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='17']">
+      <iso:assert test="count(gn:delsvar[@id='17.1']) = 1">Prognos måste ha ett delsvar.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='17.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='18']">
+      <iso:assert test="count(gn:delsvar[@id='18.1']) = 1">Arbetslivsinriktad åtgärd måste ha ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='18.2']) le 1"/>
+      <iso:assert test="count(gn:delsvar[@id='18.3']) le 1"/>
+      <iso:assert test="count(gn:delsvar[@id='18.2']) + count(gn:delsvar[@id='18.3']) = 1"/>
+      <iso:assert test="not(preceding-sibling::gn:svar[@id='18']/gn:delsvar[@id='18.1']/tp:code[.!='1'] and gn:delsvar[@id='18.1']/tp:code[.='1'])">
+        'Inte aktuellt' kan inte kombineras med andra svar
+      </iso:assert>
+      <iso:assert test="not(preceding-sibling::gn:svar[@id='18']/gn:delsvar[@id='18.1']/tp:code[.='1'] and gn:delsvar[@id='18.1']/tp:code[.!='1'])">
+        'Inte aktuellt' kan inte kombineras med andra svar
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='18.1']">
+      <iso:extends rule="cv"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0004'"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='18.1']/tp:code[.='1']">
+      <iso:assert test="//gn:delsvar[@id='18.2']"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='18.1']/tp:code[.!='1']">
+      <iso:assert test="//gn:delsvar[@id='18.3']"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='18.2']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='18.3']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='21']">
+      <iso:assert test="count(gn:delsvar[@id='21.1']) = 1">Önskar kontakt med FK måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='21.2']) le 1"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='21.1']">
+      <iso:extends rule="boolean"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <!-- TODO: check that there is NO description of önskar kontakt if önskar kontakt is NOT true/1 -->
+    <iso:rule context="//gn:delsvar[@id='21.1' and (.='1' or .='true')]">
+      <iso:assert test="//gn:delsvar[@id='21.2']"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='21.2']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:svar[@id='22']">
+      <iso:assert test="count(gn:delsvar[@id='22.1']) = 1"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='22.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule id="cv" abstract="true">
+      <iso:assert test="count(tp:cv) = 1">Ett värde av typen CV måste ha ett cv-element</iso:assert>
+      <iso:assert test="count(tp:cv/tp:codeSystem) = 1">codeSystem saknas</iso:assert>
+      <iso:assert test="count(tp:cv/tp:code) = 1">code saknas</iso:assert>
+      <iso:assert test="count(tp:cv/tp:displayName) le 1">för många displayName</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule id="date" abstract="true">
+      <iso:assert test=". castable as xs:date">värdet måste vara ett giltigt datum.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule id="period" abstract="true">
+      <iso:assert test="tp:datePeriod">En period måste enkapsuleras av ett 'datePeriod'-element</iso:assert>
+      <iso:assert test="tp:datePeriod/tp:start castable as xs:date">'from' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="tp:datePeriod/tp:end castable as xs:date">'tom' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="tp:datePeriod/tp:start le tp:datePeriod/tp:end">'from' måste vara mindre än eller lika med 'to'</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule id="non-empty-string" abstract="true">
+      <iso:assert test="string-length(normalize-space(text())) > 0">Sträng kan inte vara tom.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule id="boolean" abstract="true">
+      <iso:assert test=". castable as xs:boolean">Kan bara vara 'true/1' eller 'false/0'</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+</iso:schema>
