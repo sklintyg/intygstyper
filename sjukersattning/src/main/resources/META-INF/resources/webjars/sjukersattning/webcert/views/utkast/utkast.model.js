@@ -22,7 +22,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
 
                         form2: ['journaluppgifter',
                             'telefonkontaktMedPatienten',
-                            'undersokningAvPatienten'],
+                            'anhorigBeskrivningAvPatienten'],
 
                         form3: ['arbetsloshet',
                             'foraldraledighet',

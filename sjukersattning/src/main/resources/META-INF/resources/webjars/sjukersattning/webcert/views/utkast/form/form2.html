@@ -27,8 +27,20 @@
           dom-id="undersokningAvPatientenDate"></span>
   </div>
 
-  <!-- Telefonkontakt -->
+      <!-- Journaluppgifter -->
   <div class="form-group form-inline">
+          <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+                                                                               id="basedOnJournal"
+                                                                               name="informationBasedOn.journal"
+                                                                               ng-model="basedOnState.check.journaluppgifter"
+                                                                               ng-change="toggleBaseradPaDate('journaluppgifter')">
+              Journaluppgifter från den</label>
+    <span wc-date-picker-field target-model="dates.journaluppgifter"
+          dom-id="journaluppgifterDate"></span>
+  </div>
+
+  <!-- Telefonkontakt utgår! -->
+  <!--div class="form-group form-inline">
     <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
                                                                          id="basedOnPhoneContact"
                                                                          name="informationBasedOn.phoneContact"
@@ -37,19 +49,28 @@
       Min telefonkontakt med patienten</label>
     <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
           dom-id="telefonkontaktMedPatientenDate"></span>
-  </div>
+  </div-->
 
-  <!-- Journaluppgifter -->
-  <div class="form-group form-inline">
-    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                         id="basedOnJournal"
-                                                                         name="informationBasedOn.journal"
-                                                                         ng-model="basedOnState.check.journaluppgifter"
-                                                                         ng-change="toggleBaseradPaDate('journaluppgifter')">
-      Journaluppgifter</label>
-    <span wc-date-picker-field target-model="dates.journaluppgifter"
-          dom-id="journaluppgifterDate"></span>
-  </div>
+      <!--  Anhörigs/annans beskrivning av patienten -->
+      <div class="form-group form-inline">
+        <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+                                                                             id="anhorigBeskrivningAvPatienten"
+                                                                             name="informationBasedOn.anhorigBeskrivningAvPatienten"
+                                                                             ng-model="basedOnState.check.anhorigBeskrivningAvPatienten"
+                                                                             ng-change="toggleBaseradPaDate('anhorigBeskrivningAvPatienten')">
+           Anhörigs/annans beskrivning av patienten</label>
+        <span wc-date-picker-field target-model="dates.anhorigBeskrivningAvPatienten"
+              dom-id="anhorigBeskrivningAvPatientenDate"></span>
+      </div>
 
-</div>
+      <!--  Jag har känt patienten sedan DATE-ONLY -->
+
+      <!-- Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen? JA/NEJ checkboxar -->
+
+
+
+
+
+
+  </div>
 </div>

@@ -12,14 +12,14 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.basedOnState = {
                 check: {
                     undersokningAvPatienten: false,
-                    telefonkontaktMedPatienten: false,
+                    anhorigBeskrivningAvPatienten: false,
                     journaluppgifter: false
                 }
             };
 
             $scope.dates = {
                 undersokningAvPatienten: null,
-                telefonkontaktMedPatienten: null,
+                anhorigBeskrivningAvPatienten: null,
                 journaluppgifter: null
             };
 
@@ -36,7 +36,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 }
             });
 
-            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
+           /* $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
                 if(newVal === oldVal){
                     return;
                 }
@@ -50,24 +50,24 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                     transferModelToForm();
                     setBaserasPa();
                 }
-            });
+            }); */
 
 
             function clearViewState() {
                 $scope.basedOnState.check.undersokningAvPatienten = false;
-                $scope.basedOnState.check.telefonkontaktMedPatienten = false;
+                $scope.basedOnState.check.anhorigBeskrivningAvPatienten = false;
                 $scope.basedOnState.check.journaluppgifter = false;
             }
 
             function setBaserasPa() {
                 $scope.basedOnState.check.undersokningAvPatienten = model.undersokningAvPatienten !== undefined;
-                $scope.basedOnState.check.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten !== undefined;
+                $scope.basedOnState.check.anhorigBeskrivningAvPatienten = model.anhorigBeskrivningAvPatienten !== undefined;
                 $scope.basedOnState.check.journaluppgifter = model.journaluppgifter !== undefined;
             }
 
             function transferModelToForm() {
                 $scope.dates.undersokningAvPatienten = $scope.model.undersokningAvPatienten;
-                $scope.dates.telefonkontaktMedPatienten = $scope.model.telefonkontaktMedPatienten;
+                $scope.dates.anhorigBeskrivningAvPatienten = $scope.model.anhorigBeskrivningAvPatienten;
                 $scope.dates.journaluppgifter = $scope.model.journaluppgifter;
             }
 
@@ -101,7 +101,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
             function registerDateParsersFor2(_$scope) {
                 // Register parse function for 2 date pickers
-                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter'];
+                var baserasPaTypes = ['undersokningAvPatienten', 'anhorigBeskrivningAvPatienten', 'journaluppgifter'];
                 addParsers(_$scope.form2, baserasPaTypes, _$scope.onChangeBaserasPaDate);
             }
 
