@@ -36,7 +36,7 @@
             <div class="row bottom-padding-small">
                 <div class='col-xs-3'>
                     <label class="control-label unbreakable">ICD-10</label>
-                    <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
+                    <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" ng-blur="diagnoseCodeBlur()"  value=""
                            class='diagnose-code col-xs-11 form-control' ng-model="model.diagnosKod"
                            typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                            typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"

@@ -239,4 +239,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 return totalLength;
             };
 
+            $scope.diagnoseCodeBlur = function() {
+                if(fmbViewState.state.diagnosKod !== $scope.model.diagnosKod) {
+                    fmbService.getFMBHelpTextsByCode($scope.model.diagnosKod).then(fmbSuccess, fmbReject);
+                }
+            };
         }]);
