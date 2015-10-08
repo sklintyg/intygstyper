@@ -28,12 +28,11 @@
   </div>
 
       <!-- Journaluppgifter -->
-  <div class="form-group form-inline">
-          <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                               id="basedOnJournal"
-                                                                               name="informationBasedOn.journal"
-                                                                               ng-model="basedOnState.check.journaluppgifter"
-                                                                               ng-change="toggleBaseradPaDate('journaluppgifter')">
+  <div class="form-group form-inline"><label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+                                                                                                id="basedOnJournal"
+                                                                                                name="informationBasedOn.journal"
+                                                                                                ng-model="basedOnState.check.journaluppgifter"
+                                                                                                ng-change="toggleBaseradPaDate('journaluppgifter')">
               Journaluppgifter från den</label>
     <span wc-date-picker-field target-model="dates.journaluppgifter"
           dom-id="journaluppgifterDate"></span>
@@ -64,6 +63,11 @@
       </div>
 
       <!--  Jag har känt patienten sedan DATE-ONLY -->
+      <div class="form-group form-inline">
+          <label class="inline-block">Jag har känt patienten sedan den</label>
+          <span wc-date-picker-field target-model="dates.kandSedan"
+                dom-id="handSedan"></span>
+      </div>
 
       <!-- Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen? JA/NEJ checkboxar -->
 

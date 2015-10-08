@@ -20,7 +20,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.dates = {
                 undersokningAvPatienten: null,
                 anhorigBeskrivningAvPatienten: null,
-                journaluppgifter: null
+                journaluppgifter: null,
+                kandSedan: null
             };
 
             // once we've doneLoading we can set the radion buttons to the model state.
