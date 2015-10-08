@@ -34,6 +34,9 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         } else {
                             ViewState.common.intyg.printStatus = 'signed';
                         }
+                        if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
+                            ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
+                        }
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
 
