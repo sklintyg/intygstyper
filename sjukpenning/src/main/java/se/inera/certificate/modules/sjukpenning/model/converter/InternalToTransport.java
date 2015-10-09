@@ -203,6 +203,7 @@ public class InternalToTransport {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
                     aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod2(), source.getDiagnosBeskrivning2())).build());
         }
+
         if (source.getDiagnosKod3() != null) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
                     aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3(), source.getDiagnosBeskrivning3())).build());
@@ -260,7 +261,7 @@ public class InternalToTransport {
         TimePeriodType period = new TimePeriodType();
         period.setStart(nedsattning.fromAsLocalDate().toLocalDateTime(LocalTime.MIDNIGHT));
         period.setEnd(nedsattning.tomAsLocalDate().toLocalDateTime(LocalTime.MIDNIGHT));
-        return new JAXBElement<TimePeriodType>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "timePeriod"), TimePeriodType.class, null, period);
+        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "timePeriod"), TimePeriodType.class, null, period);
     }
 
     private static JAXBElement<CVType> aCV(String codeSystem, String code, String displayName) {
@@ -268,7 +269,7 @@ public class InternalToTransport {
         cv.setCodeSystem(codeSystem);
         cv.setCode(code);
         cv.setDisplayName(displayName);
-        return new JAXBElement<CVType>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
+        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
     }
 
     private static class SvarBuilder {

@@ -60,13 +60,10 @@ public class InternalDraftValidator {
 
     private void validateReferenser(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        if (!utlatande.isAvstangningSmittskydd()) {
-
-            if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
-                    && utlatande.getJournaluppgifter() == null) {
-                addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
-                        "sjukersattning.validation.intyg-baserat-pa.missing");
-            }
+        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
+                && utlatande.getJournaluppgifter() == null) {
+            addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.intyg-baserat-pa.missing");
         }
 
         if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
@@ -103,7 +100,7 @@ public class InternalDraftValidator {
     private void validateAktivitetsbegransning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
-        if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(aktivitetsbegransning)) {
+        if (StringUtils.isBlank(aktivitetsbegransning)) {
             addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
                     "sjukersattning.validation.aktivitetsbegransning.missing");
         }
@@ -112,7 +109,7 @@ public class InternalDraftValidator {
     private void validateFunktionsnedsattning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
-        if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(funktionsnedsattning)) {
+        if (StringUtils.isBlank(funktionsnedsattning)) {
             addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
                     "sjukersattning.validation.funktionsnedsattning.missing");
         }
@@ -120,17 +117,10 @@ public class InternalDraftValidator {
 
     private void validateDiagnose(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        // Fält 3 - always optional regardless of smittskydd
-
-        // Fält 2 - Medicinskt tillstånd kod - mandatory if not smittskydd
-        if (utlatande.isAvstangningSmittskydd()) {
-            return;
-        }
-
         if (!StringUtils.isBlank(utlatande.getDiagnosKod1())) {
             String kodsystem = utlatande.getDiagnosKodsystem1();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukersattning.validation.diagnos.invalid", validationMessages);
@@ -143,7 +133,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod2())) {
             String kodsystem = utlatande.getDiagnosKodsystem2();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukersattning.validation.diagnos2.invalid", validationMessages);
@@ -153,7 +143,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod3())) {
             String kodsystem = utlatande.getDiagnosKodsystem3();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "sjukersattning.validation.diagnos3.invalid", validationMessages);
@@ -182,7 +172,7 @@ public class InternalDraftValidator {
      *         {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#INVALID} otherwise
      */
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
-        return (validationMessages.isEmpty()) ? ValidationStatus.VALID :  ValidationStatus.INVALID;
+        return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
 
     /**

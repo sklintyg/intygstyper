@@ -52,9 +52,6 @@ public class InternalToTransportTest {
         utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");
         utlatande.setPlaneradBehandling("Mer medicin");
-        utlatande.setNedsattMed100(new InternalLocalDateInterval(new InternalDate(new LocalDate("2015-08-26")), new InternalDate(new LocalDate("2015-09-30"))));
-        utlatande.setRessattTillArbeteAktuellt(false);
-        utlatande.setRekommendationOverSocialstyrelsensBeslutsstod(false);
         utlatande.setVadPatientenKanGora("Dansa");
         utlatande.setPrognosNarPatientKanAterga("Aldrig");
         utlatande.setKommentar("Trevlig kille");

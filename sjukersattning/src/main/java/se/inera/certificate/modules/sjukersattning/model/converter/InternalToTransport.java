@@ -165,8 +165,6 @@ public class InternalToTransport {
     private static List<Svar> getSvar(SjukersattningUtlatande source) {
         List<Svar> svars = new ArrayList<>();
 
-        svars.add(aSvar(SMITTA_SVAR_ID).withDelsvar(SMITTA_DELSVAR_ID, Boolean.toString(source.isAvstangningSmittskydd())).build());
-
         if (source.getUndersokningAvPatienten() != null) {
             svars.add(aSvar(REFERENS_SVAR_ID).
                     withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT), null)).
@@ -213,27 +211,6 @@ public class InternalToTransport {
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
         svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
         svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
-
-        if (source.getNedsattMed100() != null) {
-            // TODO: reactivate!
-            //svars.add(aSvar(NEDSATTNING_SVAR_ID).withDelsvar(NEDSATTNING_DELSVAR_ID, aPeriod(source.getNedsattMed100())).build());
-        }
-        if (source.getNedsattMed75() != null) {
-            svars.add(aSvar(NEDSATTNING_SVAR_ID).withDelsvar(NEDSATTNING_DELSVAR_ID, aPeriod(source.getNedsattMed75())).build());
-        }
-        if (source.getNedsattMed50() != null) {
-            svars.add(aSvar(NEDSATTNING_SVAR_ID).withDelsvar(NEDSATTNING_DELSVAR_ID, aPeriod(source.getNedsattMed50())).build());
-        }
-        if (source.getNedsattMed25() != null) {
-            svars.add(aSvar(NEDSATTNING_SVAR_ID).withDelsvar(NEDSATTNING_DELSVAR_ID, aPeriod(source.getNedsattMed25())).build());
-        }
-
-        svars.add(aSvar(RESSATT_SVAR_ID).withDelsvar(RESSATT_DELSVAR_ID, Boolean.toString(source.isRessattTillArbeteAktuellt())).build());
-
-        svars.add(aSvar(REKOMMENDATION_OVERSKRIDER_SVAR_ID).
-                withDelsvar(REKOMMENDATION_OVERSKRIDER_DELSVAR_ID, Boolean.toString(source.isRekommendationOverSocialstyrelsensBeslutsstod())).build());
-
-        // Förändrad arbetstidsförläggning svars(add(aSvar("8").withDelsvar("8.1", source.foran)))
 
         svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getVadPatientenKanGora()).build());
 

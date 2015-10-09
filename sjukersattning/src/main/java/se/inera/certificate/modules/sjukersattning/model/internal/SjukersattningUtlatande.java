@@ -1,13 +1,10 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
 import se.inera.certificate.model.InternalDate;
-import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
 public class SjukersattningUtlatande extends Utlatande {
-
-    private boolean avstangningSmittskydd;
 
     private InternalDate undersokningAvPatienten;
     private InternalDate telefonkontaktMedPatienten;
@@ -40,28 +37,8 @@ public class SjukersattningUtlatande extends Utlatande {
     private String pagaendeBehandling;
     private String planeradBehandling;
 
-    private InternalLocalDateInterval nedsattMed25;
-    private InternalLocalDateInterval nedsattMed50;
-    private InternalLocalDateInterval nedsattMed75;
-    private InternalLocalDateInterval nedsattMed100;
-
-    private boolean ressattTillArbeteAktuellt;
-    private boolean rekommendationOverSocialstyrelsensBeslutsstod;
-
     private String vadPatientenKanGora;
     private String prognosNarPatientKanAterga;
-
-    private boolean atgardInteAktuellt;
-    private boolean atgardArbetstraning;
-    private boolean atgardArbetsanpassning;
-    private boolean atgardSokaNyttArbete;
-    private boolean atgardBesokPaArbete;
-    private boolean atgardErgonomi;
-    private boolean atgardHjalpmedel;
-    private boolean atgardKonflikthantering;
-    private boolean atgardOmfordelning;
-    private boolean atgardForetagshalsovard;
-    private boolean atgardOvrigt;
 
     private String kommentar;
     private boolean kontaktMedFk;
@@ -71,14 +48,6 @@ public class SjukersattningUtlatande extends Utlatande {
     public SjukersattningUtlatande() {
         super();
         setTyp(SjukersattningEntryPoint.MODULE_ID);
-    }
-
-    public boolean isAvstangningSmittskydd() {
-        return avstangningSmittskydd;
-    }
-
-    public void setAvstangningSmittskydd(boolean avstangningSmittskydd) {
-        this.avstangningSmittskydd = avstangningSmittskydd;
     }
 
     public String getDiagnosKod1() {
@@ -209,46 +178,6 @@ public class SjukersattningUtlatande extends Utlatande {
         this.planeradBehandling = planeradBehandling;
     }
 
-    public InternalLocalDateInterval getNedsattMed25() {
-        return nedsattMed25;
-    }
-
-    public void setNedsattMed25(InternalLocalDateInterval nedsattMed25) {
-        this.nedsattMed25 = nedsattMed25;
-    }
-
-    public InternalLocalDateInterval getNedsattMed50() {
-        return nedsattMed50;
-    }
-
-    public void setNedsattMed50(InternalLocalDateInterval nedsattMed50) {
-        this.nedsattMed50 = nedsattMed50;
-    }
-
-    public InternalLocalDateInterval getNedsattMed75() {
-        return nedsattMed75;
-    }
-
-    public void setNedsattMed75(InternalLocalDateInterval nedsattMed75) {
-        this.nedsattMed75 = nedsattMed75;
-    }
-
-    public InternalLocalDateInterval getNedsattMed100() {
-        return nedsattMed100;
-    }
-
-    public void setNedsattMed100(InternalLocalDateInterval nedsattMed100) {
-        this.nedsattMed100 = nedsattMed100;
-    }
-
-    public boolean isRessattTillArbeteAktuellt() {
-        return ressattTillArbeteAktuellt;
-    }
-
-    public void setRessattTillArbeteAktuellt(boolean ressattTillArbeteAktuellt) {
-        this.ressattTillArbeteAktuellt = ressattTillArbeteAktuellt;
-    }
-
     public boolean isKontaktMedFk() {
         return kontaktMedFk;
     }
@@ -265,14 +194,6 @@ public class SjukersattningUtlatande extends Utlatande {
         this.kommentar = kommentar;
     }
 
-    public boolean isRekommendationOverSocialstyrelsensBeslutsstod() {
-        return rekommendationOverSocialstyrelsensBeslutsstod;
-    }
-
-    public void setRekommendationOverSocialstyrelsensBeslutsstod(boolean rekommendationOverSocialstyrelsensBeslutsstod) {
-        this.rekommendationOverSocialstyrelsensBeslutsstod = rekommendationOverSocialstyrelsensBeslutsstod;
-    }
-
     public String getVadPatientenKanGora() {
         return vadPatientenKanGora;
     }
@@ -287,94 +208,6 @@ public class SjukersattningUtlatande extends Utlatande {
 
     public void setPrognosNarPatientKanAterga(String prognosNarPatientKanAterga) {
         this.prognosNarPatientKanAterga = prognosNarPatientKanAterga;
-    }
-
-    public boolean isAtgardInteAktuellt() {
-        return atgardInteAktuellt;
-    }
-
-    public void setAtgardInteAktuellt(boolean atgardInteAktuellt) {
-        this.atgardInteAktuellt = atgardInteAktuellt;
-    }
-
-    public boolean isAtgardArbetstraning() {
-        return atgardArbetstraning;
-    }
-
-    public boolean isAtgardArbetsanpassning() {
-        return atgardArbetsanpassning;
-    }
-
-    public void setAtgardArbetsanpassning(boolean atgardArbetsanpassning) {
-        this.atgardArbetsanpassning = atgardArbetsanpassning;
-    }
-
-    public boolean isAtgardSokaNyttArbete() {
-        return atgardSokaNyttArbete;
-    }
-
-    public void setAtgardSokaNyttArbete(boolean atgardSokaNyttArbete) {
-        this.atgardSokaNyttArbete = atgardSokaNyttArbete;
-    }
-
-    public boolean isAtgardBesokPaArbete() {
-        return atgardBesokPaArbete;
-    }
-
-    public void setAtgardBesokPaArbete(boolean atgardBesokPaArbete) {
-        this.atgardBesokPaArbete = atgardBesokPaArbete;
-    }
-
-    public boolean isAtgardErgonomi() {
-        return atgardErgonomi;
-    }
-
-    public void setAtgardErgonomi(boolean atgardErgonomi) {
-        this.atgardErgonomi = atgardErgonomi;
-    }
-
-    public boolean isAtgardHjalpmedel() {
-        return atgardHjalpmedel;
-    }
-
-    public void setAtgardHjalpmedel(boolean atgardHjalpmedel) {
-        this.atgardHjalpmedel = atgardHjalpmedel;
-    }
-
-    public boolean isAtgardKonflikthantering() {
-        return atgardKonflikthantering;
-    }
-
-    public void setAtgardKonflikthantering(boolean atgardKonflikthantering) {
-        this.atgardKonflikthantering = atgardKonflikthantering;
-    }
-
-    public boolean isAtgardOmfordelning() {
-        return atgardOmfordelning;
-    }
-
-    public void setAtgardOmfordelning(boolean atgardOmfordelning) {
-        this.atgardOmfordelning = atgardOmfordelning;
-    }
-
-    public boolean isAtgardForetagshalsovard() {
-        return atgardForetagshalsovard;
-    }
-
-    public void setAtgardForetagshalsovard(boolean atgardForetagshalsovard) {
-        this.atgardForetagshalsovard = atgardForetagshalsovard;
-    }
-
-    public boolean isAtgardOvrigt() {
-        return atgardOvrigt;
-    }
-
-    public void setAtgardOvrigt(boolean atgardOvrigt) {
-        this.atgardOvrigt = atgardOvrigt;
-    }
-
-    public void setAtgardArbetstraning(boolean atgardArbetstraning) {
-        this.atgardArbetstraning = atgardArbetstraning;
     }
 
     public InternalDate getKannedomOmPatient() {
@@ -400,4 +233,5 @@ public class SjukersattningUtlatande extends Utlatande {
     public void setNyBedomningDiagnos(boolean nyBedomningDiagnos) {
         this.nyBedomningDiagnos = nyBedomningDiagnos;
     }
+
 }
