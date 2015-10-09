@@ -1,5 +1,4 @@
 
-<!-- NOTES for SP-PROTOTYPE:  -->
 <div ng-form="form2">
   <a id="anchor.intygbaseratpa" name="anchor.intygbaseratpa"></a>
     <h3 class="title">Läkarutlåtande för sjukersättning</h3>
@@ -63,12 +62,18 @@
       <!--  Jag har känt patienten sedan DATE-ONLY -->
       <div class="form-group form-inline">
           <label class="inline-block bold">Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen?</label>
-            <label class="radio-inline">
+      </div>
+      <div class="form-group form-inline">
+          <label class="radio-inline">
                 <!--input id="intygFilterAktuella" name="intygFilter" type="radio" value="current"
                        ng-model="filterForm.intygFilter" checked="checked" class="ng-pristine ng-valid"-->
-                <input id="andraMedicinskaUtredningar" name="andraMedicinskaUtredninga" type="radio" value="YES"
-                        ng-model="radioMedical.status">
-            </label>
+                <input id="andraMedicinskaUtredningar1" name="andraMedicinskaUtredningar" type="radio" value="YES"
+                        ng-model="radioMedical.status">Ja
+          </label>
+          <label class="radio-inline">
+              <input id="andraMedicinskaUtredningar2" name="andraMedicinskaUtredningar" type="radio" value="NO"
+                     ng-model="radioMedical.status">Nej
+          </label>
       </div>
 
 
