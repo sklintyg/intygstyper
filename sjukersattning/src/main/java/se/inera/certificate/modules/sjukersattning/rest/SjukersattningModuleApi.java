@@ -16,7 +16,7 @@ import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.Get
 import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateType;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport2;
+import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternal;
 import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
@@ -174,7 +174,7 @@ public class SjukersattningModuleApi implements ModuleApi {
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
         RegisterCertificateType request;
         try {
-            request = InternalToTransport2.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
+            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
         } catch (ConverterException e) {
             LOG.error("Failed to convert to transport format during registerTSBas", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
@@ -212,7 +212,7 @@ public class SjukersattningModuleApi implements ModuleApi {
         String xmlString = null;
         try {
             SjukersattningUtlatande internal = objectMapper.readValue(jsonString, SjukersattningUtlatande.class);
-            RegisterCertificateType external = InternalToTransport2.convert(internal);
+            RegisterCertificateType external = InternalToTransport.convert(internal);
             StringWriter writer = new StringWriter();
             JAXB.marshal(external, writer);
             xmlString = writer.toString();

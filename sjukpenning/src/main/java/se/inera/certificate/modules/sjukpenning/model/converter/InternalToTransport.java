@@ -19,7 +19,7 @@ import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
-public class InternalToTransport2 {
+public class InternalToTransport {
 
     public static final int UNDERSOKNING_AV_PATIENT = 1;
     public static final int TELEFONKONTAKT = 2;

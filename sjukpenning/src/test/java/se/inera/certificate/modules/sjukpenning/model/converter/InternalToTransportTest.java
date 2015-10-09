@@ -1,6 +1,4 @@
-package se.inera.certificate.modules.sjukersattning.model.converter;
-
-import static org.junit.Assert.assertEquals;
+package se.inera.certificate.modules.sjukpenning.model.converter;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
@@ -18,28 +16,27 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.*;
-import se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningValidator;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningValidator;
+import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 import com.google.common.base.Charsets;
-import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLWriter;
 
-public class InternalToTransport2Test {
+public class InternalToTransportTest {
 
     @Test
     public void doSchematronValidation() throws Exception {
-        String xmlContents = xmlToString(InternalToTransport2.convert(getUtlatande()));
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();
+        String xmlContents = xmlToString(InternalToTransport.convert(getUtlatande()));
+        RegisterSjukpenningValidator validator = new RegisterSjukpenningValidator();
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
         System.out.println(SVRLWriter.createXMLString(result));
         //assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
-    private SjukersattningUtlatande getUtlatande() {
-        SjukersattningUtlatande utlatande = new SjukersattningUtlatande();
+    private SjukpenningUtlatande getUtlatande() {
+        SjukpenningUtlatande utlatande = new SjukpenningUtlatande();
         utlatande.setId("1234567");
         utlatande.setGrundData(getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
