@@ -21,7 +21,7 @@
         Ett 'intyg' måste ha en 'sysselsättning'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='3']) = 1">
-        Ett 'intyg' måste ha en 'orsak'
+        Ett 'intyg' måste ha en 'huvudsaklig orsak'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='4']) le 2">
         Ett 'intyg' får inte ha fler än 2 bidiagnoser/åtgärder
@@ -66,7 +66,7 @@
         Ett 'intyg' måste ha ett 'önskar kontakt med FK'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='22']) le 1">
-        Ett 'intyg' får ha högst ett ett 'övrigt'
+        Ett 'intyg' får ha högst ett 'övrigt'
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -100,7 +100,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='3']">
-      <iso:assert test="count(gn:delsvar[@id='3.1']) = 1">Orsak måste ha en huvuddiagnos.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='3.1']) = 1">'Huvudsakling orsak' måste ha en 'huvuddiagnos'.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -113,7 +113,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='4']">
-      <iso:assert test="count(gn:delsvar[@id='4.1']) = 1">Ytterligare orsak måste ha ANTINGEN bidiagnos ELLER åtgärd.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='4.1']) = 1">'Ytterligare orsak' måste ha ANTINGEN 'bidiagnos' ELLER 'åtgärd'.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -126,7 +126,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='5']">
-      <iso:assert test="count(gn:delsvar[@id='5.1']) = 1">Aktivitetsbegränsning måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='5.1']) = 1">'Aktivitetsbegränsning' måste ha ett delsvar.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -138,8 +138,8 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='6']">
-      <iso:assert test="count(gn:delsvar[@id='6.1']) = 1">sjukskrivning måste ha en grad.</iso:assert>
-      <iso:assert test="count(gn:delsvar[@id='6.2']) = 1">sjukskrivning måste ha en period.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='6.1']) = 1">'Sjukskrivning' måste ha en 'grad'.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='6.2']) = 1">'Sjukskrivning' måste ha en 'period'.</iso:assert>
       <iso:assert test="not(preceding-sibling::gn:svar[@id='6']/gn:delsvar[@id='6.1']/tp:code = gn:delsvar[@id='6.1']/tp:code)">
         Samma 'grad' kan inte användas flera gånger i samma 'sjukskrivning'.
       </iso:assert>
@@ -161,7 +161,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='7']">
-      <iso:assert test="count(gn:delsvar[@id='7.1']) = 1">Förändrat ressätt måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='7.1']) = 1">'Förändrat ressätt' måste ha ett delsvar.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -173,7 +173,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='8']">
-      <iso:assert test="count(gn:delsvar[@id='8.1']) = 1">Förändrad arbetstidsförläggning måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='8.1']) = 1">'Förändrad arbetstidsförläggning' måste ha ett delsvar.</iso:assert>
       <iso:assert test="count(gn:delsvar[@id='8.2']) le 1"/>
     </iso:rule>
   </iso:pattern>
@@ -199,8 +199,8 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='10']">
-      <iso:assert test="count(gn:delsvar[@id='10.1']) = 1">Referens måste en referenstyp.</iso:assert>
-      <iso:assert test="count(gn:delsvar[@id='10.2']) = 1">Referens måste ett referensdatum.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='10.1']) = 1">'Referens' måste ha en 'referenstyp'.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='10.2']) = 1">'Referens' måste ha ett 'referensdatum'.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -219,7 +219,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='11']">
-      <iso:assert test="count(gn:delsvar[@id='11.1']) = 1">Funktionsnedsättning måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='11.1']) = 1">'Funktionsnedsättning' måste ha ett delsvar.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -231,7 +231,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='12']">
-      <iso:assert test="count(gn:delsvar[@id='12.1']) = 1">Pågående behandling måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='12.1']) = 1">'Pågående behandling' måste ha ett delsvar.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -243,7 +243,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='13']">
-      <iso:assert test="count(gn:delsvar[@id='13.1']) = 1">Pågående behandling måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='13.1']) = 1">'Planerad behandling' måste ha ett delsvar.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -255,7 +255,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='14']">
-      <iso:assert test="count(gn:delsvar[@id='14.1']) = 1">Överskrider FMB måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='14.1']) = 1">'Överskrider FMB' måste ha ett delsvar.</iso:assert>
       <iso:assert test="count(gn:delsvar[@id='14.2']) le 1"/>
     </iso:rule>
   </iso:pattern>
@@ -281,7 +281,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='16']">
-      <iso:assert test="count(gn:delsvar[@id='16.1']) = 1">Aktivitetsförmåga måste ha ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='16.1']) = 1">'Aktivitetsförmåga' måste ha ett delsvar.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -293,7 +293,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='17']">
-      <iso:assert test="count(gn:delsvar[@id='17.1']) = 1">Prognos måste ha ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='17.1']) = 1">'Prognos' måste ha ett delsvar.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -305,7 +305,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='18']">
-      <iso:assert test="count(gn:delsvar[@id='18.1']) = 1">Arbetslivsinriktad åtgärd måste ha ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='18.1']) = 1">'Arbetslivsinriktad åtgärd' måste ha ett delsvar.</iso:assert>
       <iso:assert test="count(gn:delsvar[@id='18.2']) le 1"/>
       <iso:assert test="count(gn:delsvar[@id='18.3']) le 1"/>
       <iso:assert test="count(gn:delsvar[@id='18.2']) + count(gn:delsvar[@id='18.3']) = 1"/>
@@ -351,7 +351,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='21']">
-      <iso:assert test="count(gn:delsvar[@id='21.1']) = 1">Önskar kontakt med FK måste ha en ett delsvar.</iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='21.1']) = 1">'Önskar kontakt med FK' måste ha ett delsvar.</iso:assert>
       <iso:assert test="count(gn:delsvar[@id='21.2']) le 1"/>
     </iso:rule>
   </iso:pattern>
@@ -404,7 +404,7 @@
 
   <iso:pattern>
     <iso:rule id="period" abstract="true">
-      <iso:assert test="tp:datePeriod">En period måste enkapsuleras av ett 'datePeriod'-element</iso:assert>
+      <iso:assert test="tp:datePeriod">En period måste inneslutas av ett 'datePeriod'-element</iso:assert>
       <iso:assert test="tp:datePeriod/tp:start castable as xs:date">'from' måste vara ett giltigt datum.</iso:assert>
       <iso:assert test="tp:datePeriod/tp:end castable as xs:date">'tom' måste vara ett giltigt datum.</iso:assert>
       <iso:assert test="tp:datePeriod/tp:start le tp:datePeriod/tp:end">'from' måste vara mindre än eller lika med 'to'</iso:assert>
