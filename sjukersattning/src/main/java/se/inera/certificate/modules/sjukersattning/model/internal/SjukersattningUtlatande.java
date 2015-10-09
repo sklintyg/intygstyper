@@ -12,14 +12,9 @@ public class SjukersattningUtlatande extends Utlatande {
     private InternalDate undersokningAvPatienten;
     private InternalDate telefonkontaktMedPatienten;
     private InternalDate journaluppgifter;
+    private InternalDate kannedomOmPatient;
 
-    private boolean nuvarandeArbete;
-    private String nuvarandeArbetsuppgifter;
-
-    private boolean arbetsloshet;
-    private boolean foraldraledighet;
-    private boolean studier;
-    private boolean arbetsmarknadsProgram;
+    // TODO: annat underlag för behandling
 
     private String diagnosKod1;
     private String diagnosKodsystem1;
@@ -32,6 +27,10 @@ public class SjukersattningUtlatande extends Utlatande {
     private String diagnosKod3;
     private String diagnosKodsystem3;
     private String diagnosBeskrivning3;
+
+    // TODO: behandlingsåtgärder
+
+    private String diagnostisering;
 
     private String funktionsnedsattning;
     private String aktivitetsbegransning;
@@ -208,38 +207,6 @@ public class SjukersattningUtlatande extends Utlatande {
         this.planeradBehandling = planeradBehandling;
     }
 
-    public boolean isNuvarandeArbete() {
-        return nuvarandeArbete;
-    }
-
-    public void setNuvarandeArbete(boolean nuvarandeArbete) {
-        this.nuvarandeArbete = nuvarandeArbete;
-    }
-
-    public String getNuvarandeArbetsuppgifter() {
-        return nuvarandeArbetsuppgifter;
-    }
-
-    public void setNuvarandeArbetsuppgifter(String nuvarandeArbetsuppgifter) {
-        this.nuvarandeArbetsuppgifter = nuvarandeArbetsuppgifter;
-    }
-
-    public boolean isArbetsloshet() {
-        return arbetsloshet;
-    }
-
-    public void setArbetsloshet(boolean arbetsloshet) {
-        this.arbetsloshet = arbetsloshet;
-    }
-
-    public boolean isForaldraledighet() {
-        return foraldraledighet;
-    }
-
-    public void setForaldraledighet(boolean foraldraledighet) {
-        this.foraldraledighet = foraldraledighet;
-    }
-
     public InternalLocalDateInterval getNedsattMed25() {
         return nedsattMed25;
     }
@@ -294,22 +261,6 @@ public class SjukersattningUtlatande extends Utlatande {
 
     public void setKommentar(String kommentar) {
         this.kommentar = kommentar;
-    }
-
-    public boolean isStudier() {
-        return studier;
-    }
-
-    public void setStudier(boolean studier) {
-        this.studier = studier;
-    }
-
-    public boolean isArbetsmarknadsProgram() {
-        return arbetsmarknadsProgram;
-    }
-
-    public void setArbetsmarknadsProgram(boolean arbetsmarknadsProgram) {
-        this.arbetsmarknadsProgram = arbetsmarknadsProgram;
     }
 
     public boolean isRekommendationOverSocialstyrelsensBeslutsstod() {
@@ -422,5 +373,21 @@ public class SjukersattningUtlatande extends Utlatande {
 
     public void setAtgardArbetstraning(boolean atgardArbetstraning) {
         this.atgardArbetstraning = atgardArbetstraning;
+    }
+
+    public InternalDate getKannedomOmPatient() {
+        return kannedomOmPatient;
+    }
+
+    public void setKannedomOmPatient(InternalDate kannedomOmPatient) {
+        this.kannedomOmPatient = kannedomOmPatient;
+    }
+
+    public String getDiagnostisering() {
+        return diagnostisering;
+    }
+
+    public void setDiagnostisering(String diagnostisering) {
+        this.diagnostisering = diagnostisering;
     }
 }

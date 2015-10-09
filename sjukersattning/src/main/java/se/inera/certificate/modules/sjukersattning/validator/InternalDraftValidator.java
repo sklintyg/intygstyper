@@ -41,8 +41,6 @@ public class InternalDraftValidator {
         validateFunktionsnedsattning(utlatande, validationMessages);
         // Falt 5
         validateAktivitetsbegransning(utlatande, validationMessages);
-        // fält 8
-        validateArbetsformaga(utlatande, validationMessages);
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
 
@@ -100,59 +98,6 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
                     "sjukersattning.validation.vardenhet.telefonnummer.missing");
         }
-    }
-
-    private void validateArbetsformaga(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
-        if (!utlatande.isAvstangningSmittskydd()) {
-            if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldraledighet()) {
-                addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
-                        "sjukersattning.validation.sysselsattning.missing");
-            } else if (utlatande.isNuvarandeArbete() && StringUtils.isBlank(utlatande.getNuvarandeArbetsuppgifter())) {
-                addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
-                        "sjukersattning.validation.sysselsattning.arbetsuppgifter.missing");
-            }
-        }
-
-        // Check that from and tom is valid in all present intervals before doing more checks
-        if (isValidDateInIntervals(validationMessages, utlatande)) {
-            validateIntervals(validationMessages, "nedsattning", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
-                    utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
-        }
-    }
-
-    private boolean isValidDateInIntervals(List<ValidationMessage> validationMessages, SjukersattningUtlatande utlatande) {
-        boolean success = true;
-        InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
-                utlatande.getNedsattMed25() };
-        if (allNulls(intervals)) {
-            addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.nedsattning.choose-at-least-one");
-            return false;
-        }
-        // if the interval is not null and either from or tom is invalid, raise validation error
-        // use independent conditions to check this to be able to give specific validation errors for each case
-        if (intervals[0] != null && !intervals[0].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed100", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.nedsattning.nedsattmed100.incorrect-format");
-            success = false;
-        }
-        if (intervals[1] != null && !intervals[1].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed75", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.nedsattning.nedsattmed75.incorrect-format");
-            success = false;
-        }
-        if (intervals[2] != null && !intervals[2].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed50", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.nedsattning.nedsattmed50.incorrect-format");
-            success = false;
-        }
-        if (intervals[3] != null && !intervals[3].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.nedsattning.nedsattmed25.incorrect-format");
-            success = false;
-        }
-        return success;
     }
 
     private void validateAktivitetsbegransning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {

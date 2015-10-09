@@ -40,18 +40,21 @@ public class InternalToTransport {
 
     public static final String SMITTA_SVAR_ID = "2";
     public static final String SMITTA_DELSVAR_ID = "2.1";
-
     public static final String SYSSELSATTNING_SVAR_ID = "1";
     public static final String SYSSELSATTNING_TYP_DELSVAR = "1.1";
     public static final String SYSSELSATTNING_BESKRIVNING_DELSVAR_ID = "1.2";
     public static final String REFERENS_SVAR_ID = "10";
     public static final String REFERENSTYP_DELSVAR_ID = "10.1";
+    public static final String OVRIGKANNEDOM_SVAR_ID = "27";
+    public static final String OVRIGKANNEDOM_DELSVAR_ID = "27.1";
     public static final String REFERENSDATUM_DELSVAR_ID = "10.2";
     public static final String HUVUDSAKLIG_ORSAK_SVAR_ID = "3";
     public static final String DIAGNOS_DELSVAR_ID = "3.1";
     public static final String DIAGNOS_BESKRIVNING_DELSVAR_ID = "3.2";
     public static final String YTTERLIGARE_ORSAK_SVAR_ID = "4";
     public static final String YTTERLIGARE_ORSAK_DELSVAR_ID = "4.1";
+    public static final String DIAGNOSTISERING_SVAR_ID = "23";
+    public static final String DIAGNOSTISERING_DELSVAR_ID = "23.1";
     public static final String FUNKTIONSNEDSATTNING_SVAR_ID = "11";
     public static final String FUNKTIONSNEDSATTNING_DELSVAR_ID = "11.1";
     public static final String AKTIVITETSBEGRANSNING_SVAR_ID = "5";
@@ -176,23 +179,9 @@ public class InternalToTransport {
                     withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER), null)).
                     withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
-
-        if (source.isNuvarandeArbete()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).
-                    withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(ARBETE), null)).
-                    withDelsvar(SYSSELSATTNING_BESKRIVNING_DELSVAR_ID, source.getNuvarandeArbetsuppgifter()).build());
-        }
-        if (source.isArbetsloshet()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(ARBETSLOSHET), null)).build());
-        }
-        if (source.isForaldraledighet()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(FORALDRALEDIGHET), null)).build());
-        }
-        if (source.isStudier()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(STUDIER), null)).build());
-        }
-        if (source.isArbetsmarknadsProgram()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(ARBETSMARKNADSPROGRAM), null)).build());
+        if (source.getKannedomOmPatient() != null) {
+            svars.add(aSvar(OVRIGKANNEDOM_SVAR_ID).
+                    withDelsvar(OVRIGKANNEDOM_DELSVAR_ID, source.getKannedomOmPatient().asLocalDate().toString()).build());
         }
 
         svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
@@ -207,6 +196,9 @@ public class InternalToTransport {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
                     aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3(), source.getDiagnosBeskrivning3())).build());
         }
+
+        svars.add(aSvar(DIAGNOSTISERING_SVAR_ID).
+                withDelsvar(DIAGNOSTISERING_DELSVAR_ID, source.getDiagnostisering()).build());
 
         // TODO: Åtgärd som orsak till nedsatt arbetsförmåga ska in här.
 

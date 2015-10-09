@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://purl.oclc.org/dsdl/schematron"
     queryBinding='xslt2' schemaVersion='ISO19757-3'>
 
-  <iso:title>Schematron file for sjukersättning (fördjupat).</iso:title>
+  <iso:title>Schematron file for sjukersättning.</iso:title>
 
   <iso:ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
   <iso:ns prefix="rg" uri="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2"/>
@@ -18,7 +18,7 @@
   <iso:pattern>
     <iso:rule context="//rg:intyg">
       <iso:assert test="count(gn:svar[@id='10']) ge 1 and count(gn:svar[@id='10']) le 3">
-        Ett 'intyg' får inte ha mer än en tre referenser
+        Ett 'intyg' får inte ha mer än tre referenser
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='27']) = 1">
         Ett 'intyg' måste ha en 'kännedom om patient'

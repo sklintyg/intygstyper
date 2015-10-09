@@ -24,17 +24,19 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Obje
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 import com.google.common.base.Charsets;
+import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLWriter;
 
 public class InternalToTransportTest {
 
     @Test
     public void doSchematronValidation() throws Exception {
+        //  TODO: validera schema
         String xmlContents = xmlToString(InternalToTransport.convert(getUtlatande()));
         RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
         System.out.println(SVRLWriter.createXMLString(result));
-        //assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
+//        assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
     private SjukersattningUtlatande getUtlatande() {
@@ -42,7 +44,7 @@ public class InternalToTransportTest {
         utlatande.setId("1234567");
         utlatande.setGrundData(getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
-        utlatande.setArbetsloshet(true);
+        utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.setDiagnosKod1("S47");
         utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
         utlatande.setFunktionsnedsattning("Kan inte smida");
