@@ -24,6 +24,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 kandSedan: null
             };
 
+            var otherMedicalStates= { NO: 'NO', YES: 'YES' };
+
+            $scope.radioMedical = {
+                status : '=?'
+            };
+
             // once we've doneLoading we can set the radion buttons to the model state.
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
                 if(newVal === oldVal){

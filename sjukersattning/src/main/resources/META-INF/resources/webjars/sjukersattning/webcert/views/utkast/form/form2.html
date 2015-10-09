@@ -2,6 +2,7 @@
 <!-- NOTES for SP-PROTOTYPE:  -->
 <div ng-form="form2">
   <a id="anchor.intygbaseratpa" name="anchor.intygbaseratpa"></a>
+    <h3 class="title">Läkarutlåtande för sjukersättning</h3>
   <div id="intygetbaseraspa" wc-field field-label="sjukersattning.label.intygbaseratpa" field-number="2" wc-detect-animation
                        field-help-text="sjukersattning.helptext.intyg-baserat-pa" ng-hide="viewState.avstangningSmittskydd()"
        field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa" class="field-fade">
@@ -15,7 +16,7 @@
 
   <!-- Undersökning -->
   <div class="form-group form-inline">
-    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+    <label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
                                                                          id="basedOnExamination"
                                                                          name="informationBasedOn.examination"
                                                                          class="checkbox-inline"
@@ -28,7 +29,7 @@
   </div>
 
       <!-- Journaluppgifter -->
-  <div class="form-group form-inline"><label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+  <div class="form-group form-inline"><label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
                                                                                                 id="basedOnJournal"
                                                                                                 name="informationBasedOn.journal"
                                                                                                 ng-model="basedOnState.check.journaluppgifter"
@@ -38,21 +39,9 @@
           dom-id="journaluppgifterDate"></span>
   </div>
 
-  <!-- Telefonkontakt utgår! -->
-  <!--div class="form-group form-inline">
-    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                         id="basedOnPhoneContact"
-                                                                         name="informationBasedOn.phoneContact"
-                                                                         ng-model="basedOnState.check.telefonkontaktMedPatienten"
-                                                                         ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
-      Min telefonkontakt med patienten</label>
-    <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
-          dom-id="telefonkontaktMedPatientenDate"></span>
-  </div-->
-
       <!--  Anhörigs/annans beskrivning av patienten -->
       <div class="form-group form-inline">
-        <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+        <label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
                                                                              id="anhorigBeskrivningAvPatienten"
                                                                              name="informationBasedOn.anhorigBeskrivningAvPatienten"
                                                                              ng-model="basedOnState.check.anhorigBeskrivningAvPatienten"
@@ -62,16 +51,25 @@
               dom-id="anhorigBeskrivningAvPatientenDate"></span>
       </div>
 
-      <!--  Jag har känt patienten sedan DATE-ONLY -->
+      <!--  Jag har känt patienten sedan DATE-ONLY TODO: Add class attributes-->
       <div class="form-group form-inline">
-          <label class="inline-block">Jag har känt patienten sedan den</label>
+          <label class="inline-block" style="min-width: 300px">Jag har känt patienten sedan den</label>
           <span wc-date-picker-field target-model="dates.kandSedan"
                 dom-id="handSedan"></span>
       </div>
 
       <!-- Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen? JA/NEJ checkboxar -->
 
-
+      <!--  Jag har känt patienten sedan DATE-ONLY -->
+      <div class="form-group form-inline">
+          <label class="inline-block bold">Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen?</label>
+            <label class="radio-inline">
+                <!--input id="intygFilterAktuella" name="intygFilter" type="radio" value="current"
+                       ng-model="filterForm.intygFilter" checked="checked" class="ng-pristine ng-valid"-->
+                <input id="andraMedicinskaUtredningar" name="andraMedicinskaUtredninga" type="radio" value="YES"
+                        ng-model="radioMedical.status">
+            </label>
+      </div>
 
 
 
