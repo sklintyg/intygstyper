@@ -31,8 +31,10 @@ public class SjukersattningUtlatande extends Utlatande {
     // TODO: behandlingsåtgärder
 
     private String diagnostisering;
+    private boolean nyBedomningDiagnos;
 
     private String funktionsnedsattning;
+
     private String aktivitetsbegransning;
 
     private String pagaendeBehandling;
@@ -389,5 +391,13 @@ public class SjukersattningUtlatande extends Utlatande {
 
     public void setDiagnostisering(String diagnostisering) {
         this.diagnostisering = diagnostisering;
+    }
+
+    public boolean isNyBedomningDiagnos() {
+        return nyBedomningDiagnos;
+    }
+
+    public void setNyBedomningDiagnos(boolean nyBedomningDiagnos) {
+        this.nyBedomningDiagnos = nyBedomningDiagnos;
     }
 }

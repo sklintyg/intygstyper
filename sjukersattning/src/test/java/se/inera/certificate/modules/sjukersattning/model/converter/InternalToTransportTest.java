@@ -36,7 +36,7 @@ public class InternalToTransportTest {
         RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
         System.out.println(SVRLWriter.createXMLString(result));
-//        assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
+        assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
     private SjukersattningUtlatande getUtlatande() {
@@ -49,6 +49,7 @@ public class InternalToTransportTest {
         utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
         utlatande.setFunktionsnedsattning("Kan inte smida");
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
+        utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");
         utlatande.setPlaneradBehandling("Mer medicin");
         utlatande.setNedsattMed100(new InternalLocalDateInterval(new InternalDate(new LocalDate("2015-08-26")), new InternalDate(new LocalDate("2015-09-30"))));

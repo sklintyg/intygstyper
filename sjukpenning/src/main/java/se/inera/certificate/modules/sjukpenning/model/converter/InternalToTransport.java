@@ -37,6 +37,7 @@ public class InternalToTransport {
     public static final String HSA_CODE_SYSTEM = "1.2.752.129.2.1.4.1";
     public static final String INTYP_TYP_CODE_SYSTEM = "kv_utlåtandetyp_intyg";
     public static final String PERSON_ID_CODE_SYSTEM= "1.2.752.129.2.1.3.3";
+    public static final String SYSSELSATTNING_CODE_SYSTEM = "KV_FKMU_0002";
 
     public static final String SMITTA_SVAR_ID = "2";
     public static final String SMITTA_DELSVAR_ID = "2.1";
@@ -74,7 +75,6 @@ public class InternalToTransport {
     public static final String OVRIGT_DELSVAR_ID = "22.1";
     public static final String KONTAKT_ONSKAS_SVAR_ID = "21";
     public static final String KONTAKT_ONSKAS_DELSVAR_ID = "21.1";
-    public static final String SYSSELSATTNING_TYPE_SYSTEM = "KV_FKMU_0002";
 
     public static RegisterCertificateType convert(SjukpenningUtlatande source) throws ConverterException {
         if (source == null) {
@@ -179,20 +179,20 @@ public class InternalToTransport {
 
         if (source.isNuvarandeArbete()) {
             svars.add(aSvar(SYSSELSATTNING_SVAR_ID).
-                    withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(ARBETE), null)).
+                    withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_CODE_SYSTEM, Integer.toString(ARBETE), null)).
                     withDelsvar(SYSSELSATTNING_BESKRIVNING_DELSVAR_ID, source.getNuvarandeArbetsuppgifter()).build());
         }
         if (source.isArbetsloshet()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(ARBETSLOSHET), null)).build());
+            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_CODE_SYSTEM, Integer.toString(ARBETSLOSHET), null)).build());
         }
         if (source.isForaldraledighet()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(FORALDRALEDIGHET), null)).build());
+            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_CODE_SYSTEM, Integer.toString(FORALDRALEDIGHET), null)).build());
         }
         if (source.isStudier()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(STUDIER), null)).build());
+            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_CODE_SYSTEM, Integer.toString(STUDIER), null)).build());
         }
         if (source.isArbetsmarknadsProgram()) {
-            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_TYPE_SYSTEM, Integer.toString(ARBETSMARKNADSPROGRAM), null)).build());
+            svars.add(aSvar(SYSSELSATTNING_SVAR_ID).withDelsvar(SYSSELSATTNING_TYP_DELSVAR, aCV(SYSSELSATTNING_CODE_SYSTEM, Integer.toString(ARBETSMARKNADSPROGRAM), null)).build());
         }
 
         svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).

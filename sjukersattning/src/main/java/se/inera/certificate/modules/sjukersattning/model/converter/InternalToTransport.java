@@ -37,6 +37,7 @@ public class InternalToTransport {
     public static final String HSA_CODE_SYSTEM = "1.2.752.129.2.1.4.1";
     public static final String INTYP_TYP_CODE_SYSTEM = "kv_utlåtandetyp_intyg";
     public static final String PERSON_ID_CODE_SYSTEM= "1.2.752.129.2.1.3.3";
+    private static final String FUNKTIONSOMRADE_CODE_SYSTEM = "KV_FKMU_0XXX";
 
     public static final String SMITTA_SVAR_ID = "2";
     public static final String SMITTA_DELSVAR_ID = "2.1";
@@ -55,8 +56,11 @@ public class InternalToTransport {
     public static final String YTTERLIGARE_ORSAK_DELSVAR_ID = "4.1";
     public static final String DIAGNOSTISERING_SVAR_ID = "23";
     public static final String DIAGNOSTISERING_DELSVAR_ID = "23.1";
+    public static final String NYBEDOMNING_SVAR_ID = "24";
+    public static final String NYBEDOMNING_DELSVAR_ID = "24.1";
     public static final String FUNKTIONSNEDSATTNING_SVAR_ID = "11";
     public static final String FUNKTIONSNEDSATTNING_DELSVAR_ID = "11.1";
+    public static final String FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID = "11.2";
     public static final String AKTIVITETSBEGRANSNING_SVAR_ID = "5";
     public static final String AKTIVITETSBEGRANSNING_DELSVAR_ID = "5.1";
     public static final String PAGAENDEBEHANDLING_SVAR_ID = "12";
@@ -77,7 +81,6 @@ public class InternalToTransport {
     public static final String OVRIGT_DELSVAR_ID = "22.1";
     public static final String KONTAKT_ONSKAS_SVAR_ID = "21";
     public static final String KONTAKT_ONSKAS_DELSVAR_ID = "21.1";
-    public static final String SYSSELSATTNING_TYPE_SYSTEM = "KV_FKMU_0002";
 
     public static RegisterCertificateType convert(SjukersattningUtlatande source) throws ConverterException {
         if (source == null) {
@@ -199,10 +202,14 @@ public class InternalToTransport {
 
         svars.add(aSvar(DIAGNOSTISERING_SVAR_ID).
                 withDelsvar(DIAGNOSTISERING_DELSVAR_ID, source.getDiagnostisering()).build());
+        svars.add(aSvar(NYBEDOMNING_SVAR_ID).
+                withDelsvar(NYBEDOMNING_DELSVAR_ID, Boolean.toString(source.isNyBedomningDiagnos())).build());
 
         // TODO: Åtgärd som orsak till nedsatt arbetsförmåga ska in här.
 
-        svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_DELSVAR_ID, source.getFunktionsnedsattning()).build());
+        // TODO: Funktionsområde
+        svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_DELSVAR_ID, source.getFunktionsnedsattning()).
+                withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID, aCV(FUNKTIONSOMRADE_CODE_SYSTEM, "TODO", null)).build());
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
         svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
         svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
