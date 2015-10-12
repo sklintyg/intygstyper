@@ -27,7 +27,7 @@
           dom-id="undersokningAvPatientenDate"></span>
   </div>
 
-      <!-- Journaluppgifter -->
+  <!-- Journaluppgifter -->
   <div class="form-group form-inline"><label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
                                                                                                 id="basedOnJournal"
                                                                                                 name="informationBasedOn.journal"
@@ -38,35 +38,32 @@
           dom-id="journaluppgifterDate"></span>
   </div>
 
-      <!--  Anhörigs/annans beskrivning av patienten -->
-      <div class="form-group form-inline">
-        <label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
-                                                                             id="anhorigBeskrivningAvPatienten"
-                                                                             name="informationBasedOn.anhorigBeskrivningAvPatienten"
-                                                                             ng-model="basedOnState.check.anhorigBeskrivningAvPatienten"
-                                                                             ng-change="toggleBaseradPaDate('anhorigBeskrivningAvPatienten')">
-           Anhörigs/annans beskrivning av patienten</label>
-        <span wc-date-picker-field target-model="dates.anhorigBeskrivningAvPatienten"
-              dom-id="anhorigBeskrivningAvPatientenDate"></span>
-      </div>
+  <div class="form-group form-inline">
+      <label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
+                                                                           id="basedOnTelefon"
+                                                                           name="informationBasedOn.telefon"
+                                                                           ng-model="basedOnState.check.telefonkontaktMedPatienten"
+                                                                           ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
+          Telefonkontakt med patienten</label>
+    <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
+          dom-id="telefonkontaktMedPatientenDate"></span>
+  </div>
 
-      <!--  Jag har känt patienten sedan DATE-ONLY TODO: Add class attributes-->
-      <div class="form-group form-inline">
-          <label class="inline-block" style="min-width: 300px">Jag har känt patienten sedan den</label>
-          <span wc-date-picker-field target-model="dates.kandSedan"
-                dom-id="handSedan"></span>
-      </div>
+      <!--  Jag har känt patienten sedan den -->
+  <div class="form-group form-inline">
+      <label class="inline-block" style="min-width: 300px">
+          Jag har känt patienten sedan den</label>
+      <span wc-date-picker-field target-model="dates.kannedomOmPatient"
+            dom-id="kannedomOmPatientDate"></span>
+  </div>
 
-      <!-- Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen? JA/NEJ checkboxar -->
 
-      <!--  Jag har känt patienten sedan DATE-ONLY -->
+      <!--  Finns det andra medicinska... -->
       <div class="form-group form-inline">
           <label class="inline-block bold">Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen?</label>
       </div>
       <div class="form-group form-inline">
           <label class="radio-inline">
-                <!--input id="intygFilterAktuella" name="intygFilter" type="radio" value="current"
-                       ng-model="filterForm.intygFilter" checked="checked" class="ng-pristine ng-valid"-->
                 <input id="andraMedicinskaUtredningar1" name="andraMedicinskaUtredningar" type="radio" value="YES"
                         ng-model="radioMedical.status">Ja
           </label>
@@ -75,7 +72,10 @@
                      ng-model="radioMedical.status">Nej
           </label>
       </div>
-
+      <!-- outcomment this for prod
+      <div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutModelConsole()">dump model</button></div>
+      <div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutViewState()">dump viewstate</button></div>
+      -->
 
 
 

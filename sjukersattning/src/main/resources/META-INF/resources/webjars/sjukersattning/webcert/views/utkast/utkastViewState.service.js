@@ -11,12 +11,8 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
             this.setDraftModel = function(draftModel){
                 this.draftModel = draftModel;
                 this.intygModel = draftModel.content;
-                this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
             };
 
-            this.avstangningSmittskydd = function() {
-                return this.intygModel.avstangningSmittskydd;
-            };
 
             this.inputLimits = {
                 arbetsformagaPrognos: 600,

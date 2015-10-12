@@ -4,6 +4,16 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
         function($scope, $log, viewState, utils, dateUtils) {
             'use strict';
             var model = viewState.intygModel;
+
+
+            $scope.logOutModelConsole = function (){
+                $log.info("Current Model" + JSON.stringify(model));
+            }
+
+            $scope.logOutViewState = function (){
+                $log.info("Current Viewstate" + JSON.stringify(viewState));
+            }
+
             $scope.model = model;
 
             $scope.viewState = viewState;
@@ -12,23 +22,19 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.basedOnState = {
                 check: {
                     undersokningAvPatienten: false,
-                    anhorigBeskrivningAvPatienten: false,
+                    telefonkontaktMedPatienten: false,
                     journaluppgifter: false
                 }
             };
 
             $scope.dates = {
                 undersokningAvPatienten: null,
-                anhorigBeskrivningAvPatienten: null,
                 journaluppgifter: null,
-                kandSedan: null
+                telefonkontaktMedPatienten: null,
+                //anhorigBeskrivningAvPatienten: null,
+                kannedomOmPatient: null
             };
 
-            var otherMedicalStates= { NO: 'NO', YES: 'YES' };
-
-            $scope.radioMedical = {
-                status : '=?'
-            };
 
             // once we've doneLoading we can set the radion buttons to the model state.
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
@@ -43,39 +49,23 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 }
             });
 
-           /* $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
-                if(newVal === oldVal){
-                    return;
-                }
-                // only do this once the page is loaded and changes come from the gui!
-                if (viewState.common.doneLoading && newVal) {
-                    model.updateToAttic('form2');
-                    model.clear('form2');
-                    clearViewState();
-                } else {
-                    model.restoreFromAttic('form2');
-                    transferModelToForm();
-                    setBaserasPa();
-                }
-            }); */
-
-
             function clearViewState() {
                 $scope.basedOnState.check.undersokningAvPatienten = false;
-                $scope.basedOnState.check.anhorigBeskrivningAvPatienten = false;
+                $scope.basedOnState.check.telefonkontaktMedPatienten = false;
                 $scope.basedOnState.check.journaluppgifter = false;
             }
 
             function setBaserasPa() {
                 $scope.basedOnState.check.undersokningAvPatienten = model.undersokningAvPatienten !== undefined;
-                $scope.basedOnState.check.anhorigBeskrivningAvPatienten = model.anhorigBeskrivningAvPatienten !== undefined;
+                $scope.basedOnState.check.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten !== undefined;
                 $scope.basedOnState.check.journaluppgifter = model.journaluppgifter !== undefined;
             }
 
             function transferModelToForm() {
                 $scope.dates.undersokningAvPatienten = $scope.model.undersokningAvPatienten;
-                $scope.dates.anhorigBeskrivningAvPatienten = $scope.model.anhorigBeskrivningAvPatienten;
+                $scope.dates.telefonkontaktMedPatienten = $scope.model.telefonkontaktMedPatienten;
                 $scope.dates.journaluppgifter = $scope.model.journaluppgifter;
+                $scope.dates.kannedomOmPatient = $scope.model.kannedomOmPatient;
             }
 
 
@@ -108,7 +98,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
             function registerDateParsersFor2(_$scope) {
                 // Register parse function for 2 date pickers
-                var baserasPaTypes = ['undersokningAvPatienten', 'anhorigBeskrivningAvPatienten', 'journaluppgifter'];
+                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'kannedomOmPatient'];
                 addParsers(_$scope.form2, baserasPaTypes, _$scope.onChangeBaserasPaDate);
             }
 
