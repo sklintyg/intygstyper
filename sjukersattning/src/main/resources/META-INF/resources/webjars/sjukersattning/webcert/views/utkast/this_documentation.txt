@@ -1,0 +1,44 @@
+Flow:
+
+1. Get API data from common/webcert/utkast/utkast.proxy.js
+2. Data gets downloaded in format, see -> A
+3. On either creation or loading of certificate, a new viewstate is populated in  common...utkast.service.js
+4. This viewstate get set on _load method, this is consumed by each respective view in this folder /ukast/form/form1/2/3 etc
+5. Each view gets and set the model in its respective controller.
+6. Aas an example, the prop, "nyBedomningDiagnos", is set in: data from utkast.proxy.js -> but not in
+
+
+A. JSON from server:
+{
+  "version":4,
+  ...
+  "content":{
+    "id":"d4f14b0c-a2e6-4407-9013-06144c775e69",
+    "typ":"sjukersattning",
+    "grundData":{
+      "skapadAv":{
+       ..omitted for space reasons
+        "vardenhet":{
+          "enhetsid":"IFV1239877878-1042",
+          ...
+          },
+          "arbetsplatsKod":"0000000"
+        }
+      },
+      "patient":{
+        "personId":"19121212-1212",
+       ...
+      }
+    },
+    "diagnosKodsystem1":"ICD_10_SE",
+    "diagnosBeskrivning1":"dasd",
+    "diagnosKodsystem2":"ICD_10_SE",
+    "diagnosKodsystem3":"ICD_10_SE",
+    "nyBedomningDiagnos":false,
+    "aktivitetsbegransning":"dasdasd",
+    "vadPatientenKanGora":"dasd",
+    "prognosNarPatientKanAterga":"dasd",
+    "kommentar":"dasd",
+    "kontaktMedFk":false
+  }
+}

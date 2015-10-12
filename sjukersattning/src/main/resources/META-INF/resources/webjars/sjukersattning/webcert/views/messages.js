@@ -104,8 +104,10 @@ var sjukersattningMessages = {
         'sjukersattning.label.atgard': 'Förslag till åtgärder som skulle kunna underlätta återgång till arbete',
 
         'sjukersattning.vardkontakt.undersokning': 'Min undersökning av patienten den ',
-        'sjukersattning.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',
         'sjukersattning.referens.journal': 'Journaluppgifter, den ',
+        'sjukersattning.referens.anhorigBeskrivningAvPatienten': 'Anhörig beskrivning av patiend, den ',
+        'sjukersattning.referens.telefonkontaktMedPatienten': 'Telefonkontakt med patienten, den',
+        'sjukersattning.referens.kannedomOmPatient': 'Jag har känt patien, från den ',
         'sjukersattning.referens.annat': 'Annat, den ',
 
         'sjukersattning.nedsattningsgrad.helt_nedsatt': 'Helt nedsatt',
