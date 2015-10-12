@@ -12,17 +12,17 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                     return nedsatt;
                 }
             };
+           // console.log("BAM: " + DraftModel);
             var sjukersattningModel = BaseAtticModel._extend({
                 init: function init() {
-                    //console.log('--- init fk gd' + GrundData);
                     var grundData = GrundData.build();
                     init._super.call(this, 'sjukersattningModel', {
 
-                        form1: [new ModelAttr('avstangningSmittskydd', {defaultValue: false})],
-
-                        form2: ['journaluppgifter',
+                        form2: ['undersokningAvPatienten',
+                            'journaluppgifter',
+                            //'anhorigBeskrivningAvPatienten',
                             'telefonkontaktMedPatienten',
-                            'anhorigBeskrivningAvPatienten'],
+                            'kannedomOmPatient'],
 
                         form3: ['arbetsloshet',
                             'foraldraledighet',
@@ -85,7 +85,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    //console.log('----- build *****' + DraftModel + ',' + sjukersattningModel._members);
+                    //console.log('----- build *****' + DraftModel + ',' + JSON.stringify(sjukersattningModel._members));
                     return new DraftModel(new sjukersattningModel());
                 }
             });
