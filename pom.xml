@@ -49,6 +49,7 @@
     <module>ts-parent</module>
     <module>ts-bas</module>
     <module>ts-diabetes</module>
+    <module>fk-parent</module>
     <module>sjukpenning</module>
     <module>sjukersattning</module>
     <module>tools/archetype</module>

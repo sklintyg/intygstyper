@@ -4,7 +4,9 @@ import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
-public class SjukersattningUtlatande extends Utlatande {
+import java.util.Objects;
+
+public final class SjukersattningUtlatande extends Utlatande {
 
     private InternalDate undersokningAvPatienten;
     private InternalDate telefonkontaktMedPatienten;
@@ -43,11 +45,49 @@ public class SjukersattningUtlatande extends Utlatande {
     private String kommentar;
     private boolean kontaktMedFk;
 
-    // ==================================================================================================
-
     public SjukersattningUtlatande() {
         super();
         setTyp(SjukersattningEntryPoint.MODULE_ID);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+        if (getClass() != object.getClass()) {
+            return false;
+        }
+        final SjukersattningUtlatande that = (SjukersattningUtlatande) object;
+        return Objects.equals(this.undersokningAvPatienten, that.undersokningAvPatienten) &&
+                Objects.equals(this.telefonkontaktMedPatienten, that.telefonkontaktMedPatienten) &&
+                Objects.equals(this.journaluppgifter, that.journaluppgifter) &&
+                Objects.equals(this.kannedomOmPatient, that.kannedomOmPatient) &&
+                Objects.equals(this.diagnosKod1, that.diagnosKod1) &&
+                Objects.equals(this.diagnosBeskrivning1, that.diagnosBeskrivning1) &&
+                Objects.equals(this.diagnosKod2, that.diagnosKod2) &&
+                Objects.equals(this.diagnosBeskrivning2, that.diagnosBeskrivning2) &&
+                Objects.equals(this.diagnosKod3, that.diagnosKod3) &&
+                Objects.equals(this.diagnosBeskrivning3, that.diagnosBeskrivning3) &&
+                Objects.equals(this.diagnostisering, that.diagnostisering) &&
+                Objects.equals(this.nyBedomningDiagnos, that.nyBedomningDiagnos) &&
+                Objects.equals(this.funktionsnedsattning, that.funktionsnedsattning) &&
+                Objects.equals(this.aktivitetsbegransning, that.aktivitetsbegransning) &&
+                Objects.equals(this.pagaendeBehandling, that.pagaendeBehandling) &&
+                Objects.equals(this.planeradBehandling, that.planeradBehandling) &&
+                Objects.equals(this.vadPatientenKanGora, that.vadPatientenKanGora) &&
+                Objects.equals(this.prognosNarPatientKanAterga, that.prognosNarPatientKanAterga) &&
+                Objects.equals(this.kommentar, that.kommentar) &&
+                Objects.equals(this.kontaktMedFk, that.kontaktMedFk);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.undersokningAvPatienten, this.telefonkontaktMedPatienten, this.journaluppgifter, this.kannedomOmPatient,
+                this.diagnosKod1, this.diagnosBeskrivning1, this.diagnosKod2, this.diagnosBeskrivning2, this.diagnosKod3, this.diagnosBeskrivning3,
+                this.diagnostisering, this.nyBedomningDiagnos, this.funktionsnedsattning, this.pagaendeBehandling, this.planeradBehandling,
+                this.vadPatientenKanGora, this.prognosNarPatientKanAterga, this.kommentar, this.kontaktMedFk);
     }
 
     public String getDiagnosKod1() {
