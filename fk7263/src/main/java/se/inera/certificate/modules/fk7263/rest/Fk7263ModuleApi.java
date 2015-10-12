@@ -82,7 +82,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalDraftValidator internalDraftValidator;
-    
+
     @Autowired
     private InternalToNotification internalToNotficationConverter;
 

@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.ts_bas.model.converter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
@@ -12,7 +13,11 @@ import se.inera.intygstjanster.ts.services.v1.IntygMeta;
 import se.inera.intygstjanster.ts.services.v1.IntygStatus;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
-public class TsBasMetaDataConverter {
+public final class TsBasMetaDataConverter {
+
+    private TsBasMetaDataConverter() {
+    }
+
     public static CertificateMetaData toCertificateMetaData(IntygMeta intygMeta, TSBasIntyg intyg) {
         CertificateMetaData metaData = new CertificateMetaData();
         metaData.setCertificateId(intyg.getIntygsId());
@@ -30,7 +35,7 @@ public class TsBasMetaDataConverter {
     }
 
     public static List<Status> toStatusList(List<IntygStatus> certificateStatuses) {
-        List<Status> statuses = new ArrayList<>(certificateStatuses.size());
+        List<Status> statuses = certificateStatuses != null ? new ArrayList<Status>(certificateStatuses.size()) : Collections.<Status>emptyList();
         if (certificateStatuses != null) {
             for (IntygStatus certificateStatus : certificateStatuses) {
                 if (certificateStatus != null) {
@@ -42,9 +47,8 @@ public class TsBasMetaDataConverter {
     }
 
     public static Status toStatus(IntygStatus certificateStatus) {
-        Status status = new Status(CertificateState.valueOf(certificateStatus.getType().value()),
+        return new Status(CertificateState.valueOf(certificateStatus.getType().value()),
                 certificateStatus.getTarget(),
                 LocalDateTime.parse(certificateStatus.getTimestamp()));
-        return status;
     }
 }

@@ -366,10 +366,10 @@ public class InternalValidatorInstance {
      * result. This might be used to implement conditional logic based on if an assertion {@link #failed()} or was
      * {@link #success()}ful.
      */
-    protected static enum AssertionResult {
+    protected enum AssertionResult {
         SUCCESS(true), FAILURE(false);
 
-        private AssertionResult(boolean assertSuccessfull) {
+        AssertionResult(boolean assertSuccessfull) {
             this.assertSuccessful = assertSuccessfull;
         }
 

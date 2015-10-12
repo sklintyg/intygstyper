@@ -35,13 +35,13 @@ import com.google.common.base.Throwables;
 public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterface {
 
     @Autowired
-    TsBasValidator validator;
+    private TsBasValidator validator;
 
     @Autowired
     @Qualifier("tsBasModelConverterUtil")
     private ConverterUtil converterUtil;
 
-    @Autowired 
+    @Autowired
     private TsBasModuleApi moduleApi;
 
     private ObjectFactory objectFactory;
@@ -70,14 +70,14 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
             moduleApi.getModuleContainer().certificateReceived(certificateHolder);
 
             response.setResultat(ResultTypeUtil.okResult());
-            LOGGER.debug("Registered intyg with id: {}",registerTsBas.getIntyg().getIntygsId());
+            LOGGER.debug("Registered intyg with id: {}", registerTsBas.getIntyg().getIntygsId());
 
         } catch (CertificateAlreadyExistsException e) {
             response.setResultat(ResultTypeUtil.infoResult("Certificate already exists"));
             String certificateId = registerTsBas.getIntyg().getIntygsId();
             String issuedBy =  registerTsBas.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId().getExtension();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");
-       
+
         } catch (CertificateValidationException e) {
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
             LOGGER.error(LogMarkers.VALIDATION, e.getMessage());

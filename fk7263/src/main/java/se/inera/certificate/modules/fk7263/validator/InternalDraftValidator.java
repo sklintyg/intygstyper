@@ -171,6 +171,11 @@ public class InternalDraftValidator {
         boolean success = true;
         InternalLocalDateInterval[] intervals = { utlatande.getNedsattMed100(), utlatande.getNedsattMed75(), utlatande.getNedsattMed50(),
                 utlatande.getNedsattMed25() };
+        final int nedsattmed100Index = 0;
+        final int nedsattmed75Index = 1;
+        final int nedsattmed50Index = 2;
+        final int nedsattmed25Index = 3;
+
         if (allNulls(intervals)) {
             addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY,
                     "fk7263.validation.nedsattning.choose-at-least-one");
@@ -178,22 +183,22 @@ public class InternalDraftValidator {
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
         // use independent conditions to check this to be able to give specific validation errors for each case
-        if (intervals[0] != null && !intervals[0].isValid()) {
+        if (intervals[nedsattmed100Index] != null && !intervals[nedsattmed100Index].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed100", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed100.incorrect-format");
             success = false;
         }
-        if (intervals[1] != null && !intervals[1].isValid()) {
+        if (intervals[nedsattmed75Index] != null && !intervals[nedsattmed75Index].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed75", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed75.incorrect-format");
             success = false;
         }
-        if (intervals[2] != null && !intervals[2].isValid()) {
+        if (intervals[nedsattmed50Index] != null && !intervals[nedsattmed50Index].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed50", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed50.incorrect-format");
             success = false;
         }
-        if (intervals[3] != null && !intervals[3].isValid()) {
+        if (intervals[nedsattmed25Index] != null && !intervals[nedsattmed25Index].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed25.incorrect-format");
             success = false;

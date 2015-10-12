@@ -13,7 +13,7 @@ import se.inera.certificate.modules.service.WebcertModuleService;
 
 /**
  * Util for checking a models consistency in different states.
- * 
+ *
  * @author erik
  *
  */
@@ -29,9 +29,6 @@ public class ModelCompareUtil {
 
     /**
      * Check if two models differ.
-     * 
-     * @param oldUtlatande
-     * @param newUtlatande
      * @return true if they do, false otherwise
      */
     public boolean modelDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
@@ -43,15 +40,21 @@ public class ModelCompareUtil {
     private boolean sjukskrivningsgradDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         int[] oldSjukskrivningsgrad = makeIntMatrix(oldUtlatande);
         int[] newSjukskrivningsgrad = makeIntMatrix(newUtlatande);
-        return Arrays.equals(oldSjukskrivningsgrad, newSjukskrivningsgrad) ? false : true;
+        return !Arrays.equals(oldSjukskrivningsgrad, newSjukskrivningsgrad);
     }
 
     private int[] makeIntMatrix(Utlatande source) {
-        int[] matrix = new int[4];
-        matrix[0] = isValid(source.getNedsattMed100()) ? 1 : 0;
-        matrix[1] = isValid(source.getNedsattMed75()) ? 1 : 0;
-        matrix[2] = isValid(source.getNedsattMed50()) ? 1 : 0;
-        matrix[3] = isValid(source.getNedsattMed25()) ? 1 : 0;
+        final int totalNumberOfNedsattMedValues = 4;
+        final int indexNedsattMed100 = 0;
+        final int indexNedsattMed75 = 1;
+        final int indexNedsattMed50 = 2;
+        final int indexNedsattMed25 = 3;
+
+        int[] matrix = new int[totalNumberOfNedsattMedValues];
+        matrix[indexNedsattMed100] = isValid(source.getNedsattMed100()) ? 1 : 0;
+        matrix[indexNedsattMed75] = isValid(source.getNedsattMed75()) ? 1 : 0;
+        matrix[indexNedsattMed50] = isValid(source.getNedsattMed50()) ? 1 : 0;
+        matrix[indexNedsattMed25] = isValid(source.getNedsattMed25()) ? 1 : 0;
         return matrix;
     }
 
@@ -65,18 +68,16 @@ public class ModelCompareUtil {
 
     private boolean checkPerioderDiffers(InternalLocalDateInterval oldPeriod, InternalLocalDateInterval newPeriod) {
         if (isValid(oldPeriod) && isValid(newPeriod)) {
-            return oldPeriod.equals(newPeriod) ? false : true;
-        } else if ((isValid(oldPeriod) && !isValid(newPeriod)) || (!isValid(oldPeriod) && isValid(newPeriod))) {
-            return true;
+            return !oldPeriod.equals(newPeriod);
         } else {
-            return false;
+            return (isValid(oldPeriod) && !isValid(newPeriod)) || (!isValid(oldPeriod) && isValid(newPeriod));
         }
     }
 
     private boolean isValid(InternalLocalDateInterval period) {
         return period != null && period.isValid();
     }
-    
+
     private boolean diagnoseDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         DiagnosKod diagnoskodOld = new DiagnosKod(oldUtlatande.getDiagnosKod(), oldUtlatande.getDiagnosKodsystem1());
         DiagnosKod diagnoskodNew = new DiagnosKod(newUtlatande.getDiagnosKod(), newUtlatande.getDiagnosKodsystem1());
@@ -94,10 +95,7 @@ public class ModelCompareUtil {
         if (oldValid != newValid) {
             return true;
         }
-        if (oldValid && newValid && !oldDiagnosKod.equals(newDiagnosKod)) {
-            return true;
-        }
-        return false;
+        return oldValid && newValid && !oldDiagnosKod.equals(newDiagnosKod);
     }
 
     private boolean diagnoseBeskrivningDiffer(String oldBeskrivning, String newBeskrivning) {
@@ -130,8 +128,8 @@ public class ModelCompareUtil {
 
             DiagnosKod that = (DiagnosKod) o;
 
-            return Objects.equals(diagnosKod, that.diagnosKod) &&
-                    Objects.equals(diagnosKodSystem, that.diagnosKodSystem);
+            return Objects.equals(diagnosKod, that.diagnosKod)
+                    && Objects.equals(diagnosKodSystem, that.diagnosKodSystem);
         }
 
         @Override

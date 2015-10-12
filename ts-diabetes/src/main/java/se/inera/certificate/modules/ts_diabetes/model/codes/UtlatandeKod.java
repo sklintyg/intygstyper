@@ -34,7 +34,7 @@ public enum UtlatandeKod  {
 
     private static final String CODE_SYSTEM_VERSION = null;
 
-    private static final String code = TsDiabetesEntryPoint.MODULE_ID;
+    private static final String CODE = TsDiabetesEntryPoint.MODULE_ID;
 
     private final String tsUtgava;
 
@@ -42,17 +42,17 @@ public enum UtlatandeKod  {
 
     private final String description;
 
-    private final String EXTERNAL_NAME = "TSTRK1031";
+    private static final String EXTERNAL_NAME = "TSTRK1031";
 
 
-    private UtlatandeKod(String tsUtgava, String tsVersion, String desc) {
+    UtlatandeKod(String tsUtgava, String tsVersion, String desc) {
         this.tsUtgava = tsUtgava;
         this.tsVersion = tsVersion;
         this.description = desc;
     }
 
     public String getCode() {
-        return code;
+        return CODE;
     }
 
     public String getDescription() {

@@ -40,7 +40,7 @@ public class InternalValidatorInstance {
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private List<ValidationMessage> validationMessages;
-    
+
     public InternalValidatorInstance() {
         validationMessages = new ArrayList<>();
     }
@@ -48,7 +48,7 @@ public class InternalValidatorInstance {
     /**
      * Validates an internal draft of an {@link Utlatande} (this means the object being validated is not necessarily
      * complete)
-     * 
+     *
      * @param utlatande
      *            an internal {@link Utlatande}
      * @return a {@link ValidateDraftResponseHolder} with a status and a list of validationErrors
@@ -69,7 +69,7 @@ public class InternalValidatorInstance {
 
     /**
      * Check for null or empty String, if so add a validation error for field with errorCode
-     * 
+     *
      * @param beskrivning
      *            the String to check
      * @param field
@@ -88,7 +88,7 @@ public class InternalValidatorInstance {
 
     /**
      * Check if there are validation errors
-     * 
+     *
      * @return {@link ValidationStatus.VALID} if there are no errors, and {@link ValidationStatus.INVALID}
      *         otherwise
      */
@@ -98,7 +98,7 @@ public class InternalValidatorInstance {
 
     /**
      * Create a ValidationMessage and add it to the {@link ValidateDraftResponseHolder}
-     * 
+     *
      * @param field
      *            a String with the name of the field
      * @param msg
@@ -108,7 +108,7 @@ public class InternalValidatorInstance {
         validationMessages.add(new ValidationMessage(field, msg));
         LOG.debug(field + " " + msg);
     }
-    
+
     /**
      * Since the validator assertions doesn't throw exceptions on assertion failure, they instead return an assertion
      * result. This might be used to implement conditional logic based on if an assertion {@link ${symbol_pound}failed()} or

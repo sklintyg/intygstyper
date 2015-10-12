@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
@@ -16,8 +14,6 @@ import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
  * Created by erik on 15-04-08.
  */
 public final class ArbetsformagaToGiltighet {
-
-    private final static Logger log = LoggerFactory.getLogger(ArbetsformagaToGiltighet.class);
 
     private ArbetsformagaToGiltighet() {
 

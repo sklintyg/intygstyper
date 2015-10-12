@@ -44,7 +44,7 @@ public enum BefattningKod {
 
     private String description;
 
-    private BefattningKod(String code, String desc) {
+    BefattningKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }

@@ -32,7 +32,7 @@ public class Validator {
 
     /**
      * Validates an external Utlatande.
-     * 
+     *
      * @param utlatande
      *            ${package}.${artifactId-safe}.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
@@ -44,7 +44,7 @@ public class Validator {
 
     /**
      * Validates an external Utlatande.
-     * 
+     *
      * @param utlatande
      *            ${package}.${artifactId-safe}.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly

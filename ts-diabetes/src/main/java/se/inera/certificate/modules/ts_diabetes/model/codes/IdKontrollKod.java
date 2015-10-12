@@ -61,7 +61,7 @@ public enum IdKontrollKod  {
 
     private String description;
 
-    private IdKontrollKod(String code, String desc, Kodverk kodverk) {
+    IdKontrollKod(String code, String desc, Kodverk kodverk) {
         this.code = code;
         this.description = desc;
         this.codeSystemName = kodverk.getCodeSystemName();
@@ -88,10 +88,10 @@ public enum IdKontrollKod  {
     public String getCodeSystemVersion() {
         return codeSystemVersion;
     }
-    
-    public static IdKontrollKod fromCode(String code){
+
+    public static IdKontrollKod fromCode(String code) {
         for (IdKontrollKod idKontrollKod : IdKontrollKod.values()) {
-            if(idKontrollKod.code.equals(code)){
+            if (idKontrollKod.code.equals(code)) {
                 return idKontrollKod;
             }
         }

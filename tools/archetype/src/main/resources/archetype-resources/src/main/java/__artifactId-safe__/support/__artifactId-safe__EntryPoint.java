@@ -47,7 +47,7 @@ public class ${artifactId-safe}EntryPoint implements ModuleEntryPoint {
 
     @Override
     public boolean isModuleFragaSvarAvailable() {
-        // TODO: Change if intyg has fråga/svar or not here 
+        // TODO: Change if intyg has fråga/svar or not here
         return false;
     }
 

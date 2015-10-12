@@ -35,13 +35,17 @@ import se.inera.intygstjanster.ts.services.v1.SynfunktionBas;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 
-public class TransportToInternal {
+public final class TransportToInternal {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
 
     private static final String VARDKONTAKT_TYP = "5880005";
 
     private static Utlatande internal;
+
+    private TransportToInternal() {
+    }
+
     /**
      * Takes an utlatande on the transport format and converts it to the internal model.
      *
@@ -302,7 +306,7 @@ public class TransportToInternal {
     }
 
     private static String mapToKorkortsbehorighetTsBas(String name) {
-        switch(name) {
+        switch (name) {
         case "C":
             return "C";
         case "C_1":
