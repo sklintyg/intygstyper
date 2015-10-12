@@ -16,16 +16,19 @@
               </div>
 
               <div wc-field field-number="2" field-label="sjukersattning.label.intygbaseratpa" id="field2"
-                   filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.telefonkontaktMedPatienten!=null || viewState.intygModel.journaluppgifter!=null}}">
+                   filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.anhorigBeskrivningAvPatienten!=null || viewState.intygModel.journaluppgifter!=null || viewState.intygModel.kannedomOmPatient !=null }}">
                 <ul class="padded-list" id="baseratPaList">
                   <li ng-show="viewState.intygModel.undersokningAvPatienten!=null">
                     <span message key="sjukersattning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten | date:'longDate' }}</span>
                   </li>
-                  <li ng-show="viewState.intygModel.telefonkontaktMedPatienten!=null">
-                    <span message key="sjukersattning.vardkontakt.telefonkontakt"></span><span id="telefonkontaktMedPatienten">{{viewState.intygModel.telefonkontaktMedPatienten | date:'longDate' }}</span>
-                  </li>
                   <li ng-show="viewState.intygModel.journaluppgifter!=null">
                     <span message key="sjukersattning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter | date:'longDate' }}</span>
+                  </li>
+                  <li ng-show="viewState.intygModel.telefonkontaktMedPatienten!=null">
+                    <span message key="sjukersattning.referens.telefonkontaktMedPatienten"></span><span id="telefonKontaktBeskrivning">{{viewState.intygModel.telefonkontaktMedPatienten | date:'longDate' }}</span>
+                  </li>
+                  <li ng-show="viewState.intygModel.kannedomOmPatient!=null">
+                    <span message key="sjukersattning.referens.kannedomOmPatient"></span><span id="kannedomOmPatient">{{viewState.intygModel.kannedomOmPatient | date:'longDate' }}</span>
                   </li>
                 </ul>
               </div>
