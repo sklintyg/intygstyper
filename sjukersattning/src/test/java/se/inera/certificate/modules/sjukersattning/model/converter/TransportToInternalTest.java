@@ -28,10 +28,15 @@ public class TransportToInternalTest {
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.setDiagnosKod1("S47");
         utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
+        utlatande.setDiagnosYtterligareBeskrivning1("Måste få hjälp!");
+        utlatande.setDiagnosKod2("S48");
+        utlatande.setDiagnosBeskrivning2("Klämskada arm");
+        utlatande.setDiagnosYtterligareBeskrivning2("Nämnde jag hjälp?");
         utlatande.setFunktionsnedsattning("Kan inte smida");
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");
+        utlatande.setAvslutadBehandling("Gammal medicin");
         utlatande.setPlaneradBehandling("Mer medicin");
         utlatande.setVadPatientenKanGora("Dansa");
         utlatande.setPrognosNarPatientKanAterga("Aldrig");

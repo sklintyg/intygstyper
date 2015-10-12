@@ -34,6 +34,7 @@ public class RespConstants {
     public static final String DIAGNOS_BESKRIVNING_DELSVAR_ID = "3.2";
     public static final String YTTERLIGARE_ORSAK_SVAR_ID = "4";
     public static final String YTTERLIGARE_ORSAK_DELSVAR_ID = "4.1";
+    public static final String YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID = "4.2";
     public static final String DIAGNOSTISERING_SVAR_ID = "23";
     public static final String DIAGNOSTISERING_DELSVAR_ID = "23.1";
     public static final String NYBEDOMNING_SVAR_ID = "24";
@@ -45,6 +46,8 @@ public class RespConstants {
     public static final String AKTIVITETSBEGRANSNING_DELSVAR_ID = "5.1";
     public static final String PAGAENDEBEHANDLING_SVAR_ID = "12";
     public static final String PAGAENDEBEHANDLING_DELSVAR_ID = "12.1";
+    public static final String AVSLUTADBEHANDLING_SVAR_ID = "25";
+    public static final String AVSLUTADBEHANDLING_DELSVAR_ID = "25.1";
     public static final String PLANERADBEHANDLING_SVAR_ID = "13";
     public static final String PLANERADBEHANDLING_DELSVAR_ID = "13.1";
     public static final String NEDSATTNING_SVAR_ID = "6";

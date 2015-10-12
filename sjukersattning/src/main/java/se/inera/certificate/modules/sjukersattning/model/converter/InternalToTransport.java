@@ -121,7 +121,7 @@ public class InternalToTransport {
         if (source.getTelefonkontaktMedPatienten() != null) {
             svars.add(aSvar(REFERENS_SVAR_ID).
                     withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT), null)).
-                            withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getTelefonkontaktMedPatienten().asLocalDate().toString()).build());
+                    withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getTelefonkontaktMedPatienten().asLocalDate().toString()).build());
         }
         if (source.getJournaluppgifter() != null) {
             svars.add(aSvar(REFERENS_SVAR_ID).
@@ -135,15 +135,17 @@ public class InternalToTransport {
 
         svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
                 withDelsvar(DIAGNOS_DELSVAR_ID, aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod1(), source.getDiagnosBeskrivning1())).
-                withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
+                withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, source.getDiagnosYtterligareBeskrivning1()).build());
 
         if (source.getDiagnosKod2() != null) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod2(), source.getDiagnosBeskrivning2())).build());
+                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod2(), source.getDiagnosBeskrivning2())).
+                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosYtterligareBeskrivning2()).build());
         }
         if (source.getDiagnosKod3() != null) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3(), source.getDiagnosBeskrivning3())).build());
+                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3(), source.getDiagnosBeskrivning3())).
+                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosYtterligareBeskrivning3()).build());
         }
 
         svars.add(aSvar(DIAGNOSTISERING_SVAR_ID).
@@ -156,8 +158,13 @@ public class InternalToTransport {
         // TODO: Funktionsområde
         svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_DELSVAR_ID, source.getFunktionsnedsattning()).
                 withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID, aCV(FUNKTIONSOMRADE_CODE_SYSTEM, "TODO", null)).build());
+
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
+
         svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
+
+        svars.add(aSvar(AVSLUTADBEHANDLING_SVAR_ID).withDelsvar(AVSLUTADBEHANDLING_DELSVAR_ID, source.getAvslutadBehandling()).build());
+
         svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
 
         svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getVadPatientenKanGora()).build());
@@ -184,7 +191,8 @@ public class InternalToTransport {
         TimePeriodType period = new TimePeriodType();
         period.setStart(nedsattning.fromAsLocalDate().toLocalDateTime(LocalTime.MIDNIGHT));
         period.setEnd(nedsattning.tomAsLocalDate().toLocalDateTime(LocalTime.MIDNIGHT));
-        return new JAXBElement<TimePeriodType>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "timePeriod"), TimePeriodType.class, null, period);
+        return new JAXBElement<TimePeriodType>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "timePeriod"),
+                TimePeriodType.class, null, period);
     }
 
     private static JAXBElement<CVType> aCV(String codeSystem, String code, String displayName) {

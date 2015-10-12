@@ -18,14 +18,17 @@ public final class SjukersattningUtlatande extends Utlatande {
     private String diagnosKod1;
     private String diagnosKodsystem1;
     private String diagnosBeskrivning1;
+    private String diagnosYtterligareBeskrivning1;
 
     private String diagnosKod2;
     private String diagnosKodsystem2;
     private String diagnosBeskrivning2;
+    private String diagnosYtterligareBeskrivning2;
 
     private String diagnosKod3;
     private String diagnosKodsystem3;
     private String diagnosBeskrivning3;
+    private String diagnosYtterligareBeskrivning3;
 
     // TODO: behandlingsåtgärder
 
@@ -37,6 +40,7 @@ public final class SjukersattningUtlatande extends Utlatande {
     private String aktivitetsbegransning;
 
     private String pagaendeBehandling;
+    private String avslutadBehandling;
     private String planeradBehandling;
 
     private String vadPatientenKanGora;
@@ -65,15 +69,19 @@ public final class SjukersattningUtlatande extends Utlatande {
                 Objects.equals(this.kannedomOmPatient, that.kannedomOmPatient) &&
                 Objects.equals(this.diagnosKod1, that.diagnosKod1) &&
                 Objects.equals(this.diagnosBeskrivning1, that.diagnosBeskrivning1) &&
+                Objects.equals(this.diagnosYtterligareBeskrivning1, that.diagnosYtterligareBeskrivning1) &&
                 Objects.equals(this.diagnosKod2, that.diagnosKod2) &&
                 Objects.equals(this.diagnosBeskrivning2, that.diagnosBeskrivning2) &&
+                Objects.equals(this.diagnosYtterligareBeskrivning2, that.diagnosYtterligareBeskrivning2) &&
                 Objects.equals(this.diagnosKod3, that.diagnosKod3) &&
                 Objects.equals(this.diagnosBeskrivning3, that.diagnosBeskrivning3) &&
+                Objects.equals(this.diagnosYtterligareBeskrivning3, that.diagnosYtterligareBeskrivning3) &&
                 Objects.equals(this.diagnostisering, that.diagnostisering) &&
                 Objects.equals(this.nyBedomningDiagnos, that.nyBedomningDiagnos) &&
                 Objects.equals(this.funktionsnedsattning, that.funktionsnedsattning) &&
                 Objects.equals(this.aktivitetsbegransning, that.aktivitetsbegransning) &&
                 Objects.equals(this.pagaendeBehandling, that.pagaendeBehandling) &&
+                Objects.equals(this.avslutadBehandling, that.avslutadBehandling) &&
                 Objects.equals(this.planeradBehandling, that.planeradBehandling) &&
                 Objects.equals(this.vadPatientenKanGora, that.vadPatientenKanGora) &&
                 Objects.equals(this.prognosNarPatientKanAterga, that.prognosNarPatientKanAterga) &&
@@ -85,8 +93,11 @@ public final class SjukersattningUtlatande extends Utlatande {
     public int hashCode() {
         return Objects.hash(
                 this.undersokningAvPatienten, this.telefonkontaktMedPatienten, this.journaluppgifter, this.kannedomOmPatient,
-                this.diagnosKod1, this.diagnosBeskrivning1, this.diagnosKod2, this.diagnosBeskrivning2, this.diagnosKod3, this.diagnosBeskrivning3,
-                this.diagnostisering, this.nyBedomningDiagnos, this.funktionsnedsattning, this.pagaendeBehandling, this.planeradBehandling,
+                this.diagnosKod1, this.diagnosBeskrivning1, this.diagnosYtterligareBeskrivning1,
+                this.diagnosKod2, this.diagnosBeskrivning2, this.diagnosYtterligareBeskrivning2,
+                this.diagnosKod3, this.diagnosBeskrivning3, this.diagnosYtterligareBeskrivning3,
+                this.diagnostisering, this.nyBedomningDiagnos, this.funktionsnedsattning, this.aktivitetsbegransning,
+                this.pagaendeBehandling, this.avslutadBehandling, this.planeradBehandling,
                 this.vadPatientenKanGora, this.prognosNarPatientKanAterga, this.kommentar, this.kontaktMedFk);
     }
 
@@ -274,4 +285,35 @@ public final class SjukersattningUtlatande extends Utlatande {
         this.nyBedomningDiagnos = nyBedomningDiagnos;
     }
 
+    public String getDiagnosYtterligareBeskrivning1() {
+        return diagnosYtterligareBeskrivning1;
+    }
+
+    public void setDiagnosYtterligareBeskrivning1(String diagnosYtterligareBeskrivning1) {
+        this.diagnosYtterligareBeskrivning1 = diagnosYtterligareBeskrivning1;
+    }
+
+    public String getDiagnosYtterligareBeskrivning2() {
+        return diagnosYtterligareBeskrivning2;
+    }
+
+    public void setDiagnosYtterligareBeskrivning2(String diagnosYtterligareBeskrivning2) {
+        this.diagnosYtterligareBeskrivning2 = diagnosYtterligareBeskrivning2;
+    }
+
+    public String getDiagnosYtterligareBeskrivning3() {
+        return diagnosYtterligareBeskrivning3;
+    }
+
+    public void setDiagnosYtterligareBeskrivning3(String diagnosYtterligareBeskrivning3) {
+        this.diagnosYtterligareBeskrivning3 = diagnosYtterligareBeskrivning3;
+    }
+
+    public String getAvslutadBehandling() {
+        return avslutadBehandling;
+    }
+
+    public void setAvslutadBehandling(String avslutadBehandling) {
+        this.avslutadBehandling = avslutadBehandling;
+    }
 }

@@ -51,6 +51,7 @@ public class InternalToTransportTest {
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.setDiagnosKod1("S47");
         utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
+        utlatande.setDiagnosYtterligareBeskrivning1("Måste få hjälp!");
         utlatande.setFunktionsnedsattning("Kan inte smida");
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");
