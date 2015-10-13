@@ -24,13 +24,6 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'telefonkontaktMedPatienten',
                             'kannedomOmPatient'],
 
-                        form3: ['arbetsloshet',
-                            'foraldraledighet',
-                            'studier',
-                            'arbetsmarknadsProgram',
-                            'nuvarandeArbete',
-                            'nuvarandeArbetsuppgifter'],
-
                         form4: ['diagnosBeskrivning1',
                             'diagnosBeskrivning2',
                             'diagnosBeskrivning3',
@@ -41,10 +34,11 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'diagnosKodsystem2',
                             'diagnosKodsystem3',
                             new ModelAttr('samsjuklighet', {defaultValue: false})],
+                        form4b: ['diagnosticering',
+                            'nyBedomningDiagnos'],
 
-                        form5: ['funktionsnedsattning'],
-
-                        form6: ['aktivitetsbegransning'],
+                        form5: ['funktionsnedsattning',
+                            'aktivitetsbegransning'],
 
                         form7: ['pagaendeBehandling',
                             'planeradBehandling'],

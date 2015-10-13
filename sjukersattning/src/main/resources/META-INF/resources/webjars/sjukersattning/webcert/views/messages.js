@@ -49,6 +49,10 @@ var sjukersattningMessages = {
         'sjukersattning.label.sysselsattning.studier': 'Studier',
         'sjukersattning.label.sysselsattning.program': 'Deltar i arbetsmarknadspolitiskt program',
         'sjukersattning.label.aktivitetsbegransning': 'Vad kan patienten inte göra på grund av sin sjukdom? (aktivitetsbegränsning)',
+        'sjukersattning.label.diagnosticering': 'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?',
+        'sjukersattning.label.diagnosticering.nybedomning': 'Finns det skäl att göra en ny bedömning av diagnosen?',
+        'sjukersattning.label.diagnosticering.nybedomning.help' :'<p>Möjliga skäl kan vara:</p><p>-att det var länge sedan utredningen gjordes.</p><p>-att ny bedömning har rekommenderats i tidigare utlåtande eller</p><p>-att den kliniska bilden avviker från vad som kan förväntas utifrån ställds diagnos.  </p></p>',
+        'sjukersattning.label.behandling.avslutad': 'Avslutade medicinska behandlingar/åtgärder. Ange också under vilka perioder de pågick och vilka resultat de gav.',
         'sjukersattning.label.behandling.pagaende': 'Pågående medicinska behandlingar/åtgärder och ansvarig vårdenhet.',
         'sjukersattning.label.behandling.planerad': 'Planerade medicinska behandlingar/åtgärder. Ange om möjligt tidplan och ansvarig enhet.',
         'sjukersattning.label.rekommendationer': 'Rekommendationer',
@@ -76,10 +80,10 @@ var sjukersattningMessages = {
         'sjukersattning.label.ovrigt': 'Övrigt',
         'sjukersattning.label.datum': 'Datum',
         'sjukersattning.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
-        'sjukersattning.label.atgarder': 'Åtgärder',
+        'sjukersattning.label.atgarder': 'Medicinsk behandling',
         'sjukersattning.label.rekommendationer.fk': 'Rekommendationer till Försäkringskassan',
-        'sjukersattning.label.fk-kontakt': 'Kontakt',
-        'sjukersattning.label.vardenhet': 'Vårdenhetens kontaktuppgifter',
+        'sjukersattning.label.fk-kontakt': 'Vill du att Försäkringskassan kontaktar dig?',
+        'sjukersattning.label.vardenhet': 'Vårdenhetens adress',
         'sjukersattning.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'sjukersattning.label.valjkodverk': 'Välj kodverk:',
         'sjukersattning.label.spara-utkast': 'Spara',
@@ -102,6 +106,12 @@ var sjukersattningMessages = {
         'sjukersattning.label.atgard.foretagshalsovard': 'Kontakt med företagshälsovård',
         'sjukersattning.label.atgard.ovrigt': 'Övrigt',
         'sjukersattning.label.atgard': 'Förslag till åtgärder som skulle kunna underlätta återgång till arbete',
+
+
+        'sjukersattning.label.medicinskaforutsattningar': 'Medicinska förutsättningar för arbete',
+        'sjukersattning.label.medicinskaforutsattningar.bedomning': 'Hur bedömer du patientens medicinska förutsättningar för arbete, helt eller delvis, kan utvecklas över tid?',
+        'sjukersattning.label.medicinskaforutsattningar.mojligheter': 'Beskriv vad patienten kan göra trots sin sjukdom eller sina begränsningar',
+
 
         'sjukersattning.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'sjukersattning.referens.journal': 'Journaluppgifter, den ',
@@ -128,9 +138,11 @@ var sjukersattningMessages = {
 
         'sjukersattning.helptext.aktuellt-sjukdomsforlopp': 'Beskriv kortfattat sjukdomens utveckling, situation vid undersökningstillfället och förhållanden som påverkar sjukdomsutvecklingen.',
 
-        'sjukersattning.helptext.funktionsnedsattning': 'Beskriv den angivna sjukdomens påverkan på patientens fysiska respektive psykiska funktioner och hur denna påverkan observerats vid din och andra professioners undersökning och medicinska utredning.',
+        'sjukersattning.helptext.funktionsnedsattning': 'Beskriv patientens funktionsnedsättning inom de områden som är relevanta.',
 
-        'sjukersattning.helptext.aktivitetsbegransning': '<p>Ge en tydlig beskrivning av hur sjukdomen begränsar patientens förmåga, liksom av hur omfattande konsekvenserna är.</p> Denna information är den mest centrala för bedömning av rätten till sjukersattning. Använd enkel svenska som är begriplig för en person utan medicinsk utbildning.',
+        'sjukersattning.helptext.aktivitetsbegransningOld': '<p>Ge en tydlig beskrivning av hur sjukdomen begränsar patientens förmåga, liksom av hur omfattande konsekvenserna är.</p> Denna information är den mest centrala för bedömning av rätten till sjukersattning. Använd enkel svenska som är begriplig för en person utan medicinsk utbildning.',
+        'sjukersattning.helptext.aktivitetsbegransning': 'Vad har patienten svårt att göra på grund av den eller de funktionsnedsättningar som beskrivs ovan',
+        'sjukersattning.helptext.diagnosticering': '<p>Ge en tydlig beskrivning av hur sjukdomen begränsar patientens förmåga, liksom av hur omfattande konsekvenserna är.</p> Denna information är den mest centrala för bedömning av rätten till sjukersattning. Använd enkel svenska som är begriplig för en person utan medicinsk utbildning.',
 
         'sjukersattning.helptext.sysselsattning': 'Ange vad du bedömt nedsättningen av arbetsförmågan mot: patientens nuvarande arbete, arbetslöshet eller föräldraledighet. Läkarintyget måste alltid innehålla information om det. Om patienten till exempel både arbetar och är föräldraledig, kan du förtydliga det under Övriga upplysningar.',
         'sjukersattning.helptext.sysselsattning.nuvarande': 'Om patienten har ett arbete, ska nedsättningen av arbetsförmåga relateras till de arbetsuppgifter patienten har.',

@@ -23,7 +23,10 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
                 funktionsnedsattning: 450,
                 sjukdomsforlopp: 270,
                 diagnosBeskrivning :220,
-                ovrigt: 360
+                ovrigt: 360,
+                finishedBehandling: 999,
+                pagaendeBehandling: 999,
+                planeradBehandling: 999
             };
 
             this.reset = function() {

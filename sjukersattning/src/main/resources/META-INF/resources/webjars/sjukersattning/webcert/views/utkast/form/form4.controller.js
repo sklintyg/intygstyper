@@ -17,15 +17,13 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
 
             $scope.activateRow = function(row){
                 $scope.diagnoseRows.push(row);
-                $log.info("dignose rows in array:" + $scope.diagnoseRows);
+                //$log.info("dignose rows in array:" + $scope.diagnoseRows);
 
             };
 
-            $log.info("dignose rows in array:" + $scope.diagnoseRows);
-
             var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
 
-            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
+           /* $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
                 if(newVal === oldVal){
                     return;
                 }
@@ -46,8 +44,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                     }
                 }
             });
-
-            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+*/
+           $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
                 if(newVal === oldVal){
                     return;
                 }
@@ -59,7 +57,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                     }
                 }
 
-                $scope.diagnoseRows = [];
             });
 
             function setAllDiagnosKodverk(val){
@@ -72,7 +69,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             /**
              *  Remove choices related to diagnoskoder when the choice changes to make sure
              */
-            $scope.onChangeKodverk = function() {
+           $scope.onChangeKodverk = function() {
                 $scope.model.diagnosKod1 = undefined;
                 $scope.model.diagnosBeskrivning1 = undefined;
                 $scope.model.diagnosKod2 = undefined;

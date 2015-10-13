@@ -3,7 +3,7 @@
  */
 angular.module('sjukersattning').config(function($stateProvider) {
     'use strict';
-
+// TODO: clean up unused routes!
     $stateProvider.
         state('sjukersattning-edit', {
             data: { defaultActive : 'index' },
@@ -47,6 +47,11 @@ angular.module('sjukersattning').config(function($stateProvider) {
                 'form4@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form4.html',
                     controller: 'sjukersattning.EditCert.Form4Ctrl'
+                },
+
+                'form4b@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form4b.html',
+                    controller: 'sjukersattning.EditCert.Form4bCtrl'
                 },
 
                 'form5@sjukersattning-edit' : {
