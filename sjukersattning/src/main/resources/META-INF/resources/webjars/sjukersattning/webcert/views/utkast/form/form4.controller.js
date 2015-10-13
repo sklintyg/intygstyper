@@ -11,6 +11,18 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 diagnosKodverk : ''
             };
 
+            $scope.ytterligareDiagnoser = false;
+
+            $scope.diagnoseRows = [];
+
+            $scope.activateRow = function(row){
+                $scope.diagnoseRows.push(row);
+                $log.info("dignose rows in array:" + $scope.diagnoseRows);
+
+            };
+
+            $log.info("dignose rows in array:" + $scope.diagnoseRows);
+
             var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
@@ -46,6 +58,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                         setAllDiagnosKodverk( $scope.model.diagnosKodsystem1 );
                     }
                 }
+
+                $scope.diagnoseRows = [];
             });
 
             function setAllDiagnosKodverk(val){

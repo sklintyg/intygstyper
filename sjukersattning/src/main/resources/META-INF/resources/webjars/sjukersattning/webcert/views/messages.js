@@ -27,7 +27,7 @@ var sjukersattningMessages = {
         'sjukersattning.label.yes': 'Ja',
         'sjukersattning.label.no': 'Nej',
         'sjukersattning.label.delvis': 'Ja, delvis',
-        'sjukersattning.label.diagnos': 'Sjukdom som orsakar nedsatt arbetsförmåga',
+        'sjukersattning.label.diagnos': 'Diagnos/Diagnoser som orsakar nedsatt arbetsförmåga',
         'sjukersattning.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
         'sjukersattning.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
         'sjukersattning.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',
