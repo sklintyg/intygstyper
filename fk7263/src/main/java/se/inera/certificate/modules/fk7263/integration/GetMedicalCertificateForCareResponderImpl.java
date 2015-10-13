@@ -65,7 +65,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
         String nationalIdentityNumber = request.getNationalIdentityNumber();
 
         CertificateHolder certificate = null;
-        
+
         try {
             certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber, false);
             if (nationalIdentityNumber != null && !certificate.getCivicRegistrationNumber().equals(nationalIdentityNumber)) {
@@ -92,7 +92,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
 
     protected void attachCertificateDocument(CertificateHolder certificate, GetMedicalCertificateForCareResponseType response) {
         try {
-            
+
             RegisterMedicalCertificateType jaxbObject = InternalToTransport.getJaxbObject(converterUtil.fromJsonString(certificate.getDocument()));
             response.setLakarutlatande(jaxbObject.getLakarutlatande());
 

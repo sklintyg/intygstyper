@@ -69,7 +69,7 @@ public class PdfGenerator {
 
     /**
      * Method for filling out the fields of a pdf with data from the internal model
-     * 
+     *
      * @param utlatande
      *            {@link ${package}.${artifactId-safe}.model.internal.mi.Utlatande} containing data for populating
      *            the pdf

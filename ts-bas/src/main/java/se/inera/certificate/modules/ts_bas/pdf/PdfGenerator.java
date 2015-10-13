@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import com.itextpdf.text.pdf.*;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.modules.support.ApplicationOrigin;
@@ -53,6 +52,15 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PRIndirectReference;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfDictionary;
+import com.itextpdf.text.pdf.PdfIndirectReference;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfGenerator {
 

@@ -36,17 +36,20 @@ import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 import se.inera.intygstjanster.ts.services.v1.Vardenhet;
 import se.inera.intygstjanster.ts.services.v1.Vardgivare;
 
-public class InternalToTransportConverter {
+public final class InternalToTransportConverter {
 
     private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-    public static final Map<String, DiabetesTypVarden> typVardenMap;
+    public static final Map<String, DiabetesTypVarden> TYP_VARDEN_MAP;
+
+    private InternalToTransportConverter() {
+    }
 
     static {
         Map<String, DiabetesTypVarden> tempMap = new HashMap<>();
         tempMap.put("DIABETES_TYP_2", DiabetesTypVarden.TYP_2);
         tempMap.put("DIABETES_TYP_1", DiabetesTypVarden.TYP_1);
 
-        typVardenMap = Collections.unmodifiableMap(tempMap);
+        TYP_VARDEN_MAP = Collections.unmodifiableMap(tempMap);
     }
 
     public static RegisterTSDiabetesType convert(Utlatande utlatande) {
@@ -224,7 +227,7 @@ public class InternalToTransportConverter {
         result.setHarBehandlingTabletter(diabetes.getTabletter());
         result.setInsulinBehandlingSedanAr(diabetes.getInsulinBehandlingsperiod());
 
-        result.getDiabetesTyp().add(typVardenMap.get(diabetes.getDiabetestyp()));
+        result.getDiabetesTyp().add(TYP_VARDEN_MAP.get(diabetes.getDiabetestyp()));
         return result;
     }
 

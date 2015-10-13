@@ -1,7 +1,7 @@
 package se.inera.certificate.modules.ts_bas.model.internal;
 
 /**
- *
+ * Values.
  C1,
  * C1E,
  * C,

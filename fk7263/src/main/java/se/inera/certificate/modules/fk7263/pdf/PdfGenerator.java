@@ -307,10 +307,8 @@ public class PdfGenerator {
     }
 
     /**
-     * Marking this document as a print meant for the employer of the patient
-     * 
-     * @param pdfStamper
-     * @param watermarkText
+     * Marking this document as a print meant for the employer of the patient.
+     *
      * @throws DocumentException
      * @throws IOException
      */

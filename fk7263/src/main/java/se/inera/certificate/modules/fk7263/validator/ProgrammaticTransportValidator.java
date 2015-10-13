@@ -388,7 +388,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             addValidationError("No arbetsformaga element found 8b!.");
             return;
         }
-        
+
         // Fält 8b - kryssruta 1
         ArbetsformagaNedsattningType nedsatt14del = findArbetsformaga(inAktivitetFunktion.getArbetsformaga()
                 .getArbetsformagaNedsattning(),
@@ -480,7 +480,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             boolean inArbetsformagaAterstallasHelt = false;
             boolean inArbetsformagaAterstallasDelvis = false;
             boolean inArbetsformagaEjAterstallas = false;
-    
+
             if (inAktivitetFunktion.getArbetsformaga().getPrognosangivelse() != null) {
                 inArbetsformagaAterstallasHelt = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
                         .compareTo(Prognosangivelse.ATERSTALLAS_HELT) == 0;
@@ -491,7 +491,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
                 inArbetsformagaGarEjAttBedomma = inAktivitetFunktion.getArbetsformaga().getPrognosangivelse()
                         .compareTo(Prognosangivelse.DET_GAR_INTE_ATT_BEDOMMA) == 0;
             }
-    
+
             // If we got more then one prognoselement these will not be read as
             // only the first is set!
             int inPrognosCount = 0;
@@ -507,7 +507,7 @@ public class ProgrammaticTransportValidator extends AbstractValidator {
             if (inArbetsformagaGarEjAttBedomma) {
                 inPrognosCount++;
             }
-    
+
             // Fält 10 - Prognosangivelse - Check that we only got one choice
             if (inPrognosCount > 2) {
                 addValidationError("Only one prognosangivelse should be set for field 10.");

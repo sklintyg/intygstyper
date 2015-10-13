@@ -69,7 +69,7 @@ public enum ObservationsKod  {
 
     private final String codeSystemVersion;
 
-    private ObservationsKod(String code, String description, Kodverk kodverk) {
+    ObservationsKod(String code, String description, Kodverk kodverk) {
         this.code = code;
         this.description = description;
         this.codeSystem = kodverk.getCodeSystem();

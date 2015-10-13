@@ -4,25 +4,25 @@ import java.util.EnumSet;
 
 public enum KorkortsKod {
 
-    /** Motorcykel (A) */
+    /** Motorcykel (A). */
     A("A", ""),
 
-    /** Lätt motorcykel (A1) */
+    /** Lätt motorcykel (A1). */
     A1("A_1", ""),
 
-    /** Mellanstor motorcykel (A2)*/
+    /** Mellanstor motorcykel (A2). */
     A2("A_2", ""),
 
-    /** Moped klass 1 (AM) */
+    /** Moped klass 1 (AM). */
     AM("AM", ""),
 
-    /** Personbil (B)*/
+    /** Personbil (B). */
     B("B", ""),
 
-    /** Personbil, lätt lastbil och ett eller flera släpfordon, max 3.5 ton (BE)*/
+    /** Personbil, lätt lastbil och ett eller flera släpfordon, max 3.5 ton (BE). */
     BE("BE", ""),
 
-    /** Traktor (TRAKTOR) */ 
+    /** Traktor (TRAKTOR). */
     TRAKTOR("TRAKTOR", ""),
 
     /** Medeltung lastbil (C1). */
@@ -59,17 +59,13 @@ public enum KorkortsKod {
     public static final EnumSet<KorkortsKod> HOGRE_KORKORTSBEHORIGHET = EnumSet.of(C1, C1E, C, CE, D1, D1E, D, DE,
             TAXI);
 
-    private static String codeSystemName = "kv_intyget_avser";
-
-    private static String codeSystem = "24c41b8d-258a-46bf-a08a-b90738b28770";
-
     private static String codeSystemVersion = null;
 
     private String code;
 
     private String description;
 
-    private KorkortsKod(String code, String desc) {
+    KorkortsKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
@@ -92,11 +88,11 @@ public enum KorkortsKod {
     }
 
     public String getCodeSystem() {
-        return codeSystem;
+        return "24c41b8d-258a-46bf-a08a-b90738b28770";
     }
 
     public String getCodeSystemName() {
-        return codeSystemName;
+        return "kv_intyget_avser";
     }
 
     public String getCodeSystemVersion() {

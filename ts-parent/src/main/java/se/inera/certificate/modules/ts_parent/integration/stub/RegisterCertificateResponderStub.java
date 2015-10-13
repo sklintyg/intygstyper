@@ -1,7 +1,6 @@
 package se.inera.certificate.modules.ts_parent.integration.stub;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -40,12 +39,12 @@ import com.google.common.base.Throwables;
 
 @WebServiceProvider
 @ServiceMode(value = javax.xml.ws.Service.Mode.MESSAGE)
-public class RegisterCertificateResponderStub implements Provider<SOAPMessage> {
+public final class RegisterCertificateResponderStub implements Provider<SOAPMessage> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterCertificateResponderStub.class);
-    
+
     private boolean throwException = false;
-    
+
     @Autowired
     private TSCertificateStore tsCertificatesStore;
 
@@ -62,8 +61,8 @@ public class RegisterCertificateResponderStub implements Provider<SOAPMessage> {
 
     public RegisterCertificateResponseType registerCertificate(RegisterCertificateType request) {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
-        
-        if(throwException){
+
+        if (throwException) {
             LOGGER.debug("Throwing fake exception");
             throw new RuntimeException();
         }

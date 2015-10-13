@@ -44,7 +44,7 @@ public enum IdKontrollKod {
 
     private final String description;
 
-    private IdKontrollKod(String code, String desc, Kodverk kodverk) {
+    IdKontrollKod(String code, String desc, Kodverk kodverk) {
         this.code = code;
         this.description = desc;
         this.codeSystemName = kodverk.getCodeSystemName();

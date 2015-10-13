@@ -31,9 +31,7 @@ import ${package}.${artifactId-safe}.utils.ScenarioFinder;
 
 /**
  * Unit test for InternalToExternalConverter
- * 
  * @author erik
- * 
  */
 public class InternalToExternalConverterTest {
 
@@ -54,6 +52,7 @@ public class InternalToExternalConverterTest {
             Utlatande expected = scenario.asExternalModel();
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
-        
+
     }
+
 }

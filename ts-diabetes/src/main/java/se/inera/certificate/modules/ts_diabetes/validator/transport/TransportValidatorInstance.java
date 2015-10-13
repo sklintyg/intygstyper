@@ -29,7 +29,7 @@ public class TransportValidatorInstance {
         // PersonId
         if (utlatande.getGrundData().getPatient() != null) {
             String id = utlatande.getGrundData().getPatient().getPersonId().getRoot();
-            if(!id.equals(Constants.PERSON_ID_OID) && !id.equals(Constants.SAMORDNING_ID_OID)) {
+            if (!id.equals(Constants.PERSON_ID_OID) && !id.equals(Constants.SAMORDNING_ID_OID)) {
                 validationErrors.add(String.format("Root for patient.personnummer should be %s or %s but was %s",
                         Constants.PERSON_ID_OID, Constants.SAMORDNING_ID_OID, id));
             }

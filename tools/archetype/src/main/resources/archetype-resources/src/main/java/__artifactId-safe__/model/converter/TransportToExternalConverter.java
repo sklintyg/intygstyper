@@ -36,7 +36,7 @@ public class TransportToExternalConverter {
     /**
      * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to the external format
      * (${package}.${artifactId-safe}.model.external.Utlatande).
-     * 
+     *
      * @param source
      *            Utlatande in the transport format to be converted to external format
      * @return ${package}.${artifactId-safe}.model.external.Utlatande

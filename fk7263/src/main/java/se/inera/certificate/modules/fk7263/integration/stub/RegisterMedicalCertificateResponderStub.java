@@ -29,9 +29,9 @@ import se.skl.skltpservices.adapter.fk.regmedcert.Vard2FkValidator;
 public class RegisterMedicalCertificateResponderStub implements RegisterMedicalCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
-    
+
     private Vard2FkValidator validator = new Vard2FkValidator();
-    
+
     @Autowired
     private FkMedicalCertificatesStore fkMedicalCertificatesStore;
 

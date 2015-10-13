@@ -83,9 +83,9 @@ public class WebcertModelFactory {
         if (copyData.hasNewPersonnummer()) {
             populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
         }
-        
+
         resetDataInCopy(template);
-        
+
         return template;
     }
 

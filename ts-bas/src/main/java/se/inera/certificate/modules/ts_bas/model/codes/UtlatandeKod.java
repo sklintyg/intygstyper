@@ -36,13 +36,13 @@ public enum UtlatandeKod {
     TS_BAS_OLD_KOD("old-utgava", "old-version",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen");
 
-    private static final String codeSystemName = "kv_utlåtandetyp_intyg";
+    private static final String CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";
 
-    private static final String codeSystem = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
+    private static final String CODE_SYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
 
-    private static final String codeSystemVersion = null;
+    private static final String CODE_SYSTEM_VERSION = null;
 
-    private static final String code = TsBasEntryPoint.MODULE_ID;
+    private static final String CODE = TsBasEntryPoint.MODULE_ID;
 
     private final String tsUtgava;
 
@@ -50,16 +50,16 @@ public enum UtlatandeKod {
 
     private final String description;
 
-    private final String EXTERNAL_NAME = "TSTRK1007";
+    private static final String EXTERNAL_NAME = "TSTRK1007";
 
-    private UtlatandeKod(String tsUtgava, String tsVersion, String desc) {
+    UtlatandeKod(String tsUtgava, String tsVersion, String desc) {
         this.tsUtgava = tsUtgava;
         this.tsVersion = tsVersion;
         this.description = desc;
     }
 
     public String getCode() {
-        return code;
+        return CODE;
     }
 
     public String getDescription() {
@@ -67,15 +67,15 @@ public enum UtlatandeKod {
     }
 
     public String getCodeSystem() {
-        return codeSystem;
+        return CODE_SYSTEM;
     }
 
     public String getCodeSystemName() {
-        return codeSystemName;
+        return CODE_SYSTEM_NAME;
     }
 
     public String getCodeSystemVersion() {
-        return codeSystemVersion;
+        return CODE_SYSTEM_VERSION;
     }
 
     public String getTsUtgava() {

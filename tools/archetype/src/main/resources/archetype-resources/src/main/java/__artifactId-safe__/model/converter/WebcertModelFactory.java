@@ -36,14 +36,14 @@ public class WebcertModelFactory {
 
     /**
      * Create a new draft pre-populated with the attached data.
-     * 
+     *
      * @param newDraftData
      *            {@link CreateNewDraftHolder}
      * @param template
      *            A template to use as a base, or <code>null</code> if an empty internal model should be used.
-     * 
+     *
      * @return {@link Utlatande}
-     * 
+     *
      * @throws ConverterException
      *             if something unforeseen happens
      */
@@ -55,9 +55,9 @@ public class WebcertModelFactory {
         } else {
             LOG.trace("Creating copy with id {} from {}", newDraftData.getCertificateId(), template.getId());
         }
-        
+
         // TODO: Implement
-        
+
         return template;
     }
 }

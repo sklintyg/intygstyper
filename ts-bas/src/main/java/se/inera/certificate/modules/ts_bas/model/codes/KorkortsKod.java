@@ -41,17 +41,13 @@ public enum KorkortsKod {
     /** Körkortsbehörigheter som innefattar persontransport. */
     public static final EnumSet<KorkortsKod> PERSONTRANSPORT = EnumSet.of(D1, D1E, D, DE, TAXI);
 
-    private static String codeSystemName = "kv_intyget_avser";
-
-    private static String codeSystem = "24c41b8d-258a-46bf-a08a-b90738b28770";
-
     private static String codeSystemVersion = null;
 
     private String code;
 
     private String description;
 
-    private KorkortsKod(String code, String desc) {
+    KorkortsKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }
@@ -74,11 +70,11 @@ public enum KorkortsKod {
     }
 
     public String getCodeSystem() {
-        return codeSystem;
+        return "24c41b8d-258a-46bf-a08a-b90738b28770";
     }
 
     public String getCodeSystemName() {
-        return codeSystemName;
+        return "kv_intyget_avser";
     }
 
     public String getCodeSystemVersion() {

@@ -104,10 +104,10 @@ public final class InternalToTransport {
         }
         //Bidiagnoser
         String bidiagnoser = buildDiagnoser(source);
-        if (!StringUtils.isEmpty(bidiagnoser)){
+        if (!StringUtils.isEmpty(bidiagnoser)) {
             parts.add(bidiagnoser);
         }
-        //Text från fält2 
+        //Text från fält2
         if (!StringUtils.isEmpty(source.getDiagnosBeskrivning())) {
             parts.add(source.getDiagnosBeskrivning());
         }
@@ -119,8 +119,8 @@ public final class InternalToTransport {
     }
 
     private static String buildDiagnoser(Utlatande source) {
-        String diagnos1 = new String();
-        String diagnos2 = new String();
+        String diagnos1 = "";
+        String diagnos2 = "";
 
         if (!isNullOrEmpty(source.getDiagnosKod2()) && !isNullOrEmpty(source.getDiagnosBeskrivning2())) {
             diagnos1 = source.getDiagnosKod2() + " " + source.getDiagnosBeskrivning2();
@@ -143,7 +143,7 @@ public final class InternalToTransport {
             annanRef = "4b: " + source.getAnnanReferensBeskrivning();
         }
         //Falt8b
-        
+
         if (!buildArbetstidsforlaggning(source).isEmpty()) {
             arbetstidsforlaggning = "8b: " + buildArbetstidsforlaggning(source);
         }
@@ -428,7 +428,7 @@ public final class InternalToTransport {
         cd.setCode(code);
         if (codeSystem != null) {
             cd.setCodeSystem(codeSystem);
-        } 
+        }
 //        else {
 //            cd.setCodeSystem(Kodverk.ICD_10_SE.getCodeSystem());
 //        }

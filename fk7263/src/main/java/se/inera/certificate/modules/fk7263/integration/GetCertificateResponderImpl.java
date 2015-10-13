@@ -66,7 +66,7 @@ public class GetCertificateResponderImpl implements
         jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         objectFactory = new ObjectFactory();
     }
-    
+
     @Autowired
     private Fk7263ModuleApi moduleApi;
 
@@ -97,7 +97,7 @@ public class GetCertificateResponderImpl implements
         }
 
         CertificateHolder certificate = null;
-        
+
         try {
             certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber, true);
             if (certificate.isRevoked()) {
@@ -116,7 +116,7 @@ public class GetCertificateResponderImpl implements
 
     protected void attachCertificateDocument(CertificateHolder certificate, GetCertificateResponseType response) {
         try {
-            
+
             // Create the Document
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -138,5 +138,4 @@ public class GetCertificateResponderImpl implements
         }
     }
 
-    
 }
