@@ -1,5 +1,17 @@
-<div wc-field field-label="sjukersattning.label.fk-kontakt" field-number="11"
+<div wc-field field-label="sjukersattning.label.fk-kontakt" field-number="9"
      field-help-text="sjukersattning.helptext.kontakt">
-  <label><input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
-                ng-model="model.kontaktMedFk">Vill du att FK kontaktar dig?</label>
+  <!--label<input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
+                ng-model="model.kontaktMedFk">Vill du att FK kontaktar dig?</label-->
+
+    <div class="form-group form-inline">
+        <label class="radio-inline">
+            <input id="kontaktFkJa" name="kontkatFk" type="radio" value="true"
+                   ng-model="model.kontaktMedFk">Ja
+        </label>
+        <label class="radio-inline">
+            <input id="kontaktFkNej" name="andraMedicinskaUtredningar" type="radio" value="false"
+                   ng-model="model.kontaktMedFk">Nej
+        </label>
+    </div>
+
 </div>

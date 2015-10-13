@@ -1,19 +1,29 @@
-<div wc-field field-label="sjukersattning.label.atgarder" field-number="7" wc-detect-animation
+<div wc-field field-label="sjukersattning.label.atgarder" field-number="6" wc-detect-animation
      ng-hide="viewState.avstangningSmittskydd()" field-help-text="sjukersattning.helptext.atgarder"
      class="print-pagebreak-after field-fade">
 
+
   <div class="form-group">
-    <label class="control-label"><span message key="sjukersattning.label.behandling.pagaende"/></label>
-    <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='2'
+    <label class="control-label bold"><span message key="sjukersattning.label.behandling.avslutad"/></label>
+    <textarea id="measuresFinished" class="form-control" name="measures.finished" rows='6'
+              ng-model="model.finishedBehandling" ng-trim="false"
+              maxlength="{{viewState.inputLimits.finishedBehandling}}"/>
+    </div>
+
+  <div class="form-group">
+    <label class="control-label bold"><span message key="sjukersattning.label.behandling.pagaende"/></label>
+    <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='6'
               ng-model="model.pagaendeBehandling" ng-trim="false"
               maxlength="{{viewState.inputLimits.pagaendeBehandling}}"/>
   </div>
 
   <div class="form-group">
-    <label class="control-label"><span message key="sjukersattning.label.behandling.planerad"/></label>
-    <textarea id="measuresOther" class="form-control" name="measures.other" rows='2'
+    <label class="control-label bold"><span message key="sjukersattning.label.behandling.planerad"/></label>
+    <textarea id="measuresOther" class="form-control" name="measures.other" rows='6'
               ng-model="model.planeradBehandling" ng-trim="false"
               maxlength="{{viewState.inputLimits.planeradBehandling}}"/>
   </div>
+
+
 
 </div>
