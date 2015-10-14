@@ -49,7 +49,6 @@
     <module>ts-parent</module>
     <module>ts-bas</module>
     <module>ts-diabetes</module>
-    <module>tools/archetype</module>
   </modules>
 
   <scm>
