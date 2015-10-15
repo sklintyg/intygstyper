@@ -18,6 +18,10 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
             $scope.viewState = viewState;
 
+            $scope.activeRows = {
+
+            }
+
             // Fält 2. Based on handling
             $scope.basedOnState = {
                 check: {
@@ -32,7 +36,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 journaluppgifter: null,
                 telefonkontaktMedPatienten: null,
                 //anhorigBeskrivningAvPatienten: null,
-                kannedomOmPatient: null
+                kannedomOmPatient: null,
+
             };
 
 
