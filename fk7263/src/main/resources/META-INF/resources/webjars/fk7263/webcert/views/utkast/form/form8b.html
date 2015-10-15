@@ -177,7 +177,7 @@
         </div>
     </div>
 
-    <div class="col-md-5 col-fmb-base-offset">
+    <div class="col-md-5 col-fmb-base-offset" ng-hide="viewState.avstangningSmittskydd()">
         <div ng-show="fmb.formData.FORM8B">
             <wc-fmb-help-display related-form-id="FALT8B" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning"
                                  help-text-contents="fmb.formData.FORM8B"></wc-fmb-help-display>
