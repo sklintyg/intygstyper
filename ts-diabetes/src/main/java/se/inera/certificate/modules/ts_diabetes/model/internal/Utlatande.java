@@ -54,15 +54,15 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
 
     @Override
     public GrundData getGrundData() {
-		return grundData;
-	}
+        return grundData;
+    }
 
-	@Override
+    @Override
     public void setGrundData(GrundData grundData) {
-		this.grundData = grundData;
-	}
+        this.grundData = grundData;
+    }
 
-	@Override
+    @Override
     public String getTyp() {
         return typ;
     }

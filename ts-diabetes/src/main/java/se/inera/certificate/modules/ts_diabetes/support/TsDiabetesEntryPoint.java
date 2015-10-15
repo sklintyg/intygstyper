@@ -84,8 +84,8 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
         }
     }
 
-	@Override
-	public String getDefaultRecipient() {
-		return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
-	}
+    @Override
+    public String getDefaultRecipient() {
+        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
+    }
 }

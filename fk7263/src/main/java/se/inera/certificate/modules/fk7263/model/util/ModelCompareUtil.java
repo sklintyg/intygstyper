@@ -89,8 +89,8 @@ public class ModelCompareUtil {
     }
 
     private boolean diagnoseCodeDiffer(DiagnosKod oldDiagnosKod, DiagnosKod newDiagnosKod) {
-        boolean oldValid = moduleService.validateDiagnosisCode(oldDiagnosKod.diagnosKod, oldDiagnosKod.diagnosKodSystem);
-        boolean newValid = moduleService.validateDiagnosisCode(newDiagnosKod.diagnosKod, newDiagnosKod.diagnosKodSystem);
+        boolean oldValid = moduleService.validateDiagnosisCode(oldDiagnosKod.getDiagnosKod(), oldDiagnosKod.getDiagnosKodSystem());
+        boolean newValid = moduleService.validateDiagnosisCode(newDiagnosKod.getDiagnosKod(), newDiagnosKod.getDiagnosKodSystem());
 
         if (oldValid != newValid) {
             return true;
@@ -109,8 +109,8 @@ public class ModelCompareUtil {
     }
 
     private static final class DiagnosKod {
-        public final String diagnosKod;
-        public final String diagnosKodSystem;
+        private final String diagnosKod;
+        private final String diagnosKodSystem;
 
         public DiagnosKod(String diagnosKod, String diagnosKodSystem) {
             this.diagnosKod = diagnosKod;
@@ -128,13 +128,21 @@ public class ModelCompareUtil {
 
             DiagnosKod that = (DiagnosKod) o;
 
-            return Objects.equals(diagnosKod, that.diagnosKod)
-                    && Objects.equals(diagnosKodSystem, that.diagnosKodSystem);
+            return Objects.equals(getDiagnosKod(), that.getDiagnosKod())
+                    && Objects.equals(getDiagnosKodSystem(), that.getDiagnosKodSystem());
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(diagnosKod, diagnosKodSystem);
+            return Objects.hash(getDiagnosKod(), getDiagnosKodSystem());
+        }
+
+        public String getDiagnosKod() {
+            return diagnosKod;
+        }
+
+        public String getDiagnosKodSystem() {
+            return diagnosKodSystem;
         }
 
     }
