@@ -1,10 +1,10 @@
-<div class="row">
+<div class="row" ng-hide="viewState.avstangningSmittskydd()">
     <div class="col-md-6">
         <a id="anchor.aktivitetsbegransning" name="anchor.aktivitetsbegransning"></a>
 
         <div id="aktivitetsbegransning" wc-field field-label="fk7263.label.aktivitetsbegransning" field-number="5"
              wc-detect-animation group="smittskydd"
-             field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="viewState.avstangningSmittskydd()"
+             field-help-text="fk7263.helptext.aktivitetsbegransning"
              field-has-errors="viewState.common.validationMessagesGrouped.aktivitetsbegransning"
              class="print-pagebreak-after field-fade">
 
