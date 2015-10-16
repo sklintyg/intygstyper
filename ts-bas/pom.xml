@@ -14,6 +14,13 @@
 
   <name>Intygstyper (TS Läkarintyg, bas)</name>
 
+  <properties>
+    <sonar.sources>pom.xml,src/main/java,src/main/resources/META-INF/resources/webjars/ts-bas</sonar.sources>
+    <sonar.tests>src/test/java,src/test/js</sonar.tests>
+    <sonar.javascript.lcov.reportPath>target/karma_coverage/merged_lcov.info</sonar.javascript.lcov.reportPath>
+    <sonar.exclusions>**/templates.js</sonar.exclusions>
+  </properties>
+
   <dependencies>
 
     <!-- Module -->
@@ -151,6 +158,17 @@
             </goals>
             <configuration>
               <karmaConfPath>${project.basedir}/src/test/resources/karma-webcert.conf.ci.js</karmaConfPath>
+            </configuration>
+          </execution>
+          <!-- merges karma code coverage reports for wc and mi -->
+          <execution>
+            <id>grunt lcovMerge</id>
+            <goals>
+              <goal>grunt</goal>
+            </goals>
+            <phase>test</phase>
+            <configuration>
+              <arguments>lcovMerge</arguments>
             </configuration>
           </execution>
         </executions>

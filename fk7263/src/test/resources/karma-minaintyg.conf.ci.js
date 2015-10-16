@@ -16,13 +16,20 @@ module.exports = function(config) {
         browsers: [ 'PhantomJS' ],
 
         plugins: [
+            'karma-coverage',
             'karma-jasmine',
             'karma-junit-reporter',
             'karma-phantomjs-launcher',
             'karma-mocha-reporter'
         ],
 
-        reporters: [ 'dots', 'junit' ],
+        reporters: [ 'dots', 'junit', 'coverage' ],
+
+        coverageReporter: {
+            type : 'lcovonly',
+            dir : 'target/karma_coverage/minaintyg',
+            subdir: '.'
+        },
 
         junitReporter: {
             outputFile: 'target/surefire-reports/TEST-karma-minaintyg-test-results.xml'

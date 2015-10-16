@@ -16,6 +16,7 @@ module.exports = function(config) {
         browsers: [ 'PhantomJS' ],
 
         plugins: [
+            'karma-coverage',
             'karma-jasmine',
             'karma-junit-reporter',
             'karma-phantomjs-launcher',
@@ -23,7 +24,13 @@ module.exports = function(config) {
             'karma-ng-html2js-preprocessor'
         ],
 
-        reporters: [ 'dots', 'junit' ],
+        reporters: [ 'dots', 'junit', 'coverage' ],
+
+        coverageReporter: {
+            type : 'lcovonly',
+            dir : 'target/karma_coverage/webcert',
+            subdir: '.'
+        },
 
         junitReporter: {
             outputFile: 'target/surefire-reports/TEST-karma-webcert-test-results.xml'

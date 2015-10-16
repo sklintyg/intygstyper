@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-lcov-merge');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-angular-templates');
 
@@ -116,7 +117,14 @@ module.exports = function(grunt) {
             }
         },
 
-        ngtemplates: config('ngtemplates')
+        ngtemplates: config('ngtemplates'),
+
+        lcovMerge: {
+            options: {
+                outputFile: 'target/karma_coverage/merged_lcov.info'
+            },
+            src: ['target/karma_coverage/webcert/*.info', 'target/karma_coverage/minaintyg/*.info']
+        }
     });
 
     grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify' ]);
