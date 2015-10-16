@@ -1,5 +1,5 @@
-angular.module('fk7263').factory('fk7263.fmbService', ['$http' , '$q',
-    function($http, $q) {
+angular.module('fk7263').factory('fk7263.fmbService', ['$http' , '$q', '$log',
+    function($http, $q, $log) {
         'use strict';
 
         /*

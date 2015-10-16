@@ -9,7 +9,7 @@ describe('IntygController', function() {
     var viewState;
     var $controller;
 
-    beforeEach(angular.mock.module('common', function($provide) {
+    beforeEach(angular.mock.module('common', function(/*$provide*/) {
 
     }));
 

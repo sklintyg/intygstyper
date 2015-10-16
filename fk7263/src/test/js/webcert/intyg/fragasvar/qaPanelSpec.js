@@ -34,7 +34,8 @@ describe('qaPanel', function() {
             $httpBackend = _$httpBackend_;
             ManageCertView = _ManageCertView_;
 
-            element = angular.element('<div qa-panel panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>');
+            element = angular.element('<div qa-panel' +
+                ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>');
             element = $compile(element)($scope);
             $scope.$digest();
 

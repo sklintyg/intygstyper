@@ -2,14 +2,12 @@ describe('UtkastController', function() {
     'use strict';
 
     var $httpBackend;
-    var featureService;
     var $scope;
     var $q;
     var $rootScope;
-    var viewState;
     var $controller;
 
-    beforeEach(angular.mock.module('common', function($provide) {
+    beforeEach(angular.mock.module('common', function(/*$provide*/) {
 
     }));
 

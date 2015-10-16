@@ -25,7 +25,7 @@ angular.module('fk7263').service('fk7263.fmb.ViewStateService',
             this.setState = function(formData, diagnosKod){
                 this.state.formData = transformFormData(formData);
                 this.state.diagnosKod = diagnosKod;
-            }
+            };
 
             this.reset();
         });

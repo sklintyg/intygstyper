@@ -9,7 +9,7 @@ describe('fk7263.EditCertCtrl.Form10Ctrl', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
 
-    beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
+    beforeEach(angular.mock.module('common', 'fk7263', function(/*$provide*/) {
 
     }));
 

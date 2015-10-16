@@ -22,10 +22,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             // 8b. Arbetsförmåga date management
             $scope.field8b = {
-                nedsattMed25 : _dateRangeService['nedsattMed25'],
-                nedsattMed50 : _dateRangeService['nedsattMed50'],
-                nedsattMed75 : _dateRangeService['nedsattMed75'],
-                nedsattMed100 : _dateRangeService['nedsattMed100'],
+                nedsattMed25 : _dateRangeService.nedsattMed25,
+                nedsattMed50 : _dateRangeService.nedsattMed50,
+                nedsattMed75 : _dateRangeService.nedsattMed75,
+                nedsattMed100 : _dateRangeService.nedsattMed100,
                 onChangeWorkStateCheck : function(nedsattModelName) {
                     $log.debug('------------------------ onChangeWorkStateCheck');
 
@@ -63,7 +63,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 }
                 return false;
 
-            }, function(newVal, oldVal) {
+            }, function(newVal/*, oldVal*/) {
                 if (doneLoading) {
                     return;
                 }

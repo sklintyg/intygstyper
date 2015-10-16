@@ -1,5 +1,6 @@
 /* global module */
 function config(name) {
+    'use strict';
     return require('./tasks/' + name);
 }
 
@@ -60,7 +61,8 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 jshintrc: '../target/build-tools/jshint/.jshintrc',
-                force: true
+                force: true,
+                ignores: ['**/templates.js']
             },
             minaintyg: {
                 src: [ 'Gruntfile.js', SRC_DIR + 'webjars/fk7263/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]

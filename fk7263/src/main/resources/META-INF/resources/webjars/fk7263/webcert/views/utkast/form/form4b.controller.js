@@ -49,7 +49,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                 }
                 return false;
 
-            }, function(newVal, oldVal) {
+            }, function(newVal) {
                 if (doneLoading) {
                     return;
                 }
