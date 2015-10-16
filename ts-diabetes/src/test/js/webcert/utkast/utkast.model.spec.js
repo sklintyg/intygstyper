@@ -6,8 +6,7 @@ describe('ts-diabetes.domain.IntygModel', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
 
-    beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
-
+    beforeEach(angular.mock.module('common', 'fk7263', function(/*$provide*/) {
     }));
 
     // Get references to the object we want to test from the context.

@@ -1,5 +1,6 @@
 /* global module */
 function config(name) {
+    'use strict';
     return require('./tasks/' + name);
 }
 
@@ -60,7 +61,8 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 jshintrc: '../target/build-tools/jshint/.jshintrc',
-                force: true
+                force: false,
+                ignores: ['**/templates.js']
             },
             minaintyg: {
                 src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js',
@@ -81,7 +83,7 @@ module.exports = function(grunt) {
                 configFile: 'src/test/resources/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
-            webcert_continous: {
+            webcert_continous: { // jshint ignore:line
                 configFile: 'src/test/resources/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ],
                 autoWatch: true,
