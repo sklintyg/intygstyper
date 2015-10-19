@@ -119,7 +119,7 @@
 
     private void decorateWithPatient(UtlatandeType utlatandeType, Utlatande utlatandeSource) {
         PersonId personId = new PersonId();
-        personId.setExtension(utlatandeSource.getGrundData().getPatient().getPersonId());
+        personId.setExtension(utlatandeSource.getGrundData().getPatient().getPersonId().getPersonnummer());
         personId.setRoot(PERSONNUMMER_ROOT);
 
         Patient patientType = new Patient();

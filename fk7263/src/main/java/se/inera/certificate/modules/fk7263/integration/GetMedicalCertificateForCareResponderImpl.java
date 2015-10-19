@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.inera.certificate.integration.module.exception.InvalidCertificateException;
 import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
@@ -62,7 +63,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
         GetMedicalCertificateForCareResponseType response = new GetMedicalCertificateForCareResponseType();
 
         String certificateId = request.getCertificateId();
-        String nationalIdentityNumber = request.getNationalIdentityNumber();
+        Personnummer nationalIdentityNumber = request.getNationalIdentityNumber() != null ? new Personnummer(request.getNationalIdentityNumber()) : null;
 
         CertificateHolder certificate = null;
 

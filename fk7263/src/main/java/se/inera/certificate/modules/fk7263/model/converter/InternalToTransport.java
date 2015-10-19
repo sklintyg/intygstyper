@@ -505,7 +505,7 @@ public final class InternalToTransport {
         patient.setFullstandigtNamn(source.getFullstandigtNamn());
         II id = new II();
         id.setRoot(Constants.PERSON_ID_OID);
-        id.setExtension(source.getPersonId());
+        id.setExtension(source.getPersonId().getPersonnummer());
         patient.setPersonId(id);
         return patient;
     }

@@ -11,6 +11,7 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
@@ -195,7 +196,7 @@ public final class TransportToInternalConverter {
         result.setEfternamn(patient.getEfternamn());
         result.setFornamn(patient.getFornamn());
         result.setFullstandigtNamn(patient.getFullstandigtNamn());
-        result.setPersonId(patient.getPersonId().getExtension());
+        result.setPersonId(new Personnummer(patient.getPersonId().getExtension()));
         result.setPostadress(patient.getPostadress());
         result.setPostnummer(patient.getPostnummer());
         result.setPostort(patient.getPostort());

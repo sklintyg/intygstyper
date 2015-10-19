@@ -21,6 +21,7 @@ import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.fk7263.model.internal.Rehabilitering;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
@@ -322,7 +323,7 @@ public final class TransportToInternal {
         Patient patient = new Patient();
         patient.setEfternamn(source.getFullstandigtNamn());
         patient.setFullstandigtNamn(source.getFullstandigtNamn());
-        patient.setPersonId(source.getPersonId().getExtension());
+        patient.setPersonId(new Personnummer(source.getPersonId().getExtension()));
         return patient;
     }
 

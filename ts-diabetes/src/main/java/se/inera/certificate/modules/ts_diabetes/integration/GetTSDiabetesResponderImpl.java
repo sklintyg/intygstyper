@@ -15,6 +15,7 @@ import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.CertificateStateHolder;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToTransportConverter;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
@@ -47,7 +48,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
         CertificateHolder certificate = null;
 
         String certificateId = parameters.getIntygsId();
-        String personNummer = parameters.getPersonId() != null ? parameters.getPersonId().getExtension() : null;
+        Personnummer personNummer = parameters.getPersonId() != null ? new Personnummer(parameters.getPersonId().getExtension()) : null;
 
         if (certificateId == null || certificateId.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");

@@ -29,6 +29,7 @@ import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 
 /**
  * Factory for creating an editable model.
@@ -89,7 +90,7 @@ public class WebcertModelFactory {
         return template;
     }
 
-    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+    private void populateWithNewPersonnummer(Utlatande template, Personnummer newPersonnummer) {
         template.getGrundData().getPatient().setPersonId(newPersonnummer);
     }
 

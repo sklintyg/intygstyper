@@ -15,6 +15,7 @@ import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.CertificateStateHolder;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
@@ -46,7 +47,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
         GetTSBasResponseType response = new GetTSBasResponseType();
 
         String certificateId = request.getIntygsId();
-        String personNummer = request.getPersonId() != null ? request.getPersonId().getExtension() : null;
+        Personnummer personNummer = request.getPersonId() != null ? new Personnummer(request.getPersonId().getExtension()) : null;
 
         if (certificateId == null || certificateId.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");

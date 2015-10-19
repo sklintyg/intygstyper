@@ -13,6 +13,7 @@ import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
@@ -298,7 +299,7 @@ public final class TransportToInternal {
         patient.setEfternamn(source.getEfternamn());
         patient.setFornamn(source.getFornamn());
         patient.setFullstandigtNamn(source.getFullstandigtNamn());
-        patient.setPersonId(source.getPersonId().getExtension());
+        patient.setPersonId(new Personnummer(source.getPersonId().getExtension()));
         patient.setPostadress(source.getPostadress());
         patient.setPostnummer(source.getPostnummer());
         patient.setPostort(source.getPostort());

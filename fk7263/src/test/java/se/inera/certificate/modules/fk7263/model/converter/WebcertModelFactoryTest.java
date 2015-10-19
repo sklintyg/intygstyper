@@ -19,6 +19,7 @@ import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 
@@ -74,7 +75,7 @@ public class WebcertModelFactoryTest {
 
         assertEquals("new-intyg-2", utlatande.getId());
 
-        assertEquals("19121212-1212", copy.getGrundData().getPatient().getPersonId());
+        assertEquals("19121212-1212", copy.getGrundData().getPatient().getPersonId().getPersonnummer());
         assertEquals("Test", copy.getGrundData().getPatient().getFornamn());
         assertEquals("Testorsson", copy.getGrundData().getPatient().getEfternamn());
         assertNotNull(copy.getGrundData().getPatient().getPostadress());
@@ -88,7 +89,7 @@ public class WebcertModelFactoryTest {
 
         CreateDraftCopyHolder copyData = createDraftCopyHolder("new-intyg-3", false, true);
         
-        assertEquals("19121212-1212", utlatande.getGrundData().getPatient().getPersonId());
+        assertEquals("19121212-1212", utlatande.getGrundData().getPatient().getPersonId().getPersonnummer());
 
         Utlatande copy = factory.createCopy(copyData, utlatande);
 
@@ -96,7 +97,7 @@ public class WebcertModelFactoryTest {
 
         assertEquals("new-intyg-3", utlatande.getId());
 
-        assertEquals("19141414-1414", copy.getGrundData().getPatient().getPersonId());
+        assertEquals("19141414-1414", copy.getGrundData().getPatient().getPersonId().getPersonnummer());
         assertEquals("Test", copy.getGrundData().getPatient().getFornamn());
         assertEquals("Testorsson", copy.getGrundData().getPatient().getEfternamn());
     }
@@ -113,7 +114,7 @@ public class WebcertModelFactoryTest {
         }
         
         if (addNewPersonId) {
-            copyData.setNewPersonnummer("19141414-1414");
+            copyData.setNewPersonnummer(new Personnummer("19141414-1414"));
         }
 
         return copyData;

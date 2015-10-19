@@ -396,8 +396,8 @@ public class PdfGenerator {
 
     private void fillPatientDetails() {
         fillText(PATIENT_NAME, intyg.getGrundData().getPatient().getFullstandigtNamn());
-        fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId());
-        fillText(PATIENT_SSN_2, intyg.getGrundData().getPatient().getPersonId());
+        fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
+        fillText(PATIENT_SSN_2, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
     }
 
     private void fillSignerNameAndAddress() {

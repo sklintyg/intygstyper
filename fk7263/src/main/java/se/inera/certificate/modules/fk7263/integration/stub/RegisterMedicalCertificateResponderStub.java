@@ -49,7 +49,7 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
                 throw new RuntimeException("A runtime exception");
             }
             Map<String, String> props = new HashMap<>();
-            props.put("Personnummer", utlatande.getGrundData().getPatient().getPersonId());
+            props.put("Personnummer", utlatande.getGrundData().getPatient().getPersonId().getPersonnummer());
             props.put("Makulerad", "NEJ");
 
             LOGGER.info("STUB Received request");

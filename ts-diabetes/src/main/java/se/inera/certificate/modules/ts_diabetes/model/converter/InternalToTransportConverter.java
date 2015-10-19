@@ -209,7 +209,7 @@ public final class InternalToTransportConverter {
 
         II iid = new II();
         iid.setRoot(Constants.PERSON_ID_OID);
-        iid.setExtension(patient.getPersonId());
+        iid.setExtension(patient.getPersonId() != null ? patient.getPersonId().getPersonnummer() : null);
         result.setPersonId(iid);
 
         result.setPostadress(patient.getPostadress());

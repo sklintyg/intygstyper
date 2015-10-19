@@ -44,6 +44,7 @@ import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.Patient;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
@@ -85,7 +86,7 @@ public class Fk7263ModuleApiTest {
     public void testPdfFileName() {
         Utlatande intyg = new Utlatande();
         se.inera.certificate.model.common.internal.Patient patient = new se.inera.certificate.model.common.internal.Patient();
-        patient.setPersonId("19121212-1212");
+        patient.setPersonId(new Personnummer("19121212-1212"));
         intyg.getGrundData().setPatient(patient);
         // TODO Create a proper test when model has been updated.
         // assertEquals("lakarutlatande_19121212-1212_20110124-20110331.pdf", fk7263ModuleApi.pdfFileName(intyg));
@@ -144,7 +145,7 @@ public class Fk7263ModuleApiTest {
     @Test
     public void copyContainsNewPersonnummer() throws IOException, ModuleException {
 
-        String newSSN = "19121212-1414";
+        Personnummer newSSN = new Personnummer("19121212-1414");
 
         Utlatande utlatande = getUtlatandeFromFile();
 
