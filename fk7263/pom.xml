@@ -224,7 +224,7 @@
             </goals>
             <phase>test</phase>
             <configuration>
-              <arguments>lcovMerge</arguments>
+              <arguments>lcovMerge --force</arguments>
             </configuration>
           </execution>
         </executions>
