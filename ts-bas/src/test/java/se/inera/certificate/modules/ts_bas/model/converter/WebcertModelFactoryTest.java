@@ -30,6 +30,7 @@ import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.Patient;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 
@@ -45,7 +46,7 @@ public class WebcertModelFactoryTest {
     @Test
     public void testCreateEditableModel() throws IOException {
         // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient("Johnny", "Jobs", "Appleseed", "19121212-1212", "Testvägen 12", "13337", "Huddinge");
+        Patient patient = new Patient("Johnny", "Jobs", "Appleseed", new Personnummer("19121212-1212"), "Testvägen 12", "13337", "Huddinge");
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
         Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
                 "08-1337", null, "0123456789", vardgivare);

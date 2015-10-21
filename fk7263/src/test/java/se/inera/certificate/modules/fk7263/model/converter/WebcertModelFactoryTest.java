@@ -109,7 +109,7 @@ public class WebcertModelFactoryTest {
         CreateDraftCopyHolder copyData = new CreateDraftCopyHolder(intygsCopyId, skapadAv);
 
         if (addPatient) {
-            Patient patient = new Patient("Test", "Prov", "Testorsson", "19121212-1212", "Gågatan", "12345", "Staden");
+            Patient patient = new Patient("Test", "Prov", "Testorsson", new Personnummer("19121212-1212"), "Gågatan", "12345", "Staden");
             copyData.setPatient(patient);
         }
         
