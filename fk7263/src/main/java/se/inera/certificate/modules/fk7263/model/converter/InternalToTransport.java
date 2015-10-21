@@ -501,13 +501,13 @@ public final class InternalToTransport {
     }
 
     private static PatientType patientToJaxb(Patient source) {
-        PatientType patient = new PatientType();
-        patient.setFullstandigtNamn(source.getFullstandigtNamn());
+        PatientType patientType = new PatientType();
+        patientType.setFullstandigtNamn(source.getFullstandigtNamn());
         II id = new II();
         id.setRoot(Constants.PERSON_ID_OID);
         id.setExtension(source.getPersonId().getPersonnummer());
-        patient.setPersonId(id);
-        return patient;
+        patientType.setPersonId(id);
+        return patientType;
     }
 
     private static boolean isNullOrEmpty(String source) {
