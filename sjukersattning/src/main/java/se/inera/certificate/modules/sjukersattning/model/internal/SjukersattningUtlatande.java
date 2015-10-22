@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
+import org.joda.time.LocalDate;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
@@ -54,6 +55,7 @@ public final class SjukersattningUtlatande extends Utlatande {
     public SjukersattningUtlatande() {
         super();
         setTyp(SjukersattningEntryPoint.MODULE_ID);
+        underlag.add(new Underlag(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
     }
 
     @Override

@@ -12,6 +12,12 @@ public class Underlag {
 
     private boolean attachment;
 
+    public Underlag(UnderlagsTyp typ, InternalDate internalDate, boolean attachment) {
+        this.id = typ;
+        this.datum = internalDate;
+        this.attachment = attachment;
+    }
+
     public UnderlagsTyp getId() {
         return id;
     }
