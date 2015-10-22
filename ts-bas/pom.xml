@@ -148,7 +148,7 @@
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma-minaintyg.conf.ci.js</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/test/resources/karma-minaintyg.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
             </configuration>
           </execution>
           <execution>
@@ -157,7 +157,7 @@
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma-webcert.conf.ci.js</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/test/resources/karma-webcert.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
             </configuration>
           </execution>
           <!-- merges karma code coverage reports for wc and mi -->
