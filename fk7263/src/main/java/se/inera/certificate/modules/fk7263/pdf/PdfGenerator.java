@@ -354,7 +354,7 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename() {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getGrundData().getPatient().getPersonId(), intyg.getGiltighet()
+        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getGrundData().getPatient().getPersonId().getPersonnummer(), intyg.getGiltighet()
                 .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
