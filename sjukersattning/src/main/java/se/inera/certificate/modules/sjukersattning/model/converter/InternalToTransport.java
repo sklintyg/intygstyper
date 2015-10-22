@@ -88,7 +88,7 @@ public class InternalToTransport {
         patient.setMellannamn(sourcePatient.getMellannamn());
         PersonId personId = new PersonId();
         personId.setRoot(PERSON_ID_CODE_SYSTEM);
-        personId.setExtension(sourcePatient.getPersonId().replaceAll("-", ""));
+        personId.setExtension(sourcePatient.getPersonId().getPersonnummer().replaceAll("-", ""));
         patient.setPersonId(personId);
         patient.setPostadress(sourcePatient.getPostadress());
         patient.setPostnummer(sourcePatient.getPostnummer());

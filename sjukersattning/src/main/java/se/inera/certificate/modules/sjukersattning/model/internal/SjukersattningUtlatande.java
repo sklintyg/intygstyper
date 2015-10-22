@@ -4,6 +4,8 @@ import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class SjukersattningUtlatande extends Utlatande {
@@ -13,7 +15,7 @@ public final class SjukersattningUtlatande extends Utlatande {
     private InternalDate journaluppgifter;
     private InternalDate kannedomOmPatient;
 
-    // TODO: annat underlag för behandling
+    private List<Underlag> underlag = new ArrayList<>();
 
     private String diagnosKod1;
     private String diagnosKodsystem1;
@@ -315,5 +317,13 @@ public final class SjukersattningUtlatande extends Utlatande {
 
     public void setAvslutadBehandling(String avslutadBehandling) {
         this.avslutadBehandling = avslutadBehandling;
+    }
+
+    public List<Underlag> getUnderlag() {
+        return underlag;
+    }
+
+    public void setUnderlag(List<Underlag> underlag) {
+        this.underlag = underlag;
     }
 }

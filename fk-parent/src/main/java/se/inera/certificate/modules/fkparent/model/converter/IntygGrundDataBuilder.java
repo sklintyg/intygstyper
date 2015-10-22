@@ -3,6 +3,7 @@ package se.inera.certificate.modules.fkparent.model.converter;
 import org.joda.time.LocalDateTime;
 
 import se.inera.certificate.model.common.internal.*;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 
 /* TODO: this class should be moved to test directory and put in a test-jar. */
 
@@ -20,7 +21,7 @@ public class IntygGrundDataBuilder {
         Patient patient = new Patient();
         patient.setEfternamn("Olsson");
         patient.setFornamn("Olivia");
-        patient.setPersonId("19270310-4321");
+        patient.setPersonId(new Personnummer("19270310-4321"));
         patient.setPostadress("Pgatan 2");
         patient.setPostnummer("100 20");
         patient.setPostort("Stadby gärde");

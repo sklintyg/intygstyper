@@ -18,6 +18,7 @@ import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.modules.sjukpenning.integration.RegisterSjukpenningValidator;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
@@ -69,7 +70,7 @@ public class InternalToTransportTest {
         Patient patient = new Patient();
         patient.setEfternamn("Olsson");
         patient.setFornamn("Olivia");
-        patient.setPersonId("19270310-4321");
+        patient.setPersonId(new Personnummer("19270310-4321"));
         patient.setPostadress("Pgatan 2");
         patient.setPostnummer("100 20");
         patient.setPostort("Stadby gärde");

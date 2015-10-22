@@ -10,6 +10,7 @@ import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -342,7 +343,7 @@ public class TransportToInternal {
         patient.setPostort(source.getPatient().getPostort());
         patient.setPostnummer(source.getPatient().getPostnummer());
         patient.setPostadress(source.getPatient().getPostadress());
-        patient.setPersonId(source.getPatient().getPersonId().getExtension());
+        patient.setPersonId(new Personnummer(source.getPatient().getPersonId().getExtension()));
         return patient;
     }
 

@@ -52,7 +52,6 @@
     <module>fk-parent</module>
     <module>sjukpenning</module>
     <module>sjukersattning</module>
-    <module>tools/archetype</module>
   </modules>
 
   <scm>
