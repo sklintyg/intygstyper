@@ -1,6 +1,8 @@
 /* global module, require */
 var baseConfig = require('./karma-webcert.conf.js');
 
+var runCoverage = process.env.MAVEN_CMD_LINE_ARGS && process.env.MAVEN_CMD_LINE_ARGS.indexOf('-Dskip-coverage=false')  !== -1;
+
 module.exports = function(config) {
     'use strict';
 
@@ -15,15 +17,27 @@ module.exports = function(config) {
 
         browsers: [ 'PhantomJS' ],
 
-        plugins: [
-            'karma-jasmine',
-            'karma-junit-reporter',
-            'karma-phantomjs-launcher',
-            'karma-mocha-reporter',
-            'karma-ng-html2js-preprocessor'
-        ],
+        plugins: (function() {
+            var plugins = [
+                'karma-jasmine',
+                'karma-junit-reporter',
+                'karma-phantomjs-launcher',
+                'karma-mocha-reporter',
+                'karma-ng-html2js-preprocessor'
+            ];
+            if (runCoverage) {
+                plugins.push('karma-coverage');
+            }
+            return plugins;
+        })(),
 
-        reporters: [ 'dots', 'junit' ],
+        reporters: [ 'dots', 'junit', 'coverage' ],
+
+        coverageReporter: {
+            type : 'lcovonly',
+            dir : 'target/karma_coverage/webcert',
+            subdir: '.'
+        },
 
         junitReporter: {
             outputFile: 'target/surefire-reports/TEST-karma-webcert-test-results.xml'

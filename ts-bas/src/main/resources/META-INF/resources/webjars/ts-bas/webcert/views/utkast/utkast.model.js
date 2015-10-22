@@ -10,7 +10,6 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
         var TsBasModel = BaseAtticModel._extend({
             init: function init() {
                 var grundData = GrundData.build();
-                var self = this;
                 init._super.call(this, 'TsBasModel', {
                     id: undefined,
                     typ: undefined, // NOT intygtyp, this is TS-intyg type.

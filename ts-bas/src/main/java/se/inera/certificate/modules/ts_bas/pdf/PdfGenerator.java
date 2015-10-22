@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import com.itextpdf.text.pdf.*;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.modules.support.ApplicationOrigin;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
 import se.inera.certificate.modules.ts_bas.model.codes.DiabetesKod;
 import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
@@ -53,6 +53,15 @@ import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
 import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PRIndirectReference;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfDictionary;
+import com.itextpdf.text.pdf.PdfIndirectReference;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
 public class PdfGenerator {
 
@@ -194,7 +203,7 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename(Utlatande utlatande) {
-        String personId = utlatande.getGrundData().getPatient().getPersonId();
+        Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
         String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
 
         return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
@@ -286,7 +295,7 @@ public class PdfGenerator {
         INVANARE_ADRESS_FALT1.setField(fields, patient.getFullstandigtNamn());
         INVANARE_ADRESS_FALT2.setField(fields, patient.getPostadress());
         INVANARE_ADRESS_FALT3.setField(fields, patient.getPostnummer() + " " + patient.getPostort());
-        INVANARE_PERSONNUMMER.setField(fields, patient.getPersonId().replace("-", ""));
+        INVANARE_PERSONNUMMER.setField(fields, patient.getPersonId().getPersonnummerWithoutDash());
     }
 
     private void populateIntygAvser(IntygAvser intygAvser, AcroFields fields) throws IOException, DocumentException {

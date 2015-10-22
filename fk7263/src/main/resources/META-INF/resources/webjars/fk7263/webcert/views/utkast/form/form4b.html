@@ -1,78 +1,86 @@
-<div ng-form="form4b">
-  <a id="anchor.intygbaseratpa" name="anchor.intygbaseratpa"></a>
-  <div id="intygetbaseraspa" wc-field field-label="fk7263.label.intygbaseratpa" field-number="4b" wc-detect-animation group="smittskydd"
-       field-help-text="fk7263.helptext.intyg-baserat-pa" ng-hide="viewState.avstangningSmittskydd()"
-       field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa" class="field-fade">
+<div class="row" ng-hide="viewState.avstangningSmittskydd()" wc-detect-animation group="smittskydd">
+    <div class="col-md-6">
+        <div ng-form="form4b">
+            <a id="anchor.intygbaseratpa" name="anchor.intygbaseratpa"></a>
 
-    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygbaseratpa" id="validationMessages_intygbaseratpa">
-      <ul>
-        <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygbaseratpa"><span message
-                                                                                  key="{{message.message}}"></span>
-        </li>
-      </ul>
-    </div>
+            <div id="intygetbaseraspa" wc-field field-label="fk7263.label.intygbaseratpa" field-number="4b"
+                 field-help-text="fk7263.helptext.intyg-baserat-pa"
+                 field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa" class="field-fade">
 
-    <!-- Undersökning -->
-    <div class="form-group form-inline">
-      <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                           id="basedOnExamination"
-                                                                           name="informationBasedOn.examination"
-                                                                           class="checkbox-inline"
-                                                                           ng-model="basedOnState.check.undersokningAvPatienten"
-                                                                           ng-change="toggleBaseradPaDate('undersokningAvPatienten')"
-          value="true">
-        Min undersökning av patienten</label>
+                <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygbaseratpa"
+                     id="validationMessages_intygbaseratpa">
+                    <ul>
+                        <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygbaseratpa"><span
+                                message
+                                key="{{message.message}}"></span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Undersökning -->
+                <div class="form-group form-inline">
+                    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+                                                                                         id="basedOnExamination"
+                                                                                         name="informationBasedOn.examination"
+                                                                                         class="checkbox-inline"
+                                                                                         ng-model="basedOnState.check.undersokningAvPatienten"
+                                                                                         ng-change="toggleBaseradPaDate('undersokningAvPatienten')"
+                                                                                         value="true">
+                        Min undersökning av patienten</label>
       <span wc-date-picker-field target-model="dates.undersokningAvPatienten"
             dom-id="undersokningAvPatientenDate"></span>
-    </div>
+                </div>
 
-    <!-- Telefonkontakt -->
-    <div class="form-group form-inline">
-      <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                           id="basedOnPhoneContact"
-                                                                           name="informationBasedOn.phoneContact"
-                                                                           ng-model="basedOnState.check.telefonkontaktMedPatienten"
-                                                                           ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
-        Min telefonkontakt med patienten</label>
+                <!-- Telefonkontakt -->
+                <div class="form-group form-inline">
+                    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+                                                                                         id="basedOnPhoneContact"
+                                                                                         name="informationBasedOn.phoneContact"
+                                                                                         ng-model="basedOnState.check.telefonkontaktMedPatienten"
+                                                                                         ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
+                        Min telefonkontakt med patienten</label>
       <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
             dom-id="telefonkontaktMedPatientenDate"></span>
-    </div>
+                </div>
 
-    <!-- Journaluppgifter -->
-    <div class="form-group form-inline">
-      <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                           id="basedOnJournal"
-                                                                           name="informationBasedOn.journal"
-                                                                           ng-model="basedOnState.check.journaluppgifter"
-                                                                           ng-change="toggleBaseradPaDate('journaluppgifter')">
-        Journaluppgifter från den</label>
+                <!-- Journaluppgifter -->
+                <div class="form-group form-inline">
+                    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+                                                                                         id="basedOnJournal"
+                                                                                         name="informationBasedOn.journal"
+                                                                                         ng-model="basedOnState.check.journaluppgifter"
+                                                                                         ng-change="toggleBaseradPaDate('journaluppgifter')">
+                        Journaluppgifter</label>
       <span wc-date-picker-field target-model="dates.journaluppgifter"
             dom-id="journaluppgifterDate"></span>
-    </div>
+                </div>
 
-    <!-- Annat -->
-    <div class="form-group form-inline">
-      <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
-                                                                           id="basedOnOther"
-                                                                           name="informationBasedOn.other"
-                                                                           ng-model="basedOnState.check.annanReferens"
-                                                                           ng-change="toggleBaseradPaDate('annanReferens')">
-        Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
-      </label>
-      <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate"></span>
-    </div>
-    <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
-      <span>Ange vad:</span><br>
+                <!-- Annat -->
+                <div class="form-group form-inline">
+                    <label class="checkbox inline-block" style="min-width: 250px"><input type="checkbox"
+                                                                                         id="basedOnOther"
+                                                                                         name="informationBasedOn.other"
+                                                                                         ng-model="basedOnState.check.annanReferens"
+                                                                                         ng-change="toggleBaseradPaDate('annanReferens')">
+                        Annat<span wc-enable-tooltip field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
+                    </label>
+                    <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate"></span>
+                </div>
+                <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
+                    <span>Ange vad:</span><br>
       <textarea id="informationBasedOnOtherText" name="informationBasedOn.otherText" rows='2'
                 class='form-control otherInformation' ng-model="model.annanReferensBeskrivning"
                 ng-change="viewState.limitOtherField('annanReferensBeskrivning')"></textarea>
-      <div class="counter">
-        Tecken kvar: {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}
-      </div>
-      <div class="info-transfer">
-        <span message key="fk7263.label.transfertoovrigt"></span>
-      </div>
-    </div>
 
-  </div>
+                    <div class="counter">
+                        Tecken kvar: {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}
+                    </div>
+                    <div class="info-transfer">
+                        <span message key="fk7263.label.transfertoovrigt"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>

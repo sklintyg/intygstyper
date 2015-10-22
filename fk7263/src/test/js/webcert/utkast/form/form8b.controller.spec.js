@@ -40,7 +40,8 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
     describe('#Intygdata gets done loading after controller is initialized', function() {
 
         beforeEach(angular.mock.inject([
-            '$compile', '$templateCache', '$controller', '$rootScope', '$http', '$httpBackend', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
+            '$compile', '$templateCache', '$controller', '$rootScope', '$http', '$httpBackend', '$log',
+            'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
             function( $compile, $templateCache, $controller, _$rootScope_, _$http_, _$httpBackend_, _$log_, _model_, _viewState_) {
                 $rootScope = _$rootScope_;
                 $scope = $rootScope.$new();
@@ -81,7 +82,8 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
     describe('#Intygdata gets done loading before controller is initialized', function() {
 
         beforeEach(angular.mock.inject([
-            '$compile', '$templateCache', '$controller', '$rootScope', '$http', '$httpBackend', '$log', 'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
+            '$compile', '$templateCache', '$controller', '$rootScope', '$http', '$httpBackend', '$log',
+            'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
             function( $compile, $templateCache, $controller, _$rootScope_, _$http_, _$httpBackend_, _$log_, _model_, _viewState_) {
                 $rootScope = _$rootScope_;
                 $scope = $rootScope.$new();

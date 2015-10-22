@@ -15,6 +15,7 @@ import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.CertificateStateHolder;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
 import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
@@ -30,7 +31,7 @@ import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 import com.google.common.base.Throwables;
 
-public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
+public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(GetTSBasResponderImpl.class);
 
@@ -39,21 +40,21 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
     private ConverterUtil converterUtil;
 
     @Autowired
-    TsBasModuleApi moduleApi;
+    private TsBasModuleApi moduleApi;
 
     @Override
     public GetTSBasResponseType getTSBas(String logicalAddress, GetTSBasType request) {
         GetTSBasResponseType response = new GetTSBasResponseType();
 
         String certificateId = request.getIntygsId();
-        String personNummer = request.getPersonId() != null ? request.getPersonId().getExtension() : null; 
+        Personnummer personNummer = request.getPersonId() != null ? new Personnummer(request.getPersonId().getExtension()) : null;
 
         if (certificateId == null || certificateId.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "non-existing certificateId"));
             return response;
         }
-        
+
         CertificateHolder certificate = null;
 
         try {
@@ -77,7 +78,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface{
         } catch (InvalidCertificateException | MissingConsentException e) {
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
         }
-        
+
         return response;
     }
 

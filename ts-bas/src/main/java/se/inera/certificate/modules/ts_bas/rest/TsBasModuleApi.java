@@ -261,7 +261,7 @@ public class TsBasModuleApi implements ModuleApi {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return persistedState.equals(currentState) == false;
+        return !persistedState.equals(currentState);
     }
 
     @Override

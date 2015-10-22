@@ -7,7 +7,7 @@ describe('ts-diabetes.IntygController', function() {
         IntygProxy = {
             isSentToTarget: function() {},
             isRevoked: function() {},
-            getIntyg : function(id, type, onSuccess, onError) {
+            getIntyg : function(id, type, onSuccess/*, onError*/) {
                 onSuccess({
                     contents: {
                         'id': '987654321',

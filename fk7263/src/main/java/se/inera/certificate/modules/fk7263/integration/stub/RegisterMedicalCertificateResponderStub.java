@@ -29,9 +29,9 @@ import se.skl.skltpservices.adapter.fk.regmedcert.Vard2FkValidator;
 public class RegisterMedicalCertificateResponderStub implements RegisterMedicalCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
-    
+
     private Vard2FkValidator validator = new Vard2FkValidator();
-    
+
     @Autowired
     private FkMedicalCertificatesStore fkMedicalCertificatesStore;
 
@@ -49,7 +49,7 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
                 throw new RuntimeException("A runtime exception");
             }
             Map<String, String> props = new HashMap<>();
-            props.put("Personnummer", utlatande.getGrundData().getPatient().getPersonId());
+            props.put("Personnummer", utlatande.getGrundData().getPatient().getPersonId().getPersonnummer());
             props.put("Makulerad", "NEJ");
 
             LOGGER.info("STUB Received request");

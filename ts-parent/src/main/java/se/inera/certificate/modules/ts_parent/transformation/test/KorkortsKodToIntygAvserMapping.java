@@ -52,7 +52,7 @@ public enum KorkortsKodToIntygAvserMapping {
 
     private String rekommendation;
 
-    private KorkortsKodToIntygAvserMapping(String intygAvser, String rekommendation) {
+    KorkortsKodToIntygAvserMapping(String intygAvser, String rekommendation) {
         this.intygAvser = intygAvser;
         this.rekommendation = rekommendation;
     }

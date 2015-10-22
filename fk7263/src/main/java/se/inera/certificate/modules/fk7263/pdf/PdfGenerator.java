@@ -307,10 +307,8 @@ public class PdfGenerator {
     }
 
     /**
-     * Marking this document as a print meant for the employer of the patient
-     * 
-     * @param pdfStamper
-     * @param watermarkText
+     * Marking this document as a print meant for the employer of the patient.
+     *
      * @throws DocumentException
      * @throws IOException
      */
@@ -398,8 +396,8 @@ public class PdfGenerator {
 
     private void fillPatientDetails() {
         fillText(PATIENT_NAME, intyg.getGrundData().getPatient().getFullstandigtNamn());
-        fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId());
-        fillText(PATIENT_SSN_2, intyg.getGrundData().getPatient().getPersonId());
+        fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
+        fillText(PATIENT_SSN_2, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
     }
 
     private void fillSignerNameAndAddress() {

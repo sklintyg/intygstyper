@@ -42,22 +42,32 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
 
     private Bedomning bedomning;
 
-    public String getId() { return id; }
+    @Override
+    public String getId() {
+        return id;
+    }
 
-    public void setId(String id) { this.id = id; }
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    @Override
     public GrundData getGrundData() {
-		return grundData;
-	}
+        return grundData;
+    }
 
-	public void setGrundData(GrundData grundData) {
-		this.grundData = grundData;
-	}
+    @Override
+    public void setGrundData(GrundData grundData) {
+        this.grundData = grundData;
+    }
 
-	public String getTyp() {
+    @Override
+    public String getTyp() {
         return typ;
     }
 
+    @Override
     public void setTyp(String typAvUtlatande) {
         this.typ = typAvUtlatande;
     }

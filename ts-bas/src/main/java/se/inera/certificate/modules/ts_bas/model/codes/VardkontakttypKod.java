@@ -15,7 +15,7 @@ public enum VardkontakttypKod {
 
     private String description;
 
-    private VardkontakttypKod(String code, String desc) {
+    VardkontakttypKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }

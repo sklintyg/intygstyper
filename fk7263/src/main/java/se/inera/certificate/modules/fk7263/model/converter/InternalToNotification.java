@@ -37,7 +37,7 @@
 
     public class InternalToNotification {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
+        private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
 
     private static final String INTYGSID_ROOT = "1.2.752.129.2.1.2.1";
 
@@ -58,8 +58,12 @@
     private static final String HANDELSE_CODESYSTEM_NAME = "kv_händelse";
 
     private static final String ARBETSFORMAGA_UNIT = "%";
+        public static final int NEDSATTNING_25 = 25;
+        public static final int NEDSATTNING_50 = 50;
+        public static final int NEDSATTNING_75 = 75;
+        public static final int NEDSATTNING_100 = 100;
 
-    @Autowired(required = false)
+        @Autowired(required = false)
     private WebcertModuleService moduleService;
 
     @Autowired
@@ -115,7 +119,7 @@
 
     private void decorateWithPatient(UtlatandeType utlatandeType, Utlatande utlatandeSource) {
         PersonId personId = new PersonId();
-        personId.setExtension(utlatandeSource.getGrundData().getPatient().getPersonId());
+        personId.setExtension(utlatandeSource.getGrundData().getPatient().getPersonId().getPersonnummer());
         personId.setRoot(PERSONNUMMER_ROOT);
 
         Patient patientType = new Patient();
@@ -145,9 +149,9 @@
     }
 
     private void decorateWithHandelse(UtlatandeType utlatandeType, NotificationMessage notificationMessage) {
-        
+
         HandelseType handelseTyp = notificationMessage.getHandelse();
-        
+
         Handelsekod handelseKod = new Handelsekod();
         handelseKod.setCodeSystem(HANDELSE_CODESYSTEM);
         handelseKod.setCodeSystemName(HANDELSE_CODESYSTEM_NAME);
@@ -155,11 +159,11 @@
 
         HandelsekodKodRestriktion handelseValue = convertToHandelsekod(handelseTyp);
         handelseKod.setCode(handelseValue.value());
-        
+
         Handelse handelseType = new Handelse();
         handelseType.setHandelsekod(handelseKod);
         handelseType.setHandelsetidpunkt(notificationMessage.getHandelseTid());
-        
+
         utlatandeType.setHandelse(handelseType);
     }
 
@@ -193,22 +197,22 @@
         diagnos.setDisplayName(diagnosBeskrivning);
 
         LOG.debug("Adding diagnos '{}, {}' from {}", diagnos.getCode(), diagnos.getDisplayName(), diagnosKodverk.getCodeSystemName());
-        
+
         utlatandeType.setDiagnos(diagnos);
     }
 
     private void decorateWithOptionalArbetsformagor(UtlatandeType utlatandeType, Utlatande utlatandeSource) {
-    
+
         List<Arbetsformaga> arbetsformagor = utlatandeType.getArbetsformaga();
-    
-        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed25(), 25);
-        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed50(), 50);
-        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed75(), 75);
-        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed100(), 100);
+
+        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed25(), NEDSATTNING_25);
+        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed50(), NEDSATTNING_50);
+        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed75(), NEDSATTNING_75);
+        addArbetsformaga(arbetsformagor, utlatandeSource.getNedsattMed100(), NEDSATTNING_100);
     }
 
     private void decorateWithFragorOchSvar(UtlatandeType utlatandeType, NotificationMessage notificationMessage) {
-        
+
         se.inera.certificate.modules.support.api.notification.FragorOchSvar fragaSvar = notificationMessage.getFragaSvar();
 
         FragorOchSvar fosType = new FragorOchSvar();
@@ -221,32 +225,32 @@
     }
 
     private void addArbetsformaga(List<Arbetsformaga> arbetsformagor, InternalLocalDateInterval nedsattningsPeriod, double nedsattningMed) {
-    
+
         if (nedsattningsPeriod == null) {
             LOG.debug("Could not find nedsattning for {}%", nedsattningMed);
             return;
         }
-        
+
         if (!nedsattningsPeriod.isValid()) {
             LOG.debug("Found nedsattning for {}%, but it is invalid", nedsattningMed);
             return;
         }
-        
+
         DatumPeriod datumPeriod = new DatumPeriod();
         datumPeriod.setFrom(nedsattningsPeriod.fromAsLocalDate());
         datumPeriod.setTom(nedsattningsPeriod.tomAsLocalDate());
-        
+
         // Calculates the REMAINING arbetsformaga based on the nedsattning of arbetsformaga
         PQ arbestformagaVarde = new PQ();
         arbestformagaVarde.setUnit(ARBETSFORMAGA_UNIT);
-        arbestformagaVarde.setValue(100 - nedsattningMed);
-        
+        arbestformagaVarde.setValue(NEDSATTNING_100 - nedsattningMed);
+
         Arbetsformaga arbetsformaga = new Arbetsformaga();
         arbetsformaga.setPeriod(datumPeriod);
         arbetsformaga.setVarde(arbestformagaVarde);
-    
+
         arbetsformagor.add(arbetsformaga);
-        
+
         LOG.debug("Added nedsattning for {}%", nedsattningMed);
     }
 

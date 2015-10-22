@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        'common.DateRangeService',
-        function($scope, $log, viewState, DateRangeService) {
+        'common.DateRangeService', 'fk7263.fmb.ViewStateService',
+        function($scope, $log, viewState, DateRangeService, fmbViewState) {
             'use strict';
             // private vars
             //var _dateRangeGroups = DateRangeGroupsService.build(_$scope);
@@ -10,6 +10,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             // scope
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
+
+            $scope.fmb = fmbViewState.state;
 
             // 1. onload
             // 2. on check change
@@ -20,10 +22,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             // 8b. Arbetsförmåga date management
             $scope.field8b = {
-                nedsattMed25 : _dateRangeService['nedsattMed25'],
-                nedsattMed50 : _dateRangeService['nedsattMed50'],
-                nedsattMed75 : _dateRangeService['nedsattMed75'],
-                nedsattMed100 : _dateRangeService['nedsattMed100'],
+                nedsattMed25 : _dateRangeService.nedsattMed25,
+                nedsattMed50 : _dateRangeService.nedsattMed50,
+                nedsattMed75 : _dateRangeService.nedsattMed75,
+                nedsattMed100 : _dateRangeService.nedsattMed100,
                 onChangeWorkStateCheck : function(nedsattModelName) {
                     $log.debug('------------------------ onChangeWorkStateCheck');
 
@@ -61,7 +63,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 }
                 return false;
 
-            }, function(newVal, oldVal) {
+            }, function(newVal/*, oldVal*/) {
                 if (doneLoading) {
                     return;
                 }

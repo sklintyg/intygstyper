@@ -30,7 +30,7 @@ public enum DiabetesKod {
     private String code;
 
 
-    private DiabetesKod(String code) {
+    DiabetesKod(String code) {
         this.code = code;
     }
 

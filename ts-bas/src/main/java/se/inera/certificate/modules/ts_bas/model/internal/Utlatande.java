@@ -62,10 +62,12 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
 
     private Bedomning bedomning;
 
+    @Override
     public String getTyp() {
         return typ;
     }
 
+    @Override
     public void setTyp(String typAvUtlatande) {
         this.typ = typAvUtlatande;
     }
@@ -85,9 +87,15 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
         return syn;
     }
 
-    public String getId() { return id; }
+    @Override
+    public String getId() {
+        return id;
+    }
 
-    public void setId(String id) { this.id = id; }
+    @Override
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public HorselBalans getHorselBalans() {
         if (horselBalans == null) {

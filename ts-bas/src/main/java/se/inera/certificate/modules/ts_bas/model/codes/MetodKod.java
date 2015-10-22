@@ -36,7 +36,7 @@ public enum MetodKod {
 
     private String description;
 
-    private MetodKod(String code, String desc) {
+    MetodKod(String code, String desc) {
         this.code = code;
         this.description = desc;
     }

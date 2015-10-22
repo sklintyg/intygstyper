@@ -40,7 +40,7 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
 
     private boolean wireTapped = false;
-    
+
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 

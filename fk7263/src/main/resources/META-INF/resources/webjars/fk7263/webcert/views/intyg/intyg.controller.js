@@ -9,7 +9,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             $scope.viewState = ViewState;
 
             // Check if the user used the special qa-link to get here.
-            $scope.isQaOnly = UserModel.isLakareUthopp();
+            $scope.isQaOnly = UserModel.isLakareUthopp() || UserModel.isVardAdministratorUthopp();
 
             // Page setup
             $scope.user = UserModel;
@@ -33,6 +33,9 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                             ViewState.common.intyg.printStatus = 'revoked';
                         } else {
                             ViewState.common.intyg.printStatus = 'signed';
+                        }
+                        if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
+                            ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
                         }
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';

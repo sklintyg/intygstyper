@@ -1,20 +1,33 @@
-<a id="anchor.aktivitetsbegransning" name="anchor.aktivitetsbegransning"></a>
-<div id="aktivitetsbegransning" wc-field field-label="fk7263.label.aktivitetsbegransning" field-number="5" wc-detect-animation group="smittskydd"
-     field-help-text="fk7263.helptext.aktivitetsbegransning" ng-hide="viewState.avstangningSmittskydd()"
-     field-has-errors="viewState.common.validationMessagesGrouped.aktivitetsbegransning" class="print-pagebreak-after field-fade">
+<div class="row" ng-hide="viewState.avstangningSmittskydd()" wc-detect-animation group="smittskydd">
+    <div class="col-md-6">
+        <a id="anchor.aktivitetsbegransning" name="anchor.aktivitetsbegransning"></a>
 
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.aktivitetsbegransning" id="validationMessages_aktivitetsbegransning">
-    <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.aktivitetsbegransning">
-        <span message key="{{message.message}}"></span>
-      </li>
-    </ul>
-  </div>
+        <div id="aktivitetsbegransning" wc-field field-label="fk7263.label.aktivitetsbegransning" field-number="5"
+             field-help-text="fk7263.helptext.aktivitetsbegransning"
+             field-has-errors="viewState.common.validationMessagesGrouped.aktivitetsbegransning"
+             class="print-pagebreak-after field-fade">
 
-  <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
-     target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-    försäkringsmedicinska beslutsstöd</a>
+            <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.aktivitetsbegransning"
+                 id="validationMessages_aktivitetsbegransning">
+                <ul>
+                    <li ng-repeat="message in viewState.common.validationMessagesGrouped.aktivitetsbegransning">
+                        <span message key="{{message.message}}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
+               target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
+                försäkringsmedicinska beslutsstöd</a>
                     <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10'
                               ng-model="model.aktivitetsbegransning" wc-maxlength ng-trim="false"
                               maxlength="{{viewState.inputLimits.aktivitetsbegransning}}"></textarea>
+        </div>
+    </div>
+    <div class="col-md-5 col-md-fmb-offset col-lg-fmb-offset">
+        <div ng-show="fmb.formData.FORM5">
+            <wc-fmb-help-display related-form-id="FALT5" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning"
+                                 help-text-contents="fmb.formData.FORM5"></wc-fmb-help-display>
+        </div>
+    </div>
 </div>

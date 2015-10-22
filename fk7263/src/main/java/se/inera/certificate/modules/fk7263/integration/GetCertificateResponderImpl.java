@@ -39,6 +39,7 @@ import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
 import se.inera.certificate.modules.support.api.CertificateHolder;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.rivtabp20.v1.GetCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
@@ -66,7 +67,7 @@ public class GetCertificateResponderImpl implements
         jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         objectFactory = new ObjectFactory();
     }
-    
+
     @Autowired
     private Fk7263ModuleApi moduleApi;
 
@@ -82,7 +83,6 @@ public class GetCertificateResponderImpl implements
         GetCertificateResponseType response = new GetCertificateResponseType();
 
         String certificateId = request.getCertificateId();
-        String nationalIdentityNumber = request.getNationalIdentityNumber();
 
         if (certificateId == null || certificateId.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");
@@ -90,16 +90,18 @@ public class GetCertificateResponderImpl implements
             return response;
         }
 
+        final String nationalIdentityNumber = request.getNationalIdentityNumber();
         if (nationalIdentityNumber == null || nationalIdentityNumber.length() == 0) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing nationalIdentityNumber '.");
             response.setResult(ResultOfCallUtil.failResult("Validation error: missing nationalIdentityNumber"));
             return response;
         }
+        Personnummer personnummer = new Personnummer(nationalIdentityNumber);
 
         CertificateHolder certificate = null;
-        
+
         try {
-            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber, true);
+            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, personnummer, true);
             if (certificate.isRevoked()) {
                 response.setResult(ResultOfCallUtil.infoResult(String.format("Certificate '%s' has been revoked", certificateId)));
             } else {
@@ -116,7 +118,7 @@ public class GetCertificateResponderImpl implements
 
     protected void attachCertificateDocument(CertificateHolder certificate, GetCertificateResponseType response) {
         try {
-            
+
             // Create the Document
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -138,5 +140,4 @@ public class GetCertificateResponderImpl implements
         }
     }
 
-    
 }

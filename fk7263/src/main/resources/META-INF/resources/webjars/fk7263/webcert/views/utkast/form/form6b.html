@@ -1,18 +1,21 @@
-<div wc-field field-label="fk7263.label.atgarder" field-number="6b" wc-detect-animation
-     ng-hide="viewState.avstangningSmittskydd()" field-help-text="fk7263.helptext.atgarder"
-     class="print-pagebreak-after field-fade">
-  <div class="form-group">
-    <label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange
-      vilken)</label>
+<div class="row" ng-hide="viewState.avstangningSmittskydd()" wc-detect-animation>
+    <div class="col-md-6">
+        <div wc-field field-label="fk7263.label.atgarder" field-number="6b"
+             field-help-text="fk7263.helptext.atgarder" class="print-pagebreak-after field-fade">
+            <div class="form-group">
+                <label class="control-label">Planerad eller pågående behandling eller åtgärd inom sjukvården (ange
+                    vilken)</label>
                       <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='2'
                                 ng-model="model.atgardInomSjukvarden" wc-maxlength ng-trim="false"
                                 maxlength="{{viewState.inputLimits.atgardInomSjukvarden}}"></textarea>
-  </div>
+            </div>
 
-  <div class="form-group">
-    <label class="control-label">Annan åtgärd (ange vilken)</label>
+            <div class="form-group">
+                <label class="control-label">Annan åtgärd (ange vilken)</label>
                       <textarea id="measuresOther" class="form-control" name="measures.other" rows='2'
                                 ng-model="model.annanAtgard" wc-maxlength ng-trim="false"
                                 maxlength="{{viewState.inputLimits.annanAtgard}}"></textarea>
-  </div>
+            </div>
+        </div>
+    </div>
 </div>

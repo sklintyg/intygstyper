@@ -39,7 +39,7 @@ public enum ObservationsKod  {
     /** Patienten har kunskap om lämpliga åtgärder vid hypoglykemi (OBS19). */
     KUNSKAP_ATGARD_HYPOGLYKEMI("OBS19", "Patienten har kunskap om lämpliga åtgärder vid hypoglykemi", OBSERVATIONER),
 
-    /** Förekomst av hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) (OBS20). */
+    /** Förekomst av hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symtom) (OBS20). */
     HYPOGLYKEMIER_MED_TECKEN_PA_NEDSATT_HJARNFUNKTION("OBS20",
             "Förekomst av hypoglykemier med tecken på nedsatt hjärnfunktion", OBSERVATIONER),
     /** Patienten saknar förmåga att känna varningstecken på hypoglykemi (OBS21). */
@@ -69,7 +69,7 @@ public enum ObservationsKod  {
 
     private final String codeSystemVersion;
 
-    private ObservationsKod(String code, String description, Kodverk kodverk) {
+    ObservationsKod(String code, String description, Kodverk kodverk) {
         this.code = code;
         this.description = description;
         this.codeSystem = kodverk.getCodeSystem();

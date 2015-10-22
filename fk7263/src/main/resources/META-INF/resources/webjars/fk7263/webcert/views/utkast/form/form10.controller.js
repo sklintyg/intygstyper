@@ -83,7 +83,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                     $scope.radioGroups.prognos = prognosStates.UNKNOWN;
                     break;
                 default :
-                    $scope.radioGroups.prognos = undefined;
+                    $scope.radioGroups.prognos = prognosStates.YES;
                 }
             }
 

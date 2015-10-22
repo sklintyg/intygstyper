@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TSCertificateStoreRestApi {
     @Autowired
     private TSCertificateStore certificateStore;
-    
-    @Autowired(required=false)
-    private RegisterCertificateResponderStub stub; 
+
+    @Autowired(required = false)
+    private RegisterCertificateResponderStub stub;
 
     @GET
     @Path("/certificates")
@@ -25,16 +25,16 @@ public class TSCertificateStoreRestApi {
     public Map<String, Map<String, String>> getAll() {
         return certificateStore.getAll();
     }
-    
+
     @DELETE
     @Path("/certificates")
     public void clear() {
         certificateStore.clear();
-    }    
-    
+    }
+
     @POST
     @Path("/certificates")
     public void fakeException(@QueryParam("fakeException") boolean fakeException) {
         stub.setThrowException(fakeException);
-    }    
+    }
 }

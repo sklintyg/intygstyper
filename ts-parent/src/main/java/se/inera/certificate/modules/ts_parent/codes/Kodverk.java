@@ -17,7 +17,7 @@ public enum Kodverk {
     /** kv_id_kontroll (e7cc8f30-a353-4c42-b17a-a189b6876647). */
     ID_KONTROLL("e7cc8f30-a353-4c42-b17a-a189b6876647", "kv_id_kontroll", null);
 
-    private Kodverk(String codeSystem, String codeSystemName, String codeSystemVersion) {
+    Kodverk(String codeSystem, String codeSystemName, String codeSystemVersion) {
         this.codeSystem = codeSystem;
         this.codeSystemName = codeSystemName;
         this.codeSystemVersion = codeSystemVersion;
