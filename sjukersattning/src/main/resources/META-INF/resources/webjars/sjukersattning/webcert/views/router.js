@@ -29,25 +29,11 @@ angular.module('sjukersattning').config(function($stateProvider) {
                     controller: 'common.UtkastFooter'
                 },
 
-                'form1@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form1.html',
-                    controller: 'sjukersattning.EditCert.Form1Ctrl'
-                },
-
                 'form2@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form2.html',
                     controller: 'sjukersattning.EditCert.Form2Ctrl'
                 },
 
-                'form3@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form3.html',
-                    controller: 'sjukersattning.EditCert.Form3Ctrl'
-                },
-
-                'form4@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form4.html',
-                    controller: 'sjukersattning.EditCert.Form4Ctrl'
-                },
 
                 'form4b@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form4b.html',
