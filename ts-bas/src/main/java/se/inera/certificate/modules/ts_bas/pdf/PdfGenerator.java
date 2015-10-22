@@ -204,9 +204,10 @@ public class PdfGenerator {
 
     public String generatePdfFilename(Utlatande utlatande) {
         Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
+        final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
         String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
 
-        return String.format("lakarutlatande_%s_-%s.pdf", personId, certificateSignatureDate);
+        return String.format("lakarutlatande_%s_-%s.pdf", personnummerString, certificateSignatureDate);
     }
 
     public byte[] generatePDF(Utlatande utlatande, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {

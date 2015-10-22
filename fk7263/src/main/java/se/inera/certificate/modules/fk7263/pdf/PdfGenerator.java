@@ -15,6 +15,7 @@ import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.ApplicationOrigin;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -354,7 +355,9 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename() {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getGrundData().getPatient().getPersonId().getPersonnummer(), intyg.getGiltighet()
+        Personnummer personId = intyg.getGrundData().getPatient().getPersonId();
+        final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
+        return String.format("lakarutlatande_%s_%s-%s.pdf", personnummerString, intyg.getGiltighet()
                 .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
