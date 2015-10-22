@@ -44,46 +44,59 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             // this will be refactored to a service later ,also pristine and dirty will be added
             // init values on load, id: unique id made up of typ+counter, isSelected if user prev has selected something on this u.type
             $scope.additionalSupplements = {
-                supplement0: { id: 'supplement0', selectedType: 'default', dateCreated: null, willSupplyAttachment: false, selectedOrder: 0 },
-
-
+                supplement0: { id: 'supplement0',
+                    selectedType: 'default',
+                    dateCreated: null,
+                    willSupplyAttachment: false,
+                    selectedOrder: 0,
+                    isLatest: true },
             };
 
 
 
             // search and replace the model when supplement dropdown change
            $scope.onUnderlagChange = function(underlag) {
-               // Iterate and check precence of underlag
                if (underlag.selectedType !== 'default') {
                    // set supplement 1 to new underlag type
                    registerDateParsersForSupplementals($scope);
+                   if(underlag) {
+                       underlag.selectedType = underlag.selectedType;
+                       underlag.dateCreated = underlag.dateCreated;
+                       underlag.willSupplyAttachment = underlag.willSupplyAttachment;
 
-                   if($scope.additionalSupplements[underlag.id]) {
-                       $scope.additionalSupplements[underlag.id].selectedType = underlag.selectedType;
-                       $scope.additionalSupplements[underlag.id].dateCreated = underlag.dateCreated;
-                       //$log.info("current dateCreated: ", underlag.dateCreated);
-                       $scope.additionalSupplements[underlag.id].willSupplyAttachment = underlag.willSupplyAttachment;
-                       $log.info("1.obje sel: ",  $scope.additionalSupplements[underlag.id].willSupplyAttachment);
-                       $log.info("2.current willSupplyAttachment: ", underlag.willSupplyAttachment);
-                       //registerDateParsersForSupplementals($scope);
-                       // trigger date parser?
+
+
                    } else {
                        throw("no prop found with id" + underlag.id);
                    }
-                   // get the current supplement by its string id
-                  $log.info("current supplement sel: ", $scope.additionalSupplements[underlag.id]);
+/*
+                   var willSupplyYESDirty = $scope.form2['willSupplyAttachmentRadioYes' + underlag.id].$dirty;
+                   var willSupplyNODirty = $scope.form2['willSupplyAttachmentRadioNo' + underlag.id].$dirty;
+                   console.log("Yes dirt?" + JSON.stringify(willSupplyYESDirty));
+                   console.log("No dirt?" + JSON.stringify(willSupplyNODirty));
+
+                   if(underlag.selectedType !== '' && underlag.dateCreated !== null &&
+                       ( willSupplyYESDirty || willSupplyNODirty) ) {
+                       underlag.isComplete = true;
+                   } else {
+                       underlag.isComplete = false;
+                   }*/
+
                }
             }
 
             $scope.createUnderlag = function(currentSelectedNum) {
-                currentSelectedNum++;
-                var newId = 'supplement' + currentSelectedNum;
+                // first check for completion of current row to set it as latest = False, there can only be one
+                $scope.additionalSupplements['supplement' + currentSelectedNum].isLatest = false;
+                var newNumber = currentSelectedNum + 1;
+                var newId = 'supplement' + newNumber;
                 $scope.additionalSupplements[newId] = {
                                                         id: newId,
                                                         selectedType: 'default',
                                                         dateCreated: null,
                                                         willSupplyAttachment: false,
-                                                        selectedOrder: currentSelectedNum
+                                                        selectedOrder: newNumber,
+                                                        isLatest : true
                                                       };
                 registerDateParsersForSupplementals($scope);
             }
@@ -102,8 +115,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                     { "sortValue": 9, "id": "utredningFranVardinrattningUtomlands", label: "Utredning från vårdinrättning utomlands" },
                     { "sortValue": 10, "id": "ovrigt", label: "Övrigt" }
                 ];
-                $scope.initDataSupplements = { "underlagsType" : "default" , "fkCode" : "", "originalCreationDate" : "", "willSendAttachments" : false };
-                $scope.underlagSelect.push($scope.initDataSupplements);
             };
 
             // Fält 2. Based on handling
@@ -272,18 +283,13 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                         // remove the datepickers default parser
                         modelProperty.$parsers.unshift(function(viewValue) {
                             fn(type, viewValue);
-                      //      console.log("in first unshift: " + viewValue);
+
                             return viewValue;
                         });
 
                         modelProperty.$parsers.unshift(function(viewValue) {
-                            // always set the model value
-                        //    console.log("iso before convert" + viewValue);
                             var isoValue = dateUtils.convertDateToISOString(viewValue);
-                           // $scope.additionalSupplements[type].dateCreated = isoValue;  //uncomment later when we have a model.
-                          //  console.log("iso" + isoValue);
-                          //  console.log("iso is set on scope to: "  + $scope.additionalSupplements[type].dateCreated);
-                            return isoValue;
+                          return isoValue;
 
                         });
                     }

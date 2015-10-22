@@ -82,7 +82,7 @@
 
      <div class="form-group form-inline bottom-padding-small" ng-show="radioMedical.checked">
          <div class="underlagItem" style="padding-bottom: 30px;" ng-repeat="(underlagIndex, underlag) in additionalSupplements">
-
+                <span> {{ $index + 1   }}</span>
               <select class="form-control" name="andraUnderlag"
                     data-ng-model="underlag.selectedType" ng-change="onUnderlagChange(underlag)"
                     data-ng-options="item.id as item.label for item in $parent.underlagSelect"></select>
@@ -93,22 +93,22 @@
               <div class="willSupplyWrapper pull-right">
               <label class="control-label inline-block bold" style="padding-right: 10px;">Bifogas </label>
               <label class="radio-inline">
-                  <input id="willSupplyAttachmentYES-{{ underlag.id }}" name="willSupplyAttachmentRadio-{{ underlag.id }}"
+                  <input id="willSupplyAttachmentYES-{{ underlag.id }}" name="willSupplyAttachmentRadioYes{{ underlag.id }}"
                          type="radio" ng-value="true" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment">Ja
               </label>
               <label class="radio-inline">
-                  <input id="willSupplyAttachmentNO-{{ underlag.id }}" name="willSupplyAttachmentRadio-{{ underlag.id }}"
+                  <input id="willSupplyAttachmentNO-{{ underlag.id }}" name="willSupplyAttachmentRadioNo{{ underlag.id }}"
                          type="radio" ng-value="false" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment" checked="checked">Nej
               </label>
 
               </div>
-
              <br/>
-
-             <div class="col-xs-12" style="padding: 5px 0;">
+<!-- todo: these hard coded numbers should be replaced and places in valiation secton of viewmodel... -->
+             <div class="col-xs-12" style="padding: 5px 0;" ng-show="underlag.isLatest && underlag.selectedOrder < 9">
                  <a href ng-click="createUnderlag(underlag.selectedOrder)">Lägg till ytterligare underlag</a>
+
              </div>
-             <!--span> selected radio: underlag.willSendAttachments </span-->
+             <span ng-if="underlag.selectedOrder === 9">You have reached to maximum of 10 selected underlag...</span>
          </div>
 
 
