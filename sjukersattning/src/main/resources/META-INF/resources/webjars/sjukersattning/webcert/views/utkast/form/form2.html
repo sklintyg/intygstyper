@@ -64,18 +64,56 @@
       </div>
       <div class="form-group form-inline">
           <label class="radio-inline">
-                <input id="andraMedicinskaUtredningar1" name="andraMedicinskaUtredningar" type="radio" value="YES"
-                        ng-model="radioMedical.status">Ja
+                <input id="andraMedicinskaUtredningarYes" name="andraMedicinskaUtredningar" type="radio" ng-value="true"
+                        ng-model="radioMedical.checked">Ja
           </label>
           <label class="radio-inline">
-              <input id="andraMedicinskaUtredningar2" name="andraMedicinskaUtredningar" type="radio" value="NO"
-                     ng-model="radioMedical.status">Nej
+              <input id="andraMedicinskaUtredningarNo" name="andraMedicinskaUtredningar" type="radio" ng-value="false"
+                     ng-model="radioMedical.checked" checked="checked">Nej
           </label>
       </div>
-      <!-- outcomment this for prod
-      <div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutModelConsole()">dump model</button></div>
-      <div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutViewState()">dump viewstate</button></div>
-      -->
+      <!-- outcomment this for prod  -->
+      <!--div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutModelConsole()">dump model</button></div>
+      <div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutViewState()">dump viewstate</button></div-->
+
+
+        <!--select id="intygType" class="form-control" name="intygType" data-ng-model="intygType"
+                data-ng-options="type.id as type.label for type in certTypes" wc-focus-me="focusFirstInput"></select-->
+
+     <div class="form-group form-inline bottom-padding-small" ng-show="radioMedical.checked">
+         <div class="underlagItem" style="padding-bottom: 30px;" ng-repeat="(underlagIndex, underlag) in additionalSupplements">
+
+              <select class="form-control" name="andraUnderlag"
+                    data-ng-model="underlag.selectedType" ng-change="onUnderlagChange(underlag)"
+                    data-ng-options="item.id as item.label for item in $parent.underlagSelect"></select>
+
+              <span wc-date-picker-field target-model="underlag.dateCreated" dom-id="{{ underlag.id }}-Date"
+                    ng-change="onUnderlagChange(underlag)" ng-model="underlag.dateCreated"></span>
+
+              <div class="willSupplyWrapper pull-right">
+              <label class="control-label inline-block bold" style="padding-right: 10px;">Bifogas </label>
+              <label class="radio-inline">
+                  <input id="willSupplyAttachmentYES-{{ underlag.id }}" name="willSupplyAttachmentRadio-{{ underlag.id }}"
+                         type="radio" ng-value="true" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment">Ja
+              </label>
+              <label class="radio-inline">
+                  <input id="willSupplyAttachmentNO-{{ underlag.id }}" name="willSupplyAttachmentRadio-{{ underlag.id }}"
+                         type="radio" ng-value="false" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment" checked="checked">Nej
+              </label>
+
+              </div>
+
+             <br/>
+
+             <div class="col-xs-12" style="padding: 5px 0;">
+                 <a href ng-click="createUnderlag(underlag.selectedOrder)">Lägg till ytterligare underlag</a>
+             </div>
+             <!--span> selected radio: underlag.willSendAttachments </span-->
+         </div>
+
+
+
+      </div>
 
 
 
