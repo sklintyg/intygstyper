@@ -79,7 +79,7 @@ public class TransportToInternal {
 
     private static void handleReferens(SjukersattningUtlatande utlatande, Svar svar) {
         InternalDate referensDatum = null;
-        RespConstants.ReferensTyp referensTyp = null;
+        RespConstants.ReferensTyp referensTyp = ReferensTyp.UNKNOWN;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case REFERENSDATUM_DELSVAR_ID:
@@ -104,6 +104,8 @@ public class TransportToInternal {
         case JOURNAL:
             utlatande.setJournaluppgifter(referensDatum);
             break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
@@ -245,47 +247,48 @@ public class TransportToInternal {
     private static void handleAktivitetsformaga(SjukersattningUtlatande utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case AKTIVITETSFORMAGA_DELSVAR_ID:
-                utlatande.setVadPatientenKanGora(getSvarContent(delsvar, String.class));
-                return;
-            default:
-                throw new IllegalArgumentException();
+        case AKTIVITETSFORMAGA_DELSVAR_ID:
+            utlatande.setVadPatientenKanGora(getSvarContent(delsvar, String.class));
+            return;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handlePrognos(SjukersattningUtlatande utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case PROGNOS_DELSVAR_ID:
-                utlatande.setPrognosNarPatientKanAterga(getSvarContent(delsvar, String.class));
-                return;
-            default:
-                throw new IllegalArgumentException();
+        case PROGNOS_DELSVAR_ID:
+            utlatande.setPrognosNarPatientKanAterga(getSvarContent(delsvar, String.class));
+            return;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleOvrigt(SjukersattningUtlatande utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case OVRIGT_DELSVAR_ID:
-                utlatande.setKommentar(getSvarContent(delsvar, String.class));
-                return;
-            default:
-                throw new IllegalArgumentException();
+        case OVRIGT_DELSVAR_ID:
+            utlatande.setKommentar(getSvarContent(delsvar, String.class));
+            return;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleOnskarKontakt(SjukersattningUtlatande utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case KONTAKT_ONSKAS_DELSVAR_ID:
-                utlatande.setKontaktMedFk(Boolean.valueOf(getSvarContent(delsvar, String.class)));
-                return;
-            default:
-                throw new IllegalArgumentException();
+        case KONTAKT_ONSKAS_DELSVAR_ID:
+            utlatande.setKontaktMedFk(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+            return;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static <T> T getSvarContent(Delsvar delsvar, Class<T> clazz) {
         Object content = delsvar.getContent().get(0);
         if (content instanceof JAXBElement) {
@@ -321,7 +324,6 @@ public class TransportToInternal {
         vardenhet.setEnhetsnamn(source.getSkapadAv().getEnhet().getEnhetsnamn());
         vardenhet.setTelefonnummer(source.getSkapadAv().getEnhet().getTelefonnummer());
         vardenhet.setVardgivare(getVardgivare(source));
-
         return vardenhet;
     }
 

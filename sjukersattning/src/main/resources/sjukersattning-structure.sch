@@ -11,14 +11,12 @@
   <iso:ns prefix="tp" uri="urn:riv:clinicalprocess:healthcond:certificate:types:2"/>
 
   <!-- TODO: tilläggsfrågor -->
-  <!-- TODO: arbetstidsfördelning endast vid icke-100% à la Emmys mail -->
-  <!-- TODO: inga dubletter av åtgärds-id:n i enlighet med Marcus fråga -->
   <!-- TODO: begränsa värden i alla kodverk från FK -->
 
   <iso:pattern>
     <iso:rule context="//rg:intyg">
       <iso:assert test="count(gn:svar[@id='10']) ge 1 and count(gn:svar[@id='10']) le 3">
-        Ett 'intyg' får inte ha mer än tre referenser
+        Ett 'intyg' måste ha minst en men inte fler än tre 'referenser'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='27']) = 1">
         Ett 'intyg' måste ha en 'kännedom om patient'

@@ -66,7 +66,7 @@ public class RespConstants {
     public static final String KONTAKT_ONSKAS_DELSVAR_ID = "21.1";
 
     public enum ReferensTyp {
-        UNDERSOKNING(1), TELEFONKONTAKT(2), JOURNAL(3);
+        UNDERSOKNING(1), TELEFONKONTAKT(2), JOURNAL(3), UNKNOWN(-1);
 
         public final int transport;
 
