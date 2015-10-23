@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
+import com.google.common.base.Preconditions;
 import se.inera.certificate.model.InternalDate;
 
 import java.util.Objects;
@@ -61,26 +62,43 @@ public class Underlag {
     }
 
     public enum UnderlagsTyp {
-        NEUROPSYKIATRISKT_UTLATANDE("Neuropsykiatriskt utlåtande"),
-        UNDERLAG_FRAN_HABILITERINGEN("Underlag från habiliteringen"),
-        UNDERLAG_FRAN_ARBETSTERAPEUT("Underlag från arbetsterapeut"),
-        UNDERLAG_FRAN_FYSIOTERAPEUT("Underlag från fysioterapeut"),
-        UNDERLAG_FRAN_LOGOPED("Underlag från logoped"),
-        UNDERLAG_FRANPSYKOLOG("Underlag från psykolog"),
-        UNDERLAG_FRANFÖRETAGSHALSOVARD("Underlag från företagshälsovård"),
-        UTREDNING_AV_ANNAN_SPECIALISTKLINIK("Utredning av annan specialistklinik"),
-        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS("Utredning från vårdinrättning utomlands"),
-        OVRIGT("Övrigt");
+        NEUROPSYKIATRISKT_UTLATANDE(1, "Neuropsykiatriskt utlåtande"),
+        UNDERLAG_FRAN_HABILITERINGEN(2, "Underlag från habiliteringen"),
+        UNDERLAG_FRAN_ARBETSTERAPEUT(3, "Underlag från arbetsterapeut"),
+        UNDERLAG_FRAN_FYSIOTERAPEUT(4, "Underlag från fysioterapeut"),
+        UNDERLAG_FRAN_LOGOPED(5, "Underlag från logoped"),
+        UNDERLAG_FRANPSYKOLOG(6, "Underlag från psykolog"),
+        UNDERLAG_FRANFÖRETAGSHALSOVARD(7, "Underlag från företagshälsovård"),
+        UTREDNING_AV_ANNAN_SPECIALISTKLINIK(8, "Utredning av annan specialistklinik"),
+        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS(9, "Utredning från vårdinrättning utomlands"),
+        OVRIGT(10, "Övrigt"),
+        OKAND(-1, "Okand");
 
+        private final int id;
         private final String label;
 
-        UnderlagsTyp(String label) {
+        UnderlagsTyp(int id, String label) {
+            this.id = id;
             this.label = label;
+        }
+
+        public int getId() {
+            return id;
         }
 
         public String getLabel() {
             return label;
         }
+
+        public static UnderlagsTyp fromId(int id) {
+            for (UnderlagsTyp typ : values()) {
+                if (typ.id == id) {
+                    return typ;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+
     }
 
 }

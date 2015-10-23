@@ -9,6 +9,7 @@ import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
@@ -34,6 +35,9 @@ public class TransportToInternal {
                 break;
             case OVRIGKANNEDOM_SVAR_ID:
                 handleOvrigKannedom(utlatande, svar);
+                break;
+            case UNDERLAG_SVAR_ID:
+                handleUnderlag(utlatande, svar);
                 break;
             case HUVUDSAKLIG_ORSAK_SVAR_ID:
                 handleHuvudsakligOrsak(utlatande, svar);
@@ -119,6 +123,30 @@ public class TransportToInternal {
         default:
             throw new IllegalArgumentException();
         }
+    }
+
+    private static void handleUnderlag(SjukersattningUtlatande utlatande, Svar svar) {
+        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
+        InternalDate date = null;
+        Boolean attachment = null;
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+            case UNDERLAG_TYP_DELSVAR_ID:
+                CVType typ = getSvarContent(delsvar, CVType.class);
+                underlagsTyp = Underlag.UnderlagsTyp.fromId(Integer.parseInt(typ.getCode()));
+                break;
+            case UNDERLAG_DATUM_DELSVAR_ID:
+                date = new InternalDate(getSvarContent(delsvar, String.class));
+                break;
+            case UNDERLAG_BILAGA_DELSVAR_ID:
+                String svarString = getSvarContent(delsvar, String.class);
+                attachment = Boolean.parseBoolean(svarString);
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
+        }
+        utlatande.getUnderlag().add(new Underlag(underlagsTyp, date, attachment));
     }
 
     private static void handleHuvudsakligOrsak(SjukersattningUtlatande utlatande, Svar svar) {

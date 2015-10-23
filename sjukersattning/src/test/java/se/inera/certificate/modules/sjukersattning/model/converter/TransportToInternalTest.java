@@ -8,6 +8,7 @@ import org.junit.Test;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuilder;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public class TransportToInternalTest {
@@ -26,6 +27,8 @@ public class TransportToInternalTest {
         utlatande.setGrundData(IntygGrundDataBuilder.getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
+        utlatande.getUnderlag().add(new Underlag(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
+        utlatande.getUnderlag().add(new Underlag(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), true));
         utlatande.setDiagnosKod1("S47");
         utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
         utlatande.setDiagnosYtterligareBeskrivning1("Måste få hjälp!");

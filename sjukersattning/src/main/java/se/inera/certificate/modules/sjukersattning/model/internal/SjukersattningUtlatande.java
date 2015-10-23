@@ -1,13 +1,12 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
-import org.joda.time.LocalDate;
-import se.inera.certificate.model.InternalDate;
-import se.inera.certificate.model.common.internal.Utlatande;
-import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import se.inera.certificate.model.InternalDate;
+import se.inera.certificate.model.common.internal.Utlatande;
+import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
 public final class SjukersattningUtlatande extends Utlatande {
 
@@ -55,7 +54,6 @@ public final class SjukersattningUtlatande extends Utlatande {
     public SjukersattningUtlatande() {
         super();
         setTyp(SjukersattningEntryPoint.MODULE_ID);
-        underlag.add(new Underlag(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
     }
 
     @Override
@@ -71,6 +69,7 @@ public final class SjukersattningUtlatande extends Utlatande {
                 Objects.equals(this.telefonkontaktMedPatienten, that.telefonkontaktMedPatienten) &&
                 Objects.equals(this.journaluppgifter, that.journaluppgifter) &&
                 Objects.equals(this.kannedomOmPatient, that.kannedomOmPatient) &&
+                Objects.deepEquals(this.underlag, that.underlag) &&
                 Objects.equals(this.diagnosKod1, that.diagnosKod1) &&
                 Objects.equals(this.diagnosBeskrivning1, that.diagnosBeskrivning1) &&
                 Objects.equals(this.diagnosYtterligareBeskrivning1, that.diagnosYtterligareBeskrivning1) &&
@@ -96,7 +95,7 @@ public final class SjukersattningUtlatande extends Utlatande {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.undersokningAvPatienten, this.telefonkontaktMedPatienten, this.journaluppgifter, this.kannedomOmPatient,
+                this.undersokningAvPatienten, this.telefonkontaktMedPatienten, this.journaluppgifter, this.kannedomOmPatient, this.underlag,
                 this.diagnosKod1, this.diagnosBeskrivning1, this.diagnosYtterligareBeskrivning1,
                 this.diagnosKod2, this.diagnosBeskrivning2, this.diagnosYtterligareBeskrivning2,
                 this.diagnosKod3, this.diagnosBeskrivning3, this.diagnosYtterligareBeskrivning3,

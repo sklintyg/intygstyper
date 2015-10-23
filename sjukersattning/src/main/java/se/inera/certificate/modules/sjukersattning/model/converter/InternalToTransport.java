@@ -16,6 +16,7 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
@@ -133,6 +134,14 @@ public class InternalToTransport {
                     withDelsvar(OVRIGKANNEDOM_DELSVAR_ID, source.getKannedomOmPatient().asLocalDate().toString()).build());
         }
 
+        for (Underlag underlag : source.getUnderlag()) {
+            svars.add(
+                    aSvar(UNDERLAG_SVAR_ID).withDelsvar(UNDERLAG_TYP_DELSVAR_ID,
+                            aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getId().getId()), underlag.getId().getLabel())).
+                            withDelsvar(UNDERLAG_DATUM_DELSVAR_ID, underlag.getDatum().asLocalDate().toString()).
+                            withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID, Boolean.toString(underlag.isAttachment())).build());
+
+        }
         svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
                 withDelsvar(DIAGNOS_DELSVAR_ID, aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod1(), source.getDiagnosBeskrivning1())).
                 withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, source.getDiagnosYtterligareBeskrivning1()).build());
@@ -161,16 +170,23 @@ public class InternalToTransport {
 
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
 
-        svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
+        if (source.getPagaendeBehandling() != null) {
+            svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
+        }
 
-        svars.add(aSvar(AVSLUTADBEHANDLING_SVAR_ID).withDelsvar(AVSLUTADBEHANDLING_DELSVAR_ID, source.getAvslutadBehandling()).build());
+        if (source.getAvslutadBehandling() != null) {
+            svars.add(aSvar(AVSLUTADBEHANDLING_SVAR_ID).withDelsvar(AVSLUTADBEHANDLING_DELSVAR_ID, source.getAvslutadBehandling()).build());
+        }
 
-        svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
+        if (source.getPlaneradBehandling() != null) {
+            svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
+        }
 
         svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getVadPatientenKanGora()).build());
 
         svars.add(aSvar(PROGNOS_SVAR_ID).withDelsvar(PROGNOS_DELSVAR_ID, source.getPrognosNarPatientKanAterga()).build());
 
+        // TODO
         // Arbetslivsinriktade åtgärder svars.add(aSvar("18").withDelsvar("18.1", source.))
 
         svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getKommentar()).build());

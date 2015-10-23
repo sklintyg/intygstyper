@@ -18,6 +18,7 @@ public class RespConstants {
     public static final String INTYP_TYP_CODE_SYSTEM = "kv_utlåtandetyp_intyg";
     public static final String PERSON_ID_CODE_SYSTEM = "1.2.752.129.2.1.3.3";
     public static final String FUNKTIONSOMRADE_CODE_SYSTEM = "KV_FKMU_0XXX";
+    public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_1XXX";
 
     public static final String SMITTA_SVAR_ID = "2";
     public static final String SMITTA_DELSVAR_ID = "2.1";
@@ -29,6 +30,10 @@ public class RespConstants {
     public static final String OVRIGKANNEDOM_SVAR_ID = "27";
     public static final String OVRIGKANNEDOM_DELSVAR_ID = "27.1";
     public static final String REFERENSDATUM_DELSVAR_ID = "10.2";
+    public static final String UNDERLAG_SVAR_ID = "28";
+    public static final String UNDERLAG_TYP_DELSVAR_ID = "28.1";
+    public static final String UNDERLAG_DATUM_DELSVAR_ID = "28.2";
+    public static final String UNDERLAG_BILAGA_DELSVAR_ID = "28.3";
     public static final String HUVUDSAKLIG_ORSAK_SVAR_ID = "3";
     public static final String DIAGNOS_DELSVAR_ID = "3.1";
     public static final String DIAGNOS_BESKRIVNING_DELSVAR_ID = "3.2";
