@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 
@@ -8,7 +10,6 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.stream.StreamSource;
 
-import com.helger.schematron.svrl.SVRLHelper;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
@@ -17,15 +18,15 @@ import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuilder;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateValidator;
 import se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningValidator;
+import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 import com.google.common.base.Charsets;
+import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLWriter;
-
-import static org.junit.Assert.assertEquals;
 
 public class InternalToTransportTest {
     @Test
@@ -55,7 +56,8 @@ public class InternalToTransportTest {
         utlatande.setDiagnosKodsystem1("PP-VS1");
         utlatande.setBehandlingsAtgardKod1("ABC");
         utlatande.setBehandlingsAtgardBeskrivning1("Kristallterapi");
-        utlatande.setFunktionsnedsattning("Kan inte smida");
+        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"));
+        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen"));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");

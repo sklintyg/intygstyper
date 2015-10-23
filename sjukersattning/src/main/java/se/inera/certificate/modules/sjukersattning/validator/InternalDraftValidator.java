@@ -108,11 +108,6 @@ public class InternalDraftValidator {
 
     private void validateFunktionsnedsattning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
-        String funktionsnedsattning = utlatande.getFunktionsnedsattning();
-        if (StringUtils.isBlank(funktionsnedsattning)) {
-            addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.funktionsnedsattning.missing");
-        }
     }
 
     private void validateDiagnose(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {

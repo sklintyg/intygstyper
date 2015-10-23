@@ -38,7 +38,7 @@ public final class SjukersattningUtlatande extends Utlatande {
     private String diagnostisering;
     private boolean nyBedomningDiagnos;
 
-    private String funktionsnedsattning;
+    private List<Funktionsnedsattning> funktionsnedsattnings = new ArrayList<>();
 
     private String aktivitetsbegransning;
 
@@ -83,7 +83,7 @@ public final class SjukersattningUtlatande extends Utlatande {
                 Objects.equals(this.behandlingsAtgardBeskrivning2, that.behandlingsAtgardBeskrivning2) &&
                 Objects.equals(this.diagnostisering, that.diagnostisering) &&
                 Objects.equals(this.nyBedomningDiagnos, that.nyBedomningDiagnos) &&
-                Objects.equals(this.funktionsnedsattning, that.funktionsnedsattning) &&
+                Objects.deepEquals(this.funktionsnedsattnings, that.funktionsnedsattnings) &&
                 Objects.equals(this.aktivitetsbegransning, that.aktivitetsbegransning) &&
                 Objects.equals(this.pagaendeBehandling, that.pagaendeBehandling) &&
                 Objects.equals(this.avslutadBehandling, that.avslutadBehandling) &&
@@ -103,7 +103,7 @@ public final class SjukersattningUtlatande extends Utlatande {
                 this.diagnosKod3, this.diagnosBeskrivning3,
                 this.behandlingsAtgardKod1, this.behandlingsAtgardBeskrivning1,
                 this.behandlingsAtgardKod2, this.behandlingsAtgardBeskrivning2,
-                this.diagnostisering, this.nyBedomningDiagnos, this.funktionsnedsattning, this.aktivitetsbegransning,
+                this.diagnostisering, this.nyBedomningDiagnos, this.funktionsnedsattnings, this.aktivitetsbegransning,
                 this.pagaendeBehandling, this.avslutadBehandling, this.planeradBehandling,
                 this.vadPatientenKanGora, this.prognosNarPatientKanAterga, this.kommentar, this.kontaktMedFk);
     }
@@ -180,12 +180,12 @@ public final class SjukersattningUtlatande extends Utlatande {
         this.diagnosKodsystem3 = diagnosKodsystem3;
     }
 
-    public String getFunktionsnedsattning() {
-        return funktionsnedsattning;
+    public List<Funktionsnedsattning> getFunktionsnedsattnings() {
+        return funktionsnedsattnings;
     }
 
-    public void setFunktionsnedsattning(String funktionsnedsattning) {
-        this.funktionsnedsattning = funktionsnedsattning;
+    public void setFunktionsnedsattnings(List funktionsnedsattnings) {
+        this.funktionsnedsattnings = funktionsnedsattnings;
     }
 
     public InternalDate getUndersokningAvPatienten() {
@@ -339,4 +339,5 @@ public final class SjukersattningUtlatande extends Utlatande {
     public void setBehandlingsAtgardBeskrivning2(String behandlingsAtgardBeskrivning2) {
         this.behandlingsAtgardBeskrivning2 = behandlingsAtgardBeskrivning2;
     }
+
 }

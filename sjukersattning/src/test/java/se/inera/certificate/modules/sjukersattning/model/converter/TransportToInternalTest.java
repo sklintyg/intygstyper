@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuilder;
+import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -37,7 +38,8 @@ public class TransportToInternalTest {
         utlatande.setDiagnosKodsystem2("PP-CODES");
         utlatande.setBehandlingsAtgardKod1("ABC");
         utlatande.setBehandlingsAtgardBeskrivning1("Kristallterapi");
-        utlatande.setFunktionsnedsattning("Kan inte smida");
+        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"));
+        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen"));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");

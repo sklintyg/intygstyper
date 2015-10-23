@@ -8,6 +8,7 @@ import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
+import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
@@ -185,7 +186,7 @@ public class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        if (diagnosKodSystem.equals(BEHANDLINGSATGARD_CODE_SYSTEM)) {
+        if (BEHANDLINGSATGARD_CODE_SYSTEM.equals(diagnosKodSystem)) {
             if (utlatande.getBehandlingsAtgardKod1() == null) {
                 utlatande.setBehandlingsAtgardKod1(diagnosKod);
                 utlatande.setBehandlingsAtgardBeskrivning1(diagnosBeskrivning);
@@ -229,14 +230,22 @@ public class TransportToInternal {
     }
 
     private static void handleFunktionsNedsattning(SjukersattningUtlatande utlatande, Svar svar) {
-        Delsvar delsvar = svar.getDelsvar().get(0);
-        switch (delsvar.getId()) {
-        case FUNKTIONSNEDSATTNING_DELSVAR_ID:
-            utlatande.setFunktionsnedsattning(getSvarContent(delsvar, String.class));
-            return;
-        default:
-            throw new IllegalArgumentException();
+        String beskrivning = null;
+        Funktionsnedsattning.Funktionsomrade funktionsomrade = Funktionsnedsattning.Funktionsomrade.OKAND;
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+            case FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID:
+                beskrivning = getSvarContent(delsvar, String.class);
+                break;
+            case FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID:
+                CVType funktionsomradestype = getSvarContent(delsvar, CVType.class);
+                funktionsomrade = Funktionsnedsattning.Funktionsomrade.fromId(Integer.parseInt(funktionsomradestype.getCode()));
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
         }
+        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(funktionsomrade, beskrivning));
     }
 
     private static void handleAktivitetsbegransning(SjukersattningUtlatande utlatande, Svar svar) {

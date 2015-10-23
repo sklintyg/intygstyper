@@ -45,7 +45,7 @@ public class RespConstants {
     public static final String NYBEDOMNING_SVAR_ID = "24";
     public static final String NYBEDOMNING_DELSVAR_ID = "24.1";
     public static final String FUNKTIONSNEDSATTNING_SVAR_ID = "11";
-    public static final String FUNKTIONSNEDSATTNING_DELSVAR_ID = "11.1";
+    public static final String FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID = "11.1";
     public static final String FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID = "11.2";
     public static final String AKTIVITETSBEGRANSNING_SVAR_ID = "5";
     public static final String AKTIVITETSBEGRANSNING_DELSVAR_ID = "5.1";

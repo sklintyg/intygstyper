@@ -58,7 +58,6 @@ public class Underlag {
     @Override
     public int hashCode() {
         return Objects.hash(id, datum, attachment);
-
     }
 
     public enum UnderlagsTyp {

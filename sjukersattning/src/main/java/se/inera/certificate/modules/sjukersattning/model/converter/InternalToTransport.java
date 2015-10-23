@@ -15,6 +15,7 @@ import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -71,6 +72,7 @@ public class InternalToTransport {
 
     private static ArbetsplatsKod getArbetsplatsKod(String sourceArbetsplatsKod) {
         ArbetsplatsKod arbetsplatsKod = new ArbetsplatsKod();
+        arbetsplatsKod.setRoot("1.2.752.29.4.71");
         arbetsplatsKod.setExtension(sourceArbetsplatsKod);
         return arbetsplatsKod;
     }
@@ -173,10 +175,10 @@ public class InternalToTransport {
                     withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getBehandlingsAtgardBeskrivning2()).build());
         }
 
-        // TODO: Funktionsområde
-        svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_DELSVAR_ID, source.getFunktionsnedsattning()).
-                withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID, aCV(FUNKTIONSOMRADE_CODE_SYSTEM, "TODO")).build());
-
+        for (Funktionsnedsattning funktionsnedsattning : source.getFunktionsnedsattnings()) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID, funktionsnedsattning.getBeskrivning()).
+                    withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID, aCV(FUNKTIONSOMRADE_CODE_SYSTEM, Integer.toString(funktionsnedsattning.getFunktionsomrade().getId()))).build());
+        }
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
 
         if (source.getPagaendeBehandling() != null) {
