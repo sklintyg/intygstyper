@@ -29,7 +29,11 @@ public final class SjukersattningUtlatande extends Utlatande {
     private String diagnosKodsystem3;
     private String diagnosBeskrivning3;
 
-    // TODO: behandlingsåtgärder
+    private String behandlingsAtgardKod1;
+    private String behandlingsAtgardBeskrivning1;
+
+    private String behandlingsAtgardKod2;
+    private String behandlingsAtgardBeskrivning2;
 
     private String diagnostisering;
     private boolean nyBedomningDiagnos;
@@ -73,6 +77,10 @@ public final class SjukersattningUtlatande extends Utlatande {
                 Objects.equals(this.diagnosBeskrivning2, that.diagnosBeskrivning2) &&
                 Objects.equals(this.diagnosKod3, that.diagnosKod3) &&
                 Objects.equals(this.diagnosBeskrivning3, that.diagnosBeskrivning3) &&
+                Objects.equals(this.behandlingsAtgardKod1, that.behandlingsAtgardKod1) &&
+                Objects.equals(this.behandlingsAtgardBeskrivning1, that.behandlingsAtgardBeskrivning1) &&
+                Objects.equals(this.behandlingsAtgardKod2, that.behandlingsAtgardKod2) &&
+                Objects.equals(this.behandlingsAtgardBeskrivning2, that.behandlingsAtgardBeskrivning2) &&
                 Objects.equals(this.diagnostisering, that.diagnostisering) &&
                 Objects.equals(this.nyBedomningDiagnos, that.nyBedomningDiagnos) &&
                 Objects.equals(this.funktionsnedsattning, that.funktionsnedsattning) &&
@@ -93,6 +101,8 @@ public final class SjukersattningUtlatande extends Utlatande {
                 this.diagnosKod1, this.diagnosBeskrivning1,
                 this.diagnosKod2, this.diagnosBeskrivning2,
                 this.diagnosKod3, this.diagnosBeskrivning3,
+                this.behandlingsAtgardKod1, this.behandlingsAtgardBeskrivning1,
+                this.behandlingsAtgardKod2, this.behandlingsAtgardBeskrivning2,
                 this.diagnostisering, this.nyBedomningDiagnos, this.funktionsnedsattning, this.aktivitetsbegransning,
                 this.pagaendeBehandling, this.avslutadBehandling, this.planeradBehandling,
                 this.vadPatientenKanGora, this.prognosNarPatientKanAterga, this.kommentar, this.kontaktMedFk);
@@ -298,4 +308,35 @@ public final class SjukersattningUtlatande extends Utlatande {
         this.underlag = underlag;
     }
 
+    public String getBehandlingsAtgardKod1() {
+        return behandlingsAtgardKod1;
+    }
+
+    public void setBehandlingsAtgardKod1(String behandlingsAtgardKod1) {
+        this.behandlingsAtgardKod1 = behandlingsAtgardKod1;
+    }
+
+    public String getBehandlingsAtgardBeskrivning1() {
+        return behandlingsAtgardBeskrivning1;
+    }
+
+    public void setBehandlingsAtgardBeskrivning1(String behandlingsAtgardBeskrivning1) {
+        this.behandlingsAtgardBeskrivning1 = behandlingsAtgardBeskrivning1;
+    }
+
+    public String getBehandlingsAtgardKod2() {
+        return behandlingsAtgardKod2;
+    }
+
+    public void setBehandlingsAtgardKod2(String behandlingsAtgardKod2) {
+        this.behandlingsAtgardKod2 = behandlingsAtgardKod2;
+    }
+
+    public String getBehandlingsAtgardBeskrivning2() {
+        return behandlingsAtgardBeskrivning2;
+    }
+
+    public void setBehandlingsAtgardBeskrivning2(String behandlingsAtgardBeskrivning2) {
+        this.behandlingsAtgardBeskrivning2 = behandlingsAtgardBeskrivning2;
+    }
 }

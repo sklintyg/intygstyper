@@ -52,6 +52,9 @@ public class InternalToTransportTest {
         utlatande.getUnderlag().add(new Underlag(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
         utlatande.setDiagnosKod1("S47");
         utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
+        utlatande.setDiagnosKodsystem1("PP-VS1");
+        utlatande.setBehandlingsAtgardKod1("ABC");
+        utlatande.setBehandlingsAtgardBeskrivning1("Kristallterapi");
         utlatande.setFunktionsnedsattning("Kan inte smida");
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");

@@ -143,17 +143,17 @@ public class InternalToTransport {
 
         }
         svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
-                withDelsvar(DIAGNOS_DELSVAR_ID, aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod1())).
+                withDelsvar(DIAGNOS_DELSVAR_ID, aCV(source.getDiagnosKodsystem1(), source.getDiagnosKod1())).
                 withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning1()).build());
 
         if (source.getDiagnosKod2() != null) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod2())).
+                    aCV(source.getDiagnosKodsystem2(), source.getDiagnosKod2())).
                     withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning2()).build());
         }
         if (source.getDiagnosKod3() != null) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3())).
+                    aCV(source.getDiagnosKodsystem3(), source.getDiagnosKod3())).
                     withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning3()).build());
         }
 
@@ -162,7 +162,16 @@ public class InternalToTransport {
         svars.add(aSvar(NYBEDOMNING_SVAR_ID).
                 withDelsvar(NYBEDOMNING_DELSVAR_ID, Boolean.toString(source.isNyBedomningDiagnos())).build());
 
-        // TODO: Åtgärd som orsak till nedsatt arbetsförmåga ska in här.
+        if (source.getBehandlingsAtgardKod1() != null) {
+            svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
+                    aCV(BEHANDLINGSATGARD_CODE_SYSTEM, source.getBehandlingsAtgardKod1())).
+                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getBehandlingsAtgardBeskrivning1()).build());
+        }
+        if (source.getBehandlingsAtgardKod2() != null) {
+            svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
+                    aCV(BEHANDLINGSATGARD_CODE_SYSTEM, source.getBehandlingsAtgardKod2())).
+                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getBehandlingsAtgardBeskrivning2()).build());
+        }
 
         // TODO: Funktionsområde
         svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_DELSVAR_ID, source.getFunktionsnedsattning()).
@@ -185,9 +194,6 @@ public class InternalToTransport {
         svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getVadPatientenKanGora()).build());
 
         svars.add(aSvar(PROGNOS_SVAR_ID).withDelsvar(PROGNOS_DELSVAR_ID, source.getPrognosNarPatientKanAterga()).build());
-
-        // TODO
-        // Arbetslivsinriktade åtgärder svars.add(aSvar("18").withDelsvar("18.1", source.))
 
         svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getKommentar()).build());
 

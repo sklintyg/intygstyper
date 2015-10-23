@@ -30,9 +30,13 @@ public class TransportToInternalTest {
         utlatande.getUnderlag().add(new Underlag(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
         utlatande.getUnderlag().add(new Underlag(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), true));
         utlatande.setDiagnosKod1("S47");
+        utlatande.setDiagnosKodsystem1("ICD-10-SE");
         utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
         utlatande.setDiagnosKod2("S48");
         utlatande.setDiagnosBeskrivning2("Klämskada arm");
+        utlatande.setDiagnosKodsystem2("PP-CODES");
+        utlatande.setBehandlingsAtgardKod1("ABC");
+        utlatande.setBehandlingsAtgardBeskrivning1("Kristallterapi");
         utlatande.setFunktionsnedsattning("Kan inte smida");
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");

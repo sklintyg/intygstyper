@@ -155,7 +155,7 @@ public class TransportToInternal {
             case DIAGNOS_DELSVAR_ID:
                 CVType diagnos = getSvarContent(delsvar, CVType.class);
                 utlatande.setDiagnosKod1(diagnos.getCode());
-                utlatande.setDiagnosBeskrivning1(diagnos.getDisplayName());
+                utlatande.setDiagnosKodsystem1(diagnos.getCodeSystem());
                 break;
             case DIAGNOS_BESKRIVNING_DELSVAR_ID:
                 String diagnosBeskrivning = getSvarContent(delsvar, String.class);
@@ -168,31 +168,41 @@ public class TransportToInternal {
     }
 
     private static void handleYtterligareOrsak(SjukersattningUtlatande utlatande, Svar svar) {
+        String diagnosKodSystem = null;
         String diagnosKod = null;
         String diagnosBeskrivning = null;
-        String ytterligareBeskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case YTTERLIGARE_ORSAK_DELSVAR_ID:
                 CVType diagnos = getSvarContent(delsvar, CVType.class);
+                diagnosKodSystem = diagnos.getCodeSystem();
                 diagnosKod = diagnos.getCode();
-                diagnosBeskrivning = diagnos.getDisplayName();
                 break;
             case YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID:
-                ytterligareBeskrivning = getSvarContent(delsvar, String.class);
+                diagnosBeskrivning = getSvarContent(delsvar, String.class);
                 break;
             default:
                 throw new IllegalArgumentException();
             }
         }
-        if (utlatande.getDiagnosKod2() == null) {
-            utlatande.setDiagnosKod2(diagnosKod);
-            utlatande.setDiagnosBeskrivning2(diagnosBeskrivning);
-            utlatande.setDiagnosBeskrivning2(ytterligareBeskrivning);
+        if (diagnosKodSystem.equals(BEHANDLINGSATGARD_CODE_SYSTEM)) {
+            if (utlatande.getBehandlingsAtgardKod1() == null) {
+                utlatande.setBehandlingsAtgardKod1(diagnosKod);
+                utlatande.setBehandlingsAtgardBeskrivning1(diagnosBeskrivning);
+            } else {
+                utlatande.setBehandlingsAtgardKod2(diagnosKod);
+                utlatande.setBehandlingsAtgardBeskrivning2(diagnosBeskrivning);
+            }
         } else {
-            utlatande.setDiagnosKod3(diagnosKod);
-            utlatande.setDiagnosBeskrivning3(diagnosBeskrivning);
-            utlatande.setDiagnosBeskrivning3(ytterligareBeskrivning);
+            if (utlatande.getDiagnosKod2() == null) {
+                utlatande.setDiagnosKodsystem2(diagnosKodSystem);
+                utlatande.setDiagnosKod2(diagnosKod);
+                utlatande.setDiagnosBeskrivning2(diagnosBeskrivning);
+            } else {
+                utlatande.setDiagnosKodsystem3(diagnosKodSystem);
+                utlatande.setDiagnosKod3(diagnosKod);
+                utlatande.setDiagnosBeskrivning3(diagnosBeskrivning);
+            }
         }
     }
 
