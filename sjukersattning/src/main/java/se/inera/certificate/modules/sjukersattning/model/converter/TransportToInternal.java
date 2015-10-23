@@ -159,7 +159,7 @@ public class TransportToInternal {
                 break;
             case DIAGNOS_BESKRIVNING_DELSVAR_ID:
                 String diagnosBeskrivning = getSvarContent(delsvar, String.class);
-                utlatande.setDiagnosYtterligareBeskrivning1(diagnosBeskrivning);
+                utlatande.setDiagnosBeskrivning1(diagnosBeskrivning);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -188,11 +188,11 @@ public class TransportToInternal {
         if (utlatande.getDiagnosKod2() == null) {
             utlatande.setDiagnosKod2(diagnosKod);
             utlatande.setDiagnosBeskrivning2(diagnosBeskrivning);
-            utlatande.setDiagnosYtterligareBeskrivning2(ytterligareBeskrivning);
+            utlatande.setDiagnosBeskrivning2(ytterligareBeskrivning);
         } else {
             utlatande.setDiagnosKod3(diagnosKod);
             utlatande.setDiagnosBeskrivning3(diagnosBeskrivning);
-            utlatande.setDiagnosYtterligareBeskrivning3(ytterligareBeskrivning);
+            utlatande.setDiagnosBeskrivning3(ytterligareBeskrivning);
         }
     }
 

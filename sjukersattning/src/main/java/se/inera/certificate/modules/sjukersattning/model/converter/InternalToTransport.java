@@ -116,17 +116,17 @@ public class InternalToTransport {
 
         if (source.getUndersokningAvPatienten() != null) {
             svars.add(aSvar(REFERENS_SVAR_ID).
-                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT), null)).
+                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT))).
                     withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getUndersokningAvPatienten().asLocalDate().toString()).build());
         }
         if (source.getTelefonkontaktMedPatienten() != null) {
             svars.add(aSvar(REFERENS_SVAR_ID).
-                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT), null)).
+                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT))).
                     withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getTelefonkontaktMedPatienten().asLocalDate().toString()).build());
         }
         if (source.getJournaluppgifter() != null) {
             svars.add(aSvar(REFERENS_SVAR_ID).
-                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER), null)).
+                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER))).
                     withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
         if (source.getKannedomOmPatient() != null) {
@@ -137,24 +137,24 @@ public class InternalToTransport {
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
                     aSvar(UNDERLAG_SVAR_ID).withDelsvar(UNDERLAG_TYP_DELSVAR_ID,
-                            aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getId().getId()), underlag.getId().getLabel())).
+                            aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getId().getId()))).
                             withDelsvar(UNDERLAG_DATUM_DELSVAR_ID, underlag.getDatum().asLocalDate().toString()).
                             withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID, Boolean.toString(underlag.isAttachment())).build());
 
         }
         svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
-                withDelsvar(DIAGNOS_DELSVAR_ID, aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod1(), source.getDiagnosBeskrivning1())).
-                withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, source.getDiagnosYtterligareBeskrivning1()).build());
+                withDelsvar(DIAGNOS_DELSVAR_ID, aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod1())).
+                withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning1()).build());
 
         if (source.getDiagnosKod2() != null) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod2(), source.getDiagnosBeskrivning2())).
-                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosYtterligareBeskrivning2()).build());
+                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod2())).
+                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning2()).build());
         }
         if (source.getDiagnosKod3() != null) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3(), source.getDiagnosBeskrivning3())).
-                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosYtterligareBeskrivning3()).build());
+                    aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3())).
+                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning3()).build());
         }
 
         svars.add(aSvar(DIAGNOSTISERING_SVAR_ID).
@@ -166,7 +166,7 @@ public class InternalToTransport {
 
         // TODO: Funktionsområde
         svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_DELSVAR_ID, source.getFunktionsnedsattning()).
-                withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID, aCV(FUNKTIONSOMRADE_CODE_SYSTEM, "TODO", null)).build());
+                withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID, aCV(FUNKTIONSOMRADE_CODE_SYSTEM, "TODO")).build());
 
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
 
@@ -211,11 +211,10 @@ public class InternalToTransport {
                 TimePeriodType.class, null, period);
     }
 
-    private static JAXBElement<CVType> aCV(String codeSystem, String code, String displayName) {
+    private static JAXBElement<CVType> aCV(String codeSystem, String code) {
         CVType cv = new CVType();
         cv.setCodeSystem(codeSystem);
         cv.setCode(code);
-        cv.setDisplayName(displayName);
         return new JAXBElement<CVType>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
     }
 
