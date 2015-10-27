@@ -13,5 +13,4 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form7Controller',
                     viewState.intygModel.restoreFromAttic('medvetandestorning.beskrivning');
                 }
             }, true);
-            
         }]);

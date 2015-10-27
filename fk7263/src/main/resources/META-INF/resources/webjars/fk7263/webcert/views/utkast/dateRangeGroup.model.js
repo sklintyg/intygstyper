@@ -241,13 +241,10 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
             if (this.isValid()) {
                 var fromThis = this.momentFrom(),
                     tomThis = this.momentTom();
-                if (this.isFromAfterTom()) {
+
+                this.setDateInvalidState(false);
+                if (this.isFromAfterTom() || dateUtils.isSame(fromThis, tomThis)) {
                     this.setDateInvalidState(true);
-                } else if(dateUtils.isSame(fromThis, tomThis)){
-                    this.setDateInvalidState(true);
-                }
-                else {
-                    this.setDateInvalidState(false);
                 }
                 this.workState = true;
             } else {

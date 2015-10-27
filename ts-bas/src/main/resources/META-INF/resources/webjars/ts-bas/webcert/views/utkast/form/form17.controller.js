@@ -24,5 +24,5 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form17Controller',
                     viewState.intygModel.bedomning.kanInteTaStallning = false;
                 }
             });
-            
+
         }]);

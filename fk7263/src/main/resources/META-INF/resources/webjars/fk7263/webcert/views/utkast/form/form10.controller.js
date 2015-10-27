@@ -51,9 +51,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
 
             function setPrognosGroupFromModel() {
                 switch (model.prognosBedomning) {
-                case 'arbetsformagaPrognosJa':
-                    $scope.radioGroups.prognos = prognosStates.YES;
-                    break;
                 case 'arbetsformagaPrognosJaDelvis':
                     $scope.radioGroups.prognos = prognosStates.PARTLY;
                     break;
@@ -63,6 +60,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 case 'arbetsformagaPrognosGarInteAttBedoma':
                     $scope.radioGroups.prognos = prognosStates.UNKNOWN;
                     break;
+                case 'arbetsformagaPrognosJa':
+                    /* falls through */
                 default :
                     $scope.radioGroups.prognos = prognosStates.YES;
                 }

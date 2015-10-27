@@ -18,7 +18,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
         }
 
         function addListMessage(qaList, qa, messageId) {
-            var messageProxy = {}; // = angular.copy(qa);
+            var messageProxy = {};
             messageProxy.proxyMessage = messageId;
             messageProxy.id = qa.id;
             messageProxy.senasteHandelseDatum = qa.senasteHandelseDatum;

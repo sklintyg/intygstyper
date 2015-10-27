@@ -245,9 +245,6 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
                         nedsatt.setCertTom( tom );
                     }
 
-                    // make sure the form is set
-                    //nedsatt.nedsattFormFrom = from;
-                    //nedsatt.nedsattFormTom = tom;
                 } else {
                     // Remove dates
                     nedsatt.setCertFrom( undefined );

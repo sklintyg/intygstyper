@@ -63,44 +63,48 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
             // this could be moved into the model as a linked property, although thats alot of properties ...
             // maybe introduce an after update so the update of the linked property happens at
             // the end of update cycle instead of each individual property change.
+            function noKravYtterligareUnderlagFieldsFilled(intygModel) {
+                return (!intygModel.syn && !intygModel.horselBalans && !intygModel.funktionsnedsattning &&
+                    !intygModel.hjartKarl && !intygModel.diabetes && !intygModel.neurologi &&
+                    !intygModel.medvetandestorning && !intygModel.njurar && !intygModel.kognitivt &&
+                    !intygModel.somnVakenhet && !intygModel.narkotikaLakemedel && !intygModel.psykiskt &&
+                    !intygModel.utvecklingsstorning && !intygModel.sjukhusvard && !intygModel.medicinering);
+            }
+
+            function anyKravYtterligareUnderlagFieldsFilled(intygModel) {
+                return (intygModel.syn.synfaltsdefekter === true || intygModel.syn.nattblindhet === true ||
+                    intygModel.syn.progressivOgonsjukdom === true || intygModel.syn.diplopi === true ||
+                    intygModel.syn.nystagmus === true || intygModel.horselBalans.balansrubbningar === true ||
+                    intygModel.horselBalans.svartUppfattaSamtal4Meter === true ||
+                    intygModel.funktionsnedsattning.funktionsnedsattning === true ||
+                    intygModel.funktionsnedsattning.otillrackligRorelseformaga === true ||
+                    intygModel.hjartKarl.hjartKarlSjukdom === true ||
+                    intygModel.hjartKarl.hjarnskadaEfterTrauma === true ||
+                    intygModel.hjartKarl.riskfaktorerStroke === true ||
+                    intygModel.diabetes.harDiabetes === true || intygModel.neurologi.neurologiskSjukdom === true ||
+                    intygModel.medvetandestorning.medvetandestorning === true ||
+                    intygModel.njurar.nedsattNjurfunktion === true ||
+                    intygModel.kognitivt.sviktandeKognitivFunktion === true ||
+                    intygModel.somnVakenhet.teckenSomnstorningar === true ||
+                    intygModel.narkotikaLakemedel.teckenMissbruk === true ||
+                    intygModel.narkotikaLakemedel.foremalForVardinsats === true ||
+                    intygModel.narkotikaLakemedel.provtagningBehovs === true ||
+                    intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk ||
+                    intygModel.psykiskt.psykiskSjukdom === true ||
+                    intygModel.utvecklingsstorning.psykiskUtvecklingsstorning === true ||
+                    intygModel.utvecklingsstorning.harSyndrom === true ||
+                    intygModel.sjukhusvard.sjukhusEllerLakarkontakt === true ||
+                    intygModel.medicinering.stadigvarandeMedicinering === true);
+            }
+
             this.updateKravYtterligareUnderlag = function() {
-                
-                if (!this.intygModel ||
-                    (!this.intygModel.syn && !this.intygModel.horselBalans && !this.intygModel.funktionsnedsattning &&
-                        !this.intygModel.hjartKarl && !this.intygModel.diabetes && !this.intygModel.neurologi &&
-                        !this.intygModel.medvetandestorning && !this.intygModel.njurar && !this.intygModel.kognitivt &&
-                        !this.intygModel.somnVakenhet && !this.intygModel.narkotikaLakemedel && !this.intygModel.psykiskt &&
-                        !this.intygModel.utvecklingsstorning && !this.intygModel.sjukhusvard && !this.intygModel.medicinering)) {
+                this.kravYtterligareUnderlag = false;
+                if (!this.intygModel || noKravYtterligareUnderlagFieldsFilled(this.intygModel)) {
                     this.kravYtterligareUnderlag = false;
-                } else if (this.intygModel.syn.synfaltsdefekter === true || this.intygModel.syn.nattblindhet === true ||
-                    this.intygModel.syn.progressivOgonsjukdom === true || this.intygModel.syn.diplopi === true ||
-                    this.intygModel.syn.nystagmus === true || this.intygModel.horselBalans.balansrubbningar === true ||
-                    this.intygModel.horselBalans.svartUppfattaSamtal4Meter === true ||
-                    this.intygModel.funktionsnedsattning.funktionsnedsattning === true ||
-                    this.intygModel.funktionsnedsattning.otillrackligRorelseformaga === true ||
-                    this.intygModel.hjartKarl.hjartKarlSjukdom === true ||
-                    this.intygModel.hjartKarl.hjarnskadaEfterTrauma === true ||
-                    this.intygModel.hjartKarl.riskfaktorerStroke === true ||
-                    this.intygModel.diabetes.harDiabetes === true || this.intygModel.neurologi.neurologiskSjukdom === true ||
-                    this.intygModel.medvetandestorning.medvetandestorning === true ||
-                    this.intygModel.njurar.nedsattNjurfunktion === true ||
-                    this.intygModel.kognitivt.sviktandeKognitivFunktion === true ||
-                    this.intygModel.somnVakenhet.teckenSomnstorningar === true ||
-                    this.intygModel.narkotikaLakemedel.teckenMissbruk === true ||
-                    this.intygModel.narkotikaLakemedel.foremalForVardinsats === true ||
-                    this.intygModel.narkotikaLakemedel.provtagningBehovs === true ||
-                    this.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk ||
-                    this.intygModel.psykiskt.psykiskSjukdom === true ||
-                    this.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning === true ||
-                    this.intygModel.utvecklingsstorning.harSyndrom === true ||
-                    this.intygModel.sjukhusvard.sjukhusEllerLakarkontakt === true ||
-                    this.intygModel.medicinering.stadigvarandeMedicinering === true) {
+                } else if(anyKravYtterligareUnderlagFieldsFilled(this.intygModel)) {
                     this.kravYtterligareUnderlag = true;
-                } else {
-                    this.kravYtterligareUnderlag = false;
                 }
             };
-        
-            this.reset();
 
+            this.reset();
         }]);

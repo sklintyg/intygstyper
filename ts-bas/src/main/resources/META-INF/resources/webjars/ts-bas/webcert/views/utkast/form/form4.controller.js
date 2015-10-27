@@ -13,5 +13,4 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form4Controller',
                     viewState.intygModel.restoreFromAttic('hjartKarl.beskrivningRiskfaktorer');
                 }
             }, true);
-            
         }]);

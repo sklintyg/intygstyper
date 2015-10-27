@@ -23,5 +23,4 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form11Controller',
                     viewState.intygModel.restoreFromAttic('narkotikaLakemedel.lakemedelOchDos');
                 }
             }, true);
-            
         }]);

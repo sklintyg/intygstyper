@@ -88,5 +88,5 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
              *********************************************************************/
             loadCertificate();
 
-			$scope.$on('loadCertificate', loadCertificate);
+            $scope.$on('loadCertificate', loadCertificate);
         }]);
