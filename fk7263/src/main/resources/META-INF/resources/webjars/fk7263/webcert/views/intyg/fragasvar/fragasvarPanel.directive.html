@@ -131,7 +131,7 @@
           <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
           <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>
           <div class="controls">
-            <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
+            <div id="answerDisabledReasonPanel" class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
               {{qa.answerDisabledReason}}
             </div>
             <div class="form-group" ng-show="!qa.answerDisabled && !certProperties.isRevoked">
