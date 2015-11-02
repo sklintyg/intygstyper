@@ -110,7 +110,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                     model.underlag.push(convertedToBackend);
                 }
 
-                console.log('model.underlag: ' + JSON.stringify($scope.model));
+                console.log('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model.underlag)));
+                console.log('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model)));
 
             }
 

@@ -23,7 +23,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             //'anhorigBeskrivningAvPatienten',
                             'telefonkontaktMedPatienten',
                             'kannedomOmPatient',
-                            'underlag'],
+                            new ModelAttr('underlag', {defaultValue: [] })],
 
                         form4: ['diagnosBeskrivning1',
                             'diagnosBeskrivning2',
