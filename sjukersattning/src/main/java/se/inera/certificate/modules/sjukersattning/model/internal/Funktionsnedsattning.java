@@ -2,16 +2,22 @@ package se.inera.certificate.modules.sjukersattning.model.internal;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public class Funktionsnedsattning {
 
-    private Funktionsomrade funktionsomrade;
+    private Funktionsomrade id;
 
     private String beskrivning;
 
     public Funktionsnedsattning(Funktionsomrade funktionsomrade, String beskrivning) {
-        this.funktionsomrade = funktionsomrade;
+        this.id = funktionsomrade;
         this.beskrivning = beskrivning;
     }
+
+    public Funktionsnedsattning() {}
 
     @Override
     public boolean equals(Object object) {
@@ -22,20 +28,20 @@ public class Funktionsnedsattning {
             return false;
         }
         final Funktionsnedsattning that = (Funktionsnedsattning) object;
-        return Objects.equals(this.funktionsomrade, that.funktionsomrade) && Objects.equals(this.beskrivning, that.beskrivning);
+        return Objects.equals(this.id, that.id) && Objects.equals(this.beskrivning, that.beskrivning);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(funktionsomrade, beskrivning);
+        return Objects.hash(id, beskrivning);
     }
 
-    public void setFunktionsomrade(Funktionsomrade funktionsomrade) {
-        this.funktionsomrade = funktionsomrade;
+    public void setId(Funktionsomrade id) {
+        this.id = id;
     }
 
-    public Funktionsomrade getFunktionsomrade() {
-        return funktionsomrade;
+    public Funktionsomrade getId() {
+        return id;
     }
 
     public void setBeskrivning(String beskrivning) {
@@ -61,11 +67,17 @@ public class Funktionsnedsattning {
             this.label = label;
         }
 
+        @JsonValue
         public int getId() {
             return id;
         }
 
-        public static Funktionsomrade fromId(int id) {
+        public String getLabel() {
+            return label;
+        }
+
+        @JsonCreator
+        public static Funktionsomrade fromId(@JsonProperty("id") int id) {
             for (Funktionsomrade funktionsomrade : values()) {
                 if (funktionsomrade.id == id) {
                     return funktionsomrade;

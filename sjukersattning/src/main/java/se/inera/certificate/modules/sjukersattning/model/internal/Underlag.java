@@ -1,9 +1,12 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
-import com.google.common.base.Preconditions;
+import java.util.Objects;
+
 import se.inera.certificate.model.InternalDate;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public class Underlag {
 
@@ -17,6 +20,9 @@ public class Underlag {
         this.id = typ;
         this.datum = internalDate;
         this.attachment = attachment;
+    }
+
+    public Underlag() {
     }
 
     public UnderlagsTyp getId() {
@@ -81,6 +87,7 @@ public class Underlag {
             this.label = label;
         }
 
+        @JsonValue
         public int getId() {
             return id;
         }
@@ -89,7 +96,8 @@ public class Underlag {
             return label;
         }
 
-        public static UnderlagsTyp fromId(int id) {
+        @JsonCreator
+        public static UnderlagsTyp fromId(@JsonProperty("id") int id) {
             for (UnderlagsTyp typ : values()) {
                 if (typ.id == id) {
                     return typ;

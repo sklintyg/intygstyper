@@ -99,11 +99,12 @@ public class InternalDraftValidator {
 
     private void validateAktivitetsbegransning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
-        String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
-        if (StringUtils.isBlank(aktivitetsbegransning)) {
-            addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.aktivitetsbegransning.missing");
-        }
+        // TODO
+//        String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
+//        if (StringUtils.isBlank(aktivitetsbegransning)) {
+//            addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
+//                    "sjukersattning.validation.aktivitetsbegransning.missing");
+//        }
     }
 
     private void validateFunktionsnedsattning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {

@@ -3,11 +3,11 @@ package se.inera.certificate.modules.sjukersattning.model.converter.util;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.rest.SjukersattningModuleApi;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
@@ -20,6 +20,11 @@ public class ConverterUtil {
     @Autowired
     @Qualifier("sjukersattning-objectMapper")
     private ObjectMapper objectMapper;
+
+    @VisibleForTesting
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     public CertificateHolder toCertificateHolder(SjukersattningUtlatande utlatande) throws ModuleException {
         String document = toJsonString(utlatande);

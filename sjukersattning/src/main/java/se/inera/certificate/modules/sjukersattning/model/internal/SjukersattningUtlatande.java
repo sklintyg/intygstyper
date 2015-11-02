@@ -55,6 +55,8 @@ public final class SjukersattningUtlatande extends Utlatande {
     public SjukersattningUtlatande() {
         super();
         setTyp(SjukersattningEntryPoint.MODULE_ID);
+        // TODO: remove
+        //funktionsnedsattnings.add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Helt lam"));
     }
 
     @Override
@@ -184,7 +186,7 @@ public final class SjukersattningUtlatande extends Utlatande {
         return funktionsnedsattnings;
     }
 
-    public void setFunktionsnedsattnings(List funktionsnedsattnings) {
+    public void setFunktionsnedsattnings(List<Funktionsnedsattning> funktionsnedsattnings) {
         this.funktionsnedsattnings = funktionsnedsattnings;
     }
 
