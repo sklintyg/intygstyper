@@ -15,13 +15,13 @@
 
   <!-- Undersökning -->
   <div class="form-group form-inline">
-    <label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
-                                                                         id="basedOnExamination"
-                                                                         name="informationBasedOn.examination"
-                                                                         class="checkbox-inline"
-                                                                         ng-model="basedOnState.check.undersokningAvPatienten"
-                                                                         ng-change="toggleBaseradPaDate('undersokningAvPatienten')"
-        value="true">
+    <label class="checkbox inline-block" style="min-width: 300px"><input  type="checkbox"
+                                                             id="basedOnExamination"
+                                                             name="informationBasedOn.examination"
+                                                             class="checkbox-inline"
+                                                             ng-model="basedOnState.check.undersokningAvPatienten"
+                                                             ng-change="toggleBaseradPaDate('undersokningAvPatienten')"
+                                                             value="true">
       Min undersökning av patienten</label>
     <span wc-date-picker-field target-model="dates.undersokningAvPatienten"
           dom-id="undersokningAvPatientenDate"></span>
@@ -81,8 +81,8 @@
                 data-ng-options="type.id as type.label for type in certTypes" wc-focus-me="focusFirstInput"></select-->
 
      <div class="form-group form-inline bottom-padding-small" ng-show="radioMedical.checked">
-         <div class="underlagItem" style="padding-bottom: 30px;" ng-repeat="(underlagIndex, underlag) in additionalSupplements">
-                <span> {{ $index + 1   }}</span>
+         <div class="underlagItem" style="padding-bottom: 30px;" ng-repeat="underlag in additionalSupplements">
+              <span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag(underlag)"></span>
               <select class="form-control" name="andraUnderlag"
                     data-ng-model="underlag.selectedType" ng-change="onUnderlagChange(underlag)"
                     data-ng-options="item.id as item.label for item in $parent.underlagSelect"></select>
@@ -91,7 +91,7 @@
                     ng-change="onUnderlagChange(underlag)" ng-model="underlag.dateCreated"></span>
 
               <div class="willSupplyWrapper pull-right">
-              <label class="control-label inline-block bold" style="padding-right: 10px;">Bifogas </label>
+              <label class="control-label inline-block bold" style="padding-right: 10px;">Skickas separat</label>
               <label class="radio-inline">
                   <input id="willSupplyAttachmentYES-{{ underlag.id }}" name="willSupplyAttachmentRadioYes{{ underlag.id }}"
                          type="radio" ng-value="true" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment">Ja
@@ -100,20 +100,16 @@
                   <input id="willSupplyAttachmentNO-{{ underlag.id }}" name="willSupplyAttachmentRadioNo{{ underlag.id }}"
                          type="radio" ng-value="false" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment" checked="checked">Nej
               </label>
-
-              </div>
+          </div>
              <br/>
 <!-- todo: these hard coded numbers should be replaced and places in valiation secton of viewmodel... -->
              <div class="col-xs-12" style="padding: 5px 0;" ng-show="underlag.isLatest && underlag.selectedOrder < 9">
-                 <a href ng-click="createUnderlag(underlag.selectedOrder)">Lägg till ytterligare underlag</a>
+                 <a href ng-click="createUnderlag(underlag)">Lägg till ytterligare underlag</a>
 
              </div>
-             <span ng-if="underlag.selectedOrder === 9">You have reached to maximum of 10 selected underlag...</span>
+             <span ng-if="underlag.selectedOrder === 9" message key="sjukersattning.validation.underlag.max-extra-underlag"></span>
          </div>
-
-
-
-      </div>
+     </div>
 
 
 

@@ -32,12 +32,13 @@ var sjukersattningMessages = {
         'sjukersattning.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
         'sjukersattning.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',
         'sjukersattning.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
-        'sjukersattning.label.ytterligarediagnoser': 'Ytterligare diagnoser',
+        'sjukersattning.label.ytterligarediagnoser': 'Ytterligare diagnos',
+        'sjukersattning.label.ytterligarebehandling': 'Ytterligare behandling',
         'sjukersattning.label.diagnosfortydligande': 'Förtydligande av diagnos/diagnoser',
         'sjukersattning.label.diagnoses.more_results': 'Det finns fler träffar än vad som kan visas i listan, förfina sökningen.',
         'sjukersattning.label.samsjuklighet': 'Samsjuklighet föreligger',
         'sjukersattning.label.aktuellt-sjukdomsforlopp': 'Aktuellt sjukdomsförlopp',
-        'sjukersattning.label.funktionsnedsattning': 'Undersökningsfynd som är en konsekvens av sjukdomen. (funktionsnedsättning)',
+        'sjukersattning.label.funktionsnedsattning': 'Beskriv patientens funktionsnedsättning inom de områden som är relevanta',
         'sjukersattning.label.intygbaseratpa': 'Intyget baseras på',
         'sjukersattning.label.kommentar': 'Övrigt',
         'sjukersattning.label.sysselsattning': 'I relation till vilken sysselsättning gör du den medicinska bedömningen?',
@@ -48,7 +49,7 @@ var sjukersattningMessages = {
         'sjukersattning.label.sysselsattning.foraldraledighet': 'Föräldraledighet för vård av barn',
         'sjukersattning.label.sysselsattning.studier': 'Studier',
         'sjukersattning.label.sysselsattning.program': 'Deltar i arbetsmarknadspolitiskt program',
-        'sjukersattning.label.aktivitetsbegransning': 'Vad kan patienten inte göra på grund av sin sjukdom? (aktivitetsbegränsning)',
+        'sjukersattning.label.aktivitetsbegransning': 'Vad har patienten svårt att göra på grund av den eller de funktionsnedsättningar som beskrivs ovan?',
         'sjukersattning.label.diagnosticering': 'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?',
         'sjukersattning.label.diagnosticering.nybedomning': 'Finns det skäl att göra en ny bedömning av diagnosen?',
         'sjukersattning.label.diagnosticering.nybedomning.help' :'<p>Möjliga skäl kan vara:</p><p>-att det var länge sedan utredningen gjordes.</p><p>-att ny bedömning har rekommenderats i tidigare utlåtande eller</p><p>-att den kliniska bilden avviker från vad som kan förväntas utifrån ställds diagnos.  </p></p>',
@@ -172,6 +173,7 @@ var sjukersattningMessages = {
 
         //Validation messages
 
+        'sjukersattning.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
         'sjukersattning.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
         'sjukersattning.validation.diagnos.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'sjukersattning.validation.diagnos2.invalid': 'ICD-10 kod på ytterligare diagnoser rad 1, är ej giltig. (Fält 2)',

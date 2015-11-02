@@ -7,45 +7,17 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             $scope.model = model;
 
             $scope.viewState = viewState;
+
+            // we skip row 1 here since its always visible and has a stanard type
             $scope.viewModel = {
-                diagnosKodverk : ''
-            };
-
-            $scope.ytterligareDiagnoser = false;
-
-            $scope.diagnoseRows = [];
-
-            $scope.activateRow = function(row){
-                $scope.diagnoseRows.push(row);
-                //$log.info("dignose rows in array:" + $scope.diagnoseRows);
-
+                diagnosKodverk : '',
+                diagnosKodRow2 : { visible : false, diagnoseType: null },
+                diagnosKodRow3 : { visible : false,  diagnoseType: null }
             };
 
             var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
 
-           /* $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
-                if(newVal === oldVal){
-                    return;
-                }
-
-                // only do this once the page is loaded and changes come from the gui!
-                if(viewState.common.doneLoading) {
-                    // Remove defaults not applicable when smittskydd is active
-                    if (newVal === true) {
-                        model.updateToAttic(model.properties.form4);
-                        model.clear(model.properties.form4);
-                    } else {
-                        if(model.isInAttic(model.properties.form4)){
-                            model.restoreFromAttic(model.properties.form4);
-                            if(!model.diagnosKodsystem1){
-                                setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );
-                            }
-                        }
-                    }
-                }
-            });
-*/
-           $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
                 if(newVal === oldVal){
                     return;
                 }
@@ -56,7 +28,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                         setAllDiagnosKodverk( $scope.model.diagnosKodsystem1 );
                     }
                 }
-
             });
 
             function setAllDiagnosKodverk(val){
@@ -64,6 +35,11 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 $scope.model.diagnosKodsystem1 = val;
                 $scope.model.diagnosKodsystem2 = val;
                 $scope.model.diagnosKodsystem3 = val;
+                // reset visibility
+                $scope.viewModel.diagnosKodRow2.visible = false;
+                $scope.viewModel.diagnosKodRow2.type = null;
+                $scope.viewModel.diagnosKodRow3.visible = false;
+                $scope.viewModel.diagnosKodRow3.type = null;
             }
 
             /**

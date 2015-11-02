@@ -1,16 +1,21 @@
 <a id="anchor.funktionsnedsattning" name="anchor.funktionsnedsattning"></a>
-<div wc-field field-label="sjukersattning.label.funktionsnedsattning" field-number="4" wc-detect-animation
-     field-help-text="sjukersattning.helptext.funktionsnedsattning"
-     field-has-errors="viewState.common.validationMessagesGrouped.funktionsnedsattning" class="field-fade">
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.funktionsnedsattning" id="validationMessages_funktionsnedsattning">
-    <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.funktionsnedsattning">
-        <span message key="{{message.message}}"/>
-      </li>
-    </ul>
-  </div>
+<h2 class="title">4. Funktionsnedsättning och Aktivitetsbegränsning</h2>
 
-  <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
-            ng-model="model.funktionsnedsattning" ng-trim="false"
-            maxlength="{{viewState.inputLimits.funktionsnedsattning}}"></textarea>
+    <div wc-field wc-detect-animation class="print-pagebreak-after field-fade">
+
+        <div class="form-group form-inline" ng-repeat="nedsattning in funktionsnedsattningOptions">
+
+        <input type="checkbox"
+               id="nedsattning.id"
+               name="{{nedsattning.id}}-funktionsnedsattningarCheck.intellektuell"
+               class="checkbox-inline"
+               ng-model="nedsattning.selected" ng-value="true" ng-change="$parent.setFocus('{{ nedsattning.id }}', nedsattning.selected, $target)">
+        <label class="label-inline"><h3 class="title" ng-if="nedsattning.label != null">{{ nedsattning.label }}</h3></label>
+
+        <textarea id="{{nedsattning.id}}" class="form-control block grey-border" style="min-width: 600px;" name="disabilities" rows='6'
+                    ng-model="nedsattning.text" ng-trim="false" ></textarea>
+            <span>{{ nedsattning.selected }}</span>
+            <button ng-click="logModel()">Log model</button>
+    </div>
 </div>
+

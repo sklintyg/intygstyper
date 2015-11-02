@@ -14,3 +14,34 @@
 .qa-block-body.komplettera-block div span {
     white-space: pre-line;
 }
+
+.deleteUnderlag {
+    cursor:pointer;
+}
+
+.whitebg {
+    background: white;
+}
+
+.cert-body .form5  .body-row .text,   .cert-body .form6 .body-row .text{
+    display: block;
+    padding: 20px 40px 15px 40px;
+    background-color: white;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.grey-border {
+    border: 9px solid #EEE;
+    border-right-width: 6px;
+    border-left-width: 6px;
+}
+/* When focused and when active is added from checkbox, add highlighted style */
+.form5 .form-control:focus, .form5 .form-control .active,
+.form6 .form-control:focus, .form6 .form-control .active   {
+    border-color: #BBB;
+    outline: 0;
+    -webkit-box-shadow: none; /*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+    box-shadow: none; /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+}

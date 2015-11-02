@@ -23,7 +23,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             //'anhorigBeskrivningAvPatienten',
                             'telefonkontaktMedPatienten',
                             'kannedomOmPatient',
-                            'testProp'],
+                            'underlag'],
 
                         form4: ['diagnosBeskrivning1',
                             'diagnosBeskrivning2',
@@ -39,7 +39,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'nyBedomningDiagnos'],
 
                         form5: ['funktionsnedsattning',
-                            'aktivitetsbegransning'],
+                            'aktivitetsbegransning[0]'],
 
                         form7: ['pagaendeBehandling',
                             'planeradBehandling'],
@@ -64,7 +64,8 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                         form11: ['kontaktMedFk'],
 
                         misc: ['forskrivarkodOchArbetsplatskod',
-                                'namnfortydligandeOchAdress', 'id',
+                                'namnfortydligandeOchAdress',
+                                'id',
                                 new ModelAttr('grundData', {defaultValue: grundData})]
 
                     });
