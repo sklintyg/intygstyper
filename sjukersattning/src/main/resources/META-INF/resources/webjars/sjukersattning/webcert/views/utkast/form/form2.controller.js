@@ -8,7 +8,22 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.model = model;
             $scope.viewState = viewState;
 
+
             // fält 2 when new questions selected
+
+            // Validation
+            // 0: "intygbaseratpa"
+            // 1: "diagnos"
+            // 2: "aktivitetsbegransning"
+
+            // Sammanfattninge visar fel.
+
+            // fält 2, om ja fler underlag, validera dessa.
+            // fält 3 har fel validering
+            // fält 3 ska få rätt validering, NY
+            // Fält 4a saknar helt validering. Bygg ut för att stödja alla medlemmar i array
+            // Fält 4b har fel text.
+
             $scope.radioMedical = {
                 checked : false
             };
@@ -60,7 +75,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                                                     isLatest : true
                                                   });
                 registerDateParsersForSupplementals($scope);
-                console.log('res add array: ' , $scope.additionalSupplements);
+                //console.log('res add array: ' , $scope.additionalSupplements);
             }
 
             $scope.removeUnderlag = function(underlag){
@@ -72,7 +87,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                     } else {
                         $scope.additionalSupplements.splice(underlag);
                     }
-
+                    $log.info('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model.underlag)));
                     //$log.info('supp after:' + JSON.stringify($scope.additionalSupplements));
                 } else { // if we delete the first, hide and reset
                     $scope.radioMedical.checked = false;
@@ -103,15 +118,16 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 if (obj === undefined && currentUnderlag.selectedType !== null &&
                     currentUnderlag.dateCreated !== null) { // if the object is not present, go ahead and push it
                     convertedToBackend = {
-                        'id': currentUnderlag.selectedType,
+                        'id': currentUnderlag.selectedOrder,
                         'datum': dateUtils.convertDateToISOString(currentUnderlag.dateCreated),
                         'attachment': currentUnderlag.willSupplyAttachment
                     };
                     model.underlag.push(convertedToBackend);
                 }
+               // console.log('complete model: ' + JSON.stringify('model' + JSON.stringify( model)));
+               // console.log('complete model $scope: ' + JSON.stringify('model' + JSON.stringify( $scope.model)));
+               console.log('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model.underlag)));
 
-                console.log('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model.underlag)));
-                console.log('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model)));
 
             }
 
