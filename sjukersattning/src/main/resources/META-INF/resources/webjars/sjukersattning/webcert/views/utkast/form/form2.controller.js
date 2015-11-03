@@ -46,7 +46,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
             // search and replace the model when supplement dropdown change
            $scope.onUnderlagChange = function(underlag) {
-               if (underlag.selectedType !== 'default') {
+               if(underlag.selectedOrder !== 0) {
                    // set supplement 1 to new underlag type
                    registerDateParsersForSupplementals($scope);
                    if(underlag) {
@@ -79,7 +79,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             }
 
             $scope.removeUnderlag = function(underlag){
-                if(underlag.id !== 'supplement0') { // as log as we not deleting the first element
+                if(underlag.selectedOrder !== 0) { // as log as we not deleting the first element
                     var isLatest = underlag.isLatest;
                     if (isLatest) { // user deletes the last element
                         $scope.additionalSupplements.pop();
@@ -122,11 +122,13 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                         'datum': dateUtils.convertDateToISOString(currentUnderlag.dateCreated),
                         'attachment': currentUnderlag.willSupplyAttachment
                     };
+
                     model.underlag.push(convertedToBackend);
+                    console.log('model content on convert: ', model.underlag);
                 }
                // console.log('complete model: ' + JSON.stringify('model' + JSON.stringify( model)));
                // console.log('complete model $scope: ' + JSON.stringify('model' + JSON.stringify( $scope.model)));
-               console.log('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model.underlag)));
+               //console.log('model.underlag: ' + JSON.stringify('model in SetToBackend' + JSON.stringify( model.underlag)));
 
 
             }

@@ -13,7 +13,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
 
             $scope.setFocus = function(id, state){
                 var element = window.document.getElementById(id);
-                $log.info('elem:' + element);
+              //  $log.info('elem:' + element);
 
                 if(element) {
                     var initialClasses = element.className;
@@ -34,6 +34,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
                 console.log('dd' + JSON.stringify($scope.funktionsnedsattningOptions));
             }
 
-           console.log('dd' + JSON.stringify($scope.funktionsnedsattningOptions));
+         //  console.log('dd' + JSON.stringify($scope.funktionsnedsattningOptions));
 
         }]);
