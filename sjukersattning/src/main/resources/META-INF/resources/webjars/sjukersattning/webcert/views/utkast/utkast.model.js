@@ -13,6 +13,15 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                 }
             };
            // console.log("BAM: " + DraftModel);
+
+            /*
+            *     private String pagaendeBehandling;
+             private String avslutadBehandling;
+             private String planeradBehandling;
+
+             private String vadPatientenKanGora;
+             private String prognosNarPatientKanAterga;
+            * */
             var sjukersattningModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
@@ -35,13 +44,14 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'diagnosKodsystem3',
                             new ModelAttr('samsjuklighet', {defaultValue: false})],
 
-                        form4b: ['diagnosticering',
+                        form4b: ['diagnostisering',
                             'nyBedomningDiagnos'],
 
                         form5: ['funktionsnedsattning',
                             'aktivitetsbegransning'],
 
-                        form7: ['pagaendeBehandling',
+                        form7: ['avslutadBehandling',
+                            'pagaendeBehandling',
                             'planeradBehandling'],
 
                         form8b: ['tjanstgoringstid',
@@ -54,10 +64,8 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             new ModelAttr('nedsattMed75', {fromTransform: nedsattFromTransform}),
                             'nedsattMed75Beskrivning', 'vadPatientenKanGora', 'prognosNarPatientKanAterga'],
 
-                        form9: ['atgardInteAktuellt', 'atgardArbetstraning', 'atgardArbetsanpassning',
-                            'atgardSokaNyttArbete', 'atgardBesokPaArbete', 'atgardErgonomi',
-                            'atgardHjalpmedel', 'atgardKonflikthantering', 'atgardOmfordelning',
-                            'atgardForetagshalsovard', 'atgardOvrigt'],
+                        form9: [ 'vadPatientenKanGora',
+                                 'prognosNarPatientKanAterga'],
 
                         form10: ['kommentar'],
 
