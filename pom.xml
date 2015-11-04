@@ -37,8 +37,9 @@
     <intyg-transportstyrelsen.version>0-SNAPSHOT</intyg-transportstyrelsen.version>
     <intyg-transportstyrelsen.version.range>(,1.0.0]</intyg-transportstyrelsen.version.range>
 
-    <!-- Netcare -->
+    <!-- Netcare
     <mvkintegration.version>1.2.3</mvkintegration.version>
+-->
 
     <skip-coverage>true</skip-coverage>
   </properties>
@@ -114,12 +115,13 @@
         <version>${intyg-transportstyrelsen.version}</version>
       </dependency>
 
-      <!-- Netcare dependencies -->
+      <!-- Netcare dependencies
       <dependency>
         <groupId>org.callistasoftware.netcare.commons</groupId>
         <artifactId>mvk-integration</artifactId>
         <version>${mvkintegration.version}</version>
       </dependency>
+      -->
 
       <!-- XML -->
       <dependency>
