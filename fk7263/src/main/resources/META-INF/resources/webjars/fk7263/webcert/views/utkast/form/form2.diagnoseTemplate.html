@@ -1,2 +1,2 @@
 <span style="font-style:italic" ng-if="match.model.moreResults" message key="fk7263.label.diagnoses.more_results"></span>
-<a tabindex="-1" bind-html-unsafe="match.label | typeaheadHighlight:query" ></a>
+<a tabindex="-1" ng-bind-html="match.label | uibTypeaheadHighlight:query" ></a>

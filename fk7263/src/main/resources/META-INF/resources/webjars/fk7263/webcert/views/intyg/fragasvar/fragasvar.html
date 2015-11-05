@@ -40,7 +40,7 @@
             <label class="control-label">Ämne</label>
             <div class="controls">
               <select id="new-question-topic" class="form-control" ng-model="newQuestion.chosenTopic"
-                      ng-options="c.label for c in newQuestion.topics"></select>
+                      ng-options="c.label for c in newQuestion.topics track by c.value"></select>
             </div>
           </div>
 
