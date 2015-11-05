@@ -113,37 +113,37 @@ public class InternalDraftValidator {
 
     private void validateDiagnose(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        if (!StringUtils.isBlank(utlatande.getDiagnosKod1())) {
-            String kodsystem = utlatande.getDiagnosKodsystem1();
-            if (StringUtils.isBlank(kodsystem)) {
-                // Default to ICD-10
-                kodsystem = Diagnoskodverk.ICD_10_SE.name();
-            }
-            validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukersattning.validation.diagnos.invalid", validationMessages);
-        } else {
-            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.diagnos.missing");
-        }
-
-        // Validate bidiagnos 1
-        if (!StringUtils.isBlank(utlatande.getDiagnosKod2())) {
-            String kodsystem = utlatande.getDiagnosKodsystem2();
-            if (StringUtils.isBlank(kodsystem)) {
-                // Default to ICD-10
-                kodsystem = Diagnoskodverk.ICD_10_SE.name();
-            }
-            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukersattning.validation.diagnos2.invalid", validationMessages);
-        }
-
-        // Validate bidiagnos 2
-        if (!StringUtils.isBlank(utlatande.getDiagnosKod3())) {
-            String kodsystem = utlatande.getDiagnosKodsystem3();
-            if (StringUtils.isBlank(kodsystem)) {
-                // Default to ICD-10
-                kodsystem = Diagnoskodverk.ICD_10_SE.name();
-            }
-            validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "sjukersattning.validation.diagnos3.invalid", validationMessages);
-        }
+//        if (!StringUtils.isBlank(utlatande.getDiagnosKod1())) {
+//            String kodsystem = utlatande.getDiagnosKodsystem1();
+//            if (StringUtils.isBlank(kodsystem)) {
+//                // Default to ICD-10
+//                kodsystem = Diagnoskodverk.ICD_10_SE.name();
+//            }
+//            validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukersattning.validation.diagnos.invalid", validationMessages);
+//        } else {
+//            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+//                    "sjukersattning.validation.diagnos.missing");
+//        }
+//
+//        // Validate bidiagnos 1
+//        if (!StringUtils.isBlank(utlatande.getDiagnosKod2())) {
+//            String kodsystem = utlatande.getDiagnosKodsystem2();
+//            if (StringUtils.isBlank(kodsystem)) {
+//                // Default to ICD-10
+//                kodsystem = Diagnoskodverk.ICD_10_SE.name();
+//            }
+//            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukersattning.validation.diagnos2.invalid", validationMessages);
+//        }
+//
+//        // Validate bidiagnos 2
+//        if (!StringUtils.isBlank(utlatande.getDiagnosKod3())) {
+//            String kodsystem = utlatande.getDiagnosKodsystem3();
+//            if (StringUtils.isBlank(kodsystem)) {
+//                // Default to ICD-10
+//                kodsystem = Diagnoskodverk.ICD_10_SE.name();
+//            }
+//            validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "sjukersattning.validation.diagnos3.invalid", validationMessages);
+//        }
 
     }
 

@@ -8,9 +8,7 @@ import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
-import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
+import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
@@ -151,59 +149,48 @@ public class TransportToInternal {
     }
 
     private static void handleHuvudsakligOrsak(SjukersattningUtlatande utlatande, Svar svar) {
+        String diagnosKod = null;
+        String diagnosKodSystem = null;
+        String diagnosBeskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case DIAGNOS_DELSVAR_ID:
                 CVType diagnos = getSvarContent(delsvar, CVType.class);
-                utlatande.setDiagnosKod1(diagnos.getCode());
-                utlatande.setDiagnosKodsystem1(diagnos.getCodeSystem());
+                diagnosKod = diagnos.getCode();
+                diagnosKodSystem = diagnos.getCodeSystem();
                 break;
             case DIAGNOS_BESKRIVNING_DELSVAR_ID:
-                String diagnosBeskrivning = getSvarContent(delsvar, String.class);
-                utlatande.setDiagnosBeskrivning1(diagnosBeskrivning);
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
-    private static void handleYtterligareOrsak(SjukersattningUtlatande utlatande, Svar svar) {
-        String diagnosKodSystem = null;
-        String diagnosKod = null;
-        String diagnosBeskrivning = null;
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case YTTERLIGARE_ORSAK_DELSVAR_ID:
-                CVType diagnos = getSvarContent(delsvar, CVType.class);
-                diagnosKodSystem = diagnos.getCodeSystem();
-                diagnosKod = diagnos.getCode();
-                break;
-            case YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID:
                 diagnosBeskrivning = getSvarContent(delsvar, String.class);
                 break;
             default:
                 throw new IllegalArgumentException();
             }
         }
-        if (BEHANDLINGSATGARD_CODE_SYSTEM.equals(diagnosKodSystem)) {
-            if (utlatande.getBehandlingsAtgardKod1() == null) {
-                utlatande.setBehandlingsAtgardKod1(diagnosKod);
-                utlatande.setBehandlingsAtgardBeskrivning1(diagnosBeskrivning);
-            } else {
-                utlatande.setBehandlingsAtgardKod2(diagnosKod);
-                utlatande.setBehandlingsAtgardBeskrivning2(diagnosBeskrivning);
+        utlatande.getDiagnoser().add(0, new Diagnos(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
+    }
+
+    private static void handleYtterligareOrsak(SjukersattningUtlatande utlatande, Svar svar) {
+        String kod = null;
+        String kodSystem = null;
+        String beskrivning = null;
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+            case YTTERLIGARE_ORSAK_DELSVAR_ID:
+                CVType diagnos = getSvarContent(delsvar, CVType.class);
+                kodSystem = diagnos.getCodeSystem();
+                kod = diagnos.getCode();
+                break;
+            case YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID:
+                beskrivning = getSvarContent(delsvar, String.class);
+                break;
+            default:
+                throw new IllegalArgumentException();
             }
+        }
+        if (BEHANDLINGSATGARD_CODE_SYSTEM.equals(kodSystem)) {
+            utlatande.getAtgarder().add(new BehandlingsAtgard(kod, kodSystem, beskrivning));
         } else {
-            if (utlatande.getDiagnosKod2() == null) {
-                utlatande.setDiagnosKodsystem2(diagnosKodSystem);
-                utlatande.setDiagnosKod2(diagnosKod);
-                utlatande.setDiagnosBeskrivning2(diagnosBeskrivning);
-            } else {
-                utlatande.setDiagnosKodsystem3(diagnosKodSystem);
-                utlatande.setDiagnosKod3(diagnosKod);
-                utlatande.setDiagnosBeskrivning3(diagnosBeskrivning);
-            }
+            utlatande.getDiagnoser().add(new Diagnos(kod, kodSystem, beskrivning));
         }
     }
 
@@ -296,7 +283,7 @@ public class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AKTIVITETSFORMAGA_DELSVAR_ID:
-            utlatande.setVadPatientenKanGora(getSvarContent(delsvar, String.class));
+            utlatande.setAktivitetsFormaga(getSvarContent(delsvar, String.class));
             return;
         default:
             throw new IllegalArgumentException();
@@ -307,7 +294,7 @@ public class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case PROGNOS_DELSVAR_ID:
-            utlatande.setPrognosNarPatientKanAterga(getSvarContent(delsvar, String.class));
+            utlatande.setPrognos(getSvarContent(delsvar, String.class));
             return;
         default:
             throw new IllegalArgumentException();
@@ -318,7 +305,7 @@ public class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case OVRIGT_DELSVAR_ID:
-            utlatande.setKommentar(getSvarContent(delsvar, String.class));
+            utlatande.setOvrigt(getSvarContent(delsvar, String.class));
             return;
         default:
             throw new IllegalArgumentException();

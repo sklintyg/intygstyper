@@ -15,9 +15,9 @@ import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
+import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
+import se.inera.certificate.modules.support.ModuleEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
@@ -101,15 +101,17 @@ public class InternalToTransport {
 
     private static IntygId getIntygsId(SjukersattningUtlatande source) {
         IntygId intygId = new IntygId();
+        // TODO: what is supposed to be used in root/extension?
         intygId.setRoot(source.getId());
+        intygId.setExtension(source.getId());
         return intygId;
     }
 
     private static TypAvIntyg getTypAvIntyg(SjukersattningUtlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
-        typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
-        typAvIntyg.setCodeSystemName(INTYP_TYP_CODE_SYSTEM);
         typAvIntyg.setCode(source.getTyp());
+        typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
+        typAvIntyg.setDisplayName(SjukersattningEntryPoint.MODULE_NAME);
         return typAvIntyg;
     }
 
@@ -144,19 +146,18 @@ public class InternalToTransport {
                             withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID, Boolean.toString(underlag.isAttachment())).build());
 
         }
-        svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
-                withDelsvar(DIAGNOS_DELSVAR_ID, aCV(source.getDiagnosKodsystem1(), source.getDiagnosKod1())).
-                withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning1()).build());
+        for (int i = 0; i < source.getDiagnoser().size(); i++) {
+            Diagnos diagnos = source.getDiagnoser().get(i);
+            if (i == 0) {
+                svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
+                        withDelsvar(DIAGNOS_DELSVAR_ID, aCV(diagnos.getDiagnosKodSystem(), diagnos.getDiagnosKod())).
+                        withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, diagnos.getDiagnosBeskrivning()).build());
+            } else {
+                svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
+                        aCV(diagnos.getDiagnosKodSystem(), diagnos.getDiagnosKod())).
+                        withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, diagnos.getDiagnosBeskrivning()).build());
+            }
 
-        if (source.getDiagnosKod2() != null) {
-            svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(source.getDiagnosKodsystem2(), source.getDiagnosKod2())).
-                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning2()).build());
-        }
-        if (source.getDiagnosKod3() != null) {
-            svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(source.getDiagnosKodsystem3(), source.getDiagnosKod3())).
-                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getDiagnosBeskrivning3()).build());
         }
 
         svars.add(aSvar(DIAGNOSTISERING_SVAR_ID).
@@ -164,20 +165,17 @@ public class InternalToTransport {
         svars.add(aSvar(NYBEDOMNING_SVAR_ID).
                 withDelsvar(NYBEDOMNING_DELSVAR_ID, Boolean.toString(source.isNyBedomningDiagnos())).build());
 
-        if (source.getBehandlingsAtgardKod1() != null) {
+        for (BehandlingsAtgard atgard : source.getAtgarder()) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(BEHANDLINGSATGARD_CODE_SYSTEM, source.getBehandlingsAtgardKod1())).
-                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getBehandlingsAtgardBeskrivning1()).build());
+                    aCV(atgard.getAtgardsKodSystem(), atgard.getAtgardsKod())).
+                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, atgard.getAtgardsBeskrivning()).build());
         }
-        if (source.getBehandlingsAtgardKod2() != null) {
-            svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(BEHANDLINGSATGARD_CODE_SYSTEM, source.getBehandlingsAtgardKod2())).
-                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, source.getBehandlingsAtgardBeskrivning2()).build());
-        }
-
         for (Funktionsnedsattning funktionsnedsattning : source.getFunktionsnedsattnings()) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID, funktionsnedsattning.getBeskrivning()).
-                    withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID, aCV(FUNKTIONSOMRADE_CODE_SYSTEM, Integer.toString(funktionsnedsattning.getId().getId()))).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID)
+                    .withDelsvar(FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID, funktionsnedsattning.getBeskrivning())
+                    .
+                    withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID,
+                            aCV(FUNKTIONSOMRADE_CODE_SYSTEM, Integer.toString(funktionsnedsattning.getId().getId()))).build());
         }
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
 
@@ -193,12 +191,12 @@ public class InternalToTransport {
             svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
         }
 
-        svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getVadPatientenKanGora()).build());
+        svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getAktivitetsFormaga()).build());
 
-        svars.add(aSvar(PROGNOS_SVAR_ID).withDelsvar(PROGNOS_DELSVAR_ID, source.getPrognosNarPatientKanAterga()).build());
+        svars.add(aSvar(PROGNOS_SVAR_ID).withDelsvar(PROGNOS_DELSVAR_ID, source.getPrognos()).build());
 
-        if (source.getKommentar() != null) {
-            svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getKommentar()).build());
+        if (source.getOvrigt() != null) {
+            svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getOvrigt()).build());
         }
 
         svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, Boolean.toString(source.isKontaktMedFk())).build());

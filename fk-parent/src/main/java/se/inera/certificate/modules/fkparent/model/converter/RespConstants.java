@@ -14,7 +14,6 @@ public class RespConstants {
     public static final String CERTIFICATE_CODE_SYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
     public static final String REFERENS_CODE_SYSTEM = "KV_FKMU_0001";
     public static final String HSA_CODE_SYSTEM = "1.2.752.129.2.1.4.1";
-    public static final String INTYP_TYP_CODE_SYSTEM = "kv_utlåtandetyp_intyg";
     public static final String PERSON_ID_CODE_SYSTEM = "1.2.752.129.2.1.3.3";
     public static final String FUNKTIONSOMRADE_CODE_SYSTEM = "KV_FKMU_0XXX";
     public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_1XXX";

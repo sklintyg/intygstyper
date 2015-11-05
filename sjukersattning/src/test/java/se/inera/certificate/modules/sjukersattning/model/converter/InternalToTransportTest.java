@@ -1,6 +1,7 @@
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
@@ -17,10 +18,9 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuilder;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateValidator;
+import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningValidator;
-import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
+import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
@@ -29,12 +29,13 @@ import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLWriter;
 
 public class InternalToTransportTest {
+
     @Test
     public void doSchematronValidation() throws Exception {
         String xmlContents = xmlToString(InternalToTransport.convert(getUtlatande()));
 
         RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
-        generalValidator.validateGeneral(xmlContents);
+        assertTrue(generalValidator.validateGeneral(xmlContents));
 
         RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
@@ -51,20 +52,18 @@ public class InternalToTransportTest {
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.getUnderlag().add(new Underlag(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
-        utlatande.setDiagnosKod1("S47");
-        utlatande.setDiagnosBeskrivning1("Klämskada skuldra");
-        utlatande.setDiagnosKodsystem1("PP-VS1");
-        utlatande.setBehandlingsAtgardKod1("ABC");
-        utlatande.setBehandlingsAtgardBeskrivning1("Kristallterapi");
+        utlatande.getDiagnoser().add(new Diagnos("S47", "ICD-10-SE", "Klämskada skuldra"));
+        utlatande.getDiagnoser().add(new Diagnos("S48", "ICD-10-SE", "Klämskada arm"));
+        utlatande.getAtgarder().add(new BehandlingsAtgard("ABC", RespConstants.BEHANDLINGSATGARD_CODE_SYSTEM, "Kristallterapi"));
         utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"));
         utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen"));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");
         utlatande.setPlaneradBehandling("Mer medicin");
-        utlatande.setVadPatientenKanGora("Dansa");
-        utlatande.setPrognosNarPatientKanAterga("Aldrig");
-        utlatande.setKommentar("Trevlig kille");
+        utlatande.setAktivitetsFormaga("Dansa");
+        utlatande.setPrognos("Aldrig");
+        utlatande.setOvrigt("Trevlig kille");
         utlatande.setKontaktMedFk(false);
         return utlatande;
     }
