@@ -28,5 +28,4 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form5Controller',
                     viewState.intygModel.restoreFromAttic('diabetes.insulin');
                 }
             }, true);
-            
         }]);

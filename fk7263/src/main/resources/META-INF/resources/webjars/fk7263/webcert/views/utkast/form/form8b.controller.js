@@ -4,13 +4,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
         function($scope, $log, viewState, DateRangeService, fmbViewState) {
             'use strict';
             // private vars
-            //var _dateRangeGroups = DateRangeGroupsService.build(_$scope);
-
 
             // scope
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
-
             $scope.fmb = fmbViewState.state;
 
             // 1. onload
@@ -49,21 +46,17 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             var doneLoading = false;
             $scope.$watch(function() {
 
-                if (viewState.common.doneLoading) {
-                    if(angular.isObject($scope.form8b.nedsattMed25from) &&
-                        angular.isObject($scope.form8b.nedsattMed25tom) &&
-                        angular.isObject($scope.form8b.nedsattMed50from) &&
-                        angular.isObject($scope.form8b.nedsattMed50tom) &&
-                        angular.isObject($scope.form8b.nedsattMed75from) &&
-                        angular.isObject($scope.form8b.nedsattMed75tom) &&
-                        angular.isObject($scope.form8b.nedsattMed100from) &&
-                        angular.isObject($scope.form8b.nedsattMed100tom)) {
-                        return true;
-                    }
-                }
-                return false;
+                return !!(viewState.common.doneLoading &&
+                    angular.isObject($scope.form8b.nedsattMed25from) &&
+                    angular.isObject($scope.form8b.nedsattMed25tom) &&
+                    angular.isObject($scope.form8b.nedsattMed50from) &&
+                    angular.isObject($scope.form8b.nedsattMed50tom) &&
+                    angular.isObject($scope.form8b.nedsattMed75from) &&
+                    angular.isObject($scope.form8b.nedsattMed75tom) &&
+                    angular.isObject($scope.form8b.nedsattMed100from) &&
+                    angular.isObject($scope.form8b.nedsattMed100tom));
 
-            }, function(newVal/*, oldVal*/) {
+            }, function(newVal, oldVal) {
                 if (doneLoading) {
                     return;
                 }

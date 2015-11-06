@@ -162,7 +162,6 @@ angular.module('fk7263').factory('fk7263.Domain.IntygModel',
                 }
             }, {
                 build : function(){
-                    //console.log('----- build *****' + DraftModel + ',' + Fk7263Model._members);
                     return new DraftModel(new Fk7263Model());
                 }
             });

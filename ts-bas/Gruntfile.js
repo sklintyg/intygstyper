@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
         csslint: {
             options: {
-                csslintrc: '../target/build-tools/csslint/.csslintrc',
+                csslintrc: 'target/build-tools/csslint/.csslintrc',
                 force: true
             },
             minaintyg: {

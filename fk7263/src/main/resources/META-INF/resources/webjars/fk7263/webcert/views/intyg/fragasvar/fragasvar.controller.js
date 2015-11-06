@@ -67,15 +67,27 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             });
             $scope.$on('$destroy', unbindFastEvent);
 
-            $scope.openIssuesFilter = function(qa) {
-                return (qa.proxyMessage === undefined && qa.status !== 'CLOSED') ||
-                    (qa.proxyMessage !== undefined && qa.messageStatus !== 'CLOSED' && qa.messageStatus !== 'HIDDEN');
+            // ProxyMessage is set if question is handled and replaced by a blue context info box saying it is handled (or reopened) instead of the actual question showing.
+            // Checking for proxyMessage therefore is a way to decide whether the question is shown or the message is (yes, its ugly. should be refactored)
 
+            function isFragaOpen(qa) {
+                return qa.proxyMessage === undefined && qa.status !== 'CLOSED';
+            }
+
+            function isFragaProxyMessageOpenShown(qa) {
+                return qa.proxyMessage !== undefined && qa.messageStatus !== 'CLOSED' && qa.messageStatus !== 'HIDDEN';
+            }
+
+            function isFragaProxyMessageClosedShown(qa) {
+                return qa.proxyMessage !== undefined && qa.messageStatus === 'CLOSED';
+            }
+
+            $scope.openIssuesFilter = function(qa) {
+                return isFragaOpen(qa) || isFragaProxyMessageOpenShown(qa);
             };
 
             $scope.closedIssuesFilter = function(qa) {
-                return (qa.proxyMessage === undefined && qa.status === 'CLOSED') ||
-                    (qa.proxyMessage !== undefined && qa.messageStatus === 'CLOSED');
+                return !isFragaOpen(qa) || isFragaProxyMessageClosedShown(qa);
             };
 
             $scope.toggleQuestionForm = function() {
@@ -103,7 +115,6 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                             fragaSvarCommonService.decorateSingleItem(result);
                             // result is a new FragaSvar Instance: add it to our local repo
                             $scope.qaList.push(result);
-                            //$scope.activeQA = result.internReferens;
                             // close question form
                             $scope.toggleQuestionForm();
                             // show sent message

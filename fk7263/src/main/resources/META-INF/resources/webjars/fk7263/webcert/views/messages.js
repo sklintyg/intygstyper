@@ -143,7 +143,7 @@ var fk7263Messages = {
 
         'fk7263.validation.intyg-baserat-pa.telefonkontakt.incorrect_format' : 'Fel datumformat för telefonkontakt med patient (Fält 4b)',
         'fk7263.validation.intyg-baserat-pa.undersokning.incorrect_format' : 'Fel datumformat för undersökning av patient (Fält 4b)',
-        
+
         'fk7263.validation.intyg-baserat-pa.annan.incorrect_format' : 'Fel datumformat för annan referens (Fält 4b)',
         'fk7263.validation.intyg-baserat-pa.journaluppgifter.incorrect_format' : 'Fel datumformat för journaluppgifter (Fält 4b)',
 

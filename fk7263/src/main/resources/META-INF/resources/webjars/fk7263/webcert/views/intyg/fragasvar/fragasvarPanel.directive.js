@@ -42,9 +42,9 @@ angular.module('fk7263').directive('qaPanel',
                     }
 
                     function addListMessage(qaList, qa, messageId) {
-                        var messageProxy = {}; // = angular.copy(qa);
+                        var messageProxy = {};
                         messageProxy.proxyMessage = messageId;
-                        messageProxy.id = qa.internReferens;   // .id
+                        messageProxy.id = qa.internReferens;
                         messageProxy.internReferens = qa.internReferens;
                         messageProxy.senasteHandelseDatum = qa.senasteHandelseDatum;
                         messageProxy.messageStatus = qa.status;
@@ -71,7 +71,6 @@ angular.module('fk7263').directive('qaPanel',
 
                                 // update real item
                                 angular.copy(result, qa);
-                                //$scope.activeQA = qa.internReferens;
                                 statService.refreshStat();
                             }
                         }, function(errorData) {
@@ -151,7 +150,6 @@ angular.module('fk7263').directive('qaPanel',
                                 addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.hanterad');
 
                                 angular.copy(result, qa);
-                                //$scope.activeQA = qa.internReferens;
                                 statService.refreshStat();
                             }
                             $window.doneLoading = true;
@@ -183,7 +181,6 @@ angular.module('fk7263').directive('qaPanel',
                                 addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.ohanterad');
 
                                 angular.copy(result, qa);
-                                //$scope.activeQA = qa.internReferens;
                                 statService.refreshStat();
                             }
                         }, function(errorData) {

@@ -12,15 +12,6 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form19Controller',
                     return;
                 }
                 $scope.befattningar = befattningar;
-                //                    var result = '';
-                //                    for (var i = 0; i < befattningar.length; i++) {
-                //                        if (i < befattningar.length-1) {
-                //                            result += befattningar[i] + (', ');
-                //                        } else {
-                //                            result += befattningar[i];
-                //                        }
-                //                    }
-                //                    $scope.befattningar = result;
             }, true);
 
             //Make a printable list of Specialiteter
@@ -39,5 +30,4 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form19Controller',
                 }
                 $scope.specialiteter = result;
             }, true);
-
         }]);

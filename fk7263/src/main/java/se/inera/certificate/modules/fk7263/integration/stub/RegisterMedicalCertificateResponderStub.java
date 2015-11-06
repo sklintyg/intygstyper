@@ -25,7 +25,11 @@ import se.skl.skltpservices.adapter.fk.regmedcert.Vard2FkValidator;
  * @author par.wenaker
  */
 @Transactional
-@WebServiceProvider(targetNamespace = "urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20", serviceName = "RegisterMedicalCertificateResponderService", wsdlLocation = "schemas/v3/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.1_rivtabp20.wsdl")
+@WebServiceProvider(
+        targetNamespace = "urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificate:3:rivtabp20",
+        serviceName = "RegisterMedicalCertificateResponderService",
+        wsdlLocation = "classpath:interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateInteraction_3.1_rivtabp20.wsdl"
+)
 public class RegisterMedicalCertificateResponderStub implements RegisterMedicalCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
