@@ -17,40 +17,21 @@
   </cxf:bus>
 
   <jaxws:endpoint address="/get-certificate-se/v2.0"
-      implementor="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningService"
-      wsdlLocation="classpath:/interactions/GetCertificateInteraction/GetCertificateInteraction_1.0_RIVTABP21.wsdl"
-      xmlns:r="urn:riv:clinicalprocess:healthcond:certificate:GetCertificate:1:rivtabp21"
-      serviceName="r:GetCertificateResponderService"
-      endpointName="r:GetCertificateResponderPort"
-      >
+      implementor="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningResponderImpl">
     <jaxws:outFaultInterceptors>
-      <bean
-          class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
-        <constructor-arg
-            value="transform/get-sjukersattning-transform.xslt"/>
+      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+        <constructor-arg value="transform/get-sjukersattning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
   <jaxws:endpoint address="/register-certificate-se/v2.0"
-      implementor="se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningService"
-      wsdlLocation="classpath:/interactions/RegisterCertificateInteraction/RegisterCertificateInteraction_2.0_RIVTABP21.wsdl"
-      xmlns:r="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificate:2:rivtabp21"
-      serviceName="r:RegisterCertificateResponderService"
-      endpointName="r:RegisterCertificateResponderPort"
-      >
+      implementor="se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/register-sjukersattning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
-    <jaxws:properties>
-      <entry key="schema-validation-enabled" value="true"/>
-    </jaxws:properties>
-    <jaxws:schemaLocations>
-      <!--jaxws:schemaLocation>classpath:/core_components/se_intygstjanster_services_fk_1.0.xsd</jaxws:schemaLocation -->
-      <jaxws:schemaLocation>classpath:/interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd</jaxws:schemaLocation>
-    </jaxws:schemaLocations>
   </jaxws:endpoint>
 
 </beans>

@@ -336,6 +336,7 @@ public class TransportToInternal {
         GrundData grundData = new GrundData();
         grundData.setPatient(getPatient(source));
         grundData.setSkapadAv(getSkapadAv(source));
+        grundData.setSigneringsdatum(source.getSigneringstidpunkt());
         return grundData;
     }
 
