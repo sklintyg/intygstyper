@@ -1,0 +1,18 @@
+//These variables should be extracted and imported
+//colors
+$color-alto-approx: #ddd;
+
+//urls
+$ss16-url: url('../img/ss16.png');
+
+.soclink {
+  background-image: $ss16-url;
+  background-repeat: no-repeat;
+  padding-left: 25px;
+}
+
+.recipentlist {
+  padding: 10px 0;
+  border-bottom: 1px solid $color-alto-approx;
+  margin-bottom: 10px;
+}
