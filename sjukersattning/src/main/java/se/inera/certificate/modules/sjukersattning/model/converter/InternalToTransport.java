@@ -153,7 +153,7 @@ public class InternalToTransport {
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
                     aSvar(UNDERLAG_SVAR_ID).withDelsvar(UNDERLAG_TYP_DELSVAR_ID,
-                            aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getId().getId()))).
+                            aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()))).
                             withDelsvar(UNDERLAG_DATUM_DELSVAR_ID, underlag.getDatum().asLocalDate().toString()).
                             withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID, Boolean.toString(underlag.isAttachment())).build());
 
@@ -187,7 +187,7 @@ public class InternalToTransport {
                     .withDelsvar(FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID, funktionsnedsattning.getBeskrivning())
                     .
                     withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID,
-                            aCV(FUNKTIONSOMRADE_CODE_SYSTEM, Integer.toString(funktionsnedsattning.getId().getId()))).build());
+                            aCV(FUNKTIONSOMRADE_CODE_SYSTEM, Integer.toString(funktionsnedsattning.getFunktionsomrade().getId()))).build());
         }
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
 

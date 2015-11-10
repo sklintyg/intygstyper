@@ -1,63 +1,26 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.auto.value.AutoValue;
 
-public class BehandlingsAtgard {
+@AutoValue
+public abstract class BehandlingsAtgard {
 
-    private String atgardsKod;
-
-    private String atgardsKodSystem;
-
-    private String atgardsBeskrivning;
-
-    public BehandlingsAtgard() {
+    protected BehandlingsAtgard() {
     }
 
-    public BehandlingsAtgard(String atgardsKod, String atgardsKodSystem, String atgardsBeskrivning) {
-        this.atgardsKod = atgardsKod;
-        this.atgardsKodSystem = atgardsKodSystem;
-        this.atgardsBeskrivning = atgardsBeskrivning;
+    @JsonCreator
+    public static BehandlingsAtgard create(@JsonProperty("atgardsKod") String atgardsKod,
+            @JsonProperty("atgardsKodSystem") String atgardsKodSystem,
+            @JsonProperty("atgardsBeskrivning") String atgardsBeskrivning) {
+        return new AutoValue_BehandlingsAtgard(atgardsKod, atgardsKodSystem, atgardsBeskrivning);
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-        final BehandlingsAtgard that = (BehandlingsAtgard) object;
-        return Objects.equals(this.atgardsKod, that.atgardsKod) && Objects.equals(this.atgardsKodSystem, that.atgardsKodSystem) &&
-                Objects.equals(this.atgardsBeskrivning, that.atgardsBeskrivning);
-    }
+    public abstract String getAtgardsKod();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(atgardsKod, atgardsKodSystem, atgardsBeskrivning);
-    }
+    public abstract String getAtgardsKodSystem();
 
-    public String getAtgardsKod() {
-        return atgardsKod;
-    }
+    public abstract String getAtgardsBeskrivning();
 
-    public void setAtgardsKod(String atgardsKod) {
-        this.atgardsKod = atgardsKod;
-    }
-
-    public String getAtgardsKodSystem() {
-        return atgardsKodSystem;
-    }
-
-    public void setAtgardsKodSystem(String atgardsKodSystem) {
-        this.atgardsKodSystem = atgardsKodSystem;
-    }
-
-    public String getAtgardsBeskrivning() {
-        return atgardsBeskrivning;
-    }
-
-    public void setAtgardsBeskrivning(String atgardsBeskrivning) {
-        this.atgardsBeskrivning = atgardsBeskrivning;
-    }
 }

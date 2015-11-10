@@ -1,56 +1,25 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
-import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.auto.value.AutoValue;
 
-public class Funktionsnedsattning {
+@AutoValue
+public abstract class Funktionsnedsattning {
 
-    private Funktionsomrade id;
-
-    private String beskrivning;
-
-    public Funktionsnedsattning(Funktionsomrade funktionsomrade, String beskrivning) {
-        this.id = funktionsomrade;
-        this.beskrivning = beskrivning;
+    protected Funktionsnedsattning() {
     }
 
-    public Funktionsnedsattning() {}
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-        final Funktionsnedsattning that = (Funktionsnedsattning) object;
-        return Objects.equals(this.id, that.id) && Objects.equals(this.beskrivning, that.beskrivning);
+    @JsonCreator
+    public static Funktionsnedsattning create(@JsonProperty("funktionsomrade") Funktionsomrade funktionsomrade,
+            @JsonProperty("beskrivning") String beskrivning) {
+        return new AutoValue_Funktionsnedsattning(funktionsomrade, beskrivning);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, beskrivning);
-    }
+    public abstract Funktionsomrade getFunktionsomrade();
 
-    public void setId(Funktionsomrade id) {
-        this.id = id;
-    }
-
-    public Funktionsomrade getId() {
-        return id;
-    }
-
-    public void setBeskrivning(String beskrivning) {
-        this.beskrivning = beskrivning;
-    }
-
-    public String getBeskrivning() {
-        return beskrivning;
-    }
+    public abstract String getBeskrivning();
 
     public enum Funktionsomrade {
         INTELLEKTUELL(1, "Intellektuell funktion"), KOMMUNIKATION(2, "Kommunikation och social interaktion"),

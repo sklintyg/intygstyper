@@ -146,7 +146,7 @@ public class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        utlatande.getUnderlag().add(new Underlag(underlagsTyp, date, attachment));
+        utlatande.getUnderlag().add(Underlag.create(underlagsTyp, date, attachment));
     }
 
     private static void handleHuvudsakligOrsak(SjukersattningUtlatande utlatande, Svar svar) {
@@ -167,7 +167,7 @@ public class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        utlatande.getDiagnoser().add(0, new Diagnos(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
+        utlatande.getDiagnoser().add(0, Diagnos.create(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
     }
 
     private static void handleYtterligareOrsak(SjukersattningUtlatande utlatande, Svar svar) {
@@ -189,9 +189,9 @@ public class TransportToInternal {
             }
         }
         if (BEHANDLINGSATGARD_CODE_SYSTEM.equals(kodSystem)) {
-            utlatande.getAtgarder().add(new BehandlingsAtgard(kod, kodSystem, beskrivning));
+            utlatande.getAtgarder().add(BehandlingsAtgard.create(kod, kodSystem, beskrivning));
         } else {
-            utlatande.getDiagnoser().add(new Diagnos(kod, kodSystem, beskrivning));
+            utlatande.getDiagnoser().add(Diagnos.create(kod, kodSystem, beskrivning));
         }
     }
 
@@ -233,7 +233,7 @@ public class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(funktionsomrade, beskrivning));
+        utlatande.getFunktionsnedsattnings().add(Funktionsnedsattning.create(funktionsomrade, beskrivning));
     }
 
     private static void handleAktivitetsbegransning(SjukersattningUtlatande utlatande, Svar svar) {

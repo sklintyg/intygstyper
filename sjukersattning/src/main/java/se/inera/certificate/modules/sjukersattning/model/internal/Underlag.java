@@ -1,70 +1,30 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
-import java.util.Objects;
-
 import se.inera.certificate.model.InternalDate;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.auto.value.AutoValue;
 
-public class Underlag {
+@AutoValue
+public abstract class Underlag {
 
-    private UnderlagsTyp id;
-
-    private InternalDate datum;
-
-    private boolean attachment;
-
-    public Underlag(UnderlagsTyp typ, InternalDate internalDate, boolean attachment) {
-        this.id = typ;
-        this.datum = internalDate;
-        this.attachment = attachment;
+    protected Underlag() {
     }
 
-    public Underlag() {
+    @JsonCreator
+    public static Underlag create(@JsonProperty("typ") UnderlagsTyp typ,
+            @JsonProperty("datum") InternalDate datum,
+            @JsonProperty("attachment") boolean attachment) {
+        return new AutoValue_Underlag(typ, datum, attachment);
     }
 
-    public UnderlagsTyp getId() {
-        return id;
-    }
+    public abstract UnderlagsTyp getTyp();
 
-    public void setId(UnderlagsTyp id) {
-        this.id = id;
-    }
+    public abstract InternalDate getDatum();
 
-    public InternalDate getDatum() {
-        return datum;
-    }
-
-    public void setDatum(InternalDate datum) {
-        this.datum = datum;
-    }
-
-    public boolean isAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(boolean attachment) {
-        this.attachment = attachment;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-        final Underlag that = (Underlag) object;
-        return Objects.equals(this.id, that.id) && Objects.equals(this.datum, that.datum) && Objects.equals(this.attachment, that.attachment);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, datum, attachment);
-    }
+    public abstract boolean isAttachment();
 
     public enum UnderlagsTyp {
         NEUROPSYKIATRISKT_UTLATANDE(1, "Neuropsykiatriskt utlåtande"),

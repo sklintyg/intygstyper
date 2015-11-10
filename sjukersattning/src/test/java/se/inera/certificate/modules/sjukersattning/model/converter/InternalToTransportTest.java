@@ -51,12 +51,12 @@ public class InternalToTransportTest {
         utlatande.setGrundData(IntygGrundDataBuilder.getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
-        utlatande.getUnderlag().add(new Underlag(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
-        utlatande.getDiagnoser().add(new Diagnos("S47", "ICD-10-SE", "Klämskada skuldra"));
-        utlatande.getDiagnoser().add(new Diagnos("S48", "ICD-10-SE", "Klämskada arm"));
-        utlatande.getAtgarder().add(new BehandlingsAtgard("ABC", RespConstants.BEHANDLINGSATGARD_CODE_SYSTEM, "Kristallterapi"));
-        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"));
-        utlatande.getFunktionsnedsattnings().add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen"));
+        utlatande.getUnderlag().add(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false));
+        utlatande.getDiagnoser().add(Diagnos.create("S47", "ICD-10-SE", "Klämskada skuldra"));
+        utlatande.getDiagnoser().add(Diagnos.create("S48", "ICD-10-SE", "Klämskada arm"));
+        utlatande.getAtgarder().add(BehandlingsAtgard.create("ABC", RespConstants.BEHANDLINGSATGARD_CODE_SYSTEM, "Kristallterapi"));
+        utlatande.getFunktionsnedsattnings().add(Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"));
+        utlatande.getFunktionsnedsattnings().add(Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen"));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");
