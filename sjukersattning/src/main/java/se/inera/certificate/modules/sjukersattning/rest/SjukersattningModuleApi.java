@@ -21,6 +21,10 @@ import se.inera.certificate.modules.sjukersattning.model.converter.TransportToIn
 import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.texts.Category;
+import se.inera.certificate.modules.sjukersattning.model.texts.Form;
+import se.inera.certificate.modules.sjukersattning.model.texts.Question;
+import se.inera.certificate.modules.sjukersattning.model.texts.SubQuestion;
 import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
@@ -40,6 +44,8 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static java.util.Arrays.asList;
 
 public class SjukersattningModuleApi implements ModuleApi {
 
@@ -97,7 +103,6 @@ public class SjukersattningModuleApi implements ModuleApi {
     public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
         try {
             return toInternalModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder));
-
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
@@ -224,6 +229,20 @@ public class SjukersattningModuleApi implements ModuleApi {
         return xmlString;
     }
 
+    @Override
+    public String getQuestions(String version) throws ModuleException {
+        SubQuestion subQuestion11 = SubQuestion.create("1.1", "Title 1.1", null);
+        SubQuestion subQuestion12 = SubQuestion.create("1.2", "Title 1.2", "Fill in this value");
+        Question question1 = Question.create("1", "Title 1", "Some sub questions", asList(subQuestion11, subQuestion12));
+        Category category1 = Category.create("1", "Category 1", "So many questions", asList(question1));
+        Form form = Form.create("sjukersattning", "Läkarintyg, sjukersättning", "Läkarintyg för sjukersättning", asList(category1));
+        try {
+            return toJsonString(form);
+        } catch (Exception e) {
+            throw new ModuleException(e);
+        }
+    }
+
     private CertificateResponse convert(GetCertificateResponseType response, boolean revoked) throws ModuleException {
         try {
             SjukersattningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
@@ -266,13 +285,16 @@ public class SjukersattningModuleApi implements ModuleApi {
 
     private InternalModelResponse toInternalModelResponse(SjukersattningUtlatande internalModel) throws ModuleException {
         try {
-            StringWriter writer = new StringWriter();
-            objectMapper.writeValue(writer, internalModel);
-            return new InternalModelResponse(writer.toString());
-
+            return new InternalModelResponse(toJsonString(internalModel));
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
+    }
+
+    private String toJsonString(Object internalModel) throws IOException {
+        StringWriter writer = new StringWriter();
+        objectMapper.writeValue(writer, internalModel);
+        return writer.toString();
     }
 
 }

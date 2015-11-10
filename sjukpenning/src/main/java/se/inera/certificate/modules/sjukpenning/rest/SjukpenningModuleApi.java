@@ -225,6 +225,11 @@ public class SjukpenningModuleApi implements ModuleApi {
         return xmlString;
     }
 
+    @Override
+    public String getQuestions(String version) {
+        throw new UnsupportedOperationException();
+    }
+
     private CertificateResponse convert(GetCertificateResponseType response, boolean revoked) throws ModuleException {
         try {
             SjukpenningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());

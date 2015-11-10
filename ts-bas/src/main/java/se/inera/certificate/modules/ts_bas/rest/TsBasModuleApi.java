@@ -290,6 +290,11 @@ public class TsBasModuleApi implements ModuleApi {
         return xmlString;
     }
 
+    @Override
+    public String getQuestions(String version) {
+        throw new UnsupportedOperationException();
+    }
+
     // - - - - - Private scope - - - - - //
     private CertificateResponse convert(GetTSBasResponseType response, boolean revoked) throws ModuleException {
         try {

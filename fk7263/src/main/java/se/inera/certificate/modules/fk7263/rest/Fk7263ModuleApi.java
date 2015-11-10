@@ -354,6 +354,11 @@ public class Fk7263ModuleApi implements ModuleApi {
         return xmlString;
     }
 
+    @Override
+    public String getQuestions(String version) {
+        throw new UnsupportedOperationException();
+    }
+
     // - - - - - Private scope - - - - - //
 
     private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {

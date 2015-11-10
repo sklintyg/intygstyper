@@ -261,6 +261,11 @@ public class TsDiabetesModuleApi implements ModuleApi {
         return xmlString;
     }
 
+    @Override
+    public String getQuestions(String version) {
+        throw new UnsupportedOperationException();
+    }
+
     private CertificateResponse convert(GetTSDiabetesResponseType diabetesResponseType, boolean revoked) throws ModuleException {
         try {
             Utlatande utlatande = TransportToInternalConverter.convert(diabetesResponseType.getIntyg());
