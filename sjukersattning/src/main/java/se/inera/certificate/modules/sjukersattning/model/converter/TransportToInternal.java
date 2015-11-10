@@ -7,11 +7,12 @@ import javax.xml.bind.JAXBElement;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Befattning;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Specialistkompetens;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
@@ -20,7 +21,7 @@ public class TransportToInternal {
 
     public static SjukersattningUtlatande convert(Intyg source) throws ConverterException {
         SjukersattningUtlatande utlatande = new SjukersattningUtlatande();
-        utlatande.setId(source.getIntygsId().getRoot());
+        utlatande.setId(source.getIntygsId().getExtension());
         utlatande.setGrundData(getGrundData(source));
         setSvar(utlatande, source);
         return utlatande;
@@ -83,7 +84,7 @@ public class TransportToInternal {
 
     private static void handleReferens(SjukersattningUtlatande utlatande, Svar svar) {
         InternalDate referensDatum = null;
-        RespConstants.ReferensTyp referensTyp = ReferensTyp.UNKNOWN;
+        ReferensTyp referensTyp = ReferensTyp.UNKNOWN;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case REFERENSDATUM_DELSVAR_ID:
@@ -91,7 +92,7 @@ public class TransportToInternal {
                 break;
             case REFERENSTYP_DELSVAR_ID:
                 String referensTypString = getSvarContent(delsvar, CVType.class).getCode();
-                referensTyp = RespConstants.ReferensTyp.byTransport(referensTypString);
+                referensTyp = ReferensTyp.byTransport(referensTypString);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -346,6 +347,12 @@ public class TransportToInternal {
         personal.setFullstandigtNamn(source.getSkapadAv().getFullstandigtNamn());
         personal.setForskrivarKod(source.getSkapadAv().getForskrivarkod());
         personal.setVardenhet(getVardenhet(source));
+        for (Befattning befattning : source.getSkapadAv().getBefattning()) {
+            personal.getBefattningar().add(befattning.getCode());
+        }
+        for (Specialistkompetens kompetens : source.getSkapadAv().getSpecialistkompetens()) {
+            personal.getSpecialiteter().add(kompetens.getCode());
+        }
         return personal;
     }
 
@@ -382,6 +389,7 @@ public class TransportToInternal {
         return patient;
     }
 
+    // TODO: is this ever needed?
     public static CertificateMetaData getMetaData(Intyg source) {
         CertificateMetaData metaData = new CertificateMetaData();
         return metaData;

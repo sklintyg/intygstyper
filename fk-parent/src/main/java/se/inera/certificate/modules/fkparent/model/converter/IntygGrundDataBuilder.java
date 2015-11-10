@@ -34,6 +34,9 @@ public class IntygGrundDataBuilder {
         personal.setForskrivarKod("09874321");
         personal.setFullstandigtNamn("Karl Karlsson");
         personal.setPersonId("19650708-1234");
+        personal.getBefattningar().add("Klinikchef");
+        personal.getBefattningar().add("Forskningsledare");
+        personal.getSpecialiteter().add("Kirurg");
         return personal;
     }
 

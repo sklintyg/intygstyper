@@ -52,7 +52,20 @@ public class InternalToTransport {
         HosPersonal skapadAv = new HosPersonal();
         skapadAv.setPersonalId(anHsaId(sourceSkapadAv.getPersonId()));
         skapadAv.setFullstandigtNamn(sourceSkapadAv.getFullstandigtNamn());
+        skapadAv.setForskrivarkod(sourceSkapadAv.getForskrivarKod());
         skapadAv.setEnhet(getEnhet(sourceSkapadAv.getVardenhet()));
+        for (String sourceBefattning : sourceSkapadAv.getBefattningar()) {
+            Befattning befattning = new Befattning();
+            befattning.setCodeSystem(BEFATTNING_CODE_SYSTEM);
+            befattning.setCode(sourceBefattning);
+            skapadAv.getBefattning().add(befattning);
+        }
+        for (String sourceKompetens : sourceSkapadAv.getSpecialiteter()) {
+            Specialistkompetens kompetens = new Specialistkompetens();
+            kompetens.setCodeSystem(SPECIALISTKOMPETENS_CODE_SYSTEM);
+            kompetens.setCode(sourceKompetens);
+            skapadAv.getSpecialistkompetens().add(kompetens);
+        }
         return skapadAv;
     }
 
@@ -64,6 +77,7 @@ public class InternalToTransport {
         vardenhet.setPostadress(sourceVardenhet.getPostadress());
         vardenhet.setPostort(sourceVardenhet.getPostort());
         vardenhet.setTelefonnummer(sourceVardenhet.getTelefonnummer());
+        vardenhet.setEpost(sourceVardenhet.getEpost());
         vardenhet.setVardgivare(getVardgivare(sourceVardenhet.getVardgivare()));
         vardenhet.setArbetsplatskod(getArbetsplatsKod(sourceVardenhet.getArbetsplatsKod()));
         return vardenhet;
@@ -71,7 +85,7 @@ public class InternalToTransport {
 
     private static ArbetsplatsKod getArbetsplatsKod(String sourceArbetsplatsKod) {
         ArbetsplatsKod arbetsplatsKod = new ArbetsplatsKod();
-        arbetsplatsKod.setRoot("1.2.752.29.4.71");
+        arbetsplatsKod.setRoot(ARBETSPLATSKOD_CODE_SYSTEM);
         arbetsplatsKod.setExtension(sourceArbetsplatsKod);
         return arbetsplatsKod;
     }
@@ -94,14 +108,13 @@ public class InternalToTransport {
         patient.setPersonId(personId);
         patient.setPostadress(sourcePatient.getPostadress());
         patient.setPostnummer(sourcePatient.getPostnummer());
-        patient.setPostort(sourcePatient.getPostadress());
+        patient.setPostort(sourcePatient.getPostort());
         return patient;
     }
 
     private static IntygId getIntygsId(SjukersattningUtlatande source) {
         IntygId intygId = new IntygId();
-        // TODO: what is supposed to be used in root/extension?
-        intygId.setRoot(source.getId());
+        intygId.setRoot(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
         intygId.setExtension(source.getId());
         return intygId;
     }

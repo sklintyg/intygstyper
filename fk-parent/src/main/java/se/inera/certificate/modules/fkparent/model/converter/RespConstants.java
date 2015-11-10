@@ -18,6 +18,9 @@ public class RespConstants {
     public static final String FUNKTIONSOMRADE_CODE_SYSTEM = "KV_FKMU_0XXX";
     public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_1XXX";
     public static final String BEHANDLINGSATGARD_CODE_SYSTEM = "TODO-123"; // TODO
+    public static final String BEFATTNING_CODE_SYSTEM = "1.2.752.129.2.2.1.4";
+    public static final String SPECIALISTKOMPETENS_CODE_SYSTEM = "TODO-321"; // TODO
+    public static final String ARBETSPLATSKOD_CODE_SYSTEM = "1.2.752.29.4.71";
 
     public static final String SMITTA_SVAR_ID = "2";
     public static final String SMITTA_DELSVAR_ID = "2.1";

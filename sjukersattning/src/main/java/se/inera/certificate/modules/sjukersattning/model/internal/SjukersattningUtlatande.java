@@ -54,7 +54,10 @@ public final class SjukersattningUtlatande extends Utlatande {
             return false;
         }
         final SjukersattningUtlatande that = (SjukersattningUtlatande) object;
-        return Objects.equals(this.undersokningAvPatienten, that.undersokningAvPatienten) &&
+        return Objects.equals(this.id, that.id) &&
+                Objects.equals(this.typ, that.typ) &&
+                Objects.equals(this.grundData, that.grundData) &&
+                Objects.equals(this.undersokningAvPatienten, that.undersokningAvPatienten) &&
                 Objects.equals(this.telefonkontaktMedPatienten, that.telefonkontaktMedPatienten) &&
                 Objects.equals(this.journaluppgifter, that.journaluppgifter) &&
                 Objects.equals(this.kannedomOmPatient, that.kannedomOmPatient) &&
@@ -77,7 +80,7 @@ public final class SjukersattningUtlatande extends Utlatande {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.undersokningAvPatienten, this.telefonkontaktMedPatienten, this.journaluppgifter,
+                this.id, this.typ, this.grundData, this.undersokningAvPatienten, this.telefonkontaktMedPatienten, this.journaluppgifter,
                 this.kannedomOmPatient, this.underlag, this.diagnoser, this.atgarder, this.diagnostisering,
                 this.nyBedomningDiagnos, this.funktionsnedsattnings, this.aktivitetsbegransning,
                 this.pagaendeBehandling, this.avslutadBehandling, this.planeradBehandling, this.aktivitetsFormaga,

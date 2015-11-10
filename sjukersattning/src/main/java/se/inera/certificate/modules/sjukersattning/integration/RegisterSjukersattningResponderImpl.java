@@ -61,13 +61,12 @@ public class RegisterSjukersattningResponderImpl implements RegisterCertificateR
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
 
         try {
-            SjukersattningUtlatande utlatande = TransportToInternal.convert(registerCertificate.getIntyg());
-
             String xml = xmlToString(registerCertificate);
 
             SchematronOutputType valResult = validator.validateSchematron(new StreamSource(new StringReader(xml)));
             System.out.println(SVRLWriter.createXMLString(valResult));
 
+            SjukersattningUtlatande utlatande = TransportToInternal.convert(registerCertificate.getIntyg());
             CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
 
