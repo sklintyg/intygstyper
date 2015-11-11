@@ -1,3 +1,6 @@
+//colors
+$mercury: #e5e5e5;
+
 .ts-cert-answer {
   font-weight: bold;
 }
@@ -9,29 +12,30 @@
 .ts-table {
   overflow-x: auto !important;
   display: inline-block !important;
-  border: 1px solid #e5e5e5 !important;
-}
+  border: 1px solid $mercury !important;
 
-.ts-table tbody {
-  width: 100%;
-  display: inline-table;
-}
+  tbody {
+    width: 100%;
+    display: inline-table;
 
-.ts-table tbody td {
-  border-top: 1px solid transparent;
-}
+    td {
+      border-top: 1px solid transparent;
+    }
+  }
 
-.ts-table tr {
-  background: transparent !important;
-}
+  tr {
+    background: transparent !important;
 
-.ts-table tr th {
-  border-top: 1px solid transparent !important;
-  text-align: center !important;
-}
+    th {
+      border-top: 1px solid transparent !important;
+      text-align: center !important;
+    }
 
-.ts-table tr td span {
-  padding: 0 !important;
-  text-align: center !important;
+    td {
+      span {
+        padding: 0 !important;
+        text-align: center !important; 
+      }
+    }
+  }
 }
-
