@@ -2,10 +2,17 @@ package se.inera.certificate.modules.sjukpenning.model.internal;
 
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.certificate.model.common.internal.GrundData;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
 
-public class SjukpenningUtlatande extends Utlatande {
+public class SjukpenningUtlatande implements Utlatande {
+
+    private String typ;
+
+    private String id;
+
+    private GrundData grundData;
 
     private boolean avstangningSmittskydd;
 
@@ -423,4 +430,32 @@ public class SjukpenningUtlatande extends Utlatande {
     public void setAtgardArbetstraning(boolean atgardArbetstraning) {
         this.atgardArbetstraning = atgardArbetstraning;
     }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getTyp() {
+        return typ;
+    }
+
+    @Override
+    public GrundData getGrundData() {
+        return grundData;
+    }
+
+    public void setGrundData(GrundData grundData) {
+        this.grundData = grundData;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTyp(String typ) {
+        this.typ = typ;
+    }
+
 }

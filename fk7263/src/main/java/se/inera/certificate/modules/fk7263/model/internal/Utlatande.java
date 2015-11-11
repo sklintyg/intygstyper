@@ -5,11 +5,18 @@ import static se.inera.certificate.common.util.StringUtil.join;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.LocalDateInterval;
+import se.inera.certificate.model.common.internal.GrundData;
 
 /**
  * @author andreaskaltenbach
  */
-public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
+public class Utlatande implements se.inera.certificate.model.common.internal.Utlatande {
+
+    private String typ;
+
+    private String id;
+
+    private GrundData grundData;
 
     private LocalDateInterval giltighet;
 
@@ -468,4 +475,32 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
     public void setPrognosBedomning(PrognosBedomning prognosBedomning) {
         this.prognosBedomning = prognosBedomning;
     }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String getTyp() {
+        return typ;
+    }
+
+    @Override
+    public GrundData getGrundData() {
+        return grundData;
+    }
+
+    public void setGrundData(GrundData grundData) {
+        this.grundData = grundData;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTyp(String typ) {
+        this.typ = typ;
+    }
+
 }

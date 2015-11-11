@@ -20,7 +20,7 @@ package se.inera.certificate.modules.ts_diabetes.model.internal;
 
 import se.inera.certificate.model.common.internal.GrundData;
 
-public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
+public class Utlatande implements se.inera.certificate.model.common.internal.Utlatande {
 
     private String id;
 
@@ -47,7 +47,6 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
@@ -57,7 +56,6 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
         return grundData;
     }
 
-    @Override
     public void setGrundData(GrundData grundData) {
         this.grundData = grundData;
     }
@@ -67,7 +65,6 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
         return typ;
     }
 
-    @Override
     public void setTyp(String typAvUtlatande) {
         this.typ = typAvUtlatande;
     }

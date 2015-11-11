@@ -18,7 +18,11 @@
  */
 package se.inera.certificate.modules.ts_bas.model.internal;
 
-public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
+import se.inera.certificate.model.common.internal.GrundData;
+
+public class Utlatande implements se.inera.certificate.model.common.internal.Utlatande {
+
+    private GrundData grundData;
 
     private String id;
 
@@ -67,7 +71,6 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
         return typ;
     }
 
-    @Override
     public void setTyp(String typAvUtlatande) {
         this.typ = typAvUtlatande;
     }
@@ -92,7 +95,6 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
@@ -214,6 +216,15 @@ public class Utlatande extends se.inera.certificate.model.common.internal.Utlata
             intygAvser = new IntygAvser();
         }
         return intygAvser;
+    }
+
+    @Override
+    public GrundData getGrundData() {
+        return grundData;
+    }
+
+    public void setGrundData(GrundData grundData) {
+        this.grundData = grundData;
     }
 
 }
