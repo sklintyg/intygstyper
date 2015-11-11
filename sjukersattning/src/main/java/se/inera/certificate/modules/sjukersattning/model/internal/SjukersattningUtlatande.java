@@ -29,10 +29,13 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
     @Nullable
     public abstract InternalDate getUndersokningAvPatienten();
+
     @Nullable
     public abstract InternalDate getTelefonkontaktMedPatienten();
+
     @Nullable
     public abstract InternalDate getJournaluppgifter();
+
     @Nullable
     public abstract InternalDate getKannedomOmPatient();
 
@@ -44,6 +47,7 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
     @Nullable
     public abstract String getDiagnostisering();
+
     @Nullable
     public abstract Boolean getNyBedomningDiagnos();
 
@@ -54,27 +58,33 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
     @Nullable
     public abstract String getPagaendeBehandling();
+
     @Nullable
     public abstract String getAvslutadBehandling();
+
     @Nullable
     public abstract String getPlaneradBehandling();
 
     @Nullable
     public abstract String getAktivitetsFormaga();
+
     @Nullable
     public abstract String getPrognos();
 
     @Nullable
     public abstract String getOvrigt();
+
     @Nullable
     public abstract Boolean getKontaktMedFk();
 
+    public abstract Builder toBuilder();
+
     public static Builder builder() {
         return new AutoValue_SjukersattningUtlatande.Builder().
-                setUnderlag(ImmutableList.<Underlag>of()).
-                setDiagnoser(ImmutableList.<Diagnos>of()).
-                setAtgarder(ImmutableList.<BehandlingsAtgard>of()).
-                setFunktionsnedsattningar(ImmutableList.<Funktionsnedsattning>of());
+                setUnderlag(ImmutableList.<Underlag> of()).
+                setDiagnoser(ImmutableList.<Diagnos> of()).
+                setAtgarder(ImmutableList.<BehandlingsAtgard> of()).
+                setFunktionsnedsattningar(ImmutableList.<Funktionsnedsattning> of());
     }
 
     @AutoValue.Builder

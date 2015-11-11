@@ -41,24 +41,25 @@ public class WebcertModelFactory {
 
     public SjukersattningUtlatande createCopy(CreateDraftCopyHolder copyData, SjukersattningUtlatande template) throws ConverterException {
 
-        // TODO
-//        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
-//
-//        populateWithId(template, copyData.getCertificateId());
-//        populateWithSkapadAv(template, copyData.getSkapadAv());
-//
-//        if (copyData.hasPatient()) {
-//            populateWithPatientInfo(template, copyData.getPatient());
-//        }
-//
-//        if (copyData.hasNewPersonnummer()) {
-//            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
-//        }
-//
-//        resetDataInCopy(template);
-//
-//        return template;
-        return null;
+        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
+
+        SjukersattningUtlatande.Builder templateBuilder = template.toBuilder();
+        GrundData grundData = template.getGrundData();
+
+        populateWithId(templateBuilder, copyData.getCertificateId());
+        populateWithSkapadAv(grundData, copyData.getSkapadAv());
+
+        if (copyData.hasPatient()) {
+            populateWithPatientInfo(grundData, copyData.getPatient());
+        }
+
+        if (copyData.hasNewPersonnummer()) {
+            populateWithNewPersonnummer(grundData, copyData.getNewPersonnummer());
+        }
+
+        resetDataInCopy(grundData);
+
+        return templateBuilder.build();
     }
 
     private void populateWithId(Builder utlatande, String utlatandeId) throws ConverterException {
@@ -68,8 +69,8 @@ public class WebcertModelFactory {
         utlatande.setId(utlatandeId);
     }
 
-    private void populateWithNewPersonnummer(SjukersattningUtlatande template, Personnummer newPersonnummer) {
-        template.getGrundData().getPatient().setPersonId(newPersonnummer);
+    private void populateWithNewPersonnummer(GrundData grundData, Personnummer newPersonnummer) {
+        grundData.getPatient().setPersonId(newPersonnummer);
     }
 
     private void populateWithPatientInfo(GrundData grundData, Patient patient) throws ConverterException {
@@ -86,8 +87,8 @@ public class WebcertModelFactory {
         grundData.setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
     }
 
-    private void resetDataInCopy(SjukersattningUtlatande utlatande) {
-        utlatande.getGrundData().setSigneringsdatum(null);
+    private void resetDataInCopy(GrundData grundData) {
+        grundData.setSigneringsdatum(null);
     }
 
     public void updateSkapadAv(SjukersattningUtlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
