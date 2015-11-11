@@ -16,15 +16,15 @@ public abstract class Underlag {
     @JsonCreator
     public static Underlag create(@JsonProperty("typ") UnderlagsTyp typ,
             @JsonProperty("datum") InternalDate datum,
-            @JsonProperty("attachment") boolean attachment) {
-        return new AutoValue_Underlag(typ, datum, attachment);
+            @JsonProperty("bilaga") boolean bilaga) {
+        return new AutoValue_Underlag(typ, datum, bilaga);
     }
 
     public abstract UnderlagsTyp getTyp();
 
     public abstract InternalDate getDatum();
 
-    public abstract boolean isAttachment();
+    public abstract boolean isBilaga();
 
     public enum UnderlagsTyp {
         NEUROPSYKIATRISKT_UTLATANDE(1, "Neuropsykiatriskt utlåtande"),

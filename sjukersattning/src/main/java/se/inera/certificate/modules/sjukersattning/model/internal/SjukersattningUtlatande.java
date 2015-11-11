@@ -1,234 +1,146 @@
 package se.inera.certificate.modules.sjukersattning.model.internal;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import javax.annotation.Nullable;
 
 import se.inera.certificate.model.InternalDate;
+import se.inera.certificate.model.common.internal.GrundData;
 import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
-public final class SjukersattningUtlatande extends Utlatande {
-    private InternalDate undersokningAvPatienten;
-    private InternalDate telefonkontaktMedPatienten;
-    private InternalDate journaluppgifter;
-    private InternalDate kannedomOmPatient;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 
-    private List<Underlag> underlag = new ArrayList<>();
+@AutoValue
+@JsonDeserialize(builder = AutoValue_SjukersattningUtlatande.Builder.class)
+public abstract class SjukersattningUtlatande implements Utlatande {
 
-    private List<Diagnos> diagnoser = new ArrayList<>();
-
-    private List<BehandlingsAtgard> atgarder = new ArrayList<>();
-
-    private String diagnostisering;
-    private boolean nyBedomningDiagnos;
-
-    private List<Funktionsnedsattning> funktionsnedsattnings = new ArrayList<>();
-
-    private String aktivitetsbegransning;
-
-    private String pagaendeBehandling;
-    private String avslutadBehandling;
-    private String planeradBehandling;
-
-    private String aktivitetsFormaga;
-    private String prognos;
-
-    private String ovrigt;
-    private boolean kontaktMedFk;
-
-    public SjukersattningUtlatande() {
-        super();
-        setTyp(SjukersattningEntryPoint.MODULE_ID);
-        // TODO: remove
-        // funktionsnedsattnings.add(new Funktionsnedsattning(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG,
-        // "Helt lam"));
+    @Override
+    public String getTyp() {
+        return SjukersattningEntryPoint.MODULE_ID;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-        final SjukersattningUtlatande that = (SjukersattningUtlatande) object;
-        return Objects.equals(this.id, that.id) &&
-                Objects.equals(this.typ, that.typ) &&
-                Objects.equals(this.grundData, that.grundData) &&
-                Objects.equals(this.undersokningAvPatienten, that.undersokningAvPatienten) &&
-                Objects.equals(this.telefonkontaktMedPatienten, that.telefonkontaktMedPatienten) &&
-                Objects.equals(this.journaluppgifter, that.journaluppgifter) &&
-                Objects.equals(this.kannedomOmPatient, that.kannedomOmPatient) &&
-                Objects.deepEquals(this.underlag, that.underlag) &&
-                Objects.deepEquals(this.diagnoser, that.diagnoser) &&
-                Objects.deepEquals(this.atgarder, that.atgarder) &&
-                Objects.equals(this.diagnostisering, that.diagnostisering) &&
-                Objects.equals(this.nyBedomningDiagnos, that.nyBedomningDiagnos) &&
-                Objects.deepEquals(this.funktionsnedsattnings, that.funktionsnedsattnings) &&
-                Objects.equals(this.aktivitetsbegransning, that.aktivitetsbegransning) &&
-                Objects.equals(this.pagaendeBehandling, that.pagaendeBehandling) &&
-                Objects.equals(this.avslutadBehandling, that.avslutadBehandling) &&
-                Objects.equals(this.planeradBehandling, that.planeradBehandling) &&
-                Objects.equals(this.aktivitetsFormaga, that.aktivitetsFormaga) &&
-                Objects.equals(this.prognos, that.prognos) &&
-                Objects.equals(this.ovrigt, that.ovrigt) &&
-                Objects.equals(this.kontaktMedFk, that.kontaktMedFk);
-    }
+    public abstract String getId();
 
     @Override
-    public int hashCode() {
-        return Objects.hash(
-                this.id, this.typ, this.grundData, this.undersokningAvPatienten, this.telefonkontaktMedPatienten, this.journaluppgifter,
-                this.kannedomOmPatient, this.underlag, this.diagnoser, this.atgarder, this.diagnostisering,
-                this.nyBedomningDiagnos, this.funktionsnedsattnings, this.aktivitetsbegransning,
-                this.pagaendeBehandling, this.avslutadBehandling, this.planeradBehandling, this.aktivitetsFormaga,
-                this.prognos, this.ovrigt, this.kontaktMedFk);
+    public abstract GrundData getGrundData();
+
+    @Nullable
+    public abstract InternalDate getUndersokningAvPatienten();
+    @Nullable
+    public abstract InternalDate getTelefonkontaktMedPatienten();
+    @Nullable
+    public abstract InternalDate getJournaluppgifter();
+    @Nullable
+    public abstract InternalDate getKannedomOmPatient();
+
+    public abstract ImmutableList<Underlag> getUnderlag();
+
+    public abstract ImmutableList<Diagnos> getDiagnoser();
+
+    public abstract ImmutableList<BehandlingsAtgard> getAtgarder();
+
+    @Nullable
+    public abstract String getDiagnostisering();
+    @Nullable
+    public abstract Boolean getNyBedomningDiagnos();
+
+    public abstract ImmutableList<Funktionsnedsattning> getFunktionsnedsattningar();
+
+    @Nullable
+    public abstract String getAktivitetsbegransning();
+
+    @Nullable
+    public abstract String getPagaendeBehandling();
+    @Nullable
+    public abstract String getAvslutadBehandling();
+    @Nullable
+    public abstract String getPlaneradBehandling();
+
+    @Nullable
+    public abstract String getAktivitetsFormaga();
+    @Nullable
+    public abstract String getPrognos();
+
+    @Nullable
+    public abstract String getOvrigt();
+    @Nullable
+    public abstract Boolean getKontaktMedFk();
+
+    public static Builder builder() {
+        return new AutoValue_SjukersattningUtlatande.Builder().
+                setUnderlag(ImmutableList.<Underlag>of()).
+                setDiagnoser(ImmutableList.<Diagnos>of()).
+                setAtgarder(ImmutableList.<BehandlingsAtgard>of()).
+                setFunktionsnedsattningar(ImmutableList.<Funktionsnedsattning>of());
     }
 
-    public List<Diagnos> getDiagnoser() {
-        return diagnoser;
-    }
+    @AutoValue.Builder
+    public static abstract class Builder {
 
-    public void setDiagnoser(List<Diagnos> diagnoser) {
-        this.diagnoser = diagnoser;
-    }
+        public abstract SjukersattningUtlatande build();
 
-    public List<BehandlingsAtgard> getAtgarder() {
-        return atgarder;
-    }
+        @JsonProperty("id")
+        public abstract Builder setId(String id);
 
-    public void setAtgarder(List<BehandlingsAtgard> atgarder) {
-        this.atgarder = atgarder;
-    }
+        @JsonProperty("grundData")
+        public abstract Builder setGrundData(GrundData grundData);
 
-    public InternalDate getUndersokningAvPatienten() {
-        return undersokningAvPatienten;
-    }
+        @JsonProperty("undersokningAvPatienten")
+        public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);
 
-    public void setUndersokningAvPatienten(InternalDate undersokningAvPatienten) {
-        this.undersokningAvPatienten = undersokningAvPatienten;
-    }
+        @JsonProperty("telefonkontaktMedPatienten")
+        public abstract Builder setTelefonkontaktMedPatienten(InternalDate telefonkontaktMedPatienten);
 
-    public InternalDate getTelefonkontaktMedPatienten() {
-        return telefonkontaktMedPatienten;
-    }
+        @JsonProperty("journaluppgifter")
+        public abstract Builder setJournaluppgifter(InternalDate journaluppgifter);
 
-    public void setTelefonkontaktMedPatienten(InternalDate telefonkontaktMedPatienten) {
-        this.telefonkontaktMedPatienten = telefonkontaktMedPatienten;
-    }
+        @JsonProperty("kannedomOmPatient")
+        public abstract Builder setKannedomOmPatient(InternalDate kannedomOmPatient);
 
-    public InternalDate getJournaluppgifter() {
-        return journaluppgifter;
-    }
+        @JsonProperty("underlag")
+        public abstract Builder setUnderlag(ImmutableList<Underlag> underlag);
 
-    public void setJournaluppgifter(InternalDate journaluppgifter) {
-        this.journaluppgifter = journaluppgifter;
-    }
+        @JsonProperty("diagnoser")
+        public abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
 
-    public String getAktivitetsbegransning() {
-        return aktivitetsbegransning;
-    }
+        @JsonProperty("atgarder")
+        public abstract Builder setAtgarder(ImmutableList<BehandlingsAtgard> atgarder);
 
-    public void setAktivitetsbegransning(String aktivitetsbegransning) {
-        this.aktivitetsbegransning = aktivitetsbegransning;
-    }
+        @JsonProperty("diagnostisering")
+        public abstract Builder setDiagnostisering(String diagnostisering);
 
-    public List<Funktionsnedsattning> getFunktionsnedsattnings() {
-        return funktionsnedsattnings;
-    }
+        @JsonProperty("nyBedomningDiagnos")
+        public abstract Builder setNyBedomningDiagnos(Boolean nyBedomningDiagnos);
 
-    public void setFunktionsnedsattnings(List<Funktionsnedsattning> funktionsnedsattnings) {
-        this.funktionsnedsattnings = funktionsnedsattnings;
-    }
+        @JsonProperty("funktionsnedsattningar")
+        public abstract Builder setFunktionsnedsattningar(ImmutableList<Funktionsnedsattning> funktionsnedsattningar);
 
-    public String getPagaendeBehandling() {
-        return pagaendeBehandling;
-    }
+        @JsonProperty("aktivitetsbegransning")
+        public abstract Builder setAktivitetsbegransning(String aktivitetsbegransning);
 
-    public void setPagaendeBehandling(String pagaendeBehandling) {
-        this.pagaendeBehandling = pagaendeBehandling;
-    }
+        @JsonProperty("pagaendeBehandling")
+        public abstract Builder setPagaendeBehandling(String pagaendeBehandling);
 
-    public String getPlaneradBehandling() {
-        return planeradBehandling;
-    }
+        @JsonProperty("avslutadBehandling")
+        public abstract Builder setAvslutadBehandling(String avslutadBehandling);
 
-    public void setPlaneradBehandling(String planeradBehandling) {
-        this.planeradBehandling = planeradBehandling;
-    }
+        @JsonProperty("planeradBehandling")
+        public abstract Builder setPlaneradBehandling(String planeradBehandling);
 
-    public boolean isKontaktMedFk() {
-        return kontaktMedFk;
-    }
+        @JsonProperty("aktivitetsFormaga")
+        public abstract Builder setAktivitetsFormaga(String aktivitetsFormaga);
 
-    public void setKontaktMedFk(boolean kontaktMedFk) {
-        this.kontaktMedFk = kontaktMedFk;
-    }
+        @JsonProperty("prognos")
+        public abstract Builder setPrognos(String prognos);
 
-    public String getOvrigt() {
-        return ovrigt;
-    }
+        @JsonProperty("ovrigt")
+        public abstract Builder setOvrigt(String ovrigt);
 
-    public void setOvrigt(String ovrigt) {
-        this.ovrigt = ovrigt;
-    }
-
-    public String getAktivitetsFormaga() {
-        return aktivitetsFormaga;
-    }
-
-    public void setAktivitetsFormaga(String aktivitetsFormaga) {
-        this.aktivitetsFormaga = aktivitetsFormaga;
-    }
-
-    public String getPrognos() {
-        return prognos;
-    }
-
-    public void setPrognos(String prognos) {
-        this.prognos = prognos;
-    }
-
-    public InternalDate getKannedomOmPatient() {
-        return kannedomOmPatient;
-    }
-
-    public void setKannedomOmPatient(InternalDate kannedomOmPatient) {
-        this.kannedomOmPatient = kannedomOmPatient;
-    }
-
-    public String getDiagnostisering() {
-        return diagnostisering;
-    }
-
-    public void setDiagnostisering(String diagnostisering) {
-        this.diagnostisering = diagnostisering;
-    }
-
-    public boolean isNyBedomningDiagnos() {
-        return nyBedomningDiagnos;
-    }
-
-    public void setNyBedomningDiagnos(boolean nyBedomningDiagnos) {
-        this.nyBedomningDiagnos = nyBedomningDiagnos;
-    }
-
-    public String getAvslutadBehandling() {
-        return avslutadBehandling;
-    }
-
-    public void setAvslutadBehandling(String avslutadBehandling) {
-        this.avslutadBehandling = avslutadBehandling;
-    }
-
-    public List<Underlag> getUnderlag() {
-        return underlag;
-    }
-
-    public void setUnderlag(List<Underlag> underlag) {
-        this.underlag = underlag;
+        @JsonProperty("kontaktMedFk")
+        public abstract Builder setKontaktMedFk(Boolean kontaktMedFk);
     }
 
 }

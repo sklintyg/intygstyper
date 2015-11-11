@@ -4,9 +4,11 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.certificate.model.common.internal.GrundData;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
 import se.inera.certificate.modules.support.api.dto.*;
 
 /**
@@ -27,64 +29,61 @@ public class WebcertModelFactory {
 
         LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
-        SjukersattningUtlatande template = new SjukersattningUtlatande();
+        Builder template = SjukersattningUtlatande.builder();
+        GrundData grundData = new GrundData();
 
         populateWithId(template, newDraftData.getCertificateId());
+        populateWithSkapadAv(grundData, newDraftData.getSkapadAv());
+        populateWithPatientInfo(grundData, newDraftData.getPatient());
 
-        populateWithSkapadAv(template, newDraftData.getSkapadAv());
-        populateWithPatientInfo(template, newDraftData.getPatient());
-
-        return template;
+        return template.setGrundData(grundData).build();
     }
 
     public SjukersattningUtlatande createCopy(CreateDraftCopyHolder copyData, SjukersattningUtlatande template) throws ConverterException {
 
-        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
+        // TODO
+//        LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
+//
+//        populateWithId(template, copyData.getCertificateId());
+//        populateWithSkapadAv(template, copyData.getSkapadAv());
+//
+//        if (copyData.hasPatient()) {
+//            populateWithPatientInfo(template, copyData.getPatient());
+//        }
+//
+//        if (copyData.hasNewPersonnummer()) {
+//            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
+//        }
+//
+//        resetDataInCopy(template);
+//
+//        return template;
+        return null;
+    }
 
-        populateWithId(template, copyData.getCertificateId());
-        populateWithSkapadAv(template, copyData.getSkapadAv());
-
-        if (copyData.hasPatient()) {
-            populateWithPatientInfo(template, copyData.getPatient());
+    private void populateWithId(Builder utlatande, String utlatandeId) throws ConverterException {
+        if (utlatandeId == null) {
+            throw new ConverterException("No certificateID found");
         }
-
-        if (copyData.hasNewPersonnummer()) {
-            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
-        }
-        
-        resetDataInCopy(template);
-        
-        return template;
+        utlatande.setId(utlatandeId);
     }
 
     private void populateWithNewPersonnummer(SjukersattningUtlatande template, Personnummer newPersonnummer) {
         template.getGrundData().getPatient().setPersonId(newPersonnummer);
     }
 
-    private void populateWithId(SjukersattningUtlatande utlatande, String utlatandeId) throws ConverterException {
-
-        if (utlatandeId == null) {
-            throw new ConverterException("No certificateID found");
-        }
-
-        utlatande.setId(utlatandeId);
-    }
-
-    private void populateWithPatientInfo(SjukersattningUtlatande utlatande, Patient patient) throws ConverterException {
+    private void populateWithPatientInfo(GrundData grundData, Patient patient) throws ConverterException {
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
         }
-
-        utlatande.getGrundData().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
+        grundData.setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
-    private void populateWithSkapadAv(SjukersattningUtlatande utlatande, HoSPersonal hoSPersonal)
-            throws ConverterException {
+    private void populateWithSkapadAv(GrundData grundData, HoSPersonal hoSPersonal) throws ConverterException {
         if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
-
-        utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
+        grundData.setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
     }
 
     private void resetDataInCopy(SjukersattningUtlatande utlatande) {

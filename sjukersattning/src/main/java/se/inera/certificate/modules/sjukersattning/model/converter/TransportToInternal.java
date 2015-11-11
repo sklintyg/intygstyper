@@ -2,12 +2,16 @@ package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.JAXBElement;
 
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
 import se.inera.certificate.modules.support.api.dto.CertificateMetaData;
 import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Befattning;
@@ -17,17 +21,24 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
+import com.google.common.collect.ImmutableList;
+
 public class TransportToInternal {
 
     public static SjukersattningUtlatande convert(Intyg source) throws ConverterException {
-        SjukersattningUtlatande utlatande = new SjukersattningUtlatande();
+        Builder utlatande = SjukersattningUtlatande.builder();
         utlatande.setId(source.getIntygsId().getExtension());
         utlatande.setGrundData(getGrundData(source));
         setSvar(utlatande, source);
-        return utlatande;
+        return utlatande.build();
     }
 
-    private static void setSvar(SjukersattningUtlatande utlatande, Intyg source) {
+    private static void setSvar(Builder utlatande, Intyg source) {
+        List<Underlag> underlag = new ArrayList<>();
+        List<Diagnos> diagnoser = new ArrayList<>();
+        List<BehandlingsAtgard> atgarder = new ArrayList<>();
+        List<Funktionsnedsattning> funktionsnedsattningar = new ArrayList<>();
+
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
             case REFERENS_SVAR_ID:
@@ -37,13 +48,13 @@ public class TransportToInternal {
                 handleOvrigKannedom(utlatande, svar);
                 break;
             case UNDERLAG_SVAR_ID:
-                handleUnderlag(utlatande, svar);
+                handleUnderlag(underlag, svar);
                 break;
             case HUVUDSAKLIG_ORSAK_SVAR_ID:
-                handleHuvudsakligOrsak(utlatande, svar);
+                handleHuvudsakligOrsak(diagnoser, svar);
                 break;
             case YTTERLIGARE_ORSAK_SVAR_ID:
-                handleYtterligareOrsak(utlatande, svar);
+                handleYtterligareOrsak(diagnoser, atgarder, svar);
                 break;
             case DIAGNOSTISERING_SVAR_ID:
                 handleDiagnostisering(utlatande, svar);
@@ -52,7 +63,7 @@ public class TransportToInternal {
                 handleNyBedomning(utlatande, svar);
                 break;
             case FUNKTIONSNEDSATTNING_SVAR_ID:
-                handleFunktionsNedsattning(utlatande, svar);
+                handleFunktionsNedsattning(funktionsnedsattningar, svar);
                 break;
             case AKTIVITETSBEGRANSNING_SVAR_ID:
                 handleAktivitetsbegransning(utlatande, svar);
@@ -80,9 +91,14 @@ public class TransportToInternal {
                 break;
             }
         }
+
+        utlatande.setUnderlag(ImmutableList.copyOf(underlag));
+        utlatande.setDiagnoser(ImmutableList.copyOf(diagnoser));
+        utlatande.setAtgarder(ImmutableList.copyOf(atgarder));
+        utlatande.setFunktionsnedsattningar(ImmutableList.copyOf(funktionsnedsattningar));
     }
 
-    private static void handleReferens(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleReferens(Builder utlatande, Svar svar) {
         InternalDate referensDatum = null;
         ReferensTyp referensTyp = ReferensTyp.UNKNOWN;
         for (Delsvar delsvar : svar.getDelsvar()) {
@@ -114,7 +130,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleOvrigKannedom(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleOvrigKannedom(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case OVRIGKANNEDOM_DELSVAR_ID:
@@ -125,10 +141,10 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleUnderlag(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleUnderlag(List<Underlag> underlag, Svar svar) {
         Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
         InternalDate date = null;
-        Boolean attachment = null;
+        boolean attachment = false;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case UNDERLAG_TYP_DELSVAR_ID:
@@ -146,10 +162,10 @@ public class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        utlatande.getUnderlag().add(Underlag.create(underlagsTyp, date, attachment));
+        underlag.add(Underlag.create(underlagsTyp, date, attachment));
     }
 
-    private static void handleHuvudsakligOrsak(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleHuvudsakligOrsak(List<Diagnos> diagnoser, Svar svar) {
         String diagnosKod = null;
         String diagnosKodSystem = null;
         String diagnosBeskrivning = null;
@@ -167,10 +183,10 @@ public class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        utlatande.getDiagnoser().add(0, Diagnos.create(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
+        diagnoser.add(0, Diagnos.create(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
     }
 
-    private static void handleYtterligareOrsak(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleYtterligareOrsak(List<Diagnos> diagnoser, List<BehandlingsAtgard> atgarder, Svar svar) {
         String kod = null;
         String kodSystem = null;
         String beskrivning = null;
@@ -189,13 +205,13 @@ public class TransportToInternal {
             }
         }
         if (BEHANDLINGSATGARD_CODE_SYSTEM.equals(kodSystem)) {
-            utlatande.getAtgarder().add(BehandlingsAtgard.create(kod, kodSystem, beskrivning));
+            atgarder.add(BehandlingsAtgard.create(kod, kodSystem, beskrivning));
         } else {
-            utlatande.getDiagnoser().add(Diagnos.create(kod, kodSystem, beskrivning));
+            diagnoser.add(Diagnos.create(kod, kodSystem, beskrivning));
         }
     }
 
-    private static void handleDiagnostisering(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleDiagnostisering(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case DIAGNOSTISERING_DELSVAR_ID:
@@ -206,7 +222,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleNyBedomning(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleNyBedomning(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case NYBEDOMNING_DELSVAR_ID:
@@ -217,7 +233,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleFunktionsNedsattning(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleFunktionsNedsattning(List<Funktionsnedsattning> funktionsnedsattningar, Svar svar) {
         String beskrivning = null;
         Funktionsnedsattning.Funktionsomrade funktionsomrade = Funktionsnedsattning.Funktionsomrade.OKAND;
         for (Delsvar delsvar : svar.getDelsvar()) {
@@ -233,10 +249,10 @@ public class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        utlatande.getFunktionsnedsattnings().add(Funktionsnedsattning.create(funktionsomrade, beskrivning));
+        funktionsnedsattningar.add(Funktionsnedsattning.create(funktionsomrade, beskrivning));
     }
 
-    private static void handleAktivitetsbegransning(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleAktivitetsbegransning(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AKTIVITETSBEGRANSNING_DELSVAR_ID:
@@ -247,7 +263,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handlePagaendeBehandling(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handlePagaendeBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case PAGAENDEBEHANDLING_DELSVAR_ID:
@@ -258,7 +274,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleAvslutadBehandling(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleAvslutadBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AVSLUTADBEHANDLING_DELSVAR_ID:
@@ -269,7 +285,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handlePlaneradBehandling(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handlePlaneradBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case PLANERADBEHANDLING_DELSVAR_ID:
@@ -280,7 +296,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleAktivitetsformaga(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleAktivitetsformaga(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AKTIVITETSFORMAGA_DELSVAR_ID:
@@ -291,7 +307,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handlePrognos(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handlePrognos(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case PROGNOS_DELSVAR_ID:
@@ -302,7 +318,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleOvrigt(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleOvrigt(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case OVRIGT_DELSVAR_ID:
@@ -313,7 +329,7 @@ public class TransportToInternal {
         }
     }
 
-    private static void handleOnskarKontakt(SjukersattningUtlatande utlatande, Svar svar) {
+    private static void handleOnskarKontakt(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case KONTAKT_ONSKAS_DELSVAR_ID:
@@ -325,7 +341,7 @@ public class TransportToInternal {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T getSvarContent(Delsvar delsvar, Class<T> clazz) {
+    private static <T> T getSvarContent(Delsvar delsvar, @SuppressWarnings("unused") Class<T> clazz) {
         Object content = delsvar.getContent().get(0);
         if (content instanceof JAXBElement) {
             return ((JAXBElement<T>) content).getValue();

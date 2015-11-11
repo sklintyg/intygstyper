@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.sjukersattning.rest;
 
+import static java.util.Arrays.asList;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
@@ -44,8 +46,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static java.util.Arrays.asList;
 
 public class SjukersattningModuleApi implements ModuleApi {
 
