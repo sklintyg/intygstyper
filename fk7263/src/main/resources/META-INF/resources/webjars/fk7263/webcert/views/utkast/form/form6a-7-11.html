@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-7">
         <div wc-field field-label="fk7263.label.rekommendationer" id="rekommendationerForm" field-number="6a, 7, 11"
-             field-help-text="fk7263.helptext.rekommendationer" wc-detect-animation>
+             field-help-text="fk7263.helptext.rekommendationer">
 
             <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.rekommendationer"
                  id="validationMessages_rekommendationer">
@@ -28,7 +28,7 @@
             </div>
 
             <!-- 6a, 7 -->
-            <div ng-hide="viewState.avstangningSmittskydd()" class="field-fade" wc-detect-animation>
+            <div id="rekommendationer6a7" ng-hide="viewState.avstangningSmittskydd()" class="field-fade">
 
                 <!-- 6a -->
                 <div class="form-group form-inline">

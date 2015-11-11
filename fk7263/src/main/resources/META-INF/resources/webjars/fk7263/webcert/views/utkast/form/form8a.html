@@ -1,11 +1,10 @@
-<div class="row field-fade" ng-hide="viewState.avstangningSmittskydd()" wc-detect-animation group="smittskydd">
+<div class="row field-fade" ng-hide="viewState.avstangningSmittskydd()">
     <div class="col-md-7">
         <a id="anchor.sysselsattning" name="anchor.sysselsattning"></a>
 
         <div id="sysselsattning" wc-field field-label="fk7263.label.sysselsattning" field-number="8a"
              field-help-text="fk7263.helptext.sysselsattning"
-             field-has-errors="viewState.common.validationMessagesGrouped.sysselsattning"
-             id="arbeteForm">
+             field-has-errors="viewState.common.validationMessagesGrouped.sysselsattning">
 
             <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.sysselsattning"
                  id="validationMessages_sysselsattning">
