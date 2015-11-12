@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Underlag {
 
@@ -20,8 +22,10 @@ public abstract class Underlag {
         return new AutoValue_Underlag(typ, datum, bilaga);
     }
 
+    @Nullable
     public abstract UnderlagsTyp getTyp();
 
+    @Nullable
     public abstract InternalDate getDatum();
 
     public abstract boolean isBilaga();

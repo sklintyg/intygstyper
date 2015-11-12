@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Diagnos {
 
@@ -17,10 +19,13 @@ public abstract class Diagnos {
         return new AutoValue_Diagnos(diagnosKod, diagnosKodSystem, diagnosBeskrivning);
     }
 
+    @Nullable
     public abstract String getDiagnosKod();
 
+    @Nullable
     public abstract String getDiagnosKodSystem();
 
+    @Nullable
     public abstract String getDiagnosBeskrivning();
 
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class BehandlingsAtgard {
 
@@ -17,10 +19,13 @@ public abstract class BehandlingsAtgard {
         return new AutoValue_BehandlingsAtgard(atgardsKod, atgardsKodSystem, atgardsBeskrivning);
     }
 
+    @Nullable
     public abstract String getAtgardsKod();
 
+    @Nullable
     public abstract String getAtgardsKodSystem();
 
+    @Nullable
     public abstract String getAtgardsBeskrivning();
 
 }

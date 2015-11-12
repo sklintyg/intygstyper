@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Funktionsnedsattning {
 
@@ -17,8 +19,10 @@ public abstract class Funktionsnedsattning {
         return new AutoValue_Funktionsnedsattning(funktionsomrade, beskrivning);
     }
 
+    @Nullable
     public abstract Funktionsomrade getFunktionsomrade();
 
+    @Nullable
     public abstract String getBeskrivning();
 
     public enum Funktionsomrade {
