@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
+import java.util.List;
+
 @AutoValue
 @JsonDeserialize(builder = AutoValue_SjukersattningUtlatande.Builder.class)
 public abstract class SjukersattningUtlatande implements Utlatande {
@@ -111,12 +113,24 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         public abstract Builder setKannedomOmPatient(InternalDate kannedomOmPatient);
 
         @JsonProperty("underlag")
+        public Builder setUnderlag(List<Underlag> underlag) {
+            return setUnderlag(ImmutableList.copyOf(underlag));
+        }
+
         public abstract Builder setUnderlag(ImmutableList<Underlag> underlag);
 
         @JsonProperty("diagnoser")
+        public Builder setDiagnoser(List<Diagnos> diagnoser) {
+            return setDiagnoser(ImmutableList.copyOf(diagnoser));
+        }
+
         public abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
 
         @JsonProperty("atgarder")
+        public Builder setAtgarder(List<BehandlingsAtgard> atgarder) {
+            return setAtgarder(ImmutableList.copyOf(atgarder));
+        }
+
         public abstract Builder setAtgarder(ImmutableList<BehandlingsAtgard> atgarder);
 
         @JsonProperty("diagnostisering")
@@ -126,6 +140,10 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         public abstract Builder setNyBedomningDiagnos(Boolean nyBedomningDiagnos);
 
         @JsonProperty("funktionsnedsattningar")
+        public Builder setFunktionsnedsattningar(List<Funktionsnedsattning> funktionsnedsattningar) {
+            return setFunktionsnedsattningar(ImmutableList.copyOf(funktionsnedsattningar));
+        }
+
         public abstract Builder setFunktionsnedsattningar(ImmutableList<Funktionsnedsattning> funktionsnedsattningar);
 
         @JsonProperty("aktivitetsbegransning")

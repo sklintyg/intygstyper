@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 import org.joda.time.LocalDate;
@@ -10,8 +11,6 @@ import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuild
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
-
-import com.google.common.collect.ImmutableList;
 
 public class TransportToInternalTest {
 
@@ -29,11 +28,11 @@ public class TransportToInternalTest {
         utlatande.setGrundData(IntygGrundDataBuilder.getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
-        utlatande.setUnderlag(ImmutableList.of(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false),
+        utlatande.setUnderlag(asList(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false),
                 Underlag.create(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), true)));
-        utlatande.setDiagnoser(ImmutableList.of((Diagnos.create("S47", "ICD-10-SE", "Klämskada skuldra")), Diagnos.create("S48", "ICD-10-SE", "Klämskada arm")));
-        utlatande.setAtgarder(ImmutableList.of(BehandlingsAtgard.create("ABC", RespConstants.BEHANDLINGSATGARD_CODE_SYSTEM, "Kristallterapi")));
-        utlatande.setFunktionsnedsattningar(ImmutableList.of(Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"),
+        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD-10-SE", "Klämskada skuldra")), Diagnos.create("S48", "ICD-10-SE", "Klämskada arm")));
+        utlatande.setAtgarder(asList(BehandlingsAtgard.create("ABC", RespConstants.BEHANDLINGSATGARD_CODE_SYSTEM, "Kristallterapi")));
+        utlatande.setFunktionsnedsattningar(asList(Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"),
                 Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen")));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setNyBedomningDiagnos(true);

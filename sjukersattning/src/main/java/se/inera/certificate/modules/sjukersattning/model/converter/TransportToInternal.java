@@ -21,8 +21,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
-import com.google.common.collect.ImmutableList;
-
 public class TransportToInternal {
 
     public static SjukersattningUtlatande convert(Intyg source) throws ConverterException {
@@ -92,10 +90,10 @@ public class TransportToInternal {
             }
         }
 
-        utlatande.setUnderlag(ImmutableList.copyOf(underlag));
-        utlatande.setDiagnoser(ImmutableList.copyOf(diagnoser));
-        utlatande.setAtgarder(ImmutableList.copyOf(atgarder));
-        utlatande.setFunktionsnedsattningar(ImmutableList.copyOf(funktionsnedsattningar));
+        utlatande.setUnderlag(underlag);
+        utlatande.setDiagnoser(diagnoser);
+        utlatande.setAtgarder(atgarder);
+        utlatande.setFunktionsnedsattningar(funktionsnedsattningar);
     }
 
     private static void handleReferens(Builder utlatande, Svar svar) {

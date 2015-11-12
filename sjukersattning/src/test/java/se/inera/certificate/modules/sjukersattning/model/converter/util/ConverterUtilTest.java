@@ -2,7 +2,6 @@ package se.inera.certificate.modules.sjukersattning.model.converter.util;
 
 import static org.junit.Assert.assertEquals;
 
-import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import org.junit.Test;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
@@ -19,7 +18,6 @@ public class ConverterUtilTest {
     public void testConversion() throws Exception {
         ObjectMapper mapper = new CustomObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        mapper.registerModule(new GuavaModule());
         ConverterUtil converterUtil = new ConverterUtil();
         converterUtil.setObjectMapper(mapper);
         SjukersattningUtlatande originalUtlatande = TransportToInternalTest.getUtlatande();
