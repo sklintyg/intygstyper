@@ -7,7 +7,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             'use strict';
 
             // init state
-            $scope.qaList = {};
+            $scope.qaList = [];
             $scope.widgetState = {
                 doneLoading: false,
                 activeErrorMessageKey: null,

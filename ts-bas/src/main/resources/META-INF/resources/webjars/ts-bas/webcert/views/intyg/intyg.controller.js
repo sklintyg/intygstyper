@@ -1,8 +1,8 @@
 angular.module('ts-bas').controller('ts-bas.IntygController',
-    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore',
+    [ '$log', '$rootScope', '$stateParams', '$scope',
         'common.IntygService', 'common.IntygProxy', 'common.messageService','common.User',
         'ts-bas.IntygController.ViewStateService',
-        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService, IntygProxy,
+        function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, User, ViewState) {
             'use strict';
 
