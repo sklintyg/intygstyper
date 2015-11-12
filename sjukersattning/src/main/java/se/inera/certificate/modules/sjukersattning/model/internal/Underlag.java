@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class Underlag {
 
-    protected Underlag() {
+    Underlag() {
     }
 
     @JsonCreator

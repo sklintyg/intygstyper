@@ -1,17 +1,16 @@
 package se.inera.certificate.modules.sjukersattning.model.texts;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-
-import java.util.List;
 
 @AutoValue
 public abstract class Alternatives {
 
-    protected Alternatives() {
+    Alternatives() {
     }
 
     @JsonCreator

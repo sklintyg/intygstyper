@@ -18,6 +18,9 @@ import java.util.List;
 @JsonDeserialize(builder = AutoValue_SjukersattningUtlatande.Builder.class)
 public abstract class SjukersattningUtlatande implements Utlatande {
 
+    SjukersattningUtlatande() {
+    }
+
     @Override
     public String getTyp() {
         return SjukersattningEntryPoint.MODULE_ID;

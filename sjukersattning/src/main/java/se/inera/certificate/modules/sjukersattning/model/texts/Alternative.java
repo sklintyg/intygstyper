@@ -7,7 +7,7 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class Alternative {
 
-    protected Alternative() {
+    Alternative() {
     }
 
     @JsonCreator

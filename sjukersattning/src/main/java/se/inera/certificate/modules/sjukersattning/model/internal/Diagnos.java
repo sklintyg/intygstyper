@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class Diagnos {
 
-    protected Diagnos() {
+    Diagnos() {
     }
 
     @JsonCreator

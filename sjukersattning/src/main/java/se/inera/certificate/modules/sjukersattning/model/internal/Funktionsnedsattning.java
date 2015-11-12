@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class Funktionsnedsattning {
 
-    protected Funktionsnedsattning() {
+    Funktionsnedsattning() {
     }
 
     @JsonCreator

@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class BehandlingsAtgard {
 
-    protected BehandlingsAtgard() {
+    BehandlingsAtgard() {
     }
 
     @JsonCreator

@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableList;
 @AutoValue
 public abstract class Category {
 
-    protected Category() {
+    Category() {
     }
 
     @JsonCreator
