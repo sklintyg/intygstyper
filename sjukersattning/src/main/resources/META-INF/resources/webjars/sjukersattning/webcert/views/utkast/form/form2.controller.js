@@ -11,7 +11,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.viewModel = {
                 radioMedicalChecked: false,
                 underlagCompleted: [], // hold what row is selected
-                initialUnderlag: [{ 'id': 1, 'datum': null, 'attachment': false }]
+                initialUnderlag: [{ 'id': 1, 'datum': null, 'bilaga': false }]
             };
 
            /* $scope.test = function(){
@@ -147,7 +147,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
              */
             $scope.onChangeBaserasPaDateSupplemental = function(supplemental, $viewVal) {
                 if(utils.isValidString($viewVal)) {
-                    $scope.underlag[supplemental].datum = $viewVal;
+                    $scope.viewModel.initialUnderlag[supplemental].datum = $viewVal;
                 }
             }
 
@@ -162,11 +162,9 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             function resolveActiveSupplements(id) {
                 var activeSupplementsToParse = [];
                 if(!id) {
-                    angular.forEach($scope.underlag, function(value, key){
+                    angular.forEach($scope.viewModel.initialUnderlag, function(value, key){
 
-                        //console.log('test value: ' + JSON.stringify(key), ':' + JSON.stringify(value));
-                        //console.log('dc: ' + value.dateCreated);
-                        if( utils.isDefined(value.dateCreated) ) {
+                        if( utils.isDefined(value.datum) ) {
                             activeSupplementsToParse.push(value.id);
                         }
                     });
@@ -193,6 +191,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
                         modelProperty.$parsers.unshift(function(viewValue) {
                             var isoValue = dateUtils.convertDateToISOString(viewValue);
+                            $scope.viewModel.initialUnderlag[type].datum = isoValue;
                           return isoValue;
 
                         });
@@ -208,17 +207,33 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
                     registerDateParsersForSupplementals($scope);
                     if(underlag.id !==0 && underlag.datum !== null &&
-                        (underlag.attachment !== undefined || null) ) {
+                        (underlag.bilaga !== undefined || null) ) {
 
                         if( $scope.viewModel.underlagCompleted.indexOf(index) === -1 ) {
                             $scope.viewModel.underlagCompleted.push(index);// set currently manipulated underlag
                         }
+                        console.log('viewmodel underlag: ', $scope.viewModel.initialUnderlag);
+                        // add duplicate check? match for existing?
+
+                        var current = model.underlag[underlag.id];
+                       // dateUtils.convertDateToISOString(underlag.datum);
+
+                        if(current !== undefined && current.id === underlag.id &&
+                            current.datum === underlag.datum && current.bilaga === underlag.bilaga){ // if existing
+                            current.id = underlag.id;
+                            current.datum = dateUtils.convertDateToISOString(underlag.datum);
+                            current.bilaga = underlag.bilaga;
+                        } else { // if new
+                            underlag.datum = dateUtils.convertDateToISOString(underlag.datum);
+                            model.underlag.push( underlag );
+                        }
+                        console.log('model underlag: ' + JSON.stringify($scope.model.underlag));
                     }
                 }
             }
 
             $scope.createUnderlag = function() {
-                $scope.viewModel.initialUnderlag.push({ id: 0, datum: null, attachment: false }); // we set this first to allow be validations
+                $scope.viewModel.initialUnderlag.push({ id: 0, datum: null, bilaga: false }); // we set this first to allow be validations
                 registerDateParsersForSupplementals($scope);
             }
 
@@ -241,7 +256,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             }
 
             function resetUnderlag(){
-                model.underlag = [{ id: 1, datum: null, attachment: false }];
+                model.underlag = [{ id: 1, datum: null, bilaga: false }];
             }
 
 

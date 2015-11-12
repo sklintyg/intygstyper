@@ -13,7 +13,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'journaluppgifter',
                             'telefonkontaktMedPatienten',
                             'kannedomOmPatient',
-                            new ModelAttr('underlag', {defaultValue: [{ 'id': undefined, 'datum': undefined, 'attachment': undefined }] })],
+                            new ModelAttr('underlag', {defaultValue: [{ 'id': undefined, 'datum': undefined, 'bilaga': undefined }] })],
 
                         form4: [
                             new ModelAttr('diagnoser', {
@@ -26,10 +26,15 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'nyBedomningDiagnos'],
 
                         form5: [new ModelAttr( 'funktionsnedsattningar' , {defaultValue: []})],
+                        form6: ['aktivitetsbegransning'],
 
                         form7: ['avslutadBehandling',
                             'pagaendeBehandling',
                             'planeradBehandling'],
+
+                        form8: [new ModelAttr('atgarder' , {defaultValue : [
+                            { 'atgardsKod': undefined, 'atgardsKodSystem':undefined, 'atgardsBeskrivning': undefined}]}
+                        )],
 
                         form9: [ 'aktivitetsFormaga',
                                  'prognos'],
