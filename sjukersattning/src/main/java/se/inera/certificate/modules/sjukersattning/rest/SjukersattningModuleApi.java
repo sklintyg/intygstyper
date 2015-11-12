@@ -23,10 +23,7 @@ import se.inera.certificate.modules.sjukersattning.model.converter.TransportToIn
 import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.texts.Category;
-import se.inera.certificate.modules.sjukersattning.model.texts.Form;
-import se.inera.certificate.modules.sjukersattning.model.texts.Question;
-import se.inera.certificate.modules.sjukersattning.model.texts.SubQuestion;
+import se.inera.certificate.modules.sjukersattning.model.texts.*;
 import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
 import se.inera.certificate.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.support.api.ModuleApi;
@@ -235,7 +232,10 @@ public class SjukersattningModuleApi implements ModuleApi {
         SubQuestion subQuestion12 = SubQuestion.create("1.2", "Title 1.2", "Fill in this value");
         Question question1 = Question.create("1", "Title 1", "Some sub questions", asList(subQuestion11, subQuestion12));
         Category category1 = Category.create("1", "Category 1", "So many questions", asList(question1));
-        Form form = Form.create("sjukersattning", "Läkarintyg, sjukersättning", "Läkarintyg för sjukersättning", asList(category1));
+        Alternative alternative1= Alternative.create(1, "Alternativ 1");
+        Alternative alternative2 = Alternative.create(2, "Alternativ 2");
+        Alternatives alternatives = Alternatives.create("Flera alternativ", asList(alternative1, alternative2));
+        Form form = Form.create("sjukersattning", "Läkarintyg, sjukersättning", "Läkarintyg för sjukersättning", asList(category1), asList(alternatives));
         try {
             return toJsonString(form);
         } catch (Exception e) {
