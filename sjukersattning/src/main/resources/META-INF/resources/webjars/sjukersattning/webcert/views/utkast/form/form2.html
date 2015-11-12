@@ -64,51 +64,46 @@
       </div>
       <div class="form-group form-inline">
           <label class="radio-inline">
-                <input id="andraMedicinskaUtredningarYes" name="andraMedicinskaUtredningar" type="radio" ng-value="true"
-                        ng-model="radioMedical.checked">Ja
+                <input id="andraMedicinskaUtredningarYes" name="andraMedicinskaUtredningar" type="radio" ng-value="true" ng-change="test()"
+                        ng-model="viewModel.radioMedicalChecked">Ja
           </label>
           <label class="radio-inline">
-              <input id="andraMedicinskaUtredningarNo" name="andraMedicinskaUtredningar" type="radio" ng-value="false"
-                     ng-model="radioMedical.checked" checked="checked">Nej
+              <input id="andraMedicinskaUtredningarNo" name="andraMedicinskaUtredningar" type="radio" ng-value="false" ng-change="test()"
+                     ng-model="viewModel.radioMedicalChecked" checked="checked">Nej
           </label>
       </div>
-      <!-- outcomment this for prod  -->
-      <!--div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutModelConsole()">dump model</button></div>
-      <div class="form-group"><button class="btn btn-default btn-success" ng-click="logOutViewState()">dump viewstate</button></div-->
 
-
-        <!--select id="intygType" class="form-control" name="intygType" data-ng-model="intygType"
-                data-ng-options="type.id as type.label for type in certTypes" wc-focus-me="focusFirstInput"></select-->
-
-     <div class="form-group form-inline bottom-padding-small" ng-show="radioMedical.checked">
-         <div class="underlagItem" style="padding-bottom: 30px;" ng-repeat="underlag in additionalSupplements">
-              <span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag(underlag)"></span>
+     <div class="form-group form-inline bottom-padding-small" ng-show="viewModel.radioMedicalChecked"  style="padding-bottom: 40px;">
+         <div class="underlagItem" style="padding-bottom: 10px;" ng-repeat="underlag in viewModel.initialUnderlag">
+              <span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag(underlag, $index)"></span>
               <select class="form-control" name="andraUnderlag"
-                    data-ng-model="underlag.selectedType" ng-change="onUnderlagChange(underlag)"
+                    data-ng-model="underlag.id" ng-change="onUnderlagChange(underlag, $index)"
                     data-ng-options="item.id as item.label for item in $parent.underlagSelect"></select>
 
-              <span wc-date-picker-field target-model="underlag.dateCreated" dom-id="{{ underlag.id }}-Date"
-                    ng-change="onUnderlagChange(underlag)" ng-model="underlag.dateCreated"></span>
+              <span wc-date-picker-field target-model="underlag.datum" dom-id="{{ underlag.id }}-Date"
+                    ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.datum"></span>
 
               <div class="willSupplyWrapper pull-right">
               <label class="control-label inline-block bold" style="padding-right: 10px;">Skickas separat</label>
               <label class="radio-inline">
-                  <input id="willSupplyAttachmentYES-{{ underlag.id }}" name="willSupplyAttachmentRadioYes{{ underlag.id }}"
-                         type="radio" ng-value="true" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment">Ja
+                  <input id="willSupplyAttachmentYES-{{ $index }}" name="willSupplyAttachmentRadioYes{{ $index }}"
+                         type="radio" ng-value="true" ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.attachment">Ja
               </label>
               <label class="radio-inline">
-                  <input id="willSupplyAttachmentNO-{{ underlag.id }}" name="willSupplyAttachmentRadioNo{{ underlag.id }}"
-                         type="radio" ng-value="false" ng-change="onUnderlagChange(underlag)" ng-model="underlag.willSupplyAttachment" checked="checked">Nej
+                  <input id="willSupplyAttachmentNO-{{ $index }}" name="willSupplyAttachmentRadioNo{{ $index }}"
+                         type="radio" ng-value="false" ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.attachment">Nej
               </label>
           </div>
              <br/>
-<!-- todo: these hard coded numbers should be replaced and places in valiation secton of viewmodel... -->
-             <div class="col-xs-12" style="padding: 5px 0;" ng-show="underlag.isLatest && underlag.selectedOrder < 9">
-                 <a href ng-click="createUnderlag(underlag)">Lägg till ytterligare underlag</a>
-
-             </div>
-             <span ng-if="underlag.selectedOrder === 9" message key="sjukersattning.validation.underlag.max-extra-underlag"></span>
          </div>
+         <div class="col-xs-12" style="padding: 5px 0px;background-color: #e5e5e5; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;"
+              ng-show="model.underlag.length < 9">
+             <a href ng-click="createUnderlag(underlag)" class="btn btn-link"
+                ng-class="{ 'disabled': model.underlag[model.underlag.length - 1].id === 0 ||
+                                        model.underlag[model.underlag.length - 1].datum === null }">
+                 Lägg till ytterligare underlag</a>
+         </div>
+         <span ng-if="model.underlag.length === 9" message key="sjukersattning.validation.underlag.max-extra-underlag"></span><!-- kursivera -->
      </div>
 
 

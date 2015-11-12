@@ -20,10 +20,12 @@
                ng-model="nedsattning.selected" ng-value="true" ng-change="$parent.setFocus('{{ nedsattning.id }}', nedsattning.selected)">
         <label class="label-inline"><h3 class="title" ng-if="nedsattning.label != null">{{ nedsattning.label }}</h3></label>
 
-        <textarea id="{{nedsattning.id}}" class="form-control block grey-border" style="min-width: 600px;" name="disabilities" rows='6'
-                    ng-model="nedsattning.text" ng-trim="false" ></textarea>
-            <span>{{ nedsattning.selected }}</span>
-            <!--button ng-click="logModel()">Log model</button-->
+        <div class="form-nedsattning-wrapper" ng-class="{ 'dark-grey-bg': nedsattning.selected }">
+
+        <textarea id="{{nedsattning.id}}" class="form-control block grey-border" style="min-width: 600px;" name="disabilities{{ nedsattning.id }}" rows='6'
+                    ng-model="nedsattning.text" ng-trim="false" ng-focus="nedsattning.selected = true" ></textarea>
+
+        </div><!--button ng-click="logModel()">Log model</button-->
     </div>
 </div>
 

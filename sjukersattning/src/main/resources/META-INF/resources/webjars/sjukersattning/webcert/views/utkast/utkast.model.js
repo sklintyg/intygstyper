@@ -4,24 +4,6 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
             'use strict';
 
-            // --- Transform functions
-            var nedsattFromTransform = function(nedsatt) {
-                if (!nedsatt || (!nedsatt.from && !nedsatt.tom)) {
-                    return undefined;
-                } else {
-                    return nedsatt;
-                }
-            };
-           // console.log("BAM: " + DraftModel);
-
-            /*
-            *     private String pagaendeBehandling;
-             private String avslutadBehandling;
-             private String planeradBehandling;
-
-             private String vadPatientenKanGora;
-             private String prognosNarPatientKanAterga;
-            * */
             var sjukersattningModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
@@ -31,54 +13,35 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'journaluppgifter',
                             'telefonkontaktMedPatienten',
                             'kannedomOmPatient',
-                            new ModelAttr('underlag', {defaultValue: [] })],
+                            new ModelAttr('underlag', {defaultValue: [{ 'id': undefined, 'datum': undefined, 'attachment': undefined }] })],
 
-                        form4: ['diagnosBeskrivning1',
-                            'diagnosBeskrivning2',
-                            'diagnosBeskrivning3',
-                            'diagnosKod1',
-                            'diagnosKod2',
-                            'diagnosKod3',
-                            'diagnosKodsystem1',
-                            'diagnosKodsystem2',
-                            'diagnosKodsystem3',
-                            new ModelAttr('samsjuklighet', {defaultValue: false})],
+                        form4: [
+                            new ModelAttr('diagnoser', {
+                            defaultValue: [ { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
+                                { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
+                                { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined } ]})
+                        ],
 
                         form4b: ['diagnostisering',
                             'nyBedomningDiagnos'],
 
-                        form5: ['funktionsnedsattning',
-                            'aktivitetsbegransning'],
+                        form5: [new ModelAttr( 'funktionsnedsattningar' , {defaultValue: []})],
 
                         form7: ['avslutadBehandling',
                             'pagaendeBehandling',
                             'planeradBehandling'],
 
-                        form8b: ['tjanstgoringstid',
-                            'ressattTillArbeteAktuellt', 'rekommendationOverSocialstyrelsensBeslutsstod',
-                            new ModelAttr('nedsattMed100', {fromTransform: nedsattFromTransform}),
-                            new ModelAttr('nedsattMed25', {fromTransform: nedsattFromTransform}),
-                            'nedsattMed25Beskrivning',
-                            new ModelAttr('nedsattMed50', {fromTransform: nedsattFromTransform}),
-                            'nedsattMed50Beskrivning',
-                            new ModelAttr('nedsattMed75', {fromTransform: nedsattFromTransform}),
-                            'nedsattMed75Beskrivning', 'vadPatientenKanGora', 'prognosNarPatientKanAterga'],
-
-                        form9: [ 'vadPatientenKanGora',
-                                 'prognosNarPatientKanAterga'],
+                        form9: [ 'aktivitetsFormaga',
+                                 'prognos'],
 
                         form10: ['kommentar'],
 
                         form11: ['kontaktMedFk'],
 
-                        misc: ['forskrivarkodOchArbetsplatskod',
-                                'namnfortydligandeOchAdress',
-                                'id',
+                        misc: [ 'id',
                                 new ModelAttr('grundData', {defaultValue: grundData})]
                     });
-
                 },
-
                 update: function update(content, parent) {
                     if (parent) {
                         parent.content = this;
@@ -88,7 +51,6 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    //console.log('----- build *****' + DraftModel + ',' + JSON.stringify(sjukersattningModel._members));
                     return new DraftModel(new sjukersattningModel());
                 }
             });

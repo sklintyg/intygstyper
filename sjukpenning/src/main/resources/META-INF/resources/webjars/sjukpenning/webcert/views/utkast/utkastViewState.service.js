@@ -11,7 +11,6 @@ angular.module('sjukpenning').service('sjukpenning.EditCertCtrl.ViewStateService
             this.setDraftModel = function(draftModel){
                 this.draftModel = draftModel;
                 this.intygModel = draftModel.content;
-                this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
             };
 
             this.avstangningSmittskydd = function() {

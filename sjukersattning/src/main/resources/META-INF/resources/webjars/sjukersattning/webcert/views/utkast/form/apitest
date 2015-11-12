@@ -1,0 +1,32 @@
+{"undersokningAvPatienten":"2015-11-12",
+  "journaluppgifter":"2015-11-12",
+  "telefonkontaktMedPatienten":"2015-11-12",
+  "underlag":[{"id":0,"datum":null,"attachment":false}],
+  "diagnoser":[{"diagnosKod":"V3400",
+    "diagnosBeskrivning":"Förare av eller passagerare i trehjuligt motorfordon skadad i kollision med tung lastbil eller buss, förare skadad i olycka, ej trafik-idrott"},{"diagnosKod":"X2300","diagnosBeskrivning":"Kontakt med bålgetingar, getingar och bin-bostad-idrott"}]
+,"diagnostisering":"assa"
+,"nyBedomningDiagnos":"true"
+,"funktionsnedsattningar":[]
+,"avslutadBehandling":"asdasd"
+,"pagaendeBehandling":"asdasd",
+  "planeradBehandling":"adsdas"
+,"aktivitetsFormaga":"asd","prognos":"ads"
+,"kommentar":"asdds","kontaktMedFk":"true"
+,"id":"8221e455-b3c0-47e2-9d35-b67dad17a038"
+,"grundData":{"skapadAv":{"personId":"IFV1239877878-1049","fullstandigtNamn":"Jan Nilsson",
+     "vardenhet":{"enhetsid":"IFV1239877878-1042",
+       "enhetsnamn":"WebCert-Enhet1",
+       "postadress":"Storgatan 1",
+       "postnummer":"12345",
+       "postort":"Småmåla","telefonnummer":"0101234567890","epost":"enhet1@webcert.invalid.se",
+       "vardgivare":{"vardgivarid":"IFV1239877878-1041","vardgivarnamn":"WebCert-Vårdgivare1"},
+       "arbetsplatsKod":"0000000"}},
+  "patient":{"personId":"19121212-1212",
+    "fullstandigtNamn":"Tolvan Tolvansson",
+    "fornamn":"Tolvan","efternamn":"Tolvansson",
+    "postadress":"Svensson, Storgatan 1, PL 1234",
+    "postnummer":"12345","postort":"Småmåla",
+    "samordningsNummer":false}}}
+
+
+{"undersokningAvPatienten":"2015-11-12","journaluppgifter":"2015-11-12","underlag":[{"id":2,"datum":"2015-11-23T23:00:00.000Z","attachment":true}],"diagnoser":[],"funktionsnedsattningar":[],"id":"8221e455-b3c0-47e2-9d35-b67dad17a038","grundData":{"skapadAv":{"personId":"IFV1239877878-1049","fullstandigtNamn":"Jan Nilsson","vardenhet":{"enhetsid":"IFV1239877878-1042","enhetsnamn":"WebCert-Enhet1","postadress":"Storgatan 1","postnummer":"12345","postort":"Småmåla","telefonnummer":"0101234567890","epost":"enhet1@webcert.invalid.se","vardgivare":{"vardgivarid":"IFV1239877878-1041","vardgivarnamn":"WebCert-Vårdgivare1"},"arbetsplatsKod":"0000000"}},"patient":{"personId":"19121212-1212","fullstandigtNamn":"Tolvan Tolvansson","fornamn":"Tolvan","efternamn":"Tolvansson","postadress":"Svensson, Storgatan 1, PL 1234","postnummer":"12345","postort":"Småmåla","samordningsNummer":false}}}

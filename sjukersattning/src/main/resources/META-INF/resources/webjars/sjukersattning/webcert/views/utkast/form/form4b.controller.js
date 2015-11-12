@@ -14,7 +14,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4bCtrl'
 
             $scope.onChangeNyBedomning = function(){
                 $scope.model.nyBedomningDiagnos = $scope.viewModel.nyBedomningDiagnos;
-                $log.info("$scope.viewModel.nyBedomningDiagnos" + $scope.viewModel.nyBedomningDiagnos);
-            };
 
+            };
 }]);

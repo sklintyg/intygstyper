@@ -29,28 +29,28 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
             };
 
             this.underlagOptions = [
-                { 'sortValue': 0, 'id': 'default', label: 'Ange underlag eller utredning'},
-                { 'sortValue': 1, 'id': 'Neuropsykiatriskt utlatande', label: 'Neuropsykiatriskt utlåtande'},
-                { 'sortValue': 2, 'id': 'Underlag fran habiliteringen', label: 'Underlag från habiliteringen' },
-                { 'sortValue': 3, 'id': 'underlagFranarbetsterapeut', label: 'Underlag från arbetsterapeut' },
-                { 'sortValue': 4, 'id': 'underlagFranfysioterapeut', label: 'Underlag från fysioterapeut' },
-                { 'sortValue': 5, 'id': 'underlagFranlogoped', label: 'Underlag från logoped' },
-                { 'sortValue': 6, 'id': 'underlagFranpsykolog', label: 'Underlag från psykolog' },
-                { 'sortValue': 7, 'id': 'underlagFranföretagshalsovard', label: 'Underlag från företagshälsovård' },
-                { 'sortValue': 8, 'id': 'utredningAvAnnanSpecialistklinik', label: 'Utredning av annan specialistklinik'},
-                { 'sortValue': 9, 'id': 'utredningFranVardinrattningUtomlands', label: 'Utredning från vårdinrättning utomlands' },
-                { 'sortValue': 10, 'id': 'ovrigt', label: 'Övrigt' }
+                { 'id': 0, label: 'Ange underlag eller utredning'},
+                { 'id': 1, label: 'Neuropsykiatriskt utlåtande'},
+                { 'id': 2, label: 'Underlag från habiliteringen' },
+                { 'id': 3, label: 'Underlag från arbetsterapeut' },
+                { 'id': 4, label: 'Underlag från fysioterapeut' },
+                { 'id': 5, label: 'Underlag från logoped' },
+                { 'id': 6, label: 'Underlag från psykolog' },
+                { 'id': 7, label: 'Underlag från företagshälsovård' },
+                { 'id': 8, label: 'Utredning av annan specialistklinik'},
+                { 'id': 9, label: 'Utredning från vårdinrättning utomlands' },
+                { 'id': 10, label: 'Övrigt' }
             ];
 
             this.funktionsnedsattningOptions = [
-                { 'sortValue': 1, 'id': 'intellektuell', 'label': 'Intellektuell funktion', selected: false, helpText: 'example helptext1', text : null } ,
-                { 'sortValue': 2, 'id': 'kommunikation', 'label': 'Kommunikation och social interaktion', selected: false, helpText: 'example helptext2', text : null },
-                { 'sortValue': 3, 'id': 'koncentration', 'label': 'Uppmärksamhet och koncentration', selected: false, helpText: 'example helptext3', text : null },
-                { 'sortValue': 4, 'id': 'annan_psykisk', 'label': 'Annan psykisk funktion', selected: false, helpText: 'example helptext4',text : null },
-                { 'sortValue': 5, 'id': 'syn_horsel_tal', 'label':'Syn, hörsel och tal', selected: false, helpText: 'example helptext5', text : null },
-                { 'sortValue': 6, 'id': 'balans', 'label': 'Balans, koordination och motorik', selected: false, helpText: 'example helptext6', text : null },
-                { 'sortValue': 7, 'id': 'annan_kroppslig', 'label': 'Annan kroppslig funktion', selected: false, helpText: 'example helptext7', text : null },
-                { 'sortValue': 8, 'id': 'okand', 'label': 'Okänd', selected: false, text : null}
+                { 'id': 1, 'label': 'Intellektuell funktion', selected: false, helpText: 'example helptext1', text : null } ,
+                { 'id': 2, 'label': 'Kommunikation och social interaktion', selected: false, helpText: 'example helptext2', text : null },
+                { 'id': 3, 'label': 'Uppmärksamhet och koncentration', selected: false, helpText: 'example helptext3', text : null },
+                { 'id': 4, 'label': 'Annan psykisk funktion', selected: false, helpText: 'example helptext4',text : null },
+                { 'id': 5, 'label': 'Syn, hörsel och tal', selected: false, helpText: 'example helptext5', text : null },
+                { 'id': 6, 'label': 'Balans, koordination och motorik', selected: false, helpText: 'example helptext6', text : null },
+                { 'id': 7, 'label': 'Annan kroppslig funktion', selected: false, helpText: 'example helptext7', text : null },
+                { 'id': 8, 'label': 'Okänd', selected: false, text : null}
             ];
 
             this.reset = function() {

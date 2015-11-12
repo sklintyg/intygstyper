@@ -8,136 +8,30 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.model = model;
             $scope.viewState = viewState;
 
-
-            // fält 2 when new questions selected
-
-            // Validation
-            // 0: "intygbaseratpa"
-            // 1: "diagnos"
-            // 2: "aktivitetsbegransning"
-
-            // Sammanfattninge visar fel.
-
-            // fält 2, om ja fler underlag, validera dessa.
-            // fält 3 har fel validering
-            // fält 3 ska få rätt validering, NY
-            // Fält 4a saknar helt validering. Bygg ut för att stödja alla medlemmar i array
-            // Fält 4b har fel text.
-
-            $scope.radioMedical = {
-                checked : false
+            $scope.viewModel = {
+                radioMedicalChecked: false,
+                underlagCompleted: [], // hold what row is selected
+                initialUnderlag: [{ 'id': 1, 'datum': null, 'attachment': false }]
             };
 
-            $scope.valtUnderlag = 'default';
-
-            // Holds all underlag base data in select
-            $scope.underlagSelect = [];
-
-            // this will be refactored to a service later ,also pristine and dirty will be added
-            // init values on load, id: unique id made up of typ+counter, isSelected if user prev has selected something on this u.type
-            $scope.additionalSupplements = [{
-                id: 'supplement0',
-                selectedType: 'default',
-                dateCreated: null,
-                willSupplyAttachment: false,
-                selectedOrder: 0,
-                isLatest: true
-            }];
-
-            // search and replace the model when supplement dropdown change
-           $scope.onUnderlagChange = function(underlag) {
-               if(underlag.selectedOrder !== 0) {
-                   // set supplement 1 to new underlag type
-                   registerDateParsersForSupplementals($scope);
-                   if(underlag) {
-                       underlag.selectedType = underlag.selectedType;
-                      // underlag.dateCreated = underlag.dateCreated;
-                       underlag.willSupplyAttachment = underlag.willSupplyAttachment;
-
-                       setBackendModel(underlag);
-                   } else {
-                       throw('no prop found with id' + underlag.id);
-                   }
-               }
-            }
-
-            $scope.createUnderlag = function(underlag) {
-                // first check for completion of current row to set it as latest = False, there can only be one
-                underlag.isLatest = false;
-                var newNumber = $scope.additionalSupplements.length + 1;
-                var newId = 'supplement' + newNumber;
-                $scope.additionalSupplements.push({
-                                                    id: newId,
-                                                    selectedType: 'default',
-                                                    dateCreated: null,
-                                                    willSupplyAttachment: false,
-                                                    selectedOrder: newNumber,
-                                                    isLatest : true
-                                                  });
-                registerDateParsersForSupplementals($scope);
-                //console.log('res add array: ' , $scope.additionalSupplements);
-            }
-
-            $scope.removeUnderlag = function(underlag){
-                if(underlag.selectedOrder !== 0) { // as log as we not deleting the first element
-                    var isLatest = underlag.isLatest;
-                    if (isLatest) { // user deletes the last element
-                        $scope.additionalSupplements.pop();
-                        $scope.additionalSupplements[$scope.additionalSupplements.length - 1].isLatest = true;
-                    } else {
-                        $scope.additionalSupplements.splice(underlag);
-                    }
-                    $log.info('model.underlag: ' + JSON.stringify('model' + JSON.stringify( model.underlag)));
-                    //$log.info('supp after:' + JSON.stringify($scope.additionalSupplements));
-                } else { // if we delete the first, hide and reset
-                    $scope.radioMedical.checked = false;
-                    resetUnderlag();
+           /* $scope.test = function(){
+                alert('val' + $scope.viewModel.radioMedicalChecked);
+                if($scope.model.underlag.length === 0 && $scope.viewModel.radioMedicalChecked === true ){
+                    $scope.viewModel.initialUnderlag;
+                    alert('val' + $scope.model.underlag);
                 }
-            }
-
-            function resetUnderlag(){
-                // reset model later!
-               $scope.additionalSupplements = [{
-                    id: 'supplement0',
-                    selectedType: 'default',
-                    dateCreated: null,
-                    willSupplyAttachment: false,
-                    selectedOrder: 0,
-                    isLatest: true
-                }];
-            }
-
-            function setBackendModel(currentUnderlag){
-
-                var obj = model.underlag.filter(function ( obj ) {
-                    return obj.id === currentUnderlag.selectedType;
-                })[0];
-
-                var convertedToBackend = {};
-
-                if (obj === undefined && currentUnderlag.selectedType !== null &&
-                    currentUnderlag.dateCreated !== null) { // if the object is not present, go ahead and push it
-                    convertedToBackend = {
-                        'id': currentUnderlag.selectedOrder,
-                        'datum': dateUtils.convertDateToISOString(currentUnderlag.dateCreated),
-                        'attachment': currentUnderlag.willSupplyAttachment
-                    };
-
-                    model.underlag.push(convertedToBackend);
-                    console.log('model content on convert: ', model.underlag);
-                }
-               // console.log('complete model: ' + JSON.stringify('model' + JSON.stringify( model)));
-               // console.log('complete model $scope: ' + JSON.stringify('model' + JSON.stringify( $scope.model)));
-               //console.log('model.underlag: ' + JSON.stringify('model in SetToBackend' + JSON.stringify( model.underlag)));
-
-
-            }
+                alert('val' + $scope.model.underlag);
+            };*/
 
             function onPageLoad(){
                 $scope.underlagSelect = viewState.underlagOptions;
+                if(model.underlag.length < 0) {
+                    // if we have underlag with id other then 0 (default is 0) from server, show them
+                    $scope.viewModel.radioMedicalChecked = true; // test this
+                }
             }
 
-            // Fält 2. Based on handling
+            // Fält 1. Based on handling
             $scope.basedOnState = {
                 check: {
                     undersokningAvPatienten: false,
@@ -181,10 +75,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             }
 
             function transferModelToForm() {
-                $scope.dates.undersokningAvPatienten = $scope.model.undersokningAvPatienten;
-                $scope.dates.telefonkontaktMedPatienten = $scope.model.telefonkontaktMedPatienten;
-                $scope.dates.journaluppgifter = $scope.model.journaluppgifter;
-                $scope.dates.kannedomOmPatient = $scope.model.kannedomOmPatient;
+                $scope.dates.undersokningAvPatienten = model.undersokningAvPatienten;
+                $scope.dates.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten;
+                $scope.dates.journaluppgifter = model.journaluppgifter;
+                $scope.dates.kannedomOmPatient = model.kannedomOmPatient;
+
+                console.log('transferModelToForm' + JSON.stringify($scope.dates));
             }
 
 
@@ -196,13 +92,13 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
                 // Set todays date when a baserat pa field is checked
                 if ($scope.basedOnState.check[modelName]) {
-                    if (!$scope.model[modelName] || $scope.model[modelName] === '') {
-                        $scope.model[modelName] = dateUtils.todayAsYYYYMMDD();
-                        $scope.dates[modelName] = $scope.model[modelName];
+                    if (!model[modelName] || model[modelName] === '') {
+                        model[modelName] = dateUtils.todayAsYYYYMMDD();
+                        $scope.dates[modelName] = model[modelName];
                     }
                 } else {
                     // Clear date if check is unchecked
-                    $scope.model[modelName] = undefined;
+                    model[modelName] = undefined;
                     $scope.dates[modelName] = '';
                 }
             };
@@ -217,9 +113,9 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
 
             function registerDateParsersFor2(_$scope) {
                 // Register parse function for 2 date pickers
-                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'kannedomOmPatient', ];
-                addParsers(_$scope.form2, baserasPaTypes, _$scope.onChangeBaserasPaDate);
-               // console.log('_$scope.form2' + JSON.stringify(_$scope.form2));
+                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'kannedomOmPatient' ];
+                addParsers(_$scope, baserasPaTypes, _$scope.onChangeBaserasPaDate);
+               // console.log('_$scope' + JSON.stringify(_$scope));
             }
 
             function addParsers(form2, attributes, fn) {
@@ -250,11 +146,9 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
              * @param supplemental
              */
             $scope.onChangeBaserasPaDateSupplemental = function(supplemental, $viewVal) {
-                //console.log('supplemental in onChangeBaserasPaDateSupplemental: ' + supplemental);
                 if(utils.isValidString($viewVal)) {
-                    $scope.additionalSupplements[supplemental].dateCreated = $viewVal;
+                    $scope.underlag[supplemental].datum = $viewVal;
                 }
-                //console.log('viewVal in onChangeBaserasPaDateSupplemental: ' + $viewVal);
             }
 
             function registerDateParsersForSupplementals(_$scope, id) {
@@ -262,13 +156,13 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 // get active list of datepickes, with or without to register parsers on.
                 var supplements = resolveActiveSupplements(id);
                  //console.log('supplements active date pickers: '  + supplements); // incoming Tue Oct 13 2015 00:00:00 GMT+0200 (CEST)
-                addParsersSupplemental(_$scope.form2, supplements, _$scope.onChangeBaserasPaDateSupplemental);
+                addParsersSupplemental(_$scope, supplements, _$scope.onChangeBaserasPaDateSupplemental);
             }
 
             function resolveActiveSupplements(id) {
                 var activeSupplementsToParse = [];
                 if(!id) {
-                    angular.forEach($scope.additionalSupplements, function(value, key){
+                    angular.forEach($scope.underlag, function(value, key){
 
                         //console.log('test value: ' + JSON.stringify(key), ':' + JSON.stringify(value));
                         //console.log('dc: ' + value.dateCreated);
@@ -305,6 +199,51 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                     }
                 }, form2);
             }
+
+            // Holds all underlag base data in select
+            $scope.underlagSelect = [];
+            // search and replace the model when supplement dropdown change
+            $scope.onUnderlagChange = function(underlag, index) {
+                if(underlag.id !== 0 && underlag.datum !== null) {
+
+                    registerDateParsersForSupplementals($scope);
+                    if(underlag.id !==0 && underlag.datum !== null &&
+                        (underlag.attachment !== undefined || null) ) {
+
+                        if( $scope.viewModel.underlagCompleted.indexOf(index) === -1 ) {
+                            $scope.viewModel.underlagCompleted.push(index);// set currently manipulated underlag
+                        }
+                    }
+                }
+            }
+
+            $scope.createUnderlag = function() {
+                $scope.viewModel.initialUnderlag.push({ id: 0, datum: null, attachment: false }); // we set this first to allow be validations
+                registerDateParsersForSupplementals($scope);
+            }
+
+            $scope.removeUnderlag = function(underlag, index){
+                if(model.underlag.length === 1) { // hide when first is removed
+                    $scope.viewModel.radioMedicalChecked = false;
+                    resetUnderlag();
+                } else if (underlag.id === 0) { // if 0, we delete the last unpopulated
+                     model.underlag.pop();
+                } else {
+                    console.log(index);
+                    for(var i=0;  i < model.underlag.length; i++){
+                        // we must check for index here since the same id cane be used on several extra underlag
+                        if(model.underlag[i].id === underlag.id && index === i ) {
+                            model.underlag.splice(i, 1);
+                            $scope.viewModel.underlagCompleted[i + 1] = false;
+                        }
+                    }
+                }
+            }
+
+            function resetUnderlag(){
+                model.underlag = [{ id: 1, datum: null, attachment: false }];
+            }
+
 
             onPageLoad();
 

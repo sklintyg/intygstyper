@@ -58,11 +58,6 @@ angular.module('sjukersattning').config(function($stateProvider) {
                     controller: 'sjukersattning.EditCert.Form7Ctrl'
                 },
 
-                'form8b@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form8b.html',
-                    controller: 'sjukersattning.EditCert.Form8bCtrl'
-                },
-
                 'form9@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form9.html',
                     controller: 'sjukersattning.EditCert.Form9Ctrl'

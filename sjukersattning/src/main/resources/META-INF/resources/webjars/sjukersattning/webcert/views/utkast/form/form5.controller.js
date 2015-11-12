@@ -5,35 +5,52 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
             var model = viewState.intygModel;
             $scope.model = model;
             $scope.viewState = viewState;
-            $scope.funktionsnedsattning = [];
 
             function onPageLoad(){
-                $scope.funktionsnedsattningOptions = viewState.funktionsnedsattningOptions;
+
+               // alert('funktionsnedsattningar length' + model.funktionsnedsattningar.length);
+                if(model.funktionsnedsattningar.length < 1){ // do nothing let viewState options list dictate data
+                    $scope.funktionsnedsattningOptions = viewState.funktionsnedsattningOptions;
+                } else { // set data first, then update from backend on relevant data
+                    $scope.funktionsnedsattningOptions = viewState.funktionsnedsattningOptions; // 1. load
+                    for(var i = 0; i < model.funktionsnedsattningar.length; i++) { // 2. update
+                        var current = model.funktionsnedsattningar[i];
+                        if($scope.funktionsnedsattningOptions.id === current.id) {
+                            $scope.funktionsnedsattningOptions.text = current.text; // set text if match
+                        }
+                    }
+                }
             }
+
+            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+                if (newVal === oldVal) {
+                    return;
+                }
+
+                // only do this once the page is loaded and changes come from the gui!
+                if (viewState.common.doneLoading) {
+                    // Remove defaults not applicable when smittskydd is active
+                    if (newVal === true) {
+                        model.updateToAttic(model.properties.form5);
+                        model.clear(model.properties.form5);
+                    } else {
+                        model.restoreFromAttic(model.properties.form5);
+                    }
+                }
+            });
 
             $scope.setFocus = function(id, state){
                 var element = window.document.getElementById(id);
-              //  $log.info('elem:' + element);
-
                 if(element) {
-                    var initialClasses = element.className;
+                    //var initialClasses = element.className;
                     if (!state) {
                         element.blur();
-
                     } else{
                         element.focus();
                         // set model here
-
                     }
-
                 }
             };
 
             onPageLoad();
-            $scope.logModel = function(){
-                console.log('dd' + JSON.stringify($scope.funktionsnedsattningOptions));
-            }
-
-         //  console.log('dd' + JSON.stringify($scope.funktionsnedsattningOptions));
-
         }]);
