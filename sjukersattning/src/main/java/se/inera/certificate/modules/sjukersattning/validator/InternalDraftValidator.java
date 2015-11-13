@@ -38,6 +38,8 @@ public class InternalDraftValidator {
         validateReferenser(utlatande, validationMessages);
         // fält 2
         validateDiagnose(utlatande, validationMessages);
+        // fält 3
+        validateDiagnosticering(utlatande, validationMessages);
         // Falt 4
         validateFunktionsnedsattning(utlatande, validationMessages);
         // Falt 5
@@ -65,7 +67,7 @@ public class InternalDraftValidator {
 
     private void validateKannedomOmPatient(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages){
 
-        if (utlatande.getKannedomOmPatient() != null) {
+        if (utlatande.getKannedomOmPatient() == null) {
             addValidationError(validationMessages, "intygbaseratpa.kannedom.missing", ValidationMessageType.EMPTY,
                     "sjukersattning.validation.intyg-baserat-pa.kannedom.missing");
         }
@@ -160,6 +162,15 @@ public class InternalDraftValidator {
 
     }
 
+    private void validateDiagnosticering(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages){
+
+        String diagnosticering = utlatande.getDiagnostisering();
+        if(StringUtils.isBlank(diagnosticering)){
+            addValidationError(validationMessages, "diagnosticering", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.diagnosticering.missing");
+        }
+    }
+
     private void validateDiagnosKod(String diagnosKod, String kodsystem, String field, String msgKey, List<ValidationMessage> validationMessages) {
         // if moduleService is not available, skip this validation
         if (moduleService == null) {
@@ -170,6 +181,7 @@ public class InternalDraftValidator {
         if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
             addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
         }
+
     }
 
     /**
