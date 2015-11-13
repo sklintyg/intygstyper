@@ -25,7 +25,7 @@
 
 .cert-body .form5  .body-row .text,   .cert-body .form6 .body-row .text{
     display: block;
-    padding: 20px 40px 15px 40px;
+    padding: 20px 0 15px 0;
     background-color: white;
     -webkit-border-radius: 4px 4px 4px 4px;
     -moz-border-radius: 4px 4px 4px 4px;
@@ -38,8 +38,20 @@
     border-radius: 4px;
 }
 
+.form-aktivitetsbegransning-wrapper {
+    background-color: #e5e5e5;
+    padding: 10px;
+    border-radius: 4px;
+}
+.form-nedsattning-wrapper textarea, .form-aktivitetsbegransning-wrapper textarea {
+    min-width: 680px;
+    margin-left: 20px;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
 .dark-grey-bg {
-    background-color: #bbb;
+    background-color: #e5e5e5;
 
 }
 /* When focused and when active is added from checkbox, add highlighted style */

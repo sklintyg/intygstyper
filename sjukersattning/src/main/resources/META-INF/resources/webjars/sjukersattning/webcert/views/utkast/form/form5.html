@@ -13,19 +13,21 @@
 
         <div class="form-group form-inline" ng-repeat="nedsattning in funktionsnedsattningOptions">
 
-        <input type="checkbox"
-               id="nedsattning.id"
-               name="{{nedsattning.id}}-funktionsnedsattningarCheck.intellektuell"
-               class="checkbox-inline"
-               ng-model="nedsattning.selected" ng-value="true" ng-change="$parent.setFocus('{{ nedsattning.id }}', nedsattning.selected)">
-        <label class="label-inline"><h3 class="title" ng-if="nedsattning.label != null">{{ nedsattning.label }}</h3></label>
+            <input type="checkbox"
+                   id="nedsattning.id"
+                   name="{{nedsattning.id}}-funktionsnedsattningarCheck.intellektuell"
+                   class="checkbox-inline"
+                   ng-model="nedsattning.selected" ng-value="true" ng-change="$parent.setFocus('{{ nedsattning.id }}', nedsattning.selected)">
+            <label class="label-inline"><h3 class="title" ng-if="nedsattning.label != null"
+                                            ng-click="nedsattning.selected=!nedsattning.selected">
+                {{ nedsattning.label }}
+            </h3></label>
 
-        <div class="form-nedsattning-wrapper" ng-class="{ 'dark-grey-bg': nedsattning.selected }">
+            <div class="form-nedsattning-wrapper" ng-class="{ 'dark-grey-bg': nedsattning.selected }">
 
-        <textarea id="{{nedsattning.id}}" class="form-control block grey-border" style="min-width: 600px;" name="disabilities{{ nedsattning.id }}" rows='6'
-                    ng-model="nedsattning.text" ng-trim="false" ng-focus="nedsattning.selected = true" ></textarea>
-
-        </div><!--button ng-click="logModel()">Log model</button-->
+            <textarea id="{{nedsattning.id}}" class="form-control block grey-border"  name="disabilities{{ nedsattning.id }}" rows='6'
+                        ng-model="nedsattning.text" ng-trim="false" ng-focus="nedsattning.selected = true" ></textarea>
+        </div>
     </div>
 </div>
 
