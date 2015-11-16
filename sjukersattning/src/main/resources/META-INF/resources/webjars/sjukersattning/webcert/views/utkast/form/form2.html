@@ -59,12 +59,12 @@
 
       <!--  Jag har känt patienten sedan den -->
   <div class="form-group form-inline">
-      <label class="checkbox inline-block" style="min-width: 300px; "><input style="display: none;" type="checkbox"
+      <label class="checkbox inline-block" style="min-width: 300px; "><input type="checkbox"
                                                                            id="basedOnKannedom"
                                                                            name="informationBasedOn.kannedom"
                                                                            ng-model="basedOnState.check.kannedomOmPatient"
                                                                            ng-change="toggleBaseradPaDate('kannedomOmPatient')">
-          <span class="no-date-checkbox">Jag har känt patienten sedan den</span></label>
+          <span>Jag har känt patienten sedan den</span></label>
       <span wc-date-picker-field target-model="dates.kannedomOmPatient" dom-id="kannedomOmPatientDate"></span>
 
 
