@@ -171,6 +171,10 @@
         <directory>src/main/resources</directory>
         <excludes>
           <exclude>**/*.scss</exclude>
+          <exclude>**/*.spec.js</exclude>
+          <exclude>**/*.test.js</exclude>
+          <exclude>**/karma*.conf.js</exclude>
+          <exclude>**/karma*.conf.ci.js</exclude>
         </excludes>
         <filtering>false</filtering>
       </resource>
@@ -214,7 +218,7 @@
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma-minaintyg.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/main/resources/META-INF/resources/webjars/fk7263/karma-minaintyg.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
             </configuration>
           </execution>
           <execution>
@@ -223,7 +227,7 @@
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma-webcert.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/main/resources/META-INF/resources/webjars/fk7263/karma-webcert.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
             </configuration>
           </execution>
           <!-- merges karma code coverage reports for wc and mi -->

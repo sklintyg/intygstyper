@@ -19,7 +19,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass-lint');
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
-    var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
     var minaintyg = grunt.file.readJSON(SRC_DIR +
@@ -61,12 +60,10 @@ module.exports = function(grunt) {
                 ignores: ['**/templates.js']
             },
             minaintyg: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js',
-                        TEST_DIR + 'minaintyg/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js']
             },
             webcert: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/webcert/**/*.js',
-                        TEST_DIR + 'webcert/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/webcert/**/*.js']
             }
         },
 
