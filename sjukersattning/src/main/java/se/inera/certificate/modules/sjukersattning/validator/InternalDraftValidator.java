@@ -34,7 +34,7 @@ public class InternalDraftValidator {
 
         // intyget baseras på
         validateVardkontakter(utlatande, validationMessages);
-        validateKannedomOmPatient(utlatande, validationMessages);
+        //validateKannedomOmPatient(utlatande, validationMessages);
         validateReferenser(utlatande, validationMessages);
         // fält 2
         validateDiagnose(utlatande, validationMessages);
@@ -65,18 +65,12 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateKannedomOmPatient(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages){
 
-        if (utlatande.getKannedomOmPatient() == null) {
-            addValidationError(validationMessages, "intygbaseratpa.kannedom.missing", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.intyg-baserat-pa.kannedom.missing");
-        }
-    }
 
     private void validateReferenser(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
-                && utlatande.getJournaluppgifter() == null) {
+                && utlatande.getJournaluppgifter() == null || utlatande.getKannedomOmPatient() == null) {
             addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
                     "sjukersattning.validation.intyg-baserat-pa.missing");
         }

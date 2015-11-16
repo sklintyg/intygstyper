@@ -64,7 +64,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 $scope.basedOnState.check.undersokningAvPatienten = model.undersokningAvPatienten !== undefined;
                 $scope.basedOnState.check.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten !== undefined;
                 $scope.basedOnState.check.journaluppgifter = model.journaluppgifter !== undefined;
-                $scope.basedOnState.check.kannedomOmPatient = model.kannedomOmPatient !== undefined;
+                $scope.basedOnState.check.kannedomOmPatient = model.kannedomOmPatient !== null;
 
             }
 
