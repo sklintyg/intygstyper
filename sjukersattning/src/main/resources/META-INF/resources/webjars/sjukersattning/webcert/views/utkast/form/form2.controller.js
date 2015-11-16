@@ -11,7 +11,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.viewModel = {
                 radioMedicalChecked: false,
                 underlagCompleted: [], // hold what row is selected
-                initialUnderlag: [{ 'id': 1, 'datum': null, 'bilaga': false }]
+                initialUnderlag: [{ 'typ': 1, 'datum': null, 'bilaga': false }]
             };
 
             function onPageLoad(){
@@ -157,7 +157,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                     angular.forEach($scope.viewModel.initialUnderlag, function(value, key){
 
                         if( utils.isDefined(value.datum) ) {
-                            activeSupplementsToParse.push(value.id);
+                            activeSupplementsToParse.push(value.typ);
                         }
                     });
                 }
@@ -195,10 +195,10 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.underlagSelect = [];
             // search and replace the model when supplement dropdown change
             $scope.onUnderlagChange = function(underlag, index) {
-                if(underlag.id !== 0 && underlag.datum !== null) {
+                if(underlag.typ !== 0 && underlag.datum !== null) {
 
                     registerDateParsersForSupplementals($scope);
-                    if(underlag.id !==0 && underlag.datum !== null &&
+                    if(underlag.typ !==0 && underlag.datum !== null &&
                         (underlag.bilaga !== undefined || null) ) {
 
                         if( $scope.viewModel.underlagCompleted.indexOf(index) === -1 ) {
@@ -207,12 +207,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                         console.log('viewmodel underlag: ', $scope.viewModel.initialUnderlag);
                         // add duplicate check? match for existing?
 
-                        var current = model.underlag[underlag.id];
+                        var current = model.underlag[underlag.typ];
                        // dateUtils.convertDateToISOString(underlag.datum);
 
-                        if(current !== undefined && current.id === underlag.id &&
+                        if(current !== undefined && current.typ === underlag.typ &&
                             current.datum === underlag.datum && current.bilaga === underlag.bilaga){ // if existing
-                            current.id = underlag.id;
+                            current.typ = underlag.typ;
                             current.datum = dateUtils.convertDateToISOString(underlag.datum);
                             current.bilaga = underlag.bilaga;
                         } else { // if new
@@ -225,7 +225,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             }
 
             $scope.createUnderlag = function() {
-                $scope.viewModel.initialUnderlag.push({ id: 0, datum: null, bilaga: false }); // we set this first to allow be validations
+                $scope.viewModel.initialUnderlag.push({ typ: 0, datum: null, bilaga: false }); // we set this first to allow be validations
                 registerDateParsersForSupplementals($scope);
             }
 
@@ -239,7 +239,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                     console.log(index);
                     for(var i=0;  i < model.underlag.length; i++){
                         // we must check for index here since the same id cane be used on several extra underlag
-                        if(model.underlag[i].id === underlag.id && index === i ) {
+                        if(model.underlag[i].typ === underlag.typ && index === i ) {
                             model.underlag.splice(i, 1);
                             $scope.viewModel.underlagCompleted[i + 1] = false;
                         }
@@ -248,7 +248,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             }
 
             function resetUnderlag(){
-                model.underlag = [{ id: 1, datum: null, bilaga: false }];
+                model.underlag = [{ typ: 1, datum: null, bilaga: false }];
             }
 
 

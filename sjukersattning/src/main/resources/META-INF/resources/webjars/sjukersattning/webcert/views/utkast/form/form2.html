@@ -49,15 +49,16 @@
           dom-id="telefonkontaktMedPatientenDate"></span>
   </div>
 
-      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.kannedom" id="validationMessages_kannedom">
+      <!--  Jag har känt patienten sedan den -->
+
+      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.kannedom"
+           id="validationMessages_kannedom">
           <ul>
-              <li ng-repeat="message in viewState.common.validationMessagesGrouped.kannedom"><span message
-                                                                                                         key="{{message.message}}"></span>
+              <li ng-repeat="message in viewState.common.validationMessagesGrouped.kannedom">
+                  <span message key="{{message.message}}"></span>
               </li>
           </ul>
       </div>
-
-      <!--  Jag har känt patienten sedan den -->
   <div class="form-group form-inline">
       <label class="checkbox inline-block" style="min-width: 300px; "><input type="checkbox"
                                                                            id="basedOnKannedom"
@@ -93,10 +94,10 @@
          <div class="underlagItem" style="padding-bottom: 10px;" ng-repeat="underlag in viewModel.initialUnderlag">
               <span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag(underlag, $index)"></span>
               <select class="form-control" name="andraUnderlag"
-                    data-ng-model="underlag.id" ng-change="onUnderlagChange(underlag, $index)"
+                    data-ng-model="underlag.typ" ng-change="onUnderlagChange(underlag, $index)"
                     data-ng-options="item.id as item.label for item in $parent.underlagSelect"></select>
 
-              <span wc-date-picker-field target-model="underlag.datum" dom-id="{{ underlag.id }}-Date"
+              <span wc-date-picker-field target-model="underlag.datum" dom-id="{{ underlag.typ }}-Date"
                     ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.datum"></span>
 
               <div class="willSupplyWrapper pull-right">

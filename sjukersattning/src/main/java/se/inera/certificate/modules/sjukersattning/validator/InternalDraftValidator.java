@@ -78,6 +78,9 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
                     "sjukersattning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
         }
+        if (utlatande.getKannedomOmPatient() == null) {
+            addValidationError(validationMessages, "kannedom", ValidationMessageType.EMPTY, "sjukersattning.validation.kannedom");
+        }
     }
 
     private void validateVardenhet(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
@@ -159,7 +162,7 @@ public class InternalDraftValidator {
 
         String diagnosticering = utlatande.getDiagnostisering();
         if(StringUtils.isBlank(diagnosticering)){
-            addValidationError(validationMessages, "diagnosticering", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "diagnostisering", ValidationMessageType.EMPTY,
                     "sjukersattning.validation.diagnosticering.missing");
         }
     }

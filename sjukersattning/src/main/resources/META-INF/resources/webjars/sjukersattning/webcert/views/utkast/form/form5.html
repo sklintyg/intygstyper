@@ -26,7 +26,7 @@
             <div class="form-nedsattning-wrapper" ng-class="{ 'dark-grey-bg': nedsattning.selected }">
 
             <textarea id="{{nedsattning.id}}" class="form-control block grey-border"  name="disabilities{{ nedsattning.id }}" rows='6'
-                        ng-model="nedsattning.text" ng-trim="false" ng-focus="nedsattning.selected = true" ></textarea>
+                        ng-model="nedsattning.text" ng-trim="false" ng-change="setFunktionsNedsattningar( nedsattning.id, nedsattning.text )" ng-focus="nedsattning.selected = true" ></textarea>
         </div>
     </div>
 </div>

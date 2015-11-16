@@ -13,7 +13,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'journaluppgifter',
                             'telefonkontaktMedPatienten',
                             'kannedomOmPatient',
-                            new ModelAttr('underlag', {defaultValue: [{ 'id': undefined, 'datum': undefined, 'bilaga': undefined }] })],
+                            new ModelAttr('underlag', {defaultValue: [{ 'typ': undefined, 'datum': undefined, 'bilaga': undefined }] })],
 
                         form4: [
                             new ModelAttr('diagnoser', {

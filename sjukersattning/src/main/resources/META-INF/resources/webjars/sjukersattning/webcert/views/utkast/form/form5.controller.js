@@ -22,7 +22,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
                 }
             }
 
-            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+           /* $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
                 if (newVal === oldVal) {
                     return;
                 }
@@ -37,7 +37,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
                         model.restoreFromAttic(model.properties.form5);
                     }
                 }
-            });
+            }); */
 
             $scope.setFocus = function(id, state){
                 var element = window.document.getElementById(id);
@@ -48,8 +48,27 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
                     } else{
                         element.focus();
                         // set model here
+
+
+
+                        //model.funktionsnedsattning.push
                     }
+
+
                 }
+            };
+
+            $scope.setFunktionsNedsattningar = function(id, text){
+
+                    var match = model.funktionsnedsattningar[id];
+
+                    if( model.funktionsnedsattningar[id] === undefined ) {
+                         var obj = { 'funktionsomrade': id, 'beskrivning' : text };
+                         model.funktionsnedsattningar.push(obj);
+                    } else if (match) {
+                         match.funktionsomrade = id;
+                         match.beskrivning = text;
+                    }
             };
 
             onPageLoad();
