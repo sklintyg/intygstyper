@@ -54,6 +54,10 @@
     background-color: #e5e5e5;
 
 }
+
+.no-date-checkbox {
+    margin-left: -20px;
+}
 /* When focused and when active is added from checkbox, add highlighted style */
 .form5 .form-control:focus,
 .form6 .form-control:focus  {
