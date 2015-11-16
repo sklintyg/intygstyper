@@ -359,6 +359,11 @@ public class Fk7263ModuleApi implements ModuleApi {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Class<? extends se.inera.certificate.model.common.internal.Utlatande> getImplementationClass() {
+        return Utlatande.class;
+    }
+
     // - - - - - Private scope - - - - - //
 
     private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {

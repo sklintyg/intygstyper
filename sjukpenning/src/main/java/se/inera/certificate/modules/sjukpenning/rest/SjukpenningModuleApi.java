@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateResponseType;
 import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateType;
 import se.inera.certificate.model.Status;
+import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukpenning.model.converter.TransportToInternal;
@@ -228,6 +229,11 @@ public class SjukpenningModuleApi implements ModuleApi {
     @Override
     public String getQuestions(String version) {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Class<? extends Utlatande> getImplementationClass() {
+        return SjukpenningUtlatande.class;
     }
 
     private CertificateResponse convert(GetCertificateResponseType response, boolean revoked) throws ModuleException {

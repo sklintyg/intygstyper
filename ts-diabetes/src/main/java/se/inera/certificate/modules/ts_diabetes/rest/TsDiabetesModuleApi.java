@@ -266,6 +266,11 @@ public class TsDiabetesModuleApi implements ModuleApi {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Class<? extends se.inera.certificate.model.common.internal.Utlatande> getImplementationClass() {
+        return Utlatande.class;
+    }
+
     private CertificateResponse convert(GetTSDiabetesResponseType diabetesResponseType, boolean revoked) throws ModuleException {
         try {
             Utlatande utlatande = TransportToInternalConverter.convert(diabetesResponseType.getIntyg());

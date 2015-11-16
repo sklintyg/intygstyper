@@ -295,6 +295,11 @@ public class TsBasModuleApi implements ModuleApi {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Class<? extends se.inera.certificate.model.common.internal.Utlatande> getImplementationClass() {
+        return Utlatande.class;
+    }
+
     // - - - - - Private scope - - - - - //
     private CertificateResponse convert(GetTSBasResponseType response, boolean revoked) throws ModuleException {
         try {

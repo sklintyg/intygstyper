@@ -16,7 +16,6 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
-import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
@@ -123,7 +122,7 @@ public class InternalToTransport {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp());
         typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
-        typAvIntyg.setDisplayName(SjukersattningEntryPoint.MODULE_NAME);
+        typAvIntyg.setDisplayName(source.getTyp());
         return typAvIntyg;
     }
 

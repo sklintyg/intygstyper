@@ -82,6 +82,8 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     @Nullable
     public abstract Boolean getKontaktMedFk();
 
+    /* Retrieve a builder from an existing SjukersattningUtlatande object. The builder can then be used
+    to create a new copy with modified attributes. */
     public abstract Builder toBuilder();
 
     public static Builder builder() {
@@ -120,21 +122,24 @@ public abstract class SjukersattningUtlatande implements Utlatande {
             return setUnderlag(ImmutableList.copyOf(underlag));
         }
 
-        public abstract Builder setUnderlag(ImmutableList<Underlag> underlag);
+        /* package private */
+        abstract Builder setUnderlag(ImmutableList<Underlag> underlag);
 
         @JsonProperty("diagnoser")
         public Builder setDiagnoser(List<Diagnos> diagnoser) {
             return setDiagnoser(ImmutableList.copyOf(diagnoser));
         }
 
-        public abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
+        /* package private */
+        abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
 
         @JsonProperty("atgarder")
         public Builder setAtgarder(List<BehandlingsAtgard> atgarder) {
             return setAtgarder(ImmutableList.copyOf(atgarder));
         }
 
-        public abstract Builder setAtgarder(ImmutableList<BehandlingsAtgard> atgarder);
+        /* package private */
+        abstract Builder setAtgarder(ImmutableList<BehandlingsAtgard> atgarder);
 
         @JsonProperty("diagnostisering")
         public abstract Builder setDiagnostisering(String diagnostisering);
@@ -147,7 +152,8 @@ public abstract class SjukersattningUtlatande implements Utlatande {
             return setFunktionsnedsattningar(ImmutableList.copyOf(funktionsnedsattningar));
         }
 
-        public abstract Builder setFunktionsnedsattningar(ImmutableList<Funktionsnedsattning> funktionsnedsattningar);
+        /* package private */
+        abstract Builder setFunktionsnedsattningar(ImmutableList<Funktionsnedsattning> funktionsnedsattningar);
 
         @JsonProperty("aktivitetsbegransning")
         public abstract Builder setAktivitetsbegransning(String aktivitetsbegransning);

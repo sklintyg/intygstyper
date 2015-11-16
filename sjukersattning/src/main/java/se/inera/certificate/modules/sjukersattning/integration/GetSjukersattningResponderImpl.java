@@ -57,7 +57,7 @@ public class GetSjukersattningResponderImpl implements GetCertificateResponderIn
                 response.setResult(ResultUtil.errorResult(ErrorIdType.APPLICATION_ERROR,
                         String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
-                attachCertificateDocument(certificate, response);
+                setCertificateBody(certificate, response);
                 if (certificate.isRevoked()) {
                     response.setResult(ResultUtil.errorResult(ErrorIdType.REVOKED,
                             String.format("Certificate '%s' has been revoked", certificateId)));
@@ -71,7 +71,7 @@ public class GetSjukersattningResponderImpl implements GetCertificateResponderIn
         return response;
     }
 
-    protected void attachCertificateDocument(CertificateHolder certificate, GetCertificateResponseType response) {
+    protected void setCertificateBody(CertificateHolder certificate, GetCertificateResponseType response) {
         try {
             RegisterCertificateType jaxbObject = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument()));
             response.setIntyg(jaxbObject.getIntyg());

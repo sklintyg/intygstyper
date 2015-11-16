@@ -7,7 +7,11 @@ import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
+import org.joda.time.LocalDateTime;
+
+import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.InternalDate;
+import se.inera.certificate.model.Status;
 import se.inera.certificate.model.common.internal.*;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
@@ -17,7 +21,9 @@ import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Befattning;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Specialistkompetens;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
@@ -403,10 +409,53 @@ public class TransportToInternal {
         return patient;
     }
 
-    // TODO: is this ever needed?
     public static CertificateMetaData getMetaData(Intyg source) {
         CertificateMetaData metaData = new CertificateMetaData();
+        metaData.setCertificateId(source.getIntygsId().getExtension());
+        metaData.setCertificateType(source.getTyp().getCode());
+        // TODO
+        metaData.setValidFrom(null);
+        metaData.setValidTo(null);
+        metaData.setIssuerName(source.getSkapadAv().getFullstandigtNamn());
+        metaData.setFacilityName(source.getSkapadAv().getEnhet().getEnhetsnamn());
+        metaData.setSignDate(source.getSigneringstidpunkt());
+        // TODO
+        metaData.setAdditionalInfo(null);
+        List<Status> statuses = toStatusList(source.getStatus());
+        metaData.setStatus(statuses);
         return metaData;
     }
 
+    private static List<Status> toStatusList(List<IntygsStatus> certificateStatuses) {
+        List<Status> statuses = new ArrayList<>(certificateStatuses.size());
+        for (IntygsStatus certificateStatus : certificateStatuses) {
+            statuses.add(toStatus(certificateStatus));
+        }
+        return statuses;
+    }
+
+    private static Status toStatus(IntygsStatus certificateStatus) {
+        Status status = new Status(
+                getState(certificateStatus.getStatus()),
+                certificateStatus.getPart().getCode(),
+                certificateStatus.getTidpunkt());
+        return status;
+    }
+
+    private static CertificateState getState(Statuskod status) {
+        switch (status.getCode()) {
+        case "DELETED":
+            return CertificateState.DELETED;
+        case "RESTORED":
+            return CertificateState.RESTORED;
+        case "CANCELLED":
+            return CertificateState.CANCELLED;
+        case "SENT":
+            return CertificateState.SENT;
+        case "RECEIVED":
+            return CertificateState.RECEIVED;
+        default:
+            throw new IllegalArgumentException();
+        }
+    }
 }

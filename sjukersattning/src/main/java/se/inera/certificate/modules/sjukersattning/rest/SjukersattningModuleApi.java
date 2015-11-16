@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateResponseType;
 import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateType;
 import se.inera.certificate.model.Status;
+import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternal;
@@ -168,7 +169,7 @@ public class SjukersattningModuleApi implements ModuleApi {
 
     private IntygId getIntygsId(String certificateId) {
         IntygId intygId = new IntygId();
-        intygId.setRoot(certificateId);
+        intygId.setExtension(certificateId);
         return intygId;
     }
 
@@ -241,6 +242,11 @@ public class SjukersattningModuleApi implements ModuleApi {
         } catch (Exception e) {
             throw new ModuleException(e);
         }
+    }
+
+    @Override
+    public Class<? extends Utlatande> getImplementationClass() {
+        return SjukersattningUtlatande.class;
     }
 
     private CertificateResponse convert(GetCertificateResponseType response, boolean revoked) throws ModuleException {
