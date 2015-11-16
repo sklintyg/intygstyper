@@ -34,7 +34,6 @@ public class InternalDraftValidator {
 
         // intyget baseras på
         validateVardkontakter(utlatande, validationMessages);
-        //validateKannedomOmPatient(utlatande, validationMessages);
         validateReferenser(utlatande, validationMessages);
         // fält 2
         validateDiagnose(utlatande, validationMessages);
