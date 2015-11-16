@@ -44,6 +44,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                         form11: ['kontaktMedFk'],
 
                         misc: [ 'id',
+
                                 new ModelAttr('grundData', {defaultValue: grundData})]
                     });
                 },
