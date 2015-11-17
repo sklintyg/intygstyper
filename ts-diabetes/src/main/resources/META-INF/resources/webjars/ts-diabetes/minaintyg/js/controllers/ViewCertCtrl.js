@@ -1,7 +1,7 @@
 angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'minaintyg.listCertService',
-        'common.certificateService', 'common.dialogService',
-        function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService,
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
+        'common.IntygService', 'common.dialogService',
+        function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService,
             dialogService) {
             'use strict';
 
@@ -98,7 +98,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 var item = $scope.cert;
                 $log.debug('archive ' + item.id);
                 $scope.dialog.acceptprogressdone = false;
-                listCertService.archiveCertificate(item, function(fromServer, oldItem) {
+                IntygListService.archiveCertificate(item, function(fromServer, oldItem) {
                     $log.debug('statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
                         // Better way to update the object?
@@ -166,7 +166,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 return false;
             };
 
-            certificateService.getCertificate($stateParams.certificateId, function(result) {
+            IntygService.getCertificate($stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result.utlatande;

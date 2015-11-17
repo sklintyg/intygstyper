@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'minaintyg.listCertService',
-        'common.certificateService', 'common.dialogService', 'common.messageService',
-        function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService, dialogService,
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
+        'common.IntygService', 'common.dialogService', 'common.messageService',
+        function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService, dialogService,
             messageService) {
             'use strict';
 
@@ -29,7 +29,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 var item = $scope.cert;
                 $log.debug('archive ' + item.id);
                 $scope.dialog.acceptprogressdone = false;
-                listCertService.archiveCertificate(item, function(fromServer, oldItem) {
+                IntygListService.archiveCertificate(item, function(fromServer, oldItem) {
                     $log.debug('statusUpdate callback:' + fromServer);
                     if (fromServer !== null) {
                         // Better way to update the object?
@@ -99,7 +99,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
 
-            certificateService.getCertificate($stateParams.certificateId, function(result) {
+            IntygService.getCertificate($stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result.utlatande;
