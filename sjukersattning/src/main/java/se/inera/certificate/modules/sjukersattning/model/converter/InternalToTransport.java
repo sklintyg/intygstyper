@@ -9,9 +9,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
-import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.converter.util.ConverterException;
@@ -153,10 +151,13 @@ public class InternalToTransport {
             svars.add(
                     aSvar(UNDERLAG_SVAR_ID).withDelsvar(UNDERLAG_TYP_DELSVAR_ID,
                             aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()))).
-                            withDelsvar(UNDERLAG_DATUM_DELSVAR_ID, underlag.getDatum().asLocalDate().toString()).
-                            withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID, Boolean.toString(underlag.getBilaga())).build());
+                            withDelsvar(UNDERLAG_DATUM_DELSVAR_ID,
+                                    underlag.getDatum() != null ? underlag.getDatum().asLocalDate().toString() : null).
+                            withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID,
+                                    underlag.getBilaga() != null ? underlag.getBilaga().toString() : null).build());
 
         }
+
         for (int i = 0; i < source.getDiagnoser().size(); i++) {
             Diagnos diagnos = source.getDiagnoser().get(i);
             if (i == 0) {
@@ -173,8 +174,10 @@ public class InternalToTransport {
 
         svars.add(aSvar(DIAGNOSTISERING_SVAR_ID).
                 withDelsvar(DIAGNOSTISERING_DELSVAR_ID, source.getDiagnostisering()).build());
-        svars.add(aSvar(NYBEDOMNING_SVAR_ID).
-                withDelsvar(NYBEDOMNING_DELSVAR_ID, Boolean.toString(source.getNyBedomningDiagnos())).build());
+        if (source.getNyBedomningDiagnos() != null) {
+            svars.add(aSvar(NYBEDOMNING_SVAR_ID).
+                    withDelsvar(NYBEDOMNING_DELSVAR_ID, source.getNyBedomningDiagnos().toString()).build());
+        }
 
         for (BehandlingsAtgard atgard : source.getAtgarder()) {
             svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
@@ -182,9 +185,8 @@ public class InternalToTransport {
                     withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, atgard.getAtgardsBeskrivning()).build());
         }
         for (Funktionsnedsattning funktionsnedsattning : source.getFunktionsnedsattningar()) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID)
-                    .withDelsvar(FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID, funktionsnedsattning.getBeskrivning())
-                    .
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID, funktionsnedsattning.getBeskrivning()).
                     withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID,
                             aCV(FUNKTIONSOMRADE_CODE_SYSTEM, Integer.toString(funktionsnedsattning.getFunktionsomrade().getId()))).build());
         }
@@ -210,7 +212,11 @@ public class InternalToTransport {
             svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getOvrigt()).build());
         }
 
-        svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, Boolean.toString(source.getKontaktMedFk())).build());
+        if (source.getKontaktMedFk() != null) {
+            svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).
+                    withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString()).
+                    withDelsvar(ANLEDNING_TILL_KONTAKT_DELSVAR_ID, source.getAnledningTillKontakt()).build());
+        }
 
         return svars;
     }
@@ -222,19 +228,11 @@ public class InternalToTransport {
         return hsaId;
     }
 
-    private static JAXBElement<TimePeriodType> aPeriod(InternalLocalDateInterval nedsattning) {
-        TimePeriodType period = new TimePeriodType();
-        period.setStart(nedsattning.fromAsLocalDate().toLocalDateTime(LocalTime.MIDNIGHT));
-        period.setEnd(nedsattning.tomAsLocalDate().toLocalDateTime(LocalTime.MIDNIGHT));
-        return new JAXBElement<TimePeriodType>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "timePeriod"),
-                TimePeriodType.class, null, period);
-    }
-
     private static JAXBElement<CVType> aCV(String codeSystem, String code) {
         CVType cv = new CVType();
         cv.setCodeSystem(codeSystem);
         cv.setCode(code);
-        return new JAXBElement<CVType>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
+        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
     }
 
     private static SvarBuilder aSvar(String id) {

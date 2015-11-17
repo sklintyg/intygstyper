@@ -82,6 +82,9 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     @Nullable
     public abstract Boolean getKontaktMedFk();
 
+    @Nullable
+    public abstract String getAnledningTillKontakt();
+
     /* Retrieve a builder from an existing SjukersattningUtlatande object. The builder can then be used
     to create a new copy with modified attributes. */
     public abstract Builder toBuilder();
@@ -178,6 +181,9 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
         @JsonProperty("kontaktMedFk")
         public abstract Builder setKontaktMedFk(Boolean kontaktMedFk);
+
+        @JsonProperty("anledningTillKontakt")
+        public abstract Builder setAnledningTillKontakt(String anledningTillKontakt);
     }
 
 }

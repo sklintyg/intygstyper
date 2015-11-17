@@ -43,7 +43,8 @@ public class TransportToInternalTest {
         utlatande.setAktivitetsFormaga("Dansa");
         utlatande.setPrognos("Aldrig");
         utlatande.setOvrigt("Trevlig kille");
-        utlatande.setKontaktMedFk(false);
+        utlatande.setKontaktMedFk(true);
+        utlatande.setAnledningTillKontakt("Känner mig ensam");
         return utlatande.build();
     }
 

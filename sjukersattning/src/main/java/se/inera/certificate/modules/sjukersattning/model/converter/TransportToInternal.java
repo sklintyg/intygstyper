@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
-import org.joda.time.LocalDateTime;
-
 import se.inera.certificate.model.CertificateState;
 import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.model.Status;
@@ -139,7 +137,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case OVRIGKANNEDOM_DELSVAR_ID:
             utlatande.setKannedomOmPatient(new InternalDate(getSvarContent(delsvar, String.class)));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -220,7 +218,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case DIAGNOSTISERING_DELSVAR_ID:
             utlatande.setDiagnostisering(getSvarContent(delsvar, String.class));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -231,7 +229,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case NYBEDOMNING_DELSVAR_ID:
             utlatande.setNyBedomningDiagnos(Boolean.valueOf(getSvarContent(delsvar, String.class)));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -261,7 +259,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case AKTIVITETSBEGRANSNING_DELSVAR_ID:
             utlatande.setAktivitetsbegransning(getSvarContent(delsvar, String.class));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -272,7 +270,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case PAGAENDEBEHANDLING_DELSVAR_ID:
             utlatande.setPagaendeBehandling(getSvarContent(delsvar, String.class));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -283,7 +281,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case AVSLUTADBEHANDLING_DELSVAR_ID:
             utlatande.setAvslutadBehandling(getSvarContent(delsvar, String.class));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -294,7 +292,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case PLANERADBEHANDLING_DELSVAR_ID:
             utlatande.setPlaneradBehandling(getSvarContent(delsvar, String.class));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -305,7 +303,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case AKTIVITETSFORMAGA_DELSVAR_ID:
             utlatande.setAktivitetsFormaga(getSvarContent(delsvar, String.class));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -316,7 +314,7 @@ public class TransportToInternal {
         switch (delsvar.getId()) {
         case PROGNOS_DELSVAR_ID:
             utlatande.setPrognos(getSvarContent(delsvar, String.class));
-            return;
+            break;
         default:
             throw new IllegalArgumentException();
         }
@@ -334,13 +332,17 @@ public class TransportToInternal {
     }
 
     private static void handleOnskarKontakt(Builder utlatande, Svar svar) {
-        Delsvar delsvar = svar.getDelsvar().get(0);
-        switch (delsvar.getId()) {
-        case KONTAKT_ONSKAS_DELSVAR_ID:
-            utlatande.setKontaktMedFk(Boolean.valueOf(getSvarContent(delsvar, String.class)));
-            return;
-        default:
-            throw new IllegalArgumentException();
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+                case KONTAKT_ONSKAS_DELSVAR_ID:
+                    utlatande.setKontaktMedFk(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+                    break;
+                case ANLEDNING_TILL_KONTAKT_DELSVAR_ID:
+                    utlatande.setAnledningTillKontakt(getSvarContent(delsvar, String.class));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
         }
     }
 
@@ -435,11 +437,10 @@ public class TransportToInternal {
     }
 
     private static Status toStatus(IntygsStatus certificateStatus) {
-        Status status = new Status(
+        return new Status(
                 getState(certificateStatus.getStatus()),
                 certificateStatus.getPart().getCode(),
                 certificateStatus.getTidpunkt());
-        return status;
     }
 
     private static CertificateState getState(Statuskod status) {

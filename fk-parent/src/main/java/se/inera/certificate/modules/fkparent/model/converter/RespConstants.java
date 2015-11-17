@@ -71,6 +71,7 @@ public class RespConstants {
     public static final String OVRIGT_DELSVAR_ID = "22.1";
     public static final String KONTAKT_ONSKAS_SVAR_ID = "21";
     public static final String KONTAKT_ONSKAS_DELSVAR_ID = "21.1";
+    public static final String ANLEDNING_TILL_KONTAKT_DELSVAR_ID = "21.2";
 
     public enum ReferensTyp {
         UNDERSOKNING(1), TELEFONKONTAKT(2), JOURNAL(3), UNKNOWN(-1);
