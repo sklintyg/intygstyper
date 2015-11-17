@@ -10,12 +10,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
 
             // we skip row 1 here since its always visible and has a stanard type
             $scope.viewModel = {
-                diagnosKodverk : '',
+                diagnosKodSystem : '',
                 diagnosKodRow2 : { visible : false, diagnoseType: null },
                 diagnosKodRow3 : { visible : false,  diagnoseType: null }
             };
 
-            var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
+            var diagnosKodSystemStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
 
 
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
@@ -26,19 +26,19 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 if (newVal) {
                     //alert(JSON.stringify(model.form4));
                     if (model.diagnoser.length < 1 ) {
-                        setAllDiagnosKodverk( diagnosKodverkStates.ICD_10_SE );
+                        setAlldiagnosKodSystem( diagnosKodSystemStates.ICD_10_SE );
                     } else {
-                        setAllDiagnosKodverk( model.diagnoser.diagnosKodsystem );
+                        setAlldiagnosKodSystem( model.diagnoser.diagnosKodsystem );
                     }
                 }
 
                 logModel();
             });
 
-            function setAllDiagnosKodverk(val){
-                $scope.viewModel.diagnosKodverk = val;
+            function setAlldiagnosKodSystem(val){
+                $scope.viewModel.diagnosKodSystem = val;
                 for(var i =0; i< $scope.model.diagnoser.length;i++) {
-                    model.diagnoser[i].diagnosKodverk = val;
+                    model.diagnoser[i].diagnosKodSystem = val;
                 }
 
                 $scope.viewModel.diagnosKodRow2.visible = false;
@@ -53,7 +53,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
            $scope.onChangeKodverk = function() {
              //  alert(JSON.stringify(model.diagnoser));
                // resetDiagnoses();
-                setAllDiagnosKodverk( $scope.viewModel.diagnosKodverk );
+                setAlldiagnosKodSystem( $scope.viewModel.diagnosKodSystem );
             };
 
             $scope.getDiagnoseCodes = function(codeSystem, val) {
@@ -120,7 +120,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
              */
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.model.diagnoser[0].diagnosBeskrivning = $item.beskrivning;
-                $scope.model.diagnoser[0].diagnosKodverk = $scope.viewModel.diagnosKodverk;
+                $scope.model.diagnoser[0].diagnosKodSystem = $scope.viewModel.diagnosKodSystem;
                  $scope.$dirty = true;
                  $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
@@ -128,7 +128,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnoser[1].diagnosBeskrivning = $item.beskrivning;
-                $scope.model.diagnoser[1].diagnosKodverk = $scope.viewModel.diagnosKodverk;
+                $scope.model.diagnoser[1].diagnosKodSystem = $scope.viewModel.diagnosKodSystem;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
@@ -136,7 +136,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnoser[2].diagnosBeskrivning = $item.beskrivning;
-                $scope.model.diagnoser[2].diagnosKodverk = $scope.viewModel.diagnosKodverk;
+                $scope.model.diagnoser[2].diagnosKodSystem = $scope.viewModel.diagnosKodSystem;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
@@ -150,7 +150,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             $scope.onDiagnoseDescription1Select = function($item) {
                 $scope.model.diagnoser[0].diagnosKod = $item.value;
                 $scope.model.diagnoser[0].diagnosBeskrivning = $item.beskrivning;
-                $scope.model.diagnoser[0].diagnosKodverk = $scope.viewModel.diagnosKodverk;
+                $scope.model.diagnoser[0].diagnosKodSystem = $scope.viewModel.diagnosKodSystem;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
@@ -159,7 +159,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.model.diagnoser[1].diagnosKod  = $item.value;
                 $scope.model.diagnoser[1].diagnosBeskrivning = $item.beskrivning;
-                $scope.model.diagnoser[1].diagnosKodverk = $scope.viewModel.diagnosKodverk;
+                $scope.model.diagnoser[1].diagnosKodSystem = $scope.viewModel.diagnosKodSystem;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
@@ -168,7 +168,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.model.diagnoser[2].diagnosKod  = $item.value;
                 $scope.model.diagnoser[2].diagnosBeskrivning = $item.beskrivning;
-                $scope.model.diagnoser[2].diagnosKodverk = $scope.viewModel.diagnosKodverk;
+                $scope.model.diagnoser[2].diagnosKodSystem = $scope.viewModel.diagnosKodSystem;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);

@@ -17,14 +17,14 @@
                   <div class='divider'>
                       <span message key="sjukersattning.label.valjkodverk"></span>
                       <label class="radio-inline">
-                          <input type="radio" id="diagnoseKodverk_ICD_10_SE" name="diagnosKodverk" value="ICD_10_SE"
-                                 ng-model="viewModel.diagnosKodverk" checked="checked"
+                          <input type="radio" id="diagnoseKodverk_ICD_10_SE" name="diagnosKodSystem" value="ICD_10_SE"
+                                 ng-model="viewModel.diagnosKodSystem" checked="checked"
                                  ng-change="onChangeKodverk()"><span message
                                                                      key="sjukersattning.label.diagnoskodverk.icd_10_se"></span>
                       </label>
                       <label class="radio-inline">
-                          <input type="radio" id="diagnoseKodverk_KSH_97_P" name="diagnosKodverk" value="KSH_97_P"
-                                 ng-model="viewModel.diagnosKodverk" ng-change="onChangeKodverk()"><span message
+                          <input type="radio" id="diagnoseKodverk_KSH_97_P" name="diagnosKodSystem" value="KSH_97_P"
+                                 ng-model="viewModel.diagnosKodSystem" ng-change="onChangeKodverk()"><span message
                                                                                                          key="sjukersattning.label.diagnoskodverk.ksh_97_p"></span>
                       </label>
                   </div>
@@ -35,11 +35,11 @@
       <div class="row bottom-padding-small">
         <div class='col-xs-3'>
 
-          <input type="hidden" name="diagnosKodverk" value="ICD_10_SE" ng-model="model.diagnoser[0].diagnosKod" />
+          <input type="hidden" name="diagnosKodSystem" value="ICD_10_SE" ng-model="model.diagnoser[0].diagnosKod" />
           <label class="control-label unbreakable">ICD-10-SE</label>
           <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
                  class='diagnose-code col-xs-11 form-control' ng-model="model.diagnoser[0].diagnosKod"
-                 typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+                 typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | filter:$viewValue | limitTo:10"
                  typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
                  typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
                  wc-to-uppercase
@@ -50,7 +50,7 @@
           <input type="text" class="form-control maxwidth" id="diagnoseDescription"
                  class="col-xs-12 form-control" name="diagnose.description" value=""
                  ng-model= "model.diagnoser[0].diagnosBeskrivning"
-                 typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+                 typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue) | filter:$viewValue "
                  typeahead-on-select="onDiagnoseDescription1Select($item)"
                  typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
                  typeahead-wait-ms="100">
@@ -78,7 +78,7 @@
             <div class="bottom-padding-small clearfix">
               <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
                      ng-model="model.diagnoser[1].diagnosKod" class="col-xs-11 form-control"
-                     typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+                     typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | filter:$viewValue | limitTo:10"
                      typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
                      typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
                       wc-to-uppercase>
@@ -95,7 +95,7 @@
           <div class="bottom-padding-small clearfix">
             <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
                    ng-model="model.diagnoser[1].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
-                   typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+                   typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue) | filter:$viewValue "
                    typeahead-on-select="onDiagnoseDescription2Select($item)"
                    typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
                    typeahead-wait-ms="100">
@@ -120,7 +120,7 @@
             </label>
           <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
                  ng-model="model.diagnoser[2].diagnosKod" class="col-xs-11 form-control"
-                 typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+                 typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | filter:$viewValue | limitTo:10"
                  typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
                  typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
                 wc-to-uppercase>
@@ -133,7 +133,7 @@
           <div class="controls">
             <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
                    ng-model="model.diagnoser[2].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
-                   typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+                   typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue) | filter:$viewValue "
                    typeahead-on-select="onDiagnoseDescription3Select($item)"
                    typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
                    typeahead-wait-ms="100">
