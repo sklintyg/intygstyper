@@ -154,7 +154,7 @@ public class InternalToTransport {
                     aSvar(UNDERLAG_SVAR_ID).withDelsvar(UNDERLAG_TYP_DELSVAR_ID,
                             aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()))).
                             withDelsvar(UNDERLAG_DATUM_DELSVAR_ID, underlag.getDatum().asLocalDate().toString()).
-                            withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID, Boolean.toString(underlag.isBilaga())).build());
+                            withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID, Boolean.toString(underlag.getBilaga())).build());
 
         }
         for (int i = 0; i < source.getDiagnoser().size(); i++) {

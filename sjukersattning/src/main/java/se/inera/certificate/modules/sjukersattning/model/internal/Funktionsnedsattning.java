@@ -19,7 +19,6 @@ public abstract class Funktionsnedsattning {
         return new AutoValue_Funktionsnedsattning(funktionsomrade, beskrivning);
     }
 
-    @Nullable
     public abstract Funktionsomrade getFunktionsomrade();
 
     @Nullable

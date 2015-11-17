@@ -37,7 +37,7 @@
         Ett 'intyg' måste ha en 'ny bedömning av diagnos'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='11']) ge 1 and count(gn:svar[@id='11']) le 3">
-        Ett 'intyg' måste ha en 'funktionsnedsättning'
+        Ett 'intyg' måste ha minst en och högst tre 'funktionsnedsättning'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='5']) = 1">
         Ett 'intyg' måste ha en 'aktivitetsbegränsning'
