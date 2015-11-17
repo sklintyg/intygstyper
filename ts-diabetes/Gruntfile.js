@@ -69,15 +69,15 @@ module.exports = function(grunt) {
 
         karma: {
             minaintyg: {
-                configFile: 'src/test/resources/karma-minaintyg.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-minaintyg.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert: {
-                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert_continous: { // jshint ignore:line
-                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ],
                 autoWatch: true,
                 singleRun: false
