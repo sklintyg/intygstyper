@@ -17,7 +17,7 @@
                    id="nedsattning.id"
                    name="{{nedsattning.id}}-funktionsnedsattningarCheck.intellektuell"
                    class="checkbox-inline"
-                   ng-model="nedsattning.selected" ng-value="true" ng-change="$parent.setFocus('{{ nedsattning.id }}', nedsattning.selected)">
+                   ng-model="nedsattning.selected" ng-value="true" ng-change="$parent.setFocus('{{ nedsattning.id }}', nedsattning.selected, nedsattning.text)">
             <label class="label-inline"><h3 class="title" ng-if="nedsattning.label != null"
                                             ng-click="nedsattning.selected=!nedsattning.selected">
                 {{ nedsattning.label }}
@@ -26,7 +26,7 @@
             <div class="form-nedsattning-wrapper" ng-class="{ 'dark-grey-bg': nedsattning.selected }">
 
             <textarea id="{{nedsattning.id}}" class="form-control block grey-border"  name="disabilities{{ nedsattning.id }}" rows='6'
-                        ng-model="nedsattning.text" ng-trim="false" ng-change="setFunktionsNedsattningar( nedsattning.id, nedsattning.text )" ng-focus="nedsattning.selected = true" ></textarea>
+                        ng-model="nedsattning.text" ng-trim="false" ng-change="updateViewModelNedsattningar( nedsattning.id, nedsattning.text )" ng-focus="nedsattning.selected = true" ></textarea>
         </div>
     </div>
 </div>
