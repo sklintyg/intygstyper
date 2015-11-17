@@ -53,7 +53,7 @@
                  typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
                  typeahead-on-select="onDiagnoseDescription1Select($item)"
                  typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
-                 typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField(1)">
+                 typeahead-wait-ms="100">
         </div>
       </div>
       <div class="row bottom-padding-small" ng-show="!viewModel.diagnosKodRow2.visible">
@@ -81,7 +81,7 @@
                      typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
                      typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
                      typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
-                     ng-change="limitDiagnosBeskrivningField(2)" wc-to-uppercase>
+                      wc-to-uppercase>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@
                    typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
                    typeahead-on-select="onDiagnoseDescription2Select($item)"
                    typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
-                   typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField(2)">
+                   typeahead-wait-ms="100">
           </div>
         </div>
       </div>

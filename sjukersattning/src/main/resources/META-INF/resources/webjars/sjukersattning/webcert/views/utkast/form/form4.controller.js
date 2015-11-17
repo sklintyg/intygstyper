@@ -1,7 +1,7 @@
 angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
-    ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', 'sjukersattning.diagnosService',
+    ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', 'sjukersattning.diagnosService', '$filter',
         'sjukersattning.EditCertCtrl.Helper',
-        function($scope, $log, viewState, diagnosService, helper) {
+        function($scope, $log, viewState, diagnosService, helper, $filter) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -19,6 +19,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
 
 
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
+                logModel();
                 if(newVal === oldVal){
                     return;
                 }
@@ -30,6 +31,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                         setAllDiagnosKodverk( model.diagnoser.diagnosKodsystem );
                     }
                 }
+
+                logModel();
             });
 
             function setAllDiagnosKodverk(val){
@@ -117,24 +120,27 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
              */
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.model.diagnoser[0].diagnosBeskrivning = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField(1);
+                $scope.model.diagnoser[0].diagnosKodverk = $scope.viewModel.diagnosKodverk;
                  $scope.$dirty = true;
                  $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
+                logModel();
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnoser[1].diagnosBeskrivning = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField(2);
+                $scope.model.diagnoser[1].diagnosKodverk = $scope.viewModel.diagnosKodverk;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
+                logModel();
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnoser[2].diagnosBeskrivning = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField(3);
+                $scope.model.diagnoser[2].diagnosKodverk = $scope.viewModel.diagnosKodverk;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
+                logModel();
             };
 
 
@@ -144,27 +150,34 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             $scope.onDiagnoseDescription1Select = function($item) {
                 $scope.model.diagnoser[0].diagnosKod = $item.value;
                 $scope.model.diagnoser[0].diagnosBeskrivning = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField(1);
+                $scope.model.diagnoser[0].diagnosKodverk = $scope.viewModel.diagnosKodverk;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
+                logModel();
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.model.diagnoser[1].diagnosKod  = $item.value;
                 $scope.model.diagnoser[1].diagnosBeskrivning = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField(2);
+                $scope.model.diagnoser[1].diagnosKodverk = $scope.viewModel.diagnosKodverk;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
+                logModel();
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.model.diagnoser[2].diagnosKod  = $item.value;
                 $scope.model.diagnoser[2].diagnosBeskrivning = $item.beskrivning;
-                $scope.limitDiagnosBeskrivningField(3);
+                $scope.model.diagnoser[2].diagnosKodverk = $scope.viewModel.diagnosKodverk;
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
+                logModel();
             };
+
+            function logModel(){
+                console.log('model diagnos' + JSON.stringify( $scope.model.diagnoser ));
+            }
 
 
 
@@ -172,12 +185,13 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
              * Limit length of field dependent on field 2 in the external model
              * @param field
              */
-            $scope.limitDiagnosBeskrivningField = function(num) {
+           /* $scope.limitDiagnosBeskrivningField = function(num) {
+                var matchDiagnoser = $filter('filter')(model.diagnoser, {funktionsomrade:funktionsomrade})[0];
                 if ($scope.model.diagnoser[num].diagnosBeskrivning) {
                     $scope.model.diagnoser[num].diagnosBeskrivning = helper.limitLength( $scope.viewState.inputLimits.diagnosBeskrivning,
                         $scope.getTotalDiagnosBeskrivningLength(), $scope.model.diagnoser[num].diagnosBeskrivning);
                 }
-            };
+            }; */
 
 
             /**
@@ -194,12 +208,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 return totalLength;
             };
 
-            function resetDiagnoses(){
+          /*  function resetDiagnoses(){
                 $scope.diagnoser = [
                     { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
                     { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
                     { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined }
                 ];
-            }
+            }*/
 
         }]);
