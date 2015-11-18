@@ -35,6 +35,111 @@ public class TransportToInternal {
         return utlatande.build();
     }
 
+    private static GrundData getGrundData(Intyg source) {
+        GrundData grundData = new GrundData();
+        grundData.setPatient(getPatient(source));
+        grundData.setSkapadAv(getSkapadAv(source));
+        grundData.setSigneringsdatum(source.getSigneringstidpunkt());
+        return grundData;
+    }
+
+    private static HoSPersonal getSkapadAv(Intyg source) {
+        HoSPersonal personal = new HoSPersonal();
+        personal.setPersonId(source.getSkapadAv().getPersonalId().getExtension());
+        personal.setFullstandigtNamn(source.getSkapadAv().getFullstandigtNamn());
+        personal.setForskrivarKod(source.getSkapadAv().getForskrivarkod());
+        personal.setVardenhet(getVardenhet(source));
+        for (Befattning befattning : source.getSkapadAv().getBefattning()) {
+            personal.getBefattningar().add(befattning.getCode());
+        }
+        for (Specialistkompetens kompetens : source.getSkapadAv().getSpecialistkompetens()) {
+            personal.getSpecialiteter().add(kompetens.getCode());
+        }
+        return personal;
+    }
+
+    private static Vardenhet getVardenhet(Intyg source) {
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setPostort(source.getSkapadAv().getEnhet().getPostort());
+        vardenhet.setPostadress(source.getSkapadAv().getEnhet().getPostadress());
+        vardenhet.setPostnummer(source.getSkapadAv().getEnhet().getPostnummer());
+        vardenhet.setEpost(source.getSkapadAv().getEnhet().getEpost());
+        vardenhet.setEnhetsid(source.getSkapadAv().getEnhet().getEnhetsId().getExtension());
+        vardenhet.setArbetsplatsKod(source.getSkapadAv().getEnhet().getArbetsplatskod().getExtension());
+        vardenhet.setEnhetsnamn(source.getSkapadAv().getEnhet().getEnhetsnamn());
+        vardenhet.setTelefonnummer(source.getSkapadAv().getEnhet().getTelefonnummer());
+        vardenhet.setVardgivare(getVardgivare(source));
+        return vardenhet;
+    }
+
+    private static Vardgivare getVardgivare(Intyg source) {
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid(source.getSkapadAv().getEnhet().getVardgivare().getVardgivareId().getExtension());
+        vardgivare.setVardgivarnamn(source.getSkapadAv().getEnhet().getVardgivare().getVardgivarnamn());
+        return vardgivare;
+    }
+
+    private static Patient getPatient(Intyg source) {
+        Patient patient = new Patient();
+        patient.setEfternamn(source.getPatient().getEfternamn());
+        patient.setFornamn(source.getPatient().getFornamn());
+        patient.setMellannamn(source.getPatient().getMellannamn());
+        patient.setPostort(source.getPatient().getPostort());
+        patient.setPostnummer(source.getPatient().getPostnummer());
+        patient.setPostadress(source.getPatient().getPostadress());
+        patient.setPersonId(new Personnummer(source.getPatient().getPersonId().getExtension()));
+        return patient;
+    }
+
+    public static CertificateMetaData getMetaData(Intyg source) {
+        CertificateMetaData metaData = new CertificateMetaData();
+        metaData.setCertificateId(source.getIntygsId().getExtension());
+        metaData.setCertificateType(source.getTyp().getCode());
+        // TODO
+        metaData.setValidFrom(null);
+        metaData.setValidTo(null);
+        metaData.setIssuerName(source.getSkapadAv().getFullstandigtNamn());
+        metaData.setFacilityName(source.getSkapadAv().getEnhet().getEnhetsnamn());
+        metaData.setSignDate(source.getSigneringstidpunkt());
+        // TODO
+        metaData.setAdditionalInfo(null);
+        List<Status> statuses = toStatusList(source.getStatus());
+        metaData.setStatus(statuses);
+        return metaData;
+    }
+
+    private static List<Status> toStatusList(List<IntygsStatus> certificateStatuses) {
+        List<Status> statuses = new ArrayList<>(certificateStatuses.size());
+        for (IntygsStatus certificateStatus : certificateStatuses) {
+            statuses.add(toStatus(certificateStatus));
+        }
+        return statuses;
+    }
+
+    private static Status toStatus(IntygsStatus certificateStatus) {
+        return new Status(
+                getState(certificateStatus.getStatus()),
+                certificateStatus.getPart().getCode(),
+                certificateStatus.getTidpunkt());
+    }
+
+    private static CertificateState getState(Statuskod status) {
+        switch (status.getCode()) {
+        case "DELETED":
+            return CertificateState.DELETED;
+        case "RESTORED":
+            return CertificateState.RESTORED;
+        case "CANCELLED":
+            return CertificateState.CANCELLED;
+        case "SENT":
+            return CertificateState.SENT;
+        case "RECEIVED":
+            return CertificateState.RECEIVED;
+        default:
+            throw new IllegalArgumentException();
+        }
+    }
+
     private static void setSvar(Builder utlatande, Intyg source) {
         List<Underlag> underlag = new ArrayList<>();
         List<Diagnos> diagnoser = new ArrayList<>();
@@ -334,14 +439,14 @@ public class TransportToInternal {
     private static void handleOnskarKontakt(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-                case KONTAKT_ONSKAS_DELSVAR_ID:
-                    utlatande.setKontaktMedFk(Boolean.valueOf(getSvarContent(delsvar, String.class)));
-                    break;
-                case ANLEDNING_TILL_KONTAKT_DELSVAR_ID:
-                    utlatande.setAnledningTillKontakt(getSvarContent(delsvar, String.class));
-                    break;
-                default:
-                    throw new IllegalArgumentException();
+            case KONTAKT_ONSKAS_DELSVAR_ID:
+                utlatande.setKontaktMedFk(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+                break;
+            case ANLEDNING_TILL_KONTAKT_DELSVAR_ID:
+                utlatande.setAnledningTillKontakt(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
             }
         }
     }
@@ -355,108 +460,4 @@ public class TransportToInternal {
         return (T) content;
     }
 
-    private static GrundData getGrundData(Intyg source) {
-        GrundData grundData = new GrundData();
-        grundData.setPatient(getPatient(source));
-        grundData.setSkapadAv(getSkapadAv(source));
-        grundData.setSigneringsdatum(source.getSigneringstidpunkt());
-        return grundData;
-    }
-
-    private static HoSPersonal getSkapadAv(Intyg source) {
-        HoSPersonal personal = new HoSPersonal();
-        personal.setPersonId(source.getSkapadAv().getPersonalId().getExtension());
-        personal.setFullstandigtNamn(source.getSkapadAv().getFullstandigtNamn());
-        personal.setForskrivarKod(source.getSkapadAv().getForskrivarkod());
-        personal.setVardenhet(getVardenhet(source));
-        for (Befattning befattning : source.getSkapadAv().getBefattning()) {
-            personal.getBefattningar().add(befattning.getCode());
-        }
-        for (Specialistkompetens kompetens : source.getSkapadAv().getSpecialistkompetens()) {
-            personal.getSpecialiteter().add(kompetens.getCode());
-        }
-        return personal;
-    }
-
-    private static Vardenhet getVardenhet(Intyg source) {
-        Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setPostort(source.getSkapadAv().getEnhet().getPostort());
-        vardenhet.setPostadress(source.getSkapadAv().getEnhet().getPostadress());
-        vardenhet.setPostnummer(source.getSkapadAv().getEnhet().getPostnummer());
-        vardenhet.setEpost(source.getSkapadAv().getEnhet().getEpost());
-        vardenhet.setEnhetsid(source.getSkapadAv().getEnhet().getEnhetsId().getExtension());
-        vardenhet.setArbetsplatsKod(source.getSkapadAv().getEnhet().getArbetsplatskod().getExtension());
-        vardenhet.setEnhetsnamn(source.getSkapadAv().getEnhet().getEnhetsnamn());
-        vardenhet.setTelefonnummer(source.getSkapadAv().getEnhet().getTelefonnummer());
-        vardenhet.setVardgivare(getVardgivare(source));
-        return vardenhet;
-    }
-
-    private static Vardgivare getVardgivare(Intyg source) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivarid(source.getSkapadAv().getEnhet().getVardgivare().getVardgivareId().getExtension());
-        vardgivare.setVardgivarnamn(source.getSkapadAv().getEnhet().getVardgivare().getVardgivarnamn());
-        return vardgivare;
-    }
-
-    private static Patient getPatient(Intyg source) {
-        Patient patient = new Patient();
-        patient.setEfternamn(source.getPatient().getEfternamn());
-        patient.setFornamn(source.getPatient().getFornamn());
-        patient.setMellannamn(source.getPatient().getMellannamn());
-        patient.setPostort(source.getPatient().getPostort());
-        patient.setPostnummer(source.getPatient().getPostnummer());
-        patient.setPostadress(source.getPatient().getPostadress());
-        patient.setPersonId(new Personnummer(source.getPatient().getPersonId().getExtension()));
-        return patient;
-    }
-
-    public static CertificateMetaData getMetaData(Intyg source) {
-        CertificateMetaData metaData = new CertificateMetaData();
-        metaData.setCertificateId(source.getIntygsId().getExtension());
-        metaData.setCertificateType(source.getTyp().getCode());
-        // TODO
-        metaData.setValidFrom(null);
-        metaData.setValidTo(null);
-        metaData.setIssuerName(source.getSkapadAv().getFullstandigtNamn());
-        metaData.setFacilityName(source.getSkapadAv().getEnhet().getEnhetsnamn());
-        metaData.setSignDate(source.getSigneringstidpunkt());
-        // TODO
-        metaData.setAdditionalInfo(null);
-        List<Status> statuses = toStatusList(source.getStatus());
-        metaData.setStatus(statuses);
-        return metaData;
-    }
-
-    private static List<Status> toStatusList(List<IntygsStatus> certificateStatuses) {
-        List<Status> statuses = new ArrayList<>(certificateStatuses.size());
-        for (IntygsStatus certificateStatus : certificateStatuses) {
-            statuses.add(toStatus(certificateStatus));
-        }
-        return statuses;
-    }
-
-    private static Status toStatus(IntygsStatus certificateStatus) {
-        return new Status(
-                getState(certificateStatus.getStatus()),
-                certificateStatus.getPart().getCode(),
-                certificateStatus.getTidpunkt());
-    }
-
-    private static CertificateState getState(Statuskod status) {
-        switch (status.getCode()) {
-        case "DELETED":
-            return CertificateState.DELETED;
-        case "RESTORED":
-            return CertificateState.RESTORED;
-        case "CANCELLED":
-            return CertificateState.CANCELLED;
-        case "SENT":
-            return CertificateState.SENT;
-        case "RECEIVED":
-            return CertificateState.RECEIVED;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
 }

@@ -35,7 +35,7 @@ public class TransportToInternalTest {
         utlatande.setFunktionsnedsattningar(asList(Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"),
                 Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen")));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
-        utlatande.setNyBedomningDiagnos(true);
+        utlatande.setNyBedomningDiagnos(false);
         utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");
         utlatande.setAvslutadBehandling("Gammal medicin");
