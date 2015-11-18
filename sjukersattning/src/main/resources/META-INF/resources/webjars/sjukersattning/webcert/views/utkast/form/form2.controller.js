@@ -1,7 +1,7 @@
 angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
-    ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', 'common.UtilsService',
+    ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', 'common.UtilsService', '$filter',
         'common.DateUtilsService',
-        function($scope, $log, viewState, utils, dateUtils) {
+        function($scope, $log, viewState, utils, $filter, dateUtils ) {
             'use strict';
             var model = viewState.intygModel;
 
@@ -11,7 +11,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.viewModel = {
                 radioMedicalChecked: false,
                 underlagCompleted: [], // hold what row is selected
-                initialUnderlag: [{ 'typ': 1, 'datum': null, 'bilaga': false }]
+                initialUnderlag: [{ 'typ': 0, 'datum': null, 'bilaga': false }]
             };
 
             function onPageLoad(){
@@ -221,34 +221,73 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                         }
                         console.log('model underlag: ' + JSON.stringify($scope.model.underlag));
                     }
+                } else {
+                    // reset
+                    underlag.datum = null;
+                    underlag.bilaga = false;
                 }
             }
 
             $scope.createUnderlag = function() {
-                $scope.viewModel.initialUnderlag.push({ typ: 0, datum: null, bilaga: false }); // we set this first to allow be validations
+
+               /* var lastUnderlag = model.underlag[model.underlag.length - 1];
+                var initUnderlag = $scope.viewModel.initialUnderlag[$scope.viewModel.initialUnderlag - 1];
+
+                alert(JSON.stringify(lastUnderlag));
+                alert(JSON.stringify(initUnderlag));
+                if( lastUnderlag.typ === 0 && lastUnderlag.datum === null ||
+                    initUnderlag.typ === 0 && initUnderlag.datum === null) {
+                    return;
+                } else { */
+
+                    $scope.viewModel.initialUnderlag.push({ typ: 0, datum: null, bilaga: false }); // we set this first to allow be validations
+               /* } */
                 registerDateParsersForSupplementals($scope);
             }
 
-            $scope.removeUnderlag = function(underlag, index){
-                if(model.underlag.length === 1) { // hide when first is removed
-                    $scope.viewModel.radioMedicalChecked = false;
+            $scope.removeUnderlag = function(typ, index){
+                if(index === 0) { // hide when first is removed
                     resetUnderlag();
-                } else if (underlag.id === 0) { // if 0, we delete the last unpopulated
-                     model.underlag.pop();
+                    $scope.viewModel.radioMedicalChecked = false;
+
+
+                } else if(index === 1) { // if 0, we delete the last unpopulated
+
+                    if(typ !== 0 ) {
+                        deleteUnderlag(typ, index);
+                    } else{
+                        $scope.viewModel.initialUnderlag.pop();
+                    }
+
                 } else {
-                    console.log(index);
-                    for(var i=0;  i < model.underlag.length; i++){
-                        // we must check for index here since the same id cane be used on several extra underlag
-                        if(model.underlag[i].typ === underlag.typ && index === i ) {
-                            model.underlag.splice(i, 1);
-                            $scope.viewModel.underlagCompleted[i + 1] = false;
-                        }
+                    if(typ !== 0) {
+                        deleteUnderlag(typ, index);
+                    } else{
+                        $scope.viewModel.initialUnderlag.pop();
                     }
                 }
             }
 
+            function deleteUnderlag(typ){
+
+            //    var find  = $scope.viewModel.initialUnderlag.indexOf(typ);
+
+                var index = $scope.viewModel.initialUnderlag.map(function(obj, index) {
+                    if(obj.typ === typ) {
+                        return index;
+                    }
+                }).filter(isFinite)
+
+                console.log('find: ' , index);
+
+                $scope.viewModel.initialUnderlag.splice(index[index.length - 1], 1);
+                $scope.model.underlag.splice(index[index.length - 1], 1);
+
+                console.log( 'm: ' + $scope.model.underlag + ' vm: ' + $scope.viewModel.initialUnderlag );
+            }
+
             function resetUnderlag(){
-                model.underlag = [{ typ: 1, datum: null, bilaga: false }];
+                model.underlag = [];
             }
 
 

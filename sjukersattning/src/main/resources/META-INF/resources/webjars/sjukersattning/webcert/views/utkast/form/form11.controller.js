@@ -6,4 +6,5 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form11Ctrl'
             model = viewState.intygModel;
             $scope.model = model;
             $scope.viewState = viewState;
+
         }]);

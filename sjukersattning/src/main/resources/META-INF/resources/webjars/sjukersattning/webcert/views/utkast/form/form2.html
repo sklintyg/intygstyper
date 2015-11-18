@@ -92,7 +92,7 @@
 
      <div class="form-group form-inline bottom-padding-small" ng-show="viewModel.radioMedicalChecked"  style="padding-bottom: 40px;">
          <div class="underlagItem" style="padding-bottom: 10px;" ng-repeat="underlag in viewModel.initialUnderlag">
-              <span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag(underlag, $index)"></span>
+              <span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag(underlag.typ, $index)"></span>
               <select class="form-control" name="andraUnderlag"
                     data-ng-model="underlag.typ" ng-change="onUnderlagChange(underlag, $index)"
                     data-ng-options="item.id as item.label for item in $parent.underlagSelect"></select>
@@ -115,9 +115,9 @@
          </div>
          <div class="col-xs-12" style="padding: 5px 0px;background-color: #e5e5e5; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;"
               ng-show="model.underlag.length < 9">
-             <a href ng-click="createUnderlag(underlag)" class="btn btn-link"
-                ng-class="{ 'disabled': model.underlag[model.underlag.length - 1].id === 0 ||
-                                        model.underlag[model.underlag.length - 1].datum === null }">
+             <a href ng-click="createUnderlag()" class="btn btn-link"
+                ng-class="{ 'disabled': viewModel.initialUnderlag[viewModel.initialUnderlag.length - 1].typ === 0 ||
+                                        viewModel.initialUnderlag[viewModel.initialUnderlag.length - 1].datum === null }">
                  Lägg till ytterligare underlag</a>
          </div>
          <span ng-if="model.underlag.length === 9" message key="sjukersattning.validation.underlag.max-extra-underlag"></span><!-- kursivera -->

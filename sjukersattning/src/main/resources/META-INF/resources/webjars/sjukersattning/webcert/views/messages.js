@@ -73,6 +73,7 @@ var sjukersattningMessages = {
         'sjukersattning.label.kan-gora.view': 'Vad patienten kan göra trots sin sjukdom relaterat till sitt arbete:',
         'sjukersattning.label.prognos': 'Uppskattning av prognos för när patienten bedöms kunna återgå till aktuell sysselsättning helt eller delvis.',
         'sjukersattning.label.kontakt-med-fk': 'Kontakt önskas med Försäkringskassan',
+        'sjukersattning.label.kontaktmedfk.anledningtillkontakt': 'Anledning till att du vill ha kontakt med FK?',
         'sjukersattning.label.arbetsplatskod': 'Förskrivarkod och arbetsplatskod',
         'sjukersattning.label.rekommendationer.kontakt.arbetsformedlingen': 'Kontakt med Arbetsförmedlingen',
         'sjukersattning.label.rekommendationer.kontakt.foretagshalsovarden': 'Kontakt med företagshälsovården',
