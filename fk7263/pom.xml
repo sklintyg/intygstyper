@@ -16,7 +16,7 @@
 
   <properties>
     <sonar.sources>pom.xml,src/main/java,src/main/resources/META-INF/resources/webjars/fk7263</sonar.sources>
-    <sonar.tests>src/test/java,src/test/js</sonar.tests>
+    <sonar.tests>src/test/java,src/main/resources/META-INF/resources/webjars/fk7263</sonar.tests>
     <sonar.javascript.lcov.reportPath>target/karma_coverage/merged_lcov.info</sonar.javascript.lcov.reportPath>
     <sonar.exclusions>**/templates.js</sonar.exclusions>
   </properties>
