@@ -1,0 +1,41 @@
+//colors
+$mercury: #e5e5e5;
+
+.ts-cert-answer {
+  font-weight: bold;
+}
+
+.ts-text-field-wide {
+  padding: 5px !important;
+}
+
+.ts-table {
+  overflow-x: auto !important;
+  display: inline-block !important;
+  border: 1px solid $mercury !important;
+
+  tbody {
+    width: 100%;
+    display: inline-table;
+
+    td {
+      border-top: 1px solid transparent;
+    }
+  }
+
+  tr {
+    background: transparent !important;
+
+    th {
+      border-top: 1px solid transparent !important;
+      text-align: center !important;
+    }
+
+    td {
+      span {
+        padding: 0 !important;
+        text-align: center !important;
+      }
+    }
+  }
+}

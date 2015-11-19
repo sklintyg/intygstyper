@@ -2,20 +2,20 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/minaintyg/js/';
-    var TEST_DIR = 'src/test/js/minaintyg/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/views/';
+    var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/';
     var WEBJAR_DIR = '../target/webjardependencies/';
 
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '../../../',
+        basePath: '../../../../../../../',
 
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
         preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/ts-diabetes/minaintyg/**/*.js': ['coverage']
+            'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/**/*.js': ['coverage']
         },
 
         // list of files / patterns to load in the browser
@@ -25,19 +25,24 @@ module.exports = function(config) {
                 WEBJAR_DIR + 'jquery/jquery.min.js',
                 WEBJAR_DIR + 'angularjs/angular.js',
                 WEBJAR_DIR + 'angularjs/angular-mocks.js',
-                WEBJAR_DIR + 'angularjs/1.2.27/angular-locale_sv-se.js',
+                WEBJAR_DIR + 'angularjs/1.4.7/angular-locale_sv-se.js',
                 WEBJAR_DIR + 'angularjs/angular-cookies.js',
                 WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
                 WEBJAR_DIR + 'angularjs/angular-sanitize.js',
                 WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
+                WEBJAR_DIR + 'momentjs/moment.js',
+                WEBJAR_DIR + 'common/webcert/module.min.js',
+
 
             // Load these first
                 SRC_DIR + 'messages.js',
-                SRC_DIR + 'module.js',
+                TEST_DIR + 'module.test.js',
 
             { pattern: SRC_DIR + '**/*' },
-            { pattern: TEST_DIR + '**/*Spec.js' }
+            { pattern: TEST_DIR + '**/**/*.spec.js' }
         ],
+
+        exclude: [ SRC_DIR + 'module.js' ],
 
         // web server port
         port: 9876,

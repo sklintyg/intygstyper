@@ -15,9 +15,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-lcov-merge');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-sass-lint');
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
-    var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
     var minaintyg = grunt.file.readJSON(SRC_DIR +
@@ -34,19 +35,13 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
 
-        csslint: {
+        sasslint: {
             options: {
-                csslintrc: 'target/build-tools/csslint/.csslintrc',
-                force: true
+                //configFile: 'config/.sass-lint.yml' //For now we use the .sass-lint.yml that is packaged with sass-lint
             },
-            minaintyg: {
-                src: [ SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.css' ]
-            },
-            webcert: {
-                src: [ SRC_DIR + 'webjars/ts-diabetes/webcert/**/*.css' ]
-            }
+            target: [SRC_DIR + '**/*.scss']
         },
-
+        
         concat: {
             minaintyg: {
                 src: minaintyg,
@@ -65,29 +60,48 @@ module.exports = function(grunt) {
                 ignores: ['**/templates.js']
             },
             minaintyg: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js',
-                        TEST_DIR + 'minaintyg/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js']
             },
             webcert: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/webcert/**/*.js',
-                        TEST_DIR + 'webcert/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/webcert/**/*.js']
             }
         },
 
         karma: {
             minaintyg: {
-                configFile: 'src/test/resources/karma-minaintyg.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-minaintyg.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert: {
-                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert_continous: { // jshint ignore:line
-                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ],
                 autoWatch: true,
                 singleRun: false
+            }
+        },
+
+         sass: {
+            options: {
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: SRC_DIR + 'webjars/ts-diabetes/webcert/css/',
+                    src: ['*.scss'],
+                    dest: DEST_DIR + 'webjars/ts-diabetes/webcert/css',
+                    ext: '.css'
+                }, 
+                {
+                    expand: true,
+                    cwd: SRC_DIR + 'webjars/ts-diabetes/minaintyg/css/',
+                    src: ['*.scss'],
+                    dest: DEST_DIR + 'webjars/ts-diabetes/minaintyg/css',
+                    ext: '.css'
+                }]
             }
         },
 
@@ -129,10 +143,10 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify' ]);
-    grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg', 'csslint:minaintyg' ]);
-    grunt.registerTask('lint-webcert', [ 'jshint:webcert', 'csslint:webcert' ]);
-    grunt.registerTask('lint', [ 'jshint', 'csslint' ]);
+    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'sass' ]);
+    grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg' ] );
+    grunt.registerTask('lint-webcert', [ 'jshint:webcert' ]);
+    grunt.registerTask('lint', [ 'jshint', 'sasslint' ]);
     grunt.registerTask('test-minaintyg', [ 'karma:minaintyg' ]);
     grunt.registerTask('test-webcert', [ 'karma:webcert' ]);
     grunt.registerTask('test', [ 'karma' ]);

@@ -19,7 +19,6 @@ describe('UtkastController', function() {
             },
             isFeatureActive: jasmine.createSpy('isFeatureActive')
         };
-        $provide.value('common.CertificateService',{});
 
         _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printWebPage', 'load' ]);
         $provide.value('common.ManageCertView',_manageCertView);

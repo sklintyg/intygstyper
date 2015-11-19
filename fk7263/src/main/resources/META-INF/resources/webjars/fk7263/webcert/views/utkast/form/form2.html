@@ -1,10 +1,10 @@
-<div class="row" ng-hide="viewState.avstangningSmittskydd()" wc-detect-animation group="smittskydd">
+<div class="row field-fade" ng-hide="viewState.avstangningSmittskydd()">
     <div class="col-md-7" ng-form="form2">
         <a id="anchor.diagnos" name="anchor.diagnos"></a>
 
         <div wc-field field-label="fk7263.label.diagnos" field-number="2"
              field-help-text="fk7263.helptext.diagnos"
-             class="print-pagebreak-after field-fade"
+             class="print-pagebreak-after"
              field-has-errors="viewState.common.validationMessagesGrouped.diagnos" id="diagnoseForm">
 
             <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnos"
@@ -38,7 +38,7 @@
                     <label class="control-label unbreakable">ICD-10</label>
                     <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" ng-blur="updateFmbText()"  value=""
                            class='diagnose-code col-xs-11 form-control' ng-model="model.diagnosKod"
-                           typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+                           uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
                            typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
                            typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
                            wc-to-uppercase
@@ -49,7 +49,7 @@
                     <input type="text" class="form-control maxwidth" id="diagnoseDescription"
                            class="col-xs-12 form-control" name="diagnose.description" value=""
                            ng-model="model.diagnosBeskrivning1"
-                           typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+                           uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue)"
                            typeahead-on-select="onDiagnoseDescription1Select($item)"
                            typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
                            typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning1')">
@@ -64,7 +64,7 @@
                         <div class="bottom-padding-small clearfix">
                             <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
                                    ng-model="model.diagnosKod2" class="col-xs-11 form-control"
-                                   typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+                                   uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
                                    typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
                                    typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
                                    ng-change="limitDiagnosBeskrivningField('diagnosKod2')" wc-to-uppercase>
@@ -80,7 +80,7 @@
                     <div class="bottom-padding-small clearfix">
                         <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
                                ng-model="model.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
-                               typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+                               uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue)"
                                typeahead-on-select="onDiagnoseDescription2Select($item)"
                                typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
                                typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning2')">
@@ -92,7 +92,7 @@
                 <div class='col-xs-3'>
                     <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
                            ng-model="model.diagnosKod3" class="col-xs-11 form-control"
-                           typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue | limitTo:10"
+                           uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
                            typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
                            typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
                            ng-change="limitDiagnosBeskrivningField('diagnosKod3')" wc-to-uppercase>
@@ -101,7 +101,7 @@
                     <div class="controls">
                         <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
                                ng-model="model.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
-                               typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue) | filter:$viewValue "
+                               uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue)"
                                typeahead-on-select="onDiagnoseDescription3Select($item)"
                                typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
                                typeahead-wait-ms="100"

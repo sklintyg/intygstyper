@@ -1,0 +1,38 @@
+//urls
+$ss16-url: url('../img/ss16.png');
+
+.soclink {
+  background-image: $ss16-url;
+  background-repeat: no-repeat;
+  padding-left: 25px;
+}
+
+.cert-body {
+  .alert {
+    ul {
+      padding-left: 20px;
+    }
+  }
+}
+
+.qa-block-body {
+  white-space: normal;
+
+  &.komplettera-block {
+    div {
+      span {
+        white-space: pre-line;
+      }
+    }
+  }
+}
+
+.form8b-percentage-group {
+  > label {
+    &.control-label {
+      &.checkbox {
+        height: 24px;
+      }
+    }
+  }
+}

@@ -46,14 +46,14 @@
         </h1>
         <p></p>
         <div class="mi-text" message key="ts-bas.label.pageingress"></div>
-        <div collapse="!isCollapsed1" class="collapse mi-text">
+        <div uib-collapse="!isCollapsed1" class="collapse mi-text">
           <div message key="ts-bas.label.pagedescription.sendcertificate.header"></div>
           <div message key="ts-bas.label.pagedescription.sendcertificate"></div>
           <div message key="ts-bas.label.pagedescription.save.or.print.certificate.header"></div>
           <div message key="ts-bas.label.pagedescription.save.or.print.certificate"></div>
           <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF"
              title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-          <div collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message
+          <div uib-collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message
                                                                                     key="ts-bas.helptext.readpdfhelp"></span>
           </div>
           <div message key="ts-bas.label.pagedescription.error.in.certificate.header"></div>
@@ -85,7 +85,7 @@
           <span message key="ts-bas.status.{{cert.status[0].type}}"></span>
           <span message key="ts-bas.target.{{cert.status[0].target}}"></span><span>s system</span>
           <span class="certificate-event-timestamp pull-right">{{cert.status[0].timestamp | date:'short'}}</span>
-          <div collapse="!isCollapsedCertEvents" class="collapse">
+          <div uib-collapse="!isCollapsedCertEvents" class="collapse">
             <div ng-repeat="status in cert.status" ng-switch on="$index > 0">
               <div ng-switch-when="true">
                 <span message key="ts-bas.status.{{cert.status[0].type}}"></span>

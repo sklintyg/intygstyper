@@ -1,8 +1,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore',
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope',
         'common.IntygService', 'common.IntygProxy', 'common.messageService','common.UserModel','common.IntygCopyRequestModel',
         'ts-diabetes.IntygController.ViewStateService',
-        function($location, $log, $rootScope, $stateParams, $scope, $cookieStore, IntygService, IntygProxy,
+        function($location, $log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, UserModel, IntygCopyRequestModel, ViewState) {
             'use strict';
 
