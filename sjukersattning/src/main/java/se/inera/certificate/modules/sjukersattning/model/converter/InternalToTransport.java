@@ -59,7 +59,6 @@ public class InternalToTransport {
         }
         for (String sourceKompetens : sourceSkapadAv.getSpecialiteter()) {
             Specialistkompetens kompetens = new Specialistkompetens();
-            kompetens.setCodeSystem(SPECIALISTKOMPETENS_CODE_SYSTEM);
             kompetens.setCode(sourceKompetens);
             skapadAv.getSpecialistkompetens().add(kompetens);
         }
