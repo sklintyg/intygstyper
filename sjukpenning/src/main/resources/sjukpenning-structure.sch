@@ -39,7 +39,7 @@
         Ett 'intyg' måste ha ett 'finns skäl till förändrad arbetstidförläggning'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='10']) ge 1 and count(gn:svar[@id='10']) le 3">
-        Ett 'intyg' får inte ha mer än tre referenser
+        Ett 'intyg' måste ha minst ett och högst tre 'referens'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='11']) = 1">
         Ett 'intyg' måste ha en 'funktionsnedsättning'
