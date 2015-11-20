@@ -22,7 +22,7 @@ import se.inera.certificate.model.common.internal.GrundData;
 
 public class Utlatande implements se.inera.certificate.model.common.internal.Utlatande {
 
-    private GrundData grundData;
+    private GrundData grundData = new GrundData();
 
     private String id;
 

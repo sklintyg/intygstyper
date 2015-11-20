@@ -16,7 +16,7 @@ public class Utlatande implements se.inera.certificate.model.common.internal.Utl
 
     private String id;
 
-    private GrundData grundData;
+    private GrundData grundData = new GrundData();
 
     private LocalDateInterval giltighet;
 

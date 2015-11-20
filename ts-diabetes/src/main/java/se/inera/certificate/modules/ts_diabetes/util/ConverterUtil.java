@@ -46,7 +46,7 @@ public class ConverterUtil {
         certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
         certificateHolder.setType(TsDiabetesEntryPoint.MODULE_ID);
         certificateHolder.setAdditionalInfo(StringUtils.join(utlatande.getIntygAvser().getKorkortstyp(), ", "));
-        certificateHolder.setDocument(toJsonString(utlatande));
+        certificateHolder.setDocument(document);
         return certificateHolder;
     }
 
