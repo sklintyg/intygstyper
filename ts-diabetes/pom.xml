@@ -16,7 +16,7 @@
 
   <properties>
     <sonar.sources>pom.xml,src/main/java,src/main/resources/META-INF/resources/webjars/ts-diabetes</sonar.sources>
-    <sonar.tests>src/test/java,src/test/js</sonar.tests>
+    <sonar.tests>src/test/java</sonar.tests>
     <sonar.javascript.lcov.reportPath>target/karma_coverage/merged_lcov.info</sonar.javascript.lcov.reportPath>
     <sonar.exclusions>**/templates.js</sonar.exclusions>
   </properties>
@@ -105,6 +105,10 @@
         <directory>src/main/resources</directory>
         <excludes>
           <exclude>**/*.scss</exclude>
+          <exclude>**/*.spec.js</exclude>
+          <exclude>**/*.test.js</exclude>
+          <exclude>**/karma*.conf.js</exclude>
+          <exclude>**/karma*.conf.ci.js</exclude>
         </excludes>
         <filtering>false</filtering>
       </resource>
@@ -147,7 +151,7 @@
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma-minaintyg.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-minaintyg.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
             </configuration>
           </execution>
           <execution>
@@ -156,7 +160,7 @@
               <goal>karma</goal>
             </goals>
             <configuration>
-              <karmaConfPath>${project.basedir}/src/test/resources/karma-webcert.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
+              <karmaConfPath>${project.basedir}/src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-webcert.conf.ci.js --skip-coverage=${skip-coverage}</karmaConfPath>
             </configuration>
           </execution>
           <!-- merges karma code coverage reports for wc and mi -->

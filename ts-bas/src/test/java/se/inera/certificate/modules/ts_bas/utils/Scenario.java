@@ -6,7 +6,7 @@ import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSB
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
  * <ul>
  * <li>Transport model
- * <li>Export model (with and without a {@link CertificateContentHolder})
+ * <li>Export model (with and without a CertificateContentHolder)
  * <li>Internal model
  * </ul>
  *

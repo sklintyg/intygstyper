@@ -2,20 +2,20 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/fk7263/minaintyg/js/';
-    var TEST_DIR = 'src/test/js/minaintyg/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/minaintyg/js/';
+    var TEST_DIR = SRC_DIR;
     var WEBJAR_DIR = '../target/webjardependencies/';
 
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '../../../',
+        basePath: '../../../../../../../',
 
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
         preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/fk7263/minaintyg/js/**/*.js': ['coverage']
+            'src/main/resources/META-INF/resources/webjars/ts-bas/minaintyg/**/*.js': ['coverage']
         },
 
         // list of files / patterns to load in the browser

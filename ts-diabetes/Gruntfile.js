@@ -19,7 +19,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass-lint');
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
-    var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
     var minaintyg = grunt.file.readJSON(SRC_DIR +
@@ -61,26 +60,24 @@ module.exports = function(grunt) {
                 ignores: ['**/templates.js']
             },
             minaintyg: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js',
-                        TEST_DIR + 'minaintyg/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js']
             },
             webcert: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/webcert/**/*.js',
-                        TEST_DIR + 'webcert/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/webcert/**/*.js']
             }
         },
 
         karma: {
             minaintyg: {
-                configFile: 'src/test/resources/karma-minaintyg.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-minaintyg.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert: {
-                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert_continous: { // jshint ignore:line
-                configFile: 'src/test/resources/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ],
                 autoWatch: true,
                 singleRun: false

@@ -3,13 +3,13 @@ module.exports = function(config) {
     'use strict';
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/minaintyg/js/';
-    var TEST_DIR = 'src/test/js/minaintyg/';
+    var TEST_DIR = SRC_DIR;
     var WEBJAR_DIR = '../target/webjardependencies/';
 
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '../../../',
+        basePath: '../../../../../../../',
 
         // frameworks to use
         frameworks: [ 'jasmine' ],
