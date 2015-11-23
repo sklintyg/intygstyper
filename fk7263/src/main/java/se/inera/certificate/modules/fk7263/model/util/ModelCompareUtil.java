@@ -112,7 +112,7 @@ public class ModelCompareUtil {
         private final String diagnosKod;
         private final String diagnosKodSystem;
 
-        public DiagnosKod(String diagnosKod, String diagnosKodSystem) {
+        DiagnosKod(String diagnosKod, String diagnosKodSystem) {
             this.diagnosKod = diagnosKod;
             this.diagnosKodSystem = diagnosKodSystem;
         }
