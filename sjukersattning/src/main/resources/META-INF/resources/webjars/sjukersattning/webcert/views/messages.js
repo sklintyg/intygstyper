@@ -109,17 +109,25 @@ var sjukersattningMessages = {
         'sjukersattning.label.atgard.ovrigt': 'Övrigt',
         'sjukersattning.label.atgard': 'Förslag till åtgärder som skulle kunna underlätta återgång till arbete',
 
-
         'sjukersattning.label.medicinskaforutsattningar': 'Medicinska förutsättningar för arbete',
         'sjukersattning.label.medicinskaforutsattningar.bedomning': 'Hur bedömer du patientens medicinska förutsättningar för arbete, helt eller delvis, kan utvecklas över tid?',
         'sjukersattning.label.medicinskaforutsattningar.mojligheter': 'Beskriv vad patienten kan göra trots sin sjukdom eller sina begränsningar',
 
-
         'sjukersattning.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'sjukersattning.referens.journal': 'Journaluppgifter, den ',
-        'sjukersattning.referens.anhorigBeskrivningAvPatienten': 'Anhörig beskrivning av patiend, den ',
-        'sjukersattning.referens.telefonkontaktMedPatienten': 'Telefonkontakt med patienten, den',
-        'sjukersattning.referens.kannedomOmPatient': 'Jag har känt patien, från den ',
+        'sjukersattning.referens.anhorigbeskrivningavpatienten': 'Anhörig beskrivning av patiend, den ',
+        'sjukersattning.referens.telefonkontaktmedpatienten': 'Telefonkontakt med patienten, den',
+        'sjukersattning.referens.kannedomompatient': 'Jag har känt patien, från den ',
+        'sjukersattning.referens.underlag0': 'Neuropsykiatriskt utlåtande, från den ',
+        'sjukersattning.referens.underlag1': 'Underlag från habiliteringen, från den ',
+        'sjukersattning.referens.underlag2': 'Underlag från arbetsterapeut, från den ',
+        'sjukersattning.referens.underlag3': 'Underlag från fysioterapeut, från den ',
+        'sjukersattning.referens.underlag4': 'Underlag från logoped, från den ',
+        'sjukersattning.referens.underlag5': 'Underlag från psykolog, från den ',
+        'sjukersattning.referens.underlag6': 'Underlag från företagshälsovård, från den ',
+        'sjukersattning.referens.underlag7': 'Utredning av annan specialistklinik, från den ',
+        'sjukersattning.referens.underlag8': 'Utredning från vårdinrättning utomlands, från den ',
+        'sjukersattning.referens.underlag9': 'Övrigt, från den ',
         'sjukersattning.referens.annat': 'Annat, den ',
 
         'sjukersattning.nedsattningsgrad.helt_nedsatt': 'Helt nedsatt',

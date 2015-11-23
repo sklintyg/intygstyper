@@ -29,17 +29,17 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
             };
 
             this.underlagOptions = [
-                { 'id': 0, label: 'Ange underlag eller utredning'},
-                { 'id': 1, label: 'Neuropsykiatriskt utlåtande'},
-                { 'id': 2, label: 'Underlag från habiliteringen' },
-                { 'id': 3, label: 'Underlag från arbetsterapeut' },
-                { 'id': 4, label: 'Underlag från fysioterapeut' },
-                { 'id': 5, label: 'Underlag från logoped' },
-                { 'id': 6, label: 'Underlag från psykolog' },
-                { 'id': 7, label: 'Underlag från företagshälsovård' },
-                { 'id': 8, label: 'Utredning av annan specialistklinik'},
-                { 'id': 9, label: 'Utredning från vårdinrättning utomlands' },
-                { 'id': 10, label: 'Övrigt' }
+                    { 'id': 0, label: 'Ange underlag eller utredning'},
+                    { 'id': 1, label: 'Neuropsykiatriskt utlåtande'},
+                    { 'id': 2, label: 'Underlag från habiliteringen' },
+                    { 'id': 3, label: 'Underlag från arbetsterapeut' },
+                    { 'id': 4, label: 'Underlag från fysioterapeut' },
+                    { 'id': 5, label: 'Underlag från logoped' },
+                    { 'id': 6, label: 'Underlag från psykolog' },
+                    { 'id': 7, label: 'Underlag från företagshälsovård' },
+                    { 'id': 8, label: 'Utredning av annan specialistklinik'},
+                    { 'id': 9, label: 'Utredning från vårdinrättning utomlands' },
+                    { 'id': 10, label: 'Övrigt' }
             ];
 
             this.funktionsnedsattningOptions = [
