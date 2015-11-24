@@ -82,6 +82,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                     });
             };
 
+
             /**
              *
              * @param codeSystem
@@ -124,7 +125,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                  $scope.$dirty = true;
                  $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
-                logModel();
+                //logModel();
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnoser[1].diagnosBeskrivning = $item.beskrivning;
@@ -132,7 +133,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
-                logModel();
+                //logModel();
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnoser[2].diagnosBeskrivning = $item.beskrivning;
@@ -140,7 +141,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 model.updateToAttic(model.properties.form4);
-                logModel();
+                //logModel();
             };
 
 
@@ -154,7 +155,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
-                logModel();
+                //logModel();
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.model.diagnoser[1].diagnosKod  = $item.value;
@@ -163,7 +164,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
-                logModel();
+                //logModel();
             };
             $scope.onDiagnoseDescription3Select = function($item) {
                 $scope.model.diagnoser[2].diagnosKod  = $item.value;
@@ -172,7 +173,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 $scope.$dirty = true;
                 $scope.$pristine = false;
                 $scope.model.updateToAttic(model.properties.form4);
-                logModel();
+                //logModel();
             };
 
             function logModel(){
