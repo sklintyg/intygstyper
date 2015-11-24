@@ -5,8 +5,5 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form10Ctrl'
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
 
-            $scope.inputLimits = {
-                ovrigt: 360
-            };
 
         }]);

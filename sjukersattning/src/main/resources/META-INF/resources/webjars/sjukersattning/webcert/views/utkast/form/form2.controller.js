@@ -141,7 +141,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 if(utils.isValidString($viewVal)) {
                     $scope.viewModel.initialUnderlag[supplemental].datum = $viewVal;
                 }
-            }
+            };
 
             function registerDateParsersForSupplementals(_$scope, id) {
                 // Register parse function for new row where datepicker resides
@@ -208,7 +208,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                         // add duplicate check? match for existing?
 
                         var current = model.underlag[underlag.typ];
-                       // dateUtils.convertDateToISOString(underlag.datum);
 
                         if(current !== undefined && current.typ === underlag.typ &&
                             current.datum === underlag.datum && current.bilaga === underlag.bilaga){ // if existing
@@ -229,19 +228,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             }
 
             $scope.createUnderlag = function() {
-
-               /* var lastUnderlag = model.underlag[model.underlag.length - 1];
-                var initUnderlag = $scope.viewModel.initialUnderlag[$scope.viewModel.initialUnderlag - 1];
-
-                alert(JSON.stringify(lastUnderlag));
-                alert(JSON.stringify(initUnderlag));
-                if( lastUnderlag.typ === 0 && lastUnderlag.datum === null ||
-                    initUnderlag.typ === 0 && initUnderlag.datum === null) {
-                    return;
-                } else { */
-
-                    $scope.viewModel.initialUnderlag.push({ typ: 0, datum: null, bilaga: false }); // we set this first to allow be validations
-               /* } */
+                $scope.viewModel.initialUnderlag.push({ typ: 0, datum: null, bilaga: false }); // we set this first to allow be validations
                 registerDateParsersForSupplementals($scope);
             }
 
@@ -249,8 +236,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 if(index === 0) { // hide when first is removed
                     resetUnderlag();
                     $scope.viewModel.radioMedicalChecked = false;
-
-
                 } else if(index === 1) { // if 0, we delete the last unpopulated
 
                     if(typ !== 0 ) {

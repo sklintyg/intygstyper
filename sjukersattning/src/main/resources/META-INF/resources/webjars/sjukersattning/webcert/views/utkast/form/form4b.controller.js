@@ -8,7 +8,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4bCtrl'
             $scope.viewState = viewState;
 
             $scope.viewModel = {
-                nyBedomningDiagnos: '',
+                nyBedomningDiagnos: false,
                 diagnosticering: ''
             };
 

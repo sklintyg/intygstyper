@@ -64,7 +64,7 @@
                                                                            id="basedOnKannedom"
                                                                            name="informationBasedOn.kannedom"
                                                                            ng-model="basedOnState.check.kannedomOmPatient"
-                                                                           ng-change="toggleBaseradPaDate('kannedomOmPatient')">
+                                                                           ng-change="toggleBaseradPaDate('kannedomOmPatient')" />
           <span>Jag har känt patienten sedan den</span></label>
       <span wc-date-picker-field target-model="dates.kannedomOmPatient" dom-id="kannedomOmPatientDate"></span>
 
@@ -79,11 +79,11 @@
       <div class="form-group form-inline">
           <label class="radio-inline">
                 <input id="andraMedicinskaUtredningarYes" name="andraMedicinskaUtredningar" type="radio" ng-value="true"
-                        ng-model="viewModel.radioMedicalChecked">Ja
+                        ng-model="viewModel.radioMedicalChecked" />Ja
           </label>
           <label class="radio-inline">
               <input id="andraMedicinskaUtredningarNo" name="andraMedicinskaUtredningar" type="radio" ng-value="false"
-                     ng-model="viewModel.radioMedicalChecked" checked="checked">Nej
+                     ng-model="viewModel.radioMedicalChecked" checked="checked" />Nej
           </label>
       </div>
 
@@ -101,11 +101,11 @@
               <label class="control-label inline-block bold" style="padding-right: 10px;">Skickas separat</label>
               <label class="radio-inline">
                   <input id="willSupplyAttachmentYES-{{ $index }}" name="willSupplyAttachmentRadioYes{{ $index }}"
-                         type="radio" ng-value="true" ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.bilaga">Ja
+                         type="radio" ng-value="true" ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.bilaga" />Ja
               </label>
               <label class="radio-inline">
                   <input id="willSupplyAttachmentNO-{{ $index }}" name="willSupplyAttachmentRadioNo{{ $index }}"
-                         type="radio" ng-value="false" ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.bilaga">Nej
+                         type="radio" ng-value="false" ng-change="onUnderlagChange(underlag, $index)" ng-model="underlag.bilaga" />Nej
               </label>
           </div>
              <br/>
