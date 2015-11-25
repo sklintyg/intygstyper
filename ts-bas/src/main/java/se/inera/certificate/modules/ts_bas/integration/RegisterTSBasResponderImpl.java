@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.certificate.integration.module.exception.CertificateAlreadyExistsException;
+import se.inera.certificate.integration.module.exception.InvalidCertificateException;
 import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.support.api.CertificateHolder;
@@ -77,6 +78,11 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
             String certificateId = registerTsBas.getIntyg().getIntygsId();
             String issuedBy =  registerTsBas.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId().getExtension();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");
+        } catch (InvalidCertificateException e) {
+            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "Invalid certificate ID"));
+            String certificateId = registerTsBas.getIntyg().getIntygsId();
+            String issuedBy =  registerTsBas.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId().getExtension();
+            LOGGER.error(LogMarkers.VALIDATION, "Failed to create Certificate with id " + certificateId + " issued by " + issuedBy + ": Certificate ID already exists for another person.");
 
         } catch (CertificateValidationException e) {
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
