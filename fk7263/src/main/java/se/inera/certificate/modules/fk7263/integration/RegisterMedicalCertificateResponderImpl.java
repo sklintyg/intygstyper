@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.certificate.integration.module.exception.CertificateAlreadyExistsException;
+import se.inera.certificate.integration.module.exception.InvalidCertificateException;
 import se.inera.certificate.logging.LogMarkers;
 import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
@@ -95,6 +96,12 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
         } catch (CertificateValidationException | ConverterException e) {
             response.setResult(ResultOfCallUtil.failResult(e.getMessage()));
             LOGGER.error(LogMarkers.VALIDATION, e.getMessage());
+
+        } catch (InvalidCertificateException e) {
+            response.setResult(ResultOfCallUtil.applicationErrorResult("Invalid certificate ID"));
+            String certificateId = registerMedicalCertificate.getLakarutlatande().getLakarutlatandeId();
+            String issuedBy =  registerMedicalCertificate.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension();
+            LOGGER.error(LogMarkers.VALIDATION, "Failed to create Certificate with id " + certificateId + " issued by " + issuedBy + ": Certificate ID already exists for another person.");
 
         } catch (JAXBException e) {
             LOGGER.error("JAXB error in Webservice: ", e);
