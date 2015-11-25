@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
-import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 

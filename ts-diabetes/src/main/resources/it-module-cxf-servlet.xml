@@ -23,7 +23,7 @@
   <jaxws:endpoint address="/get-ts-diabetes/v1.0"
                   implementor="se.inera.certificate.modules.ts_diabetes.integration.GetTSDiabetesResponderImpl">
     <jaxws:outFaultInterceptors>
-      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+      <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/se-intygstjanster-ts-services/get-ts-diabetes-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
@@ -32,7 +32,7 @@
   <jaxws:endpoint address="/register-ts-diabetes/v1.0"
                   implementor="se.inera.certificate.modules.ts_diabetes.integration.RegisterTSDiabetesResponderImpl">
     <jaxws:outFaultInterceptors>
-      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+      <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/se-intygstjanster-ts-services/register-ts-diabetes-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>

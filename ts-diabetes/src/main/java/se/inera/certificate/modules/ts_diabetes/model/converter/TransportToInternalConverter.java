@@ -22,7 +22,7 @@ import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Synskarpevarden;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
-import se.inera.certificate.schema.adapter.InternalDateAdapter;
+import se.inera.intyg.common.util.integration.schema.adapter.InternalDateAdapter;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
 import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
