@@ -7,16 +7,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.common.enumerations.Diagnoskodverk;
-import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.service.WebcertModuleService;
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.support.api.dto.ValidationMessage;
-import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
-import se.inera.certificate.modules.support.api.dto.ValidationStatus;
-import se.inera.certificate.validate.StringValidator;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.validate.StringValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -292,12 +292,12 @@ public class InternalDraftValidator {
      *
      * @param validationMessages
      *            list of validation messages
-     * @return {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#VALID} if there are no errors, and
-     *         {@link se.inera.certificate.modules.support.api.dto.ValidationStatus#INVALID} otherwise
+     * @return {@link se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus#VALID} if there are no errors, and
+     *         {@link se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus#INVALID} otherwise
      */
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
-        return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
-                : se.inera.certificate.modules.support.api.dto.ValidationStatus.INVALID;
+        return (validationMessages.isEmpty()) ? se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus.VALID
+                : se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus.INVALID;
     }
 
     /**

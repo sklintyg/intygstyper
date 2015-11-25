@@ -20,9 +20,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.Scenario;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
-import se.inera.certificate.modules.service.WebcertModuleService;
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InternalDraftValidatorTest {

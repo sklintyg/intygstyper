@@ -44,18 +44,18 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.certificate.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.api.ModuleApi;
-import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
-import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.support.api.dto.Vardenhet;
-import se.inera.certificate.modules.support.api.dto.Vardgivare;
-import se.inera.certificate.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.Patient;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
+import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.utils.ResourceConverterUtils;
@@ -76,7 +76,7 @@ public class ModuleApiTest {
 
     /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
+    private se.inera.intyg.common.support.modules.support.api.ModuleApi moduleApi;
 
     @Autowired
     private JAXBContext jaxbContext;

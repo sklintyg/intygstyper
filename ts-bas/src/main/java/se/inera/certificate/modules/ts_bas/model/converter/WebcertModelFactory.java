@@ -22,12 +22,12 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
-import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint;
 
@@ -47,7 +47,7 @@ public class WebcertModelFactory {
      *
      * @return {@link Utlatande}
      *
-     * @throws se.inera.certificate.model.converter.util.ConverterException
+     * @throws se.inera.intyg.common.support.model.converter.util.ConverterException
      *             if something unforeseen happens
      */
     public Utlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData, Utlatande template) throws ConverterException {
@@ -70,7 +70,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithPatientInfo(Utlatande utlatande,
-            se.inera.certificate.modules.support.api.dto.Patient patient) throws ConverterException {
+            se.inera.intyg.common.support.modules.support.api.dto.Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -80,7 +80,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithSkapadAv(Utlatande utlatande,
-            se.inera.certificate.modules.support.api.dto.HoSPersonal skapadAv) throws ConverterException {
+            se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal skapadAv) throws ConverterException {
         if (skapadAv == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }

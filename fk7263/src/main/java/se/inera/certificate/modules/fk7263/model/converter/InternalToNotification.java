@@ -7,15 +7,15 @@
     import org.slf4j.LoggerFactory;
     import org.springframework.beans.factory.annotation.Autowired;
 
-    import se.inera.certificate.common.enumerations.Diagnoskodverk;
-    import se.inera.certificate.model.InternalLocalDateInterval;
-    import se.inera.certificate.model.common.internal.HoSPersonal;
+    import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+    import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+    import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
     import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
     import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-    import se.inera.certificate.modules.service.WebcertModuleService;
-    import se.inera.certificate.modules.support.api.exception.ModuleException;
-    import se.inera.certificate.modules.support.api.notification.HandelseType;
-    import se.inera.certificate.modules.support.api.notification.NotificationMessage;
+    import se.inera.intyg.common.support.modules.service.WebcertModuleService;
+    import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+    import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;
+    import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
     import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Arbetsformaga;
     import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.CertificateStatusUpdateForCareType;
     import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Enhet;
@@ -213,7 +213,7 @@
 
     private void decorateWithFragorOchSvar(UtlatandeType utlatandeType, NotificationMessage notificationMessage) {
 
-        se.inera.certificate.modules.support.api.notification.FragorOchSvar fragaSvar = notificationMessage.getFragaSvar();
+        se.inera.intyg.common.support.modules.support.api.notification.FragorOchSvar fragaSvar = notificationMessage.getFragaSvar();
 
         FragorOchSvar fosType = new FragorOchSvar();
         fosType.setAntalFragor(fragaSvar.getAntalFragor());

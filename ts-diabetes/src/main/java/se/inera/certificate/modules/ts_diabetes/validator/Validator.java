@@ -20,7 +20,7 @@ package se.inera.certificate.modules.ts_diabetes.validator;
 
 import java.util.List;
 
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_diabetes.validator.internal.InternalValidatorInstance;
 import se.inera.certificate.modules.ts_diabetes.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;

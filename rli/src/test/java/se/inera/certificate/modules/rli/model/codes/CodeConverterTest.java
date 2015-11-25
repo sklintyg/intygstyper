@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import se.inera.certificate.model.Kod;
+import se.inera.intyg.common.support.model.Kod;
 
 public class CodeConverterTest {
 

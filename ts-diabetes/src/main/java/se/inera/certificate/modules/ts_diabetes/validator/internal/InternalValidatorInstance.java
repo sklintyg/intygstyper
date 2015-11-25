@@ -6,19 +6,19 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.support.api.dto.ValidationMessage;
-import se.inera.certificate.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
-import se.inera.certificate.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
 import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
-import se.inera.certificate.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
-import se.inera.certificate.validate.StringValidator;
+import se.inera.intyg.common.support.validate.StringValidator;
 
 /**
  * Class for validating drafts of the internal model.
@@ -345,9 +345,9 @@ public class InternalValidatorInstance {
      * @return {@link ValidationStatus.COMPLETE} if there are no errors, and {@link ValidationStatus.INCOMPLETE}
      * otherwise
      */
-    private se.inera.certificate.modules.support.api.dto.ValidationStatus getValidationStatus() {
-        return (validationMessages.isEmpty()) ? se.inera.certificate.modules.support.api.dto.ValidationStatus.VALID
-                : se.inera.certificate.modules.support.api.dto.ValidationStatus.INVALID;
+    private se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus getValidationStatus() {
+        return (validationMessages.isEmpty()) ? se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus.VALID
+                : se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus.INVALID;
     }
 
     /**

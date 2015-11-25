@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-import se.inera.certificate.model.Kod;
+import se.inera.intyg.common.support.model.Kod;
 
 public enum TestKod implements CodeSystem {
 

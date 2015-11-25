@@ -1,8 +1,8 @@
 package se.inera.certificate.modules.rli.model.external;
 
-import se.inera.certificate.model.Vardgivare;
+import se.inera.intyg.common.support.model.Vardgivare;
 
-public class Vardenhet extends se.inera.certificate.model.Vardenhet {
+public class Vardenhet extends se.inera.intyg.common.support.model.Vardenhet {
 
     private Vardgivare vardgivare;
 

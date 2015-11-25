@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import se.inera.certificate.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
@@ -151,7 +151,7 @@ public final class InternalToTransportConverter {
         return result;
     }
 
-    private static GrundData readGrundData(se.inera.certificate.model.common.internal.GrundData grundData) {
+    private static GrundData readGrundData(se.inera.intyg.common.support.model.common.internal.GrundData grundData) {
         GrundData result = new GrundData();
         result.setPatient(readPatient(grundData.getPatient()));
         result.setSigneringsTidstampel(grundData.getSigneringsdatum() != null ? grundData.getSigneringsdatum().toString(SIGNERINGS_TIDSTAMPEL_FORMAT)
@@ -173,7 +173,7 @@ public final class InternalToTransportConverter {
         return result;
     }
 
-    private static Vardenhet readVardenhet(se.inera.certificate.model.common.internal.Vardenhet vardenhet) {
+    private static Vardenhet readVardenhet(se.inera.intyg.common.support.model.common.internal.Vardenhet vardenhet) {
         Vardenhet result = new Vardenhet();
         II ii = new II();
         ii.setRoot(Constants.HSA_ID_OID);
@@ -189,7 +189,7 @@ public final class InternalToTransportConverter {
         return result;
     }
 
-    private static Vardgivare readVardgivare(se.inera.certificate.model.common.internal.Vardgivare vardgivare) {
+    private static Vardgivare readVardgivare(se.inera.intyg.common.support.model.common.internal.Vardgivare vardgivare) {
         Vardgivare result = new Vardgivare();
         II ii = new II();
         ii.setRoot(Constants.HSA_ID_OID);
@@ -201,7 +201,7 @@ public final class InternalToTransportConverter {
     }
 
     private static Patient readPatient(
-            se.inera.certificate.model.common.internal.Patient patient) {
+            se.inera.intyg.common.support.model.common.internal.Patient patient) {
         Patient result = new Patient();
         result.setEfternamn(patient.getEfternamn());
         result.setFornamn(patient.getFornamn());

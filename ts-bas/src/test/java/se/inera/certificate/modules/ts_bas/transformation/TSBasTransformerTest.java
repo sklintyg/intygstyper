@@ -8,7 +8,7 @@ import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
+import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;

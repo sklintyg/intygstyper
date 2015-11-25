@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import se.inera.certificate.model.common.internal.Patient;
-import se.inera.certificate.model.common.internal.Vardenhet;
-import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;

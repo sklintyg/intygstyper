@@ -20,10 +20,10 @@ package se.inera.certificate.modules.rli.model.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.PatientRelation;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Vardgivare;
+import se.inera.intyg.common.support.model.PartialInterval;
+import se.inera.intyg.common.support.model.PatientRelation;
+import se.inera.intyg.common.support.model.Rekommendation;
+import se.inera.intyg.common.support.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.Arrangemang;
 import se.inera.certificate.modules.rli.model.external.HosPersonal;
@@ -55,7 +55,7 @@ public class TransportToExternalConverter {
     private static final Logger LOG = LoggerFactory.getLogger(TransportToExternalConverter.class);
 
     /**
-     * Converts from the transport format (se.inera.certificate.common.v1.Utlatande) to the external format
+     * Converts from the transport format (se.inera.intyg.common.support.common.v1.Utlatande) to the external format
      * (se.inera.certificate.modules.rli.model.external.Utlatande).
      *
      * @param source Utlatande in the transport format to be converted to external format

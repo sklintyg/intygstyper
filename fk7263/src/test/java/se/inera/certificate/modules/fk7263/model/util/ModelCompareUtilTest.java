@@ -12,10 +12,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.inera.certificate.common.enumerations.Diagnoskodverk;
-import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.service.WebcertModuleService;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

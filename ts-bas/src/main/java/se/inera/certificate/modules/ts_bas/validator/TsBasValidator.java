@@ -20,7 +20,7 @@ package se.inera.certificate.modules.ts_bas.validator;
 
 import java.util.List;
 
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
 import se.inera.certificate.modules.ts_bas.validator.transport.TransportValidatorInstance;

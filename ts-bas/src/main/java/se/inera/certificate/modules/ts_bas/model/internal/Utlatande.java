@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.ts_bas.model.internal;
 
-public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
+public class Utlatande extends se.inera.intyg.common.support.model.common.internal.Utlatande {
 
     private String id;
 

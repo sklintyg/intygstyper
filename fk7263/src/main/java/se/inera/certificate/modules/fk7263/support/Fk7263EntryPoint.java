@@ -1,13 +1,13 @@
 package se.inera.certificate.modules.fk7263.support;
 
-import static se.inera.certificate.common.enumerations.Recipients.FK;
+import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
-import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.ModuleEntryPoint;
-import se.inera.certificate.modules.support.api.ModuleApi;
-import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
+import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
 
 import java.util.Map;
 

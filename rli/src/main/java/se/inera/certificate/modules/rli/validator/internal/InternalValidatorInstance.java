@@ -34,9 +34,9 @@ import se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal;
 import se.inera.certificate.modules.rli.model.internal.wc.Undersokning;
 
 import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
-import se.inera.certificate.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.support.api.dto.ValidationMessage;
-import se.inera.certificate.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 
 public class InternalValidatorInstance {
 

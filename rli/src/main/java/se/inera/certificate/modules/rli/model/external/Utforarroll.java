@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.rli.model.external;
 
-public class Utforarroll extends se.inera.certificate.model.Utforarroll {
+public class Utforarroll extends se.inera.intyg.common.support.model.Utforarroll {
 
     private HosPersonal antasAv;
 

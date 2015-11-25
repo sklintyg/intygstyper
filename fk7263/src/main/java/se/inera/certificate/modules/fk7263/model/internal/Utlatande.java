@@ -1,15 +1,15 @@
 package se.inera.certificate.modules.fk7263.model.internal;
 
-import static se.inera.certificate.common.util.StringUtil.emptyToNull;
-import static se.inera.certificate.common.util.StringUtil.join;
-import se.inera.certificate.model.InternalDate;
-import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.LocalDateInterval;
+import static se.inera.intyg.common.support.common.util.StringUtil.emptyToNull;
+import static se.inera.intyg.common.support.common.util.StringUtil.join;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.LocalDateInterval;
 
 /**
  * @author andreaskaltenbach
  */
-public class Utlatande extends se.inera.certificate.model.common.internal.Utlatande {
+public class Utlatande extends se.inera.intyg.common.support.model.common.internal.Utlatande {
 
     private LocalDateInterval giltighet;
 

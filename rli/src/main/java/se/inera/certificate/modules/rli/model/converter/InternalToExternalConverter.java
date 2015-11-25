@@ -20,9 +20,9 @@ package se.inera.certificate.modules.rli.model.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Vardgivare;
+import se.inera.intyg.common.support.model.Id;
+import se.inera.intyg.common.support.model.Rekommendation;
+import se.inera.intyg.common.support.model.Vardgivare;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.CodeConverter;
 import se.inera.certificate.modules.rli.model.codes.ObservationsKod;

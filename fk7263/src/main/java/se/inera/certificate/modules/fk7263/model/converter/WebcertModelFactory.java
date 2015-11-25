@@ -22,14 +22,14 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.Patient;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 
 /**
  * Factory for creating an editable model.
@@ -111,7 +111,7 @@ public class WebcertModelFactory {
         utlatande.getGrundData().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
     }
 
-    private void populateWithSkapadAv(Utlatande utlatande, se.inera.certificate.modules.support.api.dto.HoSPersonal hoSPersonal)
+    private void populateWithSkapadAv(Utlatande utlatande, se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal hoSPersonal)
             throws ConverterException {
         if (hoSPersonal == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");

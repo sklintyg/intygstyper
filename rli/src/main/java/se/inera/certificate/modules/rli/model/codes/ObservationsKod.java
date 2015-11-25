@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.rli.model.codes;
 
-import se.inera.certificate.model.Kod;
+import se.inera.intyg.common.support.model.Kod;
 
 /**
  * Represents all the codes used by this module to define observationer.

@@ -21,11 +21,11 @@ package se.inera.certificate.modules.rli.model.converter;
 import iso.v21090.dt.v1.CD;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.PatientRelation;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Vardgivare;
-import se.inera.certificate.model.util.Strings;
+import se.inera.intyg.common.support.model.Kod;
+import se.inera.intyg.common.support.model.PatientRelation;
+import se.inera.intyg.common.support.model.Rekommendation;
+import se.inera.intyg.common.support.model.Vardgivare;
+import se.inera.intyg.common.support.model.util.Strings;
 import se.inera.certificate.modules.rli.model.external.Aktivitet;
 import se.inera.certificate.modules.rli.model.external.HosPersonal;
 import se.inera.certificate.modules.rli.model.external.Observation;
@@ -191,7 +191,7 @@ public class ExternalToTransportConverter {
         return hosPersonalType;
     }
 
-    private PartialDateInterval convertPartialDateInterval(se.inera.certificate.model.PartialInterval source) {
+    private PartialDateInterval convertPartialDateInterval(se.inera.intyg.common.support.model.PartialInterval source) {
         if (source == null) {
             LOG.trace("Source PartialDateInterval was null, could not convert");
             return null;

@@ -6,12 +6,12 @@ import java.util.Map;
 
 import org.joda.time.LocalDateTime;
 
-import se.inera.certificate.model.common.internal.GrundData;
-import se.inera.certificate.model.common.internal.HoSPersonal;
-import se.inera.certificate.model.common.internal.Patient;
-import se.inera.certificate.model.common.internal.Vardenhet;
-import se.inera.certificate.model.common.internal.Vardgivare;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;

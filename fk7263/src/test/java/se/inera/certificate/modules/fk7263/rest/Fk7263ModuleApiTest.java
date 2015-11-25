@@ -6,7 +6,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static se.inera.certificate.common.enumerations.Recipients.FK;
+import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -38,17 +38,17 @@ import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
 import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
 import se.inera.certificate.modules.fk7263.utils.ScenarioNotFoundException;
-import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
-import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.support.api.dto.Vardenhet;
-import se.inera.certificate.modules.support.api.dto.Vardgivare;
-import se.inera.certificate.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.support.api.exception.ModuleSystemException;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.Patient;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
+import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
@@ -85,7 +85,7 @@ public class Fk7263ModuleApiTest {
     @Test
     public void testPdfFileName() {
         Utlatande intyg = new Utlatande();
-        se.inera.certificate.model.common.internal.Patient patient = new se.inera.certificate.model.common.internal.Patient();
+        se.inera.intyg.common.support.model.common.internal.Patient patient = new se.inera.intyg.common.support.model.common.internal.Patient();
         patient.setPersonId(new Personnummer("19121212-1212"));
         intyg.getGrundData().setPatient(patient);
         // TODO Create a proper test when model has been updated.
