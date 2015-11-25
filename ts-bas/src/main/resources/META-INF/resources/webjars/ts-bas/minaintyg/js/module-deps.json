@@ -1,4 +1,5 @@
 [
+    "/web/webjars/ts-bas/minaintyg/templates.js",
     "/web/webjars/ts-bas/minaintyg/js/router.js",
     "/web/webjars/ts-bas/minaintyg/js/messages.js",
     "/web/webjars/ts-bas/minaintyg/js/controllers/ViewCertCtrl.js"

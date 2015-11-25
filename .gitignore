@@ -14,6 +14,7 @@ rebel.xml
 fk7263/activemq-data/localhost/KahaDB/db.data
 fk7263/activemq-data/localhost/KahaDB/db.redo
 */src/main/resources/META-INF/resources/webjars/*/webcert/templates.js
+*/src/main/resources/META-INF/resources/webjars/*/minaintyg/templates.js
 .DS_Store
 ${project.build.directory}
 generated
