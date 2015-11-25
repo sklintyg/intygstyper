@@ -25,7 +25,7 @@
     <constructor-arg value="true"/>
   </bean>
 
-  <bean id="tsBasObjectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper"/>
+  <bean id="tsBasObjectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
 
   <bean id="tsBasModelConverterUtil" class="se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil"/>
 

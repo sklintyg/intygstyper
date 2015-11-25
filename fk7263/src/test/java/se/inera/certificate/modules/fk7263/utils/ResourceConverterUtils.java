@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXB;
 
-import se.inera.certificate.integration.json.CustomObjectMapper;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
