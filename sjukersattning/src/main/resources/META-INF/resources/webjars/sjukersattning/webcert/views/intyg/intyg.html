@@ -19,22 +19,22 @@
                    filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.journaluppgifter!=null || viewState.intygModel.telefonkontaktMedPatienten !=null || viewState.intygModel.kannedomOmPatient !=null }}">
                 <ul class="padded-list" id="baseratPaList">
                   <li ng-show="viewState.intygModel.undersokningAvPatienten!=null">
-                    <span message key="sjukersattning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten | date:'longDate' }}</span>
+                    <span message key="sjukersattning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten | date: 'longDate' }}</span>
                   </li>
                   <li ng-show="viewState.intygModel.journaluppgifter!=null">
-                    <span message key="sjukersattning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter | date:'longDate' }}</span>
+                    <span message key="sjukersattning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter | date: 'longDate' }}</span>
                   </li>
                   <li ng-show="viewState.intygModel.telefonkontaktMedPatienten!=null">
-                    <span message key="sjukersattning.referens.telefonkontaktmedpatienten"></span><span id="telefonKontaktBeskrivning">{{viewState.intygModel.telefonkontaktMedPatienten | date:'longDate' }}</span>
+                    <span message key="sjukersattning.referens.telefonkontaktmedpatienten"></span><span id="telefonKontaktBeskrivning">{{viewState.intygModel.telefonkontaktMedPatienten | date: 'longDate' }}</span>
                   </li>
                   <li ng-show="viewState.intygModel.kannedomOmPatient!=null">
-                    <span message key="sjukersattning.referens.kannedomompatient"></span><span id="kannedomOmPatient">{{viewState.intygModel.kannedomOmPatient | date:'longDate' }}</span>
+                    <span message key="sjukersattning.referens.kannedomompatient"></span><span id="kannedomOmPatient">{{viewState.intygModel.kannedomOmPatient | date: 'longDate' }}</span>
                   </li>
-                  <li ng-repeat="underlag in viewState.intygModel.underlag" ng-show="viewState.intygModel.underlag!=null">
+                  <li ng-repeat="underlag in viewState.intygModel.underlag" ng-if="viewState.intygModel.underlag != null">
                       <span message key="sjukersattning.referens.underlag{{ $index }}"></span>
-                    <span id="underlagText"> {{ underlag.datum | date:'longDate' }}<br/>
-                      <i>{{ underlag.bilaga ? 'ytterligare information bifogas ' : ''}}</i>
-                    </span>
+                      <span id="underlagText"> {{ underlag.datum | date: 'longDate' }}<br/>
+                        <i>{{ underlag.bilaga ? 'ytterligare information bifogas ' : ''}}</i>
+                      </span>
                   </li>
                 </ul>
               </div>
@@ -80,9 +80,9 @@
                 </div>
 
 
-            <div wc-field field-label="sjukersattning.label.diagnostisering" filled="{{viewState.intygModel.diagnostisering!=null}}" id="4b">
+            <div wc-field field-label="sjukersattning.label.diagnostisering" filled="{{true}}" id="4b">
               <div class="form-group">
-                  <p ng-show="viewState.intygModel.diagnostisering">
+                  <p ng-show="viewState.intygModel.diagnostisering!=null">
                      <div id="diagnosticering" class="multiline">{{ viewState.intygModel.diagnostisering }}</div>
                   </p>
                   <p ng-show="viewState.intygModel.nyBedomningDiagnos">
@@ -90,11 +90,10 @@
                     <span id="nyBedomningDiagnos">{{ viewState.intygModel.nyBedomningDiagnos = true ? 'JA' : 'NEJ' }}</span>
                   </p>
               </div>
-
             </div>
 
               <div wc-field field-label="sjukersattning.label.funktionsnedsattningar" id="5"
-                   filled="{{ viewState.intygModel.funktionsnedsattningar!=null && viewState.intygModel.funktionsnedsattningar.length > 0 }}">
+                   filled="{{ viewState.intygModel.funktionsnedsattningar!=null }}">
                 <ul class="padded-list">
                      <li id="funktionsnedsattning" ng-repeat="nedsattning in viewState.intygModel.funktionsnedsattningar">
                         <span message key="sjukersattning.label.intyg.nedsattningar{{ nedsattning.funktionsomrade }}"></span>
@@ -105,7 +104,7 @@
 
               <div wc-field field-label="sjukersattning.label.aktivitetsbegransning"
                    filled="{{viewState.intygModel.aktivitetsbegransning!=null}}">
-                <div id="aktivitetsbegransning" class="multiline">{{viewState.intygModel.aktivitetsbegransning}}</div>
+                   <div id="aktivitetsbegransning" class="multiline">{{viewState.intygModel.aktivitetsbegransning}}</div>
               </div>
 
               <div wc-field field-label="sjukersattning.label.planerad-atgard" id="field7"
@@ -167,7 +166,7 @@
                 <h4>
                   <span message key="sjukersattning.label.datum"></span>
                 </h4>
-                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date:'longDate'}}</p>
+                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date: 'longDate'}}</p>
                 <h4>
                   <span message key="sjukersattning.label.kontakt-info"></span>
                 </h4>

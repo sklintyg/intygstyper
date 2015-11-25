@@ -1,7 +1,7 @@
 angular.module('sjukersattning').controller('sjukersattning.ViewCertCtrl',
-    [ '$log', '$rootScope', '$stateParams', '$scope', '$cookieStore','common.IntygService','common.IntygProxy',
+    [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
         'common.messageService', 'common.UserModel', 'sjukersattning.IntygController.ViewStateService',
-        function($log, $rootScope, $stateParams, $scope, $cookieStore, IntygService, IntygProxy,
+        function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, UserModel, ViewState) {
             'use strict';
 
