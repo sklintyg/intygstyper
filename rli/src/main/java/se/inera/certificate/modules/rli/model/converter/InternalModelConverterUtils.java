@@ -18,8 +18,8 @@
  */
 package se.inera.certificate.modules.rli.model.converter;
 
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
+import se.inera.intyg.common.support.model.Id;
+import se.inera.intyg.common.support.model.Kod;
 
 public final class InternalModelConverterUtils {
 

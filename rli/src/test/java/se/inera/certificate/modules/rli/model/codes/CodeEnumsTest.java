@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import se.inera.certificate.model.Kod;
+import se.inera.intyg.common.support.model.Kod;
 
 public class CodeEnumsTest {
 

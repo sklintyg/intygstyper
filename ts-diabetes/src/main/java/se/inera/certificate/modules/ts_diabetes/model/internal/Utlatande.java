@@ -18,9 +18,9 @@
  */
 package se.inera.certificate.modules.ts_diabetes.model.internal;
 
-import se.inera.certificate.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
 
-public class Utlatande implements se.inera.certificate.model.common.internal.Utlatande {
+public class Utlatande implements se.inera.intyg.common.support.model.common.internal.Utlatande {
 
     private String id;
 

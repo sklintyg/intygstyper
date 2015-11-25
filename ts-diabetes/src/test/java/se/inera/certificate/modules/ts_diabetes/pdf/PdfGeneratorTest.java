@@ -27,7 +27,7 @@ import java.io.IOException;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import se.inera.certificate.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
 import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
 

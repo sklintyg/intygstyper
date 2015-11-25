@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import se.inera.certificate.model.InternalDate;
-import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.LocalDateInterval;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.LocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 
 /**

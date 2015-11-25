@@ -30,7 +30,7 @@ import org.joda.time.Partial;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import se.inera.certificate.model.PartialInterval;
+import se.inera.intyg.common.support.model.PartialInterval;
 
 /**
  * Utility for converting a joda-time Partial to String and vice versa.

@@ -18,15 +18,15 @@
  */
 package se.inera.certificate.modules.ts_bas.model.internal;
 
-import se.inera.certificate.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
 
-public class Utlatande implements se.inera.certificate.model.common.internal.Utlatande {
-
-    private GrundData grundData = new GrundData();
+public class Utlatande implements se.inera.intyg.common.support.model.common.internal.Utlatande {
 
     private String id;
 
     private String typ;
+
+    private GrundData grundData = new GrundData();
 
     private String kommentar;
 

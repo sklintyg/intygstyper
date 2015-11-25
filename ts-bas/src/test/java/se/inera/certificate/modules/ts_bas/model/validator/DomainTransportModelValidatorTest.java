@@ -18,7 +18,7 @@ import org.junit.Test;
 
 import se.inera.certificate.modules.ts_bas.utils.Scenario;
 import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
+import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 
 public class DomainTransportModelValidatorTest {

@@ -22,11 +22,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.junit.Before;
 import org.junit.Test;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.certificate.modules.support.api.dto.HoSPersonal;
-import se.inera.certificate.modules.support.api.dto.Patient;
-import se.inera.certificate.modules.support.api.dto.Vardenhet;
-import se.inera.certificate.modules.support.api.dto.Vardgivare;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.Patient;
+import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
+import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 
 import java.io.IOException;
 

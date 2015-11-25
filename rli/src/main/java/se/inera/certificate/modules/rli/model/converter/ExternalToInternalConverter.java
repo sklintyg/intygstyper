@@ -21,8 +21,8 @@ package se.inera.certificate.modules.rli.model.converter;
 import org.joda.time.Partial;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.util.Strings;
+import se.inera.intyg.common.support.model.PartialInterval;
+import se.inera.intyg.common.support.model.util.Strings;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.CodeConverter;
@@ -94,7 +94,7 @@ public class ExternalToInternalConverter {
         return intUtlatande;
     }
 
-    private Vardenhet convertToIntVardenhet(se.inera.certificate.model.Vardenhet extVardenhet)
+    private Vardenhet convertToIntVardenhet(se.inera.intyg.common.support.model.Vardenhet extVardenhet)
             throws ConverterException {
 
         LOG.trace("Converting vardenhet");
@@ -119,7 +119,7 @@ public class ExternalToInternalConverter {
         return intVardenhet;
     }
 
-    private Vardgivare convertToIntVardgivare(se.inera.certificate.model.Vardgivare extVardgivare)
+    private Vardgivare convertToIntVardgivare(se.inera.intyg.common.support.model.Vardgivare extVardgivare)
             throws ConverterException {
 
         LOG.trace("Converting vardgivare");
@@ -158,7 +158,7 @@ public class ExternalToInternalConverter {
         return intHoSPersonal;
     }
 
-    private Patient convertToIntPatient(se.inera.certificate.model.Patient extPatient) throws ConverterException {
+    private Patient convertToIntPatient(se.inera.intyg.common.support.model.Patient extPatient) throws ConverterException {
 
         LOG.trace("Converting patient");
 
@@ -239,7 +239,7 @@ public class ExternalToInternalConverter {
             throw new ConverterException("- Rekommendationer should contain only 1 Rekommendation");
         }
 
-        se.inera.certificate.model.Rekommendation extRekommendation = extUtlatande.getRekommendationer().get(0);
+        se.inera.intyg.common.support.model.Rekommendation extRekommendation = extUtlatande.getRekommendationer().get(0);
 
         intRekommendation.setRekommendationskod(CodeConverter.fromCode(extRekommendation.getRekommendationskod(),
                 RekommendationsKod.class));

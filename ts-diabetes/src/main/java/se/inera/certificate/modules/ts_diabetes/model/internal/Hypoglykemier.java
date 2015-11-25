@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.ts_diabetes.model.internal;
 
-import se.inera.certificate.model.InternalDate;
+import se.inera.intyg.common.support.model.InternalDate;
 
 public class Hypoglykemier {
     private Boolean kunskapOmAtgarder;

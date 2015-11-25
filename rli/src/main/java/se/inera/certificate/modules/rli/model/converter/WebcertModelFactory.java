@@ -23,7 +23,7 @@ import se.inera.certificate.modules.rli.model.internal.wc.Undersokning;
 import se.inera.certificate.modules.rli.model.internal.wc.Utlatande;
 import se.inera.certificate.modules.rli.model.internal.wc.Vardenhet;
 import se.inera.certificate.modules.rli.model.internal.wc.Vardgivare;
-import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
 
 /**
  * Factory for creating a editable model.
@@ -49,7 +49,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithPatientInfo(Utlatande utlatande,
-            se.inera.certificate.modules.support.api.dto.Patient patient) throws ConverterException {
+            se.inera.intyg.common.support.modules.support.api.dto.Patient patient) throws ConverterException {
 
         if (patient == null) {
             throw new ConverterException("Got null while trying to populateWithPatientInfo");
@@ -59,7 +59,7 @@ public class WebcertModelFactory {
     }
 
     private se.inera.certificate.modules.rli.model.internal.wc.Patient convertPatientToEdit(
-            se.inera.certificate.modules.support.api.dto.Patient patientInfo) {
+            se.inera.intyg.common.support.modules.support.api.dto.Patient patientInfo) {
         se.inera.certificate.modules.rli.model.internal.wc.Patient patient = new se.inera.certificate.modules.rli.model.internal.wc.Patient();
         patient.setFornamn(patientInfo.getFornamn());
         patient.setMellannamn(patientInfo.getMellannamn());
@@ -74,7 +74,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithAktivitetKliniskUndersokning(Utlatande utlatande,
-            se.inera.certificate.modules.support.api.dto.Vardenhet vardenhet) throws ConverterException {
+            se.inera.intyg.common.support.modules.support.api.dto.Vardenhet vardenhet) throws ConverterException {
 
         if (vardenhet == null) {
             throw new ConverterException("Got null while trying to convert Vardenhet");
@@ -93,7 +93,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithSkapadAv(Utlatande utlatande,
-            se.inera.certificate.modules.support.api.dto.HoSPersonal skapadAv) throws ConverterException {
+            se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal skapadAv) throws ConverterException {
         if (skapadAv == null) {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
@@ -102,7 +102,7 @@ public class WebcertModelFactory {
     }
 
     private se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal convertHosPersonalToEdit(
-            se.inera.certificate.modules.support.api.dto.HoSPersonal hosPersType) {
+            se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal hosPersType) {
 
         se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal hosPersonal = new se.inera.certificate.modules.rli.model.internal.wc.HoSPersonal();
 
@@ -118,7 +118,7 @@ public class WebcertModelFactory {
         return hosPersonal;
     }
 
-    private Vardenhet convertVardenhetToEdit(se.inera.certificate.modules.support.api.dto.Vardenhet enhet) {
+    private Vardenhet convertVardenhetToEdit(se.inera.intyg.common.support.modules.support.api.dto.Vardenhet enhet) {
         if (enhet == null) {
             return null;
         }
@@ -135,7 +135,7 @@ public class WebcertModelFactory {
         return vardenhet;
     }
 
-    private Vardgivare convertVardgivareType(se.inera.certificate.modules.support.api.dto.Vardgivare source) {
+    private Vardgivare convertVardgivareType(se.inera.intyg.common.support.modules.support.api.dto.Vardgivare source) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid(source.getHsaId());
         vardgivare.setVardgivarnamn(source.getNamn());

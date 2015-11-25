@@ -7,9 +7,9 @@ import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.certificate.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.service.WebcertModuleService;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 
 /**
  * Util for checking a models consistency in different states.

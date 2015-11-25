@@ -28,8 +28,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.common.internal.HoSPersonal;
-import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
 import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
 import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
@@ -93,9 +93,9 @@ public final class InternalToTransport {
      *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
      *
      * @return {@link TSBasIntyg}, unless the source is null in which case a
-     *         {@link se.inera.certificate.model.converter.util.ConverterException} is thrown
+     *         {@link se.inera.intyg.common.support.model.converter.util.ConverterException} is thrown
      *
-     * @throws se.inera.certificate.model.converter.util.ConverterException
+     * @throws se.inera.intyg.common.support.model.converter.util.ConverterException
      */
     public static RegisterTSBasType convert(Utlatande source)
             throws ConverterException {
@@ -311,7 +311,7 @@ public final class InternalToTransport {
     }
 
     // Convert GrundData //
-    private static GrundData buildGrundData(se.inera.certificate.model.common.internal.GrundData source) {
+    private static GrundData buildGrundData(se.inera.intyg.common.support.model.common.internal.GrundData source) {
         GrundData grundData = new GrundData();
         grundData.setPatient(buildPatient(source.getPatient()));
         grundData.setSigneringsTidstampel(source.getSigneringsdatum().toString(SIGNERINGS_TIDSTAMPEL_FORMAT));
@@ -319,7 +319,7 @@ public final class InternalToTransport {
         return grundData;
     }
 
-    private static Patient buildPatient(se.inera.certificate.model.common.internal.Patient source) {
+    private static Patient buildPatient(se.inera.intyg.common.support.model.common.internal.Patient source) {
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
         patient.setFornamn(source.getFornamn());
@@ -345,7 +345,7 @@ public final class InternalToTransport {
         return skapadAv;
     }
 
-    private static Vardenhet buildVardenhet(se.inera.certificate.model.common.internal.Vardenhet source) {
+    private static Vardenhet buildVardenhet(se.inera.intyg.common.support.model.common.internal.Vardenhet source) {
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setEnhetsId(buildII(Constants.HSA_ID_OID, source.getEnhetsid()));
         vardenhet.setEnhetsnamn(source.getEnhetsnamn());
@@ -357,7 +357,7 @@ public final class InternalToTransport {
         return vardenhet;
     }
 
-    private static Vardgivare buildVardgivare(se.inera.certificate.model.common.internal.Vardgivare source) {
+    private static Vardgivare buildVardgivare(se.inera.intyg.common.support.model.common.internal.Vardgivare source) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid(buildII(Constants.HSA_ID_OID, source.getVardgivarid()));
         vardgivare.setVardgivarnamn(source.getVardgivarnamn());

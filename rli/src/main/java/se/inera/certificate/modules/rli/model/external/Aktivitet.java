@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The aktivitet used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
+ * The aktivitet used by RLI. This class is a copy of the common external model (defined in se.inera.intyg.common.support.model),
  * extending with:
  * <ul>
  * <li> {@link #plats}
@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author Gustav Norbäcker, R2M
  */
-public class Aktivitet extends se.inera.certificate.model.Aktivitet {
+public class Aktivitet extends se.inera.intyg.common.support.model.Aktivitet {
 
     private List<Utforarroll> beskrivsAv;
 

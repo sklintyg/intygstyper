@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.rli.model.external;
 
-public class Observation extends se.inera.certificate.model.Observation {
+public class Observation extends se.inera.intyg.common.support.model.Observation {
 
     private Utforarroll utforsAv;
 

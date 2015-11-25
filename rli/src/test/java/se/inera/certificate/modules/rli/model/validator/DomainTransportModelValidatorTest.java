@@ -16,7 +16,7 @@ import org.junit.Test;
 
 import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
-import se.inera.certificate.xml.SchemaValidatorBuilder;
+import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 
 public class DomainTransportModelValidatorTest {
 

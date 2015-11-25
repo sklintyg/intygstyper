@@ -21,9 +21,9 @@ package se.inera.certificate.modules.rli.validator.external;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.inera.certificate.model.Id;
-import se.inera.certificate.model.Kod;
-import se.inera.certificate.model.Rekommendation;
+import se.inera.intyg.common.support.model.Id;
+import se.inera.intyg.common.support.model.Kod;
+import se.inera.intyg.common.support.model.Rekommendation;
 import se.inera.certificate.modules.rli.model.codes.AktivitetsKod;
 import se.inera.certificate.modules.rli.model.codes.ArrangemangsKod;
 import se.inera.certificate.modules.rli.model.codes.BefattningsKod;

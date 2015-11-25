@@ -23,13 +23,13 @@ import java.util.List;
 
 import org.joda.time.LocalDate;
 
-import se.inera.certificate.model.Referens;
-import se.inera.certificate.model.Rekommendation;
-import se.inera.certificate.model.Status;
-import se.inera.certificate.model.Vardkontakt;
+import se.inera.intyg.common.support.model.Referens;
+import se.inera.intyg.common.support.model.Rekommendation;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.Vardkontakt;
 
 /**
- * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.certificate.model),
+ * The utlåtande used by RLI. This class is a copy of the common external model (defined in se.inera.intyg.common.support.model),
  * extending with:
  * <ul>
  * <li> {@link Arrangemang}
@@ -38,7 +38,7 @@ import se.inera.certificate.model.Vardkontakt;
  *
  * @author Gustav Norbäcker, R2M
  */
-public class Utlatande extends se.inera.certificate.model.Utlatande {
+public class Utlatande extends se.inera.intyg.common.support.model.Utlatande {
 
     private Patient patient;
 

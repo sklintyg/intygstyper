@@ -1,6 +1,6 @@
 package se.inera.certificate.modules.rli.model.external;
 
-public class HosPersonal extends se.inera.certificate.model.HosPersonal {
+public class HosPersonal extends se.inera.intyg.common.support.model.HosPersonal {
 
     private Vardenhet vardenhet;
 

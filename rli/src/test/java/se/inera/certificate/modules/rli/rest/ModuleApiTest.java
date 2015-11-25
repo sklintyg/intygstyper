@@ -19,7 +19,7 @@
 package se.inera.certificate.modules.rli.rest;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertLenientEquals;
-import static se.inera.certificate.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
+import static se.inera.intyg.common.support.modules.support.api.dto.TransportModelVersion.UTLATANDE_V1;
 
 import java.io.StringWriter;
 
@@ -38,13 +38,13 @@ import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.rli.model.internal.mi.Utlatande;
 import se.inera.certificate.modules.rli.utils.Scenario;
 import se.inera.certificate.modules.rli.utils.ScenarioFinder;
-import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.api.ModuleApi;
-import se.inera.certificate.modules.support.api.dto.ExternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
-import se.inera.certificate.modules.support.api.dto.TransportModelHolder;
-import se.inera.certificate.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.support.api.exception.ModuleValidationException;
+import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.api.dto.ExternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.TransportModelHolder;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleValidationException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,7 +58,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ModuleApiTest {
 
     @Autowired
-    private se.inera.certificate.modules.support.api.ModuleApi moduleApi;
+    private se.inera.intyg.common.support.modules.support.api.ModuleApi moduleApi;
 
     @Autowired
     private JAXBContext jaxbContext;

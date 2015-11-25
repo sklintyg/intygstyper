@@ -3,10 +3,10 @@ package se.inera.certificate.modules.fk7263.model.converter;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 
-import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.LocalDateInterval;
-import se.inera.certificate.model.PartialInterval;
-import se.inera.certificate.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.LocalDateInterval;
+import se.inera.intyg.common.support.model.PartialInterval;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 
 public final class DateTimeConverter {
 
