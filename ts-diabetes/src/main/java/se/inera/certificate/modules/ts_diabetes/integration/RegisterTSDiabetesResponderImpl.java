@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
-import se.inera.certificate.logging.LogMarkers;
+import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToInternalConverter;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
