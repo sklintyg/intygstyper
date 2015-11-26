@@ -108,7 +108,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:delsvar[@id='28.1']">
-      <!-- TOOD: kodverk -->
+      <!-- TODO: kodverk -->
       <iso:extends rule="cv"/>
     </iso:rule>
   </iso:pattern>
@@ -256,21 +256,6 @@
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
-
-
-  <iso:pattern>
-    <iso:rule context="//gn:svar[@id='14']">
-      <iso:assert test="count(gn:delsvar[@id='14.1']) = 1">Överskrider FMB måste ha ett delsvar.</iso:assert>
-      <iso:assert test="count(gn:delsvar[@id='14.2']) le 1"/>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern>
-    <iso:rule context="//gn:delsvar[@id='14.1']">
-      <iso:extends rule="boolean"/>
-    </iso:rule>
-  </iso:pattern>
-
 
   <iso:pattern>
     <iso:rule context="//gn:svar[@id='17']">

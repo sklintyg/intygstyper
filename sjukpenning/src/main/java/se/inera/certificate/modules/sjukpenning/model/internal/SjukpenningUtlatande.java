@@ -12,7 +12,7 @@ public class SjukpenningUtlatande implements Utlatande {
 
     private String id;
 
-    private GrundData grundData;
+    private GrundData grundData = new GrundData();
 
     private boolean avstangningSmittskydd;
 
