@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.integration.module.exception.MissingConsentException;
-import se.inera.certificate.logging.LogMarkers;
+import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;

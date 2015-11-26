@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
-import se.inera.certificate.logging.LogMarkers;
+import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;

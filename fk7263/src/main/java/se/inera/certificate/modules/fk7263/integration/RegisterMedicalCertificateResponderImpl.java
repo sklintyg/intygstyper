@@ -15,7 +15,7 @@ import org.w3.wsaddressing10.AttributedURIType;
 
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
-import se.inera.certificate.logging.LogMarkers;
+import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
 import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
