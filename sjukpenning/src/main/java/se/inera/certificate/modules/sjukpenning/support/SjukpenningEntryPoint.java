@@ -1,19 +1,17 @@
 package se.inera.certificate.modules.sjukpenning.support;
 
-import static se.inera.certificate.common.enumerations.Recipients.FK;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.sjukpenning.rest.SjukpenningModuleApi;
-import se.inera.certificate.modules.support.ApplicationOrigin;
-import se.inera.certificate.modules.support.ModuleEntryPoint;
-import se.inera.certificate.modules.support.api.ModuleApi;
-import se.inera.certificate.modules.support.feature.ModuleFeaturesFactory;
+import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
 
 import java.util.Map;
 
 public class SjukpenningEntryPoint implements ModuleEntryPoint {
 
-    public static final String DEFAULT_RECIPIENT_ID = FK.toString();
+    public static final String DEFAULT_RECIPIENT_ID = "FK";
 
     public static final String MODULE_ID = "sjukpenning";
     public static final String MODULE_NAME = "Läkarintyg";

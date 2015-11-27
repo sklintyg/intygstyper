@@ -9,11 +9,11 @@ import javax.xml.namespace.QName;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
-import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.common.internal.HoSPersonal;
-import se.inera.certificate.model.common.internal.Vardenhet;
-import se.inera.certificate.model.converter.util.ConverterException;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
@@ -120,14 +120,14 @@ public class InternalToTransport {
         return vardenhet;
     }
 
-    private static Vardgivare getVardgivare(se.inera.certificate.model.common.internal.Vardgivare sourceVardgivare) {
+    private static Vardgivare getVardgivare(se.inera.intyg.common.support.model.common.internal.Vardgivare sourceVardgivare) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivareId(anHsaId(sourceVardgivare.getVardgivarid()));
         vardgivare.setVardgivarnamn(sourceVardgivare.getVardgivarnamn());
         return vardgivare;
     }
 
-    private static Patient getPatient(se.inera.certificate.model.common.internal.Patient sourcePatient) {
+    private static Patient getPatient(se.inera.intyg.common.support.model.common.internal.Patient sourcePatient) {
         Patient patient = new se.riv.clinicalprocess.healthcond.certificate.v2.Patient();
         patient.setEfternamn(sourcePatient.getEfternamn());
         patient.setFornamn(sourcePatient.getFornamn());

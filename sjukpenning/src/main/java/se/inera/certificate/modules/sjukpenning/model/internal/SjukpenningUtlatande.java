@@ -1,10 +1,10 @@
 package se.inera.certificate.modules.sjukpenning.model.internal;
 
-import se.inera.certificate.model.InternalDate;
-import se.inera.certificate.model.InternalLocalDateInterval;
-import se.inera.certificate.model.common.internal.GrundData;
-import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukpenning.support.SjukpenningEntryPoint;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 public class SjukpenningUtlatande implements Utlatande {
 

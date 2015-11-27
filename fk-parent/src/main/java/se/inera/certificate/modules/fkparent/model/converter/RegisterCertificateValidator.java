@@ -9,9 +9,8 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 
-import se.inera.certificate.xml.SchemaValidatorBuilder;
-
 import com.google.common.base.Charsets;
+import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 
 public class RegisterCertificateValidator {
     private static final String RESPONDER_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd";

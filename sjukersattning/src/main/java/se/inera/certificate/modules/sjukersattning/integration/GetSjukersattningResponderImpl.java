@@ -24,11 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateResponseType;
 import riv.clinicalprocess.healthcond.certificate.getcertificateresponder._1.GetCertificateType;
-import se.inera.certificate.integration.module.exception.InvalidCertificateException;
 import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.rest.SjukersattningModuleApi;
-import se.inera.certificate.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
+import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;

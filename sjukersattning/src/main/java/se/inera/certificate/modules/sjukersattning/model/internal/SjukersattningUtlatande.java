@@ -2,15 +2,15 @@ package se.inera.certificate.modules.sjukersattning.model.internal;
 
 import javax.annotation.Nullable;
 
-import se.inera.certificate.model.InternalDate;
-import se.inera.certificate.model.common.internal.GrundData;
-import se.inera.certificate.model.common.internal.Utlatande;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 import java.util.List;
 

@@ -4,10 +4,10 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.certificate.model.converter.util.ConverterException;
-import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.sjukpenning.model.internal.SjukpenningUtlatande;
-import se.inera.certificate.modules.support.api.dto.*;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 
 /**
  * Factory for creating an editable model.

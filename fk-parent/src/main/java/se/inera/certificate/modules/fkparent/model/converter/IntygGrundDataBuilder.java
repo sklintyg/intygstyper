@@ -1,9 +1,8 @@
 package se.inera.certificate.modules.fkparent.model.converter;
 
 import org.joda.time.LocalDateTime;
-
-import se.inera.certificate.model.common.internal.*;
-import se.inera.certificate.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 
 /* TODO: this class should be moved to test directory and put in a test-jar. */
 

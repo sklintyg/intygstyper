@@ -267,7 +267,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public Class<? extends se.inera.certificate.model.common.internal.Utlatande> getImplementationClass() {
+    public Class<? extends se.inera.intyg.common.support.model.common.internal.Utlatande> getImplementationClass() {
         return Utlatande.class;
     }
 

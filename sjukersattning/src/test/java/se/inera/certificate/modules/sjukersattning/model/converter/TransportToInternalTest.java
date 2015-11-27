@@ -6,10 +6,10 @@ import static org.junit.Assert.assertEquals;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import se.inera.certificate.model.InternalDate;
 import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuilder;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.intyg.common.support.model.InternalDate;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public class TransportToInternalTest {

@@ -4,13 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import se.inera.certificate.integration.json.CustomObjectMapper;
 import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternalTest;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.support.api.CertificateHolder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 
 public class ConverterUtilTest {
 
