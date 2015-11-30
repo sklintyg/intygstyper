@@ -25,7 +25,7 @@
       >
     <jaxws:outFaultInterceptors>
       <bean
-          class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+          class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg
             value="transform/get-sjukpenning-transform.xslt"/>
       </bean>
@@ -40,7 +40,7 @@
       endpointName="r:RegisterCertificateResponderPort"
       >
     <jaxws:outFaultInterceptors>
-      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+      <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/register-sjukpenning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>

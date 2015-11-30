@@ -14,6 +14,6 @@
 
   <bean id="sjukersattningEntryPoint" class="se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint" />
 
-  <bean id="sjukersattning-objectMapper" class="se.inera.certificate.integration.json.CustomObjectMapper"/>
+  <bean id="sjukersattning-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
   
 </beans>

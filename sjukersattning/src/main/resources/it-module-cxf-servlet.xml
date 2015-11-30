@@ -19,7 +19,7 @@
   <jaxws:endpoint address="/get-certificate-se/v2.0"
       implementor="se.inera.certificate.modules.sjukersattning.integration.GetSjukersattningResponderImpl">
     <jaxws:outFaultInterceptors>
-      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+      <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/get-sjukersattning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
@@ -28,7 +28,7 @@
   <jaxws:endpoint address="/register-certificate-se/v2.0"
       implementor="se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningResponderImpl">
     <jaxws:outFaultInterceptors>
-      <bean class="se.inera.certificate.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
+      <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/register-sjukersattning-transform.xslt"/>
       </bean>
     </jaxws:outFaultInterceptors>
