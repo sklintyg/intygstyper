@@ -64,10 +64,10 @@ public class SjukersattningModuleApi implements ModuleApi {
 
     private ModuleContainerApi moduleContainer;
 
-    @Autowired
+    @Autowired(required = false)
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
 
-    @Autowired
+    @Autowired(required = false)
     private GetCertificateResponderInterface getCertificateResponderInterface;
 
     /**
