@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.integration;
+package se.inera.intyg.intygstyper.fk7263.integration;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -17,11 +17,11 @@ import se.inera.intyg.common.support.integration.module.exception.CertificateAlr
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
-import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
-import se.inera.certificate.modules.fk7263.validator.ProgrammaticTransportValidator;
+import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
+import se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidator;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;

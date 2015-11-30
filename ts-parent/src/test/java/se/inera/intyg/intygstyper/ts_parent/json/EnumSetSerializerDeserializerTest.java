@@ -1,9 +1,9 @@
-package se.inera.certificate.modules.ts_parent.json;
+package se.inera.intyg.intygstyper.ts_parent.json;
 
 import static junit.framework.Assert.assertEquals;
-import static se.inera.certificate.modules.ts_parent.json.EnumSetSerializerDeserializerTest.TestEnum.ONE;
-import static se.inera.certificate.modules.ts_parent.json.EnumSetSerializerDeserializerTest.TestEnum.THREE;
-import static se.inera.certificate.modules.ts_parent.json.EnumSetSerializerDeserializerTest.TestEnum.TWO;
+import static se.inera.intyg.intygstyper.ts_parent.json.EnumSetSerializerDeserializerTest.TestEnum.ONE;
+import static se.inera.intyg.intygstyper.ts_parent.json.EnumSetSerializerDeserializerTest.TestEnum.THREE;
+import static se.inera.intyg.intygstyper.ts_parent.json.EnumSetSerializerDeserializerTest.TestEnum.TWO;
 
 import java.util.EnumSet;
 

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.converter;
+package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;

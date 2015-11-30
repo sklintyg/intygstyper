@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.converter;
+package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -24,10 +24,10 @@ import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.utils.ModelAssert;
-import se.inera.certificate.modules.fk7263.utils.Scenario;
-import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.utils.ModelAssert;
+import se.inera.intyg.intygstyper.fk7263.utils.Scenario;
+import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 

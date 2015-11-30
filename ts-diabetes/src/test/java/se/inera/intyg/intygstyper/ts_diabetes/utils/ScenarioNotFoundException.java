@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.utils;
+package se.inera.intyg.intygstyper.ts_diabetes.utils;
 
 /**
  * Thrown when an expected scenario wasn't found.

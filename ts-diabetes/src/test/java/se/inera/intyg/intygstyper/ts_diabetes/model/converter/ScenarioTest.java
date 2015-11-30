@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.model.converter;
+package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.reflectionassert.ReflectionAssert;
 
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 public class ScenarioTest {

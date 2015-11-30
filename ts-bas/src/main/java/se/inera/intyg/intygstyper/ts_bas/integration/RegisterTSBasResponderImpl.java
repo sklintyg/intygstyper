@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.integration;
+package se.inera.intyg.intygstyper.ts_bas.integration;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -18,11 +18,11 @@ import se.inera.intyg.common.support.integration.module.exception.InvalidCertifi
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
-import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
-import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
-import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
+import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.ObjectFactory;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;

@@ -1,8 +1,8 @@
-package se.inera.certificate.modules.ts_diabetes.validator.internal;
+package se.inera.intyg.intygstyper.ts_diabetes.validator.internal;
 
-import se.inera.certificate.modules.ts_diabetes.model.codes.KorkortsKod;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.KorkortsKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 
 public class ValidationContext {
 

@@ -1,8 +1,8 @@
-package se.inera.certificate.modules.ts_bas.transformation;
+package se.inera.intyg.intygstyper.ts_bas.transformation;
 
-import se.inera.certificate.modules.ts_parent.transformation.test.BooleanXPathExpression;
-import se.inera.certificate.modules.ts_parent.transformation.test.DateXPathExpression;
-import se.inera.certificate.modules.ts_parent.transformation.test.StringXPathExpression;
+import se.inera.intyg.intygstyper.ts_parent.transformation.test.BooleanXPathExpression;
+import se.inera.intyg.intygstyper.ts_parent.transformation.test.DateXPathExpression;
+import se.inera.intyg.intygstyper.ts_parent.transformation.test.StringXPathExpression;
 
 /**
  * Defines xPath expressions and templates used to create all expressions needed by Transportstyrelsen.

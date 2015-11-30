@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.internal;
+package se.inera.intyg.intygstyper.ts_bas.model.internal;
 
 public class Sjukhusvard {
     //har patienten vårdats på sjukhus eller haft kontakt med läkare med anledning av punkterna 1-13

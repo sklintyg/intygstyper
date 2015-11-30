@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.pdf;
+package se.inera.intyg.intygstyper.ts_bas.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,30 +27,30 @@ import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.ts_bas.model.codes.BefattningKod;
-import se.inera.certificate.modules.ts_bas.model.codes.DiabetesKod;
-import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
-import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
-import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
-import se.inera.certificate.modules.ts_bas.model.internal.Funktionsnedsattning;
-import se.inera.certificate.modules.ts_bas.model.internal.HjartKarl;
-import se.inera.certificate.modules.ts_bas.model.internal.HorselBalans;
-import se.inera.certificate.modules.ts_bas.model.internal.IntygAvser;
-import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_bas.model.internal.Kognitivt;
-import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
-import se.inera.certificate.modules.ts_bas.model.internal.Medvetandestorning;
-import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
-import se.inera.certificate.modules.ts_bas.model.internal.Neurologi;
-import se.inera.certificate.modules.ts_bas.model.internal.Njurar;
-import se.inera.certificate.modules.ts_bas.model.internal.Psykiskt;
-import se.inera.certificate.modules.ts_bas.model.internal.Sjukhusvard;
-import se.inera.certificate.modules.ts_bas.model.internal.SomnVakenhet;
-import se.inera.certificate.modules.ts_bas.model.internal.Syn;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
-import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.BefattningKod;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.IdKontrollKod;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Funktionsnedsattning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HjartKarl;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HorselBalans;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Kognitivt;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Medicinering;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Medvetandestorning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.NarkotikaLakemedel;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Neurologi;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Njurar;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Psykiskt;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Sjukhusvard;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.SomnVakenhet;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utvecklingsstorning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -261,7 +261,7 @@ public class PdfGenerator {
      * Method for filling out the fields of a pdf with data from the internal model.
      *
      * @param utlatande
-     *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} containing data for populating
+     *            {@link se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande} containing data for populating
      *            the pdf
      * @param fields
      *            The fields of the pdf

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.model.internal;
+package se.inera.intyg.intygstyper.ts_diabetes.model.internal;
 
 import se.inera.intyg.common.support.model.InternalDate;
 

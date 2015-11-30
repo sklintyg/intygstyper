@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.model.validator;
+package se.inera.intyg.intygstyper.ts_diabetes.model.validator;
 
 import static org.junit.Assert.*;
 
@@ -8,10 +8,10 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioNotFoundException;
-import se.inera.certificate.modules.ts_diabetes.validator.Validator;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 public class TransportValidatorTest {

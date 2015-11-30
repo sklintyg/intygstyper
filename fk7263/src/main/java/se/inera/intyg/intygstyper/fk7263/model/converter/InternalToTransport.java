@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.converter;
+package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
@@ -16,8 +16,8 @@ import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;

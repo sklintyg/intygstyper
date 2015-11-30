@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.utils;
+package se.inera.intyg.intygstyper.ts_diabetes.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,16 +19,16 @@ public class ResourceConverterUtils {
     }
 
 
-    public static se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande toInternal(File resource)
+    public static se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande toInternal(File resource)
             throws IOException {
         return OBJECT_MAPPER.readValue(resource,
-                se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
+                se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande.class);
     }
 
-    public static se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande toInternal(String resource)
+    public static se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande toInternal(String resource)
             throws IOException {
         return OBJECT_MAPPER.readValue(resource,
-                se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande.class);
+                se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande.class);
     }
 
 }

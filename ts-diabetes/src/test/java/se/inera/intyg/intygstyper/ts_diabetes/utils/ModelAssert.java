@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.utils;
+package se.inera.intyg.intygstyper.ts_diabetes.utils;
 
 import junit.framework.AssertionFailedError;
 

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.utils;
+package se.inera.intyg.intygstyper.ts_bas.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.xml.bind.JAXB;
 
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

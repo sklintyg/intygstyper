@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.utils;
+package se.inera.intyg.intygstyper.fk7263.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,13 +21,13 @@ public final class ResourceConverterUtils {
         return JAXB.unmarshal(resource, RegisterMedicalCertificateType.class);
     }
 
-    public static se.inera.certificate.modules.fk7263.model.internal.Utlatande toInternal(File resource)
+    public static se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande toInternal(File resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande.class);
     }
 
-    public static se.inera.certificate.modules.fk7263.model.internal.Utlatande toInternal(String resource)
+    public static se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande toInternal(String resource)
             throws IOException {
-        return OBJECT_MAPPER.readValue(resource, se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
+        return OBJECT_MAPPER.readValue(resource, se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande.class);
     }
 }

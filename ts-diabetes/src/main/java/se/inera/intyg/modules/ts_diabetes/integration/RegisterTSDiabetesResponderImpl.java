@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.integration;
+package se.inera.intyg.intygstyper.ts_diabetes.integration;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -18,11 +18,11 @@ import se.inera.intyg.common.support.integration.module.exception.CertificateAlr
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
-import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToInternalConverter;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
-import se.inera.certificate.modules.ts_diabetes.util.ConverterUtil;
-import se.inera.certificate.modules.ts_diabetes.validator.Validator;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.TransportToInternalConverter;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
+import se.inera.intyg.intygstyper.ts_diabetes.util.ConverterUtil;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;

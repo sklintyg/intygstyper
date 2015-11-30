@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.converter;
+package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;

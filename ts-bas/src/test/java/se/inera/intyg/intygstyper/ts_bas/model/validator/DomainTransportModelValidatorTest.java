@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.validator;
+package se.inera.intyg.intygstyper.ts_bas.model.validator;
 
 import static org.junit.Assert.fail;
 
@@ -16,8 +16,8 @@ import javax.xml.validation.Validator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.certificate.modules.ts_bas.utils.Scenario;
-import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
 import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 

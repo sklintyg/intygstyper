@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.validator;
+package se.inera.intyg.intygstyper.ts_bas.validator;
 
 import java.util.List;
 
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.validator.internal.InternalValidatorInstance;
-import se.inera.certificate.modules.ts_bas.validator.transport.TransportValidatorInstance;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.validator.internal.InternalValidatorInstance;
+import se.inera.intyg.intygstyper.ts_bas.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class TsBasValidator {
@@ -31,7 +31,7 @@ public class TsBasValidator {
      * Validates an internal Utlatande.
      *
      * @param utlatande
-     *            se.inera.certificate.modules.ts_bas.model.internal.Utlatande
+     *            se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande
      * @return List of validation errors, or an empty string if validated correctly.
      */
     public ValidateDraftResponse validateInternal(Utlatande utlatande) {

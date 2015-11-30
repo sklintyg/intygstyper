@@ -1,19 +1,19 @@
-package se.inera.certificate.modules.ts_diabetes.model.converter;
+package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
-import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Vardkontakt;
 import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.types.v1.II;
@@ -119,7 +119,7 @@ public final class InternalToTransportConverter {
         return result;
     }
 
-    private static Hypoglykemier readHypoglykemier(se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier hypoglykemier) {
+    private static Hypoglykemier readHypoglykemier(se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier hypoglykemier) {
         Hypoglykemier result = new Hypoglykemier();
         result.setHarKunskapOmAtgarder(hypoglykemier.getKunskapOmAtgarder() != null && hypoglykemier.getKunskapOmAtgarder());
         result.setHarTeckenNedsattHjarnfunktion(hypoglykemier.getTeckenNedsattHjarnfunktion() != null
@@ -218,7 +218,7 @@ public final class InternalToTransportConverter {
         return result;
     }
 
-    private static Diabetes readDiabetes(se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes diabetes) {
+    private static Diabetes readDiabetes(se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes diabetes) {
         Diabetes result = new Diabetes();
         result.setAnnanBehandlingBeskrivning(diabetes.getAnnanBehandlingBeskrivning());
         result.setDebutArDiabetes(diabetes.getObservationsperiod());

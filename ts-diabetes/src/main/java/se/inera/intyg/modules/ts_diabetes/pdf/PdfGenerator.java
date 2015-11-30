@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_diabetes.pdf;
+package se.inera.intyg.intygstyper.ts_diabetes.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,17 +27,17 @@ import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.ObservationsKod;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
-import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.ObservationsKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Vardkontakt;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -232,7 +232,7 @@ public class PdfGenerator {
     /**
      * Method for filling out the fields of a pdf with data from the internal model.
      *
-     * @param utlatande {@link se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande} containing data for
+     * @param utlatande {@link se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande} containing data for
      *                  populating the pdf
      * @param fields    The fields of the pdf
      * @throws DocumentException

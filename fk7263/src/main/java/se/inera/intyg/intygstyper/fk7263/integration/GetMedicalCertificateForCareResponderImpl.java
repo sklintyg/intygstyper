@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.fk7263.integration;
+package se.inera.intyg.intygstyper.fk7263.integration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
-import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
-import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;

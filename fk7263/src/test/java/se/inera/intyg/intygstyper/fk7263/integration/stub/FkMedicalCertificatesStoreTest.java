@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.integration.stub;
+package se.inera.intyg.intygstyper.fk7263.integration.stub;
 
 import static com.google.common.collect.Maps.newHashMap;
 import static org.junit.Assert.*;
@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.fk7263.integration.stub.FkMedicalCertificatesStore;
+import se.inera.intyg.intygstyper.fk7263.integration.stub.FkMedicalCertificatesStore;
 
 public class FkMedicalCertificatesStoreTest {
 

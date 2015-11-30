@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.rest;
+package se.inera.intyg.intygstyper.ts_diabetes.rest;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -36,16 +36,16 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleConvert
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToTransportConverter;
-import se.inera.certificate.modules.ts_diabetes.model.converter.TransportToInternalConverter;
-import se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator;
-import se.inera.certificate.modules.ts_diabetes.pdf.PdfGeneratorException;
-import se.inera.certificate.modules.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
-import se.inera.certificate.modules.ts_diabetes.validator.Validator;
-import se.inera.certificate.modules.ts_parent.integration.SendTSClient;
-import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.InternalToTransportConverter;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.TransportToInternalConverter;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.WebcertModelFactory;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGenerator;
+import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorException;
+import se.inera.intyg.intygstyper.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
+import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
+import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;

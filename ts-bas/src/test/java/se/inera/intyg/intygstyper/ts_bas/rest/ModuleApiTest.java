@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.rest;
+package se.inera.intyg.intygstyper.ts_bas.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -61,11 +61,11 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.utils.ResourceConverterUtils;
-import se.inera.certificate.modules.ts_bas.utils.Scenario;
-import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.utils.ResourceConverterUtils;
+import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.utils;
+package se.inera.intyg.intygstyper.ts_diabetes.utils;
 
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 
@@ -40,7 +40,7 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande asInternalModel()
+    se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande asInternalModel()
             throws ScenarioNotFoundException;
 
 }

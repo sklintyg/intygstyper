@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.integration;
+package se.inera.intyg.intygstyper.ts_diabetes.integration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.ts_diabetes.model.converter.InternalToTransportConverter;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.InternalToTransportConverter;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;

@@ -1,11 +1,11 @@
-package se.inera.certificate.modules.ts_diabetes.model.validator;
+package se.inera.intyg.intygstyper.ts_diabetes.model.validator;
 
 import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
 import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 

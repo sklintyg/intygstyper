@@ -1,10 +1,10 @@
-package se.inera.certificate.modules.ts_diabetes.model.internal;
+package se.inera.intyg.intygstyper.ts_diabetes.model.internal;
 
 import java.util.EnumSet;
 import java.util.Set;
 
-import se.inera.certificate.modules.ts_parent.json.AbstractEnumSetDeserializer;
-import se.inera.certificate.modules.ts_parent.json.AbstractEnumSetSerializer;
+import se.inera.intyg.intygstyper.ts_parent.json.AbstractEnumSetDeserializer;
+import se.inera.intyg.intygstyper.ts_parent.json.AbstractEnumSetSerializer;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

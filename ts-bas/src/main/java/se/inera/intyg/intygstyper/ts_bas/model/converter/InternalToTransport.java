@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.model.converter;
+package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,20 +30,20 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
-import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
-import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
-import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
-import se.inera.certificate.modules.ts_bas.model.internal.Funktionsnedsattning;
-import se.inera.certificate.modules.ts_bas.model.internal.HjartKarl;
-import se.inera.certificate.modules.ts_bas.model.internal.HorselBalans;
-import se.inera.certificate.modules.ts_bas.model.internal.IntygAvser;
-import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
-import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
-import se.inera.certificate.modules.ts_bas.model.internal.Syn;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.KorkortsKod;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Funktionsnedsattning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HjartKarl;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HorselBalans;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Medicinering;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.NarkotikaLakemedel;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.types.v1.II;
@@ -71,9 +71,9 @@ import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 import se.inera.intygstjanster.ts.services.v1.Vardenhet;
 import se.inera.intygstjanster.ts.services.v1.Vardgivare;
-import se.inera.certificate.modules.ts_bas.model.codes.IdKontrollKod;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.IdKontrollKod;
 /**
- * Convert from {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande} to the external {@link TSBasIntyg}
+ * Convert from {@link se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande} to the external {@link TSBasIntyg}
  * model.
  *
  * @author erik
@@ -90,7 +90,7 @@ public final class InternalToTransport {
      * Takes an internal Utlatande and converts it to the external model.
      *
      * @param source
-     *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
+     *            {@link se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande}
      *
      * @return {@link TSBasIntyg}, unless the source is null in which case a
      *         {@link se.inera.intyg.common.support.model.converter.util.ConverterException} is thrown
@@ -201,7 +201,7 @@ public final class InternalToTransport {
         return horselBalans;
     }
 
-    private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt source) throws ConverterException {
+    private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.intyg.intygstyper.ts_bas.model.internal.Vardkontakt source) throws ConverterException {
         if (source.getIdkontroll() == null) {
             throw new ConverterException("Idkontroll was null");
         }
@@ -219,7 +219,7 @@ public final class InternalToTransport {
         return intygAvser;
     }
 
-    private static Medvetandestorning buildMedvetandestorning(se.inera.certificate.modules.ts_bas.model.internal.Medvetandestorning source) {
+    private static Medvetandestorning buildMedvetandestorning(se.inera.intyg.intygstyper.ts_bas.model.internal.Medvetandestorning source) {
         Medvetandestorning medvetandestorning = new Medvetandestorning();
         medvetandestorning.setHarMedvetandestorning(source.getMedvetandestorning());
         medvetandestorning.setMedvetandestorningBeskrivning(source.getBeskrivning());
@@ -241,7 +241,7 @@ public final class InternalToTransport {
         return funktioner;
     }
 
-    private static Sjukhusvard buildSjukhusvard(se.inera.certificate.modules.ts_bas.model.internal.Sjukhusvard source) {
+    private static Sjukhusvard buildSjukhusvard(se.inera.intyg.intygstyper.ts_bas.model.internal.Sjukhusvard source) {
         Sjukhusvard sjukhusvard = new Sjukhusvard();
         sjukhusvard.setHarSjukhusvardEllerLakarkontakt(source.getSjukhusEllerLakarkontakt());
         sjukhusvard.setSjukhusvardEllerLakarkontaktAnledning(source.getAnledning());
@@ -303,7 +303,7 @@ public final class InternalToTransport {
     }
 
     private static Utvecklingsstorning buildUtvecklingsstorning(
-            se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning source) {
+            se.inera.intyg.intygstyper.ts_bas.model.internal.Utvecklingsstorning source) {
         Utvecklingsstorning utvecklingsstorning = new Utvecklingsstorning();
         utvecklingsstorning.setHarAndrayndrom(source.getHarSyndrom());
         utvecklingsstorning.setHarPsykiskUtvecklingsstorning(source.getPsykiskUtvecklingsstorning());

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.validator;
+package se.inera.intyg.intygstyper.fk7263.validator;
 
 import java.util.ArrayList;
 import java.util.List;

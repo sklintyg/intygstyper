@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.pdf;
+package se.inera.intyg.intygstyper.fk7263.pdf;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,9 +23,9 @@ import se.inera.intyg.common.support.common.enumerations.Recipients;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.utils.Scenario;
-import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.utils.Scenario;
+import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

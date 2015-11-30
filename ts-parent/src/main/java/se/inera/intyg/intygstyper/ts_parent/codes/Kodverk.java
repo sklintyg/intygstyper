@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_parent.codes;
+package se.inera.intyg.intygstyper.ts_parent.codes;
 
 public enum Kodverk {
 

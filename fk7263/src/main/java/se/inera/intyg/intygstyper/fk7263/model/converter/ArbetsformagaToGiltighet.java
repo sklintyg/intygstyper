@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.converter;
+package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.joda.time.LocalDate;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.LocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 /**
  * Created by erik on 15-04-08.

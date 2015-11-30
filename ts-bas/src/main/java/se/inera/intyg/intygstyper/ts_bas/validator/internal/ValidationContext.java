@@ -1,8 +1,8 @@
-package se.inera.certificate.modules.ts_bas.validator.internal;
+package se.inera.intyg.intygstyper.ts_bas.validator.internal;
 
-import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
-import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.KorkortsKod;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 
 public class ValidationContext {
 

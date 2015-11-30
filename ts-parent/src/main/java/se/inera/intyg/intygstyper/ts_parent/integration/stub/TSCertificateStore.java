@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_parent.integration.stub;
+package se.inera.intyg.intygstyper.ts_parent.integration.stub;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.integration.stub;
+package se.inera.intyg.intygstyper.fk7263.integration.stub;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;

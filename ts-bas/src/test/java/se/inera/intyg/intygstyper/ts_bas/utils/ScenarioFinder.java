@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.utils;
+package se.inera.intyg.intygstyper.ts_bas.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -148,7 +148,7 @@ public final class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.ts_bas.model.internal.Utlatande asInternalModel()
+        public se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));

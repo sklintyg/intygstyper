@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_parent.transformation;
+package se.inera.intyg.intygstyper.ts_parent.transformation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

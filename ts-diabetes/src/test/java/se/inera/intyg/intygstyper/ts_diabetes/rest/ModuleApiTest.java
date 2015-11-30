@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_diabetes.rest;
+package se.inera.intyg.intygstyper.ts_diabetes.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -56,12 +56,12 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.utils.ResourceConverterUtils;
-import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ResourceConverterUtils;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

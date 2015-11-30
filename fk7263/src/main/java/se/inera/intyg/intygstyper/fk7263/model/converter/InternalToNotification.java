@@ -1,4 +1,4 @@
-    package se.inera.certificate.modules.fk7263.model.converter;
+    package se.inera.intyg.intygstyper.fk7263.model.converter;
 
     import java.util.List;
 
@@ -10,8 +10,8 @@
     import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
     import se.inera.intyg.common.support.model.InternalLocalDateInterval;
     import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-    import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-    import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+    import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+    import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
     import se.inera.intyg.common.support.modules.service.WebcertModuleService;
     import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
     import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;

@@ -1,11 +1,11 @@
-package se.inera.certificate.modules.fk7263.utils;
+package se.inera.intyg.intygstyper.fk7263.utils;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.certificate.modules.fk7263.model.converter.EmptyStringUtil;
+import se.inera.intyg.intygstyper.fk7263.model.converter.EmptyStringUtil;
 
 public class EmptyStringUtilsTest {
 

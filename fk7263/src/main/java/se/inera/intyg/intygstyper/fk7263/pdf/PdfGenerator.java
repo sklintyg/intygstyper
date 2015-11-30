@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.pdf;
+package se.inera.intyg.intygstyper.fk7263.pdf;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
@@ -13,7 +13,7 @@ import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 

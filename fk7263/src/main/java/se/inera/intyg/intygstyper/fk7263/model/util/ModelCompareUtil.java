@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.util;
+package se.inera.intyg.intygstyper.fk7263.model.util;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 
 /**

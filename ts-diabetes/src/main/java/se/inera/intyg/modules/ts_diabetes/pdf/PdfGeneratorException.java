@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_diabetes.pdf;
+package se.inera.intyg.intygstyper.ts_diabetes.pdf;
 
 public class PdfGeneratorException extends Exception {
 

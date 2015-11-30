@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.validator.internal;
+package se.inera.intyg.intygstyper.ts_bas.validator.internal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,26 +13,26 @@ import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftRespon
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
-import se.inera.certificate.modules.ts_bas.model.codes.DiabetesKod;
-import se.inera.certificate.modules.ts_bas.model.internal.Bedomning;
-import se.inera.certificate.modules.ts_bas.model.internal.Diabetes;
-import se.inera.certificate.modules.ts_bas.model.internal.Funktionsnedsattning;
-import se.inera.certificate.modules.ts_bas.model.internal.HjartKarl;
-import se.inera.certificate.modules.ts_bas.model.internal.HorselBalans;
-import se.inera.certificate.modules.ts_bas.model.internal.IntygAvser;
-import se.inera.certificate.modules.ts_bas.model.internal.Kognitivt;
-import se.inera.certificate.modules.ts_bas.model.internal.Medicinering;
-import se.inera.certificate.modules.ts_bas.model.internal.Medvetandestorning;
-import se.inera.certificate.modules.ts_bas.model.internal.NarkotikaLakemedel;
-import se.inera.certificate.modules.ts_bas.model.internal.Neurologi;
-import se.inera.certificate.modules.ts_bas.model.internal.Njurar;
-import se.inera.certificate.modules.ts_bas.model.internal.Psykiskt;
-import se.inera.certificate.modules.ts_bas.model.internal.Sjukhusvard;
-import se.inera.certificate.modules.ts_bas.model.internal.SomnVakenhet;
-import se.inera.certificate.modules.ts_bas.model.internal.Syn;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.model.internal.Utvecklingsstorning;
-import se.inera.certificate.modules.ts_bas.model.internal.Vardkontakt;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Funktionsnedsattning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HjartKarl;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HorselBalans;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Kognitivt;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Medicinering;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Medvetandestorning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.NarkotikaLakemedel;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Neurologi;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Njurar;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Psykiskt;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Sjukhusvard;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.SomnVakenhet;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utvecklingsstorning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Vardkontakt;
 import se.inera.intyg.common.support.validate.StringValidator;
 
 /**

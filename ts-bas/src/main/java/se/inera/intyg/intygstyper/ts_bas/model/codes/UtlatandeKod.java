@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.model.codes;
+package se.inera.intyg.intygstyper.ts_bas.model.codes;
 
-import se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
 /**
  * Represents the code used by this module to define the Utlåtandetyp.

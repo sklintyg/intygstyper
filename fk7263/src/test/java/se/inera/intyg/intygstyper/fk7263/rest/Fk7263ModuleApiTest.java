@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.rest;
+package se.inera.intyg.intygstyper.fk7263.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -33,11 +33,11 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.utils.ResourceConverterUtils;
-import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
-import se.inera.certificate.modules.fk7263.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.utils.ResourceConverterUtils;
+import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.fk7263.utils.ScenarioNotFoundException;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;

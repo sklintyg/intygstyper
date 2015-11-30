@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.rest;
+package se.inera.intyg.intygstyper.fk7263.rest;
 
 import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
@@ -14,17 +14,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.certificate.modules.fk7263.model.converter.ArbetsformagaToGiltighet;
-import se.inera.certificate.modules.fk7263.model.converter.InternalToNotification;
-import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
-import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
-import se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.model.util.ModelCompareUtil;
-import se.inera.certificate.modules.fk7263.pdf.PdfGenerator;
-import se.inera.certificate.modules.fk7263.pdf.PdfGeneratorException;
-import se.inera.certificate.modules.fk7263.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.fk7263.model.converter.ArbetsformagaToGiltighet;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToNotification;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.fk7263.model.converter.WebcertModelFactory;
+import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
+import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
+import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
+import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
@@ -420,12 +420,12 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     // - - - - - Private transformation methods for building responses - - - - - //
 
-    private se.inera.certificate.modules.fk7263.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
+    private se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
             throws ModuleException {
 
         try {
-            se.inera.certificate.modules.fk7263.model.internal.Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
-                    se.inera.certificate.modules.fk7263.model.internal.Utlatande.class);
+            se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
+                    se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande.class);
 
             // Explicitly populate the giltighet interval since it is information derived from
             // the arbetsformaga but needs to be serialized into the Utkast model.
@@ -448,7 +448,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     private InternalModelResponse toInteralModelResponse(
-            se.inera.certificate.modules.fk7263.model.internal.Utlatande internalModel) throws ModuleException {
+            se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);

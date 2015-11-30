@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.util;
+package se.inera.intyg.intygstyper.fk7263.model.util;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

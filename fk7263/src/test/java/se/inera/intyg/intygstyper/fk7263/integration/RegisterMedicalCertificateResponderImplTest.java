@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.integration;
+package se.inera.intyg.intygstyper.fk7263.integration;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -21,10 +21,10 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
-import se.inera.certificate.modules.fk7263.model.converter.TransportToInternal;
-import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
+import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.converter;
+package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.ts_bas.model.codes.UtlatandeKod;
-import se.inera.certificate.modules.ts_bas.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_bas.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_bas.model.internal.Synskarpevarden;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Synskarpevarden;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypBas;
 import se.inera.intygstjanster.ts.services.v1.DiabetesTypBas;
@@ -51,7 +51,7 @@ public final class TransportToInternal {
      * Takes an utlatande on the transport format and converts it to the internal model.
      *
      * @param source
-     *            {@link se.inera.certificate.modules.ts_bas.model.internal.Utlatande}
+     *            {@link se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande}
      *
      * @return {@link Utlatande}, unless the source is null in which case a
      *         {@link se.inera.intyg.common.support.model.converter.util.ConverterException} is thrown

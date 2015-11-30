@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.utils;
+package se.inera.intyg.intygstyper.ts_bas.utils;
 
 /**
  * Thrown when an expected scenario wasn't found.

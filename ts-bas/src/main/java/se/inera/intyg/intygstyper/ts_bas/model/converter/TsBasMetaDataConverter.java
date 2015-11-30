@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.converter;
+package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import java.util.ArrayList;
 import java.util.Collections;

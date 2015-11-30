@@ -1,6 +1,6 @@
-package se.inera.certificate.modules.ts_diabetes.validator.transport;
+package se.inera.intyg.intygstyper.ts_diabetes.validator.transport;
 
-import se.inera.certificate.modules.ts_diabetes.model.codes.KorkortsKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.KorkortsKod;
 import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 

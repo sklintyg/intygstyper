@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_parent.transformation.test;
+package se.inera.intyg.intygstyper.ts_parent.transformation.test;
 
 import javax.xml.xpath.XPathConstants;
 

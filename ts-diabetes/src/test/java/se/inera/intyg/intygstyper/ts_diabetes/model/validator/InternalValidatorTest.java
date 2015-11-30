@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_diabetes.model.validator;
+package se.inera.intyg.intygstyper.ts_diabetes.model.validator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -28,11 +28,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
-import se.inera.certificate.modules.ts_diabetes.utils.Scenario;
-import se.inera.certificate.modules.ts_diabetes.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_diabetes.validator.Validator;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
 
 public class InternalValidatorTest {
 
@@ -106,7 +106,7 @@ public class InternalValidatorTest {
         assertEquals("diabetes", validationResponse.getValidationErrors().get(index).getField());
     }
 
-    private Utlatande buildUtlatandeWithoutDiabetesFieldsSet() throws se.inera.certificate.modules.ts_diabetes.utils.ScenarioNotFoundException {
+    private Utlatande buildUtlatandeWithoutDiabetesFieldsSet() throws se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-insulinperiod").asInternalModel();
         utlatande.getDiabetes().setAnnanBehandlingBeskrivning(null);
         utlatande.getDiabetes().setDiabetestyp(null);

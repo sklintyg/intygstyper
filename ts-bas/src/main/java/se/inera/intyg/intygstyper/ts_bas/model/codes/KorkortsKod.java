@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.codes;
+package se.inera.intyg.intygstyper.ts_bas.model.codes;
 
 import java.util.EnumSet;
 

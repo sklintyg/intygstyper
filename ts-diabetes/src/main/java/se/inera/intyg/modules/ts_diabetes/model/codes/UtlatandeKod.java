@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_diabetes.model.codes;
+package se.inera.intyg.intygstyper.ts_diabetes.model.codes;
 
-import se.inera.certificate.modules.ts_diabetes.support.TsDiabetesEntryPoint;
+import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 
 
 /**

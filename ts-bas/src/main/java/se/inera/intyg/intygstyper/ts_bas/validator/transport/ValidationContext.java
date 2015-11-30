@@ -1,6 +1,6 @@
-package se.inera.certificate.modules.ts_bas.validator.transport;
+package se.inera.intyg.intygstyper.ts_bas.validator.transport;
 
-import se.inera.certificate.modules.ts_bas.model.codes.KorkortsKod;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.KorkortsKod;
 import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 

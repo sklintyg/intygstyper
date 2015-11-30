@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_diabetes.model.codes;
+package se.inera.intyg.intygstyper.ts_diabetes.model.codes;
 
-import se.inera.certificate.modules.ts_parent.codes.Kodverk;
-import static se.inera.certificate.modules.ts_parent.codes.Kodverk.ID_KONTROLL;
+import se.inera.intyg.intygstyper.ts_parent.codes.Kodverk;
+import static se.inera.intyg.intygstyper.ts_parent.codes.Kodverk.ID_KONTROLL;
 
 /**
  * Represents the code used by this module to define id-kontroll, Needs to be updated when proper codes are delivered..

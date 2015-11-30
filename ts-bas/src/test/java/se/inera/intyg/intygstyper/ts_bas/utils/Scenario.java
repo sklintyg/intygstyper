@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.utils;
+package se.inera.intyg.intygstyper.ts_bas.utils;
 
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 
@@ -37,5 +37,5 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    se.inera.certificate.modules.ts_bas.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
+    se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande asInternalModel() throws ScenarioNotFoundException;
 }

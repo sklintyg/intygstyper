@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.converter.util;
+package se.inera.intyg.intygstyper.ts_bas.model.converter.util;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 
 @ContextConfiguration(locations = ("/ts-bas-test-config.xml"))
 @RunWith(SpringJUnit4ClassRunner.class)

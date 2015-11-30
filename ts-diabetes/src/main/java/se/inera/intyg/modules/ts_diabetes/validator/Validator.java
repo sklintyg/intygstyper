@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_diabetes.validator;
+package se.inera.intyg.intygstyper.ts_diabetes.validator;
 
 import java.util.List;
 
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.certificate.modules.ts_diabetes.validator.internal.InternalValidatorInstance;
-import se.inera.certificate.modules.ts_diabetes.validator.transport.TransportValidatorInstance;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.internal.InternalValidatorInstance;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 public class Validator {
@@ -31,11 +31,11 @@ public class Validator {
      * Validates an external Utlatande.
      *
      * @param utlatande
-     *            se.inera.certificate.modules.ts_diabetes.model.external.Utlatande
+     *            se.inera.intyg.intygstyper.ts_diabetes.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
      */
     public ValidateDraftResponse validateInternal(
-            se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande utlatande) {
+            se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande utlatande) {
         InternalValidatorInstance instance = new InternalValidatorInstance();
         return instance.validate(utlatande);
     }

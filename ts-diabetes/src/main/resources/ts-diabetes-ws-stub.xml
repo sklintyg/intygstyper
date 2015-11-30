@@ -12,6 +12,6 @@
         profile="dev,test,local">
 
   <!-- Simulates TS recieving -->
-  <jaxws:endpoint address="/register-diabetes-certificate-stub" implementor="se.inera.certificate.modules.ts_diabetes.integration.stub.RegisterCertificateResponderStub" />
+  <jaxws:endpoint address="/register-diabetes-certificate-stub" implementor="se.inera.intyg.intygstyper.ts_diabetes.integration.stub.RegisterCertificateResponderStub" />
 
 </beans>

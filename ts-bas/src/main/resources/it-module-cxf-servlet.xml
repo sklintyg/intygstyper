@@ -20,7 +20,7 @@
 
     <!-- ws endpoints -->
     <jaxws:endpoint address="/get-ts-bas/v1.0"
-        implementor="se.inera.certificate.modules.ts_bas.integration.GetTSBasResponderImpl">
+        implementor="se.inera.intyg.intygstyper.ts_bas.integration.GetTSBasResponderImpl">
         <jaxws:outFaultInterceptors>
             <bean
                 class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
@@ -31,7 +31,7 @@
     </jaxws:endpoint>
 
     <jaxws:endpoint address="/register-ts-bas/v1.0"
-        implementor="se.inera.certificate.modules.ts_bas.integration.RegisterTSBasResponderImpl">
+        implementor="se.inera.intyg.intygstyper.ts_bas.integration.RegisterTSBasResponderImpl">
         <jaxws:outFaultInterceptors>
             <bean
                 class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
@@ -49,11 +49,11 @@
         </jaxws:schemaLocations>
     </jaxws:endpoint>
 
-  <bean id="tsBasXslTransformer" class="se.inera.certificate.modules.ts_parent.transformation.XslTransformer">
+  <bean id="tsBasXslTransformer" class="se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer">
     <constructor-arg value="xsl/transform-ts-bas.xsl"/>
   </bean>
 
-  <bean id="tsBasSendCertificateClient" class="se.inera.certificate.modules.ts_parent.integration.SendTSClient">
+  <bean id="tsBasSendCertificateClient" class="se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient">
     <constructor-arg value="${registercertificatev1.endpoint.url}"/>
   </bean>
 

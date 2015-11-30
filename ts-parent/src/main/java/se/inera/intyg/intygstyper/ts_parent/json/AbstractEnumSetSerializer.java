@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_parent.json;
+package se.inera.intyg.intygstyper.ts_parent.json;
 
 import java.io.IOException;
 import java.util.EnumSet;

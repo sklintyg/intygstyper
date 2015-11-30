@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.model.converter;
+package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -53,7 +53,7 @@ public class WebcertModelFactoryTest {
         HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", "forskrivarKod", "befattning", null, vardenhet);
         CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
-        se.inera.certificate.modules.ts_bas.model.internal.Utlatande utlatande = null;
+        se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande utlatande = null;
 
         try {
             utlatande = factory.createNewWebcertDraft(draftCertHolder, null);

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.utils;
+package se.inera.intyg.intygstyper.fk7263.utils;
 
 /**
  * Thrown when an expected scenario wasn't found.

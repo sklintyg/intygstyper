@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.rest;
+package se.inera.intyg.intygstyper.ts_bas.rest;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -54,17 +54,17 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleConvert
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
-import se.inera.certificate.modules.ts_bas.model.converter.TransportToInternal;
-import se.inera.certificate.modules.ts_bas.model.converter.TsBasMetaDataConverter;
-import se.inera.certificate.modules.ts_bas.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.pdf.PdfGenerator;
-import se.inera.certificate.modules.ts_bas.pdf.PdfGeneratorException;
-import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
-import se.inera.certificate.modules.ts_parent.integration.SendTSClient;
-import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.TsBasMetaDataConverter;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.WebcertModelFactory;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGenerator;
+import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGeneratorException;
+import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
+import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
+import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
@@ -310,11 +310,11 @@ public class TsBasModuleApi implements ModuleApi {
         return toInteralModelResponse(utlatande);
     }
 
-    private se.inera.certificate.modules.ts_bas.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
+    private se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
             throws ModuleException {
         try {
             return objectMapper.readValue(internalModel.getInternalModel(),
-                    se.inera.certificate.modules.ts_bas.model.internal.Utlatande.class);
+                    se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande.class);
 
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to deserialize internal model", e);
@@ -322,7 +322,7 @@ public class TsBasModuleApi implements ModuleApi {
     }
 
     private InternalModelResponse toInteralModelResponse(
-            se.inera.certificate.modules.ts_bas.model.internal.Utlatande internalModel) throws ModuleException {
+            se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.utils;
+package se.inera.intyg.intygstyper.fk7263.utils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -136,7 +136,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.fk7263.model.internal.Utlatande asInternalModel()
+        public se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));

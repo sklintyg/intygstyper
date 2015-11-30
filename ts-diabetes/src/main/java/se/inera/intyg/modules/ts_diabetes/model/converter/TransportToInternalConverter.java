@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.model.converter;
+package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,16 +12,16 @@ import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
-import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Hypoglykemier;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvser;
-import se.inera.certificate.modules.ts_diabetes.model.internal.IntygAvserKategori;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Syn;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Synskarpevarden;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Vardkontakt;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Synskarpevarden;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Vardkontakt;
 import se.inera.intyg.common.util.integration.schema.adapter.InternalDateAdapter;
 import se.inera.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
@@ -31,8 +31,8 @@ import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 import se.inera.intygstjanster.ts.services.v1.SynfunktionDiabetes;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
-import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
-import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
+import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 
 public final class TransportToInternalConverter {
     private static final String VARDKONTAKT_TYP = "5880005";

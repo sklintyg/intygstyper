@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.util;
+package se.inera.intyg.intygstyper.ts_diabetes.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
-import se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_diabetes.support.TsDiabetesEntryPoint;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 
 import java.io.IOException;
 import java.io.StringWriter;

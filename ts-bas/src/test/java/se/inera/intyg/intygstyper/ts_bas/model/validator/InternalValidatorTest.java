@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.ts_bas.model.validator;
+package se.inera.intyg.intygstyper.ts_bas.model.validator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,11 +29,11 @@ import org.junit.Test;
 
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.utils.Scenario;
-import se.inera.certificate.modules.ts_bas.utils.ScenarioFinder;
-import se.inera.certificate.modules.ts_bas.utils.ScenarioNotFoundException;
-import se.inera.certificate.modules.ts_bas.validator.TsBasValidator;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
 
 public class InternalValidatorTest {
 

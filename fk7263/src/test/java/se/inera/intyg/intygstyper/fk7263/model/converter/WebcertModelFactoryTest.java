@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.model.converter;
+package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
 import se.inera.intyg.common.support.modules.support.api.dto.Patient;

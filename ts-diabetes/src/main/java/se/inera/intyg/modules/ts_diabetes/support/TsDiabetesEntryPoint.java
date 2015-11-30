@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.support;
+package se.inera.intyg.intygstyper.ts_diabetes.support;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
-import se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi;
+import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 
 public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 

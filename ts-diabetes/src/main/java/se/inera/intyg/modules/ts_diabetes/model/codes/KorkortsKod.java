@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.model.codes;
+package se.inera.intyg.intygstyper.ts_diabetes.model.codes;
 
 import java.util.EnumSet;
 

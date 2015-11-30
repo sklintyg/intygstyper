@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.util;
+package se.inera.intyg.intygstyper.ts_diabetes.util;
 
 import java.util.ArrayList;
 import java.util.Collections;

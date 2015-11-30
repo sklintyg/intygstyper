@@ -1,8 +1,8 @@
-package se.inera.certificate.modules.ts_diabetes.model.codes;
-import se.inera.certificate.modules.ts_parent.codes.Kodverk;
-import static se.inera.certificate.modules.ts_parent.codes.Kodverk.ICD_10;
-import static se.inera.certificate.modules.ts_parent.codes.Kodverk.OBSERVATIONER;
-import static se.inera.certificate.modules.ts_parent.codes.Kodverk.SNOMED_CT;
+package se.inera.intyg.intygstyper.ts_diabetes.model.codes;
+import se.inera.intyg.intygstyper.ts_parent.codes.Kodverk;
+import static se.inera.intyg.intygstyper.ts_parent.codes.Kodverk.ICD_10;
+import static se.inera.intyg.intygstyper.ts_parent.codes.Kodverk.OBSERVATIONER;
+import static se.inera.intyg.intygstyper.ts_parent.codes.Kodverk.SNOMED_CT;
 
 public enum ObservationsKod  {
 

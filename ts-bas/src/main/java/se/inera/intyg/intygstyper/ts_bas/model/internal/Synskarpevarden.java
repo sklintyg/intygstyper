@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.internal;
+package se.inera.intyg.intygstyper.ts_bas.model.internal;
 
 /**
  * Class encapsulating the values for synskarpa for a single eye.

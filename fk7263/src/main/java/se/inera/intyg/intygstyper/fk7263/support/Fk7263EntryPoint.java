@@ -1,9 +1,9 @@
-package se.inera.certificate.modules.fk7263.support;
+package se.inera.intyg.intygstyper.fk7263.support;
 
 import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
+import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;

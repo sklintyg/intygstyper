@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_parent.integration;
+package se.inera.intyg.intygstyper.ts_parent.integration;
 
 import java.io.StringReader;
 

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.validator;
+package se.inera.intyg.intygstyper.fk7263.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;

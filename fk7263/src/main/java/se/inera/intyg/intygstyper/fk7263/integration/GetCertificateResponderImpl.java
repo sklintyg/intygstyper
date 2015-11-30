@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.fk7263.integration;
+package se.inera.intyg.intygstyper.fk7263.integration;
 
 import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
@@ -35,9 +35,9 @@ import org.w3c.dom.Document;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.integration.module.exception.MissingConsentException;
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.certificate.modules.fk7263.model.converter.InternalToTransport;
-import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.rivtabp20.v1.GetCertificateResponderInterface;

@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.integration;
+package se.inera.intyg.intygstyper.ts_bas.integration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,9 +16,9 @@ import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.certificate.modules.ts_bas.model.converter.InternalToTransport;
-import se.inera.certificate.modules.ts_bas.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;

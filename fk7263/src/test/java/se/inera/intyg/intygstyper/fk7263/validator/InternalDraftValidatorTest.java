@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.fk7263.validator;
+package se.inera.intyg.intygstyper.fk7263.validator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -17,9 +17,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
-import se.inera.certificate.modules.fk7263.utils.Scenario;
-import se.inera.certificate.modules.fk7263.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.utils.Scenario;
+import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
@@ -40,7 +40,7 @@ public class InternalDraftValidatorTest {
 
     @Test
     public void testValidate() throws Exception {
-        for (se.inera.certificate.modules.fk7263.utils.Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+        for (se.inera.intyg.intygstyper.fk7263.utils.Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asInternalModel();
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
             assertEquals(

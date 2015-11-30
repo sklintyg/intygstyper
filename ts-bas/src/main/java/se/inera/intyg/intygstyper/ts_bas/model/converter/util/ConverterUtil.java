@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.model.converter.util;
+package se.inera.intyg.intygstyper.ts_bas.model.converter.util;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
-import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
-import se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

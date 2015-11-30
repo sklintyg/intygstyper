@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.utils;
+package se.inera.intyg.intygstyper.ts_diabetes.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -145,7 +145,7 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public se.inera.certificate.modules.ts_diabetes.model.internal.Utlatande asInternalModel()
+        public se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
                 return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));

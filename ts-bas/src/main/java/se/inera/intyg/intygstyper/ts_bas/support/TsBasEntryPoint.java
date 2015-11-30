@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_bas.support;
+package se.inera.intyg.intygstyper.ts_bas.support;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
-import se.inera.certificate.modules.ts_bas.rest.TsBasModuleApi;
+import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 
 public class TsBasEntryPoint implements ModuleEntryPoint {
 

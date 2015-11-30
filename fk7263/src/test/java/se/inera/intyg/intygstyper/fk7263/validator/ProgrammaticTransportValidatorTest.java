@@ -1,8 +1,8 @@
-package se.inera.certificate.modules.fk7263.validator;
+package se.inera.intyg.intygstyper.fk7263.validator;
 
 import static org.junit.Assert.assertEquals;
-import static se.inera.certificate.modules.fk7263.validator.ProgrammaticTransportValidator.findAktivitetWithCode;
-import static se.inera.certificate.modules.fk7263.validator.ProgrammaticTransportValidator.findFunktionsTillstandType;
+import static se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidator.findAktivitetWithCode;
+import static se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidator.findFunktionsTillstandType;
 import iso.v21090.dt.v1.II;
 
 import java.io.File;

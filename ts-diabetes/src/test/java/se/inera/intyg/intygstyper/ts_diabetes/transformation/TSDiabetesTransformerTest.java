@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.transformation;
+package se.inera.intyg.intygstyper.ts_diabetes.transformation;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.fail;
@@ -7,7 +7,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import se.inera.certificate.modules.ts_parent.transformation.XslTransformer;
+import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 
 import javax.xml.transform.Source;

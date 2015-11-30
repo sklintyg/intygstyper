@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.ts_diabetes.validator.transport;
+package se.inera.intyg.intygstyper.ts_diabetes.validator.transport;
 
 import java.util.ArrayList;
 import java.util.List;
