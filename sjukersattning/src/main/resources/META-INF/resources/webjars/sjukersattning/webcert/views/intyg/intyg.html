@@ -39,14 +39,6 @@
                 </ul>
               </div>
 
-              <!--
-             Diagnoskod enligt ICD-10 (huvuddiagnos): F45
-
-            Förtydligande av diagnos/diagnoser
-            Somatoforma syndrom. C45 Mesoteliom. C34 Malign tumör i bronk och lunga. sddasdsa
-
-              -->
-
               <div wc-field field-label="sjukersattning.label.diagnos" filled="{{viewState.intygModel.diagnoser!=null}}" id="field4">
                 <div class="form-group">
                   <span> Baserat på diagnoskodsystem: {{ viewState.intygModel.diagnoser[0].diagnosKodSystem === 'ICD-10-SE' ? 'ICD-10-SE' : 'KSH-97-P' }}<br/></span>
@@ -144,7 +136,7 @@
                  <div id="kommentar" class="multiline">{{viewState.intygModel.kommentar}}</div>
               </div>
 
-              <div wc-field field-number="11" field-label="sjukersattning.label.kontakt-med-fk"
+              <div wc-field field-label="sjukersattning.label.kontakt-med-fk"
                    filled="{{true}}" id="field11">
                 <span id="kontaktMedFk" ng-show="viewState.intygModel.kontaktMedFk">
                   <span message key="sjukersattning.label.yes"></span>
