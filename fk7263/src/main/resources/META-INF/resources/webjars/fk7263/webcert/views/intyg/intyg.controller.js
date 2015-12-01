@@ -14,7 +14,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             // Page setup
             $scope.user = UserModel;
 
-            ViewState.intygModel = {};
+            //ViewState.intygModel = {};
             ViewState.intygModel.filledAlways = true;
 
             /**
