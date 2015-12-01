@@ -43,7 +43,7 @@
   </beans>
 
   <beans>
-    <context:component-scan base-package="se.inera.certificate.modules.ts_diabetes" />
+    <context:component-scan base-package="se.inera.intyg.intygstyper.ts_diabetes" />
   </beans>
 
 </beans>

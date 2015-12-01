@@ -13,19 +13,19 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     
-  <bean class="se.inera.certificate.modules.ts_diabetes.rest.TsDiabetesModuleApi" />
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi" />
 
-  <bean class="se.inera.certificate.modules.ts_diabetes.validator.Validator" />
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.validator.Validator" />
   
-  <bean class="se.inera.certificate.modules.ts_diabetes.util.ConverterUtil" />
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.util.ConverterUtil" />
 
-  <bean class="se.inera.certificate.modules.ts_diabetes.pdf.PdfGenerator">
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGenerator">
     <constructor-arg value="true" />
   </bean>
 
-  <bean class="se.inera.certificate.modules.ts_diabetes.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.model.converter.WebcertModelFactory" />
 
   <bean id="tsDiabetesEntryPoint"
-    class="se.inera.certificate.modules.ts_diabetes.support.TsDiabetesEntryPoint" />
+    class="se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint" />
 
 </beans>

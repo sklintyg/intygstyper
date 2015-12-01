@@ -21,7 +21,7 @@
   
   <!-- ws endpoints -->
   <jaxws:endpoint address="/get-ts-diabetes/v1.0"
-                  implementor="se.inera.certificate.modules.ts_diabetes.integration.GetTSDiabetesResponderImpl">
+                  implementor="se.inera.intyg.intygstyper.ts_diabetes.integration.GetTSDiabetesResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/se-intygstjanster-ts-services/get-ts-diabetes-transform.xslt"/>
@@ -30,7 +30,7 @@
 
   </jaxws:endpoint>
   <jaxws:endpoint address="/register-ts-diabetes/v1.0"
-                  implementor="se.inera.certificate.modules.ts_diabetes.integration.RegisterTSDiabetesResponderImpl">
+                  implementor="se.inera.intyg.intygstyper.ts_diabetes.integration.RegisterTSDiabetesResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/se-intygstjanster-ts-services/register-ts-diabetes-transform.xslt"/>
@@ -46,11 +46,11 @@
         </jaxws:schemaLocations>
   </jaxws:endpoint>
   
-  <bean id="tsDiabetesXslTransformer" class="se.inera.certificate.modules.ts_parent.transformation.XslTransformer">
+  <bean id="tsDiabetesXslTransformer" class="se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer">
     <constructor-arg value="xsl/transform-ts-diabetes.xsl"/>
   </bean>
 
-  <bean id="sendTsDiabetesClient" class="se.inera.certificate.modules.ts_parent.integration.SendTSClient">
+  <bean id="sendTsDiabetesClient" class="se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient">
     <constructor-arg value="${registercertificatev1.endpoint.url}"/>
   </bean>
 

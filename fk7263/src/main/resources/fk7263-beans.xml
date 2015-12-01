@@ -13,22 +13,22 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean class="se.inera.certificate.modules.fk7263.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.model.converter.WebcertModelFactory" />
 
-  <bean class="se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi" />
 
-  <bean class="se.inera.certificate.modules.fk7263.model.util.ModelCompareUtil" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil" />
 
-  <bean class="se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil" />
 
-  <bean class="se.inera.certificate.modules.fk7263.validator.InternalDraftValidator" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator" />
   
-  <bean class="se.inera.certificate.modules.fk7263.model.converter.InternalToNotification" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.model.converter.InternalToNotification" />
 
-  <bean id="Fk7263EntryPoint" class="se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint" />
+  <bean id="Fk7263EntryPoint" class="se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint" />
 
   <bean id="fk7263-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
   
-  <bean class="se.inera.certificate.modules.fk7263.integration.stub.FkMedicalCertificatesStore"/>
+  <bean class="se.inera.intyg.intygstyper.fk7263.integration.stub.FkMedicalCertificatesStore"/>
 
 </beans>
