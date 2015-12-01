@@ -117,10 +117,8 @@ public final class TransportToInternal {
         LocalDate toDate = null;
         for (ArbetsformagaNedsattningType nedsattning : source) {
             LocalDateInterval nextObservationsperiod = new LocalDateInterval(nedsattning.getVaraktighetFrom(), nedsattning.getVaraktighetTom());
-            if (nextObservationsperiod != null) {
-                if (toDate == null || toDate.isBefore(nextObservationsperiod.getFrom())) {
-                    toDate = nextObservationsperiod.getTom();
-                }
+            if (toDate == null || toDate.isBefore(nextObservationsperiod.getFrom())) {
+                toDate = nextObservationsperiod.getTom();
             }
         }
         return toDate;
@@ -130,10 +128,8 @@ public final class TransportToInternal {
         LocalDate fromDate = null;
         for (ArbetsformagaNedsattningType nedsattning : source) {
             LocalDateInterval nextObservationsperiod = new LocalDateInterval(nedsattning.getVaraktighetFrom(), nedsattning.getVaraktighetTom());
-            if (nextObservationsperiod != null) {
-                if (fromDate == null || fromDate.isAfter(nextObservationsperiod.getFrom())) {
-                    fromDate = nextObservationsperiod.getFrom();
-                }
+            if (fromDate == null || fromDate.isAfter(nextObservationsperiod.getFrom())) {
+                fromDate = nextObservationsperiod.getFrom();
             }
         }
         return fromDate;
