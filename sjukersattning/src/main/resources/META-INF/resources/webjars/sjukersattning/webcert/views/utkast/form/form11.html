@@ -3,16 +3,16 @@
 
     <div class="form-group form-inline">
         <label class="radio-inline">
-            <input id="kontaktFkJa" name="kontkatFk" type="radio" value="true"
+            <input id="kontaktFkJa" name="kontkatFk" type="radio" ng-value="true"
                    ng-model="model.kontaktMedFk">Ja
         </label>
         <label class="radio-inline">
-            <input id="kontaktFkNej" name="andraMedicinskaUtredningar" type="radio" value="false"
+            <input id="kontaktFkNej" name="andraMedicinskaUtredningar" type="radio" ng-value="false" checked="checked"
                    ng-model="model.kontaktMedFk">Nej
         </label>
     </div>
 
-    <div class="form-group" ng-show="model.kontaktMedFk">
+    <div class="form-group" ng-show="model.kontaktMedFk === true">
         <label class="control-label bold"><span message key="sjukersattning.label.kontaktMedFk.anledningTillKontakt"/></label>
 
             <textarea id="anledningTillKontakt" name="otherInformation" rows="6"
