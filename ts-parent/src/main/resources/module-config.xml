@@ -9,12 +9,12 @@
 		http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
     <beans profile="dev,it-ts-stub">
-        <bean id="stub" class="se.inera.certificate.modules.ts_parent.integration.stub.RegisterCertificateResponderStub" />
+        <bean id="stub" class="se.inera.intyg.intygstyper.ts_parent.integration.stub.RegisterCertificateResponderStub" />
         <jaxws:endpoint address="/register-certificate-stub" implementor="#stub" />
     </beans>
     
     <beans profile="dev,it-ts-stub,testability-api">
-        <bean class="se.inera.certificate.modules.ts_parent.integration.stub.TSCertificateStore" />
+        <bean class="se.inera.intyg.intygstyper.ts_parent.integration.stub.TSCertificateStore" />
     </beans>
     
     <beans profile="dev,testability-api">
@@ -30,7 +30,7 @@
             </jaxrs:extensionMappings>
         </jaxrs:server>
 
-        <bean id="tsCertificateStubRestApi" class="se.inera.certificate.modules.ts_parent.integration.stub.TSCertificateStoreRestApi" />
+        <bean id="tsCertificateStubRestApi" class="se.inera.intyg.intygstyper.ts_parent.integration.stub.TSCertificateStoreRestApi" />
     </beans>
 
 </beans>

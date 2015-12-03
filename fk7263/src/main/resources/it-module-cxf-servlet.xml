@@ -21,7 +21,7 @@
 
   <!-- ws endpoints -->
   <jaxws:endpoint address="/get-certificate/v1.0"
-                  implementor="se.inera.certificate.modules.fk7263.integration.GetCertificateResponderImpl">
+                  implementor="se.inera.intyg.intygstyper.fk7263.integration.GetCertificateResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/get-certificate-transform.xslt"/>
@@ -31,7 +31,7 @@
   </jaxws:endpoint>
 
   <jaxws:endpoint address="/get-medical-certificate-for-care/v1.0"
-                  implementor="se.inera.certificate.modules.fk7263.integration.GetMedicalCertificateForCareResponderImpl">
+                  implementor="se.inera.intyg.intygstyper.fk7263.integration.GetMedicalCertificateForCareResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/clinicalprocess-healthcond-certificate/get-medical-certificate-for-care-transform.xslt"/>
@@ -40,7 +40,7 @@
 
   </jaxws:endpoint>
 
-  <bean id="registerCertificateEndPoint" class="se.inera.certificate.modules.fk7263.integration.RegisterMedicalCertificateResponderImpl">
+  <bean id="registerCertificateEndPoint" class="se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl">
       <property name="wireTapped" value="false" />
   </bean>
   
@@ -53,7 +53,7 @@
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
-  <bean id="registerCertificateWiretapEndPoint" class="se.inera.certificate.modules.fk7263.integration.RegisterMedicalCertificateResponderImpl">
+  <bean id="registerCertificateWiretapEndPoint" class="se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl">
       <property name="wireTapped" value="true" />
   </bean>
   
