@@ -288,8 +288,8 @@ public class TsBasModuleApi implements ModuleApi {
     }
 
     @Override
-    public Class<? extends se.inera.intyg.common.support.model.common.internal.Utlatande> getImplementationClass() {
-        return Utlatande.class;
+    public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
+        return objectMapper.readValue(utlatandeJson, Utlatande.class);
     }
 
     // - - - - - Private scope - - - - - //

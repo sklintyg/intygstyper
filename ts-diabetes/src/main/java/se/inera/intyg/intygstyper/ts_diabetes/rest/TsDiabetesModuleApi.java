@@ -258,9 +258,10 @@ public class TsDiabetesModuleApi implements ModuleApi {
         throw new UnsupportedOperationException();
     }
 
+
     @Override
-    public Class<? extends se.inera.intyg.common.support.model.common.internal.Utlatande> getImplementationClass() {
-        return Utlatande.class;
+    public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
+        return objectMapper.readValue(utlatandeJson, Utlatande.class);
     }
 
     private CertificateResponse convert(GetTSDiabetesResponseType diabetesResponseType, boolean revoked) throws ModuleException {

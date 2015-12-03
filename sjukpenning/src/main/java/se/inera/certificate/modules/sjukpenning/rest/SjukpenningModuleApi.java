@@ -232,8 +232,8 @@ public class SjukpenningModuleApi implements ModuleApi {
     }
 
     @Override
-    public Class<? extends Utlatande> getImplementationClass() {
-        return SjukpenningUtlatande.class;
+    public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
+        return objectMapper.readValue(utlatandeJson, SjukpenningUtlatande.class);
     }
 
     private CertificateResponse convert(GetCertificateResponseType response, boolean revoked) throws ModuleException {
