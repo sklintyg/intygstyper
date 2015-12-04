@@ -48,7 +48,7 @@ describe('IntygController', function() {
 
             $q = _$q_;
             $httpBackend = _$httpBackend_;
-            _UserModel_.setUser(getTestUser({ROLE_LAKARE: 'Läkare'}));
+            _UserModel_.setUser(getTestUser({LAKARE: 'Läkare'}));
             // arrange
             spyOn($scope, '$broadcast');
         }]));
