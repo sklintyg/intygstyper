@@ -212,9 +212,14 @@ public class InternalToTransport {
         }
 
         if (source.getKontaktMedFk() != null) {
-            svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).
-                    withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString()).
-                    withDelsvar(ANLEDNING_TILL_KONTAKT_DELSVAR_ID, source.getAnledningTillKontakt()).build());
+            if (source.getKontaktMedFk() && source.getAnledningTillKontakt() != null) {
+                svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).
+                        withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString()).
+                        withDelsvar(ANLEDNING_TILL_KONTAKT_DELSVAR_ID, source.getAnledningTillKontakt()).build());
+            } else {
+                svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).
+                        withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString()).build());
+            }
         }
 
         return svars;
