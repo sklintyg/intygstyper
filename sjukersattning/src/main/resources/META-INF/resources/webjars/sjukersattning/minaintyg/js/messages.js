@@ -1,7 +1,6 @@
 /* jshint maxlen: false, unused: false */
 var sjukersattningMessages = {
     'sv': {
-
         'sjukersattning.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
         'sjukersattning.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
         'sjukersattning.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',

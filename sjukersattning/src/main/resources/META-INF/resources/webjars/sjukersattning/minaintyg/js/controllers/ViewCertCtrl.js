@@ -102,6 +102,7 @@ angular.module('sjukersattning').controller('sjukersattning.ViewCertCtrl',
             certificateService.getCertificate($stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
+                    $log.info(JSON.stringify(result));
                     $scope.cert = result.utlatande;
                     $scope.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
                     $rootScope.cert = $scope.cert;

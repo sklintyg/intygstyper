@@ -1,5 +1,4 @@
-/* global sjukersattningMessages */
-angular.module('sjukersattning', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
+angular.module('sjukersattning', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('sjukersattning').config(function($stateProvider) {
     'use strict';
