@@ -23,7 +23,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                         ],
 
                         form4b: ['diagnostisering',
-                                 'nyBedomningDiagnos' ],
+                                  new ModelAttr( 'nyBedomningDiagnos', { defaultValue : false}) ],
 
                         form5: [new ModelAttr( 'funktionsnedsattningar' , {
                             defaultValue:  [  ] })],
