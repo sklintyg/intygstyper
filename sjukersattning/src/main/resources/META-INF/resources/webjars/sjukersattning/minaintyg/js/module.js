@@ -1,3 +1,4 @@
+/* Glovbal */
 angular.module('sjukersattning', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('sjukersattning').config(function($stateProvider) {
@@ -8,7 +9,7 @@ angular.module('sjukersattning').config(function($stateProvider) {
             url :'/sjukersattning/view/:certificateId',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/view-cert.html',
             controller: 'sjukersattning.ViewCertCtrl',
-            data : { title: 'Läkarintyg' }
+            data : { title: 'Läkarintyg sjukersättning', keepInboxTabActive: true }
         }).
         state('sjukersattning-recipients', {
             url : '/sjukersattning/recipients',

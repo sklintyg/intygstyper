@@ -9,5 +9,16 @@ module.exports = {
                 return '/web/webjars/sjukersattning/webcert/' + url;
             }
         }
+    },
+    minaintyg: {
+        cwd: 'src/main/resources/META-INF/resources/webjars/sjukersattning/minaintyg',
+        src: ['**/*.html'],
+        dest: 'src/main/resources/META-INF/resources/webjars/sjukersattning/minaintyg/templates.js',
+        options:{
+            module: 'sjukersattning',
+            url: function(url) {
+                return '/web/webjars/sjukersattning/minaintyg/' + url;
+            }
+        }
     }
 };

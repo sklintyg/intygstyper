@@ -1,6 +1,6 @@
 angular.module('sjukersattning').controller('sjukersattning.ViewCertCtrl',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'minaintyg.listCertService',
-        'common.certificateService', 'common.dialogService', 'common.messageService',
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
+        'common.IntygService', 'common.dialogService', 'common.messageService',
         function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService, dialogService,
             messageService) {
             'use strict';
@@ -102,7 +102,7 @@ angular.module('sjukersattning').controller('sjukersattning.ViewCertCtrl',
             certificateService.getCertificate($stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
-                    $log.info(JSON.stringify(result));
+                    $log.info('res in virecertcontr' + JSON.stringify(result));
                     $scope.cert = result.utlatande;
                     $scope.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
                     $rootScope.cert = $scope.cert;
