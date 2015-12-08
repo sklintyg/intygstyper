@@ -100,6 +100,9 @@
       <iso:assert test="count(gn:delsvar[@id='1.3']) le 1">
         'Grund för medicinskt underlag (MU)' får ha högst ett 'Vilken annan grund finns för MU'.
       </iso:assert>
+      <iso:assert test="not(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code = gn:delsvar[@id='1.1']/tp:cv/tp:code)">
+        Samma 'Typ av grund för MU' kan inte användas flera gånger i samma 'MU'.
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -107,7 +110,7 @@
     <iso:rule context="//gn:delsvar[@id='1.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'"/>
-      <iso:assert test="tp:cv/tp:code = '1' or tp:cv/tp:code = '3' or tp:cv/tp:code = '4' or tp:cv/tp:code = '5'">
+      <iso:assert test="normalize-space(tp:cv/tp:code) = '1' or normalize-space(tp:cv/tp:code) = '3' or normalize-space(tp:cv/tp:code) = '4' or normalize-space(tp:cv/tp:code) = '5'">
         'Typ av grund för MU' kan ha ett av värdena 1, 3, 4 eller 5.
       </iso:assert>
     </iso:rule>
@@ -126,9 +129,17 @@
   </iso:pattern>
 
   <iso:pattern>
-    <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[. = '5']">
+    <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) = '5']">
       <iso:assert test="../../../gn:delsvar[@id='1.3']">
         Om 'Typ av grund för MU' är 'Annat' så måste 'Vilken annan grund finns för MU' anges.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) = '1' or normalize-space(.) = '4']">
+      <iso:assert test="../../../../gn:svar[@id='2']/gn:delsvar[@id='2.1'] le ../../../gn:delsvar[@id='1.2']">
+        'Kännedom om patienten' får inte vara senare än datum för 'Min undersökning av patienten' eller 'Anhörigs beskrivning av patienten'.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -162,6 +173,14 @@
   </iso:pattern>
 
   <iso:pattern>
+    <iso:rule context="//gn:delsvar[@id='3.1' and (normalize-space(.)='1' or normalize-space(.)='true')]">
+      <iso:assert test="count(../../gn:svar[@id='4']) ge 1">
+        Om 'Finns andra underlag?' besvarats med ja måste minst en 'Andra medicinska utredningar eller underlag' finnas.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern>
     <iso:rule context="//gn:svar[@id='4']">
       <iso:assert test="count(gn:delsvar[@id='4.1']) = 1">
         'Andra medicinska utredningar eller underlag' måste ha ett 'Utredning eller underlagstyp?'.
@@ -179,7 +198,7 @@
     <iso:rule context="//gn:delsvar[@id='4.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0005'"/>
-      <iso:assert test="tp:cv/tp:code = '1' or tp:cv/tp:code = '2' or tp:cv/tp:code = '3' or tp:cv/tp:code = '4' or tp:cv/tp:code = '5' or tp:cv/tp:code = '6' or tp:cv/tp:code = '7' or tp:cv/tp:code = '9' or tp:cv/tp:code = '10' or tp:cv/tp:code = '11'">
+      <iso:assert test="normalize-space(tp:cv/tp:code) = '1' or normalize-space(tp:cv/tp:code) = '2' or normalize-space(tp:cv/tp:code) = '3' or normalize-space(tp:cv/tp:code) = '4' or normalize-space(tp:cv/tp:code) = '5' or normalize-space(tp:cv/tp:code) = '6' or normalize-space(tp:cv/tp:code) = '7' or normalize-space(tp:cv/tp:code) = '9' or normalize-space(tp:cv/tp:code) = '10' or normalize-space(tp:cv/tp:code) = '11'">
         'Utredning eller underlagstyp?' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 9, 10 eller 11.
       </iso:assert>
     </iso:rule>
@@ -437,7 +456,7 @@
   </iso:pattern>
 
   <iso:pattern>
-    <iso:rule context="//gn:delsvar[@id='26.1' and (.='0' or .='false')]">
+    <iso:rule context="//gn:delsvar[@id='26.1' and (normalize-space(.)='0' or normalize-space(.)='false')]">
       <iso:assert test="count(../gn:delsvar[@id='26.2']) = 0">
         Om 'Kontakt önskas' besvarats med nej kan 'Motivering av kontakt önskas' inte fyllas i.
       </iso:assert>
@@ -464,7 +483,9 @@
       <iso:assert test="tp:datePeriod">En period måste inneslutas av ett 'datePeriod'-element</iso:assert>
       <iso:assert test="tp:datePeriod/tp:start castable as xs:date">'from' måste vara ett giltigt datum.</iso:assert>
       <iso:assert test="tp:datePeriod/tp:end castable as xs:date">'tom' måste vara ett giltigt datum.</iso:assert>
-      <iso:assert test="tp:datePeriod/tp:start le tp:datePeriod/tp:end">'from' måste vara mindre än eller lika med 'to'</iso:assert>
+      <iso:assert test="normalize-space(tp:datePeriod/tp:start) le normalize-space(tp:datePeriod/tp:end)">
+        'from' måste vara mindre än eller lika med 'to'
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 

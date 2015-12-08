@@ -73,7 +73,7 @@
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="1.2">2015-12-07</delsvar>
+      <delsvar id="1.2">2015-12-08</delsvar>
     </svar>
     <svar id="1">
       <delsvar id="1.1">
@@ -89,7 +89,8 @@
       <delsvar id="2.1">2015-12-07</delsvar>
     </svar>
     <svar id="3">
-      <delsvar id="3.1">true</delsvar>
+      <delsvar id="3.1">true
+      </delsvar>
     </svar>
     <svar id="4">
       <delsvar id="4.1">
