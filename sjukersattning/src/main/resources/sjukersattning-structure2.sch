@@ -100,7 +100,7 @@
       <iso:assert test="count(gn:delsvar[@id='1.3']) le 1">
         'Grund för medicinskt underlag (MU)' får ha högst ett 'Vilken annan grund finns för MU'.
       </iso:assert>
-      <iso:assert test="not(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code = gn:delsvar[@id='1.1']/tp:cv/tp:code)">
+      <iso:assert test="not(normalize-space(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code) = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
         Samma 'Typ av grund för MU' kan inte användas flera gånger i samma 'MU'.
       </iso:assert>
     </iso:rule>
@@ -110,7 +110,8 @@
     <iso:rule context="//gn:delsvar[@id='1.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'"/>
-      <iso:assert test="normalize-space(tp:cv/tp:code) = '1' or normalize-space(tp:cv/tp:code) = '3' or normalize-space(tp:cv/tp:code) = '4' or normalize-space(tp:cv/tp:code) = '5'">
+      <iso:let name="sval" value="normalize-space(tp:cv/tp:code)"/>
+      <iso:assert test="$sval = '1' or $sval = '3' or $sval = '4' or $sval = '5'">
         'Typ av grund för MU' kan ha ett av värdena 1, 3, 4 eller 5.
       </iso:assert>
     </iso:rule>
@@ -138,7 +139,7 @@
 
   <iso:pattern>
     <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) = '1' or normalize-space(.) = '4']">
-      <iso:assert test="../../../../gn:svar[@id='2']/gn:delsvar[@id='2.1'] le ../../../gn:delsvar[@id='1.2']">
+      <iso:assert test="normalize-space(../../../../gn:svar[@id='2']/gn:delsvar[@id='2.1']) le normalize-space(../../../gn:delsvar[@id='1.2'])">
         'Kännedom om patienten' får inte vara senare än datum för 'Min undersökning av patienten' eller 'Anhörigs beskrivning av patienten'.
       </iso:assert>
     </iso:rule>
@@ -198,7 +199,8 @@
     <iso:rule context="//gn:delsvar[@id='4.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0005'"/>
-      <iso:assert test="normalize-space(tp:cv/tp:code) = '1' or normalize-space(tp:cv/tp:code) = '2' or normalize-space(tp:cv/tp:code) = '3' or normalize-space(tp:cv/tp:code) = '4' or normalize-space(tp:cv/tp:code) = '5' or normalize-space(tp:cv/tp:code) = '6' or normalize-space(tp:cv/tp:code) = '7' or normalize-space(tp:cv/tp:code) = '9' or normalize-space(tp:cv/tp:code) = '10' or normalize-space(tp:cv/tp:code) = '11'">
+      <iso:let name="sval" value="normalize-space(tp:cv/tp:code)"/>
+      <iso:assert test="$sval = '1' or $sval = '2' or $sval = '3' or $sval = '4' or $sval = '5' or $sval = '6' or $sval = '7' or $sval = '9' or $sval = '10' or $sval = '11'">
         'Utredning eller underlagstyp?' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 9, 10 eller 11.
       </iso:assert>
     </iso:rule>
@@ -251,7 +253,7 @@
     <iso:rule context="//gn:delsvar[@id='6.2']"> 
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'ICD-10-SE'"/>
-      <iso:assert test="matches(tp:cv/tp:code,'[A-Za-z]\d{3,}')"/>
+      <iso:assert test="matches(tp:cv/tp:code,'[A-Za-z]\d{2}.*')"/>
     </iso:rule>
   </iso:pattern>
 
