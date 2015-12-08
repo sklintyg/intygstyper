@@ -20,6 +20,13 @@ public class RegisterSjukersattningValidator {
         }
     }
 
+    public RegisterSjukersattningValidator(String location) {
+        schematronResource = SchematronResourcePure.fromClassPath(location);
+        if (!schematronResource.isValidSchematron()) {
+            throw new IllegalArgumentException("Invalid Schematron!");
+        }
+    }
+
     public SchematronOutputType validateSchematron(@Nonnull final Source xmlContent) throws Exception {
         return schematronResource.applySchematronValidationToSVRL(xmlContent);
     }
