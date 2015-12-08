@@ -79,11 +79,11 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
                     if( !match ) {
                          var obj = { 'funktionsomrade': funktionsomrade, 'beskrivning' : beskrivning };
                          model.funktionsnedsattningar.push(obj);
-                        console.log('model.funktionsnedsattningar new*: ' + JSON.stringify(model.funktionsnedsattningar));
+                        //console.log('model.funktionsnedsattningar new*: ' + JSON.stringify(model.funktionsnedsattningar));
                     } else {
                          match.funktionsomrade = funktionsomrade;
                          match.beskrivning = beskrivning;
-                        console.log('model.funktionsnedsattningar old*: ' + JSON.stringify(model.funktionsnedsattningar));
+                      //  console.log('model.funktionsnedsattningar old*: ' + JSON.stringify(model.funktionsnedsattningar));
                     }
                     //console.log('model.funktionsnedsattningar: ' + JSON.stringify(model.funktionsnedsattningar));
             }
