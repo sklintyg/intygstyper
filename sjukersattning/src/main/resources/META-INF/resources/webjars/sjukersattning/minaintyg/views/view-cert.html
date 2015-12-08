@@ -164,7 +164,7 @@
 
             <div class="table-bottom"></div>
 
-            <div class="cert-body">
+            <div-- class="cert-body">
 
               <div mi-field field-label="sjukersattning.label.basedon"
                    filled="cert.undersokningAvPatienten!=null || cert.telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null &&
@@ -172,22 +172,22 @@
                 <ul class="padded-list">
                   <li ng-show="cert.undersokningAvPatienten!=null">
                     <div id="undersokningAvPatienten">
-                      <span message key="sjukersattning.vardkontakt.undersokning"></span><span> {{cert.underlag[0].undersokningAvPatienten | date:'longDate' }}</span>
+                      <span message key="sjukersattning.vardkontakt.undersokning"></span><span> | {{cert.undersokningAvPatienten | date:'longDate' }}</span>
                     </div>
                   </li>
                   <li ng-show="cert.telefonkontaktMedPatienten!=null">
                     <div id="telefonkontaktMedPatienten">
-                      <span message key="sjukersattning.vardkontakt.telefonkontakt"></span><span> {{cert.underlag[0].telefonkontaktMedPatienten | date:'longDate' }}</span>
+                      <span message key="sjukersattning.vardkontakt.telefonkontakt"></span><span> | {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
                     </div>
                   </li>
                   <li ng-show="cert.journaluppgifter!=null">
                     <div id="journaluppgifter">
-                      <span message key="sjukersattning.referens.journal"></span><span> {{cert.underlag[0].journaluppgifter | date:'longDate' }}</span>
+                      <span message key="sjukersattning.referens.journal"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
                     </div>
                   </li>
                   <li ng-show="cert.kannedomOmPatient!=null">
                     <div id="kannedomOmPatient">
-                      <span message key="sjukersattning.referens.kannedomompatient"></span><span> {{cert.underlag[0].kannedomOmPatient | date:'longDate' }}</span>
+                      <span message key="sjukersattning.referens.kannedomompatient"></span><span> |{{cert.kannedomOmPatient | date:'longDate' }}</span>
                     </div>
                   </li>
 
@@ -203,7 +203,7 @@
 
 
               <div mi-field field-label="sjukersattning.label.diagnosis" filled="cert.diagnoser.length">
-                <div class="form-group">
+                <div class="form-group" ng-show="cert.diagnoser[0].diagnosKod">
                   <span class="tag">
                     <span message key="sjukersattning.label.diagnosisCode"></span>
                   </span>
@@ -219,7 +219,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-show="cert.diagnoser[1].diagnosKod">
                   <span class="tag">
                     <span message key="sjukersattning.label.diagnosisCode"></span>
                   </span>
@@ -235,7 +235,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" ng-show="cert.diagnoser[2].diagnosKod">
                   <span class="tag">
                     <span message key="sjukersattning.label.diagnosisCode"></span>
                   </span>
@@ -254,11 +254,13 @@
               </div>
 
               <!--  Diagnosticering + ny bedomning -->
-
-
-
-              <div mi-field field-label="sjukersattning.label.disabilities" filled="cert.funktionsnedsattning!=null">
-                <div id="funktionsnedsattning" class="multiline">{{cert.funktionsnedsattning}}</div>
+              <div mi-field field-label="sjukersattning.label.disabilities" filled="cert.funktionsnedsattningar.length">
+                <ul class="padded-list">
+                  <li ng-repeat="nedsattning in cert.funktionsnedsattningar">
+                    <span>Nedsättning id: {{nedsattning.funktionsomrade}} </span>
+                    <span> class="multiline">Nedsättning text: {{nedsattning.beskrivning}}</span>
+                  </li>
+                </ul>
               </div>
 
 
@@ -292,9 +294,9 @@
 
 
               <!--  Kommentar -->
-              <div mi-field field-label="sjukersattning.label.otherinformation" filled="cert.kommentar">
+              <div mi-field field-label="sjukersattning.label.otherinformation" filled="cert.ovrigt">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div id="kommentar" class="tag multiline" ng-show="cert.kommentar.length > 0">{{cert.kommentar}}</div>
+                <div id="kommentar" class="tag multiline">{{cert.ovrigt}}</div>
               </div>
 
               <!-- Kontakt med fk-->
@@ -307,11 +309,11 @@
                 </span>
               </div>
 
-              <!-- META -->
-              <div mi-field field-label="sjukersattning.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">
+              <!-- META vara kvar ?-->
+              <!--div mi-field field-label="sjukersattning.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div id="forskrivarkodOchArbetsplatskod">{{cert.forskrivarkodOchArbetsplatskod}}</div>
-              </div>
+                <!--div id="forskrivarkodOchArbetsplatskod">{{cert.forskrivarkodOchArbetsplatskod}}</div-->
+              <!--/div-->
 
               <div class="row padding-bottom-30px">
                 <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
