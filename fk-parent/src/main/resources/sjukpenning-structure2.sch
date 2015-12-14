@@ -272,9 +272,6 @@
     <iso:rule context="//gn:svar[@id='32']">
       <iso:assert test="count(gn:delsvar[@id='32.1']) = 1">'Sjukskrivning' måste ha en 'grad'.</iso:assert>
       <iso:assert test="count(gn:delsvar[@id='32.2']) = 1">'Sjukskrivning' måste ha en 'period'.</iso:assert>
-      <iso:assert test="not(preceding-sibling::gn:svar[@id='32']/gn:delsvar[@id='32.1']/tp:cv/tp:code = gn:delsvar[@id='32.1']/tp:cv/tp:code)">
-        Samma 'grad' kan inte användas flera gånger i samma 'sjukskrivning'.
-      </iso:assert>
       <iso:let name="cstart" value="normalize-space(gn:delsvar[@id='32.2']/tp:datePeriod/tp:start)"/>
       <iso:let name="cend" value="normalize-space(gn:delsvar[@id='32.2']/tp:datePeriod/tp:end)"/>
       <iso:assert test="not(preceding-sibling::gn:svar[@id='32']/gn:delsvar[@id='32.2']/tp:datePeriod/tp:start[normalize-space(.) lt $cend and normalize-space(../tp:end) gt $cstart])">
