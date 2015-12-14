@@ -34,7 +34,7 @@ public class InternalToTransportTest2 {
         RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukersattning-structure2.sch");
+        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukersattning.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));
@@ -49,7 +49,7 @@ public class InternalToTransportTest2 {
         RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning-structure2.sch");
+        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning-fordjupat.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));

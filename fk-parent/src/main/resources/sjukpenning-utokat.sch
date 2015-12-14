@@ -97,9 +97,8 @@
     <iso:rule context="//gn:delsvar[@id='1.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'"/>
-      <iso:let name="sval" value="normalize-space(tp:cv/tp:code)"/>
-      <iso:assert test="$sval = '1' or $sval = '3' or $sval = '4' or $sval = '5'">
-        'Typ av grund för MU' kan ha ett av värdena 1, 3, 4 eller 5.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1235]$')">
+        'Typ av grund för MU' kan ha ett av värdena 1, 2, 3 eller 5.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -124,7 +123,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q28">
     <iso:rule context="//gn:svar[@id='28']">
       <iso:assert test="count(gn:delsvar[@id='28.1']) = 1">
         'Typ av sysselsättning' måste ha ett 'Typ av sysselsättning'.
@@ -132,18 +131,17 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q28.1">
     <iso:rule context="//gn:delsvar[@id='28.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0002'"/>
-      <iso:let name="sval" value="normalize-space(tp:cv/tp:code)"/>
-      <iso:assert test="$sval = '1' or $sval = '2' or $sval = '3' or $sval = '4' or $sval = '5'">
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-5]$')">
         'Typ av sysselsättning' kan ha ett av värdena 1, 2, 3, 4 eller 5.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q28.1-q29">
     <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.)='1']">
       <iso:assert test="count(../../../../gn:svar[@id='29']) = 1">
         Om 'Typ av sysselsättning' besvarats med 1, måste 'Nuvarande arbete' besvaras
@@ -151,7 +149,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q28.1-q30">
     <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.)='5']">
       <iso:assert test="count(../../../../gn:svar[@id='30']) = 1">
         Om 'Typ av sysselsättning' besvarats med 5, måste 'Arbetsmarknadspolitiskt program' besvaras
@@ -159,7 +157,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q29">
     <iso:rule context="//gn:svar[@id='29']">
       <iso:assert test="count(gn:delsvar[@id='29.1']) = 1">
         'Nuvarande arbete' måste ha ett 'Yrke och arbetsuppgifter'.
@@ -167,13 +165,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q29.1">
     <iso:rule context="//gn:delsvar[@id='29.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q30">
     <iso:rule context="//gn:svar[@id='30']">
       <iso:assert test="count(gn:delsvar[@id='30.1']) = 1">
         'Arbetsmarknadspolitiskt program' måste ha ett 'Aktiviteter i arbetsmarknadspolitiskt program'.
@@ -181,13 +179,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q30.1">
     <iso:rule context="//gn:delsvar[@id='30.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q6">
     <iso:rule context="//gn:svar[@id='6']">
       <iso:assert test="count(gn:delsvar[@id='6.1']) = 1">
         'Typ av diagnos' måste ha en 'Diagnostext'.
@@ -198,13 +196,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q6.1">
     <iso:rule context="//gn:delsvar[@id='6.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q6.2">
     <iso:rule context="//gn:delsvar[@id='6.2']"> 
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'ICD-10-SE'"/>
@@ -212,7 +210,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q35">
     <iso:rule context="//gn:svar[@id='35']">
       <iso:assert test="count(gn:delsvar[@id='35.1']) = 1">
         'Funktionsnedsättning' måste ha ett 'Beskrivning'.
@@ -220,7 +218,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q35.1">
+    <iso:rule context="//gn:delsvar[@id='35.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q17">
     <iso:rule context="//gn:svar[@id='17']">
       <iso:assert test="count(gn:delsvar[@id='17.1']) = 1">
         'Aktivitetsbegränsningar' måste ha ett 'Beskrivning'.
@@ -228,19 +232,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q17.1">
     <iso:rule context="//gn:delsvar[@id='17.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
-    <iso:rule context="//gn:delsvar[@id='35.1']">
-      <iso:extends rule="non-empty-string"/>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern>
+  <iso:pattern id="q19">
     <iso:rule context="//gn:svar[@id='19']">
       <iso:assert test="count(gn:delsvar[@id='19.1']) = 1">
         'Pågående medicinska behandlingar' måste ha ett 'Typ av pågående behandlingar och ansvarig vårdenhet'.
@@ -248,13 +246,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q19.1">
     <iso:rule context="//gn:delsvar[@id='19.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q20">
     <iso:rule context="//gn:svar[@id='20']">
       <iso:assert test="count(gn:delsvar[@id='20.1']) = 1">
         'Planerade medicinska behandlingar' måste ha ett 'Typ av planerade behandlingar och ansvarig vårdenhet'.
@@ -262,13 +260,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q20.1">
     <iso:rule context="//gn:delsvar[@id='20.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q32">
     <iso:rule context="//gn:svar[@id='32']">
       <iso:assert test="count(gn:delsvar[@id='32.1']) = 1">'Sjukskrivning' måste ha en 'grad'.</iso:assert>
       <iso:assert test="count(gn:delsvar[@id='32.2']) = 1">'Sjukskrivning' måste ha en 'period'.</iso:assert>
@@ -280,32 +278,31 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q32.1">
     <iso:rule context="//gn:delsvar[@id='32.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0003'"/>
-      <iso:let name="sval" value="normalize-space(tp:cv/tp:code)"/>
-      <iso:assert test="$sval = '1' or $sval = '2' or $sval = '3' or $sval = '4'">
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-4]$')">
         'Sjukskrivningsnivå' kan ha ett av värdena 1, 2, 3 eller 4.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q32.2">
     <iso:rule context="//gn:delsvar[@id='32.2']">
       <iso:extends rule="period"/>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q32.1-33">
-    <iso:rule context="//gn:delsvar[@id='32.1']/tp:cv/tp:code[normalize-space(.) = '2' or normalize-space(.) = '3' or normalize-space(.) = '4']">
+    <iso:rule context="//gn:delsvar[@id='32.1']/tp:cv/tp:code[matches(normalize-space(.), '^[2-4]$')]">
       <iso:assert test="count(../../../../gn:svar[@id='33']) = 1">
         Om 'Sjukskrivningsnivå' är 2, 3 eller 4 så måste 'Arbetstidsförläggning' anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q37">
     <iso:rule context="//gn:svar[@id='37']">
       <iso:assert test="count(gn:delsvar[@id='37.1']) = 1">
         'Försäkringsmedicinskt beslutsstöd' måste ha ett 'Överskrider försäkringsmedicinskt beslutsstöd'.
@@ -313,7 +310,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q37.1">
     <iso:rule context="//gn:delsvar[@id='37.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
@@ -350,7 +347,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q34">
     <iso:rule context="//gn:svar[@id='34']">
       <iso:assert test="count(gn:delsvar[@id='34.1']) = 1">
         'Arbetsresor' måste ha ett 'Om arbetsresor'.
@@ -358,13 +355,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q34.1">
     <iso:rule context="//gn:delsvar[@id='34.1']">
       <iso:extends rule="boolean"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q23">
     <iso:rule context="//gn:svar[@id='23']">
       <iso:assert test="count(gn:delsvar[@id='23.1']) = 1">
         'Förmåga trots begränsningar' måste ha ett 'Beskrivning'.
@@ -372,13 +369,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q23.1">
     <iso:rule context="//gn:delsvar[@id='23.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q39">
     <iso:rule context="//gn:svar[@id='39']">
       <iso:assert test="count(gn:delsvar[@id='39.1']) = 1">
         'Prognos' måste ha ett 'Beskrivning prognos'.
@@ -389,18 +386,17 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q39.1">
     <iso:rule context="//gn:delsvar[@id='39.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0006'"/>
-      <iso:let name="sval" value="normalize-space(tp:cv/tp:code)"/>
-      <iso:assert test="$sval = '1' or $sval = '2' or $sval = '3' or $sval = '4'">
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-4]$')">
         'Beskrivning prognos' kan ha ett av värdena 1, 2, 3 eller 4.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q39.2">
     <iso:rule context="//gn:delsvar[@id='39.2']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
@@ -414,7 +410,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q40">
     <iso:rule context="//gn:svar[@id='40']">
       <iso:assert test="count(gn:delsvar[@id='40.1']) = 1">
         'Arbetslivsinriktade åtgärder' måste ha ett 'Val av arbetslivsinriktade åtgärder'.
@@ -428,24 +424,23 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q40.1">
     <iso:rule context="//gn:delsvar[@id='40.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0004'"/>
-      <iso:let name="sval" value="normalize-space(tp:cv/tp:code)"/>
-      <iso:assert test="$sval = '1' or $sval = '2' or $sval = '3' or $sval = '4' or $sval = '5' or $sval = '6' or $sval = '7' or $sval = '8' or $sval = '9' or $sval = '10' or $sval = '11'">
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^([1-9]|1[01])$')">
         'Val av arbetslivsinriktade åtgärder' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 eller 11.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q40.2">
     <iso:rule context="//gn:delsvar[@id='40.2']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q40.3">
     <iso:rule context="//gn:delsvar[@id='40.3']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
@@ -467,7 +462,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q25">
     <iso:rule context="//gn:svar[@id='25']">
       <iso:assert test="count(gn:delsvar[@id='25.1']) = 1">
         'Övrigt' måste ha ett 'Typ av övriga upplysningar'.
@@ -475,13 +470,13 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q25.1">
     <iso:rule context="//gn:delsvar[@id='25.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q26">
     <iso:rule context="//gn:svar[@id='26']">
       <iso:assert test="count(gn:delsvar[@id='26.1']) = 1">
         'Kontakt önskas' måste ha ett 'Kontakt önskas'.
@@ -492,19 +487,19 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q26.1">
     <iso:rule context="//gn:delsvar[@id='26.1']">
       <iso:extends rule="boolean"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q26.2">
     <iso:rule context="//gn:delsvar[@id='26.2']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern>
+  <iso:pattern id="q26.1-26.2">
     <iso:rule context="//gn:delsvar[@id='26.1' and (normalize-space(.)='0' or normalize-space(.)='false')]">
       <iso:assert test="count(../gn:delsvar[@id='26.2']) = 0">
         Om 'Kontakt önskas' besvarats med nej kan 'Motivering av kontakt önskas' inte fyllas i.
