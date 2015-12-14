@@ -42,7 +42,7 @@ public class RegisterSjukersattningResponderImpl implements RegisterCertificateR
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 
-    private RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();;
+    private RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();
 
     @Autowired
     private SjukersattningModuleApi moduleApi;

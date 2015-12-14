@@ -28,10 +28,8 @@ import com.helger.schematron.svrl.SVRLWriter;
 public class InternalToTransportTest2 {
 
     @Test
-    public void doSchematronValidation() throws Exception {
-        String xmlContents = xmlToString(InternalToTransport.convert(TransportToInternalTest.getUtlatande()));
-
-        System.out.println(xmlContents);
+    public void doSchematronValidationSjukersattning() throws Exception {
+        String xmlContents = Resources.toString(getResource("sjukersattning2.xml"), Charsets.UTF_8);
 
         RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
@@ -45,13 +43,13 @@ public class InternalToTransportTest2 {
     }
 
     @Test
-    public void doSchematronValidationManual() throws Exception {
-        String xmlContents = Resources.toString(getResource("sjukersattning2.xml"), Charsets.UTF_8);
+    public void doSchematronValidationSjukpenningFordjupat() throws Exception {
+        String xmlContents = Resources.toString(getResource("sjukpenning2.xml"), Charsets.UTF_8);
 
         RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukersattning-structure2.sch");
+        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning-structure2.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));

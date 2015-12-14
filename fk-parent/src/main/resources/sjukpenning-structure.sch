@@ -10,6 +10,12 @@
   <iso:ns prefix="gn" uri="urn:riv:clinicalprocess:healthcond:certificate:2"/>
   <iso:ns prefix="tp" uri="urn:riv:clinicalprocess:healthcond:certificate:types:2"/>
 
+  <iso:include href='types.sch#non-empty-string-pattern'/>
+  <iso:include href='types.sch#boolean-pattern'/>
+  <iso:include href='types.sch#cv-pattern'/>
+  <iso:include href='types.sch#date-pattern'/>
+  <iso:include href='types.sch#period-pattern'/>
+
   <!-- TODO: tilläggsfrågor -->
   <!-- TODO: arbetstidsfördelning endast vid icke-100% à la Emmys mail -->
   <!-- TODO: inga dubletter av åtgärds-id:n i enlighet med Marcus fråga -->
@@ -384,42 +390,6 @@
   <iso:pattern>
     <iso:rule context="//gn:delsvar[@id='22.1']">
       <iso:extends rule="non-empty-string"/>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern>
-    <iso:rule id="cv" abstract="true">
-      <iso:assert test="count(tp:cv) = 1">Ett värde av typen CV måste ha ett cv-element</iso:assert>
-      <iso:assert test="count(tp:cv/tp:codeSystem) = 1">codeSystem saknas</iso:assert>
-      <iso:assert test="count(tp:cv/tp:code) = 1">code saknas</iso:assert>
-      <iso:assert test="count(tp:cv/tp:displayName) le 1">för många displayName</iso:assert>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern>
-    <iso:rule id="date" abstract="true">
-      <iso:assert test=". castable as xs:date">värdet måste vara ett giltigt datum.</iso:assert>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern>
-    <iso:rule id="period" abstract="true">
-      <iso:assert test="tp:datePeriod">En period måste inneslutas av ett 'datePeriod'-element</iso:assert>
-      <iso:assert test="tp:datePeriod/tp:start castable as xs:date">'from' måste vara ett giltigt datum.</iso:assert>
-      <iso:assert test="tp:datePeriod/tp:end castable as xs:date">'tom' måste vara ett giltigt datum.</iso:assert>
-      <iso:assert test="tp:datePeriod/tp:start le tp:datePeriod/tp:end">'from' måste vara mindre än eller lika med 'to'</iso:assert>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern>
-    <iso:rule id="non-empty-string" abstract="true">
-      <iso:assert test="string-length(normalize-space(text())) > 0">Sträng kan inte vara tom.</iso:assert>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern>
-    <iso:rule id="boolean" abstract="true">
-      <iso:assert test=". castable as xs:boolean">Kan bara vara 'true/1' eller 'false/0'</iso:assert>
     </iso:rule>
   </iso:pattern>
 
