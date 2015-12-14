@@ -177,7 +177,12 @@
   <iso:pattern id="q3.1-4">
     <iso:rule context="//gn:delsvar[@id='3.1' and (normalize-space(.)='1' or normalize-space(.)='true')]">
       <iso:assert test="count(../../gn:svar[@id='4']) ge 1">
-        Om 'Finns andra underlag?' besvarats med ja måste minst en 'Andra medicinska utredningar eller underlag' finnas.
+        Om 'Finns andra underlag?' besvarats med sant måste minst en 'Andra medicinska utredningar eller underlag' finnas.
+      </iso:assert>
+    </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='3.1' and (normalize-space(.)='0' or normalize-space(.)='false')]">
+      <iso:assert test="count(../../gn:svar[@id='4']) = 0">
+        Om 'Finns andra underlag?' besvarats med falskt får 'Andra medicinska utredningar eller underlag' inte finnas.
       </iso:assert>
     </iso:rule>
   </iso:pattern>

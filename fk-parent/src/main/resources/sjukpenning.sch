@@ -21,11 +21,11 @@
       <iso:assert test="count(gn:svar[@id='27']) le 1">
         Ett 'MU' får ha högst ett 'Smittbärarpenning'
       </iso:assert>
-      <iso:assert test="count(gn:svar[@id='1']) ge 1 and count(gn:svar[@id='1']) le 4">
-        Ett 'MU' måste ha mellan 1 och 4 'Grund för medicinskt underlag'
+      <iso:assert test="(count(gn:svar[@id='1']) ge 1 and count(gn:svar[@id='1']) le 4) or matches(normalize-space(gn:svar[@id='27']/gn:delsvar[@id=27.1]), '(true|1)')">
+        Ett 'MU' måste ha mellan 1 och 4 'Grund för medicinskt underlag' om 'smittskyddspenning' inte besvarats med 'sant'.
       </iso:assert>
-      <iso:assert test="count(gn:svar[@id='28']) = 1">
-        Ett 'MU' måste ha ett 'Typ av sysselsättning'
+      <iso:assert test="count(gn:svar[@id='28']) = 1 or matches(normalize-space(gn:svar[@id='27']/gn:delsvar[@id=27.1]), '(true|1)')">
+        Ett 'MU' måste ha ett 'Typ av sysselsättning' om 'smittskyddspenning' inte besvarats med 'sant'.
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='29']) le 1">
         Ett 'MU' får ha högst ett 'Nuvarande arbete'
@@ -33,11 +33,11 @@
       <iso:assert test="count(gn:svar[@id='30']) le 1">
         Ett 'MU' får ha högst ett 'Arbetsmarknadspolitiskt program'
       </iso:assert>
-      <iso:assert test="count(gn:svar[@id='6']) ge 1 and count(gn:svar[@id='6']) le 3">
-        Ett 'MU' måste ha mellan 1 och 3 'Typ av diagnos'
+      <iso:assert test="(count(gn:svar[@id='6']) ge 1 and count(gn:svar[@id='6']) le 3) or matches(normalize-space(gn:svar[@id='27']/gn:delsvar[@id=27.1]), '(true|1)')">
+        Ett 'MU' måste ha mellan 1 och 3 'Typ av diagnos' om 'smittskyddspenning' inte besvarats med 'sant'.
       </iso:assert>
-      <iso:assert test="count(gn:svar[@id='31']) = 1">
-        Ett 'MU' måste ha ett 'Huvudsaklig grund'
+      <iso:assert test="count(gn:svar[@id='31']) = 1 or matches(normalize-space(gn:svar[@id='27']/gn:delsvar[@id=27.1]), '(true|1)')">
+        Ett 'MU' måste ha ett 'Huvudsaklig grund' om 'smittskyddspenning' inte besvarats med 'sant'.
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='32']) ge 1 and count(gn:svar[@id='32']) le 4">
         Ett 'MU' måste ha mellan 1 och 4 'Behov av sjukskrivning'

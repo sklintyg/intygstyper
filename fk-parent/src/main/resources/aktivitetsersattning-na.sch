@@ -81,6 +81,9 @@
       <iso:assert test="count(gn:svar[@id='23']) le 1">
         Ett 'MU' får ha högst ett 'Förmåga trots begränsningar'
       </iso:assert>
+      <iso:assert test="count(gn:svar[@id='24']) le 1">
+        Ett 'MU' får ha högst ett 'Förslag på åtgärder'
+      </iso:assert>
       <iso:assert test="count(gn:svar[@id='25']) le 1">
         Ett 'MU' får ha högst ett 'Övrigt'
       </iso:assert>
@@ -171,6 +174,19 @@
   <iso:pattern id="q3.1">
     <iso:rule context="//gn:delsvar[@id='3.1']">
       <iso:extends rule="boolean"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q3.1-4">
+    <iso:rule context="//gn:delsvar[@id='3.1' and (normalize-space(.)='1' or normalize-space(.)='true')]">
+      <iso:assert test="count(../../gn:svar[@id='4']) ge 1">
+        Om 'Finns andra underlag?' besvarats med sant måste minst en 'Andra medicinska utredningar eller underlag' finnas.
+      </iso:assert>
+    </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='3.1' and (normalize-space(.)='0' or normalize-space(.)='false')]">
+      <iso:assert test="count(../../gn:svar[@id='4']) = 0">
+        Om 'Finns andra underlag?' besvarats med falskt får 'Andra medicinska utredningar eller underlag' inte finnas.
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -464,6 +480,20 @@
 
   <iso:pattern id="q23.1">
     <iso:rule context="//gn:delsvar[@id='23.1']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q24">
+    <iso:rule context="//gn:svar[@id='24']">
+      <iso:assert test="count(gn:delsvar[@id='24.1']) = 1">
+        'Förmåga trots begränsningar' måste ha ett 'Beskrivning'.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q24.1">
+    <iso:rule context="//gn:delsvar[@id='24.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
