@@ -66,11 +66,6 @@
         <ns3:code>Kirurg</ns3:code>
       </specialistkompetens>
     </skapadAv>
-    <svar id="27">
-      <delsvar id="27.1">
-        false
-      </delsvar>
-    </svar>
     <svar id="1">
       <delsvar id="1.1">
         <ns3:cv>
@@ -110,8 +105,13 @@
         </ns3:cv>
       </delsvar>
     </svar>
-    <svar id="31">
-      <delsvar id="31.1">Kan inte stödja på höger ben.</delsvar>
+    <svar id="35">
+      <delsvar id="35.1">Haltar när han dansar
+      </delsvar>
+    </svar>
+    <svar id="17">
+      <delsvar id="17.1">Kommer inte in i bilen
+      </delsvar>
     </svar>
     <svar id="32">
       <delsvar id="32.1">
@@ -155,6 +155,10 @@
         </ns3:datePeriod>
       </delsvar>
     </svar>
+    <svar id="37">
+      <delsvar id="37.1">Överskrider inte FMB
+      </delsvar>
+    </svar>
     <svar id="33">
       <delsvar id="33.1">true</delsvar>
       <delsvar id="33.2">Kan bara jobba på nätterna.</delsvar>
@@ -162,6 +166,34 @@
     <svar id="34">
       <delsvar id="34.1">true
       </delsvar>
+    </svar>
+    <svar id="23">
+      <delsvar id="23.1">Är bra på att dansa!
+      </delsvar>
+    </svar>
+    <svar id="39">
+      <delsvar id="39.1">
+        <ns3:cv>
+          <ns3:code>4</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="39.2">Kan bara jobba på nätterna.</delsvar>
+    </svar>
+    <svar id="40">
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>11</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="40.1">
+        <ns3:cv>
+          <ns3:code>8</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="40.2">Jobbar bra om man inte stör honom</delsvar>
     </svar>
   </ns2:intyg>
 </ns2:RegisterCertificate>

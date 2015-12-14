@@ -59,7 +59,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q27">
+  <iso:pattern id="q27.1">
     <iso:rule context="//gn:delsvar[@id='27.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
@@ -130,7 +130,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q28.1-q29">
+  <iso:pattern id="q28.1-29">
     <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.)='1']">
       <iso:assert test="count(../../../../gn:svar[@id='29']) = 1">
         Om 'Typ av sysselsättning' besvarats med 1, måste 'Nuvarande arbete' besvaras
@@ -138,7 +138,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q28.1-q30">
+  <iso:pattern id="q28.1-30">
     <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.)='5']">
       <iso:assert test="count(../../../../gn:svar[@id='30']) = 1">
         Om 'Typ av sysselsättning' besvarats med 5, måste 'Arbetsmarknadspolitiskt program' besvaras
@@ -199,16 +199,16 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q30">
-    <iso:rule context="//gn:svar[@id='30']">
-      <iso:assert test="count(gn:delsvar[@id='30.1']) = 1">
+  <iso:pattern id="q31">
+    <iso:rule context="//gn:svar[@id='31']">
+      <iso:assert test="count(gn:delsvar[@id='31.1']) = 1">
         'Huvudsaklig grund' måste ha ett 'Beskrivning'.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q30.1">
-    <iso:rule context="//gn:delsvar[@id='30.1']">
+  <iso:pattern id="q31.1">
+    <iso:rule context="//gn:delsvar[@id='31.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>

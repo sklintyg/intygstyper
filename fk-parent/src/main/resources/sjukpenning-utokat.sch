@@ -63,8 +63,8 @@
       <iso:assert test="count(gn:svar[@id='39']) = 1">
         Ett 'MU' måste ha ett 'Prognos'
       </iso:assert>
-      <iso:assert test="count(gn:svar[@id='40']) ge 1 and count(gn:svar[@id='40']) le 11">
-        Ett 'MU' måste ha mellan 1 och 11 'Arbetslivsinriktade åtgärder'
+      <iso:assert test="count(gn:svar[@id='40']) = 1">
+        Ett 'MU' måste ha ett 'Arbetslivsinriktade åtgärder'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='25']) le 1">
         Ett 'MU' får ha högst ett 'Övrigt'
@@ -345,6 +345,11 @@
         Om 'Om arbetstidsförläggning' är 'true' så måste 'Motivering arbetstidsförläggning' anges.
       </iso:assert>
     </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='33.1' and (normalize-space(.) = '0' or normalize-space(.) = 'false')]">
+      <iso:assert test="count(../gn:delsvar[@id='33.2']) = 0">
+        Om 'Om arbetstidsförläggning' är 'false' så får 'Motivering arbetstidsförläggning' inte anges.
+      </iso:assert>
+    </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q34">
@@ -408,12 +413,17 @@
         Om 'Beskrivning prognos' är 4 så måste 'Förtydligande prognos' anges.
       </iso:assert>
     </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) != '4']">
+      <iso:assert test="count(../../../gn:delsvar[@id='39.2']) = 0">
+        Om 'Beskrivning prognos' inte är 4 så får 'Förtydligande prognos' inte anges.
+      </iso:assert>
+    </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q40">
     <iso:rule context="//gn:svar[@id='40']">
-      <iso:assert test="count(gn:delsvar[@id='40.1']) = 1">
-        'Arbetslivsinriktade åtgärder' måste ha ett 'Val av arbetslivsinriktade åtgärder'.
+      <iso:assert test="count(gn:delsvar[@id='40.1']) ge 1 and count(gn:delsvar[@id='40.1']) le 10">
+        'Arbetslivsinriktade åtgärder' måste ha mellan 1 och 10 'Val av arbetslivsinriktade åtgärder'.
       </iso:assert>
       <iso:assert test="count(gn:delsvar[@id='40.2']) le 1">
         'Arbetslivsinriktade åtgärder' får ha högst ett 'Beskrivning arbetslivsriktade åtgärder aktuellt'.
@@ -430,6 +440,12 @@
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0004'"/>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^([1-9]|1[01])$')">
         'Val av arbetslivsinriktade åtgärder' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 eller 11.
+      </iso:assert>
+      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.!='1'] and tp:cv/tp:code[.='1'])">
+        'Inte aktuellt' kan inte kombineras med andra svar
+      </iso:assert>
+      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.='1'] and tp:cv/tp:code[.!='1'])">
+        'Inte aktuellt' kan inte kombineras med andra svar
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -452,12 +468,22 @@
         Om 'Val av arbetslivsinriktade åtgärder' är skiljt från '1' så måste 'Beskrivning arbetslivsriktade åtgärder aktuellt' anges.
       </iso:assert>
     </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = '1']">
+      <iso:assert test="count(../../../gn:delsvar[@id='40.2']) = 0">
+        Om 'Val av arbetslivsinriktade åtgärder' är '1' så får 'Beskrivning arbetslivsriktade åtgärder aktuellt' inte anges.
+      </iso:assert>
+    </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q40.1-40.3">
     <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = '1']">
       <iso:assert test="../../../gn:delsvar[@id='40.3']">
         Om 'Val av arbetslivsinriktade åtgärder' är '1' så måste 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' anges.
+      </iso:assert>
+    </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+      <iso:assert test="count(../../../gn:delsvar[@id='40.3']) = 0">
+        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från '1' så får 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>

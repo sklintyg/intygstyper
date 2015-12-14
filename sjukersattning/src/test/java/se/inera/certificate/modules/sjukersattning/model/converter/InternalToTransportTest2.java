@@ -43,13 +43,13 @@ public class InternalToTransportTest2 {
     }
 
     @Test
-    public void doSchematronValidationSjukpenningFordjupat() throws Exception {
-        String xmlContents = Resources.toString(getResource("sjukpenning2.xml"), Charsets.UTF_8);
+    public void doSchematronValidationSjukpenningUtokat() throws Exception {
+        String xmlContents = Resources.toString(getResource("sjukpenning-utokat2.xml"), Charsets.UTF_8);
 
         RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning-fordjupat.sch");
+        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning-utokat.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));
@@ -57,16 +57,19 @@ public class InternalToTransportTest2 {
         assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
-    private String xmlToString(RegisterCertificateType registerCertificate) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(RegisterCertificateType.class);
-        ObjectFactory objectFactory = new ObjectFactory();
+    @Test
+    public void doSchematronValidationSjukpenning() throws Exception {
+        String xmlContents = Resources.toString(getResource("sjukpenning2.xml"), Charsets.UTF_8);
 
-        StringWriter stringWriter = new StringWriter();
-        JAXBElement<RegisterCertificateType> requestElement = objectFactory.createRegisterCertificate(registerCertificate);
-        jaxbContext.createMarshaller().marshal(requestElement, stringWriter);
-        String result = stringWriter.toString();
-        System.out.println(result);
-        return result;
+        RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
+        assertTrue(generalValidator.validateGeneral(xmlContents));
+
+        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning.sch");
+        SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
+
+        System.out.println(SVRLWriter.createXMLString(result));
+
+        assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
     private static URL getResource(String href) {

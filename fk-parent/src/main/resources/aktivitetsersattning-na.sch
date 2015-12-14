@@ -81,7 +81,6 @@
       <iso:assert test="count(gn:svar[@id='23']) le 1">
         Ett 'MU' får ha högst ett 'Förmåga trots begränsningar'
       </iso:assert>
-
       <iso:assert test="count(gn:svar[@id='25']) le 1">
         Ett 'MU' får ha högst ett 'Övrigt'
       </iso:assert>
