@@ -16,7 +16,7 @@ var sjukersattningDynamicLabelsMock = {
         },
         {
             'id': 'KAT_2.HLP',
-            'text': 'Om underlaget är baserat utifrån annan anledning, ange det under \'Övrigt\', se kategori 8.'
+            'text': '<p>Om underlaget är baserat utifrån annan anledning, ange det under Övrigt, se kategori 8.</p>'
         },
         { 'id': 'FRG_10.RBK' },
         { 'id': 'FRG_10.HLP' },
