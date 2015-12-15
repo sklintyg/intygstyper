@@ -177,12 +177,12 @@
   <iso:pattern id="q3.1-4">
     <iso:rule context="//gn:delsvar[@id='3.1' and (normalize-space(.)='1' or normalize-space(.)='true')]">
       <iso:assert test="count(../../gn:svar[@id='4']) ge 1">
-        Om 'Finns andra underlag?' besvarats med sant måste minst en 'Andra medicinska utredningar eller underlag' finnas.
+        Om 'Finns andra underlag?' besvarats med sant måste minst en 'Andra medicinska utredningar eller underlag' anges.
       </iso:assert>
     </iso:rule>
     <iso:rule context="//gn:delsvar[@id='3.1' and (normalize-space(.)='0' or normalize-space(.)='false')]">
       <iso:assert test="count(../../gn:svar[@id='4']) = 0">
-        Om 'Finns andra underlag?' besvarats med falskt får 'Andra medicinska utredningar eller underlag' inte finnas.
+        Om 'Finns andra underlag?' besvarats med falskt får 'Andra medicinska utredningar eller underlag' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -257,8 +257,11 @@
   <iso:pattern id="q6.2">
     <iso:rule context="//gn:delsvar[@id='6.2']"> 
       <iso:extends rule="cv"/>
-      <iso:assert test="tp:cv/tp:codeSystem = 'ICD-10-SE'"/>
-      <iso:assert test="matches(tp:cv/tp:code,'[A-Za-z]\d{2}.*')"/>
+      <iso:assert test="normalize-space(tp:cv/tp:codeSystem) = 'ICD-10-SE'"/>
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code),'^([A-EG-Ya-eg-y][0-9]{2}[A-Za-z0-9-]*|[Zz][0-689][0-9][A-Za-z0-9-]*|[Zz]7[0-24-9][A-Za-z0-9-]*|[Zz]73[A-Za-z0-9-]+|[Ff][0-9]{2}[A-Za-z0-9-]+)$')">
+        Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst tre positioner måste anges.
+        Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra eller bindestreck, d.v.s. minst fyra positioner måste anges.
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
