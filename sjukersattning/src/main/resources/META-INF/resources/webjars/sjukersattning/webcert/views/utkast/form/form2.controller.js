@@ -8,6 +8,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.model = model;
             $scope.viewState = viewState;
 
+
             $scope.viewModel = {
                 radioMedicalChecked: false,
                 underlagCompleted: [], // hold what row is selected

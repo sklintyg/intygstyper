@@ -67,6 +67,7 @@ var sjukersattningMessages = {
         'sjukersattning.label.smittskydd': 'Avstängning enligt smittskyddslagen på grund av smitta ',
         'sjukersattning.label.yes': 'Ja',
         'sjukersattning.label.no': 'Nej',
+        'sjukersattning.label.anledningtillkontakt': 'Anledning till kontakt:',
         'sjukersattning.label.partialyes': 'Ja, delvis',
         'sjukersattning.label.diagnosis': 'Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga',
         'sjukersattning.label.diagnosiscode': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',

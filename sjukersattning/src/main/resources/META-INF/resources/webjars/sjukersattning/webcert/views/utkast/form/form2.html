@@ -2,8 +2,8 @@
 <div ng-form="form2">
   <a id="anchor.intygbaseratpa" name="anchor.intygbaseratpa"></a>
     <h3 class="title">Läkarutlåtande för sjukersättning</h3>
-  <div id="intygetbaseraspa" wc-field field-label="sjukersattning.label.intygbaseratpa"
-                       field-help-text="sjukersattning.helptext.intyg-baserat-pa"
+  <div id="intygetbaseraspa" wc-field field-dynamic-label="KAT_2.RBK"
+                                      fieldDynamicHelpText="KAT_2.HLP"
        field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa" class="field-fade">
   <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygbaseratpa" id="validationMessages_intygbaseratpa">
     <ul>
@@ -12,6 +12,24 @@
       </li>
     </ul>
   </div>
+
+  <!-- Test dynamic label
+      <div class="form-group form-inline">
+          <!-- test rubrik goes here -->
+
+          <!--p><b>with  correct id (RBK + HLP):</b></p>
+          <p><span dynamic-label key="KAT_2.RBK"></span></p>
+          <p><span dynamic-label key="KAT_2.HLP"></span></p>
+
+          <p><b>with  incorrect id (RBK + HLP):</b></p>
+          <p><span dynamic-label key="KAT_2.RBKX"></span></p>
+          <p><span dynamic-label key="KAT_2HaLP"></span></p>
+
+          <p><b>with id no text (RBK + HLP):</b></p>
+          <p><span dynamic-label key="DFR_3.1.RBK"></span></p>
+
+      </div-->
+
 
   <!-- Undersökning -->
   <div class="form-group form-inline">

@@ -12,11 +12,10 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             $scope.viewModel = {
                 diagnosKodSystem : '',
                 diagnosKodRow2 : { visible : false, diagnoseType: null },
-                diagnosKodRow3 : { visible : false,  diagnoseType: null }
+                diagnosKodRow3 : { visible : false, diagnoseType: null }
             };
 
             var diagnosKodSystemStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
-
 
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
                 logModel();

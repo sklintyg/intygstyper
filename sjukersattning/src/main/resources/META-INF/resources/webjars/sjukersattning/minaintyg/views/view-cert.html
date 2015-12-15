@@ -126,17 +126,16 @@
                   <h3 class="tag">
                     <span message key="sjukersattning.label.patientname"></span>
                   </h3>
-                  <span id="patient-name">{{cert.grundData.patient.fullstandigtNamn}}</span><br />
+                  <span id="patient-name">{{cert.grundData.patient.fornamn}} {{ cert.grundData.patient.efternamn }}</span><br />
                   <h3 class="tag">
                     <span message key="sjukersattning.label.civicnumber"></span>
                   </h3>
                   <span id="patient-crn">{{cert.grundData.patient.personId}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <h3 class="tag">
+                  <!--h3 class="tag">
                     <span message key="sjukersattning.label.nedsattning"></span>
-                  </h3>
-
+                  </h3-->
                 </div>
               </div>
               <div class="row border-bottom-resp">
@@ -164,7 +163,7 @@
 
             <div class="table-bottom"></div>
 
-            <div-- class="cert-body">
+            <div class="cert-body">
 
               <div mi-field field-label="sjukersattning.label.basedon"
                    filled="cert.undersokningAvPatienten!=null || cert.telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null &&
@@ -258,7 +257,7 @@
                 <ul class="padded-list">
                   <li ng-repeat="nedsattning in cert.funktionsnedsattningar">
                     <span>Nedsättning id: {{nedsattning.funktionsomrade}} </span>
-                    <span> class="multiline">Nedsättning text: {{nedsattning.beskrivning}}</span>
+                    <span class="multiline">Nedsättning text: {{nedsattning.beskrivning}}</span>
                   </li>
                 </ul>
               </div>
@@ -301,12 +300,19 @@
 
               <!-- Kontakt med fk-->
               <div mi-field field-label="sjukersattning.label.fkcontact" filled="true">
+
                 <span ng-show="cert.kontaktMedFk">
                   <span id="kontaktFk-yes" message key="sjukersattning.label.yes"></span>
                 </span>
+                <div id="anledningtillkontakt" class="multiline" ng-show="cert.kontaktMedFk">
+                  <span id="anledningtillkontakt-label" message key="sjukersattning.label.anledningtillkontakt"></span>
+                  {{cert.anledningTillKontakt}}
+                </div>
+
                 <span ng-show="!cert.kontaktMedFk">
                   <span id="kontaktFk-no" message key="sjukersattning.label.no"></span>
                 </span>
+
               </div>
 
               <!-- META vara kvar ?-->
