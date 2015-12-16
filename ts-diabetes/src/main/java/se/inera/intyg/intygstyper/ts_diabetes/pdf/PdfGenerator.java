@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
@@ -65,6 +66,7 @@ public class PdfGenerator {
     private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__4");
 
     private static final CheckGroupField<IntygAvserKategori> INTYG_AVSER;
+    private static final String SPECIALIST_I_ALLMANMEDICIN_TITLE = "Specialist i allmänmedicin";
 
     static {
         INTYG_AVSER = new CheckGroupField<IntygAvserKategori>();
@@ -363,11 +365,19 @@ public class PdfGenerator {
         TELEFON.setField(fields, vardenhet.getTelefonnummer());
         NAMNFORTYDLIGANDE.setField(fields, utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
 
+        populateAvslutSpecialist(utlatande, fields);
+    }
+
+    private void populateAvslutSpecialist(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
         List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter();
         if (specialiteter.size() > 0) {
-            // TODO If 'Specialist i allmänmedicin' chose that one.
-            // TODO Build text for 'beskrivning'
-            SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
+
+            int index = specialiteter.indexOf(SPECIALIST_I_ALLMANMEDICIN_TITLE);
+            if (index > -1) {
+                SPECIALISTKOMPETENS_BESKRVNING.setField(fields, specialiteter.get(index));
+            } else {
+                SPECIALISTKOMPETENS_BESKRVNING.setField(fields, specialiteter.stream().collect(Collectors.joining(", ")));
+            }
         }
     }
 

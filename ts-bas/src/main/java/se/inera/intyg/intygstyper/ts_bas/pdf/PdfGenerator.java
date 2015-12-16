@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
@@ -71,6 +72,7 @@ public class PdfGenerator {
     private static final int MARGIN_TEXT_FONTSIZE = 7;
     private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
     private static final String WEBCERT_MARGIN_TEXT = "Intyget är utskrivet från Webcert.";
+    private static final String SPECIALIST_I_ALLMANMEDICIN_TITLE = "Specialist i allmänmedicin";
 
     private static final StringField INVANARE_ADRESS_FALT1 = new StringField("Falt");
     private static final StringField INVANARE_ADRESS_FALT2 = new StringField("Falt__1");
@@ -78,6 +80,8 @@ public class PdfGenerator {
     private static final StringField INVANARE_PERSONNUMMER = new StringField("Falt__3");
 
     private static final CheckGroupField<IntygAvserKategori> INTYG_AVSER;
+
+
     static {
         INTYG_AVSER = new CheckGroupField<>();
         INTYG_AVSER.addField(IntygAvserKategori.C1, "Falt_10");
@@ -454,17 +458,25 @@ public class PdfGenerator {
         TELEFON.setField(fields, vardenhet.getTelefonnummer());
         NAMNFORTYDLIGANDE.setField(fields, utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
 
+        populateAvslutSpecialist(utlatande, fields);
+
+        List<String> befattningar = utlatande.getGrundData().getSkapadAv().getBefattningar();
+        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_LEG_ST.getDescription()));
+        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.getDescription()));
+    }
+
+    private void populateAvslutSpecialist(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
         List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter();
         if (specialiteter.size() > 0) {
             SPECIALISTKOMPETENS_CHECK.setField(fields, true);
-            // TODO If 'Specialist i allmänmedicin' chose that one.
-            // TODO Build text for 'beskrivning'
-            SPECIALISTKOMPETENS_BESKRVNING.setField(fields, "implement");
-        }
 
-        List<String> befattningar = utlatande.getGrundData().getSkapadAv().getBefattningar();
-        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.ST_LAKARE.name()));
-        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.name()));
+            int index = specialiteter.indexOf(SPECIALIST_I_ALLMANMEDICIN_TITLE);
+            if (index > -1) {
+                SPECIALISTKOMPETENS_BESKRVNING.setField(fields, specialiteter.get(index));
+            } else {
+                SPECIALISTKOMPETENS_BESKRVNING.setField(fields, specialiteter.stream().collect(Collectors.joining(", ")));
+            }
+        }
     }
 
     private static final class CheckField {
