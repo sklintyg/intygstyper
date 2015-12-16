@@ -211,20 +211,11 @@
       <iso:assert test="count(gn:delsvar[@id='15.1']) = 1">
         'Funktionsnedsättningens debut, utveckling och visar sig nu' måste ha ett 'Beskriv funktionsnedsättningens debut och utveckling'.
       </iso:assert>
-      <iso:assert test="count(gn:delsvar[@id='15.2']) = 1">
-        'Funktionsnedsättningens debut, utveckling och visar sig nu' måste ha ett 'Hur visar sig funktionsnedsättningen för närvarande'.
-      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q15.1">
     <iso:rule context="//gn:delsvar[@id='15.1']">
-      <iso:extends rule="non-empty-string"/>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern id="q15.2">
-    <iso:rule context="//gn:delsvar[@id='15.2']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
