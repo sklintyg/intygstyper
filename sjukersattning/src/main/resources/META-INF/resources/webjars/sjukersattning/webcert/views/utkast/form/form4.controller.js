@@ -23,7 +23,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                     return;
                 }
                 if (newVal) {
-                    //alert(JSON.stringify(model.form4));
                     if (model.diagnoser.length < 1 ) {
                         setAlldiagnosKodSystem( diagnosKodSystemStates.ICD_10_SE );
                     } else {
