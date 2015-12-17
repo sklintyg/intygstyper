@@ -5,7 +5,7 @@ module.exports = {
     webcert: {
         cwd: 'src/main/resources/META-INF/resources/webjars/fk7263/webcert',
         src: ['**/*.html'],
-        dest: 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/templates.js',
+        dest: 'target/classes/META-INF/resources/webjars/fk7263/webcert/templates.js',
         options:{
             module: 'fk7263',
             url: function(url) {
@@ -16,7 +16,7 @@ module.exports = {
     minaintyg: {
         cwd: 'src/main/resources/META-INF/resources/webjars/fk7263/minaintyg',
         src: ['**/*.html'],
-        dest: 'src/main/resources/META-INF/resources/webjars/fk7263/minaintyg/templates.js',
+        dest: 'target/classes/META-INF/resources/webjars/fk7263/minaintyg/templates.js',
         options:{
             module: 'fk7263',
             url: function(url) {

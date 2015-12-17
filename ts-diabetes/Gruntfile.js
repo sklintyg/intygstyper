@@ -25,12 +25,12 @@ module.exports = function(grunt) {
         'webjars/ts-diabetes/minaintyg/js/module-deps.json').map(function(file) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
-    minaintyg = [SRC_DIR + 'webjars/ts-diabetes/minaintyg/js/module.js'].concat(minaintyg);
+    minaintyg = [SRC_DIR + 'webjars/ts-diabetes/minaintyg/js/module.js', DEST_DIR + 'webjars/ts-diabetes/minaintyg/templates.js'].concat(minaintyg);
 
     var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/ts-diabetes/webcert/module-deps.json').map(function(file) {
         return file.replace(/\/web\//g, SRC_DIR);
     });
-    webcert = [SRC_DIR + 'webjars/ts-diabetes/webcert/module.js'].concat(webcert);
+    webcert = [SRC_DIR + 'webjars/ts-diabetes/webcert/module.js', DEST_DIR + 'webjars/ts-diabetes/webcert/templates.js'].concat(webcert);
 
 
     grunt.initConfig({

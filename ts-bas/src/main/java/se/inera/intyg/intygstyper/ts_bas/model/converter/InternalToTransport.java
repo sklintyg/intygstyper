@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.BefattningKod;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.KorkortsKod;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Bedomning;
@@ -333,8 +334,7 @@ public final class InternalToTransport {
 
     private static SkapadAv buildSkapadAv(HoSPersonal source) {
         SkapadAv skapadAv = new SkapadAv();
-        // TODO Find out how this actually looks in Befattningar
-        skapadAv.setAtLakare(source.getBefattningar().contains("AT-läkare"));
+        skapadAv.setAtLakare(source.getBefattningar().contains(BefattningKod.LAKARE_EJ_LEG_AT.getDescription()));
         if (!source.getBefattningar().isEmpty()) {
             skapadAv.getBefattningar().addAll(source.getBefattningar());
         }
