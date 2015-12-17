@@ -99,8 +99,9 @@ describe('IntygController', function() {
                 ]
             },
             'roles': role,
-            'aktivaFunktioner': ['hanteraFragor', 'hanteraFragor.fk7263'],
-            'totaltAntalVardenheter': 6
+            'features': ['hanteraFragor', 'hanteraFragor.fk7263'],
+            'totaltAntalVardenheter': 6,
+            'origin': 'NORMAL'
         };
 
     }
