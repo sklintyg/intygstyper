@@ -357,12 +357,12 @@ public class InternalValidatorInstance {
             return;
         }
 
-        if (narkotikaLakemedel.getForemalForVardinsats() == null) {
-            addValidationError("narkotikaLakemedel.vardinsats", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.vardinsats-bas.missing");
-        }
-
         if (narkotikaLakemedel.getTeckenMissbruk() == null) {
             addValidationError("narkotikaLakemedel.teckenMissbruk", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.teckenmissbruk.missing");
+        }
+
+        if (narkotikaLakemedel.getForemalForVardinsats() == null) {
+            addValidationError("narkotikaLakemedel.vardinsats", ValidationMessageType.EMPTY, "ts-bas.validation.narkotikaLakemedel.vardinsats-bas.missing");
         }
 
         if (BooleanUtils.isTrue(narkotikaLakemedel.getTeckenMissbruk()) || BooleanUtils.isTrue(narkotikaLakemedel.getForemalForVardinsats())) {

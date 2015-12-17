@@ -117,6 +117,10 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
                     "fk7263.validation.vardenhet.telefonnummer.missing");
         }
+
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod())) {
+            LOG.warn("Vardenhet {} has null or blank arbetsplatskod.", utlatande.getGrundData().getSkapadAv().getVardenhet());
+        }
     }
 
     private void validateKommentar(Utlatande utlatande, List<ValidationMessage> validationMessages) {
