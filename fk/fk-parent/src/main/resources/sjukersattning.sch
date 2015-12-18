@@ -87,6 +87,9 @@
       <iso:assert test="count(gn:svar[@id='26']) le 1">
         Ett 'MU' får ha högst ett 'Kontakt önskas'
       </iso:assert>
+      <iso:assert test="count(gn:svar[not(matches(@id, '^([123456789]|1[01234789]|2[012356]|9[0-9]{3})$'))]) = 0">
+        Ett 'MU' får inte innehålla svar med id:n som inte är förväntade.
+      </iso:assert>
       <!-- Meddelandet kan innehålla ett valfritt antal tilläggsfrågor -->
     </iso:rule>
   </iso:pattern>
@@ -526,6 +529,23 @@
       <iso:assert test="count(../gn:delsvar[@id='26.2']) = 0">
         Om 'Kontakt önskas' besvarats med nej kan 'Motivering av kontakt önskas' inte fyllas i.
       </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q9000">
+    <iso:rule context="//gn:svar[number(@id) ge 9001]">
+      <iso:assert test="count(gn:delsvar[@id = string-join(@id, '.1')]) = 1">
+        En tilläggsfråga måste ha ett delsvar med delfråge-id som består av frågans id plus '.1'.
+      </iso:assert>
+      <iso:assert test="not(preceding-sibling::*/@id = @id)">
+        Två tilläggsfrågor kan inte ha samma id.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q9000.1">
+    <iso:rule context="//gn:svar[number(@id) ge 9001]/gn:delsvar">
+      <iso:extends rule="non-empty-string"/>
     </iso:rule>
   </iso:pattern>
 

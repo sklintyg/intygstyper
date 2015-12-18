@@ -4,12 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
 import java.net.URL;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
 import javax.xml.transform.stream.StreamSource;
 
 import org.junit.Test;
@@ -17,8 +13,6 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateValidator;
 import se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningValidator;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;

@@ -158,5 +158,11 @@
       <delsvar id="26.1">true</delsvar>
       <delsvar id="26.2">Känner mig ensam</delsvar>
     </svar>
+    <svar id="9001">
+      <delsvar id="9001.1">Det blir bra.</delsvar>
+    </svar>
+    <svar id="9002">
+      <delsvar id="9002.1">Lördag passar fint.</delsvar>
+    </svar>
   </ns2:intyg>
 </ns2:RegisterCertificate>
