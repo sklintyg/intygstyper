@@ -304,7 +304,7 @@ public final class InternalToTransport {
 
     private static SkapadAv buildSkapadAv(HoSPersonal source) {
         SkapadAv skapadAv = new SkapadAv();
-        skapadAv.setAtLakare(source.getBefattningar().contains(BefattningKod.LAKARE_EJ_LEG_AT.getDescription()));
+        skapadAv.setAtLakare(source.getBefattningar().contains(BefattningKod.LAKARE_EJ_LEG_AT.getNamn()));
         if (!source.getBefattningar().isEmpty()) {
             skapadAv.getBefattningar().addAll(source.getBefattningar());
         }

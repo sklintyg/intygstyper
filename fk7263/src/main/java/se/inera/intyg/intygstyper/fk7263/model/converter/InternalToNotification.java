@@ -19,29 +19,28 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
-    import java.util.List;
+import java.util.List;
 
-    import org.apache.commons.lang3.StringUtils;
-    import org.slf4j.Logger;
-    import org.slf4j.LoggerFactory;
-    import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-    import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-    import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-    import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-    import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-    import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-    import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;
-    import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-    import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
-    import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-    import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.*;
-    import se.riv.clinicalprocess.healthcond.certificate.types.v1.*;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;
+import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
+import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.*;
 
+public class InternalToNotification {
 
-    public class InternalToNotification {
-
-        private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
 
     private static final String INTYGSID_ROOT = "1.2.752.129.2.1.2.1";
 
@@ -62,12 +61,12 @@ package se.inera.intyg.intygstyper.fk7263.model.converter;
     private static final String HANDELSE_CODESYSTEM_NAME = "kv_händelse";
 
     private static final String ARBETSFORMAGA_UNIT = "%";
-        public static final int NEDSATTNING_25 = 25;
-        public static final int NEDSATTNING_50 = 50;
-        public static final int NEDSATTNING_75 = 75;
-        public static final int NEDSATTNING_100 = 100;
+    public static final int NEDSATTNING_25 = 25;
+    public static final int NEDSATTNING_50 = 50;
+    public static final int NEDSATTNING_75 = 75;
+    public static final int NEDSATTNING_100 = 100;
 
-        @Autowired(required = false)
+    @Autowired(required = false)
     private WebcertModuleService moduleService;
 
     @Autowired

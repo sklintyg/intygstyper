@@ -433,8 +433,8 @@ public class PdfGenerator {
         populateAvslutSpecialist(utlatande, fields);
 
         List<String> befattningar = utlatande.getGrundData().getSkapadAv().getBefattningar();
-        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_LEG_ST.getDescription()));
-        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.getDescription()));
+        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_LEG_ST.getNamn()));
+        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.getNamn()));
     }
 
     private void populateAvslutSpecialist(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {

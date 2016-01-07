@@ -59,19 +59,19 @@ public enum BefattningKod {
 
     private String code;
 
-    private String description;
+    private String namn;
 
-    BefattningKod(String code, String desc) {
+    BefattningKod(String code, String namn) {
         this.code = code;
-        this.description = desc;
+        this.namn = namn;
     }
 
     public String getCode() {
         return this.code;
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getNamn() {
+        return this.namn;
     }
 
     public String getCodeSystem() {
