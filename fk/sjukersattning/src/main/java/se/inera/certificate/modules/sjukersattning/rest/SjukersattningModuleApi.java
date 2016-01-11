@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2015 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package se.inera.certificate.modules.sjukersattning.rest;
 
 import static java.util.Arrays.asList;
@@ -14,12 +33,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternal;
 import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.texts.*;
+import se.inera.certificate.modules.sjukersattning.model.texts.Alternative;
+import se.inera.certificate.modules.sjukersattning.model.texts.Alternatives;
+import se.inera.certificate.modules.sjukersattning.model.texts.Category;
+import se.inera.certificate.modules.sjukersattning.model.texts.Form;
+import se.inera.certificate.modules.sjukersattning.model.texts.Question;
+import se.inera.certificate.modules.sjukersattning.model.texts.SubQuestion;
 import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -27,7 +53,15 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
@@ -42,8 +76,6 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SjukersattningModuleApi implements ModuleApi {
 
@@ -233,7 +265,7 @@ public class SjukersattningModuleApi implements ModuleApi {
         SubQuestion subQuestion12 = SubQuestion.create("1.2", "Title 1.2", "Fill in this value");
         Question question1 = Question.create("1", "Title 1", "Some sub questions", asList(subQuestion11, subQuestion12));
         Category category1 = Category.create("1", "Category 1", "So many questions", asList(question1));
-        Alternative alternative1= Alternative.create(1, "Alternativ 1");
+        Alternative alternative1 = Alternative.create(1, "Alternativ 1");
         Alternative alternative2 = Alternative.create(2, "Alternativ 2");
         Alternatives alternatives = Alternatives.create("Flera alternativ", asList(alternative1, alternative2));
         Form form = Form.create("sjukersattning", "Läkarintyg, sjukersättning", "Läkarintyg för sjukersättning", asList(category1), asList(alternatives));

@@ -27,12 +27,33 @@ import se.inera.intyg.common.schemas.Constants;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Vardkontakt;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.types.v1.II;
-import se.inera.intygstjanster.ts.services.v1.*;
+import se.inera.intygstjanster.ts.services.v1.BedomningTypDiabetes;
 import se.inera.intygstjanster.ts.services.v1.Diabetes;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
+import se.inera.intygstjanster.ts.services.v1.GrundData;
 import se.inera.intygstjanster.ts.services.v1.Hypoglykemier;
+import se.inera.intygstjanster.ts.services.v1.IdentifieringsVarden;
+import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
+import se.inera.intygstjanster.ts.services.v1.IntygsAvserTypDiabetes;
+import se.inera.intygstjanster.ts.services.v1.Korkortsbehorighet;
+import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
+import se.inera.intygstjanster.ts.services.v1.Patient;
+import se.inera.intygstjanster.ts.services.v1.SkapadAv;
+import se.inera.intygstjanster.ts.services.v1.SynfunktionDiabetes;
+import se.inera.intygstjanster.ts.services.v1.SynskarpaMedKorrektion;
+import se.inera.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
+import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intygstjanster.ts.services.v1.Vardenhet;
+import se.inera.intygstjanster.ts.services.v1.Vardgivare;
 
 public final class InternalToTransportConverter {
 

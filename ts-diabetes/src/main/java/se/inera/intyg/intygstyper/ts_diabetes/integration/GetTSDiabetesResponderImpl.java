@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.model.CertificateState;
@@ -42,9 +44,11 @@ import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
-import se.inera.intygstjanster.ts.services.v1.*;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
+import se.inera.intygstjanster.ts.services.v1.IntygMeta;
+import se.inera.intygstjanster.ts.services.v1.IntygStatus;
+import se.inera.intygstjanster.ts.services.v1.Status;
+import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterface {
 

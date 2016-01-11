@@ -1,18 +1,85 @@
+/*
+ * Copyright (C) 2015 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHANDLINGSATGARD_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSTISERING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSTISERING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.HUVUDSAKLIG_ORSAK_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NYBEDOMNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NYBEDOMNING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGKANNEDOM_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGKANNEDOM_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.REFERENSDATUM_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.REFERENSTYP_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.REFERENS_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_BILAGA_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_DATUM_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.YTTERLIGARE_ORSAK_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.YTTERLIGARE_ORSAK_SVAR_ID;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
-import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
+import se.inera.certificate.modules.sjukersattning.model.internal.BehandlingsAtgard;
+import se.inera.certificate.modules.sjukersattning.model.internal.Diagnos;
+import se.inera.certificate.modules.sjukersattning.model.internal.Funktionsnedsattning;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
+import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
@@ -25,7 +92,10 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
-public class TransportToInternal {
+public final class TransportToInternal {
+
+    private TransportToInternal() {
+    }
 
     public static SjukersattningUtlatande convert(Intyg source) throws ConverterException {
         Builder utlatande = SjukersattningUtlatande.builder();
@@ -195,6 +265,8 @@ public class TransportToInternal {
                 break;
             case KONTAKT_ONSKAS_SVAR_ID:
                 handleOnskarKontakt(utlatande, svar);
+                break;
+            default:
                 break;
             }
         }
@@ -452,7 +524,7 @@ public class TransportToInternal {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T getSvarContent(Delsvar delsvar, @SuppressWarnings("unused") Class<T> clazz) {
+    private static <T> T getSvarContent(Delsvar delsvar, Class<T> clazz) {
         Object content = delsvar.getContent().get(0);
         if (content instanceof JAXBElement) {
             return ((JAXBElement<T>) content).getValue();

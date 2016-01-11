@@ -26,8 +26,8 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
@@ -38,7 +38,22 @@ import se.inera.intyg.intygstyper.ts_bas.model.internal.BedomningKorkortstyp;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Synskarpevarden;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intygstjanster.ts.services.v1.*;
+import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
+import se.inera.intygstjanster.ts.services.v1.BedomningTypBas;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypBas;
+import se.inera.intygstjanster.ts.services.v1.HjartKarlSjukdomar;
+import se.inera.intygstjanster.ts.services.v1.HorselBalanssinne;
+import se.inera.intygstjanster.ts.services.v1.IdentitetStyrkt;
+import se.inera.intygstjanster.ts.services.v1.IntygsAvserTypBas;
+import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
+import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
+import se.inera.intygstjanster.ts.services.v1.OvrigMedicinering;
+import se.inera.intygstjanster.ts.services.v1.RorelseorganenFunktioner;
+import se.inera.intygstjanster.ts.services.v1.Sjukhusvard;
+import se.inera.intygstjanster.ts.services.v1.SkapadAv;
+import se.inera.intygstjanster.ts.services.v1.SynfunktionBas;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 
 public final class TransportToInternal {
 

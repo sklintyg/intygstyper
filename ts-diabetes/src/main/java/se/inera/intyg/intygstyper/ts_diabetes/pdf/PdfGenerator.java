@@ -24,16 +24,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PRIndirectReference;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfDictionary;
+import com.itextpdf.text.pdf.PdfIndirectReference;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.ObservationsKod;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
-
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.*;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Vardkontakt;
 
 public class PdfGenerator {
 

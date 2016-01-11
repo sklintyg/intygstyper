@@ -35,8 +35,23 @@ import se.inera.intyg.common.support.modules.support.api.notification.HandelseTy
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.*;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.*;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Arbetsformaga;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.CertificateStatusUpdateForCareType;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Enhet;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.FragorOchSvar;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Handelse;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.HosPersonal;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Patient;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.UtlatandeType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.DatumPeriod;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.Diagnos;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.Handelsekod;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.HandelsekodKodRestriktion;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.HsaId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.PQ;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.PersonId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
 
 public class InternalToNotification {
 

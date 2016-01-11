@@ -36,6 +36,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.annotations.VisibleForTesting;
+
+import iso.v21090.dt.v1.CD;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
@@ -53,13 +57,25 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.intyg.intygstyper.fk7263.model.converter.*;
+import se.inera.intyg.intygstyper.fk7263.model.converter.ArbetsformagaToGiltighet;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToNotification;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.fk7263.model.converter.WebcertModelFactory;
 import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
@@ -67,10 +83,6 @@ import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.annotations.VisibleForTesting;
-import iso.v21090.dt.v1.CD;
 
 
 /**

@@ -24,6 +24,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PRIndirectReference;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfDictionary;
+import com.itextpdf.text.pdf.PdfIndirectReference;
+import com.itextpdf.text.pdf.PdfName;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -31,10 +42,27 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.BefattningKod;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.IdKontrollKod;
-import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
-
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.*;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Bedomning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.BedomningKorkortstyp;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Funktionsnedsattning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HjartKarl;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.HorselBalans;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvser;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Kognitivt;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Medicinering;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Medvetandestorning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.NarkotikaLakemedel;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Neurologi;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Njurar;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Psykiskt;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Sjukhusvard;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.SomnVakenhet;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Syn;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utvecklingsstorning;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Vardkontakt;
 
 public class PdfGenerator {
 

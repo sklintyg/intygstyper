@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.google.common.base.Throwables;
+
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.integration.module.exception.MissingConsentException;
@@ -42,9 +44,11 @@ import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
-import se.inera.intygstjanster.ts.services.v1.*;
-
-import com.google.common.base.Throwables;
+import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
+import se.inera.intygstjanster.ts.services.v1.IntygMeta;
+import se.inera.intygstjanster.ts.services.v1.IntygStatus;
+import se.inera.intygstjanster.ts.services.v1.Status;
+import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
 

@@ -24,7 +24,26 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
+import iso.v21090.dt.v1.CD;
+import iso.v21090.dt.v1.II;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
@@ -40,8 +59,6 @@ import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
-import iso.v21090.dt.v1.CD;
-import iso.v21090.dt.v1.II;
 
 public final class InternalToTransport {
 

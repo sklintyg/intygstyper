@@ -26,6 +26,14 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
+
 import se.inera.intyg.common.support.common.enumerations.Recipients;
 import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.CertificateState;
@@ -34,9 +42,6 @@ import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.*;
 
 /**
  * @author andreaskaltenbach

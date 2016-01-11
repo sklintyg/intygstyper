@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2015 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package se.inera.certificate.modules.sjukpenning.validator;
 
 import java.util.ArrayList;
@@ -147,11 +166,13 @@ public class InternalDraftValidator {
                     "sjukpenning.validation.nedsattning.nedsattmed50.incorrect-format");
             success = false;
         }
+        // CHECKSTYLE:OFF MagicNumber
         if (intervals[3] != null && !intervals[3].isValid()) {
             addValidationError(validationMessages, "nedsattning.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
                     "sjukpenning.validation.nedsattning.nedsattmed25.incorrect-format");
             success = false;
         }
+        // CHECKSTYLE:ON MagicNumber
         return success;
     }
 
@@ -185,7 +206,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod1())) {
             String kodsystem = utlatande.getDiagnosKodsystem1();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukpenning.validation.diagnos.invalid", validationMessages);
@@ -198,7 +219,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod2())) {
             String kodsystem = utlatande.getDiagnosKodsystem2();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukpenning.validation.diagnos2.invalid", validationMessages);
@@ -208,7 +229,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod3())) {
             String kodsystem = utlatande.getDiagnosKodsystem3();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "sjukpenning.validation.diagnos3.invalid", validationMessages);
@@ -233,7 +254,7 @@ public class InternalDraftValidator {
      *
      */
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
-        return (validationMessages.isEmpty()) ? ValidationStatus.VALID :  ValidationStatus.INVALID;
+        return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
 
     /**

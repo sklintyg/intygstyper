@@ -1,3 +1,23 @@
+/*
+ * Copyright (C) 2015 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 package se.inera.certificate.modules.sjukpenning.model.converter;
 
 import java.util.ArrayList;
@@ -15,11 +35,24 @@ import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.HsaId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.TimePeriodType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Enhet;
+import se.riv.clinicalprocess.healthcond.certificate.v2.HosPersonal;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Patient;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Vardgivare;
 
-public class InternalToTransport {
+public final class InternalToTransport {
+
+    private InternalToTransport() {
+    }
 
     public static final int UNDERSOKNING_AV_PATIENT = 1;
     public static final int TELEFONKONTAKT = 2;
@@ -36,7 +69,7 @@ public class InternalToTransport {
     public static final String REFERENS_CODE_SYSTEM = "KV_FKMU_0001";
     public static final String HSA_CODE_SYSTEM = "1.2.752.129.2.1.4.1";
     public static final String INTYP_TYP_CODE_SYSTEM = "kv_utlåtandetyp_intyg";
-    public static final String PERSON_ID_CODE_SYSTEM= "1.2.752.129.2.1.3.3";
+    public static final String PERSON_ID_CODE_SYSTEM = "1.2.752.129.2.1.3.3";
     public static final String SYSSELSATTNING_CODE_SYSTEM = "KV_FKMU_0002";
 
     public static final String SMITTA_SVAR_ID = "2";
@@ -209,17 +242,17 @@ public class InternalToTransport {
                     aCV(DIAGNOS_CODE_SYSTEM, source.getDiagnosKod3(), source.getDiagnosBeskrivning3())).build());
         }
 
-        // TODO: Åtgärd som orsak till nedsatt arbetsförmåga ska in här.
+        // WEBCERT-2285: Åtgärd som orsak till nedsatt arbetsförmåga ska in här.
 
         svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).withDelsvar(FUNKTIONSNEDSATTNING_DELSVAR_ID, source.getFunktionsnedsattning()).build());
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
         svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
         svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
 
-        if (source.getNedsattMed100() != null) {
-            // TODO: reactivate!
-            //svars.add(aSvar(NEDSATTNING_SVAR_ID).withDelsvar(NEDSATTNING_DELSVAR_ID, aPeriod(source.getNedsattMed100())).build());
-        }
+        // WEBCERT-2286: reactivate!
+        /*if (source.getNedsattMed100() != null) {
+            svars.add(aSvar(NEDSATTNING_SVAR_ID).withDelsvar(NEDSATTNING_DELSVAR_ID, aPeriod(source.getNedsattMed100())).build());
+        }*/
         if (source.getNedsattMed75() != null) {
             svars.add(aSvar(NEDSATTNING_SVAR_ID).withDelsvar(NEDSATTNING_DELSVAR_ID, aPeriod(source.getNedsattMed75())).build());
         }
@@ -276,7 +309,7 @@ public class InternalToTransport {
         private String id;
         private List<Delsvar> delSvars = new ArrayList<>();
 
-        public SvarBuilder(String id) {
+        SvarBuilder(String id) {
             this.id = id;
         }
 
