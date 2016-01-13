@@ -2,10 +2,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'fk7263.diagnosService',
         'common.DateUtilsService', 'common.UtilsService', 'fk7263.Domain.IntygModel',
-        'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
+        'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService', 'fk7263.fmb.ViewStateService', 'fk7263.fmbService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             UtkastService, UserModel, diagnosService,
-            dateUtils, utils, IntygModel, viewState, anchorScrollService) {
+            dateUtils, utils, IntygModel, viewState, anchorScrollService, fmbViewState, fmbService) {
             'use strict';
 
             /**********************************************************************************
@@ -17,7 +17,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.viewState = viewState;
 
             // Page states
-            $scope.user = UserModel;
+            $scope.user = UserModel.user;
 
             /****************************************************************************
              * Exposed interaction functions to view
@@ -30,9 +30,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             /**************************************************************************
              * Load certificate and setup form / Constructor ...
              **************************************************************************/
-
-            // Get the certificate draft from the server.
-            UtkastService.load(viewState);
 
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
@@ -49,10 +46,28 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 if(!$scope.certForm.$dirty){
                     $scope.destroyList();
                 }
+                fmbViewState.reset();
             });
 
             $scope.destroyList = function(){
                 viewState.clearModel();
             };
+
+            // Get the certificate draft from the server.
+            UtkastService.load(viewState).then(function(intygModel) {
+                    if(intygModel.diagnosKod) {
+                        fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
+                            function (formData) {
+                                fmbViewState.setState(formData, intygModel.diagnosKod);
+                            },
+                            function (rejectionData) {
+                                $log.debug('Error searching fmb help text');
+                                $log.debug(rejectionData);
+                                return [];
+                            }
+                        );
+                    }
+                }
+            );
 
         }]);

@@ -27,6 +27,7 @@ import se.inera.certificate.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.certificate.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.certificate.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.certificate.modules.support.api.dto.HoSPersonal;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_bas.model.internal.Utlatande;
 import se.inera.certificate.modules.ts_bas.support.TsBasEntryPoint;
 
@@ -104,7 +105,7 @@ public class WebcertModelFactory {
         return template;
     }
 
-    private void populateWithNewPersonnummer(Utlatande template, String newPersonnummer) {
+    private void populateWithNewPersonnummer(Utlatande template, Personnummer newPersonnummer) {
         template.getGrundData().getPatient().setPersonId(newPersonnummer);
     }
 

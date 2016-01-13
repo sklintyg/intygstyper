@@ -9,7 +9,7 @@ describe('fk7263.EditCertCtrl.Form6a711Ctrl', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
 
-    beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
+    beforeEach(angular.mock.module('common', 'fk7263', function(/*$provide*/) {
 
         // the below are now included in common
         //$provide.value('fk7263.domain.DraftModel', __draftModel__);
@@ -74,8 +74,8 @@ describe('fk7263.EditCertCtrl.Form6a711Ctrl', function() {
             expect(model.rekommendationOvrigt).toBe(undefined);
             expect(model.rekommendationOvrigtCheck).toBe(undefined);
 
-            expect(model.ressattTillArbeteAktuellt).toBe(undefined);
-            expect(model.ressattTillArbeteEjAktuellt).toBe(undefined);
+            expect(model.ressattTillArbeteAktuellt).toBe('ressattTillArbeteAktuellt');
+            expect(model.ressattTillArbeteEjAktuellt).toBe('ressattTillArbeteEjAktuellt');
 
             expect(model.rehabilitering).toBe(undefined);
 

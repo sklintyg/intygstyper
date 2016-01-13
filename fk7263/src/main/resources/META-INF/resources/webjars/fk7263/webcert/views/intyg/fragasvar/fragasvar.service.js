@@ -56,7 +56,7 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
         function _closeAllAsHandled(qas, onSuccess, onError) {
             var restPath = '/moduleapi/fragasvar/stang';
             var fs = [];
-            angular.forEach(qas, function(qa, key) {
+            angular.forEach(qas, function(qa/*, key*/) {
                 this.push({ intygsTyp : qa.intygsReferens.intygsTyp, fragaSvarId:qa.internReferens });
             }, fs);
 

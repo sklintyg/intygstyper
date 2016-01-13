@@ -1,12 +1,13 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form5Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        function($scope, $log, viewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.fmb.ViewStateService',
+        function($scope, $log, viewState, fmbViewState) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
 
             $scope.viewState = viewState;
 
+            $scope.fmb = fmbViewState.state;
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
                 if(newVal === oldVal){
                     return;

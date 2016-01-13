@@ -27,9 +27,6 @@ import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
-
 public class TransportValidatorInstance {
 
     private final List<String> validationErrors;
@@ -67,7 +64,7 @@ public class TransportValidatorInstance {
         // PersonId
         if (utlatande.getGrundData().getPatient() != null) {
             String id = utlatande.getGrundData().getPatient().getPersonId().getRoot();
-            if(!id.equals(Constants.PERSON_ID_OID) && !id.equals(Constants.SAMORDNING_ID_OID)) {
+            if (!id.equals(Constants.PERSON_ID_OID) && !id.equals(Constants.SAMORDNING_ID_OID)) {
                 validationErrors.add(String.format("Root for patient.personnummer should be %s or %s but was %s",
                         Constants.PERSON_ID_OID, Constants.SAMORDNING_ID_OID, id));
             }
@@ -94,9 +91,9 @@ public class TransportValidatorInstance {
     }
 
     private void validatePersontransportRelatedElements(TSBasIntyg utlatande) {
-        assertNotNull(utlatande.getRorelseorganensFunktioner().isHarOtillrackligRorelseformagaPassagerare(), 
+        assertNotNull(utlatande.getRorelseorganensFunktioner().isHarOtillrackligRorelseformagaPassagerare(),
                 "rorelseorganensFunktioner.HarOtillrackligRorelseformagaPassagerare");
-        assertNotNull(utlatande.getHorselBalanssinne().isHarSvartUppfattaSamtal4Meter(), 
+        assertNotNull(utlatande.getHorselBalanssinne().isHarSvartUppfattaSamtal4Meter(),
                 "horselBalanssinne.HarOtillrackligRorelseformagaPassagerare");
     }
 
@@ -168,7 +165,7 @@ public class TransportValidatorInstance {
      * Assert the supplied personId has the correct code root.
      *
      * @param id
-     *            {@link Id} the id to check
+     *            the id to check
      * @param element
      *            string identifying the context
      */
@@ -185,14 +182,15 @@ public class TransportValidatorInstance {
      * Assert the supplied HsaId has the correct code root.
      *
      * @param id
-     *            {@link Id} the id to check
+     *            the id to check
      * @param element
      *            string identifying the context
      */
     protected void assertValidHsaId(II id, String element) {
         if (assertNotNull(id, element).success()) {
-            if (!id.getRoot().equals(Constants.HSA_ID_OID))
+            if (!id.getRoot().equals(Constants.HSA_ID_OID)) {
                 validationError(element + " should be an HSA-ID with root: " + Constants.HSA_ID_OID);
+            }
         }
     }
 
@@ -204,7 +202,7 @@ public class TransportValidatorInstance {
     enum AssertionResult {
         SUCCESS(true), FAILURE(false);
 
-        private AssertionResult(boolean assertSuccessfull) {
+        AssertionResult(boolean assertSuccessfull) {
             this.assertSuccessful = assertSuccessfull;
         }
 

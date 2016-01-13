@@ -21,6 +21,7 @@ import se.inera.certificate.modules.fk7263.model.internal.PrognosBedomning;
 import se.inera.certificate.modules.fk7263.model.internal.Rehabilitering;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.fk7263.support.Fk7263EntryPoint;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
@@ -38,7 +39,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 /**
  * Converts se.inera.certificate.fk7263.insuranceprocess.healthreporting.mu7263.v3.Lakarutlatande Jaxb structure to
  * External model.
- * 
+ *
  * @author marced
  */
 public final class TransportToInternal {
@@ -83,7 +84,7 @@ public final class TransportToInternal {
                 if (utlatande.isNuvarandeArbete() && funktionstillstand.getArbetsformaga().getArbetsuppgift() != null) {
                     utlatande.setNuvarandeArbetsuppgifter(funktionstillstand.getArbetsformaga().getArbetsuppgift().getTypAvArbetsuppgift());
                 }
-                
+
                 populateWithPrognos(utlatande, funktionstillstand.getArbetsformaga());
             }
 
@@ -246,8 +247,8 @@ public final class TransportToInternal {
     }
 
     /**
-     * Create IntyMetadata object with information regarding Patient, SkapadAv and Skickat- and SkapatDatum
-     * 
+     * Create IntyMetadata object with information regarding Patient, SkapadAv and Skickat- and SkapatDatum.
+     *
      * @param source
      *            {@link LakarutlatandeType}
      * @return {@link GrundData}
@@ -261,8 +262,8 @@ public final class TransportToInternal {
     }
 
     /**
-     * Create Internal HoSPersonal from transport format
-     * 
+     * Create Internal HoSPersonal from transport format.
+     *
      * @param source
      *            HosPersonalType
      * @return HoSPersonal
@@ -277,8 +278,8 @@ public final class TransportToInternal {
     }
 
     /**
-     * Create Vardenhet from transportformat
-     * 
+     * Create Vardenhet from transportformat.
+     *
      * @param source
      *            EnhetType
      * @return Vardenhet
@@ -298,8 +299,8 @@ public final class TransportToInternal {
     }
 
     /**
-     * Create Internal Vardgivare from transportformat
-     * 
+     * Create Internal Vardgivare from transportformat.
+     *
      * @param source
      *            VardgivareType
      * @return Vardgivare
@@ -312,8 +313,8 @@ public final class TransportToInternal {
     }
 
     /**
-     * Create Internal Patient from transport format
-     * 
+     * Create Internal Patient from transport format.
+     *
      * @param source
      *            PatientType
      * @return Patient
@@ -322,7 +323,7 @@ public final class TransportToInternal {
         Patient patient = new Patient();
         patient.setEfternamn(source.getFullstandigtNamn());
         patient.setFullstandigtNamn(source.getFullstandigtNamn());
-        patient.setPersonId(source.getPersonId().getExtension());
+        patient.setPersonId(new Personnummer(source.getPersonId().getExtension()));
         return patient;
     }
 
@@ -372,10 +373,9 @@ public final class TransportToInternal {
     /**
      * Convert nedsattning to formaga. Note: kind of backwards, but meaning is opposite in transport model vs domain
      * model..
-     * 
+     *
      * @param source
      *            source
-     * @return Fk7263Observation
      */
     private static void populateWithArbetsformaga(Utlatande utlatande, FunktionstillstandType source) {
         for (ArbetsformagaNedsattningType nedsattning : source.getArbetsformaga().getArbetsformagaNedsattning()) {

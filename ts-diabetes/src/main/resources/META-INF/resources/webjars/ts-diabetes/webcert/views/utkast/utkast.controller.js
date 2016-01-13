@@ -14,7 +14,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
             $scope.viewState = viewState;
 
             // Page state
-            $scope.user = UserModel;
+            $scope.user = UserModel.user;
 
             /******************************************************************************************
              * Private support functions
@@ -42,9 +42,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
              * Load certificate and setup form
              **************************************************************************/
 
-            // Get the certificate draft from the server.
-            UtkastService.load(viewState);
-
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
                 var intygState = {
@@ -66,10 +63,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 viewState.clearModel();
             };
 
-            $scope.$on('intyg.loaded', function(){
-                if($scope.certForm && $scope.certForm.allvarligForekomstVakenTidObservationstid){
-                    var formElement = $scope.certForm.allvarligForekomstVakenTidObservationstid;
-                    dateUtils.addDateParserFormatter(formElement);
-                }
-            });
+            // Sätt upp lyssnare för 'intyg.loaded' innan load anropas, säkerställer att lyssnaren hunnit registreras när load körs.
+            // Get the certificate draft from the server.
+            UtkastService.load(viewState);
+
         }]);

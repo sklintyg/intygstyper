@@ -11,6 +11,8 @@
   "/web/webjars/fk7263/webcert/views/utkast/dateRangeGroup.model.js",
   "/web/webjars/fk7263/webcert/views/utkast/dateRangeGroups.service.js",
   "/web/webjars/fk7263/webcert/views/utkast/diagnos.service.js",
+  "/web/webjars/fk7263/webcert/views/utkast/fmb.service.js",
+  "/web/webjars/fk7263/webcert/views/utkast/fmb.viewstate.service.js",
   "/web/webjars/fk7263/webcert/views/utkast/utkast.controller.js",
   "/web/webjars/fk7263/webcert/views/utkast/utkast.helper.js",
   "/web/webjars/fk7263/webcert/views/utkast/utkast.model.js",

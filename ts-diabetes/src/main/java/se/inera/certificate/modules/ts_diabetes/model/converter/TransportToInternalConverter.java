@@ -11,6 +11,7 @@ import se.inera.certificate.model.common.internal.HoSPersonal;
 import se.inera.certificate.model.common.internal.Patient;
 import se.inera.certificate.model.common.internal.Vardenhet;
 import se.inera.certificate.model.common.internal.Vardgivare;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Bedomning;
 import se.inera.certificate.modules.ts_diabetes.model.internal.BedomningKorkortstyp;
 import se.inera.certificate.modules.ts_diabetes.model.internal.Diabetes;
@@ -33,22 +34,25 @@ import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 import se.inera.certificate.modules.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.certificate.modules.ts_diabetes.model.codes.UtlatandeKod;
 
-public class TransportToInternalConverter {
+public final class TransportToInternalConverter {
     private static final String VARDKONTAKT_TYP = "5880005";
-    
-    public static final Map<DiabetesTypVarden, String> typVardenMap;
-    
+
+    public static final Map<DiabetesTypVarden, String> TYP_VARDEN_MAP;
+
     static {
         Map<DiabetesTypVarden, String> tempMap = new HashMap<>();
         tempMap.put(DiabetesTypVarden.TYP_2, "DIABETES_TYP_2");
         tempMap.put(DiabetesTypVarden.TYP_1, "DIABETES_TYP_1");
-        
-        typVardenMap = Collections.unmodifiableMap(tempMap);
+
+        TYP_VARDEN_MAP = Collections.unmodifiableMap(tempMap);
     }
-    
-    public static Utlatande convert(TSDiabetesIntyg transport){
+
+    private TransportToInternalConverter() {
+    }
+
+    public static Utlatande convert(TSDiabetesIntyg transport) {
         Utlatande result = new Utlatande();
-        
+
         result.setId(transport.getIntygsId());
         result.setTyp(UtlatandeKod.getCurrentVersion().getCode());
         result.setGrundData(readGrundData(transport.getGrundData()));
@@ -71,7 +75,7 @@ public class TransportToInternalConverter {
     }
 
     private static void readIntygAvser(IntygAvser intygAvser, IntygsAvserTypDiabetes intygAvser2) {
-        for(KorkortsbehorighetTsDiabetes kbh : intygAvser2.getKorkortstyp()){
+        for (KorkortsbehorighetTsDiabetes kbh : intygAvser2.getKorkortstyp()) {
             intygAvser.getKorkortstyp().add(IntygAvserKategori.valueOf(kbh.name().replaceAll("_", "")));
         }
     }
@@ -81,15 +85,15 @@ public class TransportToInternalConverter {
         bedomning.setKommentarer(bedomning2.getOvrigKommentar());
         bedomning.setLakareSpecialKompetens(bedomning2.getBehovAvLakareSpecialistKompetens());
         bedomning.setLamplighetInnehaBehorighet(bedomning2.isLamplighetInnehaBehorighetSpecial());
-        
+
         for (KorkortsbehorighetTsDiabetes kbh : bedomning2.getKorkortstyp()) {
             bedomning.getKorkortstyp().add(BedomningKorkortstyp.valueOf(kbh.toString().replaceAll("_", "")));
         }
     }
 
     private static void readSyn(Syn syn, SynfunktionDiabetes synfunktion) {
-        
-        if(synfunktion != null){
+
+        if (synfunktion != null) {
             //syn.setSeparatOgonlakarintyg(synfunktion.isFinnsSeparatOgonlakarintyg());
             syn.setBinokulart(readBinokulart(synfunktion));
             syn.setDiplopi(synfunktion.isHarDiplopi());
@@ -141,7 +145,7 @@ public class TransportToInternalConverter {
 
     private static void readDiabetes(Diabetes diabetes, se.inera.intygstjanster.ts.services.v1.Diabetes diabetes2) {
         diabetes.setAnnanBehandlingBeskrivning(diabetes2.getAnnanBehandlingBeskrivning());
-        diabetes.setDiabetestyp(typVardenMap.get(diabetes2.getDiabetesTyp().get(0)));
+        diabetes.setDiabetestyp(TYP_VARDEN_MAP.get(diabetes2.getDiabetesTyp().get(0)));
         diabetes.setEndastKost(diabetes2.isHarBehandlingKost());
         diabetes.setInsulin(diabetes2.isHarBehandlingInsulin());
         diabetes.setInsulinBehandlingsperiod(diabetes2.getInsulinBehandlingSedanAr());
@@ -192,7 +196,7 @@ public class TransportToInternalConverter {
         result.setEfternamn(patient.getEfternamn());
         result.setFornamn(patient.getFornamn());
         result.setFullstandigtNamn(patient.getFullstandigtNamn());
-        result.setPersonId(patient.getPersonId().getExtension());
+        result.setPersonId(new Personnummer(patient.getPersonId().getExtension()));
         result.setPostadress(patient.getPostadress());
         result.setPostnummer(patient.getPostnummer());
         result.setPostort(patient.getPostort());

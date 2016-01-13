@@ -52,6 +52,7 @@ import se.inera.certificate.modules.support.api.dto.HoSPersonal;
 import se.inera.certificate.modules.support.api.dto.InternalModelHolder;
 import se.inera.certificate.modules.support.api.dto.InternalModelResponse;
 import se.inera.certificate.modules.support.api.dto.Patient;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.certificate.modules.support.api.dto.Vardenhet;
 import se.inera.certificate.modules.support.api.dto.Vardgivare;
 import se.inera.certificate.modules.support.api.exception.ModuleException;
@@ -162,7 +163,7 @@ public class ModuleApiTest {
         Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
         HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
-        Patient patient = new Patient("Kalle",null,"Kula","19121212-1212",null,null,null);
+        Patient patient = new Patient("Kalle", null, "Kula", new Personnummer("19121212-1212"), null, null, null);
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 

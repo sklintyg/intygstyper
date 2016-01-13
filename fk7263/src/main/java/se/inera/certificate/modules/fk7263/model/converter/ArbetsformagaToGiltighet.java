@@ -23,13 +23,20 @@ public final class ArbetsformagaToGiltighet {
      * Uses the NedsattMedNN information on the Utlatande to build a LocalDateInterval with the earliest fromDate to the
      * latest toDate.
      *
+     * If there are invalid dates (format etc.) on the Utlatande "NedsattMedNN", we catch all Exceptions and just return null
+     * as Giltighet. (WEBCERT-1940)
+     *
      * @param utlatande
      * @return
      *      Aa LocalDateInterval with the earliest fromDate to the
-     *      latest toDate
+     *      latest toDate. Null if there are invalid/unparsable dates.
      */
     public static LocalDateInterval getGiltighetFromUtlatande(Utlatande utlatande) {
-        return new LocalDateInterval(getValidFromDate(utlatande), getValidToDate(utlatande));
+        try {
+            return new LocalDateInterval(getValidFromDate(utlatande), getValidToDate(utlatande));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private static LocalDate getValidToDate(Utlatande utlatande) {

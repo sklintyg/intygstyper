@@ -70,7 +70,7 @@ testData.cert = {
             {type: 'TAXI', selected: false}
         ]
     },
-    updateToAttic: function(model) {
+    updateToAttic: function(/*model*/) {
     },
     restoreFromAttic: function() {
     }

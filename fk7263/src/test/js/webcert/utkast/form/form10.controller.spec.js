@@ -9,7 +9,7 @@ describe('fk7263.EditCertCtrl.Form10Ctrl', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
 
-    beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
+    beforeEach(angular.mock.module('common', 'fk7263', function(/*$provide*/) {
 
     }));
 
@@ -35,7 +35,7 @@ describe('fk7263.EditCertCtrl.Form10Ctrl', function() {
 
         }]));
 
-    describe('#change in avstangningSmittskydd should trigger an update in the attic', function() {
+    describe('#change in sysselsattning to Arbetsloshet should trigger an update in the attic', function() {
         beforeEach(function(){
 
             model.prognosBedomning = 'prognosBedomning';
@@ -51,7 +51,8 @@ describe('fk7263.EditCertCtrl.Form10Ctrl', function() {
             $scope.$apply(); // register false on avstangningSmittskydd
 
 
-            viewState.avstangningSmittskyddValue = true;
+            // set sysselsattning to Arbetsloshet only
+            viewState.sysselsattningValue = [false, true, false];
             $scope.$apply();
 
             // ----- assert
@@ -59,7 +60,7 @@ describe('fk7263.EditCertCtrl.Form10Ctrl', function() {
             expect(model.arbetsformagaPrognosGarInteAttBedomaBeskrivning).toBe(undefined);
 
             // ----- act
-            viewState.avstangningSmittskyddValue = false;  // this should trigger the watch event
+            viewState.sysselsattningValue = [true, false, false]; // this should trigger the watch event
             $scope.$apply();
 
             // ----- assert
@@ -67,10 +68,7 @@ describe('fk7263.EditCertCtrl.Form10Ctrl', function() {
             // restore from attic
             model.prognosBedomning = 'prognosBedomning';
             model.arbetsformagaPrognosGarInteAttBedomaBeskrivning = 'arbetsformagaPrognosGarInteAttBedomaBeskrivning';
-
-
         });
 
     });
-
 });

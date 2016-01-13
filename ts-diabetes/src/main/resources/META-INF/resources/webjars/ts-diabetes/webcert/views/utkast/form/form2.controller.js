@@ -41,15 +41,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.Utkast.Form2Controller',
             }, true);
 
             // hypoglykemier.allvarligForekomstVakenTidObservationstid
-            var addDateParser = function(form){
-                if(form && form.allvarligForekomstVakenTidObservationstid){
-                    var formElement = form.allvarligForekomstVakenTidObservationstid;
-                    formElement.$parsers.push(function(viewValue) {
-                        viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid = formElement.$viewValue;
-                        return viewValue;
-                    });
-                }
-            };
             $scope.$watch('viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid', function(haftAllvarligForekomstVakenTid) {
                 if (!haftAllvarligForekomstVakenTid && viewState.intygModel.hypoglykemier) {
                     viewState.intygModel.updateToAttic('hypoglykemier.allvarligForekomstVakenTidObservationstid');

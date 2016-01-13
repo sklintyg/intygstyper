@@ -7,7 +7,7 @@ describe('ts-diabetes.IntygController', function() {
         IntygProxy = {
             isSentToTarget: function() {},
             isRevoked: function() {},
-            getIntyg : function(id, type, onSuccess, onError) {
+            getIntyg : function(id, type, onSuccess/*, onError*/) {
                 onSuccess({
                     contents: {
                         'id': '987654321',
@@ -135,7 +135,7 @@ describe('ts-diabetes.IntygController', function() {
             }
         };
         $provide.value('common.IntygProxy', IntygProxy);
-        user = jasmine.createSpyObj('common.User', [ 'getUserContext' ]);
+        user = jasmine.createSpyObj('common.User', [ 'getUser' ]);
         $provide.value('common.User', {});
     }));
 

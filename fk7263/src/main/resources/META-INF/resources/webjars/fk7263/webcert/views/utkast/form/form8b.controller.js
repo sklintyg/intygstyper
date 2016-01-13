@@ -1,7 +1,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        'common.DateRangeService',
-        function($scope, $log, viewState, DateRangeService) {
+        'common.DateRangeService', 'fk7263.fmb.ViewStateService',
+        function($scope, $log, viewState, DateRangeService, fmbViewState) {
             'use strict';
             // private vars
             //var _dateRangeGroups = DateRangeGroupsService.build(_$scope);
@@ -10,6 +10,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             // scope
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
+
+            $scope.fmb = fmbViewState.state;
 
             // 1. onload
             // 2. on check change
@@ -20,10 +22,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             // 8b. Arbetsförmåga date management
             $scope.field8b = {
-                nedsattMed25 : _dateRangeService['nedsattMed25'],
-                nedsattMed50 : _dateRangeService['nedsattMed50'],
-                nedsattMed75 : _dateRangeService['nedsattMed75'],
-                nedsattMed100 : _dateRangeService['nedsattMed100'],
+                nedsattMed25 : _dateRangeService.nedsattMed25,
+                nedsattMed50 : _dateRangeService.nedsattMed50,
+                nedsattMed75 : _dateRangeService.nedsattMed75,
+                nedsattMed100 : _dateRangeService.nedsattMed100,
                 onChangeWorkStateCheck : function(nedsattModelName) {
                     $log.debug('------------------------ onChangeWorkStateCheck');
 
@@ -45,13 +47,29 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             });
 
             var doneLoading = false;
-            $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
-                if(newVal === oldVal || doneLoading){
+            $scope.$watch(function() {
+
+                if (viewState.common.doneLoading) {
+                    if(angular.isObject($scope.form8b.nedsattMed25from) &&
+                        angular.isObject($scope.form8b.nedsattMed25tom) &&
+                        angular.isObject($scope.form8b.nedsattMed50from) &&
+                        angular.isObject($scope.form8b.nedsattMed50tom) &&
+                        angular.isObject($scope.form8b.nedsattMed75from) &&
+                        angular.isObject($scope.form8b.nedsattMed75tom) &&
+                        angular.isObject($scope.form8b.nedsattMed100from) &&
+                        angular.isObject($scope.form8b.nedsattMed100tom)) {
+                        return true;
+                    }
+                }
+                return false;
+
+            }, function(newVal/*, oldVal*/) {
+                if (doneLoading) {
                     return;
                 }
                 if (newVal) {
+                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel, $scope);
                     doneLoading = true;
-                    _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel);
                 }
             });
 

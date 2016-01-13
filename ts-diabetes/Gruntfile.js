@@ -1,5 +1,6 @@
 /* global module */
 function config(name) {
+    'use strict';
     return require('./tasks/' + name);
 }
 
@@ -11,6 +12,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-lcov-merge');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.loadNpmTasks('grunt-angular-templates');
 
@@ -34,7 +36,7 @@ module.exports = function(grunt) {
 
         csslint: {
             options: {
-                csslintrc: '../target/build-tools/csslint/.csslintrc',
+                csslintrc: 'target/build-tools/csslint/.csslintrc',
                 force: true
             },
             minaintyg: {
@@ -58,8 +60,9 @@ module.exports = function(grunt) {
 
         jshint: {
             options: {
-                jshintrc: '../target/build-tools/jshint/.jshintrc',
-                force: true
+                jshintrc: 'target/build-tools/jshint/.jshintrc',
+                force: false,
+                ignores: ['**/templates.js']
             },
             minaintyg: {
                 src: [ 'Gruntfile.js', SRC_DIR + 'webjars/ts-diabetes/minaintyg/**/*.js',
@@ -80,7 +83,7 @@ module.exports = function(grunt) {
                 configFile: 'src/test/resources/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
-            webcert_continous: {
+            webcert_continous: { // jshint ignore:line
                 configFile: 'src/test/resources/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ],
                 autoWatch: true,
@@ -116,7 +119,14 @@ module.exports = function(grunt) {
             }
         },
 
-        ngtemplates: config('ngtemplates')
+        ngtemplates: config('ngtemplates'),
+
+        lcovMerge: {
+            options: {
+                outputFile: 'target/karma_coverage/merged_lcov.info'
+            },
+            src: ['target/karma_coverage/webcert/*.info', 'target/karma_coverage/minaintyg/*.info']
+        }
     });
 
     grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify' ]);

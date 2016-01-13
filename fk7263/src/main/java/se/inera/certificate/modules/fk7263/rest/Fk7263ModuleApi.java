@@ -82,7 +82,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalDraftValidator internalDraftValidator;
-    
+
     @Autowired
     private InternalToNotification internalToNotficationConverter;
 
@@ -125,7 +125,22 @@ public class Fk7263ModuleApi implements ModuleApi {
     public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
-            PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin);
+            PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin, false);
+            return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename());
+        } catch (PdfGeneratorException e) {
+            LOG.error("Failed to generate PDF for certificate!", e);
+            throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+        try {
+            Utlatande intyg = getInternal(internalModel);
+            PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin, true);
             return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename());
         } catch (PdfGeneratorException e) {
             LOG.error("Failed to generate PDF for certificate!", e);

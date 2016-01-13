@@ -1,5 +1,6 @@
 package se.inera.certificate.modules.fk7263.model.converter;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.joda.time.LocalDate;
@@ -25,6 +26,7 @@ public class ArbetsformagaToGiltighetTest {
     private LocalDate toDate2;
     private LocalDate fromDate3;
     private LocalDate toDate3;
+    private Utlatande utlatandeWithInvalidDate;
 
     @Before
     public void setupDates() {
@@ -50,6 +52,12 @@ public class ArbetsformagaToGiltighetTest {
         assertTrue(giltighet.getTom().compareTo(toDate3) == 0);
     }
 
+    @Test
+    public void testReadIntervalReturnsNullOnInvalidDatePresent() {
+        LocalDateInterval giltighet = ArbetsformagaToGiltighet.getGiltighetFromUtlatande(getUtlatandeWithInvalidDate());
+        assertNull(giltighet);
+    }
+
     private Utlatande getUtlatandeWithSingleNedsattning() {
         Utlatande utlatande = new Utlatande();
         utlatande.setNedsattMed100(new InternalLocalDateInterval(new InternalDate(fromDate1), new InternalDate(toDate1)));
@@ -64,4 +72,10 @@ public class ArbetsformagaToGiltighetTest {
         return utlatande;
     }
 
+    private Utlatande getUtlatandeWithInvalidDate() {
+        Utlatande utlatande = new Utlatande();
+        InternalLocalDateInterval internalLocalDateInterval = new InternalLocalDateInterval("2015-08-01", "2015-08-44");
+        utlatande.setNedsattMed25(internalLocalDateInterval);
+        return utlatande;
+    }
 }

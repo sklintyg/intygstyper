@@ -13,7 +13,7 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
 
             $scope.viewState = viewState.reset();
             $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. let view take from viewstate
-            $scope.user = UserModel;
+            $scope.user = UserModel.user;
 
             /***************************************************************************
              * Private controller support functions
@@ -41,9 +41,6 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              * Load certificate and setup form
              **************************************************************************/
 
-            // Get the certificate draft from the server.
-            UtkastService.load(viewState);
-
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
                 var intygState = {
@@ -64,5 +61,8 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             $scope.destroyList = function(){
                 viewState.clearModel();
             };
+
+            // Get the certificate draft from the server.
+            UtkastService.load(viewState);
 
         }]);

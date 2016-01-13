@@ -173,6 +173,9 @@ public class TsBasModuleApi implements ModuleApi {
         return moduleContainer;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     @Override
     public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
@@ -182,6 +185,14 @@ public class TsBasModuleApi implements ModuleApi {
             LOG.error("Failed to generate PDF for certificate!", e);
             throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
         }
+    }
+
+    /**
+     * @{inheritDoc}
+     */
+    @Override
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+        throw new ModuleException("Feature not supported");
     }
 
     @Override
@@ -195,7 +206,7 @@ public class TsBasModuleApi implements ModuleApi {
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
         }
 
-        RegisterTSBasResponseType response=
+        RegisterTSBasResponseType response =
                 registerTSBasResponderInterface.registerTSBas(logicalAddress, request);
 
         // check whether call was successful or not
@@ -231,26 +242,26 @@ public class TsBasModuleApi implements ModuleApi {
         GetTSBasResponseType response = getTSBasResponderInterface.getTSBas(logicalAddress, request);
 
         switch (response.getResultat().getResultCode()) {
-            case INFO:
-            case OK:
-                return convert(response, false);
-            case ERROR:
-                switch (response.getResultat().getErrorId()) {
-                    case REVOKED:
-                        return convert(response, true);
-                    case VALIDATION_ERROR:
-                        throw new ModuleException("getTSBas WS call: VALIDATION_ERROR :" + response.getResultat().getResultText());
-                    default:
-                        throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
-                }
+        case INFO:
+        case OK:
+            return convert(response, false);
+        case ERROR:
+            switch (response.getResultat().getErrorId()) {
+            case REVOKED:
+                return convert(response, true);
+            case VALIDATION_ERROR:
+                throw new ModuleException("getTSBas WS call: VALIDATION_ERROR :" + response.getResultat().getResultText());
             default:
                 throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
+            }
+        default:
+            throw new ModuleException("getTSBas WS call: ERROR :" + response.getResultat().getResultText());
         }
     }
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return persistedState.equals(currentState) == false;
+        return !persistedState.equals(currentState);
     }
 
     @Override
@@ -266,7 +277,8 @@ public class TsBasModuleApi implements ModuleApi {
             RegisterTSBasType external = InternalToTransport.convert(internal);
             StringWriter writer = new StringWriter();
 
-            JAXBElement<RegisterTSBasType> jaxbElement = new JAXBElement<RegisterTSBasType>(new QName("ns3:RegisterTSBas"), RegisterTSBasType.class, external);
+            JAXBElement<RegisterTSBasType> jaxbElement = new JAXBElement<RegisterTSBasType>(new QName("ns3:RegisterTSBas"), RegisterTSBasType.class,
+                    external);
             JAXBContext context = JAXBContext.newInstance(RegisterTSBasType.class);
             context.createMarshaller().marshal(jaxbElement, writer);
             xmlString = writer.toString();

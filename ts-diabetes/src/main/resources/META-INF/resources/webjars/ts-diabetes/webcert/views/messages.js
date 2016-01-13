@@ -37,7 +37,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.status.sent': 'Intyget är signerat och har skickats till Transportstyrelsens system.',
         'ts-diabetes.label.status.recieved': 'Intyget är signerat och mottaget av Transportstyrelsens system.',
         'ts-diabetes.label.status.signed': 'Intyget är signerat och är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
-        'ts-diabetes.label.kopiera.text': 'Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information. I de fall patienten har ändrat namn eller adress så uppdateras den informationen. Uppgifterna i intygsutkastet går att ändra innan det signeras.',
+        'ts-diabetes.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
 
         // Identitet styrkt genom
         'ts-diabetes.label.identitet.id_kort': 'ID-kort',
@@ -84,7 +84,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.diabetes.behandling.annan-beskrivning': 'Annan behandling, vilken?',
 
         'ts-diabetes.label.hypoglykemier.har-patient-kannedom': 'a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?',
-        'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
+        'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symtom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
         'ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken': 'c) Saknar patienten förmåga att känna varningstecken på hypoglykemi ("unawareness")?',
 
         'ts-diabetes.label.hypoglykemier.allvarlig-forekomst': 'd) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?',

@@ -11,7 +11,35 @@ describe('QACtrl', function() {
     var ManageCertView;
     var deferred;
 
-    var testCert = { 'id': 'intyg-2', 'typ': 'fk7263', 'grundData': {'signeringsdatum': '2012-12-23T21:00:00.000', 'skapadAv': {'personId': 'hans', 'fullstandigtNamn': 'Hans Njurgren', 'vardenhet': {'enhetsid': 'dialys', 'enhetsnamn': 'Centrum Väst Mott', 'postadress': 'Lasarettsvägen 13', 'postnummer': '721 61', 'postort': 'Västerås', 'telefonnummer': '021-1818000', 'epost': 'centrum-vast@vardenhet.se', 'vardgivare': {'vardgivarid': 'vastmanland', 'vardgivarnamn': 'Landstinget Västmanland'}}}, 'patient': {'personId': '19121212-1212', 'fullstandigtNamn': 'Test Testorsson', 'efternamn': 'Test Testorsson', 'samordningsNummer': false}}, 'giltighet': {'from': '2011-01-26', 'tom': '2011-05-31'}, 'avstangningSmittskydd': false, 'diagnosKod': 'S47', 'diagnosKodsystem1': 'ICD_10_SE', 'diagnosBeskrivning': 'Medicinskttillstånd: Klämskada på överarm', 'sjukdomsforlopp': 'Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet.\nProblemen har pågått en längre tid.', 'funktionsnedsattning': 'Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan.\nBöj- och sträckförmågan är mycket dålig.\nSmärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.', 'undersokningAvPatienten': '2011-01-26', 'telefonkontaktMedPatienten': '2011-01-12', 'journaluppgifter': '2010-01-14', 'annanReferens': '2010-01-24', 'aktivitetsbegransning': 'Funktionstillstånd-Aktivitet: Patienten bör/kan inte använda armen förrän skadan läkt.\nSkadan förvärras vid för tidigt påtvingad belastning.\nPatienten kan inte lyfta armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.', 'rekommendationKontaktArbetsformedlingen': true, 'rekommendationKontaktForetagshalsovarden': true, 'rekommendationOvrigtCheck': true, 'rekommendationOvrigt': 'När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik', 'atgardInomSjukvarden': 'Utreds om operation är nödvändig', 'annanAtgard': 'Patienten ansvarar för att armen hålls i stillhet', 'rehabilitering': 'rehabiliteringGarInteAttBedoma', 'nuvarandeArbete': true, 'nuvarandeArbetsuppgifter': 'Dirigent. Dirigerar en större orkester på deltid', 'arbetsloshet': true, 'foraldrarledighet': true, 'nedsattMed25': {'from': '2011-04-01', 'tom': '2011-05-31'}, 'nedsattMed50': {'from': '2011-03-07', 'tom': '2011-03-31'}, 'nedsattMed75': {'from': '2011-02-14', 'tom': '2011-03-06'}, 'nedsattMed100': {'from': '2011-01-26', 'tom': '2011-02-13'}, 'arbetsformagaPrognos': 'Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation är nödvändig för att läka skadan.', 'prognosBedomning': 'arbetsformagaPrognosGarInteAttBedoma', 'ressattTillArbeteAktuellt': false, 'ressattTillArbeteEjAktuellt': true, 'kontaktMedFk': true, 'kommentar': 'Prognosen för patienten är god.\nHan kommer att kunna återgå till sitt arbete efter genomförd behandling.', 'namnfortydligandeOchAdress': 'Hans Njurgren\nCentrum Väst Mott\nLasarettsvägen 13\n721 61 Västerås\n021-1818000' };
+    var testCert = { 'id': 'intyg-2', 'typ': 'fk7263', 'grundData': {'signeringsdatum': '2012-12-23T21:00:00.000',
+        'skapadAv': {'personId': 'hans', 'fullstandigtNamn': 'Hans Njurgren', 'vardenhet': {'enhetsid': 'dialys',
+            'enhetsnamn': 'Centrum Väst Mott', 'postadress': 'Lasarettsvägen 13', 'postnummer': '721 61',
+            'postort': 'Västerås', 'telefonnummer': '021-1818000', 'epost': 'centrum-vast@vardenhet.se',
+            'vardgivare': {'vardgivarid': 'vastmanland', 'vardgivarnamn': 'Landstinget Västmanland'}}},
+        'patient': {'personId': '19121212-1212', 'fullstandigtNamn': 'Test Testorsson', 'efternamn': 'Test Testorsson',
+            'samordningsNummer': false}}, 'giltighet': {'from': '2011-01-26', 'tom': '2011-05-31'},
+        'avstangningSmittskydd': false, 'diagnosKod': 'S47', 'diagnosKodsystem1': 'ICD_10_SE',
+        'diagnosBeskrivning': 'Medicinskttillstånd: Klämskada på överarm',
+        'sjukdomsforlopp': 'Bedömttillstånd: Patienten klämde höger överarm vid olycka i hemmet.\nProblemen har pågått en längre tid.',
+        'funktionsnedsattning': 'Funktionstillstånd-Kroppsfunktion: Kraftigt nedsatt rörlighet i överarmen pga skadan.\n' +
+            'Böj- och sträckförmågan är mycket dålig.\nSmärtar vid rörelse vilket ger att patienten inte kan använda armen särkilt mycket.',
+        'undersokningAvPatienten': '2011-01-26', 'telefonkontaktMedPatienten': '2011-01-12', 'journaluppgifter': '2010-01-14',
+        'annanReferens': '2010-01-24', 'aktivitetsbegransning': 'Funktionstillstånd-Aktivitet: Patienten bör/kan inte använda ' +
+            'armen förrän skadan läkt.\nSkadan förvärras vid för tidigt påtvingad belastning.\nPatienten kan inte lyfta ' +
+            'armen utan den ska hållas riktad nedåt och i fast läge så mycket som möjligt under tiden för läkning.',
+        'rekommendationKontaktArbetsformedlingen': true, 'rekommendationKontaktForetagshalsovarden': true, 'rekommendationOvrigtCheck': true,
+        'rekommendationOvrigt': 'När skadan förbättrats rekommenderas muskeluppbyggande sjukgymnastik',
+        'atgardInomSjukvarden': 'Utreds om operation är nödvändig', 'annanAtgard': 'Patienten ansvarar för att armen hålls i stillhet',
+        'rehabilitering': 'rehabiliteringGarInteAttBedoma', 'nuvarandeArbete': true,
+        'nuvarandeArbetsuppgifter': 'Dirigent. Dirigerar en större orkester på deltid', 'arbetsloshet': true, 'foraldrarledighet': true,
+        'nedsattMed25': {'from': '2011-04-01', 'tom': '2011-05-31'}, 'nedsattMed50': {'from': '2011-03-07', 'tom': '2011-03-31'},
+        'nedsattMed75': {'from': '2011-02-14', 'tom': '2011-03-06'}, 'nedsattMed100': {'from': '2011-01-26', 'tom': '2011-02-13'},
+        'arbetsformagaPrognos': 'Arbetsförmåga: Skadan har förvärrats vid varje tillfälle patienten använt armen. Måste ' +
+            'hållas i total stillhet tills läkningsprocessen kommit en bit på väg. Eventuellt kan utredning visa att operation ' +
+            'är nödvändig för att läka skadan.', 'prognosBedomning': 'arbetsformagaPrognosGarInteAttBedoma',
+        'ressattTillArbeteAktuellt': false, 'ressattTillArbeteEjAktuellt': true, 'kontaktMedFk': true,
+        'kommentar': 'Prognosen för patienten är god.\nHan kommer att kunna återgå till sitt arbete efter genomförd behandling.',
+        'namnfortydligandeOchAdress': 'Hans Njurgren\nCentrum Väst Mott\nLasarettsvägen 13\n721 61 Västerås\n021-1818000' };
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
@@ -64,7 +92,7 @@ describe('QACtrl', function() {
 
             // ----- arrange
             // spies, mocks
-            spyOn(ManageCertView, 'isSentToTarget').and.callFake(function(statuses, target) {
+            spyOn(ManageCertView, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
                 // Statuses include a SENT object below so return true.
                 return true;
             });

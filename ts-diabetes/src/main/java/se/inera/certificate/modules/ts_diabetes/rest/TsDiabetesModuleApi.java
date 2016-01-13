@@ -171,6 +171,11 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+        throw new ModuleException("Feature not supported");
+    }
+
+    @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
         RegisterTSDiabetesType request = new RegisterTSDiabetesType();
         try {
@@ -270,7 +275,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return persistedState.equals(currentState) == false;
+        return !persistedState.equals(currentState);
     }
 
     @Override

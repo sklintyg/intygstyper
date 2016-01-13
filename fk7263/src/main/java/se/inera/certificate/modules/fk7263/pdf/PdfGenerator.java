@@ -15,6 +15,7 @@ import se.inera.certificate.model.InternalLocalDateInterval;
 import se.inera.certificate.model.Status;
 import se.inera.certificate.modules.fk7263.model.internal.Utlatande;
 import se.inera.certificate.modules.support.ApplicationOrigin;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,12 +42,15 @@ public class PdfGenerator {
     // Constants used for watermarking
     private static final int MARK_AS_COPY_HEIGTH = 30;
     private static final int MARK_AS_COPY_WIDTH = 250;
+    private static final int MARK_AS_EMPLOYER_HEIGTH = 30;
+    private static final int MARK_AS_EMPLOYER_WIDTH = 410;
     private static final int MARK_AS_COPY_START_X = 50;
     private static final int MARK_AS_COPY_START_Y = 690;
     private static final int WATERMARK_TEXT_PADDING = 10;
     private static final int WATERMARK_FONTSIZE = 12;
 
     private static final String WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
+    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg endast avsett för arbetsgivare.";
 
     // Right margin texts
     private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
@@ -185,11 +189,13 @@ public class PdfGenerator {
     private ByteArrayOutputStream outputStream;
     private AcroFields fields;
 
-    public PdfGenerator(Utlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
-        this(intyg, statuses, true, applicationOrigin);
+    public PdfGenerator(Utlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin, boolean isEmployerCopy)
+            throws PdfGeneratorException {
+        this(intyg, statuses, true, applicationOrigin, isEmployerCopy);
     }
 
-    public PdfGenerator(Utlatande intyg, List<Status> statuses, boolean flatten, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
+    public PdfGenerator(Utlatande intyg, List<Status> statuses, boolean flatten, ApplicationOrigin applicationOrigin, boolean isEmployerCopy)
+            throws PdfGeneratorException {
         try {
             this.intyg = intyg;
 
@@ -199,7 +205,7 @@ public class PdfGenerator {
             PdfStamper pdfStamper = new PdfStamper(pdfReader, this.outputStream);
             fields = pdfStamper.getAcroFields();
 
-            generatePdf();
+            generatePdf(isEmployerCopy);
 
             // Decorate PDF depending on the origin of the pdf-call
             switch (applicationOrigin) {
@@ -209,7 +215,10 @@ public class PdfGenerator {
                 createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), MINA_INTYG_MARGIN_TEXT);
                 break;
             case WEBCERT:
-                if (isCertificateSentToFK(statuses)) {
+                if (isEmployerCopy) {
+                    maskSendToFkInformation(pdfStamper);
+                    markAsEmployerCopy(pdfStamper, WATERMARK_TEXT_EMPLOYER);
+                } else if (isCertificateSentToFK(statuses)) {
                     maskSendToFkInformation(pdfStamper);
                     markAsElectronicCopy(pdfStamper, WATERMARK_TEXT);
                 }
@@ -295,12 +304,26 @@ public class PdfGenerator {
 
     // Mark this document as a copy of an electronically signed document
     private void markAsElectronicCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
+        mark(pdfStamper, watermarkText, MARK_AS_COPY_HEIGTH, MARK_AS_COPY_WIDTH);
+    }
+
+    /**
+     * Marking this document as a print meant for the employer of the patient.
+     *
+     * @throws DocumentException
+     * @throws IOException
+     */
+    private void markAsEmployerCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
+        mark(pdfStamper, watermarkText, MARK_AS_EMPLOYER_HEIGTH, MARK_AS_EMPLOYER_WIDTH);
+    }
+
+    private void mark(PdfStamper pdfStamper, String watermarkText, int height, int width) throws DocumentException, IOException {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(1);
         addOverlay.saveState();
         addOverlay.setColorFill(CMYKColor.WHITE);
         addOverlay.setColorStroke(CMYKColor.RED);
-        addOverlay.rectangle(MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, MARK_AS_COPY_WIDTH, MARK_AS_COPY_HEIGTH);
+        addOverlay.rectangle(MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, width, height);
         addOverlay.stroke();
         addOverlay.restoreState();
         // Do text
@@ -332,7 +355,9 @@ public class PdfGenerator {
     }
 
     public String generatePdfFilename() {
-        return String.format("lakarutlatande_%s_%s-%s.pdf", intyg.getGrundData().getPatient().getPersonId(), intyg.getGiltighet()
+        Personnummer personId = intyg.getGrundData().getPatient().getPersonId();
+        final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
+        return String.format("lakarutlatande_%s_%s-%s.pdf", personnummerString, intyg.getGiltighet()
                 .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
@@ -340,47 +365,42 @@ public class PdfGenerator {
         return outputStream.toByteArray();
     }
 
-    private void generatePdf() {
+    private void generatePdf(boolean isEmployerCopy) {
+        // Mandatory fields
         fillPatientDetails();
+        fillRecommendationsWork();
+        fillCapacityRelativeTo();
+        fillCapacity();
+        fillTravel();
+        fillSignerCodes();
         fillSignerNameAndAddress();
 
-        fillSignerCodes();
+        // Fields not suitable for employer
+        if (!isEmployerCopy) {
+            fillRecommendationsOther();
+            fillArbetsformaga();
+            fillDiagnose();
+            fillDiseaseCause();
+            fillPrognose();
+            fillIsSuspenseDueToInfection();
+            fillBasedOn();
+            fillDisability();
+            fillOther();
+            fillActivityLimitation();
+            fillMeasures();
+            fillRehabilitation();
+            fillFkContact();
+        }
+    }
 
-        fillIsSuspenseDueToInfection();
-
-        fillDiagnose();
-
-        fillDiseaseCause();
-
-        fillBasedOn();
-
-        fillDisability();
-
-        fillActivityLimitation();
-
-        fillRecommendations();
-
-        fillMeasures();
-
-        fillRehabilitation();
-
-        fillCapacityRelativeTo();
-
-        fillCapacity();
-
-        fillTravel();
-
+    private void fillFkContact() {
         setField(CONTACT_WITH_FK, intyg.isKontaktMedFk());
-
-        fillPrognose();
-
-        fillOther();
     }
 
     private void fillPatientDetails() {
         fillText(PATIENT_NAME, intyg.getGrundData().getPatient().getFullstandigtNamn());
-        fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId());
-        fillText(PATIENT_SSN_2, intyg.getGrundData().getPatient().getPersonId());
+        fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
+        fillText(PATIENT_SSN_2, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
     }
 
     private void fillSignerNameAndAddress() {
@@ -419,6 +439,9 @@ public class PdfGenerator {
             default:
             }
         }
+    }
+
+    private void fillArbetsformaga() {
         fillText(WORK_CAPACITY_TEXT, stripNewlines(intyg.getArbetsformagaPrognos()));
     }
 
@@ -469,9 +492,12 @@ public class PdfGenerator {
         }
     }
 
-    private void fillRecommendations() {
-        setField(RECOMMENDATIONS_CONTACT_AF, intyg.isRekommendationKontaktArbetsformedlingen());
+    private void fillRecommendationsWork() {
         setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommendationKontaktForetagshalsovarden());
+    }
+
+    private void fillRecommendationsOther() {
+        setField(RECOMMENDATIONS_CONTACT_AF, intyg.isRekommendationKontaktArbetsformedlingen());
         if (intyg.getRekommendationOvrigt() != null) {
             checkField(RECOMMENDATIONS_OTHER);
             fillText(RECOMMENDATIONS_OTHER_TEXT, stripNewlines(intyg.getRekommendationOvrigt()));

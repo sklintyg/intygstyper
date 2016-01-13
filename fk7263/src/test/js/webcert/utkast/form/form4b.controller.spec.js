@@ -9,7 +9,7 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
 
-    beforeEach(angular.mock.module('common', 'fk7263', function($provide) {
+    beforeEach(angular.mock.module('common', 'fk7263', function(/*$provide*/) {
 
         // the below are now included in common
         //$provide.value('fk7263.domain.DraftModel', __draftModel__);
@@ -51,6 +51,12 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
             model.telefonkontaktMedPatienten = 'telefonkontaktMedPatienten';
             model.undersokningAvPatienten = 'undersokningAvPatienten';
 
+            $scope.form4b = {
+                undersokningAvPatientenDate: {$parsers:[]},
+                telefonkontaktMedPatienten: {$parsers:[]},
+                journaluppgifter: {$parsers:[]},
+                annanReferens: {$parsers:[]}
+            };
         });
 
         it('can restore from the attic', function(){

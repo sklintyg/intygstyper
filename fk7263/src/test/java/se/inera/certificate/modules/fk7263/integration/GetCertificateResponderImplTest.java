@@ -46,6 +46,7 @@ import se.inera.certificate.modules.fk7263.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.fk7263.rest.Fk7263ModuleApi;
 import se.inera.certificate.modules.support.api.CertificateHolder;
 import se.inera.certificate.modules.support.api.ModuleContainerApi;
+import se.inera.certificate.modules.support.api.dto.Personnummer;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
@@ -57,7 +58,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ErrorIdEnum;
 @RunWith(MockitoJUnitRunner.class)
 public class GetCertificateResponderImplTest {
 
-    private static final String civicRegistrationNumber = "19350108-1234";
+    private static final Personnummer civicRegistrationNumber = new Personnummer("19350108-1234");
     private static final String certificateId = "123456";
     
     private CustomObjectMapper objectMapper = new CustomObjectMapper();
@@ -159,7 +160,7 @@ public class GetCertificateResponderImplTest {
 
     @Test
     public void getCertificateWithNullCertificateId() {
-        GetCertificateRequestType request = createGetCertificateRequest("", null);
+        GetCertificateRequestType request = createGetCertificateRequest(new Personnummer(""), null);
         GetCertificateResponseType response = responder.getCertificate(null, request);
         assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
         verifyZeroInteractions(moduleRestApi);
@@ -167,7 +168,7 @@ public class GetCertificateResponderImplTest {
 
     @Test
     public void getCertificateWithBlankCertificateId() {
-        GetCertificateRequestType request = createGetCertificateRequest("", "");
+        GetCertificateRequestType request = createGetCertificateRequest(new Personnummer(""), "");
         GetCertificateResponseType response = responder.getCertificate(null, request);
         assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
         verifyZeroInteractions(moduleRestApi);
@@ -175,7 +176,7 @@ public class GetCertificateResponderImplTest {
 
     @Test
     public void getCertificateWithNullIdentityNumber() {
-        GetCertificateRequestType request = createGetCertificateRequest(null, certificateId);
+        GetCertificateRequestType request = createGetCertificateRequest(new Personnummer(null), certificateId);
         GetCertificateResponseType response = responder.getCertificate(null, request);
         assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
         verifyZeroInteractions(moduleRestApi);
@@ -183,15 +184,15 @@ public class GetCertificateResponderImplTest {
 
     @Test
     public void getCertificateWithBlankIdentityNumber() {
-        GetCertificateRequestType request = createGetCertificateRequest("", certificateId);
+        GetCertificateRequestType request = createGetCertificateRequest(new Personnummer(""), certificateId);
         GetCertificateResponseType response = responder.getCertificate(null, request);
         assertEquals(response.getResult().getErrorId(), ErrorIdEnum.VALIDATION_ERROR);
         verifyZeroInteractions(moduleRestApi);
     }
 
-    private GetCertificateRequestType createGetCertificateRequest(String civicRegistrationNumber, String certificateId) {
+    private GetCertificateRequestType createGetCertificateRequest(Personnummer civicRegistrationNumber, String certificateId) {
         GetCertificateRequestType parameters = new GetCertificateRequestType();
-        parameters.setNationalIdentityNumber(civicRegistrationNumber);
+        parameters.setNationalIdentityNumber(civicRegistrationNumber.getPersonnummer());
         parameters.setCertificateId(certificateId);
         return parameters;
     }

@@ -57,7 +57,7 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                 } else {
                     this.behorighet = 'BEDOMNING';
                 }
-            }
+            };
 
             // This is not so pretty, but necessary? Can it be improved?
             // this could be moved into the model as a linked property, although thats alot of properties ...

@@ -26,7 +26,7 @@
             <p>
               Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
             </p>
-            <div wc-feature-not-active feature="franJournalsystem" class="form-inline"
+            <div wc-authority="PRIVILEGE_VIDAREBEFORDRA_FRAGASVAR" class="form-inline"
                  ng-show="!certProperties.isRevoked">
               <label for="{{panelId}}-mark-as-notified-{{qa.internReferens}}" class="checkbox-inline">
                 <input id="{{panelId}}-mark-as-notified-{{qa.internReferens}}" type="checkbox"
@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <div wc-feature-not-active feature="franJournalsystem" class="col-xs-3">
+        <div wc-authority="PRIVILEGE_VIDAREBEFORDRA_FRAGASVAR" class="col-xs-3">
           <!--  status header -->
           <button id="{{panelId}}-vidarebefordraEjHanterad" class="btn pull-right"
                   ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"
@@ -131,7 +131,7 @@
           <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
           <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>
           <div class="controls">
-            <div class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
+            <div id="answerDisabledReasonPanel" class="alert alert-info" ng-show="qa.answerDisabled && qa.answerDisabledReason">
               {{qa.answerDisabledReason}}
             </div>
             <div class="form-group" ng-show="!qa.answerDisabled && !certProperties.isRevoked">

@@ -11,11 +11,21 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
             this.setDraftModel = function(draftModel){
                 this.draftModel = draftModel;
                 this.intygModel = draftModel.content;
-                this.avstangningSmittskyddVal = this.intygModel.avstangningSmittskydd;
+                this.avstangningSmittskyddValue = this.intygModel.avstangningSmittskydd;
+                this.sysselsattningValue = [this.intygModel.nuvarandeArbete, this.intygModel.arbetsloshet, this.intygModel.foraldrarledighet];
             };
 
             this.avstangningSmittskydd = function() {
                 return this.intygModel.avstangningSmittskydd;
+            };
+
+            this.isArbetslos = function() {
+                var sysselsattning = [this.intygModel.nuvarandeArbete, this.intygModel.arbetsloshet, this.intygModel.foraldrarledighet];
+
+                if (JSON.stringify(sysselsattning) === JSON.stringify([false, true, false])) {
+                    return true;
+                }
+                return false;
             };
 
             this.inputLimits = {

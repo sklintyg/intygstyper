@@ -63,7 +63,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.diabetes.behandling.annan': 'Annan behandling',
 
         'ts-diabetes.label.hypoglykemier.har-patient-kannedom': 'a) Har patienten kunskap om lämpliga åtgärder vid hypoglykemi?',
-        'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symptom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
+        'ts-diabetes.label.hypoglykemier.tecken-nedsatt-hjarnfunktion': 'b) Förekommer hypoglykemier med tecken på nedsatt hjärnfunktion (neuroglukopena symtom) som bedöms kunna innebära en trafiksäkerhetsrisk?',
         'ts-diabetes.label.hypoglykemier.saknar-formaga-kanna-varningstecken': 'c) Saknar patienten förmåga att känna varningstecken på hypoglykemi',
 
         'ts-diabetes.label.hypoglykemier.allvarlig-forekomst': 'd) Har patienten haft allvarlig hypoglykemi (som krävt hjälp av annan för att hävas) under det senaste året?',

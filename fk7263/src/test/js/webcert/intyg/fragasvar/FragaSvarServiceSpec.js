@@ -7,8 +7,28 @@ describe('FragaSvarService', function() {
     var fragaSvarService;
 
     // Testdata
-    var testNewQuestionResponse = {'internReferens':13,'frageStallare':'WC','amne':'ARBETSTIDSFORLAGGNING','frageText':'fdhfdh','frageSigneringsDatum':'2015-02-23T10:14:49.013','frageSkickadDatum':'2015-02-23T10:14:49.013','senasteHandelse':'2015-02-23T10:14:49.013','vardAktorHsaId':'eva','vardAktorNamn':'Eva Holgersson','intygsReferens':{'intygsId':'intyg-2','intygsTyp':'fk7263','patientNamn':'Test Testorsson','signeringsDatum':'2012-12-23T21:00:00.000','patientId':{'patientIdRoot':'1.2.752.129.2.1.3.1','patientIdExtension':'19121212-1212'}},'vardperson':{'hsaId':'hans','namn':'Hans Njurgren','enhetsId':'dialys','enhetsnamn':'Centrum Väst Mott','postadress':'Lasarettsvägen 13','postnummer':'721 61','postort':'Västerås','telefonnummer':'021-1818000','epost':'centrum-vast@vardenhet.se','vardgivarId':'vastmanland','vardgivarnamn':'Landstinget Västmanland'},'status':'PENDING_EXTERNAL_ACTION','vidarebefordrad':false,'senasteHandelseDatum':'2015-02-23T10:14:49.013'};
-    var testAnswerResponse = {'internReferens':12,'externReferens':'FK-5003-revoked','frageStallare':'FK','amne':'OVRIGT','frageText':'Detta är ett konstigt ärende. vad menar Hr Doktor egentligen?','frageSigneringsDatum':'2012-12-23T21:00:00.000','frageSkickadDatum':'2013-09-09T00:00:00.000','svarsText':'srhrshs','svarSigneringsDatum':'2015-02-23T13:11:15.790','svarSkickadDatum':'2015-02-23T13:11:15.790','senasteHandelse':'2015-02-23T13:11:15.790','vardAktorHsaId':'eva','vardAktorNamn':'Eva Holgersson','intygsReferens':{'intygsId':'intyg-4-revoked','intygsTyp':'fk7263','patientNamn':'Test Testorsson','signeringsDatum':'2011-01-26T00:00:00.000','patientId':{'patientIdRoot':'1.2.752.129.2.1.3.1','patientIdExtension':'19121212-1212'}},'vardperson':{'hsaId':'eva','namn':'Eva Rättare','forskrivarKod':'1234567','enhetsId':'centrum-vast','arbetsplatsKod':'123456789011','enhetsnamn':'Kir mott','postadress':'Lasarettsvägen 13','postnummer':'85150','postort':'Sundsvall','telefonnummer':'060-1818000','vardgivarId':'Landstinget Norrland','vardgivarnamn':'Landstinget Norrland'},'status':'CLOSED','vidarebefordrad':false,'senasteHandelseDatum':'2015-02-23T13:11:15.790'};
+    var testNewQuestionResponse = {'internReferens':13,'frageStallare':'WC','amne':'ARBETSTIDSFORLAGGNING',
+        'frageText':'fdhfdh','frageSigneringsDatum':'2015-02-23T10:14:49.013','frageSkickadDatum':'2015-02-23T10:14:49.013',
+        'senasteHandelse':'2015-02-23T10:14:49.013','vardAktorHsaId':'eva','vardAktorNamn':'Eva Holgersson',
+        'intygsReferens':{'intygsId':'intyg-2','intygsTyp':'fk7263','patientNamn':'Test Testorsson',
+            'signeringsDatum':'2012-12-23T21:00:00.000','patientId':{'patientIdRoot':'1.2.752.129.2.1.3.1',
+                'patientIdExtension':'19121212-1212'}},'vardperson':{'hsaId':'hans','namn':'Hans Njurgren','enhetsId':'dialys',
+            'enhetsnamn':'Centrum Väst Mott','postadress':'Lasarettsvägen 13','postnummer':'721 61','postort':'Västerås',
+            'telefonnummer':'021-1818000','epost':'centrum-vast@vardenhet.se','vardgivarId':'vastmanland',
+            'vardgivarnamn':'Landstinget Västmanland'},'status':'PENDING_EXTERNAL_ACTION','vidarebefordrad':false,
+        'senasteHandelseDatum':'2015-02-23T10:14:49.013'};
+    var testAnswerResponse = {'internReferens':12,'externReferens':'FK-5003-revoked','frageStallare':'FK','amne':'OVRIGT',
+        'frageText':'Detta är ett konstigt ärende. vad menar Hr Doktor egentligen?','frageSigneringsDatum':'2012-12-23T21:00:00.000',
+        'frageSkickadDatum':'2013-09-09T00:00:00.000','svarsText':'srhrshs','svarSigneringsDatum':'2015-02-23T13:11:15.790',
+        'svarSkickadDatum':'2015-02-23T13:11:15.790','senasteHandelse':'2015-02-23T13:11:15.790','vardAktorHsaId':'eva',
+        'vardAktorNamn':'Eva Holgersson','intygsReferens':{'intygsId':'intyg-4-revoked','intygsTyp':'fk7263',
+            'patientNamn':'Test Testorsson','signeringsDatum':'2011-01-26T00:00:00.000',
+            'patientId':{'patientIdRoot':'1.2.752.129.2.1.3.1','patientIdExtension':'19121212-1212'}},
+        'vardperson':{'hsaId':'eva','namn':'Eva Rättare','forskrivarKod':'1234567','enhetsId':'centrum-vast',
+            'arbetsplatsKod':'123456789011','enhetsnamn':'Kir mott','postadress':'Lasarettsvägen 13','postnummer':'85150',
+            'postort':'Sundsvall','telefonnummer':'060-1818000','vardgivarId':'Landstinget Norrland',
+            'vardgivarnamn':'Landstinget Norrland'},'status':'CLOSED','vidarebefordrad':false,
+        'senasteHandelseDatum':'2015-02-23T13:11:15.790'};
 
     beforeEach(module('fk7263', function($provide) {
         $provide.value('common.User', {});
