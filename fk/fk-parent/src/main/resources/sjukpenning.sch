@@ -60,6 +60,10 @@
       <iso:assert test="count(gn:delsvar[@id='27.1']) = 1">
         'Smittbärarpenning' måste ha ett 'Om smittbärarpenning'.
       </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^27\.[1]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -82,6 +86,10 @@
       </iso:assert>
       <iso:assert test="not(normalize-space(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code) = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
         Samma 'Typ av grund för MU' kan inte användas flera gånger i samma 'MU'.
+      </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^1\.[123]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -123,6 +131,10 @@
     <iso:rule context="//gn:svar[@id='28']">
       <iso:assert test="count(gn:delsvar[@id='28.1']) = 1">
         'Typ av sysselsättning' måste ha ett 'Typ av sysselsättning'.
+      </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^28\.[1]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -168,6 +180,10 @@
       <iso:assert test="count(gn:delsvar[@id='29.1']) = 1">
         'Nuvarande arbete' måste ha ett 'Yrke och arbetsuppgifter'.
       </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^29\.[1]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -181,6 +197,10 @@
     <iso:rule context="//gn:svar[@id='30']">
       <iso:assert test="count(gn:delsvar[@id='30.1']) = 1">
         'Arbetsmarknadspolitiskt program' måste ha ett 'Aktiviteter i arbetsmarknadspolitiskt program'.
+      </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^30\.[1]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -199,6 +219,10 @@
       <iso:assert test="count(gn:delsvar[@id='6.2']) = 1">
         'Typ av diagnos' måste ha en 'Diagnoskod ICD-10'.
       </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^6\.[12]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -213,9 +237,9 @@
       <iso:extends rule="cv"/>
       <iso:assert test="normalize-space(tp:cv/tp:codeSystem) = 'ICD-10-SE'"/>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code),'^([A-EG-Ya-eg-y][0-9]{2}[A-Za-z0-9-]*|[Zz][0-689][0-9][A-Za-z0-9-]*|[Zz]7[0-24-9][A-Za-z0-9-]*|[Zz]73[A-Za-z0-9-]+|[Ff][0-9]{2}[A-Za-z0-9-]+)$')">
-        Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst
-        tre positioner måste anges. Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra
-        eller bindestreck, d.v.s. minst fyra positioner måste anges.
+        Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst tre positioner
+        måste anges. Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra eller bindestreck, d.v.s. minst fyra
+        positioner måste anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -224,6 +248,10 @@
     <iso:rule context="//gn:svar[@id='31']">
       <iso:assert test="count(gn:delsvar[@id='31.1']) = 1">
         'Huvudsaklig grund' måste ha ett 'Beskrivning'.
+      </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^31\.[1]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -242,6 +270,10 @@
       <iso:let name="cend" value="normalize-space(gn:delsvar[@id='32.2']/tp:datePeriod/tp:end)"/>
       <iso:assert test="not(preceding-sibling::gn:svar[@id='32']/gn:delsvar[@id='32.2']/tp:datePeriod/tp:start[normalize-space(.) lt $cend and normalize-space(../tp:end) gt $cstart])">
         Två 'perioder' kan inte vara överlappande.
+      </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^32\.[12]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -278,6 +310,10 @@
       <iso:assert test="count(gn:delsvar[@id='33.2']) le 1">
         'Arbetstidsförläggning' får ha högst ett 'Motivering arbetstidsförläggning'.
       </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^33\.[12]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -310,6 +346,10 @@
     <iso:rule context="//gn:svar[@id='34']">
       <iso:assert test="count(gn:delsvar[@id='34.1']) = 1">
         'Arbetsresor' måste ha ett 'Om arbetsresor'.
+      </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^34\.[1]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
     </iso:rule>
   </iso:pattern>
