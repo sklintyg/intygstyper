@@ -23,7 +23,7 @@ public class InternalToTransportTest2 {
 
     @Test
     public void doSchematronValidationSjukersattning() throws Exception {
-        String xmlContents = Resources.toString(getResource("sjukersattning2.xml"), Charsets.UTF_8);
+        String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
 
         RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));

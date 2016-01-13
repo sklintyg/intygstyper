@@ -65,7 +65,7 @@
 
   <iso:pattern id="q27.1">
     <iso:rule context="//gn:delsvar[@id='27.1']">
-      <iso:extends rule="non-empty-string"/>
+      <iso:extends rule="boolean"/>
     </iso:rule>
   </iso:pattern>
 
@@ -105,6 +105,9 @@
   <iso:pattern id="q1.3">
     <iso:rule context="//gn:delsvar[@id='1.3']">
       <iso:extends rule="non-empty-string"/>
+      <iso:assert test="count(../gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) != '5']) = 0">
+        Om 'Typ av grund för MU' inte är 'Annat' så får 'Vilken annan grund finns för MU' inte anges.
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -140,12 +143,22 @@
         Om 'Typ av sysselsättning' besvarats med 1, måste 'Nuvarande arbete' besvaras
       </iso:assert>
     </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+      <iso:assert test="count(../../../../gn:svar[@id='29']) = 0">
+        Om 'Typ av sysselsättning' besvarats med något annat än 1, får 'Nuvarande arbete' inte besvaras
+      </iso:assert>
+    </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q28.1-30">
     <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.)='5']">
       <iso:assert test="count(../../../../gn:svar[@id='30']) = 1">
         Om 'Typ av sysselsättning' besvarats med 5, måste 'Arbetsmarknadspolitiskt program' besvaras
+      </iso:assert>
+    </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != '5']">
+      <iso:assert test="count(../../../../gn:svar[@id='30']) = 0">
+        Om 'Typ av sysselsättning' besvarats med något annat än 5, får 'Arbetsmarknadspolitiskt program' inte besvaras
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -200,8 +213,9 @@
       <iso:extends rule="cv"/>
       <iso:assert test="normalize-space(tp:cv/tp:codeSystem) = 'ICD-10-SE'"/>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code),'^([A-EG-Ya-eg-y][0-9]{2}[A-Za-z0-9-]*|[Zz][0-689][0-9][A-Za-z0-9-]*|[Zz]7[0-24-9][A-Za-z0-9-]*|[Zz]73[A-Za-z0-9-]+|[Ff][0-9]{2}[A-Za-z0-9-]+)$')">
-        Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst tre positioner måste anges.
-        Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra eller bindestreck, d.v.s. minst fyra positioner måste anges.
+        Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst
+        tre positioner måste anges. Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra
+        eller bindestreck, d.v.s. minst fyra positioner måste anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -283,6 +297,11 @@
     <iso:rule context="//gn:delsvar[@id='33.1' and (normalize-space(.) = '1' or normalize-space(.) = 'true')]">
       <iso:assert test="../gn:delsvar[@id='33.2']">
         Om 'Om arbetstidsförläggning' är 'true' så måste 'Motivering arbetstidsförläggning' anges.
+      </iso:assert>
+    </iso:rule>
+    <iso:rule context="//gn:delsvar[@id='33.1' and (normalize-space(.) = '0' or normalize-space(.) = 'false')]">
+      <iso:assert test="count(../gn:delsvar[@id='33.2']) = 0">
+        Om 'Om arbetstidsförläggning' är 'false' så får 'Motivering arbetstidsförläggning' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>

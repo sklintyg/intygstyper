@@ -130,6 +130,9 @@
   <iso:pattern id="q1.3">
     <iso:rule context="//gn:delsvar[@id='1.3']">
       <iso:extends rule="non-empty-string"/>
+      <iso:assert test="count(../gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) != '5']) = 0">
+        Om 'Typ av grund för MU' inte är 'Annat' så får 'Vilken annan grund finns för MU' inte anges.
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
