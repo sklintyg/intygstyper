@@ -87,8 +87,9 @@
       <iso:assert test="count(gn:svar[@id='26']) le 1">
         Ett 'MU' får ha högst ett 'Kontakt önskas'
       </iso:assert>
-      <iso:assert test="count(gn:svar[not(matches(@id, '^([123456789]|1[01234789]|2[012356]|9[0-9]{3})$'))]) = 0">
-        Ett 'MU' får inte innehålla svar med id:n som inte är förväntade.
+      <iso:let name="svarsIdExpr" value="'^([123456789]|1[01234789]|2[012356]|9[0-9]{3})$'"/>
+      <iso:assert test="count(gn:svar[not(matches(@id, $svarsIdExpr))]) = 0">
+        Oväntat svars-id. Svars-id:n måste matcha "<value-of select="$svarsIdExpr"/>".
       </iso:assert>
       <!-- Meddelandet kan innehålla ett valfritt antal tilläggsfrågor -->
     </iso:rule>
