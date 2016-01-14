@@ -28,6 +28,11 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
                 planeradBehandling: 999
             };
 
+            this.extraqs = [
+                { 'id': 0, label: 'Ange 1', help: 'Hjalp hjalp 1!', model: 'Test1'},
+                { 'id': 1, label: 'Ange 2', help: 'Hjalp hjalp 2!', model: 'Test2'},
+            ];
+
             this.underlagOptions = [
                 { 'id': 0, label: 'Ange underlag eller utredning'},
                 { 'id': 1, label: 'Neuropsykiatriskt utlåtande'},
