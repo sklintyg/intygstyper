@@ -74,7 +74,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 $scope.dates.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten;
                 $scope.dates.journaluppgifter = model.journaluppgifter;
                 $scope.dates.kannedomOmPatient = model.kannedomOmPatient;
-
             }
 
 

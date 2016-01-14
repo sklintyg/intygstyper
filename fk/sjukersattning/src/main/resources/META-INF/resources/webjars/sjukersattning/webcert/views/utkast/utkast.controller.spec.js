@@ -13,23 +13,22 @@ describe('UtkastController', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('sjukersattning', function($provide) {
-/*        featureService = {
-            features:{
-                HANTERA_INTYGSUTKAST: 'hanteraIntygsutkast'
-            },
-            isFeatureActive: jasmine.createSpy('isFeatureActive')
-        };
-        $provide.value('common.CertificateService',{});
+        /*        featureService = {
+         features:{
+         HANTERA_INTYGSUTKAST: 'hanteraIntygsutkast'
+         },
+         isFeatureActive: jasmine.createSpy('isFeatureActive')
+         };
 
-        _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printWebPage', 'load' ]);
-        $provide.value('common.ManageCertView',_manageCertView);
-        $provide.value('common.User', {});
-        $provide.value('common.UserModel', {});
-        $provide.value('common.wcFocus', {});
-        $provide.value('common.diagnosService', {});
-        $provide.value('common.DateUtilsService', {});
-        $provide.value('common.UtilsService', {});
-        $provide.value('common.anchorScrollService', {});*/
+         _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printWebPage', 'load' ]);
+         $provide.value('common.ManageCertView',_manageCertView);
+         $provide.value('common.User', {});
+         $provide.value('common.UserModel', {});
+         $provide.value('common.wcFocus', {});
+         $provide.value('common.diagnosService', {});
+         $provide.value('common.DateUtilsService', {});
+         $provide.value('common.UtilsService', {});
+         $provide.value('common.anchorScrollService', {});*/
         $provide.value('common.UtkastProxy', {});
         $provide.value('common.utkastNotifyService', {});
     }));
@@ -53,12 +52,12 @@ describe('UtkastController', function() {
     describe('#testEvents', function() {
         it('on some event', function(){
 
-            //$controller('sjukersattning.EditCertCtrl', { $scope: $scope, viewState:viewState });
+            //$controller('fk7263.EditCertCtrl', { $scope: $scope, viewState:viewState });
             // ----- arrange
             // spies, mocks
 
             // kick off the window change event
-            //$rootScope.$broadcast('sjukersattning.ViewCertCtrl.load');
+            //$rootScope.$broadcast('fk7263.ViewCertCtrl.load');
 
             // ------ act
             // promises are resolved/dispatched only on next $digest cycle
