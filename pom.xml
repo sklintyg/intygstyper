@@ -60,7 +60,6 @@
     <module>ts-bas</module>
     <module>ts-diabetes</module>
     <module>fk/fk-parent</module>
-    <module>fk/sjukpenning</module>
     <module>fk/sjukersattning</module>
   </modules>
 
