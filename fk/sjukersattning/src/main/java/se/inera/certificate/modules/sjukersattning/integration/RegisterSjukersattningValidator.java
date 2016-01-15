@@ -30,8 +30,6 @@ import autovalue.shaded.com.google.common.common.base.Throwables;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 
 public class RegisterSjukersattningValidator {
-    private static final String SCHEMATRON_SCHEMA = "sjukersattning-structure.sch";
-
     private SchematronResourceSCH schematronResource;
 
     public RegisterSjukersattningValidator(String location)  {
@@ -45,10 +43,6 @@ public class RegisterSjukersattningValidator {
         if (!schematronResource.isValidSchematron()) {
             throw new IllegalArgumentException("Invalid Schematron!");
         }
-    }
-
-    public RegisterSjukersattningValidator() {
-        this(SCHEMATRON_SCHEMA);
     }
 
     public SchematronOutputType validateSchematron(@Nonnull final Source xmlContent) throws Exception {

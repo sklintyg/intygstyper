@@ -51,9 +51,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import com.google.common.base.Throwables;
 import com.helger.schematron.svrl.SVRLWriter;
 
-/**
- *
- */
 public class RegisterSjukersattningResponderImpl implements RegisterCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterSjukersattningResponderImpl.class);
@@ -61,7 +58,7 @@ public class RegisterSjukersattningResponderImpl implements RegisterCertificateR
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 
-    private RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator();
+    private RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukersattning.sch");
 
     @Autowired
     private SjukersattningModuleApi moduleApi;
