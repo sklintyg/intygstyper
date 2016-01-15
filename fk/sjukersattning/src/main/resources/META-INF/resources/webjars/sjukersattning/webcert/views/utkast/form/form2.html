@@ -1,13 +1,13 @@
 
 <div ng-form="form2">
-  <a id="anchor.intygbaseratpa" name="anchor.intygbaseratpa"></a>
+  <a id="anchor.grundformu" name="anchor.grundformu"></a>
     <h3 class="title">Läkarutlåtande för sjukersättning</h3>
-  <div id="intygetbaseraspa" wc-field field-dynamic-label="KAT_2.RBK"
+  <div id="grundformu" wc-field field-dynamic-label="KAT_2.RBK"
                                       field-dynamic-help-text="KAT_2.HLP"
-       field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa" class="field-fade">
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygbaseratpa" id="validationMessages_intygbaseratpa">
+       field-has-errors="viewState.common.validationMessagesGrouped.grundformu" class="field-fade">
+  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.grundformu" id="validationMessages_grundformu">
     <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygbaseratpa"><span message
+      <li ng-repeat="message in viewState.common.validationMessagesGrouped.grundformu"><span message
                                                                                 key="{{message.message}}"></span>
       </li>
     </ul>
@@ -56,33 +56,21 @@
           dom-id="journaluppgifterDate"></span>
   </div>
 
+  <!-- Anhörigs beskrivning av patienten -->
   <div class="form-group form-inline">
       <label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
-                                                                           id="basedOnTelefon"
-                                                                           name="informationBasedOn.telefon"
-                                                                           ng-model="basedOnState.check.telefonkontaktMedPatienten"
-                                                                           ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
+                                                                           id="basedOnAnhorigsBeskrivning"
+                                                                           name="informationBasedOn.anhorigsBeskrivning"
+                                                                           ng-model="basedOnState.check.anhorigsBeskrivning"
+                                                                           ng-change="toggleBaseradPaDate('anhorigsBeskrivning')">
           Telefonkontakt med patienten</label>
-    <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
-          dom-id="telefonkontaktMedPatientenDate"></span>
+    <span wc-date-picker-field target-model="dates.anhorigsBeskrivning"
+          dom-id="anhorigsBeskrivningDate"></span>
   </div>
 
-      <!--  Jag har känt patienten sedan den -->
-
-      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.kannedom"
-           id="validationMessages_kannedom">
-          <ul>
-              <li ng-repeat="message in viewState.common.validationMessagesGrouped.kannedom">
-                  <span message key="{{message.message}}"></span>
-              </li>
-          </ul>
-      </div>
+  <!--  Jag har känt patienten sedan den -->
   <div class="form-group form-inline">
-      <label class="checkbox inline-block" style="min-width: 300px; "><input type="checkbox"
-                                                                           id="basedOnKannedom"
-                                                                           name="informationBasedOn.kannedom"
-                                                                           ng-model="basedOnState.check.kannedomOmPatient"
-                                                                           ng-change="toggleBaseradPaDate('kannedomOmPatient')" />
+      <label class="checkbox inline-block" style="min-width: 300px; ">
           <span>Jag har känt patienten sedan den</span></label>
       <span wc-date-picker-field target-model="dates.kannedomOmPatient" dom-id="kannedomOmPatientDate"></span>
 

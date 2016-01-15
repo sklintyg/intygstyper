@@ -29,7 +29,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.modules.sjukersattning.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
@@ -50,54 +52,111 @@ public class InternalDraftValidator {
     public ValidateDraftResponse validateDraft(SjukersattningUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
-        // intyget baseras på
-        validateVardkontakter(utlatande, validationMessages);
-        validateReferenser(utlatande, validationMessages);
-        // fält 2
+        // Kategori 1 – Grund för medicinskt underlag
+        validateGrundForMU(utlatande, validationMessages);
+        // Kategori 2 – Andra medicinska utredningar och underlag
+        validateUnderlag(utlatande, validationMessages);
+        // Kategori 3 – Sjukdomsförlopp
+        validateSjukdomsforlopp(utlatande, validationMessages);
+        // Kategori 4 – Diagnos
         validateDiagnose(utlatande, validationMessages);
-        // fält 3
-        validateDiagnosticering(utlatande, validationMessages);
-        // Falt 4
+        // Diagnosgrund
+        validateDiagnosgrund(utlatande, validationMessages);
+        // Kategori 5 – Funktionsnedsättning
         validateFunktionsnedsattning(utlatande, validationMessages);
-        // Falt 5
+        // Kategori 6 – Aktivitetsbegränsning
         validateAktivitetsbegransning(utlatande, validationMessages);
+        // Kategori 7 – Medicinska behandlingar/åtgärder
+        // Kategori 8 – Medicinska förutsättningar för arbete
+        validateMedicinskaForutsattningarForArbete(utlatande, validationMessages);
+        // Kategori 9 – Övrigt
+        // Kategori 10 – Kontakt
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-    private void validateVardkontakter(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.intyg-baserat-pa.telefonkontakt.incorrect_format");
+    private void validateGrundForMU(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+
+        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getJournaluppgifter() == null
+                && utlatande.getAnhorigsBeskrivningAvPatienten() == null && utlatande.getAnnatGrundForMU() == null) {
+            addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.grund-for-mu.missing");
         }
+
         if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.undersokning", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.intyg-baserat-pa.undersokning.incorrect_format");
+            addValidationError(validationMessages, "grundformu.undersokning", ValidationMessageType.INVALID_FORMAT,
+                    "sjukersattning.validation.grund-for-mu.undersokning.incorrect_format");
         }
-        if (utlatande.getKannedomOmPatient() != null && !utlatande.getKannedomOmPatient().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.kannedom", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.intyg-baserat-pa.kannedom.incorrect_format");
+        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
+                    "sjukersattning.validation.grund-for-mu.journaluppgifter.incorrect_format");
+        }
+        if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && !utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.anhorigsbeskrivning", ValidationMessageType.INVALID_FORMAT,
+                    "sjukersattning.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format");
+        }
+        if (utlatande.getAnnatGrundForMU() != null && !utlatande.getAnnatGrundForMU().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
+                    "sjukersattning.validation.grund-for-mu.annat.incorrect_format");
+        }
+        if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.grund-for-mu.annat.missing");
+        }
+
+        if (utlatande.getKannedomOmPatient() == null) {
+            addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.grund-for-mu.kannedom.missing");
+        } else if (!utlatande.getKannedomOmPatient().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.INVALID_FORMAT,
+                    "sjukersattning.validation.grund-for-mu.kannedom.incorrect_format");
+        } else {
+            if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()
+                    && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {
+                addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.OTHER,
+                        "sjukersattning.validation.grund-for-mu.kannedom.after.undersokning");
+            }
+            if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && !utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()
+                    && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getAnhorigsBeskrivningAvPatienten().asLocalDate())) {
+                addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.OTHER,
+                        "sjukersattning.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning");
+            }
+        }
+
+    }
+
+    private void validateUnderlag(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        for (Underlag underlag : utlatande.getUnderlag()) {
+            // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
+            if (underlag.getTyp() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD
+                && underlag.getTyp() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK
+                && underlag.getTyp() != Underlag.UnderlagsTyp.OVRIGT) {
+                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+                        "sjukersattning.validation.underlag.incorrect_format");
+            }
+            if (underlag.getDatum() == null) {
+                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+                        "sjukersattning.validation.grund-for-mu.undersokning.incorrect_format");
+            } else if (!underlag.getDatum().isValidDate()) {
+                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+                        "sjukersattning.validation.grund-for-mu.undersokning.incorrect_format");
+            }
         }
     }
 
-
-
-    private void validateReferenser(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-
-        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
-                && utlatande.getJournaluppgifter() == null || utlatande.getKannedomOmPatient() == null) {
-            addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.intyg-baserat-pa.missing");
-        }
-
-        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format");
-        }
-        if (utlatande.getKannedomOmPatient() == null) {
-            addValidationError(validationMessages, "kannedom", ValidationMessageType.EMPTY, "sjukersattning.validation.kannedom");
+    private void validateSjukdomsforlopp(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (StringUtils.isBlank(utlatande.getSjukdomsforlopp())) {
+            addValidationError(validationMessages, "sjukdomsforlopp", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.sjukdomsforlopp.missing");
         }
     }
 
@@ -127,58 +186,61 @@ public class InternalDraftValidator {
     }
 
     private void validateAktivitetsbegransning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
-        // TODO
-//        String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
-//        if (StringUtils.isBlank(aktivitetsbegransning)) {
-//            addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
-//                    "sjukersattning.validation.aktivitetsbegransning.missing");
-//        }
+        if (StringUtils.isBlank(utlatande.getAktivitetsbegransning())) {
+            addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.aktivitetsbegransning.missing");
+        }
+    }
+
+    private void validateMedicinskaForutsattningarForArbete(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (StringUtils.isBlank(utlatande.getMedicinskaForutsattningarForArbete())) {
+            addValidationError(validationMessages, "medicinskaforutsattningarforarbete", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.medicinskaforutsattningarforarbete.missing");
+        }
     }
 
     private void validateFunktionsnedsattning(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
+        if (StringUtils.isBlank(utlatande.getFunktionsnedsattningAnnan())
+                && StringUtils.isBlank(utlatande.getFunktionsnedsattningBalansKoordination())
+                && StringUtils.isBlank(utlatande.getFunktionsnedsattningIntellektuell())
+                && StringUtils.isBlank(utlatande.getFunktionsnedsattningKommunikation())
+                && StringUtils.isBlank(utlatande.getFunktionsnedsattningKoncentration())
+                && StringUtils.isBlank(utlatande.getFunktionsnedsattningPsykisk())
+                && StringUtils.isBlank(utlatande.getFunktionsnedsattningSynHorselTal())) {
+            addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.funktionsnedsattning.missing");
+        }
     }
 
     private void validateDiagnose(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-//        if (!StringUtils.isBlank(utlatande.getDiagnosKod1())) {
-//            String kodsystem = utlatande.getDiagnosKodsystem1();
-//            if (StringUtils.isBlank(kodsystem)) {
-//                // Default to ICD-10
-//                kodsystem = Diagnoskodverk.ICD_10_SE.name();
-//            }
-//            validateDiagnosKod(utlatande.getDiagnosKod1(), kodsystem, "diagnos", "sjukersattning.validation.diagnos.invalid", validationMessages);
-//        } else {
-//            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-//                    "sjukersattning.validation.diagnos.missing");
-//        }
-//
-//        // Validate bidiagnos 1
-//        if (!StringUtils.isBlank(utlatande.getDiagnosKod2())) {
-//            String kodsystem = utlatande.getDiagnosKodsystem2();
-//            if (StringUtils.isBlank(kodsystem)) {
-//                // Default to ICD-10
-//                kodsystem = Diagnoskodverk.ICD_10_SE.name();
-//            }
-//            validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "sjukersattning.validation.diagnos2.invalid", validationMessages);
-//        }
-//
-//        // Validate bidiagnos 2
-//        if (!StringUtils.isBlank(utlatande.getDiagnosKod3())) {
-//            String kodsystem = utlatande.getDiagnosKodsystem3();
-//            if (StringUtils.isBlank(kodsystem)) {
-//                // Default to ICD-10
-//                kodsystem = Diagnoskodverk.ICD_10_SE.name();
-//            }
-//            validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "sjukersattning.validation.diagnos3.invalid", validationMessages);
-//        }
+        if (utlatande.getDiagnoser().size() == 0) {
+            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.diagnos.missing");
+        }
+        for (Diagnos diagnos : utlatande.getDiagnoser()) {
+            if (!StringUtils.isBlank(diagnos.getDiagnosKod())) {
+                validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
+                        "sjukersattning.validation.diagnos.invalid", validationMessages);
+            } else {
+                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                        "sjukersattning.validation.diagnos.missing");
+            }
+            if (!StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
+                validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
+                        "sjukersattning.validation.diagnos.invalid", validationMessages);
+            } else {
+                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                        "sjukersattning.validation.diagnos.missing");
+            }
+        }
 
     }
 
-    private void validateDiagnosticering(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateDiagnosgrund(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        String diagnosticering = utlatande.getDiagnostisering();
+        String diagnosticering = utlatande.getDiagnosgrund();
         if (StringUtils.isBlank(diagnosticering)) {
             addValidationError(validationMessages, "diagnostisering", ValidationMessageType.EMPTY,
                     "sjukersattning.validation.diagnosticering.missing");

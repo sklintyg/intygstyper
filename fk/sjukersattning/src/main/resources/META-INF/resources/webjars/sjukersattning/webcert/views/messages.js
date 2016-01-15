@@ -203,7 +203,6 @@ var sjukersattningMessages = {
 
         'sjukersattning.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)',
 
-        'sjukersattning.validation.intyg-baserat-pa.telefonkontakt.incorrect_format' : 'Fel datumformat för telefonkontakt med patient (Fält 1)',
         'sjukersattning.validation.intyg-baserat-pa.undersokning.incorrect_format' : 'Fel datumformat för undersökning av patient (Fält 1)',
         
         'sjukersattning.validation.intyg-baserat-pa.annan.incorrect_format' : 'Fel datumformat för annan referens (Fält 1)',

@@ -149,24 +149,34 @@ public final class InternalToTransport {
         List<Svar> svars = new ArrayList<>();
 
         if (source.getUndersokningAvPatienten() != null) {
-            svars.add(aSvar(REFERENS_SVAR_ID).
-                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT))).
-                    withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getUndersokningAvPatienten().asLocalDate().toString()).build());
-        }
-        if (source.getTelefonkontaktMedPatienten() != null) {
-            svars.add(aSvar(REFERENS_SVAR_ID).
-                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT))).
-                    withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getTelefonkontaktMedPatienten().asLocalDate().toString()).build());
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getUndersokningAvPatienten().asLocalDate().toString()).build());
         }
         if (source.getJournaluppgifter() != null) {
-            svars.add(aSvar(REFERENS_SVAR_ID).
-                    withDelsvar(REFERENSTYP_DELSVAR_ID, aCV(REFERENS_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER))).
-                    withDelsvar(REFERENSDATUM_DELSVAR_ID, source.getJournaluppgifter().asLocalDate().toString()).build());
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
+        if (source.getAnhorigsBeskrivningAvPatienten() != null) {
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANHORIGSBESKRIVNING))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getAnhorigsBeskrivningAvPatienten().asLocalDate().toString()).build());
+        }
+        if (source.getAnnatGrundForMU() != null) {
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getAnnatGrundForMU().asLocalDate().toString()).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID, source.getAnnatGrundForMUBeskrivning()).build());
+        }
+
         if (source.getKannedomOmPatient() != null) {
-            svars.add(aSvar(OVRIGKANNEDOM_SVAR_ID).
-                    withDelsvar(OVRIGKANNEDOM_DELSVAR_ID, source.getKannedomOmPatient().asLocalDate().toString()).build());
+            svars.add(aSvar(KANNEDOM_SVAR_ID).
+                    withDelsvar(KANNEDOM_DELSVAR_ID, source.getKannedomOmPatient().asLocalDate().toString()).build());
         }
+
+        svars.add(aSvar(UNDERLAGFINNS_SVAR_ID).
+                withDelsvar(UNDERLAGFINNS_DELSVAR_ID, new Boolean(source.getUnderlag().size() > 0).toString()).build());
 
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
@@ -176,58 +186,81 @@ public final class InternalToTransport {
                                     underlag.getDatum() != null ? underlag.getDatum().asLocalDate().toString() : null).
                             withDelsvar(UNDERLAG_BILAGA_DELSVAR_ID,
                                     underlag.getBilaga() != null ? underlag.getBilaga().toString() : null).build());
-
         }
+
+        svars.add(aSvar(SJUKDOMSFORLOPP_SVAR_ID).
+                withDelsvar(SJUKDOMSFORLOPP_DELSVAR_ID, source.getSjukdomsforlopp()).build());
 
         for (int i = 0; i < source.getDiagnoser().size(); i++) {
             Diagnos diagnos = source.getDiagnoser().get(i);
-            if (i == 0) {
-                svars.add(aSvar(HUVUDSAKLIG_ORSAK_SVAR_ID).
-                        withDelsvar(DIAGNOS_DELSVAR_ID, aCV(diagnos.getDiagnosKodSystem(), diagnos.getDiagnosKod())).
-                        withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, diagnos.getDiagnosBeskrivning()).build());
-            } else {
-                svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                        aCV(diagnos.getDiagnosKodSystem(), diagnos.getDiagnosKod())).
-                        withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, diagnos.getDiagnosBeskrivning()).build());
-            }
-
+            svars.add(aSvar(DIAGNOS_SVAR_ID).
+                    withDelsvar(DIAGNOS_DELSVAR_ID, aCV(diagnos.getDiagnosKodSystem(), diagnos.getDiagnosKod())).
+                    withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, diagnos.getDiagnosBeskrivning()).build());
         }
 
-        svars.add(aSvar(DIAGNOSTISERING_SVAR_ID).
-                withDelsvar(DIAGNOSTISERING_DELSVAR_ID, source.getDiagnostisering()).build());
-        if (source.getNyBedomningDiagnos() != null) {
-            svars.add(aSvar(NYBEDOMNING_SVAR_ID).
-                    withDelsvar(NYBEDOMNING_DELSVAR_ID, source.getNyBedomningDiagnos().toString()).build());
+        svars.add(aSvar(DIAGNOSGRUND_SVAR_ID).
+                withDelsvar(DIAGNOSGRUND_DELSVAR_ID, source.getDiagnosgrund()).
+                withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID, source.getNyBedomningDiagnosgrund().toString()).build());
+
+        if (source.getFunktionsnedsattningIntellektuell() != null) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID, source.getFunktionsnedsattningIntellektuell()).build());
         }
 
-        for (BehandlingsAtgard atgard : source.getAtgarder()) {
-            svars.add(aSvar(YTTERLIGARE_ORSAK_SVAR_ID).withDelsvar(YTTERLIGARE_ORSAK_DELSVAR_ID,
-                    aCV(atgard.getAtgardsKodSystem(), atgard.getAtgardsKod())).
-                    withDelsvar(YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID, atgard.getAtgardsBeskrivning()).build());
+        if (source.getFunktionsnedsattningKommunikation() != null) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID, source.getFunktionsnedsattningKommunikation()).build());
         }
-        for (Funktionsnedsattning funktionsnedsattning : source.getFunktionsnedsattningar()) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID, funktionsnedsattning.getBeskrivning()).
-                    withDelsvar(FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID,
-                            aCV(FUNKTIONSOMRADE_CODE_SYSTEM, Integer.toString(funktionsnedsattning.getFunktionsomrade().getId()))).build());
+
+        if (source.getFunktionsnedsattningKoncentration() != null) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID, source.getFunktionsnedsattningKoncentration()).build());
         }
+
+        if (source.getFunktionsnedsattningPsykisk() != null) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID, source.getFunktionsnedsattningPsykisk()).build());
+        }
+
+        if (source.getFunktionsnedsattningSynHorselTal() != null) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID, source.getFunktionsnedsattningSynHorselTal()).build());
+        }
+
+        if (source.getFunktionsnedsattningBalansKoordination() != null) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID, source.getFunktionsnedsattningBalansKoordination()).build());
+        }
+
+        if (source.getFunktionsnedsattningAnnan() != null) {
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID).
+                    withDelsvar(FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID, source.getFunktionsnedsattningAnnan()).build());
+        }
+
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
-
-        if (source.getPagaendeBehandling() != null) {
-            svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
-        }
 
         if (source.getAvslutadBehandling() != null) {
             svars.add(aSvar(AVSLUTADBEHANDLING_SVAR_ID).withDelsvar(AVSLUTADBEHANDLING_DELSVAR_ID, source.getAvslutadBehandling()).build());
+        }
+
+        if (source.getPagaendeBehandling() != null) {
+            svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
         }
 
         if (source.getPlaneradBehandling() != null) {
             svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
         }
 
-        svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getAktivitetsFormaga()).build());
+        if (source.getSubstansIntag() != null) {
+            svars.add(aSvar(SUBSTANSINTAG_SVAR_ID).withDelsvar(SUBSTANSINTAG_DELSVAR_ID, source.getSubstansIntag()).build());
+        }
 
-        svars.add(aSvar(PROGNOS_SVAR_ID).withDelsvar(PROGNOS_DELSVAR_ID, source.getPrognos()).build());
+        svars.add(aSvar(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID).
+                withDelsvar(MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID, source.getMedicinskaForutsattningarForArbete()).build());
+
+        if (source.getAktivitetsFormaga() != null) {
+            svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getAktivitetsFormaga()).build());
+        }
 
         if (source.getOvrigt() != null) {
             svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getOvrigt()).build());

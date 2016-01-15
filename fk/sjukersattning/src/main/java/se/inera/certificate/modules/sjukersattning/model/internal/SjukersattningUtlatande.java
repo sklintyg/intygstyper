@@ -51,56 +51,119 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     @Override
     public abstract GrundData getGrundData();
 
+    // Kategori 1 – Grund för medicinskt underlag
+    // Fråga 1
     @Nullable
     public abstract InternalDate getUndersokningAvPatienten();
-
-    @Nullable
-    public abstract InternalDate getTelefonkontaktMedPatienten();
 
     @Nullable
     public abstract InternalDate getJournaluppgifter();
 
     @Nullable
+    public abstract InternalDate getAnhorigsBeskrivningAvPatienten();
+
+    @Nullable
+    public abstract InternalDate getAnnatGrundForMU();
+
+    @Nullable
+    public abstract String getAnnatGrundForMUBeskrivning();
+
+    // Fråga 2
+    @Nullable
     public abstract InternalDate getKannedomOmPatient();
 
+    // Kategori 2 – Andra medicinska utredningar och underlag
+    // Fråga 3&4
     public abstract ImmutableList<Underlag> getUnderlag();
 
+    // Kategori 3 - Sjukdomsförlopp
+    // Fråga 5
+    @Nullable
+    public abstract String getSjukdomsforlopp();
+
+    // Kategori 4 - Diagnos
+    // Fråga 6
     public abstract ImmutableList<Diagnos> getDiagnoser();
 
-    public abstract ImmutableList<BehandlingsAtgard> getAtgarder();
-
+    // Fråga 7.1
     @Nullable
-    public abstract String getDiagnostisering();
+    public abstract String getDiagnosgrund();
 
+    // Fråga 7.2
     @Nullable
-    public abstract Boolean getNyBedomningDiagnos();
+    public abstract Boolean getNyBedomningDiagnosgrund();
 
-    public abstract ImmutableList<Funktionsnedsattning> getFunktionsnedsattningar();
+    // Kategori 5 – Funktionsnedsättning
+    // Fråga 8
+    @Nullable
+    public abstract String getFunktionsnedsattningIntellektuell();
 
+    // Fråga 9
+    @Nullable
+    public abstract String getFunktionsnedsattningKommunikation();
+
+    // Fråga 10
+    @Nullable
+    public abstract String getFunktionsnedsattningKoncentration();
+
+    // Fråga 11
+    @Nullable
+    public abstract String getFunktionsnedsattningPsykisk();
+
+    // Fråga 12
+    @Nullable
+    public abstract String getFunktionsnedsattningSynHorselTal();
+
+    // Fråga 13
+    @Nullable
+    public abstract String getFunktionsnedsattningBalansKoordination();
+
+    // Fråga 14
+    @Nullable
+    public abstract String getFunktionsnedsattningAnnan();
+
+    // Kategori 6 - AktivitetsbegränsningBeskrivning
+    // Fråga 17
     @Nullable
     public abstract String getAktivitetsbegransning();
 
+    // Kategori 7 – Medicinska behandlingar/åtgärder
+    // Fråga 19
     @Nullable
     public abstract String getPagaendeBehandling();
 
+    // Fråga 18
     @Nullable
     public abstract String getAvslutadBehandling();
 
+    // Fråga 20
     @Nullable
     public abstract String getPlaneradBehandling();
 
+    // Fråga 21
+    @Nullable
+    public abstract String getSubstansIntag();
+
+    // Kategori 8 – Medicinska förutsättningar för arbete
+    // Fråga 22.1
+    @Nullable
+    public abstract String getMedicinskaForutsattningarForArbete();
+
+    // Fråga 23.1
     @Nullable
     public abstract String getAktivitetsFormaga();
 
-    @Nullable
-    public abstract String getPrognos();
-
+    // Kategori 9 - Övrigt
+    // Fråga 25
     @Nullable
     public abstract String getOvrigt();
 
+    // Kategori 10 - Kontakt
+    // Fråga 26.1
     @Nullable
     public abstract Boolean getKontaktMedFk();
 
+    // Fråga 26.2
     @Nullable
     public abstract String getAnledningTillKontakt();
 
@@ -111,9 +174,7 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     public static Builder builder() {
         return new AutoValue_SjukersattningUtlatande.Builder().
                 setUnderlag(ImmutableList.<Underlag> of()).
-                setDiagnoser(ImmutableList.<Diagnos> of()).
-                setAtgarder(ImmutableList.<BehandlingsAtgard> of()).
-                setFunktionsnedsattningar(ImmutableList.<Funktionsnedsattning> of());
+                setDiagnoser(ImmutableList.<Diagnos> of());
     }
 
     @AutoValue.Builder
@@ -130,11 +191,17 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         @JsonProperty("undersokningAvPatienten")
         public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);
 
-        @JsonProperty("telefonkontaktMedPatienten")
-        public abstract Builder setTelefonkontaktMedPatienten(InternalDate telefonkontaktMedPatienten);
-
         @JsonProperty("journaluppgifter")
         public abstract Builder setJournaluppgifter(InternalDate journaluppgifter);
+
+        @JsonProperty("anhorigsBeskrivningAvPatienten")
+        public abstract Builder setAnhorigsBeskrivningAvPatienten(InternalDate anhorigsBeskrivningAvPatienten);
+
+        @JsonProperty("annatGrundForMU")
+        public abstract Builder setAnnatGrundForMU(InternalDate annatGrundForMU);
+
+        @JsonProperty("annatGrundForMUBeskrivning")
+        public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
 
         @JsonProperty("kannedomOmPatient")
         public abstract Builder setKannedomOmPatient(InternalDate kannedomOmPatient);
@@ -147,6 +214,9 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         /* package private */
         abstract Builder setUnderlag(ImmutableList<Underlag> underlag);
 
+        @JsonProperty("sjukdomsforlopp")
+        public abstract Builder setSjukdomsforlopp(String sjukdomsforlopp);
+
         @JsonProperty("diagnoser")
         public Builder setDiagnoser(List<Diagnos> diagnoser) {
             return setDiagnoser(ImmutableList.copyOf(diagnoser));
@@ -155,27 +225,32 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         /* package private */
         abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
 
-        @JsonProperty("atgarder")
-        public Builder setAtgarder(List<BehandlingsAtgard> atgarder) {
-            return setAtgarder(ImmutableList.copyOf(atgarder));
-        }
+        @JsonProperty("diagnosgrund")
+        public abstract Builder setDiagnosgrund(String diagnosgrund);
 
-        /* package private */
-        abstract Builder setAtgarder(ImmutableList<BehandlingsAtgard> atgarder);
+        @JsonProperty("nyBedomningDiagnosgrund")
+        public abstract Builder setNyBedomningDiagnosgrund(Boolean nyBedomningDiagnosgrund);
 
-        @JsonProperty("diagnostisering")
-        public abstract Builder setDiagnostisering(String diagnostisering);
+        @JsonProperty("funktionsnedsattningIntellektuell")
+        public abstract Builder setFunktionsnedsattningIntellektuell(String funktionsnedsattningIntellektuell);
 
-        @JsonProperty("nyBedomningDiagnos")
-        public abstract Builder setNyBedomningDiagnos(Boolean nyBedomningDiagnos);
+        @JsonProperty("funktionsnedsattningKommunikation")
+        public abstract Builder setFunktionsnedsattningKommunikation(String funktionsnedsattningKommunikation);
 
-        @JsonProperty("funktionsnedsattningar")
-        public Builder setFunktionsnedsattningar(List<Funktionsnedsattning> funktionsnedsattningar) {
-            return setFunktionsnedsattningar(ImmutableList.copyOf(funktionsnedsattningar));
-        }
+        @JsonProperty("funktionsnedsattningKoncentration")
+        public abstract Builder setFunktionsnedsattningKoncentration(String funktionsnedsattningKoncentration);
 
-        /* package private */
-        abstract Builder setFunktionsnedsattningar(ImmutableList<Funktionsnedsattning> funktionsnedsattningar);
+        @JsonProperty("funktionsnedsattningPsykisk")
+        public abstract Builder setFunktionsnedsattningPsykisk(String funktionsnedsattningPsykisk);
+
+        @JsonProperty("funktionsnedsattningSynHorselTal")
+        public abstract Builder setFunktionsnedsattningSynHorselTal(String funktionsnedsattningSynHorselTal);
+
+        @JsonProperty("funktionsnedsattningBalansKoordination")
+        public abstract Builder setFunktionsnedsattningBalansKoordination(String funktionsnedsattningBalansKoordination);
+
+        @JsonProperty("funktionsnedsattningAnnan")
+        public abstract Builder setFunktionsnedsattningAnnan(String funktionsnedsattningAnnan);
 
         @JsonProperty("aktivitetsbegransning")
         public abstract Builder setAktivitetsbegransning(String aktivitetsbegransning);
@@ -189,11 +264,14 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         @JsonProperty("planeradBehandling")
         public abstract Builder setPlaneradBehandling(String planeradBehandling);
 
+        @JsonProperty("substansIntag")
+        public abstract Builder setSubstansIntag(String substansIntag);
+
+        @JsonProperty("medicinskaForutsattningarForArbete")
+        public abstract Builder setMedicinskaForutsattningarForArbete(String medicinskaForutsattningarForArbete);
+
         @JsonProperty("aktivitetsFormaga")
         public abstract Builder setAktivitetsFormaga(String aktivitetsFormaga);
-
-        @JsonProperty("prognos")
-        public abstract Builder setPrognos(String prognos);
 
         @JsonProperty("ovrigt")
         public abstract Builder setOvrigt(String ovrigt);

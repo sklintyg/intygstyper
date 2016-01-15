@@ -56,9 +56,10 @@ public abstract class Underlag {
         UNDERLAG_FRAN_LOGOPED(5, "Underlag från logoped"),
         UNDERLAG_FRANPSYKOLOG(6, "Underlag från psykolog"),
         UNDERLAG_FRANFORETAGSHALSOVARD(7, "Underlag från företagshälsovård"),
-        UTREDNING_AV_ANNAN_SPECIALISTKLINIK(8, "Utredning av annan specialistklinik"),
-        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS(9, "Utredning från vårdinrättning utomlands"),
-        OVRIGT(10, "Övrigt"),
+        UNDERLAG_FRANSKOLHALSOVARD(8, "Underlag från skolhälsovård"),
+        UTREDNING_AV_ANNAN_SPECIALISTKLINIK(9, "Utredning av annan specialistklinik"),
+        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS(10, "Utredning från vårdinrättning utomlands"),
+        OVRIGT(11, "Övrigt"),
         OKAND(-1, "Okand");
 
         private final int id;

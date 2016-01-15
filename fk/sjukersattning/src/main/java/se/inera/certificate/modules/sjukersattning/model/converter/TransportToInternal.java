@@ -161,52 +161,68 @@ public final class TransportToInternal {
     private static void setSvar(Builder utlatande, Intyg source) {
         List<Underlag> underlag = new ArrayList<>();
         List<Diagnos> diagnoser = new ArrayList<>();
-        List<BehandlingsAtgard> atgarder = new ArrayList<>();
-        List<Funktionsnedsattning> funktionsnedsattningar = new ArrayList<>();
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
-            case REFERENS_SVAR_ID:
-                handleReferens(utlatande, svar);
+            case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID:
+                handleGrundForMedicinsktUnderlag(utlatande, svar);
                 break;
-            case OVRIGKANNEDOM_SVAR_ID:
-                handleOvrigKannedom(utlatande, svar);
+            case KANNEDOM_SVAR_ID:
+                handleKannedom(utlatande, svar);
                 break;
             case UNDERLAG_SVAR_ID:
                 handleUnderlag(underlag, svar);
                 break;
-            case HUVUDSAKLIG_ORSAK_SVAR_ID:
-                handleHuvudsakligOrsak(diagnoser, svar);
+            case SJUKDOMSFORLOPP_SVAR_ID:
+                handleSjukdomsForlopp(utlatande, svar);
                 break;
-            case YTTERLIGARE_ORSAK_SVAR_ID:
-                handleYtterligareOrsak(diagnoser, atgarder, svar);
+            case DIAGNOS_SVAR_ID:
+                handleDiagnos(diagnoser, svar);
                 break;
-            case DIAGNOSTISERING_SVAR_ID:
-                handleDiagnostisering(utlatande, svar);
+            case DIAGNOSGRUND_SVAR_ID:
+                handleDiagnosgrund(utlatande, svar);
                 break;
-            case NYBEDOMNING_SVAR_ID:
-                handleNyBedomning(utlatande, svar);
+            case FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID:
+                handleFunktionsNedsattningIntellektuell(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_SVAR_ID:
-                handleFunktionsNedsattning(funktionsnedsattningar, svar);
+            case FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID:
+                handleFunktionsNedsattningKommunikation(utlatande, svar);
+                break;
+            case FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID:
+                handleFunktionsNedsattningKoncentration(utlatande, svar);
+                break;
+            case FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID:
+                handleFunktionsNedsattningPsykisk(utlatande, svar);
+                break;
+            case FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID:
+                handleFunktionsNedsattningSynHorselTal(utlatande, svar);
+                break;
+            case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID:
+                handleFunktionsNedsattningBalansKoordination(utlatande, svar);
+                break;
+            case FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID:
+                handleFunktionsNedsattningAnnan(utlatande, svar);
                 break;
             case AKTIVITETSBEGRANSNING_SVAR_ID:
                 handleAktivitetsbegransning(utlatande, svar);
                 break;
-            case PAGAENDEBEHANDLING_SVAR_ID:
-                handlePagaendeBehandling(utlatande, svar);
-                break;
             case AVSLUTADBEHANDLING_SVAR_ID:
                 handleAvslutadBehandling(utlatande, svar);
+                break;
+            case PAGAENDEBEHANDLING_SVAR_ID:
+                handlePagaendeBehandling(utlatande, svar);
                 break;
             case PLANERADBEHANDLING_SVAR_ID:
                 handlePlaneradBehandling(utlatande, svar);
                 break;
+            case SUBSTANSINTAG_SVAR_ID:
+                handleSubstansIntag(utlatande, svar);
+                break;
+            case MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID:
+                handleMedicinskaForutsattningarForArbete(utlatande, svar);
+                break;
             case AKTIVITETSFORMAGA_SVAR_ID:
                 handleAktivitetsformaga(utlatande, svar);
-                break;
-            case PROGNOS_SVAR_ID:
-                handlePrognos(utlatande, svar);
                 break;
             case OVRIGT_SVAR_ID:
                 handleOvrigt(utlatande, svar);
@@ -221,46 +237,50 @@ public final class TransportToInternal {
 
         utlatande.setUnderlag(underlag);
         utlatande.setDiagnoser(diagnoser);
-        utlatande.setAtgarder(atgarder);
-        utlatande.setFunktionsnedsattningar(funktionsnedsattningar);
     }
 
-    private static void handleReferens(Builder utlatande, Svar svar) {
-        InternalDate referensDatum = null;
-        ReferensTyp referensTyp = ReferensTyp.UNKNOWN;
+    private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) {
+        InternalDate grundForMedicinsktUnderlagDatum = null;
+        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.UNKNOWN;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case REFERENSDATUM_DELSVAR_ID:
-                referensDatum = new InternalDate(getSvarContent(delsvar, String.class));
+            case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID:
+                grundForMedicinsktUnderlagDatum = new InternalDate(getSvarContent(delsvar, String.class));
                 break;
-            case REFERENSTYP_DELSVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID:
                 String referensTypString = getSvarContent(delsvar, CVType.class).getCode();
-                referensTyp = ReferensTyp.byTransport(referensTypString);
+                grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
+                break;
+            case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID:
+                utlatande.setAnnatGrundForMUBeskrivning(getSvarContent(delsvar, String.class));
                 break;
             default:
                 throw new IllegalArgumentException();
             }
         }
 
-        switch (referensTyp) {
+        switch (grundForMedicinsktUnderlagTyp) {
         case UNDERSOKNING:
-            utlatande.setUndersokningAvPatienten(referensDatum);
-            break;
-        case TELEFONKONTAKT:
-            utlatande.setTelefonkontaktMedPatienten(referensDatum);
+            utlatande.setUndersokningAvPatienten(grundForMedicinsktUnderlagDatum);
             break;
         case JOURNAL:
-            utlatande.setJournaluppgifter(referensDatum);
+            utlatande.setJournaluppgifter(grundForMedicinsktUnderlagDatum);
+            break;
+        case ANHORIGSBESKRIVNING:
+            utlatande.setAnhorigsBeskrivningAvPatienten(grundForMedicinsktUnderlagDatum);
+            break;
+        case ANNAT:
+            utlatande.setAnnatGrundForMU(grundForMedicinsktUnderlagDatum);
             break;
         default:
             throw new IllegalArgumentException();
         }
     }
 
-    private static void handleOvrigKannedom(Builder utlatande, Svar svar) {
+    private static void handleKannedom(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case OVRIGKANNEDOM_DELSVAR_ID:
+        case KANNEDOM_DELSVAR_ID:
             utlatande.setKannedomOmPatient(new InternalDate(getSvarContent(delsvar, String.class)));
             break;
         default:
@@ -292,7 +312,18 @@ public final class TransportToInternal {
         underlag.add(Underlag.create(underlagsTyp, date, attachment));
     }
 
-    private static void handleHuvudsakligOrsak(List<Diagnos> diagnoser, Svar svar) {
+    private static void handleSjukdomsForlopp(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case SJUKDOMSFORLOPP_DELSVAR_ID:
+                utlatande.setSjukdomsforlopp(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) {
         String diagnosKod = null;
         String diagnosKodSystem = null;
         String diagnosBeskrivning = null;
@@ -310,73 +341,99 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        diagnoser.add(0, Diagnos.create(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
+        diagnoser.add(Diagnos.create(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
     }
 
-    private static void handleYtterligareOrsak(List<Diagnos> diagnoser, List<BehandlingsAtgard> atgarder, Svar svar) {
-        String kod = null;
-        String kodSystem = null;
-        String beskrivning = null;
+    private static void handleDiagnosgrund(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case YTTERLIGARE_ORSAK_DELSVAR_ID:
-                CVType diagnos = getSvarContent(delsvar, CVType.class);
-                kodSystem = diagnos.getCodeSystem();
-                kod = diagnos.getCode();
-                break;
-            case YTTERLIGARE_ORSAK_BESKRIVNING_DELSVAR_ID:
-                beskrivning = getSvarContent(delsvar, String.class);
+                case DIAGNOSGRUND_DELSVAR_ID:
+                    utlatande.setDiagnosgrund(getSvarContent(delsvar, String.class));
+                    break;
+                case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID:
+                    utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    private static void handleFunktionsNedsattningIntellektuell(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID:
+                utlatande.setFunktionsnedsattningIntellektuell(getSvarContent(delsvar, String.class));
                 break;
             default:
                 throw new IllegalArgumentException();
-            }
-        }
-        if (BEHANDLINGSATGARD_CODE_SYSTEM.equals(kodSystem)) {
-            atgarder.add(BehandlingsAtgard.create(kod, kodSystem, beskrivning));
-        } else {
-            diagnoser.add(Diagnos.create(kod, kodSystem, beskrivning));
         }
     }
 
-    private static void handleDiagnostisering(Builder utlatande, Svar svar) {
+    private static void handleFunktionsNedsattningKommunikation(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case DIAGNOSTISERING_DELSVAR_ID:
-            utlatande.setDiagnostisering(getSvarContent(delsvar, String.class));
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private static void handleNyBedomning(Builder utlatande, Svar svar) {
-        Delsvar delsvar = svar.getDelsvar().get(0);
-        switch (delsvar.getId()) {
-        case NYBEDOMNING_DELSVAR_ID:
-            utlatande.setNyBedomningDiagnos(Boolean.valueOf(getSvarContent(delsvar, String.class)));
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private static void handleFunktionsNedsattning(List<Funktionsnedsattning> funktionsnedsattningar, Svar svar) {
-        String beskrivning = null;
-        Funktionsnedsattning.Funktionsomrade funktionsomrade = Funktionsnedsattning.Funktionsomrade.OKAND;
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_BESKRIVNING_DELSVAR_ID:
-                beskrivning = getSvarContent(delsvar, String.class);
-                break;
-            case FUNKTIONSNEDSATTNING_FUNKTIONSOMRADE_DELSVAR_ID:
-                CVType funktionsomradestype = getSvarContent(delsvar, CVType.class);
-                funktionsomrade = Funktionsnedsattning.Funktionsomrade.fromId(Integer.parseInt(funktionsomradestype.getCode()));
+            case FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID:
+                utlatande.setFunktionsnedsattningKommunikation(getSvarContent(delsvar, String.class));
                 break;
             default:
                 throw new IllegalArgumentException();
-            }
         }
-        funktionsnedsattningar.add(Funktionsnedsattning.create(funktionsomrade, beskrivning));
+    }
+
+    private static void handleFunktionsNedsattningKoncentration(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID:
+                utlatande.setFunktionsnedsattningKoncentration(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleFunktionsNedsattningPsykisk(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID:
+                utlatande.setFunktionsnedsattningPsykisk(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleFunktionsNedsattningSynHorselTal(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID:
+                utlatande.setFunktionsnedsattningSynHorselTal(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleFunktionsNedsattningBalansKoordination(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID:
+                utlatande.setFunktionsnedsattningBalansKoordination(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleFunktionsNedsattningAnnan(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID:
+                utlatande.setFunktionsnedsattningAnnan(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
     }
 
     private static void handleAktivitetsbegransning(Builder utlatande, Svar svar) {
@@ -423,22 +480,33 @@ public final class TransportToInternal {
         }
     }
 
+    private static void handleSubstansIntag(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case SUBSTANSINTAG_DELSVAR_ID:
+                utlatande.setSubstansIntag(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleMedicinskaForutsattningarForArbete(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID:
+                utlatande.setMedicinskaForutsattningarForArbete(getSvarContent(delsvar, String.class));
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
     private static void handleAktivitetsformaga(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AKTIVITETSFORMAGA_DELSVAR_ID:
             utlatande.setAktivitetsFormaga(getSvarContent(delsvar, String.class));
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private static void handlePrognos(Builder utlatande, Svar svar) {
-        Delsvar delsvar = svar.getDelsvar().get(0);
-        switch (delsvar.getId()) {
-        case PROGNOS_DELSVAR_ID:
-            utlatande.setPrognos(getSvarContent(delsvar, String.class));
             break;
         default:
             throw new IllegalArgumentException();

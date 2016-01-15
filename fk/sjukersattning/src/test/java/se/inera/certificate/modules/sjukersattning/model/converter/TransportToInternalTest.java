@@ -7,7 +7,6 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuilder;
-import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -30,18 +29,23 @@ public class TransportToInternalTest {
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.setUnderlag(asList(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false),
                 Underlag.create(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), true)));
+        utlatande.setSjukdomsforlopp("Snabbt");
         utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD-10-SE", "Klämskada skuldra")), Diagnos.create("S48", "ICD-10-SE", "Klämskada arm")));
-        utlatande.setAtgarder(asList(BehandlingsAtgard.create("ABC", RespConstants.BEHANDLINGSATGARD_CODE_SYSTEM, "Kristallterapi")));
-        utlatande.setFunktionsnedsattningar(asList(Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_KROPPSLIG, "Kan inte smida"),
-                Funktionsnedsattning.create(Funktionsnedsattning.Funktionsomrade.ANNAN_PSYKISK, "Lite ledsen")));
+        utlatande.setDiagnosgrund("Ingen som vet");
+        utlatande.setNyBedomningDiagnosgrund(true);
+        utlatande.setFunktionsnedsattningIntellektuell("Bra");
+        utlatande.setFunktionsnedsattningKommunikation("Tyst");
+        utlatande.setFunktionsnedsattningKoncentration("Noll");
+        utlatande.setFunktionsnedsattningPsykisk("Lite ledsen");
+        utlatande.setFunktionsnedsattningSynHorselTal("Vitt");
+        utlatande.setFunktionsnedsattningBalansKoordination("Tyst");
+        utlatande.setFunktionsnedsattningAnnan("Kan inte smida");
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
-        utlatande.setNyBedomningDiagnos(false);
-        utlatande.setDiagnostisering("Helt galen");
         utlatande.setPagaendeBehandling("Medicin");
         utlatande.setAvslutadBehandling("Gammal medicin");
         utlatande.setPlaneradBehandling("Mer medicin");
+        utlatande.setMedicinskaForutsattningarForArbete("Svårt");
         utlatande.setAktivitetsFormaga("Dansa");
-        utlatande.setPrognos("Aldrig");
         utlatande.setOvrigt("Trevlig kille");
         utlatande.setKontaktMedFk(true);
         utlatande.setAnledningTillKontakt("Känner mig ensam");
