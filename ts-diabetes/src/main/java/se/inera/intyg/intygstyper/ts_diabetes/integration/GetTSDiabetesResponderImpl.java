@@ -20,9 +20,7 @@
 package se.inera.intyg.intygstyper.ts_diabetes.integration;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,14 +39,8 @@ import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.InternalToTransportConverter;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
-import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface;
-import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponseType;
-import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesType;
-import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
-import se.inera.intygstjanster.ts.services.v1.IntygMeta;
-import se.inera.intygstjanster.ts.services.v1.IntygStatus;
-import se.inera.intygstjanster.ts.services.v1.Status;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
+import se.inera.intygstjanster.ts.services.v1.*;
 
 public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterface {
 

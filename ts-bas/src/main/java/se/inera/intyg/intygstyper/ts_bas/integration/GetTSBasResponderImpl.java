@@ -19,9 +19,7 @@
 
 package se.inera.intyg.intygstyper.ts_bas.integration;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,14 +39,8 @@ import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
-import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
-import se.inera.intygstjanster.ts.services.v1.IntygMeta;
-import se.inera.intygstjanster.ts.services.v1.IntygStatus;
-import se.inera.intygstjanster.ts.services.v1.Status;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
+import se.inera.intygstjanster.ts.services.v1.*;
 
 public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
 

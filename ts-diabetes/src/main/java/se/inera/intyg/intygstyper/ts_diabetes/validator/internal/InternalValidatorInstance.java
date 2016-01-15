@@ -27,17 +27,9 @@ import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.StringValidator;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Bedomning;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvser;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Syn;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Vardkontakt;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 
 /**
  * Class for validating drafts of the internal model.
