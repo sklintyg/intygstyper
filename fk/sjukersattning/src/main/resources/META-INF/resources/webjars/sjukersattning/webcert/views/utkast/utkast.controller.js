@@ -34,7 +34,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCertCtrl',
             // Get the certificate draft from the server.
             UtkastService.load(viewState);
 
-            $scope.$on('saveRequest', function($event, saveDefered) {
+            $scope.$on('saveRequest', function($event, saveDeferred) {
                 $scope.certForm.$setPristine();
                 var intygState = {
                     viewState : viewState,
@@ -42,7 +42,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCertCtrl',
                         $scope.certForm.$setDirty();
                     }
                 };
-                saveDefered.resolve(intygState);
+                saveDeferred.resolve(intygState);
             });
 
             $scope.$on('$destroy', function() {
