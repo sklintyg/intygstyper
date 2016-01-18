@@ -26,7 +26,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                     if (model.diagnoser.length < 1 ) {
                         setAlldiagnosKodSystem( diagnosKodSystemStates.ICD_10_SE );
                     } else {
-                        setAlldiagnosKodSystem( model.diagnoser.diagnosKodsystem );
+                        setAlldiagnosKodSystem( model.diagnoser[0].diagnosKodSystem );
                     }
                 }
 
