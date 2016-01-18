@@ -13,66 +13,25 @@
     </ul>
   </div>
 
-  <!-- Test dynamic label
-      <div class="form-group form-inline">
-          <!-- test rubrik goes here -->
-
-          <!--p><b>with  correct id (RBK + HLP):</b></p>
-          <p><span dynamic-label key="KAT_2.RBK"></span></p>
-          <p><span dynamic-label key="KAT_2.HLP"></span></p>
-
-          <p><b>with  incorrect id (RBK + HLP):</b></p>
-          <p><span dynamic-label key="KAT_2.RBKX"></span></p>
-          <p><span dynamic-label key="KAT_2HaLP"></span></p>
-
-          <p><b>with id no text (RBK + HLP):</b></p>
-          <p><span dynamic-label key="DFR_3.1.RBK"></span></p>
-
-      </div-->
-
-
-  <!-- Undersökning -->
-  <div class="form-group form-inline">
-    <label class="checkbox inline-block" style="min-width: 300px"><input  type="checkbox"
-                                                             id="basedOnExamination"
-                                                             name="informationBasedOn.examination"
-                                                             class="checkbox-inline"
-                                                             ng-model="basedOnState.check.undersokningAvPatienten"
-                                                             ng-change="toggleBaseradPaDate('undersokningAvPatienten')"
-                                                             value="true">
-      Min undersökning av patienten</label>
-    <span wc-date-picker-field target-model="dates.undersokningAvPatienten"
-          dom-id="undersokningAvPatientenDate"></span>
-  </div>
-
-  <!-- Journaluppgifter -->
-  <div class="form-group form-inline"><label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
-                                                                                                id="basedOnJournal"
-                                                                                                name="informationBasedOn.journal"
-                                                                                                ng-model="basedOnState.check.journaluppgifter"
-                                                                                                ng-change="toggleBaseradPaDate('journaluppgifter')">
-              Journaluppgifter från den</label>
-    <span wc-date-picker-field target-model="dates.journaluppgifter"
-          dom-id="journaluppgifterDate"></span>
-  </div>
-
-  <!-- Anhörigs beskrivning av patienten -->
-  <div class="form-group form-inline">
-      <label class="checkbox inline-block" style="min-width: 300px"><input type="checkbox"
-                                                                           id="basedOnAnhorigsBeskrivning"
-                                                                           name="informationBasedOn.anhorigsBeskrivning"
-                                                                           ng-model="basedOnState.check.anhorigsBeskrivning"
-                                                                           ng-change="toggleBaseradPaDate('anhorigsBeskrivning')">
-          Telefonkontakt med patienten</label>
-    <span wc-date-picker-field target-model="dates.anhorigsBeskrivning"
-          dom-id="anhorigsBeskrivningDate"></span>
+  <div class="form-group form-inline" ng-repeat="grundForMUdate in grundForMUdates">
+    <label class="checkbox inline-block" style="min-width: 300px">
+      <input type="checkbox"
+             id="grundForMUdate-{{grundForMUdate}}"
+             class="checkbox-inline"
+             ng-model="grundForMUState.check[grundForMUdate]"
+             ng-change="toggleBaseradPaDate(grundForMUdate)"
+             value="true">
+      <span message key="sjukersattning.label.grund-for-mu-date.{{grundForMUdate}}"></span>
+    </label>
+    <span wc-date-picker-field target-model="dates[grundForMUdate]"
+          dom-id="{{grundForMUdate}}Date"></span>
   </div>
 
   <!--  Jag har känt patienten sedan den -->
   <div class="form-group form-inline">
       <label class="checkbox inline-block" style="min-width: 300px; ">
           <span>Jag har känt patienten sedan den</span></label>
-      <span wc-date-picker-field target-model="dates.kannedomOmPatient" dom-id="kannedomOmPatientDate"></span>
+      <span wc-date-picker-field target-model="model.kannedomOmPatient" dom-id="kannedomOmPatientDate"></span>
 
 
   </div>

@@ -126,6 +126,12 @@ var sjukersattningMessages = {
         'sjukersattning.label.medicinskaforutsattningar.bedomning': 'Hur bedömer du patientens medicinska förutsättningar för arbete, helt eller delvis, kan utvecklas över tid?',
         'sjukersattning.label.medicinskaforutsattningar.mojligheter': 'Beskriv vad patienten kan göra trots sin sjukdom eller sina begränsningar',
 
+        'sjukersattning.label.grund-for-mu-date.undersokningavpatienten': 'Min undersökning av patienten',
+        'sjukersattning.label.grund-for-mu-date.journaluppgifter': 'Journaluppgifter från den',
+        'sjukersattning.label.grund-for-mu-date.anhorigsbeskrivningavpatienten': 'Anhörigs beskrivning av patienten',
+        'sjukersattning.label.grund-for-mu-date.annatgrundformu': 'Annat',
+        'sjukersattning.label.grund-for-mu-date.kannedomompatient': 'Jag har känt patienten sedan den',
+
         'sjukersattning.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'sjukersattning.referens.journal': 'Journaluppgifter, den ',
         'sjukersattning.referens.anhorigbeskrivningavpatienten': 'Anhörig beskrivning av patiend, den ',
@@ -203,18 +209,23 @@ var sjukersattningMessages = {
 
         'sjukersattning.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)',
 
-        'sjukersattning.validation.intyg-baserat-pa.undersokning.incorrect_format' : 'Fel datumformat för undersökning av patient (Fält 1)',
+        'sjukersattning.validation.grund-for-mu.undersokning.incorrect_format' : 'Fel datumformat för undersökning av patient (Fält 1)',
         
-        'sjukersattning.validation.intyg-baserat-pa.annan.incorrect_format' : 'Fel datumformat för annan referens (Fält 1)',
-        'sjukersattning.validation.intyg-baserat-pa.journaluppgifter.incorrect_format' : 'Fel datumformat för journaluppgifter (Fält 1)',
+        'sjukersattning.validation.grund-for-mu.annan.incorrect_format' : 'Fel datumformat för annan referens (Fält 1)',
+        'sjukersattning.validation.grund-for-mu.journaluppgifter.incorrect_format' : 'Fel datumformat för journaluppgifter (Fält 1)',
 
-        'sjukersattning.validation.intyg-baserat-pa.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
-        'sjukersattning.validation.intyg-baserat-pa.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i. (Fält 1)',
-        'sjukersattning.validation.intyg-baserat-pa.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
+        'sjukersattning.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
+        'sjukersattning.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i. (Fält 1)',
+        'sjukersattning.validation.grund-for-mu.kannedom.incorrect_format' : 'Fel datumformat för \'Kännedom om patienten\'',
+        'sjukersattning.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
+        'sjukersattning.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
+        'sjukersattning.validation.grund-for-mu.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
+
+        'sjukersattning.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
         'sjukersattning.validation.diagnosticering.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
 
-        'sjukersattning.validation.funktionsnedsattning.missing': 'Fältet med funktionsnedsättning måste fyllas i. (Fält 4)',
+        'sjukersattning.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
 
         'sjukersattning.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
 

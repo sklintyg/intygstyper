@@ -11,9 +11,14 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
 
                         form2: ['undersokningAvPatienten',
                             'journaluppgifter',
-                            'telefonkontaktMedPatienten',
+                            'anhorigsBeskrivningAvPatienten',
+                            'annatGrundForMU',
                             'kannedomOmPatient',
                             new ModelAttr('underlag', {defaultValue: [{ 'typ': undefined, 'datum': undefined, 'bilaga': undefined }] })],
+
+                        sjukdomsforlopp: [
+                            'sjukdomsforlopp'
+                        ],
 
                         form4: [
                             new ModelAttr('diagnoser', {
@@ -22,11 +27,16 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                                 { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined } ]})
                         ],
 
-                        form4b: ['diagnostisering',
-                                  new ModelAttr( 'nyBedomningDiagnos', { defaultValue : false}) ],
+                        form4b: ['diagnosgrund',
+                                  new ModelAttr( 'nyBedomningDiagnosgrund', { defaultValue : false}) ],
 
-                        form5: [new ModelAttr( 'funktionsnedsattningar' , {
-                            defaultValue:  [  ] })],
+                        form5: ['funktionsnedsattningIntellektuell',
+                            'funktionsnedsattningKommunikation',
+                            'funktionsnedsattningKoncentration',
+                            'funktionsnedsattningPsykisk',
+                            'funktionsnedsattningSynHorselTal',
+                            'funktionsnedsattningBalansKoordination',
+                            'funktionsnedsattningAnnan'],
 
                         form6: ['aktivitetsbegransning'],
 
@@ -38,8 +48,8 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             { 'atgardsKod': undefined, 'atgardsKodSystem':undefined, 'atgardsBeskrivning': undefined}]}
                         )],
 
-                        form9: [ 'aktivitetsFormaga',
-                                 'prognos'],
+                        form9: [ 'medicinskaForutsattningarForArbete',
+                                 'aktivitetsFormaga'],
 
                         form10: ['ovrigt'],
 

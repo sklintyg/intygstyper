@@ -8,6 +8,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.model = model;
             $scope.viewState = viewState;
 
+            var grundForMUdates = ['undersokningAvPatienten', 'journaluppgifter', 'anhorigsBeskrivningAvPatienten', 'annatGrundForMU' ];
+            $scope.grundForMUdates = grundForMUdates;
 
             $scope.viewModel = {
                 radioMedicalChecked: false,
@@ -23,22 +25,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 }
             }
 
-            // Fält 1. Based on handling
-            $scope.basedOnState = {
-                check: {
-                    undersokningAvPatienten: false,
-                    telefonkontaktMedPatienten: false,
-                    journaluppgifter: false,
-                    kannedomOmPatient: false
-                }
-            };
-
-            $scope.dates = {
-                undersokningAvPatienten: null,
-                journaluppgifter: null,
-                telefonkontaktMedPatienten: null,
-                kannedomOmPatient: null
-            };
+            $scope.grundForMUState = {check:{}};
+            $scope.dates = {};
+            grundForMUdates.forEach(function(grundForMUdate) {
+                $scope.grundForMUState.check[grundForMUdate] = false;
+                $scope.dates[grundForMUdate] = null;
+            });
 
             // once we've doneLoading we can set the radion buttons to the model state.
             $scope.$watch('viewState.common.doneLoading', function(newVal, oldVal) {
@@ -48,32 +40,28 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 if (newVal) {
                     registerDateParsersFor2($scope);
                     registerDateParsersForSupplementals($scope);
-                    setBaserasPa();
+                    setGrundForMU();
                     // I really hate this but needs to be done because the datepicker doesn't accept non dates!!
                     transferModelToForm();
                 }
             });
 
             function clearViewState() {
-                $scope.basedOnState.check.undersokningAvPatienten = false;
-                $scope.basedOnState.check.telefonkontaktMedPatienten = false;
-                $scope.basedOnState.check.journaluppgifter = false;
-                $scope.basedOnState.check.kannedomOmPatient = false;
+                grundForMUdates.forEach(function(grundForMUdate) {
+                    $scope.grundForMUState.check[grundForMUdate] = false;
+                });
             }
 
-            function setBaserasPa() {
-                $scope.basedOnState.check.undersokningAvPatienten = model.undersokningAvPatienten !== undefined;
-                $scope.basedOnState.check.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten !== undefined;
-                $scope.basedOnState.check.journaluppgifter = model.journaluppgifter !== undefined;
-                $scope.basedOnState.check.kannedomOmPatient = model.kannedomOmPatient !== undefined;
-
+            function setGrundForMU() {
+                grundForMUdates.forEach(function(grundForMUdate) {
+                    $scope.grundForMUState.check[grundForMUdate] = model[grundForMUdate] !== undefined;
+                });
             }
 
             function transferModelToForm() {
-                $scope.dates.undersokningAvPatienten = model.undersokningAvPatienten;
-                $scope.dates.telefonkontaktMedPatienten = model.telefonkontaktMedPatienten;
-                $scope.dates.journaluppgifter = model.journaluppgifter;
-                $scope.dates.kannedomOmPatient = model.kannedomOmPatient;
+                grundForMUdates.forEach(function(grundForMUdate) {
+                    $scope.dates[grundForMUdate] = model[grundForMUdate];
+                });
             }
 
 
@@ -84,7 +72,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.toggleBaseradPaDate = function(modelName) {
 
                 // Set todays date when a baserat pa field is checked
-                if ($scope.basedOnState.check[modelName]) {
+                if ($scope.grundForMUState.check[modelName]) {
                     if (!model[modelName] || model[modelName] === '') {
                         model[modelName] = dateUtils.todayAsYYYYMMDD();
                         $scope.dates[modelName] = model[modelName];
@@ -100,20 +88,19 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
              * 2. Update checkboxes when datepickers are interacted with
              * @param baserasPaType
              */
-            $scope.onChangeBaserasPaDate = function(baserasPaType, $viewValue) {
-                $scope.basedOnState.check[baserasPaType] = utils.isValidString($viewValue);
+            $scope.onChangeGrundForMUDate = function(baserasPaType, $viewValue) {
+                $scope.grundForMUState.check[baserasPaType] = utils.isValidString($viewValue);
             };
 
             function registerDateParsersFor2(_$scope) {
                 // Register parse function for 2 date pickers
-                var baserasPaTypes = ['undersokningAvPatienten', 'telefonkontaktMedPatienten', 'journaluppgifter', 'kannedomOmPatient' ];
-                addParsers(_$scope, baserasPaTypes, _$scope.onChangeBaserasPaDate);
+                addParsers(_$scope, grundForMUdates, _$scope.onChangeGrundForMUDate);
             }
 
             function addParsers(form2, attributes, fn) {
                 var modelProperty;
                 angular.forEach(attributes, function(type) {
-                    modelProperty = this[type + 'Date'];
+                    modelProperty = this.form2[type + 'Date'];
                     //console.log('modelprop from addParsers1' + JSON.stringify(modelProperty));
                     if (modelProperty) {
                         // remove the datepickers default parser

@@ -47,17 +47,6 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
                 { 'id': 10, label: 'Övrigt' }
             ];
 
-            this.funktionsnedsattningOptions = [
-                { 'id': 1, 'label': 'Intellektuell funktion', selected: false, helpText: 'example helptext1', text : null } ,
-                { 'id': 2, 'label': 'Kommunikation och social interaktion', selected: false, helpText: 'example helptext2', text : null },
-                { 'id': 3, 'label': 'Uppmärksamhet och koncentration', selected: false, helpText: 'example helptext3', text : null },
-                { 'id': 4, 'label': 'Annan psykisk funktion', selected: false, helpText: 'example helptext4',text : null },
-                { 'id': 5, 'label': 'Syn, hörsel och tal', selected: false, helpText: 'example helptext5', text : null },
-                { 'id': 6, 'label': 'Balans, koordination och motorik', selected: false, helpText: 'example helptext6', text : null },
-                { 'id': 7, 'label': 'Annan kroppslig funktion', selected: false, helpText: 'example helptext7', text : null },
-                { 'id': 8, 'label': 'Okänd', selected: false, text : null}
-            ];
-
             this.reset = function() {
                 CommonViewState.reset();
                 CommonViewState.intyg.type = 'sjukersattning';

@@ -35,7 +35,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
 
             function setAlldiagnosKodSystem(val){
                 $scope.viewModel.diagnosKodSystem = val;
-                for(var i =0; i< $scope.model.diagnoser.length;i++) {
+                for(var i =0; i < $scope.model.diagnoser.length;i++) {
                     model.diagnoser[i].diagnosKodSystem = val;
                 }
 
@@ -48,9 +48,8 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
             /**
              *  Remove choices related to diagnoskoder when the choice changes to make sure
              */
-           $scope.onChangeKodverk = function() {
-             //  alert(JSON.stringify(model.diagnoser));
-               // resetDiagnoses();
+            $scope.onChangeKodverk = function() {
+                resetDiagnoses();
                 setAlldiagnosKodSystem( $scope.viewModel.diagnosKodSystem );
             };
 
@@ -207,12 +206,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
                 return totalLength;
             };
 
-          /*  function resetDiagnoses(){
-                $scope.diagnoser = [
-                    { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
-                    { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
-                    { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined }
-                ];
-            }*/
+            function resetDiagnoses(){
+                $scope.model.diagnoser.forEach(function(diagnos) {
+                    diagnos.diagnosKodSystem = undefined;
+                    diagnos.diagnosKod = undefined;
+                    diagnos.diagnosBeskrivning = undefined;
+                });
+            }
 
         }]);

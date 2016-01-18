@@ -11,8 +11,8 @@
             </ul>
         </div>
         <div class="form-group">
-              <textarea id="diagnostisering" class="form-control" name="diagnostisation" rows='6'
-                        ng-model="model.diagnostisering" ng-trim="false" />
+              <textarea id="diagnosgrund" class="form-control" name="diagnosgrund" rows='6'
+                        ng-model="model.diagnosgrund" ng-trim="false" />
         </div>
 
         <div class="form-group form-inline">
@@ -26,11 +26,11 @@
         <div class="form-group form-inline">
             <label class="radio-inline">
                 <input type="radio" id="nyBedomning_Yes" name="nyBedomning" ng-value="true"
-                       ng-model="viewModel.nyBedomningDiagnos" ng-change="onChangeNyBedomning()" checked="checked">Ja
+                       ng-model="viewModel.nyBedomningDiagnosgrund" ng-change="onChangeNyBedomning()" checked="checked">Ja
             </label>
             <label class="radio-inline">
                 <input type="radio" id="nyBedomning_No" name="nyBedomning" ng-value="false"
-                       ng-model="viewModel.nyBedomningDiagnos" ng-change="onChangeNyBedomning()">Nej
+                       ng-model="viewModel.nyBedomningDiagnosgrund" ng-change="onChangeNyBedomning()">Nej
             </label>
 
         </div>
