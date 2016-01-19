@@ -27,6 +27,7 @@ public class TransportToInternalTest {
         utlatande.setGrundData(IntygGrundDataBuilder.getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
+        utlatande.setUnderlagFinns(true);
         utlatande.setUnderlag(asList(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false),
                 Underlag.create(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), true)));
         utlatande.setSjukdomsforlopp("Snabbt");

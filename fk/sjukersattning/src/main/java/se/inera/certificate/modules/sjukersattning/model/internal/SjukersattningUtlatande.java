@@ -73,7 +73,11 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     public abstract InternalDate getKannedomOmPatient();
 
     // Kategori 2 – Andra medicinska utredningar och underlag
-    // Fråga 3&4
+    // Fråga 3
+    @Nullable
+    public abstract Boolean getUnderlagFinns();
+
+    // Fråga 4
     public abstract ImmutableList<Underlag> getUnderlag();
 
     // Kategori 3 - Sjukdomsförlopp
@@ -205,6 +209,9 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
         @JsonProperty("kannedomOmPatient")
         public abstract Builder setKannedomOmPatient(InternalDate kannedomOmPatient);
+
+        @JsonProperty("underlagFinns")
+        public abstract Builder setUnderlagFinns(Boolean underlagFinns);
 
         @JsonProperty("underlag")
         public Builder setUnderlag(List<Underlag> underlag) {

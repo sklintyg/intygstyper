@@ -201,6 +201,7 @@ var sjukersattningMessages = {
 
         //Validation messages
 
+        'sjukersattning.validation.underlagfinns.missing' : 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
         'sjukersattning.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
         'sjukersattning.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
         'sjukersattning.validation.diagnos.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
@@ -225,7 +226,8 @@ var sjukersattningMessages = {
 
         'sjukersattning.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
-        'sjukersattning.validation.diagnosticering.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
+        'sjukersattning.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
+        'sjukersattning.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
 
         'sjukersattning.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
 

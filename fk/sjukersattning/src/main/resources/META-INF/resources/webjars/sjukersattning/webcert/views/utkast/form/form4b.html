@@ -1,11 +1,11 @@
-<a id="anchor.diagnosticering" name="anchor.diagnosticering"></a>
+<a id="anchor.diagnosgrund" name="anchor.diagnosgrund"></a>
 <div ng-form="form4b">
     <div wc-field field-label="sjukersattning.label.diagnostisering"
          field-has-errors="sjukersattning.helptext.diagnostisering" class="print-pagebreak-after field-fade">
 
-        <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnostisering" id="validationMessages_diagnostisering">
+        <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnosgrund" id="validationMessages_diagnosgrund">
             <ul>
-                <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnostisering">
+                <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnosgrund">
                     <span message key="{{message.message}}"></span>
                 </li>
             </ul>
@@ -26,11 +26,11 @@
         <div class="form-group form-inline">
             <label class="radio-inline">
                 <input type="radio" id="nyBedomning_Yes" name="nyBedomning" ng-value="true"
-                       ng-model="viewModel.nyBedomningDiagnosgrund" ng-change="onChangeNyBedomning()" checked="checked">Ja
+                       ng-model="model.nyBedomningDiagnosgrund">Ja
             </label>
             <label class="radio-inline">
                 <input type="radio" id="nyBedomning_No" name="nyBedomning" ng-value="false"
-                       ng-model="viewModel.nyBedomningDiagnosgrund" ng-change="onChangeNyBedomning()">Nej
+                       ng-model="model.nyBedomningDiagnosgrund">Nej
             </label>
 
         </div>

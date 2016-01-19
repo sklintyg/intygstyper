@@ -131,6 +131,14 @@ public class InternalDraftValidator {
     }
 
     private void validateUnderlag(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (utlatande.getUnderlagFinns() == null) {
+            addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.underlagfinns.missing");
+        } else if (utlatande.getUnderlagFinns() && utlatande.getUnderlag().isEmpty()) {
+            addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.underlagfinns.missing");
+        }
+
         for (Underlag underlag : utlatande.getUnderlag()) {
             // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
             if (underlag.getTyp() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE
@@ -255,10 +263,14 @@ public class InternalDraftValidator {
 
     private void validateDiagnosgrund(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        String diagnosticering = utlatande.getDiagnosgrund();
-        if (StringUtils.isBlank(diagnosticering)) {
-            addValidationError(validationMessages, "diagnostisering", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.diagnosticering.missing");
+        if (StringUtils.isBlank(utlatande.getDiagnosgrund())) {
+            addValidationError(validationMessages, "diagnosgrund", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.diagnosgrund.missing");
+        }
+
+        if (utlatande.getNyBedomningDiagnosgrund() == null) {
+            addValidationError(validationMessages, "diagnosgrund", ValidationMessageType.EMPTY,
+                    "sjukersattning.validation.nybedomningdiagnosgrund.missing");
         }
     }
 

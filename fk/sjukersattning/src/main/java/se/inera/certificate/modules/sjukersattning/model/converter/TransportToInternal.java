@@ -170,6 +170,9 @@ public final class TransportToInternal {
             case KANNEDOM_SVAR_ID:
                 handleKannedom(utlatande, svar);
                 break;
+            case UNDERLAGFINNS_SVAR_ID:
+                handleUnderlagFinns(utlatande, svar);
+                break;
             case UNDERLAG_SVAR_ID:
                 handleUnderlag(underlag, svar);
                 break;
@@ -285,6 +288,18 @@ public final class TransportToInternal {
             break;
         default:
             throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleUnderlagFinns(Builder utlatande, Svar svar) {
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+                case UNDERLAGFINNS_DELSVAR_ID:
+                    utlatande.setUnderlagFinns(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
         }
     }
 

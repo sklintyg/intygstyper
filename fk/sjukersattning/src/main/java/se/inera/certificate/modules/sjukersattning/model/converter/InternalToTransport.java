@@ -176,7 +176,7 @@ public final class InternalToTransport {
         }
 
         svars.add(aSvar(UNDERLAGFINNS_SVAR_ID).
-                withDelsvar(UNDERLAGFINNS_DELSVAR_ID, new Boolean(source.getUnderlag().size() > 0).toString()).build());
+                withDelsvar(UNDERLAGFINNS_DELSVAR_ID, source.getUnderlagFinns().toString()).build());
 
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(

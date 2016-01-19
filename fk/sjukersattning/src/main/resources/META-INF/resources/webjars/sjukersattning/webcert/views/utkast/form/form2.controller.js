@@ -12,17 +12,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.grundForMUdates = grundForMUdates;
 
             $scope.viewModel = {
-                radioMedicalChecked: false,
                 underlagCompleted: [], // hold what row is selected
                 initialUnderlag: [{ 'typ': 0, 'datum': null, 'bilaga': false }]
             };
 
             function onPageLoad(){
                 $scope.underlagSelect = viewState.underlagOptions;
-                if(model.underlag.length < 0) {
-                    // if we have underlag with id other then 0 (default is 0) from server, show them
-                    $scope.viewModel.radioMedicalChecked = true; // test this
-                }
             }
 
             $scope.grundForMUState = {check:{}};
@@ -222,7 +217,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             $scope.removeUnderlag = function(typ, index){
                 if(index === 0) { // hide when first is removed
                     resetUnderlag();
-                    $scope.viewModel.radioMedicalChecked = false;
                 } else if(index === 1) { // if 0, we delete the last unpopulated
 
                     if(typ !== 0 ) {

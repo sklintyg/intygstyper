@@ -14,6 +14,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'anhorigsBeskrivningAvPatienten',
                             'annatGrundForMU',
                             'kannedomOmPatient',
+                            'underlagFinns',
                             new ModelAttr('underlag', {defaultValue: [{ 'typ': undefined, 'datum': undefined, 'bilaga': undefined }] })],
 
                         sjukdomsforlopp: [
@@ -28,7 +29,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                         ],
 
                         form4b: ['diagnosgrund',
-                                  new ModelAttr( 'nyBedomningDiagnosgrund', { defaultValue : false}) ],
+                                 'nyBedomningDiagnosgrund' ],
 
                         form5: ['funktionsnedsattningIntellektuell',
                             'funktionsnedsattningKommunikation',
@@ -53,7 +54,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
 
                         form10: ['ovrigt'],
 
-                        form11: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false}),
+                        form11: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
                                 'anledningTillKontakt'],
 
                         misc: [ 'id',
