@@ -233,8 +233,8 @@ public class InternalDraftValidator {
         for (Diagnos diagnos : utlatande.getDiagnoser()) {
 
             String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
-            /* R8	För delfråga 6.2 ska diagnoskod anges med så många positioner som möjligt, men minst tre positioner (t.ex. F32).
-               R9	För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
+            /* R8 För delfråga 6.2 ska diagnoskod anges med så många positioner som möjligt, men minst tre positioner (t.ex. F32).
+               R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
