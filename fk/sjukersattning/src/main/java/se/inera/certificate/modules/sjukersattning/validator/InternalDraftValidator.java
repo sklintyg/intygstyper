@@ -49,6 +49,9 @@ public class InternalDraftValidator {
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
+    private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
+    private static final int MIN_SIZE_DIAGNOS = 3;
+
     public ValidateDraftResponse validateDraft(SjukersattningUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
@@ -113,12 +116,12 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.INVALID_FORMAT,
                     "sjukersattning.validation.grund-for-mu.kannedom.incorrect_format");
         } else {
-            if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()
+            if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
                     && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {
                 addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.OTHER,
                         "sjukersattning.validation.grund-for-mu.kannedom.after.undersokning");
             }
-            if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && !utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()
+            if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()
                     && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getAnhorigsBeskrivningAvPatienten().asLocalDate())) {
                 addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.OTHER,
                         "sjukersattning.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning");
@@ -220,12 +223,24 @@ public class InternalDraftValidator {
                     "sjukersattning.validation.diagnos.missing");
         }
         for (Diagnos diagnos : utlatande.getDiagnoser()) {
-            if (!StringUtils.isBlank(diagnos.getDiagnosKod())) {
-                validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                        "sjukersattning.validation.diagnos.invalid", validationMessages);
-            } else {
+
+            String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
+            /* R8	För delfråga 6.2 ska diagnoskod anges med så många positioner som möjligt, men minst tre positioner (t.ex. F32).
+               R9	För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
+               Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
+            if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                         "sjukersattning.validation.diagnos.missing");
+            } else if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
+                    && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
+                addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
+                        "sjukersattning.validation.diagnos.psykisk.length-4");
+            } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
+                addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
+                        "sjukersattning.validation.diagnos.length-3");
+            } else {
+                validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
+                        "sjukersattning.validation.diagnos.invalid", validationMessages);
             }
             if (!StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
                 validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",

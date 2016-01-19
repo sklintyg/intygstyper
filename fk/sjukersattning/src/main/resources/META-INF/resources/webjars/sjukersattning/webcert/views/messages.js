@@ -204,6 +204,8 @@ var sjukersattningMessages = {
         'sjukersattning.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
         'sjukersattning.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
         'sjukersattning.validation.diagnos.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
+        'sjukersattning.validation.diagnos.length-3': 'Diagnoskod ska anges med så många positioner som möjligt, men minst tre positioner.',
+        'sjukersattning.validation.diagnos.psykisk.length-4': 'Diagnoskod ska anges med minst fyra positioner då en psykisk diagnos anges.',
         'sjukersattning.validation.diagnos2.invalid': 'ICD-10 kod på ytterligare diagnoser rad 1, är ej giltig. (Fält 2)',
         'sjukersattning.validation.diagnos3.invalid': 'ICD-10 kod på ytterligare diagnoser rad 2, är ej giltig. (Fält 2)',
 
