@@ -307,7 +307,7 @@ public final class TransportToInternal {
     private static void handleUnderlag(List<Underlag> underlag, Svar svar) {
         Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
         InternalDate date = null;
-        boolean attachment = false;
+        String hamtasFran = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case UNDERLAG_TYP_DELSVAR_ID:
@@ -317,15 +317,14 @@ public final class TransportToInternal {
             case UNDERLAG_DATUM_DELSVAR_ID:
                 date = new InternalDate(getSvarContent(delsvar, String.class));
                 break;
-            case UNDERLAG_BILAGA_DELSVAR_ID:
-                String svarString = getSvarContent(delsvar, String.class);
-                attachment = Boolean.parseBoolean(svarString);
+            case UNDERLAG_HAMTAS_FRAN_DELSVAR_ID:
+                hamtasFran = getSvarContent(delsvar, String.class);
                 break;
             default:
                 throw new IllegalArgumentException();
             }
         }
-        underlag.add(Underlag.create(underlagsTyp, date, attachment));
+        underlag.add(Underlag.create(underlagsTyp, date, hamtasFran));
     }
 
     private static void handleSjukdomsForlopp(Builder utlatande, Svar svar) {

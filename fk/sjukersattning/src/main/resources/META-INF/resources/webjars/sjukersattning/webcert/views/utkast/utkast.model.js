@@ -4,6 +4,23 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
             'use strict';
 
+            var underlagTransform = function(underlagArray) {
+                if (underlagArray) {
+                    underlagArray.forEach(function(underlag) {
+                        if (!underlag.typ) {
+                            underlag.typ = null;
+                        }
+                        if (!underlag.datum) {
+                            underlag.datum = null;
+                        }
+                        if (!underlag.hamtasFran) {
+                            underlag.hamtasFran = null;
+                        }
+                    });
+                }
+                return underlagArray;
+            };
+
             var sjukersattningModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
@@ -15,7 +32,8 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'annatGrundForMU',
                             'kannedomOmPatient',
                             'underlagFinns',
-                            new ModelAttr('underlag', {defaultValue: [{ 'typ': undefined, 'datum': undefined, 'bilaga': undefined }] })],
+                            new ModelAttr('underlag', {fromTransform: underlagTransform})
+                        ],
 
                         sjukdomsforlopp: [
                             'sjukdomsforlopp'

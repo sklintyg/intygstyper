@@ -141,7 +141,10 @@ public class InternalDraftValidator {
 
         for (Underlag underlag : utlatande.getUnderlag()) {
             // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
-            if (underlag.getTyp() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE
+            if (underlag.getTyp() == null) {
+                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                        "sjukersattning.validation.underlag.missing");
+            } else if (underlag.getTyp() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE
                 && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN
                 && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT
                 && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT
@@ -155,11 +158,15 @@ public class InternalDraftValidator {
                         "sjukersattning.validation.underlag.incorrect_format");
             }
             if (underlag.getDatum() == null) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
-                        "sjukersattning.validation.grund-for-mu.undersokning.incorrect_format");
+                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                        "sjukersattning.validation.underlag.date.missing");
             } else if (!underlag.getDatum().isValidDate()) {
                 addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
-                        "sjukersattning.validation.grund-for-mu.undersokning.incorrect_format");
+                        "sjukersattning.validation.underlag.date.incorrect_format");
+            }
+            if (underlag.getHamtasFran() == null) {
+                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                        "sjukersattning.validation.underlag.hamtas-fran.missing");
             }
         }
     }

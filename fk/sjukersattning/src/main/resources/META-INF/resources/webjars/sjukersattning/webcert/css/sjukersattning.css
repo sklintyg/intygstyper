@@ -23,6 +23,10 @@
     background: white;
 }
 
+.underlagRow > td, .underlagRow > th {
+    padding: 2px 5px;
+}
+
 /* When focused and when active is added from checkbox, add highlighted style */
 .form5 .form-control:focus,
 .form6 .form-control:focus  {

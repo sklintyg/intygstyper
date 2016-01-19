@@ -28,8 +28,8 @@ public class TransportToInternalTest {
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.setUnderlagFinns(true);
-        utlatande.setUnderlag(asList(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false),
-                Underlag.create(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), true)));
+        utlatande.setUnderlag(asList(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), "plats 1"),
+                Underlag.create(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), "plats 2")));
         utlatande.setSjukdomsforlopp("Snabbt");
         utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra")), Diagnos.create("S48", "ICD_10_SE", "Klämskada arm")));
         utlatande.setDiagnosgrund("Ingen som vet");

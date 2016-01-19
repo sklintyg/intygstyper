@@ -11,11 +11,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
             var grundForMUdates = ['undersokningAvPatienten', 'journaluppgifter', 'anhorigsBeskrivningAvPatienten', 'annatGrundForMU' ];
             $scope.grundForMUdates = grundForMUdates;
 
-            $scope.viewModel = {
-                underlagCompleted: [], // hold what row is selected
-                initialUnderlag: [{ 'typ': 0, 'datum': null, 'bilaga': false }]
-            };
-
             function onPageLoad(){
                 $scope.underlagSelect = viewState.underlagOptions;
             }
@@ -34,7 +29,6 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 }
                 if (newVal) {
                     registerDateParsersFor2($scope);
-                    registerDateParsersForSupplementals($scope);
                     setGrundForMU();
                     // I really hate this but needs to be done because the datepicker doesn't accept non dates!!
                     transferModelToForm();
@@ -115,147 +109,26 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
                 }, form2);
             }
 
-            /**
-             * 2-Update datepickers on supplementals when interacted with
-             * @param supplemental
-             */
-            $scope.onChangeBaserasPaDateSupplemental = function(supplemental, $viewVal) {
-                if(utils.isValidString($viewVal)) {
-                    $scope.viewModel.initialUnderlag[supplemental].datum = $viewVal;
+            $scope.onUnderlagFinnsChanged = function() {
+                if (model.underlagFinns) {
+                    if (model.underlag.length === 0) {
+                        $scope.createUnderlag();
+                    }
+                }
+                else {
+                    model.underlag = [];
                 }
             };
 
-            function registerDateParsersForSupplementals(_$scope, id) {
-                // Register parse function for new row where datepicker resides
-                // get active list of datepickes, with or without to register parsers on.
-                var supplements = resolveActiveSupplements(id);
-                 //console.log('supplements active date pickers: '  + supplements); // incoming Tue Oct 13 2015 00:00:00 GMT+0200 (CEST)
-                addParsersSupplemental(_$scope, supplements, _$scope.onChangeBaserasPaDateSupplemental);
-            }
-
-            function resolveActiveSupplements(id) {
-                var activeSupplementsToParse = [];
-                if(!id) {
-                    angular.forEach($scope.viewModel.initialUnderlag, function(value, key){
-
-                        if( utils.isDefined(value.datum) ) {
-                            activeSupplementsToParse.push(value.typ);
-                        }
-                    });
-                }
-                activeSupplementsToParse.push(id);
-              //  console.log(activeSupplementsToParse);
-                return activeSupplementsToParse;
-            }
-
-            function addParsersSupplemental(form2, attributes, fn) {
-                var modelProperty;
-                angular.forEach(attributes, function(type) {
-                  //  console.log('attrs:' + JSON.stringify(attributes));
-                    modelProperty = this[type + '-Date'];
-                  //  console.log('modelprop after:' + JSON.stringify(modelProperty));
-                    if (modelProperty) {
-                    //    console.log('mp count');
-                        // remove the datepickers default parser
-                        modelProperty.$parsers.unshift(function(viewValue) {
-                            fn(type, viewValue);
-
-                            return viewValue;
-                        });
-
-                        modelProperty.$parsers.unshift(function(viewValue) {
-                            var isoValue = dateUtils.convertDateToISOString(viewValue);
-                            $scope.viewModel.initialUnderlag[type].datum = isoValue;
-                          return isoValue;
-
-                        });
-                    }
-                }, form2);
-            }
-
-            // Holds all underlag base data in select
-            $scope.underlagSelect = [];
-            // search and replace the model when supplement dropdown change
-            $scope.onUnderlagChange = function(underlag, index) {
-                if(underlag.typ !== 0 && underlag.datum !== null) {
-
-                    registerDateParsersForSupplementals($scope);
-                    if(underlag.typ !==0 && underlag.datum !== null &&
-                        (underlag.bilaga !== undefined || null) ) {
-
-                        if( $scope.viewModel.underlagCompleted.indexOf(index) === -1 ) {
-                            $scope.viewModel.underlagCompleted.push(index);// set currently manipulated underlag
-                        }
-                        console.log('viewmodel underlag: ', $scope.viewModel.initialUnderlag);
-                        // add duplicate check? match for existing?
-
-                        var current = model.underlag[underlag.typ];
-
-                        if(current !== undefined && current.typ === underlag.typ &&
-                            current.datum === underlag.datum && current.bilaga === underlag.bilaga){ // if existing
-                            current.typ = underlag.typ;
-                            current.datum = dateUtils.convertDateToISOString(underlag.datum);
-                            current.bilaga = underlag.bilaga;
-                        } else { // if new
-                            underlag.datum = dateUtils.convertDateToISOString(underlag.datum);
-                            model.underlag.push( underlag );
-                        }
-                        console.log('model underlag: ' + JSON.stringify($scope.model.underlag));
-                    }
-                } else {
-                    // reset
-                    underlag.datum = null;
-                    underlag.bilaga = false;
-                }
-            }
-
             $scope.createUnderlag = function() {
-                $scope.viewModel.initialUnderlag.push({ typ: 0, datum: null, bilaga: false }); // we set this first to allow be validations
-                registerDateParsersForSupplementals($scope);
-            }
+                model.underlag.push({ typ: null, datum: null, hamtasFran: null });
+                $scope.form2.$setDirty();
+            };
 
-            $scope.removeUnderlag = function(typ, index){
-                if(index === 0) { // hide when first is removed
-                    resetUnderlag();
-                } else if(index === 1) { // if 0, we delete the last unpopulated
-
-                    if(typ !== 0 ) {
-                        deleteUnderlag(typ, index);
-                    } else{
-                        $scope.viewModel.initialUnderlag.pop();
-                    }
-
-                } else {
-                    if(typ !== 0) {
-                        deleteUnderlag(typ, index);
-                    } else{
-                        $scope.viewModel.initialUnderlag.pop();
-                    }
-                }
-            }
-
-            function deleteUnderlag(typ){
-
-            //    var find  = $scope.viewModel.initialUnderlag.indexOf(typ);
-
-                var index = $scope.viewModel.initialUnderlag.map(function(obj, index) {
-                    if(obj.typ === typ) {
-                        return index;
-                    }
-                }).filter(isFinite)
-
-                console.log('find: ' , index);
-
-                $scope.viewModel.initialUnderlag.splice(index[index.length - 1], 1);
-                $scope.model.underlag.splice(index[index.length - 1], 1);
-
-                console.log( 'm: ' + $scope.model.underlag + ' vm: ' + $scope.viewModel.initialUnderlag );
-            }
-
-            function resetUnderlag(){
-                model.underlag = [];
-            }
-
+            $scope.removeUnderlag = function(index) {
+                model.underlag.splice(index, 1);
+                $scope.form2.$setDirty();
+            };
 
             onPageLoad();
 

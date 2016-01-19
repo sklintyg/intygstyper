@@ -34,7 +34,7 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
             ];
 
             this.underlagOptions = [
-                { 'id': 0, label: 'Ange underlag eller utredning'},
+                { 'id': null, label: 'Ange underlag eller utredning'},
                 { 'id': 1, label: 'Neuropsykiatriskt utlåtande'},
                 { 'id': 2, label: 'Underlag från habiliteringen' },
                 { 'id': 3, label: 'Underlag från arbetsterapeut' },

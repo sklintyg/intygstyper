@@ -47,7 +47,7 @@ public final class RespConstants {
     public static final String UNDERLAG_SVAR_ID = "4";
     public static final String UNDERLAG_TYP_DELSVAR_ID = "4.1";
     public static final String UNDERLAG_DATUM_DELSVAR_ID = "4.2";
-    public static final String UNDERLAG_BILAGA_DELSVAR_ID = "4.3";
+    public static final String UNDERLAG_HAMTAS_FRAN_DELSVAR_ID = "4.3";
     public static final String SJUKDOMSFORLOPP_SVAR_ID = "5";
     public static final String SJUKDOMSFORLOPP_DELSVAR_ID = "5.1";
     public static final String DIAGNOS_SVAR_ID = "6";
