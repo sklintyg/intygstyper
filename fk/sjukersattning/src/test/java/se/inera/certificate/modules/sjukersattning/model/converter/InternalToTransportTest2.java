@@ -11,13 +11,13 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.Test;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
-import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateValidator;
-import se.inera.certificate.modules.sjukersattning.integration.RegisterSjukersattningValidator;
+import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLWriter;
+import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
 
 public class InternalToTransportTest2 {
 
@@ -25,10 +25,10 @@ public class InternalToTransportTest2 {
     public void doSchematronValidationSjukersattning() throws Exception {
         String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
 
-        RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
+        RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukersattning.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));
@@ -40,10 +40,10 @@ public class InternalToTransportTest2 {
     public void doSchematronValidationSjukpenningUtokat() throws Exception {
         String xmlContents = Resources.toString(getResource("sjukpenning-utokat2.xml"), Charsets.UTF_8);
 
-        RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
+        RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning-utokat.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));
@@ -55,10 +55,10 @@ public class InternalToTransportTest2 {
     public void doSchematronValidationSjukpenning() throws Exception {
         String xmlContents = Resources.toString(getResource("sjukpenning2.xml"), Charsets.UTF_8);
 
-        RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
+        RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukpenning.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));
@@ -70,10 +70,10 @@ public class InternalToTransportTest2 {
     public void doSchematronValidationAktivitetsersattningNA() throws Exception {
         String xmlContents = Resources.toString(getResource("aktivitetsersattning-na2.xml"), Charsets.UTF_8);
 
-        RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
+        RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("aktivitetsersattning-na.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-na.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));
@@ -85,10 +85,10 @@ public class InternalToTransportTest2 {
     public void doSchematronValidationAktivitetsersattningFS() throws Exception {
         String xmlContents = Resources.toString(getResource("aktivitetsersattning-fs2.xml"), Charsets.UTF_8);
 
-        RegisterCertificateValidator generalValidator = new RegisterCertificateValidator();
+        RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("aktivitetsersattning-fs.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-fs.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));

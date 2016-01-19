@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.certificate.modules.sjukersattning.integration;
+package se.inera.certificate.modules.fkparent.integration;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -33,13 +33,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternal;
-import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.rest.SjukersattningModuleApi;
+import se.inera.certificate.modules.fkparent.rest.FKModuleApi;
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.registry.IntygModuleRegistry;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
@@ -51,20 +52,18 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import com.google.common.base.Throwables;
 import com.helger.schematron.svrl.SVRLWriter;
 
-public class RegisterSjukersattningResponderImpl implements RegisterCertificateResponderInterface {
+public class RegisterCertificateResponderImpl implements RegisterCertificateResponderInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterSjukersattningResponderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterCertificateResponderImpl.class);
 
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 
-    private RegisterSjukersattningValidator validator = new RegisterSjukersattningValidator("sjukersattning.sch");
+    @Autowired
+    private ModuleContainerApi moduleContainer;
 
     @Autowired
-    private SjukersattningModuleApi moduleApi;
-
-    @Autowired
-    private ConverterUtil converterUtil;
+    private IntygModuleRegistry moduleRegistry;
 
     @PostConstruct
     public void initializeJaxbContext() throws JAXBException {
@@ -79,14 +78,20 @@ public class RegisterSjukersattningResponderImpl implements RegisterCertificateR
         try {
             String xml = xmlToString(registerCertificate);
 
-            SchematronOutputType valResult = validator.validateSchematron(new StreamSource(new StringReader(xml)));
-            System.out.println(SVRLWriter.createXMLString(valResult));
+            String intygsTyp = getIntygsTyp(registerCertificate);
 
-            SjukersattningUtlatande utlatande = TransportToInternal.convert(registerCertificate.getIntyg());
-            CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
+            ModuleApi api = moduleRegistry.getModuleApi(intygsTyp);
+            if (! (api instanceof FKModuleApi)) {
+                throw new RuntimeException("Must use an instance of FKModuleApi");
+            }
+            FKModuleApi fkApi = (FKModuleApi) api;
+
+            Utlatande utlatande = fkApi.getUtlatandeFromIntyg(registerCertificate.getIntyg(), xml);
+
+            CertificateHolder certificateHolder = toCertificateHolder(utlatande, xml, intygsTyp);
             certificateHolder.setOriginalCertificate(xml);
 
-            moduleApi.getModuleContainer().certificateReceived(certificateHolder);
+            moduleContainer.certificateReceived(certificateHolder);
 
             response.setResult(ResultUtil.okResult());
 
@@ -118,6 +123,24 @@ public class RegisterSjukersattningResponderImpl implements RegisterCertificateR
         JAXBElement<RegisterCertificateType> requestElement = objectFactory.createRegisterCertificate(registerCertificate);
         jaxbContext.createMarshaller().marshal(requestElement, stringWriter);
         return stringWriter.toString();
+    }
+
+    private String getIntygsTyp(RegisterCertificateType certificateType) {
+        return certificateType.getIntyg().getTyp().getCode();
+    }
+
+    private CertificateHolder toCertificateHolder(Utlatande utlatande, String document, String type) {
+        CertificateHolder certificateHolder = new CertificateHolder();
+        certificateHolder.setId(utlatande.getId());
+        certificateHolder.setCareUnitId(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
+        certificateHolder.setCareUnitName(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
+        certificateHolder.setCareGiverId(utlatande.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarid());
+        certificateHolder.setSigningDoctorName(utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
+        certificateHolder.setCivicRegistrationNumber(utlatande.getGrundData().getPatient().getPersonId());
+        certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
+        certificateHolder.setType(type);
+        certificateHolder.setDocument(document);
+        return certificateHolder;
     }
 
 }

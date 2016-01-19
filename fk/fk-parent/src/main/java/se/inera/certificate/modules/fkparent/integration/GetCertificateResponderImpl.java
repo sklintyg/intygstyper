@@ -17,17 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.certificate.modules.sjukersattning.integration;
+package se.inera.certificate.modules.fkparent.integration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport;
-import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukersattning.rest.SjukersattningModuleApi;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateType;
@@ -36,15 +34,14 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 
 import com.google.common.base.Throwables;
 
-public class GetSjukersattningResponderImpl implements GetCertificateResponderInterface {
+import javax.xml.bind.JAXB;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetSjukersattningResponderImpl.class);
+public class GetCertificateResponderImpl implements GetCertificateResponderInterface {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetCertificateResponderImpl.class);
 
     @Autowired
-    private SjukersattningModuleApi moduleApi;
-
-    @Autowired
-    private ConverterUtil converterUtil;
+    private ModuleContainerApi moduleContainer;
 
     @Override
     public GetCertificateResponseType getCertificate(String logicalAddress, GetCertificateType request) {
@@ -53,7 +50,7 @@ public class GetSjukersattningResponderImpl implements GetCertificateResponderIn
         String certificateId = request.getIntygsId().getExtension();
 
         try {
-            CertificateHolder certificate = moduleApi.getModuleContainer().getCertificate(certificateId, null, false);
+            CertificateHolder certificate = moduleContainer.getCertificate(certificateId, null, false);
             if (certificate.isDeletedByCareGiver()) {
                 response.setResult(ResultUtil.errorResult(ErrorIdType.APPLICATION_ERROR,
                         String.format("Certificate '%s' has been deleted by care giver", certificateId)));
@@ -74,7 +71,7 @@ public class GetSjukersattningResponderImpl implements GetCertificateResponderIn
 
     protected void setCertificateBody(CertificateHolder certificate, GetCertificateResponseType response) {
         try {
-            RegisterCertificateType jaxbObject = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument()));
+            RegisterCertificateType jaxbObject = JAXB.unmarshal(certificate.getOriginalCertificate(), RegisterCertificateType.class);
             response.setIntyg(jaxbObject.getIntyg());
         } catch (Exception e) {
             LOGGER.error("Error while converting in getMedicalCertificate for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());

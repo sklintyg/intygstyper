@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import se.inera.certificate.modules.fkparent.model.converter.IntygGrundDataBuilder;
+import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -24,7 +24,7 @@ public class TransportToInternalTest {
     public static SjukersattningUtlatande getUtlatande() {
         SjukersattningUtlatande.Builder utlatande = SjukersattningUtlatande.builder();
         utlatande.setId("1234567");
-        utlatande.setGrundData(IntygGrundDataBuilder.getGrundData());
+        utlatande.setGrundData(IntygTestDataBuilder.getGrundData());
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.setUnderlagFinns(true);

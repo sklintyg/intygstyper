@@ -19,49 +19,35 @@
 
 package se.inera.certificate.modules.sjukersattning.rest;
 
-import static java.util.Arrays.asList;
-
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
+import javax.xml.transform.stream.StreamSource;
 
 import org.joda.time.LocalDateTime;
+import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
+import se.inera.certificate.modules.fkparent.rest.FKModuleApi;
 import se.inera.certificate.modules.sjukersattning.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukersattning.model.converter.TransportToInternal;
 import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.texts.Alternative;
-import se.inera.certificate.modules.sjukersattning.model.texts.Alternatives;
-import se.inera.certificate.modules.sjukersattning.model.texts.Category;
-import se.inera.certificate.modules.sjukersattning.model.texts.Form;
-import se.inera.certificate.modules.sjukersattning.model.texts.Question;
-import se.inera.certificate.modules.sjukersattning.model.texts.SubQuestion;
 import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
@@ -75,9 +61,13 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
-public class SjukersattningModuleApi implements ModuleApi {
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.helger.schematron.svrl.SVRLHelper;
+
+public class SjukersattningModuleApi implements FKModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(SjukersattningModuleApi.class);
 
@@ -101,6 +91,8 @@ public class SjukersattningModuleApi implements ModuleApi {
 
     @Autowired(required = false)
     private GetCertificateResponderInterface getCertificateResponderInterface;
+
+    private RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
 
     /**
      * {@inheritDoc}
@@ -261,19 +253,7 @@ public class SjukersattningModuleApi implements ModuleApi {
 
     @Override
     public String getQuestions(String version) throws ModuleException {
-        SubQuestion subQuestion11 = SubQuestion.create("1.1", "Title 1.1", null);
-        SubQuestion subQuestion12 = SubQuestion.create("1.2", "Title 1.2", "Fill in this value");
-        Question question1 = Question.create("1", "Title 1", "Some sub questions", asList(subQuestion11, subQuestion12));
-        Category category1 = Category.create("1", "Category 1", "So many questions", asList(question1));
-        Alternative alternative1 = Alternative.create(1, "Alternativ 1");
-        Alternative alternative2 = Alternative.create(2, "Alternativ 2");
-        Alternatives alternatives = Alternatives.create("Flera alternativ", asList(alternative1, alternative2));
-        Form form = Form.create("sjukersattning", "Läkarintyg, sjukersättning", "Läkarintyg för sjukersättning", asList(category1), asList(alternatives));
-        try {
-            return toJsonString(form);
-        } catch (Exception e) {
-            throw new ModuleException(e);
-        }
+        return "{ KAT1 : 'What is your favourite colour?' }";
     }
 
     @Override
@@ -335,4 +315,12 @@ public class SjukersattningModuleApi implements ModuleApi {
         return writer.toString();
     }
 
+    @Override
+    public Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
+        SchematronOutputType valResult = validator.validateSchematron(new StreamSource(new StringReader(xml)));
+        if (SVRLHelper.getAllFailedAssertions(valResult).size() > 0) {
+            throw new Exception("Validation failed");
+        }
+        return TransportToInternal.convert(intyg);
+    }
 }

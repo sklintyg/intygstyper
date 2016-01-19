@@ -28,9 +28,9 @@ import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 
-public final class IntygGrundDataBuilder {
+public final class IntygTestDataBuilder {
 
-    private IntygGrundDataBuilder() {
+    private IntygTestDataBuilder() {
     }
 
     public static GrundData getGrundData() {
