@@ -30,6 +30,7 @@ import javax.xml.namespace.QName;
 import org.joda.time.LocalDateTime;
 
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
@@ -193,8 +194,9 @@ public final class InternalToTransport {
 
         for (int i = 0; i < source.getDiagnoser().size(); i++) {
             Diagnos diagnos = source.getDiagnoser().get(i);
+            Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
             svars.add(aSvar(DIAGNOS_SVAR_ID).
-                    withDelsvar(DIAGNOS_DELSVAR_ID, aCV(diagnos.getDiagnosKodSystem(), diagnos.getDiagnosKod())).
+                    withDelsvar(DIAGNOS_DELSVAR_ID, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod())).
                     withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, diagnos.getDiagnosBeskrivning()).build());
         }
 

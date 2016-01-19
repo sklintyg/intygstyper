@@ -29,6 +29,7 @@ import javax.xml.bind.JAXBElement;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.common.internal.Patient;
@@ -356,7 +357,8 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        diagnoser.add(Diagnos.create(diagnosKod, diagnosKodSystem, diagnosBeskrivning));
+        Diagnoskodverk diagnoskodverk = Diagnoskodverk.getEnumByCodeSystem(diagnosKodSystem);
+        diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning));
     }
 
     private static void handleDiagnosgrund(Builder utlatande, Svar svar) {

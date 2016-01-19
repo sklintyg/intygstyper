@@ -31,7 +31,7 @@ public class TransportToInternalTest {
         utlatande.setUnderlag(asList(Underlag.create(Underlag.UnderlagsTyp.OVRIGT, new InternalDate(new LocalDate()), false),
                 Underlag.create(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT, new InternalDate(new LocalDate().plusWeeks(2)), true)));
         utlatande.setSjukdomsforlopp("Snabbt");
-        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD-10-SE", "Klämskada skuldra")), Diagnos.create("S48", "ICD-10-SE", "Klämskada arm")));
+        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra")), Diagnos.create("S48", "ICD_10_SE", "Klämskada arm")));
         utlatande.setDiagnosgrund("Ingen som vet");
         utlatande.setNyBedomningDiagnosgrund(true);
         utlatande.setFunktionsnedsattningIntellektuell("Bra");
