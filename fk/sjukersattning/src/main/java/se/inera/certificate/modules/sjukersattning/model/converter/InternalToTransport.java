@@ -185,8 +185,7 @@ public final class InternalToTransport {
                             aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()))).
                             withDelsvar(UNDERLAG_DATUM_DELSVAR_ID,
                                     underlag.getDatum() != null ? underlag.getDatum().asLocalDate().toString() : null).
-                            withDelsvar(UNDERLAG_HAMTAS_FRAN_DELSVAR_ID,
-                                    underlag.getHamtasFran() != null ? underlag.getHamtasFran() : null).build());
+                            withDelsvar(UNDERLAG_HAMTAS_FRAN_DELSVAR_ID, underlag.getHamtasFran()).build());
         }
 
         svars.add(aSvar(SJUKDOMSFORLOPP_SVAR_ID).
