@@ -20,7 +20,6 @@
 package se.inera.certificate.modules.sjukersattning.model.converter.util;
 
 import java.io.IOException;
-import java.io.StringWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

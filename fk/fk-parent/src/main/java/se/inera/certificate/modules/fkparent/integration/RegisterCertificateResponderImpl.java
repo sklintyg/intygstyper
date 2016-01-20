@@ -19,16 +19,13 @@
 
 package se.inera.certificate.modules.fkparent.integration;
 
-import java.io.StringReader;
 import java.io.StringWriter;
 
 import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.transform.stream.StreamSource;
 
-import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +47,6 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 
 import com.google.common.base.Throwables;
-import com.helger.schematron.svrl.SVRLWriter;
 
 public class RegisterCertificateResponderImpl implements RegisterCertificateResponderInterface {
 
@@ -81,7 +77,7 @@ public class RegisterCertificateResponderImpl implements RegisterCertificateResp
             String intygsTyp = getIntygsTyp(registerCertificate);
 
             ModuleApi api = moduleRegistry.getModuleApi(intygsTyp);
-            if (! (api instanceof FKModuleApi)) {
+            if (!(api instanceof FKModuleApi)) {
                 throw new RuntimeException("Must use an instance of FKModuleApi");
             }
             FKModuleApi fkApi = (FKModuleApi) api;
