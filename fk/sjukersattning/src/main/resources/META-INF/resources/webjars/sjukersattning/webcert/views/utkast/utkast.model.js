@@ -30,6 +30,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'journaluppgifter',
                             'anhorigsBeskrivningAvPatienten',
                             'annatGrundForMU',
+                            'annatGrundForMUBeskrivning',
                             'kannedomOmPatient',
                             'underlagFinns',
                             new ModelAttr('underlag', {fromTransform: underlagTransform})

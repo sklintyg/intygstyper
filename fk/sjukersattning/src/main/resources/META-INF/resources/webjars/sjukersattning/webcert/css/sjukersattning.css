@@ -35,3 +35,15 @@
    /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
    /* box-shadow: none;*/ /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
 }
+
+.dfr_1_3 {
+    transition:.4s ease-out all;
+}
+.dfr_1_3.ng-hide {
+    margin-top:-44px;
+    opacity:0;
+}
+.dfr_1_3.form-inline .form-control {
+    width:100%;
+    max-width:340px;
+}
