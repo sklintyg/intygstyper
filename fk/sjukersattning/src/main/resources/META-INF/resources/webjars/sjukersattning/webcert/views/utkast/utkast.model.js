@@ -76,6 +76,8 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                         form11: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
                                 'anledningTillKontakt'],
 
+                        tillaggsfragor: [ new ModelAttr( 'tillaggsfragor', { defaultValue : [] }) ],
+
                         misc: [ 'id',
                                 new ModelAttr('grundData', {defaultValue: grundData})]
                     });

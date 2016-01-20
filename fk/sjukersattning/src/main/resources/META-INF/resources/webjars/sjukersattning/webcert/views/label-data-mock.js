@@ -1,13 +1,7 @@
 /* jshint maxlen: false, unused: false */
 var sjukersattningDynamicLabelsMock = {
     'texter': {
-        'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-        'xmlns': 'http://schema.forsakringskassan.se/vardgivare_sjukvard',
-        'typ': 'LÄKINU',
-        'giltigFrom': '2015-11-03',
-        'giltigTom': '2015-12-31',
         'version': '1.0',
-        'xsi:schemaLocation': 'http://schema.forsakringskassan.se/vardgivare_sjukvard texterMU_v1.0.xsd',
         'text': [
             // KAT 1
             {
@@ -300,27 +294,6 @@ var sjukersattningDynamicLabelsMock = {
                 'id': 'DFR_26.2.HLP'
             },
 
-            // KAT 9999 tilläggsfrågor
-            {
-                'id': 'KAT_9999.RBK',
-                'text': ''
-            },
-            {
-                'id': 'KAT_9999.HLP'
-            },
-            {
-                'id': 'DFR_9001.1.RBK'
-            },
-            {
-                'id': 'DFR_9001.1.HLP'
-            },
-            {
-                'id': 'DFR_9002.1.RBK'
-            },
-            {
-                'id': 'DFR_9002.1.HLP'
-            },
-
             {
                 'id': 'KV_FKMU_0001.1',
                 'text': 'Min undersökning av patienten'
@@ -409,15 +382,32 @@ var sjukersattningDynamicLabelsMock = {
                 'id': 'KV_FKMU_0004.11',
                 'text': 'Övrigt'
             },
-        ],
-        'tillagg': {
-            'tillaggsfraga': {
-                'id': 'TFG_1',
-                'text': [
-                    { 'id': 'TFG_1.RBK' },
-                    { 'id': 'TFG_1.HLP' }
-                ]
+            // KAT 9999 tilläggsfrågor
+            {
+                'id': 'KAT_9999.RBK',
+                'text': ''
+            },
+            {
+                'id':'KAT_9999.HLP'
             }
-        }
-    }
+        ],
+    },
+    'tillaggsfragor': [
+        {
+            'id': 'DFR_9001.1.RBK',
+            'text': 'Blah',
+            'help': {
+                'id': 'DFR_9001.1.HLP',
+                'text': 'Hajplp'
+            },
+        },
+        {
+            'id': 'DFR_9003.1.RBK',
+            'text': 'Blah',
+            'help': {
+                'id': 'DFR_9003.1.HLP',
+                'text': 'Hajplp'
+            }
+        },
+    ]
 };
