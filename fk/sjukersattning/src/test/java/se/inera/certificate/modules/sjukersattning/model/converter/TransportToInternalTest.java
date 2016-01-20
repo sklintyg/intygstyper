@@ -50,6 +50,7 @@ public class TransportToInternalTest {
         utlatande.setOvrigt("Trevlig kille");
         utlatande.setKontaktMedFk(true);
         utlatande.setAnledningTillKontakt("Känner mig ensam");
+        utlatande.setTillaggsfragor(asList(Tillaggsfraga.create("9001", "Svar text 1"), Tillaggsfraga.create("9002", "Svar text 2")));
         return utlatande.build();
     }
 

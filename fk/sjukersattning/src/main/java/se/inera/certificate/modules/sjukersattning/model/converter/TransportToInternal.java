@@ -26,6 +26,7 @@ import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
+import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
@@ -42,6 +43,8 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public final class TransportToInternal {
+
+    private static final int TILLAGGSFRAGA_START = 9001;
 
     private TransportToInternal() {
     }
@@ -162,6 +165,7 @@ public final class TransportToInternal {
     private static void setSvar(Builder utlatande, Intyg source) {
         List<Underlag> underlag = new ArrayList<>();
         List<Diagnos> diagnoser = new ArrayList<>();
+        List<Tillaggsfraga> tillaggsfragor = new ArrayList<>();
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
@@ -235,12 +239,16 @@ public final class TransportToInternal {
                 handleOnskarKontakt(utlatande, svar);
                 break;
             default:
+                if (StringUtils.isNumeric(svar.getId()) && Integer.parseInt(svar.getId()) >= TILLAGGSFRAGA_START) {
+                    handleTillaggsfraga(tillaggsfragor, svar);
+                }
                 break;
             }
         }
 
         utlatande.setUnderlag(underlag);
         utlatande.setDiagnoser(diagnoser);
+        utlatande.setTillaggsfragor(tillaggsfragor);
     }
 
     private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) {
@@ -552,6 +560,21 @@ public final class TransportToInternal {
             default:
                 throw new IllegalArgumentException();
             }
+        }
+    }
+
+    private static void handleTillaggsfraga(List<Tillaggsfraga> tillaggsFragor, Svar svar) {
+        // En tilläggsfråga har endast ett delsvar
+        if (svar.getDelsvar().size() >  1) {
+            throw new IllegalArgumentException();
+        }
+
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        // Kontrollera att ID matchar
+        if (delsvar.getId().equals(svar.getId() + ".1")) {
+            tillaggsFragor.add(Tillaggsfraga.create(svar.getId(), getSvarContent(delsvar, String.class)));
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 

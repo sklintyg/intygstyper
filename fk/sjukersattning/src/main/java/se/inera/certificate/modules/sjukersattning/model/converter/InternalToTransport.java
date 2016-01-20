@@ -278,6 +278,11 @@ public final class InternalToTransport {
             }
         }
 
+        for (Tillaggsfraga tillaggsfraga : source.getTillaggsfragor()) {
+            svars.add(aSvar(tillaggsfraga.getId()).
+                    withDelsvar(tillaggsfraga.getId() + ".1", tillaggsfraga.getSvar()).build());
+        }
+
         return svars;
     }
 

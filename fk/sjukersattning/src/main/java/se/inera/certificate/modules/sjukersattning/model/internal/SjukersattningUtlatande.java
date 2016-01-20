@@ -171,6 +171,9 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     @Nullable
     public abstract String getAnledningTillKontakt();
 
+    // Tilläggsfrågor
+    public abstract ImmutableList<Tillaggsfraga> getTillaggsfragor();
+
     /* Retrieve a builder from an existing SjukersattningUtlatande object. The builder can then be used
     to create a new copy with modified attributes. */
     public abstract Builder toBuilder();
@@ -178,7 +181,8 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     public static Builder builder() {
         return new AutoValue_SjukersattningUtlatande.Builder().
                 setUnderlag(ImmutableList.<Underlag> of()).
-                setDiagnoser(ImmutableList.<Diagnos> of());
+                setDiagnoser(ImmutableList.<Diagnos> of()).
+                setTillaggsfragor(ImmutableList.<Tillaggsfraga>of());
     }
 
     @AutoValue.Builder
@@ -288,6 +292,14 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
         @JsonProperty("anledningTillKontakt")
         public abstract Builder setAnledningTillKontakt(String anledningTillKontakt);
+
+        @JsonProperty("tillaggsfragor")
+        public Builder setTillaggsfragor(List<Tillaggsfraga> tillaggsfragor) {
+            return setTillaggsfragor(ImmutableList.copyOf(tillaggsfragor));
+        }
+
+        /* package private */
+        abstract Builder setTillaggsfragor(ImmutableList<Tillaggsfraga> tillaggsfragor);
     }
 
 }
