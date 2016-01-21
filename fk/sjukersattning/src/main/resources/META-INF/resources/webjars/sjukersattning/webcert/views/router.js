@@ -29,52 +29,52 @@ angular.module('sjukersattning').config(function($stateProvider) {
                     controller: 'common.UtkastFooter'
                 },
 
-                'form2@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form2.html',
-                    controller: 'sjukersattning.EditCert.Form2Ctrl'
+                'formUnderlag@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formUnderlag.html',
+                    controller: 'sjukersattning.EditCert.FormUnderlagCtrl'
                 },
-                'sjukdomsforlopp@sjukersattning-edit' : {
+                'formSjukdomsforlopp@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formSjukdomsforlopp.html',
                     controller: 'sjukersattning.EditCert.FormSjukdomsforloppCtrl'
                 },
-                'form4@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form4.html',
-                    controller: 'sjukersattning.EditCert.Form4Ctrl'
+                'formDiagnos@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.html',
+                    controller: 'sjukersattning.EditCert.FormDiagnosCtrl'
                 },
 
-                'form4b@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form4b.html',
-                    controller: 'sjukersattning.EditCert.Form4bCtrl'
+                'formDiagnos2@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos2.html',
+                    controller: 'sjukersattning.EditCert.FormDiagnos2Ctrl'
                 },
 
-                'form5@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form5.html',
-                    controller: 'sjukersattning.EditCert.Form5Ctrl'
+                'formFunktionsnedsattning@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formFunktionsNedsattning.html',
+                    controller: 'sjukersattning.EditCert.FormFunktionsNedsattningCtrl'
                 },
 
-                'form6@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form6.html',
-                    controller: 'sjukersattning.EditCert.Form6Ctrl'
+                'formAktivitetsBegransning@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formAktivitetsBegransning.html',
+                    controller: 'sjukersattning.EditCert.FormAktivitetsBegransningCtrl'
                 },
 
-                'form7@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form7.html',
-                    controller: 'sjukersattning.EditCert.Form7Ctrl'
+                'formMedicinskaBehandlingar@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formMedicinskaBehandlingar.html',
+                    controller: 'sjukersattning.EditCert.FormMedicinskaBehandlingarCtrl'
                 },
 
-                'form9@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form9.html',
-                    controller: 'sjukersattning.EditCert.Form9Ctrl'
+                'formMedicinskaForutsattningar@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formMedicinskaForutsattningar.html',
+                    controller: 'sjukersattning.EditCert.FormMedicinskaForutsattningarCtrl'
                 },
 
-                'form10@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form10.html',
-                    controller: 'sjukersattning.EditCert.Form10Ctrl'
+                'formOvrigt@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formOvrigt.html',
+                    controller: 'sjukersattning.EditCert.FormOvrigtCtrl'
                 },
 
-                'form11@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form11.html',
-                    controller: 'sjukersattning.EditCert.Form11Ctrl'
+                'formKontakt@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formKontakt.html',
+                    controller: 'sjukersattning.EditCert.FormKontaktCtrl'
                 },
 
                 'formExtraQuestions@sjukersattning-edit' : {
@@ -82,9 +82,9 @@ angular.module('sjukersattning').config(function($stateProvider) {
                     controller: 'sjukersattning.EditCert.FormExtraQuestionsCtrl'
                 },
 
-                'form15@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/form15.html',
-                    controller: 'sjukersattning.EditCert.Form15Ctrl'
+                'formGrundData@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formGrundData.html',
+                    controller: 'sjukersattning.EditCert.FormGrundDataCtrl'
                 }
 
             }

@@ -1,4 +1,4 @@
-angular.module('sjukersattning').controller('sjukersattning.EditCert.Form4Ctrl',
+angular.module('sjukersattning').controller('sjukersattning.EditCert.FormDiagnosCtrl',
     ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', 'sjukersattning.diagnosService', '$filter',
         'sjukersattning.EditCertCtrl.Helper',
         function($scope, $log, viewState, diagnosService, helper, $filter) {

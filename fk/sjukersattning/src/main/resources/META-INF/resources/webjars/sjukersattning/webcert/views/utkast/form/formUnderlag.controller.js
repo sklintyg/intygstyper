@@ -1,4 +1,4 @@
-angular.module('sjukersattning').controller('sjukersattning.EditCert.Form2Ctrl',
+angular.module('sjukersattning').controller('sjukersattning.EditCert.FormUnderlagCtrl',
     ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', 'common.UtilsService', '$filter',
         'common.DateUtilsService',
         function($scope, $log, viewState, utils, $filter, dateUtils ) {

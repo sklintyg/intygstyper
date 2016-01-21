@@ -1,5 +1,5 @@
 <a id="anchor.diagnos" name="anchor.diagnos"></a>
-<div ng-form="form4">
+<div ng-form="formDiagnos">
       <div wc-field field-label="sjukersattning.label.diagnos"
          field-help-text="sjukersattning.helptext.diagnos"
          class="print-pagebreak-after field-fade" field-has-errors="viewState.common.validationMessagesGrouped.diagnos" id="diagnoseForm">
@@ -41,7 +41,7 @@
                  class='diagnose-code col-xs-11 form-control' ng-model="model.diagnoser[0].diagnosKod"
                  uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
                  typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
-                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
+                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
                  wc-to-uppercase>
         </div>
         <div class='col-xs-9'>
@@ -51,7 +51,7 @@
                  ng-model= "model.diagnoser[0].diagnosBeskrivning"
                  uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
                  typeahead-on-select="onDiagnoseDescription1Select($item)"
-                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
+                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
                  typeahead-wait-ms="100">
         </div>
       </div>
@@ -79,7 +79,7 @@
                      ng-model="model.diagnoser[1].diagnosKod" class="col-xs-11 form-control"
                      uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
                      typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
-                     typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
+                     typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
                       wc-to-uppercase>
             </div>
           </div>
@@ -96,7 +96,7 @@
                    ng-model="model.diagnoser[1].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
                    uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
                    typeahead-on-select="onDiagnoseDescription2Select($item)"
-                   typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
+                   typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
                    typeahead-wait-ms="100">
           </div>
         </div>
@@ -121,7 +121,7 @@
                  ng-model="model.diagnoser[2].diagnosKod" class="col-xs-11 form-control"
                  uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
                  typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
-                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
+                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
                 wc-to-uppercase>
         </div>
         <div class='col-xs-9'>
@@ -134,7 +134,7 @@
                    ng-model="model.diagnoser[2].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
                    uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
                    typeahead-on-select="onDiagnoseDescription3Select($item)"
-                   typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/form4.diagnoseTemplate.html"
+                   typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
                    typeahead-wait-ms="100">
           </div>
         </div>
