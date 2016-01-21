@@ -1,148 +1,145 @@
 <a id="anchor.diagnos" name="anchor.diagnos"></a>
 <div ng-form="formDiagnos">
-      <div wc-field field-label="sjukersattning.label.diagnos"
-         field-help-text="sjukersattning.helptext.diagnos"
-         class="print-pagebreak-after field-fade" field-has-errors="viewState.common.validationMessagesGrouped.diagnos" id="diagnoseForm">
+  <div wc-field field-dynamic-label="KAT_4.RBK" field-dynamic-help-text="KAT_4.HLP"
+       class="print-pagebreak-after field-fade" field-has-errors="viewState.common.validationMessagesGrouped.diagnos"
+       id="diagnoseForm">
 
-          <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnos" id="validationMessages_diagnos">
-            <ul>
-              <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnos"><span message
-                                                                                 key="{{message.message}}"></span>
-              </li>
-            </ul>
-          </div>
+    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnos"
+         id="validationMessages_diagnos">
+      <ul>
+        <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnos"><span message
+                                                                                            key="{{message.message}}"></span>
+        </li>
+      </ul>
+    </div>
 
-          <div class="row bottom-padding-small">
-              <div class='col-xs-12'>
-                  <div class='divider'>
-                      <span message key="sjukersattning.label.valjkodverk"></span>
-                      <label class="radio-inline">
-                          <input type="radio" id="diagnoseKodverk_ICD_10_SE" name="diagnosKodSystem" value="ICD_10_SE"
-                                 ng-model="viewModel.diagnosKodSystem" checked="checked"
-                                 ng-change="onChangeKodverk()"><span message
-                                                                     key="sjukersattning.label.diagnoskodverk.icd_10_se"></span>
-                      </label>
-                      <label class="radio-inline">
-                          <input type="radio" id="diagnoseKodverk_KSH_97_P" name="diagnosKodSystem" value="KSH_97_P"
-                                 ng-model="viewModel.diagnosKodSystem" ng-change="onChangeKodverk()"><span message
-                                                                                                         key="sjukersattning.label.diagnoskodverk.ksh_97_p"></span>
-                      </label>
-                  </div>
-              </div>
-          </div>
-
-        <!-- ROW 1 -->
-      <div class="row bottom-padding-small">
-        <div class='col-xs-3'>
-
-          <input type="hidden" name="diagnosKodSystem" value="ICD_10_SE" ng-model="model.diagnoser[0].diagnosKod" />
-          <label class="control-label unbreakable">ICD-10-SE</label>
-          <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
-                 class='diagnose-code col-xs-11 form-control' ng-model="model.diagnoser[0].diagnosKod"
-                 uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
-                 typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
-                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
-                 wc-to-uppercase>
+    <div class="row bottom-padding-small">
+      <div class='col-xs-12'>
+        <div class='divider'>
+          <span message key="sjukersattning.label.valjkodverk"></span>
+          <label class="radio-inline">
+            <input type="radio" id="diagnoseKodverk_ICD_10_SE" name="diagnosKodSystem" value="ICD_10_SE"
+                   ng-model="viewModel.diagnosKodSystem" checked="checked" ng-change="onChangeKodverk()"><span message
+                                                                                                               key="sjukersattning.label.diagnoskodverk.icd_10_se"></span>
+          </label>
+          <label class="radio-inline">
+            <input type="radio" id="diagnoseKodverk_KSH_97_P" name="diagnosKodSystem" value="KSH_97_P"
+                   ng-model="viewModel.diagnosKodSystem" ng-change="onChangeKodverk()"><span message
+                                                                                             key="sjukersattning.label.diagnoskodverk.ksh_97_p"></span>
+          </label>
         </div>
-        <div class='col-xs-9'>
-          <label class="control-label">Diagnos</label>
-          <input type="text" class="form-control maxwidth" id="diagnoseDescription"
-                 class="col-xs-12 form-control" name="diagnose.description" value=""
-                 ng-model= "model.diagnoser[0].diagnosBeskrivning"
+      </div>
+    </div>
+
+    <!-- ROW 1 -->
+    <div class="row bottom-padding-small">
+      <div class='col-xs-3'>
+
+        <input type="hidden" name="diagnosKodSystem" value="ICD_10_SE" ng-model="model.diagnoser[0].diagnosKod" />
+        <label class="control-label unbreakable"><span dynamic-label key="DFR_6.2.RBK"></span></label>
+        <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" value=""
+               class='diagnose-code col-xs-11 form-control' ng-model="model.diagnoser[0].diagnosKod"
+               uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
+               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
+               typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
+               wc-to-uppercase>
+      </div>
+      <div class='col-xs-9'>
+        <label class="control-label"><span dynamic-label key="DFR_6.1.RBK"></span></label>
+        <input type="text" class="form-control maxwidth" id="diagnoseDescription" class="col-xs-12 form-control"
+               name="diagnose.description" value="" ng-model="model.diagnoser[0].diagnosBeskrivning"
+               uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
+               typeahead-on-select="onDiagnoseDescription1Select($item)"
+               typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
+               typeahead-wait-ms="100">
+      </div>
+    </div>
+    <div class="row bottom-padding-small" ng-show="!viewModel.diagnosKodRow2.visible">
+      <div class="col-xs-12">
+        <a href ng-click="viewModel.diagnosKodRow2.visible = true; viewModel.diagnosKodRow2.type = 'diagnos'">
+          Lägg till övriga diagnoser </a>|
+        <a href ng-click="viewModel.diagnosKodRow2.visible = true; viewModel.diagnosKodRow2.type = 'behandling'">
+          Lägg till behandlingsåtgärder som orsakat nedsatt arbetsförmåga</a>
+      </div>
+      <div class="col-xs-12">
+
+      </div>
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="row bottom-padding-tiny" ng-show="viewModel.diagnosKodRow2.visible">
+      <div class='col-xs-3'>
+        <label class="control-label unbreakable">{{ viewModel.diagnosKodRow2.type !== null &&
+          viewModel.diagnosKodRow2.type === 'diagnos' ? 'ICD-10-SE' : 'KVÅ' }}
+        </label>
+        <div class="controls">
+          <div class="bottom-padding-small clearfix">
+            <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
+                   ng-model="model.diagnoser[1].diagnosKod" class="col-xs-11 form-control"
+                   uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
+                   typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
+                   typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
+                   wc-to-uppercase>
+          </div>
+        </div>
+      </div>
+
+
+      <div class='col-xs-9'>
+        <label class="control-label inline-block">
+              <span message key="{{ viewModel.diagnosKodRow2.type !== null && viewModel.diagnosKodRow2.type === 'diagnos' ?
+                                    'sjukersattning.label.ytterligarediagnoser' : 'sjukersattning.label.ytterligarebehandling' }}"></span>
+        </label>
+        <div class="bottom-padding-small clearfix">
+          <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
+                 ng-model="model.diagnoser[1].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
                  uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
-                 typeahead-on-select="onDiagnoseDescription1Select($item)"
+                 typeahead-on-select="onDiagnoseDescription2Select($item)"
                  typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
                  typeahead-wait-ms="100">
         </div>
       </div>
-      <div class="row bottom-padding-small" ng-show="!viewModel.diagnosKodRow2.visible">
-          <div class="col-xs-12">
-              <a href ng-click="viewModel.diagnosKodRow2.visible = true; viewModel.diagnosKodRow2.type = 'diagnos'">
-                  Lägg till övriga diagnoser </a>|
-              <a href ng-click="viewModel.diagnosKodRow2.visible = true; viewModel.diagnosKodRow2.type = 'behandling'">
-                  Lägg till behandlingsåtgärder som orsakat nedsatt arbetsförmåga</a>
-          </div>
-          <div class="col-xs-12">
+    </div>
 
-          </div>
+    <!-- ROW 3 -->
+    <div class="row bottom-padding-small"
+         ng-show="viewModel.diagnosKodRow2.visible && !viewModel.diagnosKodRow3.visible">
+      <div class="col-xs-12">
+        <a href ng-click="viewModel.diagnosKodRow3.visible = true; viewModel.diagnosKodRow3.type = 'diagnos'">
+          Lägg till övriga diagnoser </a>|
+        <a href ng-click="viewModel.diagnosKodRow3.visible = true; viewModel.diagnosKodRow3.type = 'behandling'">
+          Lägg till behandlingsåtgärder som orsakat nedsatt arbetsförmåga</a></div>
+    </div>
+
+    <div class="row bottom-padding-small" ng-show="viewModel.diagnosKodRow3.visible">
+
+      <div class='col-xs-3'>
+        <label class="control-label unbreakable">{{ viewModel.diagnosKodRow3.type !== null &&
+          viewModel.diagnosKodRow3.type === 'diagnos' ? 'ICD-10-SE' : 'KVÅ' }}
+        </label>
+        <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
+               ng-model="model.diagnoser[2].diagnosKod" class="col-xs-11 form-control"
+               uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
+               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
+               typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
+               wc-to-uppercase>
       </div>
-
-      <!-- ROW 2 -->
-      <div class="row bottom-padding-tiny" ng-show="viewModel.diagnosKodRow2.visible">
-        <div class='col-xs-3'>
-          <label class="control-label unbreakable">{{ viewModel.diagnosKodRow2.type !== null &&
-              viewModel.diagnosKodRow2.type === 'diagnos' ? 'ICD-10-SE' : 'KVÅ' }}
-              </label>
-          <div class="controls">
-            <div class="bottom-padding-small clearfix">
-              <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
-                     ng-model="model.diagnoser[1].diagnosKod" class="col-xs-11 form-control"
-                     uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
-                     typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
-                     typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
-                      wc-to-uppercase>
-            </div>
-          </div>
-        </div>
-
-
-        <div class='col-xs-9'>
-          <label class="control-label inline-block">
-              <span message key="{{ viewModel.diagnosKodRow2.type !== null && viewModel.diagnosKodRow2.type === 'diagnos' ?
-                                    'sjukersattning.label.ytterligarediagnoser' : 'sjukersattning.label.ytterligarebehandling' }}"></span>
-            </label>
-          <div class="bottom-padding-small clearfix">
-            <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
-                   ng-model="model.diagnoser[1].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
-                   uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
-                   typeahead-on-select="onDiagnoseDescription2Select($item)"
-                   typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
-                   typeahead-wait-ms="100">
-          </div>
-        </div>
-      </div>
-
-      <!-- ROW 3 -->
-      <div class="row bottom-padding-small" ng-show="viewModel.diagnosKodRow2.visible && !viewModel.diagnosKodRow3.visible">
-          <div class="col-xs-12">
-              <a href ng-click="viewModel.diagnosKodRow3.visible = true; viewModel.diagnosKodRow3.type = 'diagnos'">
-                  Lägg till övriga diagnoser </a>|
-              <a href ng-click="viewModel.diagnosKodRow3.visible = true; viewModel.diagnosKodRow3.type = 'behandling'">
-                  Lägg till behandlingsåtgärder som orsakat nedsatt arbetsförmåga</a> </div>
-      </div>
-
-      <div class="row bottom-padding-small" ng-show="viewModel.diagnosKodRow3.visible">
-
-        <div class='col-xs-3'>
-            <label class="control-label unbreakable">{{ viewModel.diagnosKodRow3.type !== null &&
-                viewModel.diagnosKodRow3.type === 'diagnos' ? 'ICD-10-SE' : 'KVÅ' }}
-            </label>
-          <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
-                 ng-model="model.diagnoser[2].diagnosKod" class="col-xs-11 form-control"
-                 uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodSystem, $viewValue) | limitTo:10"
-                 typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
-                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
-                wc-to-uppercase>
-        </div>
-        <div class='col-xs-9'>
-            <label class="control-label inline-block">
+      <div class='col-xs-9'>
+        <label class="control-label inline-block">
                 <span message key="{{ viewModel.diagnosKodRow3.type !== null && viewModel.diagnosKodRow3.type === 'diagnos' ?
                             'sjukersattning.label.ytterligarediagnoser' : 'sjukersattning.label.ytterligarebehandling' }}"></span>
-            </label>
-          <div class="controls">
-            <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
-                   ng-model="model.diagnoser[2].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
-                   uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
-                   typeahead-on-select="onDiagnoseDescription3Select($item)"
-                   typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
-                   typeahead-wait-ms="100">
-          </div>
+        </label>
+        <div class="controls">
+          <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
+                 ng-model="model.diagnoser[2].diagnosBeskrivning" class="block col-xs-12 form-control maxwidth"
+                 uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodSystem, $viewValue)"
+                 typeahead-on-select="onDiagnoseDescription3Select($item)"
+                 typeahead-template-url="/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.diagnoseTemplate.html"
+                 typeahead-wait-ms="100">
         </div>
-          <span>{{ $scope.model.diagnoser }}</span>
       </div>
-
-
-
-
+      <span>{{ $scope.model.diagnoser }}</span>
     </div>
+
+  </div>
 </div>

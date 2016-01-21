@@ -8,18 +8,15 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormUnderla
             $scope.model = model;
             $scope.viewState = viewState;
 
-            var grundForMUdates = ['undersokningAvPatienten', 'journaluppgifter', 'anhorigsBeskrivningAvPatienten', 'annatGrundForMU' ];
-            $scope.grundForMUdates = grundForMUdates;
-
-            function onPageLoad(){
-                $scope.underlagSelect = viewState.underlagOptions;
-            }
-
-            $scope.grundForMUState = {check:{}};
-            $scope.dates = {};
-            grundForMUdates.forEach(function(grundForMUdate) {
+            $scope.grundForMUState = {
+                dates: {},
+                check:{},
+                labelID: ['KV_FKMU_0001.1.RBK','KV_FKMU_0001.3.RBK','KV_FKMU_0001.4.RBK','KV_FKMU_0001.5.RBK'],
+                fieldNames: ['undersokningAvPatienten', 'journaluppgifter', 'anhorigsBeskrivningAvPatienten', 'annatGrundForMU' ]
+            };
+            $scope.grundForMUState.fieldNames.forEach(function(grundForMUdate) {
                 $scope.grundForMUState.check[grundForMUdate] = false;
-                $scope.dates[grundForMUdate] = null;
+                $scope.grundForMUState.dates[grundForMUdate] = null;
             });
 
             // once we've doneLoading we can set the radion buttons to the model state.
@@ -32,24 +29,25 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormUnderla
                     setGrundForMU();
                     // I really hate this but needs to be done because the datepicker doesn't accept non dates!!
                     transferModelToForm();
+                    viewState.updateUnderlagOptions();
                 }
             });
 
             function clearViewState() {
-                grundForMUdates.forEach(function(grundForMUdate) {
-                    $scope.grundForMUState.check[grundForMUdate] = false;
+                $scope.grundForMUState.fieldNames.forEach(function(fieldName) {
+                    $scope.grundForMUState.check[fieldName] = false;
                 });
             }
 
             function setGrundForMU() {
-                grundForMUdates.forEach(function(grundForMUdate) {
-                    $scope.grundForMUState.check[grundForMUdate] = model[grundForMUdate] !== undefined;
+                $scope.grundForMUState.fieldNames.forEach(function(fieldName) {
+                    $scope.grundForMUState.check[fieldName] = model[fieldName] !== undefined;
                 });
             }
 
             function transferModelToForm() {
-                grundForMUdates.forEach(function(grundForMUdate) {
-                    $scope.dates[grundForMUdate] = model[grundForMUdate];
+                $scope.grundForMUState.fieldNames.forEach(function(fieldName) {
+                    $scope.grundForMUState.dates[fieldName] = model[fieldName];
                 });
             }
 
@@ -64,12 +62,12 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormUnderla
                 if ($scope.grundForMUState.check[modelName]) {
                     if (!model[modelName] || model[modelName] === '') {
                         model[modelName] = dateUtils.todayAsYYYYMMDD();
-                        $scope.dates[modelName] = model[modelName];
+                        $scope.grundForMUState.dates[modelName] = model[modelName];
                     }
                 } else {
                     // Clear date if check is unchecked
                     model[modelName] = undefined;
-                    $scope.dates[modelName] = '';
+                    $scope.grundForMUState.dates[modelName] = '';
                 }
             };
 
@@ -83,7 +81,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormUnderla
 
             function registerDateParsersFor2(_$scope) {
                 // Register parse function for 2 date pickers
-                addParsers(_$scope, grundForMUdates, _$scope.onChangeGrundForMUDate);
+                addParsers(_$scope, $scope.grundForMUState.fieldNames, _$scope.onChangeGrundForMUDate);
             }
 
             function addParsers(form2, attributes, fn) {
@@ -129,7 +127,4 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormUnderla
                 model.underlag.splice(index, 1);
                 $scope.form2.$setDirty();
             };
-
-            onPageLoad();
-
         }]);

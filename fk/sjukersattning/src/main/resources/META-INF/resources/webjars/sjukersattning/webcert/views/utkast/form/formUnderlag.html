@@ -1,103 +1,100 @@
-
 <div ng-form="formUnderlag">
   <a id="anchor.grundformu" name="anchor.grundformu"></a>
-    <h3 class="title">Läkarutlåtande för sjukersättning</h3>
-  <div id="grundformu" wc-field field-dynamic-label="KAT_2.RBK"
-                                      field-dynamic-help-text="KAT_2.HLP"
+  <div id="grundformu" wc-field field-dynamic-label="KAT_2.RBK" field-dynamic-help-text="KAT_2.HLP"
        field-has-errors="viewState.common.validationMessagesGrouped.grundformu" class="field-fade">
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.grundformu" id="validationMessages_grundformu">
-    <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.grundformu"><span message
-                                                                                key="{{message.message}}"></span>
-      </li>
-    </ul>
-  </div>
+    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.grundformu"
+         id="validationMessages_grundformu">
+      <ul>
+        <li ng-repeat="message in viewState.common.validationMessagesGrouped.grundformu"><span message
+                                                                                               key="{{message.message}}"></span>
+        </li>
+      </ul>
+    </div>
 
-  <div class="form-group form-inline" ng-repeat="grundForMUdate in grundForMUdates">
-    <label class="checkbox inline-block" style="min-width: 300px">
-      <input type="checkbox"
-             id="grundForMUdate-{{grundForMUdate}}"
-             class="checkbox-inline"
-             ng-model="grundForMUState.check[grundForMUdate]"
-             ng-change="toggleBaseradPaDate(grundForMUdate)"
-             value="true">
-      <span message key="sjukersattning.label.grund-for-mu-date.{{grundForMUdate}}"></span>
-    </label>
-    <span wc-date-picker-field target-model="dates[grundForMUdate]"
+    <!-- Grund för MU fields -->
+    <div class="form-group form-inline" ng-repeat="grundForMUdate in grundForMUState.fieldNames">
+      <label class="checkbox inline-block" style="min-width: 300px">
+        <input type="checkbox" id="grundForMUdate-{{grundForMUdate}}" class="checkbox-inline"
+               ng-model="grundForMUState.check[grundForMUdate]" ng-change="toggleBaseradPaDate(grundForMUdate)"
+               value="true">
+        <span dynamic-label key="{{grundForMUState.labelID[$index]}}"></span>
+      </label>
+    <span wc-date-picker-field target-model="$scope.grundForMUState.dates[grundForMUdate]"
           dom-id="{{grundForMUdate}}Date"></span>
-  </div>
+    </div>
 
-  <div class="form-group form-inline dfr_1_3" ng-show="grundForMUState.check.annatGrundForMU">
+    <div class="form-group form-inline dfr_1_3" ng-show="grundForMUState.check.annatGrundForMU">
       <label style="min-width: 300px"><span dynamic-label key="DFR_1.3.RBK"></span></label>
       <input type="text" class="form-control" ng-model="model.annatGrundForMUBeskrivning">
-  </div>
+    </div>
 
-  <!--  Jag har känt patienten sedan den -->
-  <div class="form-group form-inline">
+    <!--  Jag har känt patienten sedan den -->
+    <div class="form-group form-inline">
       <label class="checkbox inline-block" style="min-width: 300px; ">
-          <span>Jag har känt patienten sedan den</span></label>
+        <span dynamic-label key="DFR_2.1.RBK"></span></label>
       <span wc-date-picker-field target-model="model.kannedomOmPatient" dom-id="kannedomOmPatientDate"></span>
 
 
-  </div>
-      <p>
+    </div>
+    <p>
 
-      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.underlag" id="validationMessages_underlag">
-          <ul>
-              <li ng-repeat="message in viewState.common.validationMessagesGrouped.underlag"><span message
-                                                                                                     key="{{message.message}}"></span>
-              </li>
-          </ul>
-      </div>
+    <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.underlag"
+         id="validationMessages_underlag">
+      <ul>
+        <li ng-repeat="message in viewState.common.validationMessagesGrouped.underlag"><span message
+                                                                                             key="{{message.message}}"></span>
+        </li>
+      </ul>
+    </div>
 
-      <!--  Finns det andra medicinska... -->
-      <div class="form-group form-inline">
-          <label class="inline-block bold">Finns det andra medicinska utredningar eller underlag som är relevanta för bedömningen?</label>
-      </div>
-      <div class="form-group form-inline">
-          <label class="radio-inline">
-                <input id="andraMedicinskaUtredningarYes" name="andraMedicinskaUtredningar" type="radio" ng-value="true"
-                        ng-model="model.underlagFinns" ng-change="onUnderlagFinnsChanged()"/>Ja
-          </label>
-          <label class="radio-inline">
-              <input id="andraMedicinskaUtredningarNo" name="andraMedicinskaUtredningar" type="radio" ng-value="false"
-                     ng-model="model.underlagFinns" ng-change="onUnderlagFinnsChanged()"/>Nej
-          </label>
-      </div>
+    <!--  Finns det andra medicinska... -->
+    <div class="form-group form-inline">
+      <label class="inline-block bold"><span dynamic-label key="DFR_3.1.RBK"></span></label>
+    </div>
+    <div class="form-group form-inline">
+      <label class="radio-inline">
+        <input id="andraMedicinskaUtredningarYes" name="andraMedicinskaUtredningar" type="radio" ng-value="true"
+               ng-model="model.underlagFinns" ng-change="onUnderlagFinnsChanged()" />Ja
+      </label>
+      <label class="radio-inline">
+        <input id="andraMedicinskaUtredningarNo" name="andraMedicinskaUtredningar" type="radio" ng-value="false"
+               ng-model="model.underlagFinns" ng-change="onUnderlagFinnsChanged()" />Nej
+      </label>
+    </div>
 
-     <div class="form-group form-inline bottom-padding-small" ng-show="model.underlagFinns"  style="padding-bottom: 40px;">
-         <table>
-             <tr class="underlagRow">
-                 <th></th>
-                 <th><span dynamic-label key="DFR_4.1.RBK"></span></span></th>
-                 <th><span dynamic-label key="DFR_4.2.RBK"></span></span></th>
-                 <th><span dynamic-label key="DFR_4.3.RBK"></span></span></th>
-             </tr>
-             <tr class="underlagRow" ng-repeat="underlag in model.underlag">
-                  <td><span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag($index)" ng-show="model.underlag.length > 1"></span></td>
-                  <td>
-                      <select class="form-control" name="andraUnderlag"
-                              data-ng-model="underlag.typ"
-                              data-ng-options="item.id as item.label for item in $parent.underlagSelect"></select>
-                  </td>
-                  <td>
+    <div class="form-group form-inline bottom-padding-small" ng-show="model.underlagFinns"
+         style="padding-bottom: 40px;">
+      <table>
+        <tr class="underlagRow">
+          <th></th>
+          <th><span dynamic-label key="DFR_4.1.RBK"></span></span></th>
+          <th><span dynamic-label key="DFR_4.2.RBK"></span></span></th>
+          <th><span dynamic-label key="DFR_4.3.RBK"></span></span></th>
+        </tr>
+        <tr class="underlagRow" ng-repeat="underlag in model.underlag">
+          <td><span class="glyphicon glyphicon-remove-sign deleteUnderlag" ng-click="removeUnderlag($index)"
+                    ng-show="model.underlag.length > 1"></span></td>
+          <td>
+            <select class="form-control" name="andraUnderlag" data-ng-model="underlag.typ"
+                    data-ng-options="item.id as item.label for item in viewState.underlagOptions"></select>
+          </td>
+          <td>
                       <span wc-date-picker-field target-model="underlag.datum" dom-id="{{ underlag.typ }}-Date"
                             ng-model="underlag.datum"></span>
-                  </td>
-                  <td>
-                      <input type="text" class="form-control input-full" ng-model="underlag.hamtasFran">
-                  </td>
-              </tr>
-         </table>
-         <div>
-             <a href ng-click="createUnderlag()" class="btn btn-link"
-                ng-class="{ 'disabled': model.underlag[model.underlag.length - 1].typ === 0 ||
+          </td>
+          <td>
+            <input type="text" class="form-control input-full" ng-model="underlag.hamtasFran">
+          </td>
+        </tr>
+      </table>
+      <div>
+        <a href ng-click="createUnderlag()" class="btn btn-link" ng-class="{ 'disabled': model.underlag[model.underlag.length - 1].typ === 0 ||
                                         model.underlag[model.underlag.length - 1].datum === null }">
-                 Lägg till ytterligare underlag</a>
-         </div>
-         <span ng-if="model.underlag.length === 9" message key="sjukersattning.validation.underlag.max-extra-underlag"></span><!-- kursivera -->
-     </div>
-
+          Lägg till ytterligare underlag</a>
+      </div>
+      <span ng-if="model.underlag.length === 9" message
+            key="sjukersattning.validation.underlag.max-extra-underlag"></span><!-- kursivera -->
+    </div>
 
 
   </div>

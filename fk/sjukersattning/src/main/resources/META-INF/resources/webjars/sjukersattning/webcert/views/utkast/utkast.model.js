@@ -62,7 +62,8 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
 
                         formMedicinskaBehandlingar: ['avslutadBehandling',
                             'pagaendeBehandling',
-                            'planeradBehandling'],
+                            'planeradBehandling',
+                            'substansintag'],
 
                         formMedicinskaForutsattningar: [ 'medicinskaForutsattningarForArbete',
                                  'aktivitetsFormaga'],

@@ -252,8 +252,8 @@ public final class InternalToTransport {
             svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
         }
 
-        if (source.getSubstansIntag() != null) {
-            svars.add(aSvar(SUBSTANSINTAG_SVAR_ID).withDelsvar(SUBSTANSINTAG_DELSVAR_ID, source.getSubstansIntag()).build());
+        if (source.getSubstansintag() != null) {
+            svars.add(aSvar(SUBSTANSINTAG_SVAR_ID).withDelsvar(SUBSTANSINTAG_DELSVAR_ID, source.getSubstansintag()).build());
         }
 
         svars.add(aSvar(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID).
