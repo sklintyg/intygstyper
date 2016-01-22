@@ -109,7 +109,7 @@
       <iso:assert test="count(gn:delsvar[@id='1.3']) le 1">
         'Grund för medicinskt underlag (MU)' får ha högst ett 'Vilken annan grund finns för MU'.
       </iso:assert>
-      <iso:assert test="not(normalize-space(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code) = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
+      <iso:assert test="not(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code/normalize-space() = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
         Samma 'Typ av grund för MU' kan inte användas flera gånger i samma 'MU'.
       </iso:assert>
       <iso:let name="delsvarsIdExpr" value="'^1\.[123]$'"/>
