@@ -25,7 +25,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormUnderla
                     return;
                 }
                 if (newVal) {
-                    registerDateParsersFor2($scope);
+                    //registerDateParsersFor2($scope);
                     setGrundForMU();
                     // I really hate this but needs to be done because the datepicker doesn't accept non dates!!
                     transferModelToForm();
