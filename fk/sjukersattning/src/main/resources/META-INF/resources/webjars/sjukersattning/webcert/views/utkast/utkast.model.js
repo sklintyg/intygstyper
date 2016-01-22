@@ -21,6 +21,17 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                 return underlagArray;
             };
 
+            var diagnosTransform = function(diagnosArray) {
+                if (diagnosArray.length === 0) {
+                    diagnosArray.push({
+                        diagnosKodSystem: undefined,
+                        diagnosKod : undefined,
+                        diagnosBeskrivning : undefined
+                    });
+                }
+                return diagnosArray;
+            };
+
             var sjukersattningModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
@@ -41,10 +52,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                         ],
 
                         formDiagnos: [
-                            new ModelAttr('diagnoser', {
-                            defaultValue: [ { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
-                                { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
-                                { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined } ]})
+                            new ModelAttr('diagnoser', {fromTransform: diagnosTransform})
                         ],
 
                         formDiagnos2: ['diagnosgrund',

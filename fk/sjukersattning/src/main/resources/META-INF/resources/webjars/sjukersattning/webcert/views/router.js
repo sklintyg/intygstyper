@@ -29,6 +29,11 @@ angular.module('sjukersattning').config(function($stateProvider) {
                     controller: 'common.UtkastFooter'
                 },
 
+                'formly@sjukersattning-edit' : {
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formly.html',
+                    controller: 'sjukersattning.EditCert.FormlyCtrl'
+                }/*,
+
                 'formUnderlag@sjukersattning-edit' : {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formUnderlag.html',
                     controller: 'sjukersattning.EditCert.FormUnderlagCtrl'
@@ -86,7 +91,7 @@ angular.module('sjukersattning').config(function($stateProvider) {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/formGrundData.html',
                     controller: 'sjukersattning.EditCert.FormGrundDataCtrl'
                 }
-
+*/
             }
         });
 });

@@ -39,11 +39,25 @@
 .dfr_1_3 {
     transition:.4s ease-out all;
 }
-.dfr_1_3.ng-hide {
-    margin-top:-44px;
-    opacity:0;
+.dfr_1_3.ng-enter,
+.dfr_1_3.ng-leave.ng-leave-active {
+    margin-top: -44px;
+    opacity: 0;
 }
+.dfr_1_3.ng-enter.ng-enter-active,
+.dfr_1_3.ng-leave {
+    margin-top: 0px;
+    opacity: 1;
+}
+.dfr_1_3 .form-control,
 .dfr_1_3.form-inline .form-control {
     width:100%;
     max-width:340px;
 }
+
+input.ng-invalid-date {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(255,0,0,0.6);
+    border-color: #ff6600;
+}
+
+
