@@ -28,6 +28,5 @@
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formKontakt.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formExtraQuestions.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formGrundData.controller.js",
-    "/web/webjars/sjukersattning/webcert/views/utkast/form/form15.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formly.controller.js"
 ]
