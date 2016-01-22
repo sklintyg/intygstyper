@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning.SysselsattningsTyp;
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
@@ -73,7 +73,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     // Kategori 2 - Sysselsättning
     // Fråga 28 
     // Fråga 28.1
-    public abstract Sysselsattning getSysselsattningsTyp();
+    public abstract Sysselsattning getSysselsattning();
 
     // Fråga 29 - Nuvarande arbete
     // Fråga 29.1
@@ -136,7 +136,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     // Fråga 23 - Förmåga trots begränsning
     // 23.1
     @Nullable
-    public abstract String getFormageTrotsBegransning();
+    public abstract String getFormagaTrotsBegransning();
 
     // Fråga 39
     public abstract Prognos getPrognos();
@@ -196,14 +196,14 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
         @JsonProperty("annatGrundForMUBeskrivning")
         public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
 
-        @JsonProperty("kannedomOmPatient")
-        public abstract Builder setKannedomOmPatient(InternalDate kannedomOmPatient);
+        @JsonProperty("sysselsattning") 
+        public abstract Builder setSysselsattning(Sysselsattning sysselsattning);
 
-        @JsonProperty("underlagFinns")
-        public abstract Builder setUnderlagFinns(Boolean underlagFinns);
+        @JsonProperty("nuvarandeArbete")
+        public abstract Builder setNuvarandeArbete(String nuvarandeArbete);
 
-        @JsonProperty("sjukdomsforlopp")
-        public abstract Builder setSjukdomsforlopp(String sjukdomsforlopp);
+        @JsonProperty("arbetsmarknadspolitisktProgram")
+        public abstract Builder setArbetsmarknadspolitisktProgram(String arbetsmarknadspolitisktProgram);
 
         @JsonProperty("diagnoser")
         public Builder setDiagnoser(List<Diagnos> diagnoser) {
@@ -213,32 +213,8 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
         /* package private */
         abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
 
-        @JsonProperty("diagnosgrund")
-        public abstract Builder setDiagnosgrund(String diagnosgrund);
-
-        @JsonProperty("nyBedomningDiagnosgrund")
-        public abstract Builder setNyBedomningDiagnosgrund(Boolean nyBedomningDiagnosgrund);
-
-        @JsonProperty("funktionsnedsattningIntellektuell")
-        public abstract Builder setFunktionsnedsattningIntellektuell(String funktionsnedsattningIntellektuell);
-
-        @JsonProperty("funktionsnedsattningKommunikation")
-        public abstract Builder setFunktionsnedsattningKommunikation(String funktionsnedsattningKommunikation);
-
-        @JsonProperty("funktionsnedsattningKoncentration")
-        public abstract Builder setFunktionsnedsattningKoncentration(String funktionsnedsattningKoncentration);
-
-        @JsonProperty("funktionsnedsattningPsykisk")
-        public abstract Builder setFunktionsnedsattningPsykisk(String funktionsnedsattningPsykisk);
-
-        @JsonProperty("funktionsnedsattningSynHorselTal")
-        public abstract Builder setFunktionsnedsattningSynHorselTal(String funktionsnedsattningSynHorselTal);
-
-        @JsonProperty("funktionsnedsattningBalansKoordination")
-        public abstract Builder setFunktionsnedsattningBalansKoordination(String funktionsnedsattningBalansKoordination);
-
-        @JsonProperty("funktionsnedsattningAnnan")
-        public abstract Builder setFunktionsnedsattningAnnan(String funktionsnedsattningAnnan);
+        @JsonProperty("funktionsnedsattning")
+        public abstract Builder setFunktionsnedsattning(String funktionsnedsattning);
 
         @JsonProperty("aktivitetsbegransning")
         public abstract Builder setAktivitetsbegransning(String aktivitetsbegransning);
@@ -246,20 +222,33 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
         @JsonProperty("pagaendeBehandling")
         public abstract Builder setPagaendeBehandling(String pagaendeBehandling);
 
-        @JsonProperty("avslutadBehandling")
-        public abstract Builder setAvslutadBehandling(String avslutadBehandling);
-
         @JsonProperty("planeradBehandling")
         public abstract Builder setPlaneradBehandling(String planeradBehandling);
 
-        @JsonProperty("substansIntag")
-        public abstract Builder setSubstansIntag(String substansIntag);
+        @JsonProperty("sjukskrivningar")
+        public Builder setBehovAvSjukskrivning(List<Sjukskrivning> sjukskrivningar) {
+            return setBehovAvSjukskrivning(ImmutableList.copyOf(sjukskrivningar));
+        }
+        /* package private */
+        abstract Builder setBehovAvSjukskrivning(ImmutableList<Sjukskrivning> sjukskrivningar);
 
-        @JsonProperty("medicinskaForutsattningarForArbete")
-        public abstract Builder setMedicinskaForutsattningarForArbete(String medicinskaForutsattningarForArbete);
+        @JsonProperty("forsakringsmedicinsktBeslutsstod")
+        public abstract Builder setForsakringsmedicinsktBeslutsstod(String forskningsmedicinsktBeslutsstod);
 
-        @JsonProperty("aktivitetsFormaga")
-        public abstract Builder setAktivitetsFormaga(String aktivitetsFormaga);
+        @JsonProperty("arbetstidsforlaggning")
+        public abstract Builder setArbetstidsforlaggning(Boolean arbetstidsforlaggning);
+
+        @JsonProperty("arbetstidsforlaggningMotivering")
+        public abstract Builder setArbetstidsforlaggningMotivering(String arbetstidsforlaggningMotivering);
+
+        @JsonProperty("arbetsresor")
+        public abstract Builder setArbetsresor(Boolean arbetsresor);
+
+        @JsonProperty("formagaTrotsBegransning")
+        public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
+
+        @JsonProperty("prognos")
+        public abstract Builder setPrognos(Prognos prognos);
 
         @JsonProperty("ovrigt")
         public abstract Builder setOvrigt(String ovrigt);
