@@ -1,0 +1,28 @@
+<div wc-field field-label="sjukersattning.label.atgarder"
+     field-help-text="sjukersattning.helptext.atgarder"
+     class="print-pagebreak-after field-fade">
+
+  <div class="form-group">
+    <label class="control-label bold"><span message key="sjukersattning.label.behandling.avslutad"/></label>
+    <textarea id="measuresFinished" class="form-control" name="measures.finished" rows='6'
+              ng-model="model.avslutadBehandling" ng-trim="false"
+              />
+    </div>
+
+  <div class="form-group">
+    <label class="control-label bold"><span message key="sjukersattning.label.behandling.pagaende"/></label>
+    <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='6'
+              ng-model="model.pagaendeBehandling" ng-trim="false"
+              />
+  </div>
+
+  <div class="form-group">
+    <label class="control-label bold"><span message key="sjukersattning.label.behandling.planerad"/></label>
+    <textarea id="measuresOther" class="form-control" name="measures.other" rows='6'
+              ng-model="model.planeradBehandling" ng-trim="false"
+             />
+  </div>
+
+
+
+</div>

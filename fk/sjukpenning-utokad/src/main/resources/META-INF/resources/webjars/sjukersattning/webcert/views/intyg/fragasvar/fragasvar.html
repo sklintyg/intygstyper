@@ -1,0 +1,112 @@
+<div class="row weak-hidden" ng-class="{show: widgetState.showTemplate}" ng-controller="sjukersattning.QACtrl">
+  <div class="col-md-12 qa-column">
+
+    <div wc-spinner label="sjukersattning.info.loading.existing.qa" show-spinner="!widgetState.doneLoading"
+         show-content="widgetState.doneLoading">
+
+      <div class="webcert-bottom-padding-section" ng-show="certProperties.isLoaded">
+
+        <!-- Question button -->
+        <div
+            ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen && (viewState.isIntygOnSendQueue || certProperties.isSent || qaList.length>0)"
+            wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}">
+          <div class="form-group">
+            <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till
+              Försäkringskassan
+            </button>
+          </div>
+        </div>
+        <div ng-if="viewState.isIntygOnSendQueue === false && certProperties.isSent === false && (qaList.length<1)" wc-check-vardenhet
+             vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}" class="alert alert-info"
+             id="certificate-is-not-sent-to-fk-message-text">
+          <strong>Intyget är inte skickat till Försäkringskassan.</strong><br> Det går därför inte att ställa frågor om
+          intyget.
+        </div>
+        <div ng-if="certProperties.isSent === undefined && (qaList.length<1)" wc-check-vardenhet
+             vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}" class="alert alert-info"
+             id="certificate-is-not-available">
+          <strong>Det finns inga frågor och svar.</strong>
+        </div>
+
+        <!-- New question form -->
+        <div ng-show="widgetState.newQuestionOpen">
+          <div class="form-group">
+            <label class="control-label">Fråga</label>
+            <textarea wc-maxlength ng-trim="false" maxlength="2000" rows="13" class="form-control"
+                      ng-model="newQuestion.frageText" wc-focus-me="widgetState.focusQuestion"
+                      id="newQuestionText"></textarea>
+          </div>
+          <div class="form-group" id="newQuestionForm">
+            <label class="control-label">Ämne</label>
+            <div class="controls">
+              <select id="new-question-topic" class="form-control" ng-model="newQuestion.chosenTopic"
+                      ng-options="c.label for c in newQuestion.topics"></select>
+            </div>
+          </div>
+
+          <!-- error message occuring when inteacting with server for this FragaSvar-->
+          <div id="newQuestion-load-error" ng-show="newQuestion.activeErrorMessageKey" class="alert alert-danger">
+            <span message key="sjukersattning.error.{{newQuestion.activeErrorMessageKey}}"></span>
+          </div>
+
+          <!-- Form button group -->
+          <div class="form-group">
+            <button class="btn btn-success" ng-click="sendQuestion(newQuestion)"
+                    ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}"
+                    id="sendQuestionBtn">
+              <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till
+              Försäkringskassan
+            </button>
+            <button class="btn btn-default btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt
+              fråga
+            </button>
+          </div>
+        </div>
+        <!--  Fragasvar formular end -->
+
+        <!-- question sent message -->
+        <div ng-if="widgetState.sentMessage">
+          <div alert type="info" close="dismissSentMessage()" id="question-is-sent-to-fk-message-text">
+            <strong>Frågan är skickad till Försäkringskassan</strong><br><span wc-feature-not-active
+                                                                               feature="franJournalsystem"> Vårdenheten kontaktas via mejl när svar har inkommit.</span>
+          </div>
+        </div>
+
+        <!-- error message -->
+        <div id="qa-list-load-error" ng-show="widgetState.doneLoading && widgetState.activeErrorMessageKey"
+             class="alert alert-danger">
+          <span message key="sjukersattning.error.{{widgetState.activeErrorMessageKey}}"></span>
+        </div>
+      </div>
+
+      <div class="webcert-col-section qa-list-section" ng-show="(qaList | filter:openIssuesFilter).length > 0" id="unhandledQACol">
+
+        <h2 class="col-head">Ej hanterade frågor och svar</h2>
+        <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
+
+          <div qa-panel panel-id="unhandled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ------------------------- HANTERADE FRÅGOR --------------------------------------------- -->
+
+    <div class="webcert-col-section qa-list-section" ng-show="(qaList | filter:closedIssuesFilter).length > 0">
+
+      <h2 class="col-head">Hanterade frågor och svar</h2>
+      <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
+
+        <div qa-panel panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
+
+      </div>
+
+    </div>
+    <!--  end ng-repeat -->
+
+  </div>
+  <!--  end spinner -->
+
+</div>
