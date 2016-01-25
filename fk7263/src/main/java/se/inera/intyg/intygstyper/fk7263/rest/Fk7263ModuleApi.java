@@ -357,11 +357,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public String getQuestions(String version) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
         return objectMapper.readValue(utlatandeJson, Utlatande.class);
     }

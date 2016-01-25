@@ -271,11 +271,6 @@ public class TsBasModuleApi implements ModuleApi {
     }
 
     @Override
-    public String getQuestions(String version) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
         return objectMapper.readValue(utlatandeJson, Utlatande.class);
     }

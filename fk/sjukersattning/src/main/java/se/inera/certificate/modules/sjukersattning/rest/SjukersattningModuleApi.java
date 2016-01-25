@@ -252,11 +252,6 @@ public class SjukersattningModuleApi implements FKModuleApi {
     }
 
     @Override
-    public String getQuestions(String version) throws ModuleException {
-        return "{ KAT1 : 'What is your favourite colour?' }";
-    }
-
-    @Override
     public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
         return objectMapper.readValue(utlatandeJson, SjukersattningUtlatande.class);
     }
