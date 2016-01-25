@@ -1,13 +1,17 @@
 angular.module('sjukersattning').controller('sjukersattning.EditCert.FormlyCtrl',
     ['$scope', 'sjukersattning.EditCertCtrl.ViewStateService',
-        function FormlyCtrl($scope, ViewStateService) {
+        function FormlyCtrl($scope, viewState) {
             'use strict';
 
-            $scope.model = ViewStateService.intygModel;
+            $scope.viewState = viewState;
+
+            $scope.model = viewState.intygModel;
 
             $scope.options = {
                 formState:{}
             };
+
+            var tillaggsFragor = null;
 
             $scope.formFields = [{
                 wrapper: 'wc-field',
@@ -25,7 +29,18 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormlyCtrl'
                 templateOptions: { category: 2 },
                 fieldGroup: [
                     { key: 'underlagFinns',   type: 'boolean', templateOptions: { label: 'DFR_3.1' } },
-                    { key: 'underlag',        type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: { underlagsTyper: [1,2,3,4,5,6,7,9,10,11] } }
+                    { key: 'underlag',        type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: { underlagsTyper: [1,2,3,4,5,6,7,9,10,11] },
+                        watcher: {
+                            expression: 'model.underlagFinns',
+                            listener: function(field, newValue, oldValue, scope, stopWatching) {
+                                if(newValue) {
+                                    if (!scope.model.underlag || scope.model.underlag.length === 0) {
+                                        scope.model.underlag.push({});
+                                    }
+                                }
+                            }
+                        }
+                    }
                 ]
             },{
                 wrapper: 'wc-field',
@@ -89,6 +104,36 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormlyCtrl'
                     { key: 'anledningTillKontakt', type: 'multi-text', hideExpression: '!model.kontaktMedFk', templateOptions: { label: 'DFR_26.2' } }
                 ]
             }];
+
+            function buildTillaggsFragor() {
+                var fields = [];
+
+                for(var i=0; i<$scope.model.tillaggsfragor.length; i++) {
+                    var tillagsFraga = $scope.model.tillaggsfragor[i];
+                    fields.push({
+                        key: 'tillaggsfragor[' + i + '].svar',
+                        type: 'multi-text',
+                        templateOptions: { label: 'DFR_' + tillagsFraga.id + '.1' }
+                    });
+                }
+
+                if (fields.length > 0) {
+                    if (!tillaggsFragor) {
+                        tillaggsFragor = {
+                            wrapper: 'wc-field',
+                            templateOptions: { category: 9999 }
+                        };
+                        $scope.formFields.push(tillaggsFragor);
+                    }
+                    tillaggsFragor.fieldGroup = fields;
+                }
+            }
+
+            $scope.watch('viewState.common.doneLoading', function(newVal, oldVal){
+                if (newVal) {
+                    buildTillaggsFragor();
+                }
+            });
 
         }
     ]);
