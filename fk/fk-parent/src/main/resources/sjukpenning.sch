@@ -85,7 +85,7 @@
       <iso:assert test="count(gn:delsvar[@id='1.3']) le 1">
         'Grund för medicinskt underlag (MU)' får ha högst ett 'Vilken annan grund finns för MU'.
       </iso:assert>
-      <iso:assert test="not(normalize-space(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code) = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
+      <iso:assert test="not(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code/normalize-space() = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
         Samma 'Typ av grund för MU' kan inte användas flera gånger i samma 'MU'.
       </iso:assert>
       <iso:let name="delsvarsIdExpr" value="'^1\.[123]$'"/>
@@ -98,7 +98,7 @@
   <iso:pattern id="q1.1">
     <iso:rule context="//gn:delsvar[@id='1.1']">
       <iso:extends rule="cv"/>
-      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'">'codeSystem' måste vara 'KV_FKMU_0001'.</iso:assert>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1235]$')">
         'Typ av grund för MU' kan ha ett av värdena 1, 2, 3 eller 5.
       </iso:assert>
@@ -143,7 +143,7 @@
   <iso:pattern id="q28.1">
     <iso:rule context="//gn:delsvar[@id='28.1']">
       <iso:extends rule="cv"/>
-      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0002'"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0002'">'codeSystem' måste vara 'KV_FKMU_0002'.</iso:assert>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-5]$')">
         'Typ av sysselsättning' kan ha ett av värdena 1, 2, 3, 4 eller 5.
       </iso:assert>
@@ -284,7 +284,7 @@
   <iso:pattern id="q32.1">
     <iso:rule context="//gn:delsvar[@id='32.1']">
       <iso:extends rule="cv"/>
-      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0003'"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0003'">'codeSystem' måste vara 'KV_FKMU_0003'.</iso:assert>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-4]$')">
         'Sjukskrivningsnivå' kan ha ett av värdena 1, 2, 3 eller 4.
       </iso:assert>

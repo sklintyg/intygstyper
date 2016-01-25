@@ -109,7 +109,7 @@
       <iso:assert test="count(gn:delsvar[@id='1.3']) le 1">
         'Grund för medicinskt underlag (MU)' får ha högst ett 'Vilken annan grund finns för MU'.
       </iso:assert>
-      <iso:assert test="not(normalize-space(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code) = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
+      <iso:assert test="not(preceding-sibling::gn:svar[@id='1']/gn:delsvar[@id='1.1']/tp:cv/tp:code/normalize-space() = normalize-space(gn:delsvar[@id='1.1']/tp:cv/tp:code))">
         Samma 'Typ av grund för MU' kan inte användas flera gånger i samma 'MU'.
       </iso:assert>
       <iso:let name="delsvarsIdExpr" value="'^1\.[123]$'"/>
@@ -122,7 +122,7 @@
   <iso:pattern id="q1.1">
     <iso:rule context="//gn:delsvar[@id='1.1']">
       <iso:extends rule="cv"/>
-      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'">'codeSystem' måste vara 'KV_FKMU_0001'.</iso:assert>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1345]$')">
         'Typ av grund för MU' kan ha ett av värdena 1, 3, 4 eller 5.
       </iso:assert>
@@ -230,7 +230,7 @@
   <iso:pattern id="q4.1">
     <iso:rule context="//gn:delsvar[@id='4.1']">
       <iso:extends rule="cv"/>
-      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0005'"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0005'">'codeSystem' måste vara 'KV_FKMU_0005'.</iso:assert>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^([1-9]|1[01])$')">
         'Utredning eller underlagstyp?' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 eller 11.
       </iso:assert>

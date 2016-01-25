@@ -1,4 +1,4 @@
-angular.module('sjukersattning').controller('sjukersattning.EditCert.Form5Ctrl',
+angular.module('sjukersattning').controller('sjukersattning.EditCert.FormFunktionsNedsattningCtrl',
     ['$scope', '$log', 'sjukersattning.EditCertCtrl.ViewStateService', '$filter',
         function($scope, $log, viewState, $filter) {
             'use strict';

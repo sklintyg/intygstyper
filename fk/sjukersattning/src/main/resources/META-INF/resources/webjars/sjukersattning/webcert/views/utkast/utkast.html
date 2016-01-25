@@ -24,41 +24,42 @@
 
               <div id="certificate" class="row certificate">
                 <div class="col-md-12 cert-body">
+                  <!-- 1. Underlag -->
+                  <div ui-view="formUnderlag"/>
 
-                  <div ui-view="form2"/>
+                  <!-- 2. Sjukdomsförlopp -->
+                  <div ui-view="formSjukdomsforlopp"/>
 
-                  <div ui-view="sjukdomsforlopp"/>
+                  <!-- 3. Diagnos. SAMMA SOM INNAN -->
+                  <div ui-view="formDiagnos"/>
 
-                  <!-- 2. Diagnos. SAMMA SOM INNAN -->
-                  <div ui-view="form4"/>
+                  <!-- 4. Förtydligande diagnos -->
+                  <div ui-view="formDiagnos2"/>
 
-                  <!-- 3. Förtydligande diagnos -->
-                  <div ui-view="form4b"/>
+                  <!-- 5A. Funktionsnedsättning -->
+                  <div ui-view="formFunktionsnedsattning" class="form5"/>
+                  <!-- 5B. aktivitetsbegränsning. -->
+                  <div ui-view="formAktivitetsBegransning" class="form6"/>
 
-                  <!-- 4A. Funktionsnedsättning. - SAMMA SOM INNNA FAST SAMMAFOGAD MED AKTIVITETSBEGRÄNSNING -->
-                  <div ui-view="form5" class="form5"/>
-                  <!-- 4B. aktivitetsbegränsning. -->
-                  <div ui-view="form6" class="form6"/>
+                  <!-- 6. MEDICINSKA BEHANDLING. NY -->
+                  <div ui-view="formMedicinskaBehandlingar"/>
 
-                  <!-- 4. MEDICINSKA BEHANDLING. NY -->
-                  <div ui-view="form7"/>
+                  <!-- 7. Medicinska förutsättningar för arbete -->
+                  <div ui-view="formMedicinskaForutsattningar"/>
 
-                  <!-- 5. Medicinska förutsättningar för arbete -->
-                  <div ui-view="form9"/>
+                  <!-- 8. Övrigt -->
+                  <div ui-view="formOvrigt"/>
 
-                  <!-- 6. Övrigt -->
-                  <div ui-view="form10"/>
+                  <!-- 9. Kontakt -->
+                  <div ui-view="formKontakt"/>
 
-                  <!-- 7. Kontakt -->
-                  <div ui-view="form11"/>
-
-                  <!-- Additional questions -->
+                  <!-- 10. Additional questions -->
                   <div ui-view="formExtraQuestions"/>
 
-                  <!-- 8. Upplysningar om utfärdare -->
-                  <div ui-view="form15"/>
+                  <!-- 11. Upplysningar om utfärdare -->
+                  <div ui-view="formGrundData"/>
 
-                  <!-- 9. Sign doktor -->
+                  <!-- 12. Sign doktor -->
                   <div wc-field-signing-doctor></div>
 
                 </div>

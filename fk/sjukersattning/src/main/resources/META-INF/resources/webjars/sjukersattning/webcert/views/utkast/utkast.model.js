@@ -26,7 +26,7 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                     var grundData = GrundData.build();
                     init._super.call(this, 'sjukersattningModel', {
 
-                        form2: ['undersokningAvPatienten',
+                        formUnderlag: ['undersokningAvPatienten',
                             'journaluppgifter',
                             'anhorigsBeskrivningAvPatienten',
                             'annatGrundForMU',
@@ -36,21 +36,21 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             new ModelAttr('underlag', {fromTransform: underlagTransform})
                         ],
 
-                        sjukdomsforlopp: [
+                        formSjukdomsforlopp: [
                             'sjukdomsforlopp'
                         ],
 
-                        form4: [
+                        formDiagnos: [
                             new ModelAttr('diagnoser', {
                             defaultValue: [ { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
                                 { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined },
                                 { 'diagnosKodSystem': undefined, 'diagnosKod': undefined, 'diagnosBeskrivning': undefined } ]})
                         ],
 
-                        form4b: ['diagnosgrund',
+                        formDiagnos2: ['diagnosgrund',
                                  'nyBedomningDiagnosgrund' ],
 
-                        form5: ['funktionsnedsattningIntellektuell',
+                        formFunktionsnedsattning: ['funktionsnedsattningIntellektuell',
                             'funktionsnedsattningKommunikation',
                             'funktionsnedsattningKoncentration',
                             'funktionsnedsattningPsykisk',
@@ -58,22 +58,19 @@ angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
                             'funktionsnedsattningBalansKoordination',
                             'funktionsnedsattningAnnan'],
 
-                        form6: ['aktivitetsbegransning'],
+                        formAktivitetsBegransning: ['aktivitetsbegransning'],
 
-                        form7: ['avslutadBehandling',
+                        formMedicinskaBehandlingar: ['avslutadBehandling',
                             'pagaendeBehandling',
-                            'planeradBehandling'],
+                            'planeradBehandling',
+                            'substansintag'],
 
-                        form8: [new ModelAttr('atgarder' , {defaultValue : [
-                            { 'atgardsKod': undefined, 'atgardsKodSystem':undefined, 'atgardsBeskrivning': undefined}]}
-                        )],
-
-                        form9: [ 'medicinskaForutsattningarForArbete',
+                        formMedicinskaForutsattningar: [ 'medicinskaForutsattningarForArbete',
                                  'aktivitetsFormaga'],
 
-                        form10: ['ovrigt'],
+                        formOvrigt: ['ovrigt'],
 
-                        form11: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
+                        formKontakt: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
                                 'anledningTillKontakt'],
 
                         tillaggsfragor: [ new ModelAttr( 'tillaggsfragor', { defaultValue : [] }) ],

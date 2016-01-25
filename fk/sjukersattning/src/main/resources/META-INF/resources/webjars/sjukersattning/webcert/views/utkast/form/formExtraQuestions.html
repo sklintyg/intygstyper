@@ -1,6 +1,6 @@
 <h2>Extra frågor</h2>
-<div wc-field field-label="DFR_{{extra.id}}.1.RBK"
-     field-help-text="DFR_{{extra.id}}.1.HLP" class="print-pagebreak-after"
+<div wc-field field-dynamic-label="DFR_{{extra.id}}.1.RBK"
+     field-dynamic-help-text="DFR_{{extra.id}}.1.HLP" class="print-pagebreak-after"
     ng-repeat="extra in model.tillaggsfragor">
      <textarea id="extraid{{extra.id}}" name="name{{extra.id}}" rows="6" class="form-control" ng-model="extra.svar" style="min-width: 600px">
      </textarea>

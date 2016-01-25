@@ -224,7 +224,7 @@ public final class TransportToInternal {
                 handlePlaneradBehandling(utlatande, svar);
                 break;
             case SUBSTANSINTAG_SVAR_ID:
-                handleSubstansIntag(utlatande, svar);
+                handleSubstansintag(utlatande, svar);
                 break;
             case MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID:
                 handleMedicinskaForutsattningarForArbete(utlatande, svar);
@@ -504,11 +504,11 @@ public final class TransportToInternal {
         }
     }
 
-    private static void handleSubstansIntag(Builder utlatande, Svar svar) {
+    private static void handleSubstansintag(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case SUBSTANSINTAG_DELSVAR_ID:
-                utlatande.setSubstansIntag(getSvarContent(delsvar, String.class));
+                utlatande.setSubstansintag(getSvarContent(delsvar, String.class));
                 break;
             default:
                 throw new IllegalArgumentException();

@@ -1,4 +1,4 @@
-describe('sjukersattning.EditCertCtrl.Form2Ctrl', function() {
+describe('sjukersattning.EditCertCtrl.FormUnderlagCtrl', function() {
     'use strict';
 
     var $scope;

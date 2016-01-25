@@ -146,7 +146,7 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
     // Fråga 21
     @Nullable
-    public abstract String getSubstansIntag();
+    public abstract String getSubstansintag();
 
     // Kategori 8 – Medicinska förutsättningar för arbete
     // Fråga 22.1
@@ -275,8 +275,8 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         @JsonProperty("planeradBehandling")
         public abstract Builder setPlaneradBehandling(String planeradBehandling);
 
-        @JsonProperty("substansIntag")
-        public abstract Builder setSubstansIntag(String substansIntag);
+        @JsonProperty("substansintag")
+        public abstract Builder setSubstansintag(String substansintag);
 
         @JsonProperty("medicinskaForutsattningarForArbete")
         public abstract Builder setMedicinskaForutsattningarForArbete(String medicinskaForutsattningarForArbete);

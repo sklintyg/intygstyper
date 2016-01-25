@@ -1,28 +1,33 @@
-<div wc-field field-label="sjukersattning.label.atgarder"
-     field-help-text="sjukersattning.helptext.atgarder"
+<div wc-field field-dynamic-label="KAT_7.RBK"
+     field-dynamic-help-text="KAT_7.HLP"
      class="print-pagebreak-after field-fade">
 
   <div class="form-group">
-    <label class="control-label bold"><span message key="sjukersattning.label.behandling.avslutad"/></label>
+    <label class="control-label bold"><span dynamic-label key="DFR_18.1.RBK"/></label>
     <textarea id="measuresFinished" class="form-control" name="measures.finished" rows='6'
               ng-model="model.avslutadBehandling" ng-trim="false"
               />
     </div>
 
   <div class="form-group">
-    <label class="control-label bold"><span message key="sjukersattning.label.behandling.pagaende"/></label>
+    <label class="control-label bold"><span dynamic-label key="DFR_19.1.RBK"/></label>
     <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='6'
               ng-model="model.pagaendeBehandling" ng-trim="false"
               />
   </div>
 
   <div class="form-group">
-    <label class="control-label bold"><span message key="sjukersattning.label.behandling.planerad"/></label>
+    <label class="control-label bold"><span dynamic-label key="DFR_20.1.RBK"/></label>
     <textarea id="measuresOther" class="form-control" name="measures.other" rows='6'
               ng-model="model.planeradBehandling" ng-trim="false"
              />
   </div>
 
-
+  <div class="form-group">
+    <label class="control-label bold"><span dynamic-label key="DFR_21.1.RBK"/></label>
+    <textarea id="measuresType" class="form-control" name="measures.type" rows='6'
+              ng-model="model.substansintag" ng-trim="false"
+        />
+  </div>
 
 </div>
