@@ -20,7 +20,7 @@
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formSjukdomsforlopp.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formDiagnos2.controller.js",
-    "/web/webjars/sjukersattning/webcert/views/utkast/form/formFunktionsNedsattning.controller.js",
+    "/web/webjars/sjukersattning/webcert/views/utkast/form/formFunktionsnedsattning.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formAktivitetsBegransning.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formMedicinskaBehandlingar.controller.js",
     "/web/webjars/sjukersattning/webcert/views/utkast/form/formMedicinskaForutsattningar.controller.js",
