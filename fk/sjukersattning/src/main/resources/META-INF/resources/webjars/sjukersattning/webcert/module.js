@@ -7,6 +7,4 @@ angular.module('sjukersattning').run(['common.messageService', 'common.dynamicLa
         'use strict';
 
         messageService.addResources(sjukersattningMessages);
-        dynamicLabelService.addLabels(sjukersattningDynamicLabelsMock);
-
     }]);

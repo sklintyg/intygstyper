@@ -36,16 +36,16 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
 
                 this.underlagOptions = [
                     { 'id': null, label: 'Ange underlag eller utredning'},
-                    { 'id': 'KV_FKMU_0005.1.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.1.RBK')},
-                    { 'id': 'KV_FKMU_0005.2.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.2.RBK')},
-                    { 'id': 'KV_FKMU_0005.3.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.3.RBK')},
-                    { 'id': 'KV_FKMU_0005.4.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.4.RBK')},
-                    { 'id': 'KV_FKMU_0005.5.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.5.RBK')},
-                    { 'id': 'KV_FKMU_0005.6.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.6.RBK')},
-                    { 'id': 'KV_FKMU_0005.7.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.7.RBK')},
-                    { 'id': 'KV_FKMU_0005.9.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.9.RBK')},
-                    { 'id': 'KV_FKMU_0005.10.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.10.RBK')},
-                    { 'id': 'KV_FKMU_0005.11.RBK', label: dynamicLabelService.getProperty('KV_FKMU_0005.11.RBK')},
+                    { 'id': 1, label: dynamicLabelService.getProperty('KV_FKMU_0005.1.RBK')},
+                    { 'id': 2, label: dynamicLabelService.getProperty('KV_FKMU_0005.2.RBK')},
+                    { 'id': 3, label: dynamicLabelService.getProperty('KV_FKMU_0005.3.RBK')},
+                    { 'id': 4, label: dynamicLabelService.getProperty('KV_FKMU_0005.4.RBK')},
+                    { 'id': 5, label: dynamicLabelService.getProperty('KV_FKMU_0005.5.RBK')},
+                    { 'id': 6, label: dynamicLabelService.getProperty('KV_FKMU_0005.6.RBK')},
+                    { 'id': 7, label: dynamicLabelService.getProperty('KV_FKMU_0005.7.RBK')},
+                    { 'id': 9, label: dynamicLabelService.getProperty('KV_FKMU_0005.9.RBK')},
+                    { 'id': 10, label: dynamicLabelService.getProperty('KV_FKMU_0005.10.RBK')},
+                    { 'id': 11, label: dynamicLabelService.getProperty('KV_FKMU_0005.11.RBK')},
                 ];
             }
 
