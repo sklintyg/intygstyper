@@ -103,9 +103,19 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormlyCtrl'
                     { key: 'kontaktMedFk', type: 'boolean', templateOptions: { label: 'DFR_26.1' } },
                     { key: 'anledningTillKontakt', type: 'multi-text', hideExpression: '!model.kontaktMedFk', templateOptions: { label: 'DFR_26.2' } }
                 ]
+            },{
+                wrapper: 'wc-field-static',
+                templateOptions: { staticLabel: 'sjukersattning.label.vardenhet' },
+                fieldGroup: [
+                    { type: 'label-vardenhet' },
+                    { key: 'grundData.skapadAv.vardenhet.postadress',    type: 'single-text', templateOptions: { staticLabel: 'Postadress', size: 'full' } },
+                    { key: 'grundData.skapadAv.vardenhet.postnummer',    type: 'single-text', templateOptions: { staticLabel: 'Postnummer', size: '5' } },
+                    { key: 'grundData.skapadAv.vardenhet.postort',       type: 'single-text', templateOptions: { staticLabel: 'Postort' } },
+                    { key: 'grundData.skapadAv.vardenhet.telefonnummer', type: 'single-text', templateOptions: { staticLabel: 'Telefonnummer' } }
+                ]
             }];
 
-            function buildTillaggsFragor() {
+            function buildTillaggsFragor(insertIndex) {
                 var fields = [];
 
                 for(var i=0; i<$scope.model.tillaggsfragor.length; i++) {
@@ -123,7 +133,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormlyCtrl'
                             wrapper: 'wc-field',
                             templateOptions: { category: 9999 }
                         };
-                        $scope.formFields.push(tillaggsFragor);
+                        $scope.formFields.splice(insertIndex, 0, tillaggsFragor);
                     }
                     tillaggsFragor.fieldGroup = fields;
                 }
@@ -131,7 +141,7 @@ angular.module('sjukersattning').controller('sjukersattning.EditCert.FormlyCtrl'
 
             $scope.watch('viewState.common.doneLoading', function(newVal, oldVal){
                 if (newVal) {
-                    buildTillaggsFragor();
+                    buildTillaggsFragor(10);
                 }
             });
 
