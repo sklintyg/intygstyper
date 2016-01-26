@@ -18,7 +18,7 @@
  */
 
 /* global tsBasMessages */
-angular.module('ts-bas', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
+angular.module('ts-bas', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
 angular.module('ts-bas').run([ 'common.messageService',

@@ -30,7 +30,7 @@ angular.module('sjukersattning').config(function($stateProvider) {
                 },
 
                 'formly@sjukersattning-edit' : {
-                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/form/sjukersattning.formly.html',
+                    templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/sjukersattning.formly.html',
                     controller: 'sjukersattning.EditCert.FormlyCtrl'
                 }
             }

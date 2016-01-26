@@ -1,11 +1,9 @@
 angular.module('sjukersattning').controller('sjukersattning.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.UtkastService', 'common.UserModel', 'sjukersattning.diagnosService',
-        'common.DateUtilsService', 'common.UtilsService', 'sjukersattning.Domain.IntygModel',
-        'sjukersattning.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
+        'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
+        'sjukersattning.Domain.IntygModel', 'sjukersattning.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, diagnosService,
-            dateUtils, utils, IntygModel, viewState, anchorScrollService) {
+            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService) {
             'use strict';
 
             /**********************************************************************************

@@ -18,7 +18,7 @@
  */
 
 /* global fk7263Messages */
-angular.module('fk7263', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
+angular.module('fk7263', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
 angular.module('fk7263').run(['common.messageService',

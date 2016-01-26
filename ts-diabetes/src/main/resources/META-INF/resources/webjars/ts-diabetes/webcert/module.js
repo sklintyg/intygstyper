@@ -18,7 +18,7 @@
  */
 
 /* global tsDiabetesMessages */
-angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
+angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
 angular.module('ts-diabetes').run([ 'common.messageService',
