@@ -1,4 +1,4 @@
-angular.module('sjukersattning').controller('sjukersattning.QACtrl',
+angular.module('luse').controller('sjukersattning.QACtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'sjukersattning.fragaSvarService', 'common.fragaSvarCommonService', 'common.statService',
         'common.UserModel', 'sjukersattning.QACtrl.Helper', 'common.IntygViewStateService',

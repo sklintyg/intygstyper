@@ -1,4 +1,4 @@
-angular.module('sjukersattning').run(['$templateCache', function($templateCache) {
+angular.module('luse').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('/web/webjars/fk/sjukersattning/webcert/views/intyg/fragasvar/fragasvar.html',

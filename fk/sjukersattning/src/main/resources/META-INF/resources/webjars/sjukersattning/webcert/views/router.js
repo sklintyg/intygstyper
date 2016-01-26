@@ -1,13 +1,13 @@
 /**
  * Created by stephenwhite on 05/03/15.
  */
-angular.module('sjukersattning').config(function($stateProvider) {
+angular.module('luse').config(function($stateProvider) {
     'use strict';
 // TODO: clean up unused routes!
     $stateProvider.
         state('sjukersattning-edit', {
-            data: { defaultActive : 'index' },
-            url : '/sjukersattning/edit/:certificateId?:patientId&:hospName',
+            data: { defaultActive : 'index', intygType: 'luse' },
+            url : '/luse/edit/:certificateId?:patientId&:hospName',
             views : {
                 'content@' : {
                     templateUrl: '/web/webjars/sjukersattning/webcert/views/utkast/utkast.html',

@@ -1,7 +1,7 @@
-angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateService',
-    ['$log', 'common.UtkastViewStateService', 'sjukersattning.Domain.IntygModel', 'sjukersattning.EditCertCtrl.Helper',
+angular.module('luse').service('sjukersattning.EditCertCtrl.ViewStateService',
+    ['$log', '$state', 'common.UtkastViewStateService', 'sjukersattning.Domain.IntygModel', 'sjukersattning.EditCertCtrl.Helper',
         'common.dynamicLabelService',
-        function($log, CommonViewState, IntygModel, helper, dynamicLabelService) {
+        function($log, $state, CommonViewState, IntygModel, helper, dynamicLabelService) {
             'use strict';
 
             this.common = CommonViewState;
@@ -51,7 +51,7 @@ angular.module('sjukersattning').service('sjukersattning.EditCertCtrl.ViewStateS
 
             this.reset = function() {
                 CommonViewState.reset();
-                CommonViewState.intyg.type = 'sjukersattning';
+                CommonViewState.intyg.type = $state.current.data.intygType;
                 this.setDraftModel(IntygModel._members.build());
                 return this;
             };

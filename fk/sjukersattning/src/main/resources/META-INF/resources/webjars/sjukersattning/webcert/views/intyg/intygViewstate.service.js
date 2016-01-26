@@ -1,4 +1,4 @@
-angular.module('sjukersattning').service('sjukersattning.IntygController.ViewStateService',
+angular.module('luse').service('sjukersattning.IntygController.ViewStateService',
     ['$log', 'common.IntygViewStateService',
         function($log, CommonViewState) {
             'use strict';

@@ -1,4 +1,4 @@
-angular.module('sjukersattning').controller('sjukersattning.EditCertCtrl',
+angular.module('luse').controller('sjukersattning.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'sjukersattning.Domain.IntygModel', 'sjukersattning.EditCertCtrl.ViewStateService', 'common.anchorScrollService',

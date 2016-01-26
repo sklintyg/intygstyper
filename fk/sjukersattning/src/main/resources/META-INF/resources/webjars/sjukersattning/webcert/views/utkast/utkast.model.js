@@ -1,4 +1,4 @@
-angular.module('sjukersattning').factory('sjukersattning.Domain.IntygModel',
+angular.module('luse').factory('sjukersattning.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {

@@ -11,13 +11,13 @@ var sjukersattningMessages = {
         'sjukersattning.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukersattning
-        'sjukersattning.label.certtitle': 'Läkarutlåtande för sjukersättning',
+        'luse.label.certtitle': 'Läkarutlåtande för sjukersättning',
 
         //Labels
         'sjukersattning.label.valjkodverk': 'Välj kodverk:',
         'sjukersattning.label.spara-utkast': 'Spara',
         'sjukersattning.label.ta-bort-utkast': 'Ta bort utkast',
-        'sjukersattning.label.skriv-ut-utkast': 'Skriv ut',
+        'luse.label.skriv-ut-utkast': 'Skriv ut',
 
         'sjukersattning.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
         'sjukersattning.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',

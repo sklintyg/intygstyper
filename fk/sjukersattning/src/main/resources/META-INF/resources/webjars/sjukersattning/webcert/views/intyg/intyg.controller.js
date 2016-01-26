@@ -1,4 +1,4 @@
-angular.module('sjukersattning').controller('sjukersattning.ViewCertCtrl',
+angular.module('luse').controller('sjukersattning.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
         'common.messageService', 'common.UserModel', 'sjukersattning.IntygController.ViewStateService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,

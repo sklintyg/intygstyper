@@ -1,4 +1,4 @@
-angular.module('sjukersattning').service('sjukersattning.QACtrl.Helper',
+angular.module('luse').service('sjukersattning.QACtrl.Helper',
     ['$log', '$timeout', 'sjukersattning.fragaSvarService', 'common.fragaSvarCommonService', '$window', 'common.statService',
         function( $log, $timeout, fragaSvarService, fragaSvarCommonService, $window, statService) {
         'use strict';

@@ -1,4 +1,4 @@
-angular.module('sjukersattning').factory('sjukersattning.UnderlagTypProxy',
+angular.module('luse').factory('sjukersattning.UnderlagTypProxy',
     [ '$q', '$http', '$stateParams', '$log', '$location', '$window', '$timeout', '$uibModal', '$cookieStore',
         'common.User', 'common.dialogService', 'common.featureService', 'common.messageService', 'common.statService',
         'common.UserModel',

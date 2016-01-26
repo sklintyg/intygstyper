@@ -32,7 +32,7 @@ public class SjukersattningEntryPoint implements ModuleEntryPoint {
 
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
-    public static final String MODULE_ID = "sjukersattning";
+    public static final String MODULE_ID = "luse";
     public static final String MODULE_NAME = "Läkarintyg, sjukersättning";
     public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
 

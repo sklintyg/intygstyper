@@ -1,7 +1,7 @@
 /* Glovbal */
-angular.module('sjukersattning', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
+angular.module('luse', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
-angular.module('sjukersattning').config(function($stateProvider) {
+angular.module('luse').config(function($stateProvider) {
     'use strict';
 
     $stateProvider.
@@ -51,7 +51,7 @@ angular.module('sjukersattning').config(function($stateProvider) {
 });
 
 // Inject language resources
-angular.module('sjukersattning').run(['common.messageService',
+angular.module('luse').run(['common.messageService',
     function(messageService) {
         'use strict';
 

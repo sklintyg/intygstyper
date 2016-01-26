@@ -1,4 +1,4 @@
-angular.module('sjukersattning').factory('sjukersattning.EditCertCtrl.DateRangeGroupsService',
+angular.module('luse').factory('sjukersattning.EditCertCtrl.DateRangeGroupsService',
     ['common.DateUtilsService', 'common.UtilsService','sjukersattning.EditCertCtrl.DateRangeGroupModel', '$log', '$filter',
         function( dateUtils, utils, DateRangeGroupModel, $log, $filter) {
         'use strict';

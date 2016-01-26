@@ -1,4 +1,4 @@
-angular.module('sjukersattning').factory('sjukersattning.diagnosService',
+angular.module('luse').factory('sjukersattning.diagnosService',
     function($http, $log, $window) {
         'use strict';
 
