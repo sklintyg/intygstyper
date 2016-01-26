@@ -16,13 +16,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.fkparent.rest;
 
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+package se.inera.certificate.modules.sjukpenning_utokad.model.internal;
 
-public interface FKModuleApi extends ModuleApi {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.auto.value.AutoValue;
 
-    Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception;
+import javax.annotation.Nullable;
+
+@AutoValue
+public abstract class Tillaggsfraga {
+
+    Tillaggsfraga() {
+    }
+
+    @JsonCreator
+    public static Tillaggsfraga create(@JsonProperty("id") String id,
+                                       @JsonProperty("svar") String svar) {
+        return new AutoValue_Tillaggsfraga(id, svar);
+    }
+
+    @Nullable
+    public abstract String getId();
+
+    @Nullable
+    public abstract String getSvar();
+
 }

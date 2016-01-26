@@ -24,17 +24,22 @@ public final class RespConstants {
     }
 
     public static final int UNDERSOKNING_AV_PATIENT = 1;
+    public static final int TELEFONKONTAKT_MED_PATIENT = 2;
     public static final int JOURNALUPPGIFTER = 3;
     public static final int ANHORIGSBESKRIVNING = 4;
     public static final int ANNAT = 5;
 
     public static final String CERTIFICATE_CODE_SYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
-    public static final String GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM = "KV_FKMU_0001";
     public static final String HSA_CODE_SYSTEM = "1.2.752.129.2.1.4.1";
     public static final String PERSON_ID_CODE_SYSTEM = "1.2.752.129.2.1.3.3";
-    public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_0005";
     public static final String BEFATTNING_CODE_SYSTEM = "1.2.752.129.2.2.1.4";
     public static final String ARBETSPLATSKOD_CODE_SYSTEM = "1.2.752.29.4.71";
+    public static final String GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM = "KV_FKMU_0001";
+    public static final String TYP_AV_SYSSELSATTNING_CODE_SYSTEM = "KV_FKMU_0002";
+    public static final String SJUKSKRIVNING_CODE_SYSTEM = "KV_FKMU_0003";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM = "KV_FKMU_0004";
+    public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_0005";
+    public static final String PROGNOS_CODE_SYSTEM = "KV_FKMU_0006";
 
     public static final String GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID = "1";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID = "1.1";
@@ -89,6 +94,31 @@ public final class RespConstants {
     public static final String KONTAKT_ONSKAS_SVAR_ID = "26";
     public static final String KONTAKT_ONSKAS_DELSVAR_ID = "26.1";
     public static final String ANLEDNING_TILL_KONTAKT_DELSVAR_ID = "26.2";
+    public static final String TYP_AV_SYSSELSATTNING_SVAR_ID = "28";
+    public static final String TYP_AV_SYSSELSATTNING_DELSVAR_ID = "28.1";
+    public static final String NUVARANDE_ARBETE_SVAR_ID = "29";
+    public static final String NUVARANDE_ARBETE_DELSVAR_ID = "29.1";
+    public static final String ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID = "30";
+    public static final String ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID = "30.1";
+    public static final String BEHOV_AV_SJUKSKRIVNING_SVAR_ID = "32";
+    public static final String BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID = "32.1";
+    public static final String BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID = "32.2";
+    public static final String ARBETSTIDSFORLAGGNING_SVAR_ID = "33";
+    public static final String ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID = "33.1";
+    public static final String ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID = "33.2";
+    public static final String ARBETSRESOR_SVAR_ID = "34";
+    public static final String ARBETSRESOR_OM_DELSVAR_ID = "34.1";
+    public static final String FUNKTIONSNEDSATTNING_SVAR_ID = "35";
+    public static final String FUNKTIONSNEDSATTNING_DELSVAR_ID = "35.1";
+    public static final String FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID = "37";
+    public static final String FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID = "37.1";
+    public static final String PROGNOS_SVAR_ID = "39";
+    public static final String PROGNOS_BESKRIVNING_DELSVAR_ID = "39.1";
+    public static final String PROGNOS_FORTYDLIGANDE_DELSVAR_ID = "39.2";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID = "40";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID = "40.1";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID = "40.2";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID = "40.3";
 
     public enum ReferensTyp {
         UNDERSOKNING(1), TELEFONKONTAKT(2), JOURNAL(3), ANHORIGSBESKRIVNING(4), ANNAT(5), UNKNOWN(-1);

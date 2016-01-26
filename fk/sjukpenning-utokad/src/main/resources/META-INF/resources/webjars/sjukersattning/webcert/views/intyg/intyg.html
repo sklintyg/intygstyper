@@ -1,0 +1,180 @@
+<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}" ng-controller="sjukersattning.ViewCertCtrl">
+  <div wc-spinner label="sjukersattning.info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+       show-content="viewState.common.doneLoading">
+
+    <div ui-view="header"></div>
+
+    <div ng-show="!viewState.common.activeErrorMessageKey">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : $scope.viewState.common.intyg.isRevoked}">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="cert-body">
+
+              <!--div wc-field field-number="1" field-label="sjukersattning.label.smittskydd" filled="{{true}}">
+                <span ng-show="viewState.intygModel.avstangningSmittskydd" id="smittskydd"> <span message key="sjukersattning.label.yes"></span></span>
+                <span ng-show="!viewState.intygModel.avstangningSmittskydd"> <span message key="sjukersattning.label.no"></span></span>
+              </div-->
+
+              <div wc-field field-label="sjukersattning.label.intygbaseratpa" id="field2"
+                   filled="{{viewState.intygModel.undersokningAvPatienten!=null || viewState.intygModel.journaluppgifter!=null || viewState.intygModel.telefonkontaktMedPatienten !=null || viewState.intygModel.kannedomOmPatient !=null }}">
+                <ul class="padded-list" id="baseratPaList">
+                  <li ng-show="viewState.intygModel.undersokningAvPatienten!=null">
+                    <span message key="sjukersattning.vardkontakt.undersokning"></span><span id="undersokningAvPatienten">{{viewState.intygModel.undersokningAvPatienten | date: 'longDate' }}</span>
+                  </li>
+                  <li ng-show="viewState.intygModel.journaluppgifter!=null">
+                    <span message key="sjukersattning.referens.journal"></span><span id="journaluppgifter">{{viewState.intygModel.journaluppgifter | date: 'longDate' }}</span>
+                  </li>
+                  <li ng-show="viewState.intygModel.telefonkontaktMedPatienten!=null">
+                    <span message key="sjukersattning.referens.telefonkontaktmedpatienten"></span><span id="telefonKontaktBeskrivning">{{viewState.intygModel.telefonkontaktMedPatienten | date: 'longDate' }}</span>
+                  </li>
+                  <li ng-show="viewState.intygModel.kannedomOmPatient!=null">
+                    <span message key="sjukersattning.referens.kannedomompatient"></span><span id="kannedomOmPatient">{{viewState.intygModel.kannedomOmPatient | date: 'longDate' }}</span>
+                  </li>
+                  <li ng-repeat="underlag in viewState.intygModel.underlag" ng-if="viewState.intygModel.underlag != null">
+                      <span message key="sjukersattning.referens.underlag{{ $index }}"></span>
+                      <span id="underlagText"> {{ underlag.datum | date: 'longDate' }}<br/>
+                        <i>{{ underlag.bilaga ? 'ytterligare information bifogas ' : ''}}</i>
+                      </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div wc-field field-label="sjukersattning.label.diagnos" filled="{{viewState.intygModel.diagnoser!=null}}" id="field4">
+                <div class="form-group">
+                  <span> Baserat på diagnoskodsystem: {{ viewState.intygModel.diagnoser[0].diagnosKodSystem === 'ICD-10-SE' ? 'ICD-10-SE' : 'KSH-97-P' }}<br/></span>
+                  <span id="diagnosKod">Diagnoskod: {{viewState.intygModel.diagnoser[0].diagnosKod}} <br/></span>
+                  <span id="diagnosBeskrivning1">Diagnosbeskrivning: {{ viewState.intygModel.diagnoser[0].diagnosBeskrivning }}</span>
+                </div>
+                <div class="form-group">
+                  <label class="control-label bold"
+                         ng-show="viewState.intygModel.diagnoser[1].diagnosKod || viewState.intygModel.diagnoser[1].diagnosBeskrivning ||
+                         viewState.intygModel.diagnoser[2].intygModel.diagnosKod || viewState.intygModel.diagnoser[2].diagnosBeskrivning">
+                    <span message key="sjukersattning.label.ytterligarediagnoser"></span>
+                  </label>
+                  <div class="controls">
+                    <p ng-show="viewState.intygModel.diagnoser[1].diagnosKod || viewState.intygModel.diagnoser[1].diagnosBeskrivning">
+                      <span id="diagnosKod2">{{ viewState.intygModel.diagnoser[1].diagnosKod }} :</span>
+                      <span id="diagnosBeskrivning2">{{viewState.intygModel.diagnoser[1].diagnosBeskrivning}}</span>
+                    </p>
+                    <p ng-show="viewState.intygModel.diagnoser[2].diagnosKod || viewState.intygModel.diagnoser[2].diagnosBeskrivning">
+                      <span id="diagnosKod3">{{viewState.intygModel.diagnoser[2].diagnosKod}} :</span>
+                      <span id="diagnosBeskrivning3">{{viewState.intygModel.diagnoser[2].diagnosBeskrivning}}</span>
+                    </p>
+                  </div>
+                </div>
+                <!--div class="form-group" ng-show="viewState.intygModel.diagnosBeskrivning">
+                  <label class="control-label bold">
+                    <span message key="sjukersattning.label.diagnosfortydligande"></span>
+                  </label>
+                  <div class="controls">
+                    <div id="diagnosBeskrivning" class="multiline">{{viewState.intygModel.diagnosBeskrivning}}</div>
+                  </div-->
+                </div>
+
+
+            <div wc-field field-label="sjukersattning.label.diagnostisering" filled="{{true}}" id="4b">
+              <div class="form-group">
+                  <p ng-show="viewState.intygModel.diagnostisering!=null">
+                     <div id="diagnosticering" class="multiline">{{ viewState.intygModel.diagnostisering }}</div>
+                  </p>
+                  <p ng-show="viewState.intygModel.nyBedomningDiagnos">
+                    <span message key="sjukersattning.label.diagnostisering.nybedomning"></span>
+                    <span id="nyBedomningDiagnos">{{ viewState.intygModel.nyBedomningDiagnos = true ? 'JA' : 'NEJ' }}</span>
+                  </p>
+              </div>
+            </div>
+
+              <div wc-field field-label="sjukersattning.label.funktionsnedsattningar" id="5"
+                   filled="{{ viewState.intygModel.funktionsnedsattningar!=null }}">
+                <ul class="padded-list">
+                     <li id="funktionsnedsattning" ng-repeat="nedsattning in viewState.intygModel.funktionsnedsattningar">
+                        <span message key="sjukersattning.label.intyg.nedsattningar{{ nedsattning.funktionsomrade }}"></span>
+                        <div id="nedsattning-{{ nedsattning.funktionsomrade }}" class="multiline">{{ nedsattning.beskrivning }}</div>
+                     </li>
+                </ul>
+              </div>
+
+              <div wc-field field-label="sjukersattning.label.aktivitetsbegransning"
+                   filled="{{viewState.intygModel.aktivitetsbegransning!=null}}">
+                   <div id="aktivitetsbegransning" class="multiline">{{viewState.intygModel.aktivitetsbegransning}}</div>
+              </div>
+
+              <div wc-field field-label="sjukersattning.label.planerad-atgard" id="field7"
+                   filled="{{viewState.intygModel.pagaendeBehandling!=null|| viewState.intygModel.planeradBehandling!=null|| viewState.intygModel.avslutadBehandling!=null }}">
+                <ul class="padded-list">
+                  <li ng-show="viewState.intygModel.avslutadBehandling != null">
+                    <span message key="sjukersattning.label.planerad-atgard.avslutadBehandling"></span>
+                    <div id="avslutadBehandling" class="multiline">{{viewState.intygModel.avslutadBehandling}}</div>
+                  </li>
+                  <li ng-show="viewState.intygModel.pagaendeBehandling != null">
+                    <span message key="sjukersattning.label.planerad-atgard.pagaendeBehandling"></span>
+                    <div id="pagaendeBehandling" class="multiline">{{viewState.intygModel.pagaendeBehandling}}</div>
+                  </li>
+                  <li ng-show="viewState.intygModel.planeradBehandling != null">
+                    <span message key="sjukersattning.label.planerad-atgard.planeradBehandling"></span>
+                    <div id="planeradBehandling" class="multiline">{{viewState.intygModel.planeradBehandling}}</div>
+                  </li>
+                </ul>
+              </div>
+
+              <div wc-field field-label="sjukersattning.label.medicinskaforutsattningar" id="field9"
+                   filled="{{ viewState.intygModel.prognos!=null || viewState.intygModel.aktivitetsFormaga!=null }}">
+                 <ul class="padded-list">
+                   <li ng-show="viewState.intygModel.prognos != null">
+                     <span message key="sjukersattning.label.medicinskaforutsattningar.bedomning"></span>
+                     <div id="prognos" class="multiline">{{viewState.intygModel.prognos}}</div>
+                   </li>
+                   <li ng-show="viewState.intygModel.aktivitetsFormaga != null">
+                     <span message key="sjukersattning.label.medicinskaforutsattningar.mojligheter"></span>
+                     <div id="aktivitetsFormaga" class="multiline">{{viewState.intygModel.aktivitetsFormaga }}</div>
+                   </li>
+                 </ul>
+              </div>
+
+              <div wc-field field-label="sjukersattning.label.ovrigt" id="field10" filled="{{ viewState.intygModel.ovrigt!=null }}"
+                   id="field10">
+                 <div id="kommentar" class="multiline">{{viewState.intygModel.ovrigt}}</div>
+              </div>
+
+              <div wc-field field-label="sjukersattning.label.kontakt-med-fk"
+                   filled="{{true}}" id="field11">
+                <span id="kontaktMedFk" ng-show="viewState.intygModel.kontaktMedFk">
+                  <span message key="sjukersattning.label.yes"></span>
+                </span>
+                <span ng-show="!viewState.intygModel.kontaktMedFk">
+                  <span message key="sjukersattning.label.no"></span>
+                </span>
+                <div id="anledningTillKontakt" class="multiline" ng-show="!viewState.intygModel.anledningTillKontakt != null">
+                  <span message key="sjukersattning.label.anledningTillKontakt"></span>
+                  {{ viewState.intygModel.anledningTillKontakt }}
+                </div>
+
+              </div>
+
+              <div class="infobox">
+                <h3>
+                  <span message key="common.label.ovanstaende-har-bekraftats"></span>
+                </h3>
+                <h4>
+                  <span message key="sjukersattning.label.datum"></span>
+                </h4>
+                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date: 'longDate'}}</p>
+                <h4>
+                  <span message key="sjukersattning.label.kontakt-info"></span>
+                </h4>
+                <p>
+                  <span class="text" id="vardperson_namn">{{viewState.intygModel.grundData.skapadAv.fullstandigtNamn}}</span><br>
+                  <span class="text" id="vardperson_enhetsnamn">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                  <span class="text" id="vardperson_postadress">{{viewState.intygModel.grundData.skapadAv.vardenhet.postadress}}</span><br>
+                  <span class="text"><span id="vardperson_postnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardperson_postort">{{viewState.intygModel.grundData.skapadAv.vardenhet.postort}}</span></span><br>
+                  <span class="text" id="vardperson_telefonnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
+                </p>
+              </div>
+
+            </div><!-- cert body -->
+          </div>
+        </div>
+      </div>
+    </div><!-- entire cert -->
+  </div><!--  spinner end -->
+</div>

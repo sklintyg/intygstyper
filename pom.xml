@@ -61,6 +61,7 @@
     <module>ts-diabetes</module>
     <module>fk/fk-parent</module>
     <module>fk/sjukersattning</module>
+    <module>fk/sjukpenning-utokad</module>
   </modules>
 
   <scm>
