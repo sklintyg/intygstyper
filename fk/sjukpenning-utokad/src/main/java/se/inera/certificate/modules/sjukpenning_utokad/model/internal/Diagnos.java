@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class Diagnos{
+public abstract class Diagnos {
 
     Diagnos() {
     }

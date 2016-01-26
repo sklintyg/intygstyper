@@ -40,7 +40,6 @@ public final class RespConstants {
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM = "KV_FKMU_0004";
     public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_0005";
     public static final String PROGNOS_CODE_SYSTEM = "KV_FKMU_0006";
-    
 
     public static final String GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID = "1";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID = "1.1";
@@ -120,7 +119,7 @@ public final class RespConstants {
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID = "40.1";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID = "40.2";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID = "40.3";
-    
+
     public enum ReferensTyp {
         UNDERSOKNING(1), TELEFONKONTAKT(2), JOURNAL(3), ANHORIGSBESKRIVNING(4), ANNAT(5), UNKNOWN(-1);
 

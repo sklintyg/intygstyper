@@ -73,7 +73,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     public abstract String getAnnatGrundForMUBeskrivning();
 
     // Kategori 2 - Sysselsättning
-    // Fråga 28 
+    // Fråga 28
     // Fråga 28.1
     public abstract Sysselsattning getSysselsattning();
 
@@ -84,7 +84,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
 
     // Fråga 30 - Arbetsmarknadspolitiskt program
     // Fråga 30.1
-    @Nullable 
+    @Nullable
     public abstract String getArbetsmarknadspolitisktProgram();
 
     // Kategori 3 - Diagnos
@@ -93,7 +93,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
 
     // Kategori 4 - Sjukdomens konsekvenser
     // Fråga 35 - Funktionsnedsättning
-    // Fråga 35.1 
+    // Fråga 35.1
     public abstract String getFunktionsnedsattning();
 
     // Fråga 17 Aktivitetsbegränsning
@@ -107,8 +107,8 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     public abstract String getPagaendeBehandling();
 
     // Fråga 20 - Planerad medicinsk behandling
-    // Fråga 20.1 
-    @Nullable 
+    // Fråga 20.1
+    @Nullable
     public abstract String getPlaneradBehandling();
 
     // Kategori 6 - Bedömning
@@ -119,7 +119,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     // Fråga 37 - försäkringsmedicinskt beslutsstöd
     // 37.1
     @Nullable
-    public abstract String getForsakringsmedicinsktBeslutsstod(); 
+    public abstract String getForsakringsmedicinsktBeslutsstod();
 
     // Fråga 33 - Arbetstidsförläggning
     // 33.1
@@ -154,7 +154,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     @Nullable
     // Delfråga 40.3 - Arbetslivsinriktade åtgärder ej aktuellt beksrivning
     public abstract String getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning();
-    
+
     // Kategori 8 - Övrigt
     // Fråga 25
     @Nullable
@@ -216,7 +216,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
         @JsonProperty("annatGrundForMUBeskrivning")
         public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
 
-        @JsonProperty("sysselsattning") 
+        @JsonProperty("sysselsattning")
         public abstract Builder setSysselsattning(Sysselsattning sysselsattning);
 
         @JsonProperty("nuvarandeArbete")

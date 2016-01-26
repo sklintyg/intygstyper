@@ -1,3 +1,22 @@
+/*
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package se.inera.certificate.modules.sjukpenning_utokad.model.internal;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -12,14 +31,13 @@ public abstract class Prognos {
 
     @JsonCreator
     public static Prognos create(@JsonProperty("prognos") PrognosTyp prognosTyp,
-            @JsonProperty("fortydligande") String fortydligande){
+            @JsonProperty("fortydligande") String fortydligande) {
         return new AutoValue_Prognos(prognosTyp, fortydligande);
     }
 
     public abstract PrognosTyp getPrognosTyp();
-    
     public abstract String getFortydligande();
-    
+
     public enum PrognosTyp {
         /**
          * Med stor sannolikhet (id 1).

@@ -406,7 +406,7 @@ public final class TransportToInternal {
                 break;
             case BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID:
                 DatePeriodType datePeriod = getSvarContent(delsvar, DatePeriodType.class);
-                period = new InternalLocalDateInterval(datePeriod.getStart().toString(), datePeriod.getEnd().toString()); 
+                period = new InternalLocalDateInterval(datePeriod.getStart().toString(), datePeriod.getEnd().toString());
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -427,7 +427,7 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        
+
     }
 
     private static void handleArbetsmarknadspolitisktProgram(Builder utlatande, Svar svar) {
@@ -530,7 +530,6 @@ public final class TransportToInternal {
         diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning));
     }
 
-
     private static void handleAktivitetsbegransning(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
@@ -592,7 +591,7 @@ public final class TransportToInternal {
 
     private static void handleTillaggsfraga(List<Tillaggsfraga> tillaggsFragor, Svar svar) {
         // En tilläggsfråga har endast ett delsvar
-        if (svar.getDelsvar().size() >  1) {
+        if (svar.getDelsvar().size() > 1) {
             throw new IllegalArgumentException();
         }
 
