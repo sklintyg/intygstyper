@@ -25,5 +25,4 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 public interface FKModuleApi extends ModuleApi {
 
     Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception;
-
 }

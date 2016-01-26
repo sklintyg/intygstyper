@@ -19,14 +19,14 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.model.internal;
 
+import javax.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
-import javax.annotation.Nullable;
-
 @AutoValue
-public abstract class Diagnos {
+public abstract class Diagnos{
 
     Diagnos() {
     }

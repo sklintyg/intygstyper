@@ -28,7 +28,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning.SysselsattningsTyp;
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
@@ -56,6 +55,9 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     // Fråga 1
     @Nullable
     public abstract InternalDate getUndersokningAvPatienten();
+
+    @Nullable
+    public abstract InternalDate getTelefonkontaktMedPatienten();
 
     @Nullable
     public abstract InternalDate getJournaluppgifter();
@@ -112,7 +114,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     // Kategori 6 - Bedömning
     // Fråga 32 - Behov av sjukskrivning
     // 32.1
-    public abstract ImmutableList<Sjukskrivning> getBehovAvSjukskrivning();
+    public abstract ImmutableList<Sjukskrivning> getSjukskrivningar();
 
     // Fråga 37 - försäkringsmedicinskt beslutsstöd
     // 37.1
@@ -142,8 +144,17 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     public abstract Prognos getPrognos();
 
     // Kategori 7 - Åtgärder
-    // Fråga 40
+    // Fråga 40 - Arbetslivsinriktade åtgärder
+    public abstract ImmutableList<ArbetslivsinriktadeAtgarder> getArbetslivsinriktadeAtgarder();
 
+    @Nullable
+    // Delfråga 40.2 - Arbetslivsinriktade åtgärder aktuellt beksrivning
+    public abstract String getArbetslivsinriktadeAtgarderAktuelltBeskrivning();
+
+    @Nullable
+    // Delfråga 40.3 - Arbetslivsinriktade åtgärder ej aktuellt beksrivning
+    public abstract String getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning();
+    
     // Kategori 8 - Övrigt
     // Fråga 25
     @Nullable
@@ -155,9 +166,11 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     public abstract Boolean getKontaktMedFk();
 
     // Fråga 26.2
+    @Nullable
     public abstract String getAnledningTillKontakt();
 
     // Tilläggsfrågor
+    @Nullable
     public abstract ImmutableList<Tillaggsfraga> getTillaggsfragor();
 
     /*
@@ -167,7 +180,11 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     public abstract Builder toBuilder();
 
     public static Builder builder() {
-        return AutoValue_SjukpenningUtokadUtlatande.builder();
+        return new AutoValue_SjukpenningUtokadUtlatande.Builder()
+            .setDiagnoser(ImmutableList.<Diagnos> of())
+            .setSjukskrivningar(ImmutableList.<Sjukskrivning> of())
+            .setArbetslivsinriktadeAtgarder(ImmutableList.<ArbetslivsinriktadeAtgarder> of())
+            .setTillaggsfragor(ImmutableList.<Tillaggsfraga>of());
     }
 
     @AutoValue.Builder
@@ -183,6 +200,9 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
 
         @JsonProperty("undersokningAvPatienten")
         public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);
+
+        @JsonProperty("telefonkontaktMedPatienten")
+        public abstract Builder setTelefonkontaktMedPatienten(InternalDate telefonkontaktMedPatienten);
 
         @JsonProperty("journaluppgifter")
         public abstract Builder setJournaluppgifter(InternalDate journaluppgifter);
@@ -226,11 +246,11 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
         public abstract Builder setPlaneradBehandling(String planeradBehandling);
 
         @JsonProperty("sjukskrivningar")
-        public Builder setBehovAvSjukskrivning(List<Sjukskrivning> sjukskrivningar) {
-            return setBehovAvSjukskrivning(ImmutableList.copyOf(sjukskrivningar));
+        public Builder setSjukskrivningar(List<Sjukskrivning> sjukskrivningar) {
+            return setSjukskrivningar(ImmutableList.copyOf(sjukskrivningar));
         }
         /* package private */
-        abstract Builder setBehovAvSjukskrivning(ImmutableList<Sjukskrivning> sjukskrivningar);
+        abstract Builder setSjukskrivningar(ImmutableList<Sjukskrivning> sjukskrivningar);
 
         @JsonProperty("forsakringsmedicinsktBeslutsstod")
         public abstract Builder setForsakringsmedicinsktBeslutsstod(String forskningsmedicinsktBeslutsstod);
@@ -249,6 +269,20 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
 
         @JsonProperty("prognos")
         public abstract Builder setPrognos(Prognos prognos);
+
+        @JsonProperty("arbetslivsinriktadeAtgarder")
+        public Builder setArbetslivsinriktadeAtgarder(List<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder) {
+            return setArbetslivsinriktadeAtgarder(ImmutableList.copyOf(arbetslivsinriktadeAtgarder));
+        }
+
+        @JsonProperty("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
+        public abstract Builder setArbetslivsinriktadeAtgarderAktuelltBeskrivning(String arbetslivsinriktadeAtgarderAktuelltBeskrivning);
+
+        @JsonProperty("arbetslivsinriktadeAtgarderEjAktuelltBeskrivning")
+        public abstract Builder setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning(String arbetslivsinriktadeAtgarderEjAktuelltBeskrivning);
+
+        /* package private*/
+        abstract Builder setArbetslivsinriktadeAtgarder(ImmutableList<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder);
 
         @JsonProperty("ovrigt")
         public abstract Builder setOvrigt(String ovrigt);

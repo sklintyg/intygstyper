@@ -71,32 +71,32 @@ public class InternalDraftValidator {
 
     private void validateGrundForMU(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getJournaluppgifter() == null
-                && utlatande.getAnhorigsBeskrivningAvPatienten() == null && utlatande.getAnnatGrundForMU() == null) {
-            addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.grund-for-mu.missing");
-        }
-
-        if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
-            addValidationError(validationMessages, "grundformu.undersokning", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.grund-for-mu.undersokning.incorrect_format");
-        }
-        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
-            addValidationError(validationMessages, "grundformu.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.grund-for-mu.journaluppgifter.incorrect_format");
-        }
-        if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && !utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()) {
-            addValidationError(validationMessages, "grundformu.anhorigsbeskrivning", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format");
-        }
-        if (utlatande.getAnnatGrundForMU() != null && !utlatande.getAnnatGrundForMU().isValidDate()) {
-            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
-                    "sjukersattning.validation.grund-for-mu.annat.incorrect_format");
-        }
-        if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
-            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.grund-for-mu.annat.missing");
-        }
+//        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getJournaluppgifter() == null
+//                && utlatande.getAnhorigsBeskrivningAvPatienten() == null && utlatande.getAnnatGrundForMU() == null) {
+//            addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
+//                    "sjukersattning.validation.grund-for-mu.missing");
+//        }
+//
+//        if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
+//            addValidationError(validationMessages, "grundformu.undersokning", ValidationMessageType.INVALID_FORMAT,
+//                    "sjukersattning.validation.grund-for-mu.undersokning.incorrect_format");
+//        }
+//        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
+//            addValidationError(validationMessages, "grundformu.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
+//                    "sjukersattning.validation.grund-for-mu.journaluppgifter.incorrect_format");
+//        }
+//        if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && !utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()) {
+//            addValidationError(validationMessages, "grundformu.anhorigsbeskrivning", ValidationMessageType.INVALID_FORMAT,
+//                    "sjukersattning.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format");
+//        }
+//        if (utlatande.getAnnatGrundForMU() != null && !utlatande.getAnnatGrundForMU().isValidDate()) {
+//            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
+//                    "sjukersattning.validation.grund-for-mu.annat.incorrect_format");
+//        }
+//        if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+//            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
+//                    "sjukersattning.validation.grund-for-mu.annat.missing");
+//        }
 
     }
 

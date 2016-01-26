@@ -33,9 +33,9 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
 
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
-    public static final String MODULE_ID = "sjukersattning";
-    public static final String MODULE_NAME = "Läkarintyg, sjukersättning";
-    public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+    public static final String MODULE_ID = "LISU";
+    public static final String MODULE_NAME = "Läkarintyg för sjukpenning utökat";
+    public static final String MODULE_DESCRIPTION = "Läkarintyg för sjukpenning utökat";
 
     @Autowired
     private SjukpenningUtokadModuleApi moduleApi;

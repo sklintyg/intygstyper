@@ -23,9 +23,21 @@ public abstract class Sjukskrivning {
     public abstract InternalLocalDateInterval getPeriod();
 
     public enum SjukskrivningsGrad {
+        /**
+         * Helt nedsatt (id 1).
+         */
         HELT_NEDSATT(1, "Helt nedsatt"),
+        /**
+         * Nedsatt till 3/4 (id 2).
+         */
         NEDSATT_3_4(2, "Nedsatt med 3/4"),
+        /**
+         * Nedsatt till hälften (id 3).
+         */
         NEDSATT_HALFTEN(3, "Nedsatt med hälften"),
+        /**
+         * Nedsatt till 1/4 (id 4).
+         */
         NEDSATT_1_4(4,"Nedsatt med 1/4");
 
         private final int id;

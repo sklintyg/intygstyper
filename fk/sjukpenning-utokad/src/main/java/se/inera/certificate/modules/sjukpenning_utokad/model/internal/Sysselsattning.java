@@ -17,11 +17,11 @@ public abstract class Sysselsattning {
     public abstract SysselsattningsTyp getSysselsattningsTyp();
 
     public enum SysselsattningsTyp {
-        nuvarande_arbete(1, ""),
-        arbetssokande(2, ""),
-        foraldrarledighet_vard_av_barn(3, ""),
-        studier(4, ""),
-        arbetsmarknadspolitiskt_program(5, "");
+        NUVARANDE_ARBETE(1, ""),
+        ARBETSSOKANDE(2, ""),
+        FORADLRARLEDIGHET_VARD_AV_BARN(3, ""),
+        STUDIER(4, ""),
+        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "");
         
         private final int id;
         private final String label;

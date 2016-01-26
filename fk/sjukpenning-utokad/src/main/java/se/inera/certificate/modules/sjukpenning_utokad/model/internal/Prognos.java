@@ -21,9 +21,21 @@ public abstract class Prognos {
     public abstract String getFortydligande();
     
     public enum PrognosTyp {
+        /**
+         * Med stor sannolikhet (id 1).
+         */
         MED_STOR_SANNOLIKHET(1, "Med stor sannolikhet"),
+        /**
+         * Sannolikt sjukskrivning 180 dagar (id 2).
+         */
         SANNOLIK_SJUKSKRIVNING_180_DAGAR(2, "Patienten bedöms kunna återgå i nuvarande sysselsättning, men sjukskrivningstiden är sannolikt längre än 180 dagar"),
+        /**
+         * Sannolikt ej återgå till nuvarande sysselsättning (id 3).
+         */
         SANNOLIKT_EJ_ATERGA_TILL_SYSSELSATTNING(3, "Patienten kan sannolikt inte återgå till nuvarande sysselsättning"),
+        /**
+         * Prognos oklar (id 4).
+         */
         PROGNOS_OKLAR(4, "Prognos för återgång i nuvarande sysselsättning är oklar");
         public final int id;
 

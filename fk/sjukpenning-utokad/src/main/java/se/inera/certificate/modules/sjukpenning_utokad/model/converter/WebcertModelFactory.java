@@ -62,7 +62,7 @@ public class WebcertModelFactory {
 
         LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
 
-        SjukpenningUtokadUtlatande.Builder templateBuilder = template.builder();
+        SjukpenningUtokadUtlatande.Builder templateBuilder = template.toBuilder();
         GrundData grundData = template.getGrundData();
 
         populateWithId(templateBuilder, copyData.getCertificateId());
