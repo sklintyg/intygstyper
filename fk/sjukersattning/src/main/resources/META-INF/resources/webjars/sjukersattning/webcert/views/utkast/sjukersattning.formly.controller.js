@@ -1,4 +1,4 @@
-angular.module('sjukersattning').controller('sjukersattning.EditCert.FormlyCtrl',
+angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
     ['$scope', 'sjukersattning.EditCertCtrl.ViewStateService',
         function FormlyCtrl($scope, viewState) {
             'use strict';
