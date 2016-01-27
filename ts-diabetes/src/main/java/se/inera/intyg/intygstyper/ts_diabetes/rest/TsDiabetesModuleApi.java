@@ -319,4 +319,9 @@ public class TsDiabetesModuleApi implements ModuleApi {
         }
     }
 
+    @Override
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return inputXml;
+    }
+
 }

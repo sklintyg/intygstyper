@@ -326,4 +326,9 @@ public class SjukpenningUtokadModuleApi implements FKModuleApi {
         }
         return TransportToInternal.convert(intyg);
     }
+    
+    @Override
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return inputXml;
+    }
 }

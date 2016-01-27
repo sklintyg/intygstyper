@@ -27,6 +27,8 @@ import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.joda.time.LocalDateTime;
@@ -62,6 +64,7 @@ import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 
 
@@ -87,6 +90,10 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalToNotification internalToNotficationConverter;
+    
+    @Autowired(required = false)
+    @Qualifier("fXslTransformer")
+    private XslTransformer xslTransformer;
 
     @Autowired
     @Qualifier("fk7263-objectMapper")
@@ -249,6 +256,11 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
         sendCertificateToRecipient(internalModel, logicalAddress, null);
+    }
+    
+    @Override
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return xslTransformer.transform(inputXml);
     }
 
     @Override

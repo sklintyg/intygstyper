@@ -326,4 +326,9 @@ public class TsBasModuleApi implements ModuleApi {
     protected void setGetTSBasResponderClient(GetTSBasResponderInterface getTSBasResponderInterface) {
         this.getTSBasResponderInterface = getTSBasResponderInterface;
     }
+
+    @Override
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return inputXml;
+    }
 }
