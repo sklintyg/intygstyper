@@ -58,11 +58,11 @@ public class InternalToTransportTest {
     }
 
     @Test
-    public void testInternalToTransportConversion() throws Exception{
+    public void testInternalToTransportConversion() throws Exception {
         SjukpenningUtokadUtlatande expected = getUtlatande();
         RegisterCertificateType transport = InternalToTransport.convert(expected);
         SjukpenningUtokadUtlatande actual = TransportToInternal.convert(transport.getIntyg());
-        
+
         assertEquals(expected, actual);
     }
 
@@ -70,7 +70,7 @@ public class InternalToTransportTest {
         SjukpenningUtokadUtlatande.Builder utlatande = SjukpenningUtokadUtlatande.builder();
         utlatande.setId("1234567");
         GrundData grundData = IntygTestDataBuilder.getGrundData();
-        
+
         grundData.setSigneringsdatum(new LocalDateTime("2015-12-07T15:48:05"));
         utlatande.setGrundData(grundData);
 
@@ -87,11 +87,11 @@ public class InternalToTransportTest {
         utlatande.setAktivitetsbegransning("Kommer inte in i bilen");
 
         utlatande.setSjukskrivningar(asList(
-                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_3_4, 
+                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_3_4,
                         new InternalLocalDateInterval(new InternalDate("2015-12-07"), new InternalDate("2015-12-10"))),
-                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_HALFTEN, 
+                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_HALFTEN,
                         new InternalLocalDateInterval(new InternalDate("2015-12-12"), new InternalDate("2015-12-14"))),
-                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_1_4, 
+                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_1_4,
                         new InternalLocalDateInterval(new InternalDate("2015-12-15"), new InternalDate("2015-12-15")))
                         ));
 

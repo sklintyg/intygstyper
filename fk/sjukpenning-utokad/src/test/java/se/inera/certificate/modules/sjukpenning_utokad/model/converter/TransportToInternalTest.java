@@ -40,7 +40,7 @@ public class TransportToInternalTest {
         utlatande.setPlaneradBehandling("Mer medicin");
 
         utlatande.setArbetslivsinriktadeAtgarder(asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)));
-        
+
         utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.STUDIER));
         utlatande.setPrognos(Prognos.create(PrognosTyp.MED_STOR_SANNOLIKHET, "Förtydligande"));
         utlatande.setFunktionsnedsattning("Funktionsnedsättning");
