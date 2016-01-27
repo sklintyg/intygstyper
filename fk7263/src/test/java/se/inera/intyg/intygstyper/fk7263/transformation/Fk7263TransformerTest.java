@@ -22,8 +22,8 @@ import com.helger.schematron.xslt.SchematronResourceSCH;
 import java.util.Arrays;
 import java.util.List;
 
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
-import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 
 public class Fk7263TransformerTest {
     private static final String COMMON_UTLATANDE_SCHEMA = "core_components/MU7263-RIV_3.1.xsd";
