@@ -17,6 +17,8 @@ angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
                 wrapper: 'wc-field',
                 templateOptions: { category: 1 },
                 fieldGroup: [
+                    { key: 'frg', type: 'label', templateOptions: { label: 'FRG_1.RBK', help: 'FRG_1.HLP' } },
+                    { key: 'dfr', type: 'label', templateOptions: { label: 'DFR_1.1.RBK', help: 'DFR_1.1.HLP' } },
                     { key: 'undersokningAvPatienten',        type: 'date', templateOptions: { label: 'KV_FKMU_0001.1' } },
                     { key: 'journaluppgifter',               type: 'date', templateOptions: { label: 'KV_FKMU_0001.3' } },
                     { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.4' } },
