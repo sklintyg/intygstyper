@@ -42,15 +42,21 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
-    var minaintyg = grunt.file.readJSON(SRC_DIR + 'webjars/fk7263/minaintyg/js/module-deps.json').map(function(file) {
-        return file.replace(/\/web\//g, SRC_DIR);
-    });
-    minaintyg = [SRC_DIR + 'webjars/fk7263/minaintyg/js/module.js', DEST_DIR + 'webjars/fk7263/minaintyg/templates.js'].concat(minaintyg);
+    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/fk7263/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/fk7263/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
+        map(function(file){ return '/web/'+file; }).
+        concat('/web/webjars/fk7263/minaintyg/templates.js'), null, 4));
+    minaintyg = [SRC_DIR + 'webjars/fk7263/minaintyg/js/module.js', DEST_DIR + 'webjars/fk7263/minaintyg/templates.js'].concat(minaintyg.map(function(file){
+        return SRC_DIR + file;
+    }));
 
-    var webcert = grunt.file.readJSON(SRC_DIR + 'webjars/fk7263/webcert/module-deps.json').map(function(file) {
-        return file.replace(/\/web\//g, SRC_DIR);
-    });
-    webcert = [SRC_DIR + 'webjars/fk7263/webcert/module.js', DEST_DIR + 'webjars/fk7263/webcert/templates.js'].concat(webcert);
+    var webcert = grunt.file.expand({cwd:SRC_DIR}, ['webjars/fk7263/webcert/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/fk7263/webcert/module-deps.json', JSON.stringify(webcert.
+        map(function(file){ return '/web/'+file; }).
+        concat('/web/webjars/fk7263/webcert/templates.js'), null, 4));
+    webcert = [SRC_DIR + 'webjars/fk7263/webcert/module.js', DEST_DIR + 'webjars/fk7263/webcert/templates.js'].concat(webcert.map(function(file){
+        return SRC_DIR + file;
+    }));
 
     grunt.initConfig({
 
