@@ -55,9 +55,9 @@ public abstract class Prognos {
          * Prognos oklar (id 4).
          */
         PROGNOS_OKLAR(4, "Prognos för återgång i nuvarande sysselsättning är oklar");
-        public final int id;
+        private final int id;
 
-        public final String label;
+        private final String label;
 
         PrognosTyp(int id, String label) {
             this.id = id;

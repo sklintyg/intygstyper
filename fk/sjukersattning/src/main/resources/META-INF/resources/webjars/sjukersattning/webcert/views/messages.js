@@ -204,63 +204,63 @@ var sjukersattningMessages = {
          */
         //Validation messages
 
-        'sjukersattning.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
-        'sjukersattning.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
-        'sjukersattning.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
-        'sjukersattning.validation.diagnos.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
-        'sjukersattning.validation.diagnos.length-3': 'Diagnoskod ska anges med så många positioner som möjligt, men minst tre positioner.',
-        'sjukersattning.validation.diagnos.psykisk.length-4': 'Diagnoskod ska anges med minst fyra positioner då en psykisk diagnos anges.',
-        'sjukersattning.validation.diagnos2.invalid': 'ICD-10 kod på ytterligare diagnoser rad 1, är ej giltig. (Fält 2)',
-        'sjukersattning.validation.diagnos3.invalid': 'ICD-10 kod på ytterligare diagnoser rad 2, är ej giltig. (Fält 2)',
+        'luse.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
+        'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
+        'luse.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
+        'luse.validation.diagnos.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
+        'luse.validation.diagnos.length-3': 'Diagnoskod ska anges med så många positioner som möjligt, men minst tre positioner.',
+        'luse.validation.diagnos.psykisk.length-4': 'Diagnoskod ska anges med minst fyra positioner då en psykisk diagnos anges.',
+        'luse.validation.diagnos2.invalid': 'ICD-10 kod på ytterligare diagnoser rad 1, är ej giltig. (Fält 2)',
+        'luse.validation.diagnos3.invalid': 'ICD-10 kod på ytterligare diagnoser rad 2, är ej giltig. (Fält 2)',
 
-        'sjukersattning.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)',
+        'luse.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)',
 
-        'sjukersattning.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient (Fält 1)',
+        'luse.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient (Fält 1)',
 
-        'sjukersattning.validation.grund-for-mu.annan.incorrect_format': 'Fel datumformat för annan referens (Fält 1)',
-        'sjukersattning.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter (Fält 1)',
+        'luse.validation.grund-for-mu.annan.incorrect_format': 'Fel datumformat för annan referens (Fält 1)',
+        'luse.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter (Fält 1)',
 
-        'sjukersattning.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
-        'sjukersattning.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i. (Fält 1)',
-        'sjukersattning.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för \'Kännedom om patienten\'',
-        'sjukersattning.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
-        'sjukersattning.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
-        'sjukersattning.validation.grund-for-mu.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
+        'luse.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
+        'luse.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i. (Fält 1)',
+        'luse.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för \'Kännedom om patienten\'',
+        'luse.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
+        'luse.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
+        'luse.validation.grund-for-mu.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
 
-        'sjukersattning.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
+        'luse.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
-        'sjukersattning.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
-        'sjukersattning.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
+        'luse.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
+        'luse.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
 
-        'sjukersattning.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
+        'luse.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
 
-        'sjukersattning.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
+        'luse.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
 
-        'sjukersattning.validation.sysselsattning.missing': 'Välj minst ett alternativ som arbetsförmågan bedöms i förhållande till. (Fält 8a)',
-        'sjukersattning.validation.sysselsattning.arbetsuppgifter.missing': 'Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under \'Arbete\' måste fyllas i. (Fält 8a)',
+        'luse.validation.sysselsattning.missing': 'Välj minst ett alternativ som arbetsförmågan bedöms i förhållande till. (Fält 8a)',
+        'luse.validation.sysselsattning.arbetsuppgifter.missing': 'Aktuella arbetsuppgifter som hör till alternativet Nuvarande arbete under \'Arbete\' måste fyllas i. (Fält 8a)',
 
-        'sjukersattning.validation.nedsattning.tjanstgoringstid': 'För att kunna beräkna arbetstid måste \'Faktisk tjänstgöringstid\' vara ett nummer (Fält 8a)',
-        'sjukersattning.validation.nedsattning.choose-at-least-one': 'Välj minst ett alternativ för arbetsförmåga. (Fält 8b)',
-        'sjukersattning.validation.nedsattning.incorrect-date-interval': 'Ett datuminterval har angetts på ett felaktigt sätt (startdatum efter slutdatum). (Fält 8b)',
+        'luse.validation.nedsattning.tjanstgoringstid': 'För att kunna beräkna arbetstid måste \'Faktisk tjänstgöringstid\' vara ett nummer (Fält 8a)',
+        'luse.validation.nedsattning.choose-at-least-one': 'Välj minst ett alternativ för arbetsförmåga. (Fält 8b)',
+        'luse.validation.nedsattning.incorrect-date-interval': 'Ett datuminterval har angetts på ett felaktigt sätt (startdatum efter slutdatum). (Fält 8b)',
 
-        'sjukersattning.validation.nedsattning.nedsattmed100.incorrect-format': 'Datum för nedsatt med 100% har angetts med felaktigt format (Fält 8b)',
-        'sjukersattning.validation.nedsattning.nedsattmed75.incorrect-format': 'Datum för nedsatt med 75% har angetts med felaktigt format (Fält 8b)',
-        'sjukersattning.validation.nedsattning.nedsattmed50.incorrect-format': 'Datum för nedsatt med 50% har angetts med felaktigt format (Fält 8b)',
-        'sjukersattning.validation.nedsattning.nedsattmed25.incorrect-format': 'Datum för nedsatt med 25% har angetts med felaktigt format (Fält 8b)',
+        'luse.validation.nedsattning.nedsattmed100.incorrect-format': 'Datum för nedsatt med 100% har angetts med felaktigt format (Fält 8b)',
+        'luse.validation.nedsattning.nedsattmed75.incorrect-format': 'Datum för nedsatt med 75% har angetts med felaktigt format (Fält 8b)',
+        'luse.validation.nedsattning.nedsattmed50.incorrect-format': 'Datum för nedsatt med 50% har angetts med felaktigt format (Fält 8b)',
+        'luse.validation.nedsattning.nedsattmed25.incorrect-format': 'Datum för nedsatt med 25% har angetts med felaktigt format (Fält 8b)',
 
-        'sjukersattning.validation.nedsattning.overlapping-date-interval': 'Två datuminterval med överlappande datum har angetts. (Fält 8b)',
+        'luse.validation.nedsattning.overlapping-date-interval': 'Två datuminterval med överlappande datum har angetts. (Fält 8b)',
 
-        'sjukersattning.validation.nedsattning.prognos.choose-one': 'Max ett alternativ kan väljas (Fält 10)',
+        'luse.validation.nedsattning.prognos.choose-one': 'Max ett alternativ kan väljas (Fält 10)',
 
-        'sjukersattning.validation.prognos.gar-ej-att-bedomma.beskrivning.missing': 'Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under \'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete\' måste fyllas i. (Fält 10)',
+        'luse.validation.prognos.gar-ej-att-bedomma.beskrivning.missing': 'Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under \'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete\' måste fyllas i. (Fält 10)',
 
-        'sjukersattning.validation.forandrat-ressatt.choose-one': 'Endast ett alternativ kan anges avseende förändrat ressätt. (Fält 11)',
+        'luse.validation.forandrat-ressatt.choose-one': 'Endast ett alternativ kan anges avseende förändrat ressätt. (Fält 11)',
 
-        'sjukersattning.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
-        'sjukersattning.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
-        'sjukersattning.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges (Fält 15)',
-        'sjukersattning.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format (Fält 15)',
-        'sjukersattning.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges (Fält 15)',
+        'luse.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
+        'luse.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
+        'luse.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges (Fält 15)',
+        'luse.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format (Fält 15)',
+        'luse.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges (Fält 15)',
 
 
         // errors
