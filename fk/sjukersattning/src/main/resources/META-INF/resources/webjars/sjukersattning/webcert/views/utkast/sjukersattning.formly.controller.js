@@ -19,11 +19,12 @@ angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
                 fieldGroup: [
                     { key: 'frg', type: 'label', templateOptions: { label: 'FRG_1.RBK', help: 'FRG_1.HLP' } },
                     { key: 'dfr', type: 'label', templateOptions: { label: 'DFR_1.1.RBK', help: 'DFR_1.1.HLP' } },
+                    { key: 'datum', type: 'label', templateOptions: { label: 'DFR_1.2.RBK', help: 'DFR_1.2.HLP' } },
                     { key: 'undersokningAvPatienten',        type: 'date', templateOptions: { label: 'KV_FKMU_0001.1' } },
                     { key: 'journaluppgifter',               type: 'date', templateOptions: { label: 'KV_FKMU_0001.3' } },
                     { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.4' } },
                     { key: 'annatGrundForMU',                type: 'date', templateOptions: { label: 'KV_FKMU_0001.5' } },
-                    { key: 'annatGrundForMUBeskrivning',     type: 'single-text', className: 'dfr_1_3', hideExpression: '!model.annatGrundForMU', templateOptions: { label: 'DFR_1.3' } },
+                    { key: 'annatGrundForMUBeskrivning',     type: 'single-text', className: 'dfr_1_3', hideExpression: '!model.annatGrundForMU', templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', indent: true } },
                     { key: 'kannedomOmPatient',              type: 'date', templateOptions: { label: 'DFR_2.1' } }
                 ]
             },{
