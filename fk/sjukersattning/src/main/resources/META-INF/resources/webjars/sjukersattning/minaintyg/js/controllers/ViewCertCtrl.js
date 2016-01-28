@@ -13,7 +13,7 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
             $scope.doneLoading = false;
 
             $scope.send = function() {
-                $location.path('/sjukersattning/recipients').search({ module: 'sjukersattning', defaultRecipient: 'FK'});
+                $location.path('/luse/recipients').search({ module: 'luse', defaultRecipient: 'FK'});
             };
 
             $scope.visibleStatuses = [ 'SENT' ];
