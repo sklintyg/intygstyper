@@ -84,6 +84,7 @@ angular.module('luse').factory('sjukersattning.Domain.IntygModel',
                         tillaggsfragor: [ new ModelAttr( 'tillaggsfragor', { defaultValue : [] }) ],
 
                         misc: [ 'id',
+                                'textVersion',
                                 new ModelAttr('grundData', {defaultValue: grundData})]
                     });
                 },
