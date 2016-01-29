@@ -38,7 +38,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
-import se.inera.certificate.modules.fkparent.rest.FKModuleApi;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.TransportToInternal;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.WebcertModelFactory;
@@ -49,6 +48,7 @@ import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
@@ -75,7 +75,7 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
-public class SjukpenningUtokadModuleApi implements FKModuleApi {
+public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(SjukpenningUtokadModuleApi.class);
 

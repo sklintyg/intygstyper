@@ -55,6 +55,7 @@ import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
@@ -317,6 +318,11 @@ public class TsDiabetesModuleApi implements ModuleApi {
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
+    }
+    
+    @Override
+    public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
+        throw new UnsupportedOperationException("Module TsDiabetesModuleApi does not support getUtlatandeFromIntyg.");
     }
 
 }

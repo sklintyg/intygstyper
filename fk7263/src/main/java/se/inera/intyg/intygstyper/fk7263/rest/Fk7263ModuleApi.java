@@ -63,6 +63,7 @@ import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 
 /**
@@ -462,6 +463,11 @@ public class Fk7263ModuleApi implements ModuleApi {
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
+    }
+
+    @Override
+    public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
+        throw new UnsupportedOperationException("Module Fk7263 does not support getUtlatandeFromIntyg.");
     }
 
 }
