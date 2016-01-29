@@ -102,6 +102,11 @@
         <artifactId>common-schemas</artifactId>
         <version>${common.version}</version>
       </dependency>
+      <dependency>
+        <groupId>se.inera.intyg.common</groupId>
+        <artifactId>common-services</artifactId>
+        <version>${common.version}</version>
+      </dependency>
 
       <!-- RIVTA Schemas -->
       <dependency>
