@@ -1,0 +1,53 @@
+<a id="top"></a>
+<div class="container-fluid" id="edit-sjukpenning-utokad">
+  <div class="row">
+    <div class="col-md-12 webcert-col webcert-col-single">
+
+      <div ui-view="header"></div>
+
+      <!-- Integration deleted message -->
+      <div id="integration-deleted" ng-if="viewState.common.deleted">
+        <div class="alert alert-info banner-margin">
+          Utkastet är raderat och borttaget från Webcert.
+        </div>
+      </div>
+
+      <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}" wc-size-target>
+
+        <form name="certForm" novalidate autocomplete="off" wc-auto-save>
+          <div ng-hide="viewState.common.error.activeErrorMessageKey || viewState.common.deleted">
+
+            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
+                 show-content="viewState.common.doneLoading">
+
+              <div wc-utkast-error-summary view-state="viewState"></div>
+
+              <div id="certificate" class="row certificate">
+                <div class="col-md-12 cert-body">
+
+                  <div ui-view="formly"/>
+
+                  <!-- 12. Sign doktor -->
+                  <div wc-field-signing-doctor></div>
+
+                </div>
+                <!-- cert body -->
+
+              </div>
+              <!-- certificate -->
+
+              <div ui-view="footer"></div>
+
+            </div>
+          </div>
+
+          <wc-disable-key-down wc-disable-key-down-elements=":text,:checkbox,:radio" wc-disable-key-down-done-loading="viewState.common.doneLoading" />
+
+        </form>
+      </div>
+
+    </div>
+    <!-- span12 webcert-col-single -->
+  </div>
+  <!-- row -->
+</div> <!-- container -->
