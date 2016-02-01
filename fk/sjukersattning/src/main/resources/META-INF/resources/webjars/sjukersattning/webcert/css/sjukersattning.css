@@ -60,4 +60,14 @@ input.ng-invalid-date {
     border-color: #ff6600;
 }
 
+.not-entered {
+    font-style: italic;
+}
 
+.intyg-field {
+    margin-bottom: 10px;
+}
+.intyg-field label {
+    margin-bottom: 0px;
+    font-weight: bold;
+}

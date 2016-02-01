@@ -1,8 +1,9 @@
 angular.module('luse').controller('sjukersattning.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
         'common.messageService', 'common.UserModel', 'sjukersattning.IntygController.ViewStateService',
+        'sjukersattning.FormFactory', 'common.dynamicLabelService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
-            messageService, UserModel, ViewState) {
+            messageService, UserModel, ViewState, formFactory, DynamicLabelService) {
             'use strict';
 
             ViewState.reset();
@@ -19,6 +20,8 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
             ViewState.intygModel = {};
             ViewState.intygModel.filledAlways = true;
 
+            $scope.intygFields = formFactory.formFields;
+
             /**
              * Private
              */
@@ -28,6 +31,9 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
+
+                        var version = '0.9';
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intyg.type, ViewState.intygModel);
 
                         ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FK');
                         ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
@@ -70,4 +76,10 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
             $scope.$on('$destroy', unbindFastEventFail);
 
             $scope.$on('loadCertificate', loadIntyg);
+
+            formFactory.buildTillaggsFragor(ViewState.intygModel, 10);
+            $scope.$on('dynamicLabels.updated', function () {
+                formFactory.buildTillaggsFragor(ViewState.intygModel, 10);
+            });
+
         }]);
