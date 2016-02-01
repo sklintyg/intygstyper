@@ -39,7 +39,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.*;
 public class WebcertModelFactory {
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
-    @Autowired
+    @Autowired(required = false)
     private IntygTextsService intygTexts;
 
     /**
