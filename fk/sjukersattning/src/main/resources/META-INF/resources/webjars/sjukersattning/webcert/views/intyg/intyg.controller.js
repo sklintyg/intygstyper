@@ -21,6 +21,8 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
             ViewState.intygModel.filledAlways = true;
 
             $scope.intygFields = formFactory.formFields;
+            // Remove vardenhet group, uses custom layout
+            formFactory.formFields.pop();
 
             /**
              * Private
@@ -76,10 +78,4 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
             $scope.$on('$destroy', unbindFastEventFail);
 
             $scope.$on('loadCertificate', loadIntyg);
-
-            formFactory.buildTillaggsFragor(ViewState.intygModel, 10);
-            $scope.$on('dynamicLabels.updated', function () {
-                formFactory.buildTillaggsFragor(ViewState.intygModel, 10);
-            });
-
         }]);

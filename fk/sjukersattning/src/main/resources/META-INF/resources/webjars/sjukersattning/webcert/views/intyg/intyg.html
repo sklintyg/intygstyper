@@ -1,5 +1,5 @@
 <div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}" ng-controller="sjukersattning.ViewCertCtrl">
-  <div wc-spinner label="sjukersattning.info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+  <div wc-spinner label="luse.info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
        show-content="viewState.common.doneLoading">
 
     <div ui-view="header"></div>
@@ -59,6 +59,35 @@
                           </div>
                       </div>
                   </div>
+              </div>
+
+              <div wc-field field-dynamic-label="KAT_9999.RBK">
+                <div ng-repeat="tillaggsfraga in viewState.intygModel.tillaggsfragor" class="intyg-field">
+                  <div>
+                    <label><span dynamic-label key="DFR_{{tillaggsfraga.id}}.1.RBK"></span></label>
+                  </div>
+                  {{tillaggsfraga.svar}}
+                </div>
+              </div>
+
+              <div class="infobox">
+                <h3>
+                  <span message key="common.label.ovanstaende-har-bekraftats"></span>
+                </h3>
+                <h4>
+                  <span message key="luse.label.datum"></span>
+                </h4>
+                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date:'longDate'}}</p>
+                <h4>
+                  <span message key="luse.label.kontakt-info"></span>
+                </h4>
+                <p>
+                  <span class="text" id="vardperson_namn">{{viewState.intygModel.grundData.skapadAv.fullstandigtNamn}}</span><br>
+                  <span class="text" id="vardperson_enhetsnamn">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                  <span class="text" id="vardperson_postadress">{{viewState.intygModel.grundData.skapadAv.vardenhet.postadress}}</span><br>
+                  <span class="text"><span id="vardperson_postnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardperson_postort">{{viewState.intygModel.grundData.skapadAv.vardenhet.postort}}</span></span><br>
+                  <span class="text" id="vardperson_telefonnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
+                </p>
               </div>
 
             </div><!-- cert body -->
