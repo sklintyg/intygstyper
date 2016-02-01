@@ -58,7 +58,7 @@ public final class InternalToTransport {
         Intyg intyg = new Intyg();
         intyg.setTyp(getTypAvIntyg(source));
         intyg.setIntygsId(getIntygsId(source));
-        intyg.setVersion("1"); // TODO
+        intyg.setVersion(getTextVersion(source));
         intyg.setSigneringstidpunkt(source.getGrundData().getSigneringsdatum());
         intyg.setSkickatTidpunkt(new LocalDateTime());
         intyg.setSkapadAv(getSkapadAv(source));
@@ -144,6 +144,10 @@ public final class InternalToTransport {
         typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
         typAvIntyg.setDisplayName(source.getTyp());
         return typAvIntyg;
+    }
+
+    private static String getTextVersion(SjukersattningUtlatande source) {
+        return source.getTextVersion();
     }
 
     private static List<Svar> getSvar(SjukersattningUtlatande source) {

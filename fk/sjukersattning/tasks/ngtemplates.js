@@ -4,7 +4,7 @@ module.exports = {
         src: ['**/*.html'],
         dest: 'target/classes/META-INF/resources/webjars/sjukersattning/webcert/templates.js',
         options:{
-            module: 'sjukersattning',
+            module: 'luse',
             url: function(url) {
                 return '/web/webjars/sjukersattning/webcert/' + url;
             }
@@ -15,7 +15,7 @@ module.exports = {
         src: ['**/*.html'],
         dest: 'target/classes/resources/META-INF/resources/webjars/sjukersattning/minaintyg/templates.js',
         options:{
-            module: 'sjukersattning',
+            module: 'luse',
             url: function(url) {
                 return '/web/webjars/sjukersattning/minaintyg/' + url;
             }

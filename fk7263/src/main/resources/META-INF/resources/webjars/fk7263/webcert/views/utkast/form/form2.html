@@ -74,7 +74,7 @@
                 <div class='col-xs-9'>
                     <label class="control-label inline-block"><span message
                                                                     key="fk7263.label.ytterligarediagnoser"></span>
-                        (frivilligt)</label><span wc-enable-tooltip class="absolute"
+                        (frivilligt)</label><span wc-help-mark class="absolute"
                                                   field-help-text="fk7263.helptext.diagnos.ytterligare"></span>
 
                     <div class="bottom-padding-small clearfix">
@@ -114,7 +114,7 @@
             <div class="form-group">
                 <div>
                     <label class="control-label"><span message key="fk7263.label.diagnosfortydligande"></span></label>
-                    <span wc-enable-tooltip field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
+                    <span wc-help-mark field-help-text="fk7263.helptext.diagnos.fortydligande"></span>
                 </div>
                       <textarea id="diagnoseClarification" class="form-control" name="diagnose.clarification" rows='5'
                                 ng-model="model.diagnosBeskrivning" ng-trim="false"
@@ -127,7 +127,7 @@
                     <input type="checkbox" id="diagnoseMultipleDiagnoses" name="diagnose.multipleDiagnoses"
                            ng-model="model.samsjuklighet"
                            ng-change="limitDiagnosBeskrivningField('samsjuklighet')">
-                    Samsjuklighet föreligger</label><span wc-enable-tooltip
+                    Samsjuklighet föreligger</label><span wc-help-mark
                                                           field-help-text="fk7263.helptext.diagnos.samsjuklighet"></span>
             </div>
         </div>

@@ -127,4 +127,10 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
         }
         return bedomning;
     }
+
+    // Not used for this certificate
+    @Override
+    public String getTextVersion() {
+        return null;
+    }
 }
