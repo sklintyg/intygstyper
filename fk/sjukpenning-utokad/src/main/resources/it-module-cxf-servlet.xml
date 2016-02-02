@@ -16,7 +16,7 @@
     </cxf:features>
   </cxf:bus>
 
-  <jaxws:endpoint address="/get-certificate-se/v2.0"
+  <jaxws:endpoint address="/get-sjukpenning-utokad-se/v2.0"
       implementor="se.inera.certificate.modules.fkparent.integration.GetCertificateResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
@@ -25,7 +25,7 @@
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
-  <jaxws:endpoint address="/register-certificate-se/v2.0"
+  <jaxws:endpoint address="/register-sjukpenning-utokad-se/v2.0"
       implementor="se.inera.certificate.modules.fkparent.integration.RegisterCertificateResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
