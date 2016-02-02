@@ -95,6 +95,7 @@ public class SjukpenningUtokadModuleApi implements FKModuleApi {
     private ModuleContainerApi moduleContainer;
 
     @Autowired(required = false)
+    @Qualifier("registerCertificateClient")
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
 
     @Autowired(required = false)

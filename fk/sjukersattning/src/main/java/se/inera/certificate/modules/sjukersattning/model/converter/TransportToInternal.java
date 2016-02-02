@@ -652,7 +652,11 @@ public final class TransportToInternal {
 
     @SuppressWarnings("unchecked")
     private static <T> T getSvarContent(Delsvar delsvar, Class<T> clazz) {
-        Object content = delsvar.getContent().get(0);
+        List<Object> contentList = delsvar.getContent();
+        if (contentList == null || contentList.size() == 0) {
+            return null;
+        }
+        Object content = contentList.get(0);
         if (content instanceof JAXBElement) {
             return ((JAXBElement<T>) content).getValue();
         }
