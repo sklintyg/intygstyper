@@ -78,6 +78,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     // Kategori 2 - Sysselsättning
     // Fråga 28
     // Fråga 28.1
+    @Nullable
     public abstract Sysselsattning getSysselsattning();
 
     // Fråga 29 - Nuvarande arbete
@@ -97,10 +98,12 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     // Kategori 4 - Sjukdomens konsekvenser
     // Fråga 35 - Funktionsnedsättning
     // Fråga 35.1
+    @Nullable
     public abstract String getFunktionsnedsattning();
 
     // Fråga 17 Aktivitetsbegränsning
     // Fråga 17.1
+    @Nullable
     public abstract String getAktivitetsbegransning();
 
     // Kategori 5 - Medicinska behandlingar / åtgärder
@@ -144,6 +147,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     public abstract String getFormagaTrotsBegransning();
 
     // Fråga 39
+    @Nullable
     public abstract Prognos getPrognos();
 
     // Kategori 7 - Åtgärder

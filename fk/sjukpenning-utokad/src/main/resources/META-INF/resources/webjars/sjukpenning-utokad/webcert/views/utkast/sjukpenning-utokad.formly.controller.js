@@ -1,5 +1,5 @@
-angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
-    ['$scope', 'sjukersattning.EditCertCtrl.ViewStateService', 'sjukersattning.FormFactory',
+angular.module('lisu').controller('sjukpenning-utokad.EditCert.FormlyCtrl',
+    ['$scope', 'sjukpenning-utokad.EditCertCtrl.ViewStateService', 'sjukpenning-utokad.FormFactory',
         function FormlyCtrl($scope, viewState, formFactory) {
             'use strict';
 
