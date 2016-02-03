@@ -4,23 +4,6 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
             'use strict';
 
-            var underlagTransform = function(underlagArray) {
-                if (underlagArray) {
-                    underlagArray.forEach(function(underlag) {
-                        if (!underlag.typ) {
-                            underlag.typ = null;
-                        }
-                        if (!underlag.datum) {
-                            underlag.datum = null;
-                        }
-                        if (!underlag.hamtasFran) {
-                            underlag.hamtasFran = null;
-                        }
-                    });
-                }
-                return underlagArray;
-            };
-
             var diagnosTransform = function(diagnosArray) {
                 if (diagnosArray.length === 0) {
                     diagnosArray.push({
@@ -32,23 +15,43 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 return diagnosArray;
             };
 
+            var sjukskrivningTransform = function(sjukskrivningArray) {
+                if (sjukskrivningArray.length === 0) {
+                    sjukskrivningArray.push({
+                        sjukskrivningsgrad: undefined,
+                        period : undefined
+                    });
+                }
+                return sjukskrivningArray;
+            };
+
+            var arbetslivsAtgarderTransform = function(arbetsatgarderArray) {
+                if (arbetsatgarderArray.length === 0) {
+                    arbetsatgarderArray.push({
+                        val: undefined
+                    });
+                }
+                return arbetsatgarderArray;
+            };
+
             var sjukersattningModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
                     init._super.call(this, 'sjukersattningModel', {
 
+                        // Dessa nycklar på grupperna används inte någonstans på något sätt. Men strängarna måste matcha backend för att load/save ska fungera
                         formUnderlag: ['undersokningAvPatienten',
+                            'telefonkontaktMedPatienten',
                             'journaluppgifter',
                             'anhorigsBeskrivningAvPatienten',
                             'annatGrundForMU',
-                            'annatGrundForMUBeskrivning',
-                            'kannedomOmPatient',
-                            'underlagFinns',
-                            new ModelAttr('underlag', {fromTransform: underlagTransform})
+                            'annatGrundForMUBeskrivning'
                         ],
 
-                        formSjukdomsforlopp: [
-                            'sjukdomsforlopp'
+                        formSysselsattning: [
+                            'sysselsattning',
+                            'nuvarandeArbete',
+                            'arbetsmarknadspolitisktProgram'
                         ],
 
                         formDiagnos: [
@@ -58,23 +61,31 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                         formDiagnos2: ['diagnosgrund',
                                  'nyBedomningDiagnosgrund' ],
 
-                        formFunktionsnedsattning: ['funktionsnedsattningIntellektuell',
-                            'funktionsnedsattningKommunikation',
-                            'funktionsnedsattningKoncentration',
-                            'funktionsnedsattningPsykisk',
-                            'funktionsnedsattningSynHorselTal',
-                            'funktionsnedsattningBalansKoordination',
-                            'funktionsnedsattningAnnan'],
+                        formFunktionsnedsattning: [
+                            'funktionsnedsattning',
+                            'aktivitetsbegransning'
+                        ],
 
-                        formAktivitetsBegransning: ['aktivitetsbegransning'],
-
-                        formMedicinskaBehandlingar: ['avslutadBehandling',
+                        formMedicinskaBehandlingar: [
                             'pagaendeBehandling',
-                            'planeradBehandling',
-                            'substansintag'],
+                            'planeradBehandling'
+                        ],
 
-                        formMedicinskaForutsattningar: [ 'medicinskaForutsattningarForArbete',
-                                 'aktivitetsFormaga'],
+                        formBedomning: [
+                            new ModelAttr('sjukskrivningar', {fromTransform: sjukskrivningTransform}),
+                            'forsakringsmedicinsktBeslutsstod',
+                            'arbetstidsforlaggning',
+                            'arbetstidsforlaggningMotivering',
+                            'arbetsresor',
+                            'formagaTrotsBegransning',
+                            'prognos'
+                        ],
+
+                        formAtgarder: [
+                            new ModelAttr('arbetslivsinriktadeAtgarder', {fromTransform: arbetslivsAtgarderTransform}),
+                            'arbetslivsinriktadeAtgarderAktuelltBeskrivning',
+                            'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning',
+                        ],
 
                         formOvrigt: ['ovrigt'],
 

@@ -12,40 +12,32 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                 { type: 'label', templateOptions: { label: 'DFR_1.1.RBK', help: 'DFR_1.1.HLP' } },
                 { type: 'label', templateOptions: { label: 'DFR_1.2.RBK', help: 'DFR_1.2.HLP' } },
                 { key: 'undersokningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.1' } },
-                { key: 'journaluppgifter', type: 'date', templateOptions: { label: 'KV_FKMU_0001.3' } },
-                { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.4' } },
+                { key: 'journaluppgifter', type: 'date', templateOptions: { label: 'KV_FKMU_0001.2' } },
+                { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.3' } },
                 { key: 'annatGrundForMU', type: 'date', templateOptions: { label: 'KV_FKMU_0001.5' } },
-                { key: 'annatGrundForMUBeskrivning',     type: 'single-text', className: 'dfr_1_3', hideExpression: '!model.annatGrundForMU',
-                  templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', indent: true } },
-                { key: 'kannedomOmPatient', type: 'date', templateOptions: { label: 'DFR_2.1' } }
+                { key: 'annatGrundForMUBeskrivning', type: 'single-text', className: 'dfr_1_3', hideExpression: '!model.annatGrundForMU',
+                  templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', indent: true } }
             ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 2, categoryName: 'underlag' },
+            templateOptions: { category: 2, categoryName: 'sysselsattning' },
             fieldGroup: [
-                { key: 'underlagFinns', type: 'boolean', templateOptions: { label: 'DFR_3.1' } },
-                { key: 'underlag', type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: {
-                        underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
-                        typLabel:'DFR_4.1', datumLabel:'DFR_4.2', hamtasFranLabel:'DFR_4.3' },
-                    watcher: {
-                        expression: 'model.underlagFinns',
-                        listener: function (field, newValue, oldValue, scope, stopWatching) {
-                            if (newValue) {
-                                if (!scope.model.underlag || scope.model.underlag.length === 0) {
-                                    scope.model.underlag.push({});
-                                }
-                            }
-                        }
+                { key: 'sysselsattning', type: 'radio-group',
+                    templateOptions: {
+                        label: 'DFR_28.1',
+                        code: 'KV_FKMU_0002',
+                        choices: [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5
+                        ]
                     }
-                }
-            ]
-        },
-        {
-            wrapper: 'wc-field',
-            templateOptions: { category: 3, categoryName: 'sjukdomsforlopp' },
-            fieldGroup: [
-                { key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: { label: 'DFR_5.1' } }
+                },
+                { key: 'nuvarandeArbete', type: 'multi-text', templateOptions: { label: 'DFR_29.1' } },
+                { key: 'arbetsmarknadspolitisktProgram', type: 'multi-text', templateOptions: { label: 'DFR_30.1' } }
             ]
         },
         {

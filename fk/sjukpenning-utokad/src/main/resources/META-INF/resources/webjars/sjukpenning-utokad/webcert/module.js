@@ -6,5 +6,5 @@ angular.module('lisu').run(['common.messageService', 'common.dynamicLabelService
     function(messageService, dynamicLabelService) {
         'use strict';
 
-        messageService.addResources(sjukersattningMessages);
+        messageService.addResources(sjukpenningUtokadMessages);
     }]);
