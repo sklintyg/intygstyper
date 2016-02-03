@@ -85,7 +85,7 @@ public class WebcertModelFactory {
             populateWithNewPersonnummer(grundData, copyData.getNewPersonnummer());
         }
 
-        templateBuilder.setTextVersion(template.getTextVersion());
+        templateBuilder.setTextVersion(intygTexts.getLatestVersion(SjukersattningEntryPoint.MODULE_ID));
 
         resetDataInCopy(grundData);
 
