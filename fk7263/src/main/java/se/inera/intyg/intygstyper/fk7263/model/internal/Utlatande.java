@@ -523,4 +523,10 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
         this.typ = typ;
     }
 
+    // Not used for this certificate
+    @Override
+    public String getTextVersion() {
+        return null;
+    }
+
 }

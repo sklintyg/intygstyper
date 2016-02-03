@@ -131,7 +131,7 @@ public final class InternalToTransport {
         Intyg intyg = new Intyg();
         intyg.setTyp(getTypAvIntyg(source));
         intyg.setIntygsId(getIntygsId(source));
-        intyg.setVersion("1"); // TODO
+        intyg.setVersion(getTextVersion(source));
         intyg.setSigneringstidpunkt(source.getGrundData().getSigneringsdatum());
         // Set this to something else perhaps?
         intyg.setSkickatTidpunkt(source.getGrundData().getSigneringsdatum());
@@ -139,6 +139,10 @@ public final class InternalToTransport {
         intyg.setPatient(getPatient(source.getGrundData().getPatient()));
         intyg.getSvar().addAll(getSvar(source));
         return intyg;
+    }
+
+    private static String getTextVersion(SjukpenningUtokadUtlatande source) {
+        return source.getTextVersion();
     }
 
     private static HosPersonal getSkapadAv(SjukpenningUtokadUtlatande source) {

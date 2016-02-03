@@ -23,8 +23,11 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande.Builder;
+import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
@@ -40,8 +43,11 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 public class WebcertModelFactory {
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
 
+    @Autowired(required = false)
+    private IntygTextsService intygTexts;
+
     /**
-     * Create a new sjukersattning draft pre-populated with the attached data.
+     * Create a new sjukpenning-utokad draft pre-populated with the attached data.
      *
      * @param newDraftData
      *            {@link CreateNewDraftHolder}
@@ -58,6 +64,9 @@ public class WebcertModelFactory {
         populateWithId(template, newDraftData.getCertificateId());
         populateWithSkapadAv(grundData, newDraftData.getSkapadAv());
         populateWithPatientInfo(grundData, newDraftData.getPatient());
+
+        // Default to latest version available of intyg
+        template.setTextVersion(intygTexts.getLatestVersion(SjukpenningUtokadEntryPoint.MODULE_ID));
 
         return template.setGrundData(grundData).build();
     }

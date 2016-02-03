@@ -33,7 +33,7 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
 
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
-    public static final String MODULE_ID = "LISU";
+    public static final String MODULE_ID = "lisu";
     public static final String MODULE_NAME = "Läkarintyg för sjukpenning utökat";
     public static final String MODULE_DESCRIPTION = "Läkarintyg för sjukpenning utökat";
 
@@ -67,16 +67,16 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("sjukersattning-features.properties");
+        return ModuleFeaturesFactory.getFeatures("sjukpenning-utokad-features.properties");
     }
 
     @Override
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukersattning/minaintyg/css/sjukersattning.css";
+            return "/web/webjars/sjukpenning-utokad/minaintyg/css/sjukpenning-utokad.css";
         case WEBCERT:
-            return "/web/webjars/sjukersattning/webcert/css/sjukersattning.css";
+            return "/web/webjars/sjukpenning-utokad/webcert/css/sjukpenning-utokad.css";
         default:
             return null;
         }
@@ -86,9 +86,9 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
     public String getModuleScriptPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukersattning/minaintyg/js/module";
+            return "/web/webjars/sjukpenning-utokad/minaintyg/js/module";
         case WEBCERT:
-            return "/web/webjars/sjukersattning/webcert/module";
+            return "/web/webjars/sjukpenning-utokad/webcert/module";
         default:
             return null;
         }
@@ -98,9 +98,9 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukersattning/minaintyg/js/module-deps.json";
+            return "/web/webjars/sjukpenning-utokad/minaintyg/js/module-deps.json";
         case WEBCERT:
-            return "/web/webjars/sjukersattning/webcert/module-deps.json";
+            return "/web/webjars/sjukpenning-utokad/webcert/module-deps.json";
         default:
             return null;
         }

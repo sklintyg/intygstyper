@@ -51,6 +51,9 @@ public abstract class SjukersattningUtlatande implements Utlatande {
     @Override
     public abstract GrundData getGrundData();
 
+    @Override
+    public abstract String getTextVersion();
+
     // Kategori 1 – Grund för medicinskt underlag
     // Fråga 1
     @Nullable
@@ -195,6 +198,9 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
         @JsonProperty("grundData")
         public abstract Builder setGrundData(GrundData grundData);
+
+        @JsonProperty("textVersion")
+        public abstract Builder setTextVersion(String textVersion);
 
         @JsonProperty("undersokningAvPatienten")
         public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);

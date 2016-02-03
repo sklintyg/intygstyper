@@ -65,6 +65,7 @@ public class TransportToInternalTest {
         SjukersattningUtlatande.Builder utlatande = SjukersattningUtlatande.builder();
         utlatande.setId("1234567");
         utlatande.setGrundData(IntygTestDataBuilder.getGrundData());
+        utlatande.setTextVersion("1.0");
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setKannedomOmPatient(new InternalDate(new LocalDate()));
         utlatande.setUnderlagFinns(true);

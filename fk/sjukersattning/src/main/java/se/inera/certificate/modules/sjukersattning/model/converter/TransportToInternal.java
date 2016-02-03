@@ -124,6 +124,7 @@ public final class TransportToInternal {
         Builder utlatande = SjukersattningUtlatande.builder();
         utlatande.setId(source.getIntygsId().getExtension());
         utlatande.setGrundData(getGrundData(source));
+        utlatande.setTextVersion(source.getVersion());
         setSvar(utlatande, source);
         return utlatande.build();
     }

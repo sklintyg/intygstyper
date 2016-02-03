@@ -1,14 +1,14 @@
 /* jshint maxlen: false, unused: false */
 var sjukersattningMessages = {
     'sv': {
-        'sjukersattning.error.generic': 'Kunde inte visa intyget',
-        'sjukersattning.info.loadingcertificate': 'Hämtar intyget..',
-        'sjukersattning.info.loading.existing.qa': 'Hämtar tidigare frågor och svar...',
-        'sjukersattning.message.certificateloading': 'Hämtar intyg...',
+        'luse.error.generic': 'Kunde inte visa intyget',
+        'luse.info.loadingcertificate': 'Hämtar intyget..',
+        'luse.info.loading.existing.qa': 'Hämtar tidigare frågor och svar...',
+        'luse.message.certificateloading': 'Hämtar intyg...',
 
-        'sjukersattning.label.send': 'Skicka intyg till Försäkringskassan',
-        'sjukersattning.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukersattning hos Försäkringskassan.',
-        'sjukersattning.button.send': 'Skicka till Försäkringskassan',
+        'luse.label.send': 'Skicka intyg till Försäkringskassan',
+        'luse.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukersattning hos Försäkringskassan.',
+        'luse.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukersattning
         'luse.label.certtitle': 'Läkarutlåtande för sjukersättning',
@@ -24,6 +24,12 @@ var sjukersattningMessages = {
         'sjukersattning.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',
         'sjukersattning.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
         'sjukersattning.label.vardenhet': 'Vårdenhetens adress',
+
+        'luse.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
+        'luse.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
+        'luse.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukersattning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
+        'luse.label.datum': 'Datum',
+        'luse.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
 
         /*
          'sjukersattning.label.common': 'Ej angivet',
@@ -94,8 +100,6 @@ var sjukersattningMessages = {
          'sjukersattning.label.rekommendationer.kontakt.ovrigt': 'Övrigt: ',
          'sjukersattning.label.se-ovrigt': 'Övrigt',
          'sjukersattning.label.ovrigt': 'Övrigt',
-         'sjukersattning.label.datum': 'Datum',
-         'sjukersattning.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
          'sjukersattning.label.atgarder': 'Medicinsk behandling',
          'sjukersattning.label.rekommendationer.fk': 'Rekommendationer till Försäkringskassan',
          'sjukersattning.label.fk-kontakt': 'Vill du att Försäkringskassan kontaktar dig?',

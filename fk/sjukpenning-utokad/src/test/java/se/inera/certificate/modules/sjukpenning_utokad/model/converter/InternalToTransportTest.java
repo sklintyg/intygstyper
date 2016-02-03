@@ -69,6 +69,7 @@ public class InternalToTransportTest {
     public static SjukpenningUtokadUtlatande getUtlatande() {
         SjukpenningUtokadUtlatande.Builder utlatande = SjukpenningUtokadUtlatande.builder();
         utlatande.setId("1234567");
+        utlatande.setTextVersion("1.0");
         GrundData grundData = IntygTestDataBuilder.getGrundData();
 
         grundData.setSigneringsdatum(new LocalDateTime("2015-12-07T15:48:05"));
