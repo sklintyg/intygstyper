@@ -329,14 +329,14 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID:
-                grundForMedicinsktUnderlagDatum = new InternalDate(getSvarContent(delsvar, String.class));
+                grundForMedicinsktUnderlagDatum = new InternalDate(getStringContent(delsvar));
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID:
                 String referensTypString = getCVSvarContent(delsvar).getCode();
                 grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID:
-                utlatande.setAnnatGrundForMUBeskrivning(getSvarContent(delsvar, String.class));
+                utlatande.setAnnatGrundForMUBeskrivning(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -365,7 +365,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case KANNEDOM_DELSVAR_ID:
-            utlatande.setKannedomOmPatient(new InternalDate(getSvarContent(delsvar, String.class)));
+            utlatande.setKannedomOmPatient(new InternalDate(getStringContent(delsvar)));
             break;
         default:
             throw new IllegalArgumentException();
@@ -376,7 +376,7 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
                 case UNDERLAGFINNS_DELSVAR_ID:
-                    utlatande.setUnderlagFinns(getBooleanContent(delsvar));
+                    utlatande.setUnderlagFinns(Boolean.valueOf(getStringContent(delsvar)));
                     break;
                 default:
                     throw new IllegalArgumentException();
@@ -395,10 +395,10 @@ public final class TransportToInternal {
                 underlagsTyp = Underlag.UnderlagsTyp.fromId(Integer.parseInt(typ.getCode()));
                 break;
             case UNDERLAG_DATUM_DELSVAR_ID:
-                date = new InternalDate(getSvarContent(delsvar, String.class));
+                date = new InternalDate(getStringContent(delsvar));
                 break;
             case UNDERLAG_HAMTAS_FRAN_DELSVAR_ID:
-                hamtasFran = getSvarContent(delsvar, String.class);
+                hamtasFran = getStringContent(delsvar);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -411,7 +411,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case SJUKDOMSFORLOPP_DELSVAR_ID:
-                utlatande.setSjukdomsforlopp(getSvarContent(delsvar, String.class));
+                utlatande.setSjukdomsforlopp(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -430,7 +430,7 @@ public final class TransportToInternal {
                 diagnosKodSystem = diagnos.getCodeSystem();
                 break;
             case DIAGNOS_BESKRIVNING_DELSVAR_ID:
-                diagnosBeskrivning = getSvarContent(delsvar, String.class);
+                diagnosBeskrivning = getStringContent(delsvar);
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -444,10 +444,10 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
                 case DIAGNOSGRUND_DELSVAR_ID:
-                    utlatande.setDiagnosgrund(getSvarContent(delsvar, String.class));
+                    utlatande.setDiagnosgrund(getStringContent(delsvar));
                     break;
                 case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID:
-                    utlatande.setNyBedomningDiagnosgrund(getBooleanContent(delsvar));
+                    utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getStringContent(delsvar)));
                     break;
                 default:
                     throw new IllegalArgumentException();
@@ -459,7 +459,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID:
-                utlatande.setFunktionsnedsattningIntellektuell(getSvarContent(delsvar, String.class));
+                utlatande.setFunktionsnedsattningIntellektuell(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -470,7 +470,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID:
-                utlatande.setFunktionsnedsattningKommunikation(getSvarContent(delsvar, String.class));
+                utlatande.setFunktionsnedsattningKommunikation(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -481,7 +481,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID:
-                utlatande.setFunktionsnedsattningKoncentration(getSvarContent(delsvar, String.class));
+                utlatande.setFunktionsnedsattningKoncentration(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -492,7 +492,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID:
-                utlatande.setFunktionsnedsattningPsykisk(getSvarContent(delsvar, String.class));
+                utlatande.setFunktionsnedsattningPsykisk(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -503,7 +503,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID:
-                utlatande.setFunktionsnedsattningSynHorselTal(getSvarContent(delsvar, String.class));
+                utlatande.setFunktionsnedsattningSynHorselTal(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -514,7 +514,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID:
-                utlatande.setFunktionsnedsattningBalansKoordination(getSvarContent(delsvar, String.class));
+                utlatande.setFunktionsnedsattningBalansKoordination(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -525,7 +525,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID:
-                utlatande.setFunktionsnedsattningAnnan(getSvarContent(delsvar, String.class));
+                utlatande.setFunktionsnedsattningAnnan(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -536,7 +536,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AKTIVITETSBEGRANSNING_DELSVAR_ID:
-            utlatande.setAktivitetsbegransning(getSvarContent(delsvar, String.class));
+            utlatande.setAktivitetsbegransning(getStringContent(delsvar));
             break;
         default:
             throw new IllegalArgumentException();
@@ -547,7 +547,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case PAGAENDEBEHANDLING_DELSVAR_ID:
-            utlatande.setPagaendeBehandling(getSvarContent(delsvar, String.class));
+            utlatande.setPagaendeBehandling(getStringContent(delsvar));
             break;
         default:
             throw new IllegalArgumentException();
@@ -558,7 +558,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AVSLUTADBEHANDLING_DELSVAR_ID:
-            utlatande.setAvslutadBehandling(getSvarContent(delsvar, String.class));
+            utlatande.setAvslutadBehandling(getStringContent(delsvar));
             break;
         default:
             throw new IllegalArgumentException();
@@ -569,7 +569,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case PLANERADBEHANDLING_DELSVAR_ID:
-            utlatande.setPlaneradBehandling(getSvarContent(delsvar, String.class));
+            utlatande.setPlaneradBehandling(getStringContent(delsvar));
             break;
         default:
             throw new IllegalArgumentException();
@@ -580,7 +580,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case SUBSTANSINTAG_DELSVAR_ID:
-                utlatande.setSubstansintag(getSvarContent(delsvar, String.class));
+                utlatande.setSubstansintag(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -591,7 +591,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
             case MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID:
-                utlatande.setMedicinskaForutsattningarForArbete(getSvarContent(delsvar, String.class));
+                utlatande.setMedicinskaForutsattningarForArbete(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -602,7 +602,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AKTIVITETSFORMAGA_DELSVAR_ID:
-            utlatande.setAktivitetsFormaga(getSvarContent(delsvar, String.class));
+            utlatande.setAktivitetsFormaga(getStringContent(delsvar));
             break;
         default:
             throw new IllegalArgumentException();
@@ -613,7 +613,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case OVRIGT_DELSVAR_ID:
-            utlatande.setOvrigt(getSvarContent(delsvar, String.class));
+            utlatande.setOvrigt(getStringContent(delsvar));
             return;
         default:
             throw new IllegalArgumentException();
@@ -624,10 +624,10 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case KONTAKT_ONSKAS_DELSVAR_ID:
-                utlatande.setKontaktMedFk(getBooleanContent(delsvar));
+                utlatande.setKontaktMedFk(Boolean.valueOf(getStringContent(delsvar)));
                 break;
             case ANLEDNING_TILL_KONTAKT_DELSVAR_ID:
-                utlatande.setAnledningTillKontakt(getSvarContent(delsvar, String.class));
+                utlatande.setAnledningTillKontakt(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -644,7 +644,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         // Kontrollera att ID matchar
         if (delsvar.getId().equals(svar.getId() + ".1")) {
-            tillaggsFragor.add(Tillaggsfraga.create(svar.getId(), getSvarContent(delsvar, String.class)));
+            tillaggsFragor.add(Tillaggsfraga.create(svar.getId(), getStringContent(delsvar)));
         } else {
             throw new IllegalArgumentException();
         }
@@ -659,12 +659,12 @@ public final class TransportToInternal {
         return (T) content;
     }
 
-    private static Boolean getBooleanContent(Delsvar delsvar) {
+    private static String getStringContent(Delsvar delsvar) {
         String string = delsvar.getContent().stream()
             .map(content -> ((String) content).trim())
             .filter(content -> (!content.isEmpty()))
             .reduce("", String::concat);
-        return Boolean.parseBoolean(string);
+        return string;
     }
 
     @SuppressWarnings("unchecked")

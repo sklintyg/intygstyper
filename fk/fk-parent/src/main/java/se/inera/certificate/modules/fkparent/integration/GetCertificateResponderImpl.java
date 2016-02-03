@@ -19,9 +19,16 @@
 
 package se.inera.certificate.modules.fkparent.integration;
 
+import java.io.StringReader;
+
+import javax.xml.bind.JAXB;
+import javax.xml.transform.stream.StreamSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.base.Throwables;
 
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
@@ -31,10 +38,6 @@ import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertif
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
-
-import com.google.common.base.Throwables;
-
-import javax.xml.bind.JAXB;
 
 public class GetCertificateResponderImpl implements GetCertificateResponderInterface {
 
@@ -71,7 +74,8 @@ public class GetCertificateResponderImpl implements GetCertificateResponderInter
 
     protected void setCertificateBody(CertificateHolder certificate, GetCertificateResponseType response) {
         try {
-            RegisterCertificateType jaxbObject = JAXB.unmarshal(certificate.getOriginalCertificate(), RegisterCertificateType.class);
+            StringBuffer sb = new StringBuffer(certificate.getOriginalCertificate());
+            RegisterCertificateType jaxbObject = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())), RegisterCertificateType.class);
             response.setIntyg(jaxbObject.getIntyg());
         } catch (Exception e) {
             LOGGER.error("Error while converting in getMedicalCertificate for id: {} with stacktrace: {}", certificate.getId(), e.getStackTrace());
