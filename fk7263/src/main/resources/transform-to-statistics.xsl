@@ -19,6 +19,10 @@
 
 	<xsl:output method="xml" indent="yes" />
 
+
+
+
+
 	<xsl:template match="ns0:RegisterMedicalCertificate">
 		<p1:RegisterCertificate>
 			<p1:intyg>
@@ -175,58 +179,40 @@
 					</p2:svar>
 				</xsl:if>
 
-				<xsl:choose>
-				<xsl:when test="not(ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:beskrivning)">
-						<p2:svar id="6">
-							<p2:delsvar id="6.1">
-								Information om medicinskt tillstånd
-								saknas.
-							</p2:delsvar>
-							<p2:delsvar id="6.2">
-								<p3:cv>
-									<p3:code>U99</p3:code>
-									<p3:codeSystem>1.2.752.116.1.1.1.1.3</p3:codeSystem>
-								</p3:cv>
-							</p2:delsvar>
-						</p2:svar>
-					</xsl:when>
-					<xsl:otherwise>
-						<p2:svar id="6">
-							<p2:delsvar id="6.1">
-								<xsl:value-of
-									select="ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:beskrivning" />
-							</p2:delsvar>
-							<p2:delsvar id="6.2">
-								<p3:cv>
-									<p3:code>
-										<xsl:value-of
-											select="ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:tillstandskod/@code" />
-									</p3:code>
-									<p3:codeSystem>1.2.752.116.1.1.1.1.3</p3:codeSystem>
-								</p3:cv>
-							</p2:delsvar>
-						</p2:svar>
-					</xsl:otherwise>
-				</xsl:choose>
+	<xsl:choose>
+		<xsl:when
+			test="not(ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:beskrivning)">
+			<xsl:call-template name="diagnostext">
+				<xsl:with-param name="beskrivning" select="'Information om medicinskt tillstånd saknas'" />
+				<xsl:with-param name="code" select="'U99'" />
+				<xsl:with-param name="codeSystem" select="'1.2.752.116.1.1.1.1.3'" />
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+		<xsl:call-template name="diagnostext">
+				<xsl:with-param name="beskrivning" select="ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:beskrivning" />
+				<xsl:with-param name="code" select="ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:tillstandskod/@code" />
+				<xsl:with-param name="codeSystem" select="'1.2.752.116.1.1.1.1.3'" />
+			</xsl:call-template>
 
-				<xsl:choose>
-				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:typAvFunktionstillstand[.='Aktivitet'])">
-						<p2:svar id="17">
-							<p2:delsvar id="17.1">
-								Uppgift om aktivitetsbegränsningar
-								saknas.
-							</p2:delsvar>
-						</p2:svar>
-					</xsl:when>
-					<xsl:otherwise>
-							<p2:svar id="17">
-								<p2:delsvar id="17.1">
-									<xsl:value-of
-										select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:beskrivning" />
-								</p2:delsvar>
-							</p2:svar>
-					</xsl:otherwise>
-				</xsl:choose>
+		</xsl:otherwise>
+	</xsl:choose>
+
+	<xsl:choose>
+		<xsl:when
+			test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:typAvFunktionstillstand[.='Aktivitet'])">
+			<xsl:call-template name="aktivitetsbegransningar">
+				<xsl:with-param name="beskrivning"
+					select="'Uppgift om aktivitetsbegränsningar saknas.'" />
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="aktivitetsbegransningar">
+				<xsl:with-param name="beskrivning"
+					select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:beskrivning" />
+			</xsl:call-template>
+		</xsl:otherwise>
+	</xsl:choose>
 
 				<xsl:choose>
 				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:sysselsattning/ns5:typAvSysselsattning)">
@@ -591,6 +577,36 @@
 				</p3:cv>
 			</xsl:when>
 		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="diagnostext">
+		<xsl:param name="beskrivning" />
+		<xsl:param name="code" />
+		<xsl:param name="codeSystem" />
+		<p2:svar id="6">
+			<p2:delsvar id="6.1">
+				<xsl:value-of
+					select="$beskrivning" />
+
+			</p2:delsvar>
+			<p2:delsvar id="6.2">
+				<p3:cv>
+					<p3:code><xsl:value-of
+					select="$code"/></p3:code>
+					<p3:codeSystem><xsl:value-of
+					select="$codeSystem"/></p3:codeSystem>
+				</p3:cv>
+			</p2:delsvar>
+		</p2:svar>
+	</xsl:template>
+
+	<xsl:template name="aktivitetsbegransningar">
+		<xsl:param name="beskrivning" />
+		<p2:svar id="17">
+			<p2:delsvar id="17.1">
+				<xsl:value-of select="$beskrivning"/>
+			</p2:delsvar>
+		</p2:svar>
 	</xsl:template>
 
 </xsl:stylesheet>
