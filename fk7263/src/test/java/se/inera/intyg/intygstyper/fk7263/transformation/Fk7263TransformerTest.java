@@ -69,7 +69,7 @@ public class Fk7263TransformerTest {
                 "fk7263_utanprognosangivelse.xml", "fk7263_utanmedicinskttillstand.xml", "fk7263_utanfunktionstillstand.xml",
                 "fk7263_utanbedomttillstand.xml", "fk7263_utanarbetsbegransning.xml", "fk7263_utanaktivitet.xml");
 
-        XslTransformer transformer = new XslTransformer("transform-fk7263.xsl");
+        XslTransformer transformer = new XslTransformer("transform-to-statistics.xsl");
 
         for (String xmlFile : testFiles) {
             String xmlContentsInput = Resources.toString(getResource("Fk7263TransformerTest/" + xmlFile), Charsets.UTF_8);

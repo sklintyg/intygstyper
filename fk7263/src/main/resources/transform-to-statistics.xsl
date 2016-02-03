@@ -61,11 +61,11 @@
 					</p2:person-id>
 					<p2:fornamn>
 						<xsl:value-of
-							select="substring-before(ns0:lakarutlatande/ns5:patient/ns3:fullstandigtNamn,$spacedelimiter)" />
+							select="substring-before(ns0:lakarutlatande/ns5:patient/ns3:fullstandigtNamn,' ')" />
 					</p2:fornamn>
 					<p2:efternamn>
 						<xsl:value-of
-							select="substring-after(ns0:lakarutlatande/ns5:patient/ns3:fullstandigtNamn,$spacedelimiter)" />
+							select="substring-after(ns0:lakarutlatande/ns5:patient/ns3:fullstandigtNamn,' ')" />
 					</p2:efternamn>
 				</p2:patient>
 				<p2:skapadAv>
@@ -145,7 +145,6 @@
 					</p2:enhet>
 				</p2:skapadAv>
 
-
 				<xsl:for-each select="ns0:lakarutlatande/ns5:vardkontakt">
 					<p2:svar id="1">
 						<p2:delsvar id="1.1">
@@ -176,10 +175,8 @@
 					</p2:svar>
 				</xsl:if>
 
-				<xsl:variable name="medicinsktTillstand"
-					select="count(ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:beskrivning)" />
 				<xsl:choose>
-					<xsl:when test="$medicinsktTillstand = 0">
+				<xsl:when test="not(ns0:lakarutlatande/ns5:medicinsktTillstand/ns5:beskrivning)">
 						<p2:svar id="6">
 							<p2:delsvar id="6.1">
 								Information om medicinskt tillstånd
@@ -212,12 +209,8 @@
 					</xsl:otherwise>
 				</xsl:choose>
 
-
-
-				<xsl:variable name="count"
-					select="count(ns0:lakarutlatande/ns5:funktionstillstand/ns5:typAvFunktionstillstand[.='Aktivitet'])" />
 				<xsl:choose>
-					<xsl:when test="$count = 0">
+				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:typAvFunktionstillstand[.='Aktivitet'])">
 						<p2:svar id="17">
 							<p2:delsvar id="17.1">
 								Uppgift om aktivitetsbegränsningar
@@ -226,22 +219,17 @@
 						</p2:svar>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:if
-							test="ns0:lakarutlatande/ns5:funktionstillstand/ns5:typAvFunktionstillstand = 'Aktivitet'">
 							<p2:svar id="17">
 								<p2:delsvar id="17.1">
 									<xsl:value-of
 										select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:beskrivning" />
 								</p2:delsvar>
 							</p2:svar>
-						</xsl:if>
 					</xsl:otherwise>
 				</xsl:choose>
 
-				<xsl:variable name="countSysselsattning"
-					select="count(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:sysselsattning/ns5:typAvSysselsattning)" />
 				<xsl:choose>
-					<xsl:when test="$countSysselsattning = 0">
+				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:sysselsattning/ns5:typAvSysselsattning)">
 						<p2:svar id="28">
 							<p2:delsvar id="28.1">
 								<p3:cv>
@@ -263,7 +251,6 @@
 					</xsl:otherwise>
 				</xsl:choose>
 
-
 				<xsl:if
 					test="ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsuppgift/ns5:typAvArbetsuppgift != ''">
 					<p2:svar id="29">
@@ -274,11 +261,8 @@
 					</p2:svar>
 				</xsl:if>
 
-
-				<xsl:variable name="countArb"
-					select="count(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsformagaNedsattning)" />
 				<xsl:choose>
-					<xsl:when test="$countArb = 0">
+				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsformagaNedsattning)">
 						<p2:svar id="32">
 							<p2:delsvar id="32.1">
 								<p3:cv>
@@ -326,8 +310,6 @@
 					</xsl:otherwise>
 				</xsl:choose>
 
-
-
 				<xsl:if
 					test="ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsformagaNedsattning/ns5:nedsattningsgrad != 'Helt_nedsatt'">
 					<p2:svar id="33">
@@ -341,11 +323,8 @@
 					</p2:svar>
 				</xsl:if>
 
-
-				<xsl:variable name="bedomtTillstand"
-					select="count(ns0:lakarutlatande/ns5:bedomtTillstand)" />
 				<xsl:choose>
-					<xsl:when test="$bedomtTillstand = 0">
+                  <xsl:when test="not(ns0:lakarutlatande/ns5:bedomtTillstand)">
 					<p2:svar id="35">
 								<p2:delsvar id="35.1">
 									Bedömt tillstånd saknas. 
@@ -398,10 +377,8 @@
 					</xsl:otherwise>
 				</xsl:choose>
 
-				<xsl:variable name="aktivitet"
-					select="count(ns0:lakarutlatande/ns5:aktivitet)" />
 				<xsl:choose>
-					<xsl:when test="$aktivitet = 0">
+				 <xsl:when test="not(ns0:lakarutlatande/ns5:aktivitet)">
 						<p2:svar id="40">
 							<p2:delsvar id="40.1">
 								<p3:cv>
@@ -433,12 +410,6 @@
 			</p1:intyg>
 		</p1:RegisterCertificate>
 	</xsl:template>
-
-	<xsl:variable name="spacedelimiter" select="' '" />
-
-
-
-
 
 	<xsl:template name="beslutsunderlag">
 		<xsl:param name="list" />
@@ -592,7 +563,6 @@
 		</xsl:choose>
 	</xsl:template>
 
-
 	<xsl:template name="prognos">
 		<xsl:param name="param" />
 		<xsl:choose>
@@ -622,10 +592,6 @@
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
-
-
-
-
 
 </xsl:stylesheet>
 
