@@ -19,7 +19,59 @@
 
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_DATUM_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,24 +79,43 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
-import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.certificate.modules.sjukersattning.model.internal.Diagnos;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
+import se.inera.certificate.modules.sjukersattning.model.internal.Tillaggsfraga;
+import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.*;
-import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Befattning;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Specialistkompetens;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public final class TransportToInternal {
 
     private static final int TILLAGGSFRAGA_START = 9001;
+    
+    private static final Logger LOG = LoggerFactory.getLogger(TransportToInternal.class);
 
     private TransportToInternal() {
     }
@@ -116,7 +187,7 @@ public final class TransportToInternal {
     public static CertificateMetaData getMetaData(Intyg source) {
         CertificateMetaData metaData = new CertificateMetaData();
         metaData.setCertificateId(source.getIntygsId().getExtension());
-        metaData.setCertificateType(source.getTyp().getCode());
+        metaData.setCertificateType(source.getTyp().getCode().toLowerCase());
         // TODO
         metaData.setValidFrom(null);
         metaData.setValidTo(null);
@@ -260,7 +331,7 @@ public final class TransportToInternal {
                 grundForMedicinsktUnderlagDatum = new InternalDate(getSvarContent(delsvar, String.class));
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID:
-                String referensTypString = getSvarContent(delsvar, CVType.class).getCode();
+                String referensTypString = getCVSvarContent(delsvar).getCode();
                 grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID:
@@ -304,7 +375,7 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
                 case UNDERLAGFINNS_DELSVAR_ID:
-                    utlatande.setUnderlagFinns(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+                    utlatande.setUnderlagFinns(getBooleanContent(delsvar));
                     break;
                 default:
                     throw new IllegalArgumentException();
@@ -319,7 +390,7 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case UNDERLAG_TYP_DELSVAR_ID:
-                CVType typ = getSvarContent(delsvar, CVType.class);
+                CVType typ = getCVSvarContent(delsvar);
                 underlagsTyp = Underlag.UnderlagsTyp.fromId(Integer.parseInt(typ.getCode()));
                 break;
             case UNDERLAG_DATUM_DELSVAR_ID:
@@ -353,7 +424,7 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case DIAGNOS_DELSVAR_ID:
-                CVType diagnos = getSvarContent(delsvar, CVType.class);
+                CVType diagnos = getCVSvarContent(delsvar);
                 diagnosKod = diagnos.getCode();
                 diagnosKodSystem = diagnos.getCodeSystem();
                 break;
@@ -375,7 +446,7 @@ public final class TransportToInternal {
                     utlatande.setDiagnosgrund(getSvarContent(delsvar, String.class));
                     break;
                 case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID:
-                    utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+                    utlatande.setNyBedomningDiagnosgrund(getBooleanContent(delsvar));
                     break;
                 default:
                     throw new IllegalArgumentException();
@@ -552,7 +623,7 @@ public final class TransportToInternal {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case KONTAKT_ONSKAS_DELSVAR_ID:
-                utlatande.setKontaktMedFk(Boolean.valueOf(getSvarContent(delsvar, String.class)));
+                utlatande.setKontaktMedFk(getBooleanContent(delsvar));
                 break;
             case ANLEDNING_TILL_KONTAKT_DELSVAR_ID:
                 utlatande.setAnledningTillKontakt(getSvarContent(delsvar, String.class));
@@ -587,4 +658,38 @@ public final class TransportToInternal {
         return (T) content;
     }
 
+    private static Boolean getBooleanContent(Delsvar delsvar) {
+        String string = delsvar.getContent().stream()
+            .map(content -> ((String) content).trim())
+            .filter(content -> (!content.isEmpty()))
+            .reduce("", String::concat);
+        return Boolean.parseBoolean(string);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static CVType getCVSvarContent(Delsvar delsvar) {
+        CVType cvType = new CVType();
+        for (Object o: delsvar.getContent()) {
+            if (o instanceof Node) {
+                Node node = (Node) o;
+                NodeList list = node.getChildNodes();
+                for (int i = 0;i < list.getLength(); i++) {
+                    switch (list.item(i).getNodeName()){
+                    case "ns3:code":
+                        cvType.setCode(list.item(i).getTextContent());
+                        break;
+                    case "ns3:codeSystem":
+                        cvType.setCodeSystem(list.item(i).getTextContent());
+                        break;
+                    default:
+                        LOG.debug("Unexpected element found while parsing CVType");
+                        break;
+                    }
+                }
+            } else if (o instanceof JAXBElement) {
+                return ((JAXBElement<CVType>) o).getValue();
+            }
+        }
+        return cvType;
+    }
 }

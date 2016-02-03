@@ -11,10 +11,9 @@ import java.net.URL;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXB;
-import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
@@ -22,28 +21,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.helger.schematron.svrl.SVRLHelper;
-import com.helger.schematron.svrl.SVRLWriter;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
+import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
+import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 @ContextConfiguration(locations = ("/module-config.xml"))
 @RunWith(SpringJUnit4ClassRunner.class)
-public class InternalToTransportTest {
+public class ConverterTest {
 
     @Autowired
     @Qualifier("sjukersattning-objectMapper")
     private ObjectMapper objectMapper;
-
+    private ConverterUtil converterUtil;
+    
+    @Before
+    public void setUp() {
+        converterUtil = new ConverterUtil();
+        converterUtil.setObjectMapper(objectMapper);
+    }
+    
     @Test
     public void doSchematronValidationSjukersattning() throws Exception {
         String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
@@ -54,52 +60,60 @@ public class InternalToTransportTest {
         RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
-        System.out.println(SVRLWriter.createXMLString(result));
-
         assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
-    private void meh() throws IOException, SAXException {
-        final String CLINICAL_CORE_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_2.0.xsd";
-
-        final String CLINICAL_TYPES_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_types_2.0.xsd";
-
-        final String CLINIAL_REGISTER_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd";
-
-        SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
-        Source rootSource = schemaValidatorBuilder.registerResource(CLINIAL_REGISTER_SCHEMA);
-        schemaValidatorBuilder.registerResource(CLINICAL_TYPES_SCHEMA);
-        schemaValidatorBuilder.registerResource(CLINICAL_CORE_SCHEMA);
-        Schema schema = schemaValidatorBuilder.build(rootSource);
-    }
-    
     @Test
     public void outputJsonFromXml() throws Exception {
 
         String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
-
         RegisterCertificateType transport = JAXB.unmarshal(new StringReader(xmlContents), RegisterCertificateType.class);
+        
 
-        transport.getIntyg().getSvar().stream()
-            .forEach(e -> System.out.println(e.getDelsvar()
-                    .stream()
-                    .map(l -> "DelsvarId: " + l.getId() + " Content: " + l.getContent().toString())
-                    .collect(Collectors.toList())));
-        StringWriter sw = new StringWriter();
-        JAXB.marshal(transport, sw);
-        String xmlAgain = sw.toString();
-        System.out.println(xmlAgain);
-//        SjukersattningUtlatande internal = TransportToInternal.convert(transport.getIntyg());
-//        try {
-//            objectMapper.writeValue(sw, internal);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(sw.toString());
+        String json = getJsonFromTransport(transport);
+        SjukersattningUtlatande utlatandeFromJson = converterUtil.fromJsonString(json);
+
+        RegisterCertificateType transportConvertedALot = InternalToTransport.convert(utlatandeFromJson);
+        String convertedXML = getXmlFromModel(transportConvertedALot);
+
+        // Do schematron validation on the xml-string from the converted transport format
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
+        SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
+        assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
+
+        // Why not validate internal model as well?
+        InternalDraftValidator internalValidator = new InternalDraftValidator();
+        internalValidator.validateDraft(utlatandeFromJson);
+    }
+
+    private String getErrorString(SchematronOutputType result) {
+        StringBuilder errorMsg = new StringBuilder();  
+        SVRLHelper.getAllFailedAssertions(result).stream()
+                .map(e -> e.getText())
+                .collect(Collectors.toList())
+                    .forEach(e -> errorMsg.append(e));
+        return errorMsg.toString();
     }
 
     private static URL getResource(String href) {
         return Thread.currentThread().getContextClassLoader().getResource(href);
+    }
+    
+    private String getXmlFromModel(RegisterCertificateType transport) throws IOException {
+        StringWriter sw = new StringWriter();
+        JAXB.marshal(transport, sw);
+        return sw.toString();
+    }
+
+    private String getJsonFromTransport(RegisterCertificateType transport) throws ConverterException {
+        StringWriter jsonWriter = new StringWriter();
+        SjukersattningUtlatande internal = TransportToInternal.convert(transport.getIntyg());
+        try {
+            objectMapper.writeValue(jsonWriter, internal);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonWriter.toString();
     }
 
 }
