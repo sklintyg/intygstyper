@@ -72,17 +72,13 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
+import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
-
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.sjukersattning.model.internal.Diagnos;
@@ -114,8 +110,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 public final class TransportToInternal {
 
     private static final int TILLAGGSFRAGA_START = 9001;
-    
-    private static final Logger LOG = LoggerFactory.getLogger(TransportToInternal.class);
 
     private TransportToInternal() {
     }
@@ -648,53 +642,5 @@ public final class TransportToInternal {
         } else {
             throw new IllegalArgumentException();
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> T getSvarContent(Delsvar delsvar, Class<T> clazz) {
-        List<Object> contentList = delsvar.getContent();
-        if (contentList == null || contentList.size() == 0) {
-            return null;
-        }
-        Object content = contentList.get(0);
-        if (content instanceof JAXBElement) {
-            return ((JAXBElement<T>) content).getValue();
-        }
-        return (T) content;
-    }
-
-    private static String getStringContent(Delsvar delsvar) {
-        String string = delsvar.getContent().stream()
-            .map(content -> ((String) content).trim())
-            .filter(content -> (!content.isEmpty()))
-            .reduce("", String::concat);
-        return string;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static CVType getCVSvarContent(Delsvar delsvar) {
-        CVType cvType = new CVType();
-        for (Object o: delsvar.getContent()) {
-            if (o instanceof Node) {
-                Node node = (Node) o;
-                NodeList list = node.getChildNodes();
-                for (int i = 0;i < list.getLength(); i++) {
-                    switch (list.item(i).getNodeName()){
-                    case "ns3:code":
-                        cvType.setCode(list.item(i).getTextContent());
-                        break;
-                    case "ns3:codeSystem":
-                        cvType.setCodeSystem(list.item(i).getTextContent());
-                        break;
-                    default:
-                        LOG.debug("Unexpected element found while parsing CVType");
-                        break;
-                    }
-                }
-            } else if (o instanceof JAXBElement) {
-                return ((JAXBElement<CVType>) o).getValue();
-            }
-        }
-        return cvType;
     }
 }

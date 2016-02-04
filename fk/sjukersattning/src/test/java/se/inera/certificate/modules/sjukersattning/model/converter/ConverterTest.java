@@ -43,13 +43,13 @@ public class ConverterTest {
     @Qualifier("sjukersattning-objectMapper")
     private ObjectMapper objectMapper;
     private ConverterUtil converterUtil;
-    
+
     @Before
     public void setUp() {
         converterUtil = new ConverterUtil();
         converterUtil.setObjectMapper(objectMapper);
     }
-    
+
     @Test
     public void doSchematronValidationSjukersattning() throws Exception {
         String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
