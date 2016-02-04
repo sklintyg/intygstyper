@@ -34,4 +34,9 @@
     </jaxws:outFaultInterceptors>
   </jaxws:endpoint>
 
+  <jaxws:client id="registerCertificateClient"
+      serviceClass="se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface"
+      address="${registercertificatev2.endpoint.url}">
+  </jaxws:client>
+
 </beans>
