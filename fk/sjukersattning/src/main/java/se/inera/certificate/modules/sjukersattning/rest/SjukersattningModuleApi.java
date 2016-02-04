@@ -50,6 +50,7 @@ import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
+import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
@@ -336,7 +337,7 @@ public class SjukersattningModuleApi implements ModuleApi {
             SVRLHelper.getAllFailedAssertions(valResult)
                     .forEach(fra -> errorMsgs.append("Text: " + fra + "\n"));
 
-            throw new Exception(String.format("Validation failed with messages %s", errorMsgs));
+            throw new CertificateValidationException(String.format("Validation failed with messages %s", errorMsgs));
         }
         return TransportToInternal.convert(intyg);
     }

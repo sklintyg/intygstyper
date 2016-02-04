@@ -64,6 +64,7 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleConvert
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
+import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateType;
@@ -323,7 +324,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     public Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
         SchematronOutputType valResult = validator.validateSchematron(new StreamSource(new StringReader(xml)));
         if (SVRLHelper.getAllFailedAssertions(valResult).size() > 0) {
-            throw new Exception("Validation failed");
+            throw new CertificateValidationException("Validation failed");
         }
         return TransportToInternal.convert(intyg);
     }
