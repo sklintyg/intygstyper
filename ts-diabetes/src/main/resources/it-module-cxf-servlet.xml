@@ -65,7 +65,7 @@
         </jaxws:schemaLocations>
   </jaxws:endpoint>
   
-  <bean id="tsDiabetesXslTransformer" class="se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer">
+  <bean id="tsDiabetesXslTransformer" class="se.inera.intyg.common.support.model.converter.util.XslTransformer">
     <constructor-arg value="xsl/transform-ts-diabetes.xsl"/>
   </bean>
 

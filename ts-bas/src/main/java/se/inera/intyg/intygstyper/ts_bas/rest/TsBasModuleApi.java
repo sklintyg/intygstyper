@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
@@ -50,7 +51,6 @@ import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
 import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
-import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
@@ -325,5 +325,10 @@ public class TsBasModuleApi implements ModuleApi {
 
     protected void setGetTSBasResponderClient(GetTSBasResponderInterface getTSBasResponderInterface) {
         this.getTSBasResponderInterface = getTSBasResponderInterface;
+    }
+
+    @Override
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return inputXml;
     }
 }
