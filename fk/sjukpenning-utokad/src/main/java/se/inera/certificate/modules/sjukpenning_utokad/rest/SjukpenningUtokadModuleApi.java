@@ -95,6 +95,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     private ModuleContainerApi moduleContainer;
 
     @Autowired(required = false)
+    @Qualifier("registerCertificateClient")
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
 
     @Autowired(required = false)
@@ -326,7 +327,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
         }
         return TransportToInternal.convert(intyg);
     }
-    
+
     @Override
     public String transformToStatisticsService(String inputXml) throws ModuleException {
         return inputXml;

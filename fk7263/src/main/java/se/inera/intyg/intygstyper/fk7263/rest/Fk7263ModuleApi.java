@@ -27,8 +27,6 @@ import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
-import javax.xml.soap.SOAPEnvelope;
-import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.joda.time.LocalDateTime;
@@ -91,7 +89,7 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalToNotification internalToNotficationConverter;
-    
+
     @Autowired(required = false)
     @Qualifier("fXslTransformer")
     private XslTransformer xslTransformer;
@@ -258,7 +256,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
         sendCertificateToRecipient(internalModel, logicalAddress, null);
     }
-    
+
     @Override
     public String transformToStatisticsService(String inputXml) throws ModuleException {
         return xslTransformer.transform(inputXml);

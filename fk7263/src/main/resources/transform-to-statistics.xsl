@@ -197,55 +197,56 @@
 
 		</xsl:otherwise>
 	</xsl:choose>
-
-	<xsl:choose>
-		<xsl:when
-			test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:typAvFunktionstillstand[.='Aktivitet'])">
-			<xsl:call-template name="aktivitetsbegransningar">
-				<xsl:with-param name="beskrivning"
-					select="'Uppgift om aktivitetsbegränsningar saknas.'" />
-			</xsl:call-template>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:call-template name="aktivitetsbegransningar">
-				<xsl:with-param name="beskrivning"
-					select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:beskrivning" />
-			</xsl:call-template>
-		</xsl:otherwise>
-	</xsl:choose>
-
+	
 				<xsl:choose>
-				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:sysselsattning/ns5:typAvSysselsattning)">
-						<p2:svar id="28">
-							<p2:delsvar id="28.1">
-								<p3:cv>
-									<p3:code>2</p3:code>
-									<p3:codeSystem>KV_FKMU_0002</p3:codeSystem>
-								</p3:cv>
-							</p2:delsvar>
-						</p2:svar>
+				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:typAvFunktionstillstand[.='Aktivitet'])">
+				<xsl:call-template name="aktivitetsbegransningar">
+				<xsl:with-param name="beskrivning" select="'Uppgift om aktivitetsbegränsningar saknas.'" />
+			</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<p2:svar id="28">
-							<p2:delsvar id="28.1">
-								<xsl:call-template name="typavarbete">
-									<xsl:with-param name="param"
-										select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:sysselsattning/ns5:typAvSysselsattning" />
-								</xsl:call-template>
-							</p2:delsvar>
-						</p2:svar>
+					<xsl:call-template name="aktivitetsbegransningar">
+				<xsl:with-param name="beskrivning" select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:beskrivning" />
+			</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
 
-				<xsl:if
-					test="ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsuppgift/ns5:typAvArbetsuppgift != ''">
-					<p2:svar id="29">
-						<p2:delsvar id="29.1">
-							<xsl:value-of
-								select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsuppgift/ns5:typAvArbetsuppgift" />
-						</p2:delsvar>
-					</p2:svar>
-				</xsl:if>
+	<xsl:choose>
+		<xsl:when
+			test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:sysselsattning/ns5:typAvSysselsattning)">
+			<p2:svar id="28">
+				<p2:delsvar id="28.1">
+					<p3:cv>
+						<p3:code>2</p3:code>
+						<p3:codeSystem>KV_FKMU_0002</p3:codeSystem>
+					</p3:cv>
+				</p2:delsvar>
+			</p2:svar>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:variable name="sysselsattningar"
+				select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:sysselsattning/ns5:typAvSysselsattning" />
+			<p2:svar id="28">
+				<p2:delsvar id="28.1">
+					<xsl:call-template name="typavarbete">
+						<xsl:with-param name="param"
+							select="$sysselsattningar" />
+					</xsl:call-template>
+				</p2:delsvar>
+			</p2:svar>
+			<xsl:if
+				test="count(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsuppgift/ns5:typAvArbetsuppgift) != 0 and $sysselsattningar[1]='Nuvarande_arbete'">
+				<p2:svar id="29">
+					<p2:delsvar id="29.1">
+						<xsl:value-of
+							select="ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsuppgift/ns5:typAvArbetsuppgift" />
+					</p2:delsvar>
+				</p2:svar>
+			</xsl:if>
+		</xsl:otherwise>
+	</xsl:choose>
+
+				
 
 				<xsl:choose>
 				<xsl:when test="not(ns0:lakarutlatande/ns5:funktionstillstand/ns5:arbetsformaga/ns5:arbetsformagaNedsattning)">
@@ -418,19 +419,19 @@
 	<xsl:template name="typavarbete">
 		<xsl:param name="param" />
 		<xsl:choose>
-			<xsl:when test="contains($param, 'Nuvarande_arbete')">
+			<xsl:when test="contains($param[1], 'Nuvarande_arbete')">
 				<p3:cv>
 					<p3:code>1</p3:code>
 					<p3:codeSystem>KV_FKMU_0002</p3:codeSystem>
 				</p3:cv>
 			</xsl:when>
-			<xsl:when test="contains($param, 'Arbetsloshet')">
+			<xsl:when test="contains($param[1], 'Arbetsloshet')">
 				<p3:cv>
 					<p3:code>2</p3:code>
 					<p3:codeSystem>KV_FKMU_0002</p3:codeSystem>
 				</p3:cv>
 			</xsl:when>
-			<xsl:when test="contains($param, 'Foraldraledighet')">
+			<xsl:when test="contains($param[1], 'Foraldraledighet')">
 				<p3:cv>
 					<p3:code>3</p3:code>
 					<p3:codeSystem>KV_FKMU_0002</p3:codeSystem>

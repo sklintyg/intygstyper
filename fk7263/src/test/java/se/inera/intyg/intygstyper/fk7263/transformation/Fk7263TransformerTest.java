@@ -67,7 +67,7 @@ public class Fk7263TransformerTest {
 
         List<String> testFiles = Arrays.asList("fk7263.xml", "fk7263_utanvardkontakt.xml", "fk7263_utanreferens.xml",
                 "fk7263_utanprognosangivelse.xml", "fk7263_utanmedicinskttillstand.xml", "fk7263_utanfunktionstillstand.xml",
-                "fk7263_utanbedomttillstand.xml", "fk7263_utanarbetsbegransning.xml", "fk7263_utanaktivitet.xml");
+                "fk7263_utanbedomttillstand.xml", "fk7263_utanarbetsbegransning.xml", "fk7263_utanaktivitet.xml", "fk7263_flerasysselsattningar.xml");
 
         XslTransformer transformer = new XslTransformer("transform-to-statistics.xsl");
 
@@ -79,7 +79,7 @@ public class Fk7263TransformerTest {
             }
 
             String result = transformer.transform(xmlContentsInput);
-
+System.out.println(result);
             if (!validateIntygstjansterOutputXSD(result)) {
                 fail();
             }
