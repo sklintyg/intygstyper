@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
@@ -29,8 +30,7 @@ public class TransportConverterUtil {
         return string;
     }
 
-    @SuppressWarnings("unchecked")
-    public static CVType getCVSvarContent(Delsvar delsvar) {
+    public static CVType getCVSvarContent(Delsvar delsvar) throws ConverterException {
         CVType cvType = new CVType();
         for (Object o : delsvar.getContent()) {
             if (o instanceof Node) {
@@ -45,14 +45,19 @@ public class TransportConverterUtil {
                         cvType.setCodeSystem(list.item(i).getTextContent());
                         break;
                     default:
-                        LOG.debug("Unexpected element found while parsing CVType");
+                        LOG.info("Unexpected element found while parsing CVType");
                         break;
                     }
                 }
             } else if (o instanceof JAXBElement) {
-                return ((JAXBElement<CVType>) o).getValue();
+                @SuppressWarnings("unchecked")
+                JAXBElement<CVType> jaxbCvType = ((JAXBElement<CVType>) o);
+                return jaxbCvType.getValue();
             }
         }
-        return cvType.getCode() != null && cvType.getCodeSystem() != null ? cvType : null;
+        if (cvType.getCode() == null || cvType.getCodeSystem() == null){
+            throw new ConverterException("Error while converting CVType");
+        }
+        return cvType;
     }
 }

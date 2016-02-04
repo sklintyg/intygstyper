@@ -228,7 +228,7 @@ public final class TransportToInternal {
         }
     }
 
-    private static void setSvar(Builder utlatande, Intyg source) {
+    private static void setSvar(Builder utlatande, Intyg source) throws ConverterException {
         List<Underlag> underlag = new ArrayList<>();
         List<Diagnos> diagnoser = new ArrayList<>();
         List<Tillaggsfraga> tillaggsfragor = new ArrayList<>();
@@ -317,7 +317,7 @@ public final class TransportToInternal {
         utlatande.setTillaggsfragor(tillaggsfragor);
     }
 
-    private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) {
+    private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) throws ConverterException {
         InternalDate grundForMedicinsktUnderlagDatum = null;
         ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.UNKNOWN;
         for (Delsvar delsvar : svar.getDelsvar()) {
@@ -378,7 +378,7 @@ public final class TransportToInternal {
         }
     }
 
-    private static void handleUnderlag(List<Underlag> underlag, Svar svar) {
+    private static void handleUnderlag(List<Underlag> underlag, Svar svar) throws ConverterException {
         Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
         InternalDate date = null;
         String hamtasFran = null;
@@ -412,7 +412,7 @@ public final class TransportToInternal {
         }
     }
 
-    private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) {
+    private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) throws ConverterException {
         String diagnosKod = null;
         String diagnosKodSystem = null;
         String diagnosBeskrivning = null;
