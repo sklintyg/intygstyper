@@ -66,8 +66,8 @@ import org.springframework.util.xml.SimpleNamespaceContext;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
-import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.BooleanXPathExpression;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.KorkortsKodToIntygAvserMapping;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.XPathEvaluator;

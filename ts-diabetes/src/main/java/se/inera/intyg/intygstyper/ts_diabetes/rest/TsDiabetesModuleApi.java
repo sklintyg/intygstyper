@@ -38,6 +38,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
@@ -51,7 +52,6 @@ import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
 import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
 import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
-import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
@@ -323,6 +323,11 @@ public class TsDiabetesModuleApi implements ModuleApi {
     @Override
     public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
         throw new UnsupportedOperationException("Module TsDiabetesModuleApi does not support getUtlatandeFromIntyg.");
+    }
+
+    @Override
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return inputXml;
     }
 
 }

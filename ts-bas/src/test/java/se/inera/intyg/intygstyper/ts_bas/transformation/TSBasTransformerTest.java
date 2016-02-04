@@ -33,8 +33,8 @@ import javax.xml.validation.Schema;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
-import se.inera.intyg.intygstyper.ts_parent.transformation.XslTransformer;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;

@@ -180,6 +180,16 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+    	<groupId>se.inera.intyg.intygstyper</groupId>
+    	<artifactId>ts-parent</artifactId>
+    	<version>${project.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.helger</groupId>
+    	<artifactId>ph-schematron</artifactId>
+    	<version>3.0.1</version>
+    </dependency>
   </dependencies>
 
   <build>

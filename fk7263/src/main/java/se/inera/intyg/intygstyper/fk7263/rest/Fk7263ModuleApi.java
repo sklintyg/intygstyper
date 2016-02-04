@@ -27,6 +27,8 @@ import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPMessage;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.joda.time.LocalDateTime;
@@ -49,6 +51,7 @@ import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertifica
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
@@ -88,6 +91,10 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalToNotification internalToNotficationConverter;
+    
+    @Autowired(required = false)
+    @Qualifier("fXslTransformer")
+    private XslTransformer xslTransformer;
 
     @Autowired
     @Qualifier("fk7263-objectMapper")
@@ -250,6 +257,11 @@ public class Fk7263ModuleApi implements ModuleApi {
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
         sendCertificateToRecipient(internalModel, logicalAddress, null);
+    }
+    
+    @Override
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return xslTransformer.transform(inputXml);
     }
 
     @Override

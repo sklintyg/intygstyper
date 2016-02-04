@@ -311,6 +311,12 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
+
+    public String transformToStatisticsService(String inputXml) throws ModuleException {
+        return inputXml;
+    }
+
+
     public Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
         SchematronOutputType valResult = validator.validateSchematron(new StreamSource(new StringReader(xml)));
         if (SVRLHelper.getAllFailedAssertions(valResult).size() > 0) {
@@ -318,4 +324,5 @@ public class SjukersattningModuleApi implements ModuleApi {
         }
         return TransportToInternal.convert(intyg);
     }
+
 }
