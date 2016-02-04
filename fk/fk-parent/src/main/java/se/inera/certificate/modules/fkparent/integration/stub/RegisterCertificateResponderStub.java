@@ -19,10 +19,6 @@
 
 package se.inera.certificate.modules.fkparent.integration.stub;
 
-import static se.inera.certificate.modules.fkparent.integration.stub.CertificatesStubStore.*;
-
-import java.util.HashMap;
-
 import javax.xml.ws.WebServiceProvider;
 
 import org.slf4j.Logger;
