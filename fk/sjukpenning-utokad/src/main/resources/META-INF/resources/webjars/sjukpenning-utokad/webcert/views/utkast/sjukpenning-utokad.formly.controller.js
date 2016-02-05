@@ -13,9 +13,9 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCert.FormlyCtrl',
 
             $scope.formFields = formFactory.formFields;
 
-            formFactory.buildTillaggsFragor(viewState.intygModel, 10);
+            formFactory.buildTillaggsFragor(viewState.intygModel, 9);
             $scope.$on('dynamicLabels.updated', function () {
-                formFactory.buildTillaggsFragor(viewState.intygModel, 10);
+                formFactory.buildTillaggsFragor(viewState.intygModel, 9);
             });
 
         }

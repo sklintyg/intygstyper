@@ -19,18 +19,19 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 if (sjukskrivningArray.length === 0) {
                     sjukskrivningArray.push({
                         sjukskrivningsgrad: undefined,
-                        period : undefined
+                        period : {
+                            from: '',
+                            tom: ''
+                        }
                     });
                 }
                 return sjukskrivningArray;
             };
 
             var arbetslivsAtgarderTransform = function(arbetsatgarderArray) {
-                if (arbetsatgarderArray.length === 0) {
-                    arbetsatgarderArray.push({
-                        val: undefined
-                    });
-                }
+                /*if (arbetsatgarderArray.length === 0) {
+                    arbetsatgarderArray.push();
+                }*/
                 return arbetsatgarderArray;
             };
 
@@ -58,9 +59,6 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                             new ModelAttr('diagnoser', {fromTransform: diagnosTransform})
                         ],
 
-                        formDiagnos2: ['diagnosgrund',
-                                 'nyBedomningDiagnosgrund' ],
-
                         formFunktionsnedsattning: [
                             'funktionsnedsattning',
                             'aktivitetsbegransning'
@@ -78,7 +76,8 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                             'arbetstidsforlaggningMotivering',
                             'arbetsresor',
                             'formagaTrotsBegransning',
-                            'prognos'
+                            'prognos',
+                            'fortydligande'
                         ],
 
                         formAtgarder: [
