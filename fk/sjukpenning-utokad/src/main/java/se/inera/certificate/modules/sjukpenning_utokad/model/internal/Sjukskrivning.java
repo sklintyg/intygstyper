@@ -26,6 +26,8 @@ import com.google.auto.value.AutoValue;
 
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Sjukskrivning {
     Sjukskrivning() {
@@ -37,8 +39,10 @@ public abstract class Sjukskrivning {
         return new AutoValue_Sjukskrivning(sjukskrivningsgrad, period);
     }
 
+    @Nullable
     public abstract SjukskrivningsGrad getSjukskrivningsgrad();
 
+    @Nullable
     public abstract InternalLocalDateInterval getPeriod();
 
     public enum SjukskrivningsGrad {
