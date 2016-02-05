@@ -266,7 +266,7 @@ public final class InternalToTransport {
 
         svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID)
                 .withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID, aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM,
-                        Integer.toString(source.getSysselsattning().getSysselsattningsTyp().getId())))
+                        Integer.toString(source.getSysselsattning().getTyp().getId())))
                 .build());
 
         if (source.getNuvarandeArbete() != null) {

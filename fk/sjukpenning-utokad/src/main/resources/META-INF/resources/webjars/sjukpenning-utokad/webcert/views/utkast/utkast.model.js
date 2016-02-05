@@ -40,62 +40,60 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                     var grundData = GrundData.build();
                     init._super.call(this, 'sjukersattningModel', {
 
-                        // Dessa nycklar på grupperna används inte någonstans på något sätt. Men strängarna måste matcha backend för att load/save ska fungera
-                        formUnderlag: ['undersokningAvPatienten',
-                            'telefonkontaktMedPatienten',
-                            'journaluppgifter',
-                            'anhorigsBeskrivningAvPatienten',
-                            'annatGrundForMU',
-                            'annatGrundForMUBeskrivning'
-                        ],
+                        'id': undefined,
+                        'textVersion': undefined,
+                        'grundData': grundData,
 
-                        formSysselsattning: [
-                            'sysselsattning',
-                            'nuvarandeArbete',
-                            'arbetsmarknadspolitisktProgram'
-                        ],
+                        // Kategori 1 Grund för medicinskt underlag
+                        'undersokningAvPatienten': undefined,
+                        'telefonkontaktMedPatienten': undefined,
+                        'journaluppgifter': undefined,
+                        'anhorigsBeskrivningAvPatienten': undefined,
+                        'annatGrundForMU': undefined,
+                        'annatGrundForMUBeskrivning': undefined,
 
-                        formDiagnos: [
-                            new ModelAttr('diagnoser', {fromTransform: diagnosTransform})
-                        ],
+                        // Kategori 2 sysselsättning
+                        'sysselsattning': {
+                            typ: undefined
+                        },
+                        'nuvarandeArbete' : undefined,
+                        'arbetsmarknadspolitisktProgram': undefined,
 
-                        formFunktionsnedsattning: [
-                            'funktionsnedsattning',
-                            'aktivitetsbegransning'
-                        ],
+                        // Kategori 3 diagnos
+                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
 
-                        formMedicinskaBehandlingar: [
-                            'pagaendeBehandling',
-                            'planeradBehandling'
-                        ],
+                        // Kategori 4 Sjukdomens konsekvenser
+                        'funktionsnedsattning': undefined,
+                        'aktivitetsbegransning': undefined,
 
-                        formBedomning: [
-                            new ModelAttr('sjukskrivningar', {fromTransform: sjukskrivningTransform}),
-                            'forsakringsmedicinsktBeslutsstod',
-                            'arbetstidsforlaggning',
-                            'arbetstidsforlaggningMotivering',
-                            'arbetsresor',
-                            'formagaTrotsBegransning',
-                            'prognos',
-                            'fortydligande'
-                        ],
+                        // Kategori 5 Medicinska behandlingar / åtgärder
+                        'pagaendeBehandling': undefined,
+                        'planeradBehandling': undefined,
 
-                        formAtgarder: [
-                            new ModelAttr('arbetslivsinriktadeAtgarder', {fromTransform: arbetslivsAtgarderTransform}),
-                            'arbetslivsinriktadeAtgarderAktuelltBeskrivning',
-                            'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning',
-                        ],
+                        // Kategory 6 Bedömning
+                        'sjukskrivningar': new ModelAttr('sjukskrivningar', {fromTransform: sjukskrivningTransform}),
+                        'forsakringsmedicinsktBeslutsstod': undefined,
+                        'arbetstidsforlaggning': undefined,
+                        'arbetstidsforlaggningMotivering': undefined,
+                        'arbetsresor': undefined,
+                        'formagaTrotsBegransning': undefined,
+                        'prognos': undefined,
+                        'fortydligande': undefined,
 
-                        formOvrigt: ['ovrigt'],
+                        // Kategori 7 Åtgärder
+                        'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {fromTransform: arbetslivsAtgarderTransform}),
+                        'arbetslivsinriktadeAtgarderAktuelltBeskrivning': undefined,
+                        'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning': undefined,
 
-                        formKontakt: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
-                                'anledningTillKontakt'],
+                        // Kategori 8 Övrigt
+                        'ovrigt': undefined,
 
-                        tillaggsfragor: [ new ModelAttr( 'tillaggsfragor', { defaultValue : [] }) ],
+                        // Kategori 9 Kontakt
+                        'kontaktMedFk': new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
+                        'anledningTillKontakt': undefined,
 
-                        misc: [ 'id',
-                                'textVersion',
-                                new ModelAttr('grundData', {defaultValue: grundData})]
+                        // Kategori 9999 Tilläggsfrågor
+                        'tillaggsfragor': new ModelAttr( 'tillaggsfragor', { defaultValue : [] })
                     });
                 },
                 update: function update(content, parent) {

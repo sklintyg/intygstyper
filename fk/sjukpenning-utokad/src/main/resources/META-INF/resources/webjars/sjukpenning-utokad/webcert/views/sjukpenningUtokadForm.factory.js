@@ -23,7 +23,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: { category: 2, categoryName: 'sysselsattning' },
             fieldGroup: [
-                { key: 'sysselsattning', type: 'radio-group',
+                { key: 'sysselsattning.typ', type: 'radio-group',
                     templateOptions: {
                         label: 'DFR_28.1',
                         code: 'KV_FKMU_0002',
