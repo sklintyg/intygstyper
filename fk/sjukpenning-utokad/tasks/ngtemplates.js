@@ -13,7 +13,7 @@ module.exports = {
     minaintyg: {
         cwd: 'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/minaintyg',
         src: ['**/*.html'],
-        dest: 'target/classes/resources/META-INF/resources/webjars/sjukpenning-utokad/minaintyg/templates.js',
+        dest: 'target/classes/META-INF/resources/webjars/sjukpenning-utokad/minaintyg/templates.js',
         options:{
             module: 'lisu',
             url: function(url) {
