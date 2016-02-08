@@ -37,55 +37,61 @@ angular.module('luse').factory('sjukersattning.Domain.IntygModel',
                     var grundData = GrundData.build();
                     init._super.call(this, 'sjukersattningModel', {
 
-                        formUnderlag: ['undersokningAvPatienten',
-                            'journaluppgifter',
-                            'anhorigsBeskrivningAvPatienten',
-                            'annatGrundForMU',
-                            'annatGrundForMUBeskrivning',
-                            'kannedomOmPatient',
-                            'underlagFinns',
-                            new ModelAttr('underlag', {fromTransform: underlagTransform})
-                        ],
+                        'id': undefined,
+                        'textVersion': undefined,
+                        'grundData': grundData,
 
-                        formSjukdomsforlopp: [
-                            'sjukdomsforlopp'
-                        ],
+                        // Kategori 1 Grund för medicinskt underlag
+                        'undersokningAvPatienten':undefined,
+                        'journaluppgifter':undefined,
+                        'anhorigsBeskrivningAvPatienten':undefined,
+                        'annatGrundForMU':undefined,
+                        'annatGrundForMUBeskrivning':undefined,
+                        'kannedomOmPatient':undefined,
 
-                        formDiagnos: [
-                            new ModelAttr('diagnoser', {fromTransform: diagnosTransform})
-                        ],
+                        // Kategori 2 Andra medicinska utredningar och underlag
+                        'underlagFinns':undefined,
+                        'underlag':new ModelAttr('underlag', {fromTransform: underlagTransform}),
 
-                        formDiagnos2: ['diagnosgrund',
-                                 'nyBedomningDiagnosgrund' ],
+                        // Kategori 3 Sjukdomsförlopp
+                        'sjukdomsforlopp':undefined,
 
-                        formFunktionsnedsattning: ['funktionsnedsattningIntellektuell',
-                            'funktionsnedsattningKommunikation',
-                            'funktionsnedsattningKoncentration',
-                            'funktionsnedsattningPsykisk',
-                            'funktionsnedsattningSynHorselTal',
-                            'funktionsnedsattningBalansKoordination',
-                            'funktionsnedsattningAnnan'],
+                        // Ketegori 4 diagnos
+                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
+                        'diagnosgrund': undefined,
+                        'nyBedomningDiagnosgrund': undefined,
 
-                        formAktivitetsBegransning: ['aktivitetsbegransning'],
+                        // Ketagori 5 Funktionsnedsättning
+                        'funktionsnedsattningIntellektuell': undefined,
+                        'funktionsnedsattningKommunikation': undefined,
+                        'funktionsnedsattningKoncentration': undefined,
+                        'funktionsnedsattningPsykisk': undefined,
+                        'funktionsnedsattningSynHorselTal': undefined,
+                        'funktionsnedsattningBalansKoordination': undefined,
+                        'funktionsnedsattningAnnan': undefined,
 
-                        formMedicinskaBehandlingar: ['avslutadBehandling',
-                            'pagaendeBehandling',
-                            'planeradBehandling',
-                            'substansintag'],
+                        // Kategori 6 Aktivitetsbegransning
+                        'aktivitetsbegransning': undefined,
 
-                        formMedicinskaForutsattningar: [ 'medicinskaForutsattningarForArbete',
-                                 'aktivitetsFormaga'],
+                        // Kategori 7 Medicinska behandlingar/åtgärder
+                        'avslutadBehandling': undefined,
+                        'pagaendeBehandling': undefined,
+                        'planeradBehandling': undefined,
+                        'substansintag': undefined,
 
-                        formOvrigt: ['ovrigt'],
+                        // Kategori 8 Medicinska förutsättningar för arbete
+                        'medicinskaForutsattningarForArbete': undefined,
+                        'aktivitetsFormaga': undefined,
 
-                        formKontakt: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
-                                'anledningTillKontakt'],
+                        // Kategori 9 Övrigt
+                        'ovrigt': undefined,
 
-                        tillaggsfragor: [ new ModelAttr( 'tillaggsfragor', { defaultValue : [] }) ],
+                        // Kategori 10 Kontakt
+                        'kontaktMedFk' : new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
+                        'anledningTillKontakt': undefined,
 
-                        misc: [ 'id',
-                                'textVersion',
-                                new ModelAttr('grundData', {defaultValue: grundData})]
+                        // Kategori 9999 Tilläggsfrågor
+                        'tillaggsfragor': [ new ModelAttr( 'tillaggsfragor', { defaultValue : [] }) ]
                     });
                 },
                 update: function update(content, parent) {
