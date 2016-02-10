@@ -150,15 +150,15 @@ public final class TransportToInternal {
 
     private static CertificateState getState(Statuskod status) {
         switch (status.getCode()) {
-        case "DELETED":
+        case "DELETE":
             return CertificateState.DELETED;
-        case "RESTORED":
+        case "RESTOR":
             return CertificateState.RESTORED;
-        case "CANCELLED":
+        case "CANCEL":
             return CertificateState.CANCELLED;
-        case "SENT":
+        case "SENTTO":
             return CertificateState.SENT;
-        case "RECEIVED":
+        case "RECEIV":
             return CertificateState.RECEIVED;
         default:
             throw new IllegalArgumentException();
