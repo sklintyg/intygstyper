@@ -75,6 +75,8 @@ import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
 import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
+
+import se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Diagnos;
@@ -92,18 +94,10 @@ import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.common.internal.Patient;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
-import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Befattning;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Specialistkompetens;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
@@ -120,66 +114,10 @@ public final class TransportToInternal {
     public static SjukpenningUtokadUtlatande convert(Intyg source) throws ConverterException {
         Builder utlatande = SjukpenningUtokadUtlatande.builder();
         utlatande.setId(source.getIntygsId().getExtension());
-        utlatande.setGrundData(getGrundData(source));
+        utlatande.setGrundData(TransportConverterUtil.getGrundData(source));
         utlatande.setTextVersion(source.getVersion());
         setSvar(utlatande, source);
         return utlatande.build();
-    }
-
-    private static GrundData getGrundData(Intyg source) {
-        GrundData grundData = new GrundData();
-        grundData.setPatient(getPatient(source));
-        grundData.setSkapadAv(getSkapadAv(source));
-        grundData.setSigneringsdatum(source.getSigneringstidpunkt());
-        return grundData;
-    }
-
-    private static HoSPersonal getSkapadAv(Intyg source) {
-        HoSPersonal personal = new HoSPersonal();
-        personal.setPersonId(source.getSkapadAv().getPersonalId().getExtension());
-        personal.setFullstandigtNamn(source.getSkapadAv().getFullstandigtNamn());
-        personal.setForskrivarKod(source.getSkapadAv().getForskrivarkod());
-        personal.setVardenhet(getVardenhet(source));
-        for (Befattning befattning : source.getSkapadAv().getBefattning()) {
-            personal.getBefattningar().add(befattning.getCode());
-        }
-        for (Specialistkompetens kompetens : source.getSkapadAv().getSpecialistkompetens()) {
-            personal.getSpecialiteter().add(kompetens.getCode());
-        }
-        return personal;
-    }
-
-    private static Vardenhet getVardenhet(Intyg source) {
-        Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setPostort(source.getSkapadAv().getEnhet().getPostort());
-        vardenhet.setPostadress(source.getSkapadAv().getEnhet().getPostadress());
-        vardenhet.setPostnummer(source.getSkapadAv().getEnhet().getPostnummer());
-        vardenhet.setEpost(source.getSkapadAv().getEnhet().getEpost());
-        vardenhet.setEnhetsid(source.getSkapadAv().getEnhet().getEnhetsId().getExtension());
-        vardenhet.setArbetsplatsKod(source.getSkapadAv().getEnhet().getArbetsplatskod().getExtension());
-        vardenhet.setEnhetsnamn(source.getSkapadAv().getEnhet().getEnhetsnamn());
-        vardenhet.setTelefonnummer(source.getSkapadAv().getEnhet().getTelefonnummer());
-        vardenhet.setVardgivare(getVardgivare(source));
-        return vardenhet;
-    }
-
-    private static Vardgivare getVardgivare(Intyg source) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivarid(source.getSkapadAv().getEnhet().getVardgivare().getVardgivareId().getExtension());
-        vardgivare.setVardgivarnamn(source.getSkapadAv().getEnhet().getVardgivare().getVardgivarnamn());
-        return vardgivare;
-    }
-
-    private static Patient getPatient(Intyg source) {
-        Patient patient = new Patient();
-        patient.setEfternamn(source.getPatient().getEfternamn());
-        patient.setFornamn(source.getPatient().getFornamn());
-        patient.setMellannamn(source.getPatient().getMellannamn());
-        patient.setPostort(source.getPatient().getPostort());
-        patient.setPostnummer(source.getPatient().getPostnummer());
-        patient.setPostadress(source.getPatient().getPostadress());
-        patient.setPersonId(new Personnummer(source.getPatient().getPersonId().getExtension()));
-        return patient;
     }
 
     public static CertificateMetaData getMetaData(Intyg source) {
