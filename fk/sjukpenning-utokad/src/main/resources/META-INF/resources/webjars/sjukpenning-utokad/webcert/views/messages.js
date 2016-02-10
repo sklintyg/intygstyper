@@ -25,6 +25,7 @@ var sjukpenningUtokadMessages = {
         'lisu.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
         'lisu.label.vardenhet': 'Vårdenhetens adress',
 
+        'lisu.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         /*
          'lisu.label.common': 'Ej angivet',
          'lisu.label.field': 'Fält',
