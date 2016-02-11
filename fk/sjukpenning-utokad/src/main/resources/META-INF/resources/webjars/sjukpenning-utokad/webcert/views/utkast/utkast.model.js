@@ -1,7 +1,7 @@
 angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
+        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
             'use strict';
 
             var diagnosTransform = function(diagnosArray) {
@@ -28,14 +28,7 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 return sjukskrivningArray;
             };
 
-            var arbetslivsAtgarderTransform = function(arbetsatgarderArray) {
-                /*if (arbetsatgarderArray.length === 0) {
-                    arbetsatgarderArray.push();
-                }*/
-                return arbetsatgarderArray;
-            };
-
-            var sjukersattningModel = BaseAtticModel._extend({
+            var sjukpenningUtokadModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
                     init._super.call(this, 'sjukersattningModel', {
@@ -81,7 +74,10 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                         'fortydligande': undefined,
 
                         // Kategori 7 Åtgärder
-                        'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {fromTransform: arbetslivsAtgarderTransform}),
+                        'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {
+                            toTransform: ModelTransform.toTypeTransform,
+                            fromTransform: ModelTransform.fromTypeTransform
+                        }),
                         'arbetslivsinriktadeAtgarderAktuelltBeskrivning': undefined,
                         'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning': undefined,
 
@@ -105,13 +101,13 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new sjukersattningModel());
+                    return new DraftModel(new sjukpenningUtokadModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return sjukersattningModel;
+            return sjukpenningUtokadModel;
 
         }]);

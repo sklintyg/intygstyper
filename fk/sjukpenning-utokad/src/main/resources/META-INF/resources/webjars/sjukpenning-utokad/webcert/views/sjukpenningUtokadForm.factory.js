@@ -93,19 +93,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                     templateOptions: {
                         label: 'DFR_40.1',
                         code: 'KV_FKMU_0004',
-                        choices: [
-                            'INTE_AKTUELLT',
-                            'ARBETSTRANING',
-                            'ARBETSANPASSNING',
-                            'SOKA_NYTT_ARBETE',
-                            'BESOK_PA_ARBETSPLATSEN',
-                            'ERGONOMISK_BEDOMNING',
-                            'HJALPMEDEL',
-                            'KONFLIKTHANTERING',
-                            'KONTAKT_MED_FORETAGSHALSOVARD',
-                            'OMFORDELNING_AV_ARBETSUPPGIFTER',
-                            'OVRIGT'
-                        ]
+                        choices: [1,2,3,4,5,6,7,8,9,10,11]
                     }
                 },
                 { key: 'arbetslivsinriktadeAtgarderAktuelltBeskrivning', type: 'multi-text', templateOptions: { label: 'DFR_40.2' } },
