@@ -20,9 +20,9 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
             ViewState.intygModel = {};
             ViewState.intygModel.filledAlways = true;
 
-            $scope.intygFields = formFactory.formFields;
+            $scope.intygFields = formFactory.getFormFields();
             // Remove vardenhet group, uses custom layout
-            formFactory.formFields.pop();
+            $scope.intygFields.pop();
 
             /**
              * Private

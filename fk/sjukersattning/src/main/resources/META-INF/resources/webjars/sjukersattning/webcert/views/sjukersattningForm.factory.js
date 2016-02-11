@@ -1,8 +1,6 @@
 angular.module('luse').factory('sjukersattning.FormFactory', function() {
     'use strict';
 
-    var tillaggsFragor = null;
-
     var formFields = [
         {
             wrapper: 'wc-field',
@@ -114,7 +112,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field-static',
-            templateOptions: { staticLabel: 'sjukersattning.label.vardenhet' },
+            templateOptions: { staticLabel: 'luse.label.vardenhet' },
             fieldGroup: [
                 { type: 'label-vardenhet' },
                 { key: 'grundData.skapadAv.vardenhet.postadress', type: 'single-text', templateOptions: { staticLabel: 'Postadress', size: 'full' } },
@@ -125,7 +123,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         }
     ];
 
-    function _buildTillaggsFragor(model, insertIndex) {
+    function _buildTillaggsFragor(formFields, model, insertIndex) {
         if (!model.tillaggsfragor) {
             return;
         }
@@ -141,6 +139,12 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         }
 
         if (fields.length > 0) {
+            var tillaggsFragor = null;
+            for(var j = 0; j < formFields.length; j++) {
+                if (formFields[j].templateOptions && formFields[j].templateOptions.category === 9999) {
+                    tillaggsFragor = formFields[j];
+                }
+            }
             if (!tillaggsFragor) {
                 tillaggsFragor = {
                     wrapper: 'wc-field',
@@ -153,7 +157,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
     }
 
     return {
-        formFields: formFields,
+        getFormFields: function() { return angular.copy(formFields); },
         buildTillaggsFragor: _buildTillaggsFragor
     };
 });

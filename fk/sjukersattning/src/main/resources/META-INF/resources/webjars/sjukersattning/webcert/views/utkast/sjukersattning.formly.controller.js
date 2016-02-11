@@ -11,11 +11,11 @@ angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
                 formState:{viewState:viewState}
             };
 
-            $scope.formFields = formFactory.formFields;
+            $scope.formFields = formFactory.getFormFields();
 
-            formFactory.buildTillaggsFragor(viewState.intygModel, 10);
+            formFactory.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
             $scope.$on('dynamicLabels.updated', function () {
-                formFactory.buildTillaggsFragor(viewState.intygModel, 10);
+                formFactory.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
             });
 
         }

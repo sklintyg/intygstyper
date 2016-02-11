@@ -77,9 +77,9 @@ angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
 
             $scope.$on('loadCertificate', loadIntyg);
 
-            formFactory.buildTillaggsFragor(ViewState.intygModel, 10);
+            formFactory.buildTillaggsFragor($scope.formFields, ViewState.intygModel, 10);
             $scope.$on('dynamicLabels.updated', function () {
-                formFactory.buildTillaggsFragor(ViewState.intygModel, 10);
+                formFactory.buildTillaggsFragor($scope.formFields, ViewState.intygModel, 10);
             });
 
         }]);
