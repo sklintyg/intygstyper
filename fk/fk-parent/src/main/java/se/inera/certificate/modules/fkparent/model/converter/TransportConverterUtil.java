@@ -58,33 +58,47 @@ public final class TransportConverterUtil {
      * @throws ConverterException
      */
     public static CVType getCVSvarContent(Delsvar delsvar) throws ConverterException {
-        CVType cvType = new CVType();
         for (Object o : delsvar.getContent()) {
             if (o instanceof Node) {
+                CVType cvType = new CVType();
                 Node node = (Node) o;
                 NodeList list = node.getChildNodes();
                 for (int i = 0; i < list.getLength(); i++) {
+                    String textContent = list.item(i).getTextContent();
                     switch (list.item(i).getNodeName()) {
                     case "ns3:code":
-                        cvType.setCode(list.item(i).getTextContent());
+                        cvType.setCode(textContent);
                         break;
                     case "ns3:codeSystem":
-                        cvType.setCodeSystem(list.item(i).getTextContent());
+                        cvType.setCodeSystem(textContent);
+                        break;
+                    case "ns3:codeSystemVersion":
+                        cvType.setCodeSystemVersion(textContent);
+                        break;
+                    case "ns3:codeSystemName":
+                        cvType.setCodeSystemName(textContent);
+                        break;
+                    case "ns3:displayName":
+                        cvType.setDisplayName(textContent);
+                        break;
+                    case "ns3:originalText":
+                        cvType.setOriginalText(textContent);
                         break;
                     default:
-                        LOG.info("Unexpected element found while parsing CVType");
+                        LOG.debug("Unexpected element found while parsing CVType");
                         break;
                     }
                 }
+                if (cvType.getCode() == null || cvType.getCodeSystem() == null) {
+                    throw new ConverterException("Error while converting CVType, missing mandatory field");
+                }
+                return cvType;
             } else if (o instanceof JAXBElement) {
                 @SuppressWarnings("unchecked")
                 JAXBElement<CVType> jaxbCvType = ((JAXBElement<CVType>) o);
                 return jaxbCvType.getValue();
             }
         }
-        if (cvType.getCode() == null || cvType.getCodeSystem() == null) {
-            throw new ConverterException("Error while converting CVType");
-        }
-        return cvType;
+        throw new ConverterException("Unexpected outcome while converting CVType");
     }
 }
