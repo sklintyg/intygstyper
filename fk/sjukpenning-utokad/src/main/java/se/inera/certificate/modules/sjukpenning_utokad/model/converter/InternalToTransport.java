@@ -133,7 +133,6 @@ public final class InternalToTransport {
         intyg.setIntygsId(getIntygsId(source));
         intyg.setVersion(getTextVersion(source));
         intyg.setSigneringstidpunkt(source.getGrundData().getSigneringsdatum());
-        // Set this to something else perhaps?
         intyg.setSkickatTidpunkt(source.getGrundData().getSigneringsdatum());
         intyg.setSkapadAv(getSkapadAv(source));
         intyg.setPatient(getPatient(source.getGrundData().getPatient()));
