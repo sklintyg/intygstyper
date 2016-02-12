@@ -172,7 +172,8 @@ public class TsBasModuleApi implements ModuleApi {
      * @{inheritDoc}
      */
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+            throws ModuleException {
         throw new ModuleException("Feature not supported");
     }
 
@@ -187,8 +188,7 @@ public class TsBasModuleApi implements ModuleApi {
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
         }
 
-        RegisterTSBasResponseType response =
-                registerTSBasResponderInterface.registerTSBas(logicalAddress, request);
+        RegisterTSBasResponseType response = registerTSBasResponderInterface.registerTSBas(logicalAddress, request);
 
         // check whether call was successful or not
         if (response.getResultat().getResultCode() != ResultCodeType.OK) {
@@ -327,7 +327,7 @@ public class TsBasModuleApi implements ModuleApi {
     protected void setGetTSBasResponderClient(GetTSBasResponderInterface getTSBasResponderInterface) {
         this.getTSBasResponderInterface = getTSBasResponderInterface;
     }
-    
+
     @Override
     public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
         throw new UnsupportedOperationException("Module TsBas does not support getUtlatandeFromIntyg.");
