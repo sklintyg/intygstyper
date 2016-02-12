@@ -136,7 +136,6 @@ public final class InternalToTransport {
         Intyg intyg = new Intyg();
         intyg.setTyp(getTypAvIntyg(source));
         intyg.setIntygsId(getIntygsId(source));
-        intyg.setVersion("1.0"); // TODO
         intyg.setVersion(getTextVersion(source));
         intyg.setSigneringstidpunkt(source.getGrundData().getSigneringsdatum());
         intyg.setSkickatTidpunkt(source.getGrundData().getSigneringsdatum());
