@@ -4,7 +4,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
     var formFields = [
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 1, categoryName: 'grundformu' },
+            templateOptions: { category: 1, categoryName: 'grundformu', prototypeName : 'default' },
             fieldGroup: [
                 { type: 'label', templateOptions: { label: 'FRG_1.RBK', help: 'FRG_1.HLP' } },
                 { type: 'label', templateOptions: { label: 'DFR_1.1.RBK', help: 'DFR_1.1.HLP' } },
@@ -20,7 +20,39 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 2, categoryName: 'underlag' },
+            templateOptions: { category: 1, categoryName: 'grundformu', prototypeName : 'prototype0' },
+            fieldGroup: [
+                { type: 'label', templateOptions: { label: 'FRG_1.RBK', help: 'FRG_1.HLP' } },
+                { type: 'label', templateOptions: { label: 'DFR_1.1.RBK', help: 'DFR_1.1.HLP' } }
+            ]
+        },
+        {
+            wrapper: 'wc-field',
+            templateOptions: { category: 1, categoryName: 'grundformu', prototypeName : 'prototype1' },
+            fieldGroup: [
+                { type: 'label', templateOptions: { label: 'FRG_1.RBK', help: 'FRG_1.HLP' } },
+                { type: 'label', templateOptions: { label: 'DFR_1.1.RBK', help: 'DFR_1.1.HLP' } },
+                { type: 'label', templateOptions: { label: 'DFR_1.2.RBK', help: 'DFR_1.2.HLP' } },
+                { key: 'undersokningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.1' } },
+                { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.4' } },
+                { key: 'annatGrundForMU', type: 'date', templateOptions: { label: 'KV_FKMU_0001.5' } },
+                { key: 'annatGrundForMUBeskrivning',     type: 'single-text', className: 'dfr_1_3', hideExpression: '!model.annatGrundForMU',
+                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', indent: true } },
+                { key: 'kannedomOmPatient', type: 'date', templateOptions: { label: 'DFR_2.1' } }
+            ]
+        },
+        {
+            wrapper: 'wc-field',
+            templateOptions: { category: 1, categoryName: 'grundformu', prototypeName : 'prototype2' },
+            fieldGroup: [
+                { key: 'annatGrundForMU', type: 'date', templateOptions: { label: 'KV_FKMU_0001.5' } },
+                { key: 'annatGrundForMUBeskrivning',     type: 'single-text', className: 'dfr_1_3', hideExpression: '!model.annatGrundForMU',
+                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', indent: true } }
+            ]
+        },
+        {
+            wrapper: 'wc-field',
+            templateOptions: { category: 2, categoryName: 'underlag'  },
             fieldGroup: [
                 { key: 'underlagFinns', type: 'boolean', templateOptions: { label: 'DFR_3.1' } },
                 { key: 'underlag', type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: {
@@ -57,7 +89,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 5, categoryName: 'funktionsnedsattning' },
+            templateOptions: { category: 5, categoryName: 'funktionsnedsattning'  },
             fieldGroup: [
                 { key: 'funktionsnedsattningIntellektuell', type: 'multi-text', templateOptions: { label: 'DFR_8.1' } },
                 { key: 'funktionsnedsattningKommunikation', type: 'multi-text', templateOptions: { label: 'DFR_9.1' } },
@@ -104,7 +136,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 10, categoryName: 'kontakt' },
+            templateOptions: { category: 10, categoryName: 'kontakt'},
             fieldGroup: [
                 { key: 'kontaktMedFk', type: 'boolean', templateOptions: { label: 'DFR_26.1' } },
                 { key: 'anledningTillKontakt', type: 'multi-text', hideExpression: '!model.kontaktMedFk', templateOptions: { label: 'DFR_26.2' } }

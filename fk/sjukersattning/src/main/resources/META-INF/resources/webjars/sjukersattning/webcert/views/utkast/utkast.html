@@ -25,6 +25,11 @@
               <div id="certificate" class="row certificate">
                 <div class="col-md-12 cert-body">
 
+                  <select ng-model="viewState.prototypes.selected" data-ng-options="proto.id as proto.label for proto in viewState.prototypes.prototypTemplates"
+                          class="proto-selector pull-right" ng-show="viewState.prototypes.testModeActive == true" >
+                  </select>
+                  {{ viewState.prototypes.selected }}
+
                   <div ui-view="formly"/>
 
                   <!-- 12. Sign doktor -->
