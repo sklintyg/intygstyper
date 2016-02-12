@@ -1,6 +1,6 @@
 angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
-    ['$scope', 'sjukersattning.EditCertCtrl.ViewStateService', 'sjukersattning.FormFactory',
-        function FormlyCtrl($scope, viewState, formFactory) {
+    ['$scope', 'sjukersattning.EditCertCtrl.ViewStateService', 'sjukersattning.FormFactory', 'common.TillaggsfragorHelper',
+        function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper) {
             'use strict';
 
             $scope.viewState = viewState;
@@ -13,9 +13,9 @@ angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
 
             $scope.formFields = formFactory.getFormFields();
 
-            formFactory.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
+            tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
             $scope.$on('dynamicLabels.updated', function () {
-                formFactory.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
+                tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
             });
 
         }
