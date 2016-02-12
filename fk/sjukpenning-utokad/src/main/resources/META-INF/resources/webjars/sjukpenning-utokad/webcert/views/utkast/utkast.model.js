@@ -1,25 +1,8 @@
 angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
+        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
             'use strict';
-
-            var underlagTransform = function(underlagArray) {
-                if (underlagArray) {
-                    underlagArray.forEach(function(underlag) {
-                        if (!underlag.typ) {
-                            underlag.typ = null;
-                        }
-                        if (!underlag.datum) {
-                            underlag.datum = null;
-                        }
-                        if (!underlag.hamtasFran) {
-                            underlag.hamtasFran = null;
-                        }
-                    });
-                }
-                return underlagArray;
-            };
 
             var diagnosTransform = function(diagnosArray) {
                 if (diagnosArray.length === 0) {
@@ -32,60 +15,81 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 return diagnosArray;
             };
 
-            var sjukersattningModel = BaseAtticModel._extend({
+            var sjukskrivningTransform = function(sjukskrivningArray) {
+                if (sjukskrivningArray.length === 0) {
+                    sjukskrivningArray.push({
+                        sjukskrivningsgrad: undefined,
+                        period : {
+                            from: '',
+                            tom: ''
+                        }
+                    });
+                }
+                return sjukskrivningArray;
+            };
+
+            var sjukpenningUtokadModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
                     init._super.call(this, 'sjukersattningModel', {
 
-                        formUnderlag: ['undersokningAvPatienten',
-                            'journaluppgifter',
-                            'anhorigsBeskrivningAvPatienten',
-                            'annatGrundForMU',
-                            'annatGrundForMUBeskrivning',
-                            'kannedomOmPatient',
-                            'underlagFinns',
-                            new ModelAttr('underlag', {fromTransform: underlagTransform})
-                        ],
+                        'id': undefined,
+                        'textVersion': undefined,
+                        'grundData': grundData,
 
-                        formSjukdomsforlopp: [
-                            'sjukdomsforlopp'
-                        ],
+                        // Kategori 1 Grund för medicinskt underlag
+                        'undersokningAvPatienten': undefined,
+                        'telefonkontaktMedPatienten': undefined,
+                        'journaluppgifter': undefined,
+                        'anhorigsBeskrivningAvPatienten': undefined,
+                        'annatGrundForMU': undefined,
+                        'annatGrundForMUBeskrivning': undefined,
 
-                        formDiagnos: [
-                            new ModelAttr('diagnoser', {fromTransform: diagnosTransform})
-                        ],
+                        // Kategori 2 sysselsättning
+                        'sysselsattning': {
+                            typ: undefined
+                        },
+                        'nuvarandeArbete' : undefined,
+                        'arbetsmarknadspolitisktProgram': undefined,
 
-                        formDiagnos2: ['diagnosgrund',
-                                 'nyBedomningDiagnosgrund' ],
+                        // Kategori 3 diagnos
+                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
 
-                        formFunktionsnedsattning: ['funktionsnedsattningIntellektuell',
-                            'funktionsnedsattningKommunikation',
-                            'funktionsnedsattningKoncentration',
-                            'funktionsnedsattningPsykisk',
-                            'funktionsnedsattningSynHorselTal',
-                            'funktionsnedsattningBalansKoordination',
-                            'funktionsnedsattningAnnan'],
+                        // Kategori 4 Sjukdomens konsekvenser
+                        'funktionsnedsattning': undefined,
+                        'aktivitetsbegransning': undefined,
 
-                        formAktivitetsBegransning: ['aktivitetsbegransning'],
+                        // Kategori 5 Medicinska behandlingar / åtgärder
+                        'pagaendeBehandling': undefined,
+                        'planeradBehandling': undefined,
 
-                        formMedicinskaBehandlingar: ['avslutadBehandling',
-                            'pagaendeBehandling',
-                            'planeradBehandling',
-                            'substansintag'],
+                        // Kategory 6 Bedömning
+                        'sjukskrivningar': new ModelAttr('sjukskrivningar', {fromTransform: sjukskrivningTransform}),
+                        'forsakringsmedicinsktBeslutsstod': undefined,
+                        'arbetstidsforlaggning': undefined,
+                        'arbetstidsforlaggningMotivering': undefined,
+                        'arbetsresor': undefined,
+                        'formagaTrotsBegransning': undefined,
+                        'prognos': undefined,
+                        'fortydligande': undefined,
 
-                        formMedicinskaForutsattningar: [ 'medicinskaForutsattningarForArbete',
-                                 'aktivitetsFormaga'],
+                        // Kategori 7 Åtgärder
+                        'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {
+                            toTransform: ModelTransform.toTypeTransform,
+                            fromTransform: ModelTransform.fromTypeTransform
+                        }),
+                        'arbetslivsinriktadeAtgarderAktuelltBeskrivning': undefined,
+                        'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning': undefined,
 
-                        formOvrigt: ['ovrigt'],
+                        // Kategori 8 Övrigt
+                        'ovrigt': undefined,
 
-                        formKontakt: [ new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
-                                'anledningTillKontakt'],
+                        // Kategori 9 Kontakt
+                        'kontaktMedFk': new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
+                        'anledningTillKontakt': undefined,
 
-                        tillaggsfragor: [ new ModelAttr( 'tillaggsfragor', { defaultValue : [] }) ],
-
-                        misc: [ 'id',
-                                'textVersion',
-                                new ModelAttr('grundData', {defaultValue: grundData})]
+                        // Kategori 9999 Tilläggsfrågor
+                        'tillaggsfragor': new ModelAttr( 'tillaggsfragor', { defaultValue : [] })
                     });
                 },
                 update: function update(content, parent) {
@@ -97,13 +101,13 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new sjukersattningModel());
+                    return new DraftModel(new sjukpenningUtokadModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return sjukersattningModel;
+            return sjukpenningUtokadModel;
 
         }]);

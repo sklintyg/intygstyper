@@ -19,12 +19,19 @@
 
 package se.inera.certificate.modules.fkparent.integration.stub;
 
+import static se.inera.intyg.common.support.stub.MedicalCertificatesStore.MAKULERAD;
+import static se.inera.intyg.common.support.stub.MedicalCertificatesStore.MAKULERAD_NEJ;
+import static se.inera.intyg.common.support.stub.MedicalCertificatesStore.PERSONNUMMER;
+
+import java.util.HashMap;
+
 import javax.xml.ws.WebServiceProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.intyg.common.support.stub.MedicalCertificatesStore;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
@@ -33,8 +40,8 @@ public final class RegisterCertificateResponderStub implements RegisterCertifica
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterCertificateResponderStub.class);
 
-    @Autowired
-    private CertificatesStubStore store;
+    @Autowired(required = false)
+    private MedicalCertificatesStore store;
 
     @Override
     public RegisterCertificateResponseType registerCertificate(String logicalAddress, RegisterCertificateType parameters) {
@@ -42,15 +49,19 @@ public final class RegisterCertificateResponderStub implements RegisterCertifica
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         ResultType resultType = new ResultType();
 
-//        HashMap<String, String> properties = new HashMap<>();
-//        Intyg intyg = parameters.getIntyg();
-//        String pnr = intyg.getPatient().getPersonId().getExtension();
-//        String certificateteId = intyg.getIntygsId().getExtension();
-//        properties.put(MAKULERAD, MAKULERAD_NEJ);
-//        properties.put(PERSONNUMMER, pnr);
-//        store.addCertificate(certificateteId, properties);
-//
-        resultType.setResultCode(ResultCodeType.OK);
+        try {
+            HashMap<String, String> properties = new HashMap<>();
+            Intyg intyg = parameters.getIntyg();
+            String pnr = intyg.getPatient().getPersonId().getExtension();
+            String certificateteId = intyg.getIntygsId().getExtension();
+            properties.put(MAKULERAD, MAKULERAD_NEJ);
+            properties.put(PERSONNUMMER, pnr);
+            store.addCertificate(certificateteId, properties);
+            resultType.setResultCode(ResultCodeType.OK);
+        } catch (Exception e) {
+            LOGGER.debug("fk-parent RegisterCertificate got exception: ", e);
+            resultType.setResultCode(ResultCodeType.ERROR);
+        }
         response.setResult(resultType);
         return response;
     }

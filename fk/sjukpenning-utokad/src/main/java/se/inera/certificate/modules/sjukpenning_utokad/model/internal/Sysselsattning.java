@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Sysselsattning {
     Sysselsattning() {
@@ -33,7 +35,8 @@ public abstract class Sysselsattning {
         return new AutoValue_Sysselsattning(typ);
     }
 
-    public abstract SysselsattningsTyp getSysselsattningsTyp();
+    @Nullable
+    public abstract SysselsattningsTyp getTyp();
 
     public enum SysselsattningsTyp {
         NUVARANDE_ARBETE(1, ""),

@@ -24,6 +24,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Prognos {
     Prognos() {
@@ -35,7 +37,9 @@ public abstract class Prognos {
         return new AutoValue_Prognos(prognosTyp, fortydligande);
     }
 
+    @Nullable
     public abstract PrognosTyp getPrognosTyp();
+    @Nullable
     public abstract String getFortydligande();
 
     public enum PrognosTyp {

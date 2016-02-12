@@ -136,34 +136,36 @@ public class InternalDraftValidator {
 
         if (utlatande.getDiagnoser().size() == 0) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                    "sjukersattning.validation.diagnos.missing");
+                    "lisu.validation.diagnos.missing");
         }
         for (Diagnos diagnos : utlatande.getDiagnoser()) {
 
-            String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
             /* R8 För delfråga 6.2 ska diagnoskod anges med så många positioner som möjligt, men minst tre positioner (t.ex. F32).
                R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "sjukersattning.validation.diagnos.missing");
-            } else if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
-                    && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                        "sjukersattning.validation.diagnos.psykisk.length-4");
-            } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                        "sjukersattning.validation.diagnos.length-3");
+                        "lisu.validation.diagnos.missing");
             } else {
-                validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                        "sjukersattning.validation.diagnos.invalid", validationMessages);
+                String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
+                if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
+                        && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
+                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
+                            "lisu.validation.diagnos.psykisk.length-4");
+                } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
+                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
+                            "lisu.validation.diagnos.length-3");
+                } else {
+                    validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
+                            "lisu.validation.diagnos.invalid", validationMessages);
+                }
             }
             if (!StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
                 validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                        "sjukersattning.validation.diagnos.invalid", validationMessages);
+                        "lisu.validation.diagnos.invalid", validationMessages);
             } else {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "sjukersattning.validation.diagnos.missing");
+                        "lisu.validation.diagnos.missing");
             }
         }
 

@@ -1,7 +1,7 @@
 angular.module('lisu').service('sjukpenning-utokad.EditCertCtrl.ViewStateService',
-    ['$log', '$state', 'common.UtkastViewStateService', 'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.Helper',
+    ['$log', '$state', 'common.UtkastViewStateService', 'sjukpenning-utokad.Domain.IntygModel',
         'common.dynamicLabelService',
-        function($log, $state, CommonViewState, IntygModel, helper, dynamicLabelService) {
+        function($log, $state, CommonViewState, IntygModel, dynamicLabelService) {
             'use strict';
 
             this.common = CommonViewState;

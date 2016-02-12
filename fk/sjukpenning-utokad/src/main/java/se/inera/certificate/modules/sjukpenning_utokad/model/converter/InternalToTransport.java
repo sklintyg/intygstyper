@@ -133,7 +133,6 @@ public final class InternalToTransport {
         intyg.setIntygsId(getIntygsId(source));
         intyg.setVersion(getTextVersion(source));
         intyg.setSigneringstidpunkt(source.getGrundData().getSigneringsdatum());
-        // Set this to something else perhaps?
         intyg.setSkickatTidpunkt(source.getGrundData().getSigneringsdatum());
         intyg.setSkapadAv(getSkapadAv(source));
         intyg.setPatient(getPatient(source.getGrundData().getPatient()));
@@ -266,7 +265,7 @@ public final class InternalToTransport {
 
         svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID)
                 .withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID, aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM,
-                        Integer.toString(source.getSysselsattning().getSysselsattningsTyp().getId())))
+                        Integer.toString(source.getSysselsattning().getTyp().getId())))
                 .build());
 
         if (source.getNuvarandeArbete() != null) {

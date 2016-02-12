@@ -30,6 +30,7 @@ var sjukersattningMessages = {
         'luse.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukersattning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
         'luse.label.datum': 'Datum',
         'luse.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
+        'luse.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
 
         /*
          'sjukersattning.label.common': 'Ej angivet',

@@ -532,15 +532,28 @@ public class PdfGenerator {
 
     private String buildOtherText() {
         ArrayList<String> parts = new ArrayList<>();
+
+        if (isValidString(intyg.getAnnanReferensBeskrivning())) {
+            parts.add("4b: " + intyg.getAnnanReferensBeskrivning());
+        }
+
+        List<String> nedsattningDescription = new ArrayList<String>();
+        nedsattningDescription.add(intyg.getNedsattMed25Beskrivning());
+        nedsattningDescription.add(intyg.getNedsattMed50Beskrivning());
+        nedsattningDescription.add(intyg.getNedsattMed75Beskrivning());
+        nedsattningDescription.removeIf(s -> s == null || s.length() == 0);
+        if (!nedsattningDescription.isEmpty()) {
+            parts.add("8b: " + StringUtil.join(". ", nedsattningDescription));
+        }
+
+        if (isValidString(intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+            parts.add("10: " + intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning());
+        }
+
         if (isValidString(intyg.getKommentar())) {
             parts.add(intyg.getKommentar());
         }
-        if (isValidString(intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
-            parts.add("Från fält 10: " + intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning());
-        }
-        if (isValidString(intyg.getAnnanReferensBeskrivning())) {
-            parts.add("Från fält 4b: " + intyg.getAnnanReferensBeskrivning());
-        }
+
         return StringUtils.trimToNull(StringUtil.join(". ", parts));
     }
 

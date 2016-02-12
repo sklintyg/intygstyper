@@ -41,6 +41,7 @@ import se.inera.certificate.modules.sjukersattning.model.converter.*;
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
+import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
@@ -150,8 +151,8 @@ public class SjukersattningModuleApi implements ModuleApi {
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        if (internalModel == null || internalModel.getXmlModel() == null) {
-            throw new ModuleException("Internal model does not contain the original xml, it was {}");
+        if (internalModel == null || internalModel.getXmlModel() == null || StringUtil.isNullOrEmpty(logicalAddress)) {
+            throw new ModuleException("Internal model does not contain the original xml");
         }
         StringBuffer sb = new StringBuffer(internalModel.getXmlModel());
         RegisterCertificateType request = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())), RegisterCertificateType.class);

@@ -13,7 +13,7 @@ module.exports = {
     minaintyg: {
         cwd: 'src/main/resources/META-INF/resources/webjars/sjukersattning/minaintyg',
         src: ['**/*.html'],
-        dest: 'target/classes/resources/META-INF/resources/webjars/sjukersattning/minaintyg/templates.js',
+        dest: 'target/classes/META-INF/resources/webjars/sjukersattning/minaintyg/templates.js',
         options:{
             module: 'luse',
             url: function(url) {

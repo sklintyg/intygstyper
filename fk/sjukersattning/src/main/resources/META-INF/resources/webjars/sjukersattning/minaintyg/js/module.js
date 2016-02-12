@@ -6,43 +6,43 @@ angular.module('luse').config(function($stateProvider) {
 
     $stateProvider.
         state('sjukersattning-view', {
-            url :'/sjukersattning/view/:certificateId',
+            url :'/luse/view/:certificateId',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/view-cert.html',
             controller: 'sjukersattning.ViewCertCtrl',
             data : { title: 'Läkarintyg sjukersättning', keepInboxTabActive: true }
         }).
         state('sjukersattning-recipients', {
-            url : '/sjukersattning/recipients',
+            url : '/luse/recipients',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/recipients.html',
             controller: 'common.SendCertWizardCtrl',
             data : { title: 'Skicka intyg till mottagare' }
         }).
         state('sjukersattning-statushistory', {
-            url : '/sjukersattning/statushistory',
+            url : '/luse/statushistory',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/status-history.html',
             controller: 'sjukersattning.ViewCertCtrl',
             data : { title: 'Alla intygets händelser' }
         }).
         state('sjukersattning-summary', {
-            url : '/sjukersattning/summary',
+            url : '/luse/summary',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/send-summary.html',
             controller: 'common.SendCertWizardCtrl',
             data : { title: 'Kontrollera och skicka intyget' }
         }).
         state('sjukersattning-sent', {
-            url : '/sjukersattning/sent',
+            url : '/luse/sent',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/sent-cert.html',
             controller: 'common.SendCertWizardCtrl',
             data : { title: 'Intyget har skickats' }
         }).
         state('sjukersattning-fel', {
-            url : '/sjukersattning/fel/:errorCode',
+            url : '/luse/fel/:errorCode',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/error.html',
             controller: 'sjukersattning.ErrorCtrl',
             data : { title: 'Fel' }
         }).
         state('sjukersattning-visafel', {
-            url :'/sjukersattning/visafel/:errorCode',
+            url :'/luse/visafel/:errorCode',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/error.html',
             controller: 'sjukersattning.ErrorCtrl',
             data : { title: 'Fel',

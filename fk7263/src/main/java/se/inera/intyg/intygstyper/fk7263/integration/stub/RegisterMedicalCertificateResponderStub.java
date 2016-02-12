@@ -19,6 +19,10 @@
 
 package se.inera.intyg.intygstyper.fk7263.integration.stub;
 
+import static se.inera.intyg.common.support.stub.MedicalCertificatesStore.MAKULERAD;
+import static se.inera.intyg.common.support.stub.MedicalCertificatesStore.MAKULERAD_NEJ;
+import static se.inera.intyg.common.support.stub.MedicalCertificatesStore.PERSONNUMMER;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +39,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificater
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.stub.MedicalCertificatesStore;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
@@ -55,8 +60,8 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
 
     private Vard2FkValidator validator = new Vard2FkValidator();
 
-    @Autowired
-    private FkMedicalCertificatesStore fkMedicalCertificatesStore;
+    @Autowired(required = false)
+    private MedicalCertificatesStore medicalCertificatesStore;
 
     @Override
     public RegisterMedicalCertificateResponseType registerMedicalCertificate(AttributedURIType logicalAddress, RegisterMedicalCertificateType request) {
@@ -72,11 +77,11 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
                 throw new RuntimeException("A runtime exception");
             }
             Map<String, String> props = new HashMap<>();
-            props.put("Personnummer", utlatande.getGrundData().getPatient().getPersonId().getPersonnummer());
-            props.put("Makulerad", "NEJ");
+            props.put(PERSONNUMMER, utlatande.getGrundData().getPatient().getPersonId().getPersonnummer());
+            props.put(MAKULERAD, MAKULERAD_NEJ);
 
             LOGGER.info("STUB Received request");
-            fkMedicalCertificatesStore.addCertificate(id, props);
+            medicalCertificatesStore.addCertificate(id, props);
         } catch (CertificateValidationException e) {
             response.setResult(ResultOfCallUtil.failResult(e.getMessage()));
             return response;

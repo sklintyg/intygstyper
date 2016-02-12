@@ -68,7 +68,6 @@ public class ConverterTest {
 
         String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
         RegisterCertificateType transport = JAXB.unmarshal(new StringReader(xmlContents), RegisterCertificateType.class);
-        
 
         String json = getJsonFromTransport(transport);
         SjukersattningUtlatande utlatandeFromJson = converterUtil.fromJsonString(json);
@@ -87,18 +86,18 @@ public class ConverterTest {
     }
 
     private String getErrorString(SchematronOutputType result) {
-        StringBuilder errorMsg = new StringBuilder();  
+        StringBuilder errorMsg = new StringBuilder();
         SVRLHelper.getAllFailedAssertions(result).stream()
                 .map(e -> e.getText())
                 .collect(Collectors.toList())
-                    .forEach(e -> errorMsg.append(e));
+                .forEach(e -> errorMsg.append(e));
         return errorMsg.toString();
     }
 
     private static URL getResource(String href) {
         return Thread.currentThread().getContextClassLoader().getResource(href);
     }
-    
+
     private String getXmlFromModel(RegisterCertificateType transport) throws IOException {
         StringWriter sw = new StringWriter();
         JAXB.marshal(transport, sw);
