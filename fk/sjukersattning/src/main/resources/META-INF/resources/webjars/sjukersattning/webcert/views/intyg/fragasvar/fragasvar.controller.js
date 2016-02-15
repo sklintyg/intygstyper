@@ -34,7 +34,7 @@ angular.module('luse').controller('sjukersattning.QACtrl',
             };
 
             // Request loading of QA's for this certificate
-            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'sjukersattning', function(result) {
+            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'luse', function(result) {
                 $log.debug('getQAForCertificate:success data:' + result);
                 $scope.widgetState.doneLoading = true;
                 $scope.widgetState.activeErrorMessageKey = null;
@@ -94,7 +94,7 @@ angular.module('luse').controller('sjukersattning.QACtrl',
                 newQuestion.updateInProgress = true; // trigger local spinner
                 $scope.widgetState.sentMessage = false;
 
-                fragaSvarService.saveNewQuestion($stateParams.certificateId, 'sjukersattning', newQuestion,
+                fragaSvarService.saveNewQuestion($stateParams.certificateId, 'luse', newQuestion,
                     function(result) {
                         $log.debug('Got saveNewQuestion result:' + result);
                         newQuestion.updateInProgress = false;

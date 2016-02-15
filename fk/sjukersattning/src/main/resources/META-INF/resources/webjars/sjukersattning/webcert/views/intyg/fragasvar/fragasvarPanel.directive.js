@@ -60,7 +60,7 @@ angular.module('luse').directive('qaPanelsp',
                     $scope.sendAnswer = function sendAnswer(qa) {
                         qa.updateInProgress = true; // trigger local spinner
 
-                        fragaSvarService.saveAnswer(qa, 'sjukersattning', function(result) {
+                        fragaSvarService.saveAnswer(qa, 'luse', function(result) {
                             $log.debug('Got saveAnswer result:' + result);
                             qa.updateInProgress = false;
                             qa.activeErrorMessageKey = null;
@@ -83,7 +83,7 @@ angular.module('luse').directive('qaPanelsp',
                     $scope.onVidareBefordradChange = function(qa) {
                         qa.forwardInProgress = true;
 
-                        fragaSvarCommonService.setVidareBefordradState(qa.internReferens, 'sjukersattning', qa.vidarebefordrad,
+                        fragaSvarCommonService.setVidareBefordradState(qa.internReferens, 'luse', qa.vidarebefordrad,
                             function(result) {
                                 qa.forwardInProgress = false;
 
@@ -142,7 +142,7 @@ angular.module('luse').directive('qaPanelsp',
                         $log.debug('updateAsHandled:' + qa);
                         qa.updateHandledStateInProgress = true;
 
-                        fragaSvarService.closeAsHandled(qa.internReferens, 'sjukersattning', function(result) {
+                        fragaSvarService.closeAsHandled(qa.internReferens, 'luse', function(result) {
                             qa.activeErrorMessageKey = null;
                             qa.updateHandledStateInProgress = false;
                             if (result !== null) {
@@ -172,7 +172,7 @@ angular.module('luse').directive('qaPanelsp',
                         $log.debug('updateAsUnHandled:' + qa);
                         qa.updateHandledStateInProgress = true; // trigger local
 
-                        fragaSvarService.openAsUnhandled(qa.internReferens, 'sjukersattning', function(result) {
+                        fragaSvarService.openAsUnhandled(qa.internReferens, 'luse', function(result) {
                             $log.debug('Got openAsUnhandled result:' + result);
                             qa.activeErrorMessageKey = null;
                             qa.updateHandledStateInProgress = false;
