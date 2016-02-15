@@ -111,7 +111,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 7, categoryName: 'underlag' },
+            templateOptions: { category: 7, categoryName: 'medicinskabehandlingar' },
             fieldGroup: [
                 { key: 'avslutadBehandling', type: 'multi-text', templateOptions: { label: 'DFR_18.1' } },
                 { key: 'pagaendeBehandling', type: 'multi-text', templateOptions: { label: 'DFR_19.1' } },
