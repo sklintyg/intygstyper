@@ -23,7 +23,8 @@ var sjukersattningMessages = {
         'sjukersattning.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
         'sjukersattning.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',
         'sjukersattning.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
-        'sjukersattning.label.vardenhet': 'Vårdenhetens adress',
+
+        'luse.label.vardenhet': 'Vårdenhetens adress',
 
         'luse.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
         'luse.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
