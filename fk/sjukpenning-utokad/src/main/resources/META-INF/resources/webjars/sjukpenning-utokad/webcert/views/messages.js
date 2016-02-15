@@ -26,6 +26,12 @@ var sjukpenningUtokadMessages = {
         'lisu.label.vardenhet': 'Vårdenhetens adress',
 
         'lisu.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
+        'lisu.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
+        'lisu.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
+        'lisu.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om lisu. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
+
+        'lisu.label.datum': 'Datum',
+        'lisu.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         /*
          'lisu.label.common': 'Ej angivet',
          'lisu.label.field': 'Fält',
@@ -95,15 +101,10 @@ var sjukpenningUtokadMessages = {
          'lisu.label.rekommendationer.kontakt.ovrigt': 'Övrigt: ',
          'lisu.label.se-ovrigt': 'Övrigt',
          'lisu.label.ovrigt': 'Övrigt',
-         'lisu.label.datum': 'Datum',
-         'lisu.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
          'lisu.label.atgarder': 'Medicinsk behandling',
          'lisu.label.rekommendationer.fk': 'Rekommendationer till Försäkringskassan',
          'lisu.label.fk-kontakt': 'Vill du att Försäkringskassan kontaktar dig?',
          'lisu.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
-         'lisu.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
-         'lisu.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
-         'lisu.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om lisu. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
          'lisu.label.kopiera.text': 'Kopiera intyg innebär att en kopia skapas av det befintliga intyget och med samma information. I de fall patienten har ändrat namn eller adress så uppdateras den informationen. Uppgifterna i intygsutkastet går att ändra innan det signeras. Kopiera intyg kan användas exempelvis vid förlängning av en sjukskrivning.',
          'lisu.label.transfertoovrigt': 'Informationen överförs till "Övriga upplysningar" vid signering. Tecken kvar påverkas av antalet tecken tillförda i samtliga fält.',
          'lisu.label.atgard.inte-aktuellt': 'Inte aktuellt',

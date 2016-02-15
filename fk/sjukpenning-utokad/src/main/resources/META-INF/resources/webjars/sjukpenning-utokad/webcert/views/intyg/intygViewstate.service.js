@@ -1,4 +1,4 @@
-angular.module('lisu').service('sjukpenning-utokad.IntygController.ViewStateService',
+angular.module('lisu').service('lisu.IntygController.ViewStateService',
     ['$log', 'common.IntygViewStateService',
         function($log, CommonViewState) {
             'use strict';

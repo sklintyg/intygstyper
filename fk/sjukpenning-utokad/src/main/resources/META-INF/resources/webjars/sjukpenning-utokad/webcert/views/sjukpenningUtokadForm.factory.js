@@ -72,14 +72,14 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                 { key: 'arbetstidsforlaggningMotivering', type: 'multi-text', templateOptions: { label: 'DFR_33.2' } },
                 { key: 'arbetsresor', type: 'boolean', templateOptions: { label: 'DFR_34.1' } },
                 { key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: { label: 'DFR_23.1' } },
-                { key: 'prognos', type: 'radio-group',
+                { key: 'prognos.prognosTyp', type: 'radio-group',
                     templateOptions: {
                         label: 'DFR_39.1',
                         code: 'KV_FKMU_0006',
                         choices: [1, 2, 3, 4]
                     }
                 },
-                { key: 'fortydligande', type: 'multi-text', templateOptions: { label: 'DFR_39.2' } },
+                { key: 'prognos.fortydligande', type: 'multi-text', templateOptions: { label: 'DFR_39.2' } },
             ]
         },
         {

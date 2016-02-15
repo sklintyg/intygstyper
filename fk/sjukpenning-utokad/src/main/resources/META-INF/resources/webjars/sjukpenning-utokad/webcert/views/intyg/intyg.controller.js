@@ -1,6 +1,6 @@
-angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
+angular.module('lisu').controller('lisu.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
-        'common.messageService', 'common.UserModel', 'sjukpenning-utokad.IntygController.ViewStateService',
+        'common.messageService', 'common.UserModel', 'lisu.IntygController.ViewStateService',
         'sjukpenning-utokad.FormFactory', 'common.dynamicLabelService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService) {
@@ -21,6 +21,8 @@ angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
             ViewState.intygModel.filledAlways = true;
 
             $scope.intygFields = formFactory.formFields;
+            // Remove vardenhet group, uses custom layout
+            formFactory.formFields.pop();
 
             /**
              * Private
@@ -45,7 +47,7 @@ angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('sjukpenning-utokad.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
+                        $rootScope.$emit('lisu.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
@@ -70,16 +72,11 @@ angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
              * @type {{}}
              */
             $scope.intygBackup = {intyg: null, showBackupInfo: false};
-            var unbindFastEventFail = $rootScope.$on('sjukpenning-utokad.ViewCertCtrl.load.failed', function(event, intyg) {
+            var unbindFastEventFail = $rootScope.$on('lisu.ViewCertCtrl.load.failed', function(event, intyg) {
                 $scope.intygBackup.intyg = intyg;
             });
             $scope.$on('$destroy', unbindFastEventFail);
 
             $scope.$on('loadCertificate', loadIntyg);
 
-            formFactory.buildTillaggsFragor($scope.formFields, ViewState.intygModel, 10);
-            $scope.$on('dynamicLabels.updated', function () {
-                formFactory.buildTillaggsFragor($scope.formFields, ViewState.intygModel, 10);
-            });
-
-        }]);
+		}]);
