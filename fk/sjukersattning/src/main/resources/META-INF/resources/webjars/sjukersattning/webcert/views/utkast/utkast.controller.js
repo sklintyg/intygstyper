@@ -20,7 +20,6 @@ angular.module('luse').controller('sjukersattning.EditCertCtrl',
 
             $scope.viewState.prototypes = {
                 selected : null,
-                testModeActive : true,
                 prototypTemplates: [{
                     id: 'default', label: 'default'
                 }, {
