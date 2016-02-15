@@ -45,8 +45,12 @@ angular.module('luse').controller('sjukersattning.EditCertCtrl',
              * Load certificate and setup form / Constructor ...
              **************************************************************************/
 
-                // Get the certificate draft from the server.
-            UtkastService.load(viewState);
+            // Get the certificate draft from the server.
+            UtkastService.load(viewState).then(function() {
+                if (viewState.common.textVersionUpdated) {
+                    $scope.certForm.$setDirty();
+                }
+            });
 
             $scope.$on('saveRequest', function($event, saveDeferred) {
                 $scope.certForm.$setPristine();
