@@ -20,9 +20,9 @@ angular.module('lisu').controller('lisu.ViewCertCtrl',
             ViewState.intygModel = {};
             ViewState.intygModel.filledAlways = true;
 
-            $scope.intygFields = formFactory.formFields;
+            $scope.intygFields = formFactory.getFormFields();
             // Remove vardenhet group, uses custom layout
-            formFactory.formFields.pop();
+            $scope.intygFields.pop();
 
             /**
              * Private
@@ -34,7 +34,6 @@ angular.module('lisu').controller('lisu.ViewCertCtrl',
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
 
-                        var version = '0.9';
                         DynamicLabelService.updateDynamicLabels(ViewState.common.intyg.type, ViewState.intygModel);
 
                         ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FK');
