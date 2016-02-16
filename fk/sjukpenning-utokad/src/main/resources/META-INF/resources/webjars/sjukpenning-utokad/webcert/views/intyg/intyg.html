@@ -16,58 +16,61 @@
                 <div ng-repeat="field in group.fieldGroup" ng-if="field.key" class="intyg-field">
                   <label ng-if="field.templateOptions.label"><span dynamic-label
                                                                    key="{{field.templateOptions.label}}.RBK"></span></label>
-                  <div ng-if="field.key && viewState.intygModel[field.key] == null" class="not-entered">
-                    Ej angivet
-                  </div>
-                  <div ng-if="field.key && viewState.intygModel[field.key] != null" ng-switch="field.type">
-                    <div ng-switch-when="date">
-                      {{viewState.intygModel[field.key] | date: 'longDate'}}
-                    </div>
-                    <div ng-switch-when="boolean">
-                      <div ng-switch="viewState.intygModel[field.key]">
-                        <div ng-switch-when="true">Ja</div>
-                        <div ng-switch-when="false">Nej</div>
+                  <div field-selective-view="field" field-model="viewState.intygModel">
+                    <div ng-switch="field.type">
+                      <div ng-switch-when="radio-group">
+                        <div radio-view="field" field-model="viewState.intygModel"></div>
                       </div>
-                    </div>
-                    <div ng-switch-when="underlag">
-                      <div ng-repeat="underlag in viewState.intygModel[field.key]">
-                        <div>
-                          <label><span dynamic-label key="{{field.templateOptions.typLabel}}.RBK"></span></label>
-                        </div>
-                        <span dynamic-label key="KV_FKMU_0005.{{underlag.typ}}.RBK"></span></label>
-                        <div>
-                          <label><span dynamic-label key="{{field.templateOptions.datumLabel}}.RBK"></span></label>
-                        </div>
-                        {{underlag.datum | date: 'longDate'}}
-                        <div>
-                          <label><span dynamic-label key="{{field.templateOptions.hamtasFranLabel}}.RBK"></span></label>
-                        </div>
-                        {{underlag.hamtasFran}}
+                      <div ng-switch-when="date">
+                        {{viewState.intygModel[field.key] | date: 'longDate'}}
                       </div>
-                    </div>
-                    <div ng-switch-when="diagnos">
-                      <div ng-repeat="diagnos in viewState.intygModel[field.key]">
-                        <div>
-                          <label><span dynamic-label key="{{field.templateOptions.diagnosKodLabel}}.RBK"></span></label>
+                      <div ng-switch-when="boolean">
+                        <div ng-switch="viewState.intygModel[field.key]">
+                          <div ng-switch-when="true">Ja</div>
+                          <div ng-switch-when="false">Nej</div>
                         </div>
-                        {{diagnos.diagnosKod}}
-                        <div>
-                          <label><span dynamic-label key="{{field.templateOptions.diagnosBeskrivningLabel}}.RBK"></span></label>
+                      </div>
+                      <div ng-switch-when="underlag">
+                        <div ng-repeat="underlag in viewState.intygModel[field.key]">
+                          <div>
+                            <label><span dynamic-label key="{{field.templateOptions.typLabel}}.RBK"></span></label>
+                          </div>
+                          <span dynamic-label key="KV_FKMU_0005.{{underlag.typ}}.RBK"></span></label>
+                          <div>
+                            <label><span dynamic-label key="{{field.templateOptions.datumLabel}}.RBK"></span></label>
+                          </div>
+                          {{underlag.datum | date: 'longDate'}}
+                          <div>
+                            <label><span dynamic-label
+                                         key="{{field.templateOptions.hamtasFranLabel}}.RBK"></span></label>
+                          </div>
+                          {{underlag.hamtasFran}}
                         </div>
-                        {{diagnos.diagnosBeskrivning}}
                       </div>
-                    </div>
-                    <div ng-switch-when="check-group">
-
-                      <!-- arbetslivsinriktadeAtgarder -->
-                      <div data-ng-repeat="asa in viewState.intygModel[field.key]">
-                        <ul>
-                          <li><span dynamic-label key="KV_FKMU_0004.{{asa.val}}.RBK"></span></li>
-                        </ul>
+                      <div ng-switch-when="diagnos">
+                        <div ng-repeat="diagnos in viewState.intygModel[field.key]">
+                          <div>
+                            <label><span dynamic-label
+                                         key="{{field.templateOptions.diagnosKodLabel}}.RBK"></span></label>
+                          </div>
+                          {{diagnos.diagnosKod}}
+                          <div>
+                            <label><span dynamic-label
+                                         key="{{field.templateOptions.diagnosBeskrivningLabel}}.RBK"></span></label>
+                          </div>
+                          {{diagnos.diagnosBeskrivning}}
+                        </div>
                       </div>
-                    </div>
-                    <div ng-switch-default>
-                      {{viewState.intygModel[field.key]}}
+                      <div ng-switch-when="check-group">
+                        <div data-ng-repeat="asa in viewState.intygModel[field.key]">
+                          <ul>
+                            <li><span dynamic-label key="{{field.templateOptions.code}}.{{asa.val}}.RBK"></span></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div ng-switch-default>
+                        <div default-view="field" field-model="viewState.intygModel"></div>
+                      </div>
                     </div>
                   </div>
                 </div>

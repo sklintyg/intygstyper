@@ -17,6 +17,5 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCert.FormlyCtrl',
             $scope.$on('dynamicLabels.updated', function () {
                 tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, 9);
             });
-
         }
     ]);
