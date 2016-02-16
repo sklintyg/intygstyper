@@ -47,7 +47,7 @@ angular.module('luse').controller('sjukersattning.ViewCertCtrl',
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('sjukersattning.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
+                        $rootScope.$emit('ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
