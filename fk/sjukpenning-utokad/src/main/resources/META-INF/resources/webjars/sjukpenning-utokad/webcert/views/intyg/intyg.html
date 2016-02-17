@@ -30,6 +30,9 @@
                           <div ng-switch-when="false">Nej</div>
                         </div>
                       </div>
+                      <div ng-switch-when="sjukskrivningar">
+                        <div sjukskrivning-view="field" field-model="viewState.intygModel"></div>
+                      </div>
                       <div ng-switch-when="underlag">
                         <div ng-repeat="underlag in viewState.intygModel[field.key]">
                           <div>

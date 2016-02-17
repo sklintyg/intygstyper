@@ -63,7 +63,7 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 angular.forEach(sjukskrivningObject, function(value, key) {
                     if(!ObjectHelper.isEmpty(value.period.from) || !ObjectHelper.isEmpty(value.period.tom)) {
                         resultArray.push({
-                            sjukskrivningsGrad: parseInt(key),
+                            sjukskrivningsgrad: parseInt(key),
                             period: {
                                 from: value.period.from,
                                 tom: value.period.tom
