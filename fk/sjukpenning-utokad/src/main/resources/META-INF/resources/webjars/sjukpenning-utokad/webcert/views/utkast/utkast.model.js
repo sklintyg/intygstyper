@@ -1,7 +1,7 @@
 angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
+        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService', 'common.ObjectHelper',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform, ObjectHelper) {
             'use strict';
 
             var diagnosTransform = function(diagnosArray) {
@@ -15,17 +15,64 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 return diagnosArray;
             };
 
-            var sjukskrivningTransform = function(sjukskrivningArray) {
-                if (sjukskrivningArray.length === 0) {
-                    sjukskrivningArray.push({
-                        sjukskrivningsgrad: undefined,
-                        period : {
-                            from: '',
-                            tom: ''
+            var sjukskrivningFromTransform = function(sjukskrivningArray) {
+
+                /*if (sjukskrivningArray.length < 4) {
+
+                    for(var i = 1; i <= 4; i++){
+
+                        if(i > sjukskrivningArray.length - 1)
+                        {
+                            sjukskrivningArray.push({
+                                sjukskrivningsgrad: i,
+                                period : {
+                                    from: '',
+                                    tom: ''
+                                }
+                            });
                         }
-                    });
+                        else if(sjukskrivningArray[i - 1].sjukskrivningsgrad != i){
+                            sjukskrivningArray.splice(i, 0, {
+                                sjukskrivningsgrad: i,
+                                period : {
+                                    from: '',
+                                    tom: ''
+                                }
+                            });
+                        }
+
+                    }
+
+                }*/
+
+                var resultObject = {};
+
+                for(var i = 0; i < sjukskrivningArray.length; i++){
+                    resultObject[sjukskrivningArray[i].sjukskrivningsgrad] = {
+                        period: sjukskrivningArray[i].period
+                    }
                 }
-                return sjukskrivningArray;
+
+                return resultObject;
+            };
+
+            var sjukskrivningToTransform = function(sjukskrivningObject) {
+
+                var resultArray = [];
+
+                angular.forEach(sjukskrivningObject, function(value, key) {
+                    if(!ObjectHelper.isEmpty(value.period.from) || !ObjectHelper.isEmpty(value.period.tom)) {
+                        resultArray.push({
+                            sjukskrivningsGrad: parseInt(key),
+                            period: {
+                                from: value.period.from,
+                                tom: value.period.tom
+                            }
+                        });
+                    }
+                }, sjukskrivningObject);
+
+                return resultArray;
             };
 
             var sjukpenningUtokadModel = BaseAtticModel._extend({
@@ -64,7 +111,36 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                         'planeradBehandling': undefined,
 
                         // Kategory 6 Bedömning
-                        'sjukskrivningar': new ModelAttr('sjukskrivningar', {fromTransform: sjukskrivningTransform}),
+                        'sjukskrivningar': new ModelAttr('sjukskrivningar', {
+                            defaultValue : {
+                                1: {
+                                    period: {
+                                        from: '',
+                                        tom: ''
+                                    }
+                                },
+                                2: {
+                                    period: {
+                                        from: '',
+                                        tom: ''
+                                    }
+                                },
+                                3: {
+                                    period: {
+                                        from: '',
+                                        tom: ''
+                                    }
+                                },
+                                4: {
+                                    period: {
+                                        from: '',
+                                        tom: ''
+                                    }
+                                }
+                            },
+                            fromTransform: sjukskrivningFromTransform,
+                            toTransform: sjukskrivningToTransform,
+                        }),
                         'forsakringsmedicinsktBeslutsstod': undefined,
                         'arbetstidsforlaggning': undefined,
                         'arbetstidsforlaggningMotivering': undefined,
