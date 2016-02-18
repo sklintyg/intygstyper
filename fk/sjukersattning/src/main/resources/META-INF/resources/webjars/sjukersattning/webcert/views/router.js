@@ -60,13 +60,31 @@ angular.module('luse').config(function($stateProvider) {
             views: {
                 'intyg@webcert.intyg.fk' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
-                    controller: 'sjukersattning.ViewCertCtrl'
+                    controller: 'luse.ViewCertCtrl'
                 },
                 'fragaSvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'intyg/fragasvar/fragasvar.html',
+                    templateUrl: commonPath + 'intyg/fk/fragasvar/fragasvar.html',
                     controller: 'common.QACtrl'
                 },
                 'header@webcert.intyg.fk.luse' : {
+                    templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
+                    controller: 'common.IntygHeader'
+                }
+            }
+        }).
+        state('webcert.fragasvar.luse', {
+            data: { defaultActive : 'unhandled-qa', intygType: 'luse' },
+            url: '/fragasvar/luse/:certificateId',
+            views: {
+                'intyg@webcert.fragasvar' : {
+                    templateUrl: intygsTypPath + 'views/intyg/intyg.html',
+                    controller: 'luse.ViewCertCtrl'
+                },
+                'fragasvar@webcert.fragasvar' : {
+                    templateUrl: commonPath + 'intyg/fk/fragasvar/fragasvar.html',
+                    controller: 'common.QACtrl'
+                },
+                'header@webcert.fragasvar' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
                     controller: 'common.IntygHeader'
                 }

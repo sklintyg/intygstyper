@@ -23,104 +23,143 @@
 angular.module('fk7263').config(function($stateProvider) {
     'use strict';
 
+    var commonPath = '/web/webjars/common/webcert/';
+    var intygsTypPath = '/web/webjars/fk7263/webcert/';
+
     $stateProvider.
         state('fk7263-edit', {
             data: { defaultActive : 'index' },
             url : '/fk7263/edit/:certificateId?:patientId&:hospName',
             views : {
                 'content@' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/utkast.html',
+                    templateUrl: intygsTypPath + 'views/utkast/utkast.html',
                     controller: 'fk7263.EditCertCtrl'
                 },
 
                 'wcHeader@fk7263-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/gui/headers/wcHeader.partial.html',
+                    templateUrl: commonPath + 'gui/headers/wcHeader.partial.html',
                     controller: 'common.wcHeaderController'
                 },
 
                 'header@fk7263-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',
+                    templateUrl: commonPath + 'utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'
                 },
 
                 'footer@fk7263-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkastFooter.html',
+                    templateUrl: commonPath + 'utkast/utkast-footer/utkastFooter.html',
                     controller: 'common.UtkastFooter'
                 },
 
                 'form1@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form1.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form1.html',
                     controller: 'fk7263.EditCert.Form1Ctrl'
                 },
 
                 'form4b@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form4b.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form4b.html',
                     controller: 'fk7263.EditCert.Form4bCtrl'
                 },
 
                 'form2@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form2.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form2.html',
                     controller: 'fk7263.EditCert.Form2Ctrl'
                 },
 
                 'form3@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form3.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form3.html',
                     controller: 'fk7263.EditCert.Form3Ctrl'
                 },
 
                 'form4@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form4.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form4.html',
                     controller: 'fk7263.EditCert.Form4Ctrl'
                 },
 
                 'form5@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form5.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form5.html',
                     controller: 'fk7263.EditCert.Form5Ctrl'
                 },
 
                 'form8a@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form8a.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form8a.html',
                     controller: 'fk7263.EditCert.Form8aCtrl'
                 },
 
                 'form8b@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form8b.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form8b.html',
                     controller: 'fk7263.EditCert.Form8bCtrl'
                 },
 
                 'form9@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form9.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form9.html',
                     controller: 'fk7263.EditCert.Form9Ctrl'
                 },
 
                 'form10@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form10.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form10.html',
                     controller: 'fk7263.EditCert.Form10Ctrl'
                 },
 
                 'form6b@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form6b.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form6b.html',
                     controller: 'fk7263.EditCert.Form6bCtrl'
                 },
 
                 'form6a-7-11@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form6a-7-11.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form6a-7-11.html',
                     controller: 'fk7263.EditCert.Form6a711Ctrl'
                 },
 
                 'form12@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form12.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form12.html',
                     controller: 'fk7263.EditCert.Form12Ctrl'
                 },
 
                 'form13@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form13.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form13.html',
                     controller: 'fk7263.EditCert.Form13Ctrl'
                 },
 
                 'form15@fk7263-edit' : {
-                    templateUrl: '/web/webjars/fk7263/webcert/views/utkast/form/form15.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form15.html',
                     controller: 'fk7263.EditCert.Form15Ctrl'
+                }
+            }
+        }).
+        state('webcert.intyg.fk.fk7263', {
+            data: { defaultActive : 'index', intygType: 'fk7263' },
+            url:'/intyg/fk7263/:certificateId?:patientId&:hospName&:signed',
+            views: {
+                'intyg@webcert.intyg.fk' : {
+                    templateUrl: intygsTypPath + 'views/intyg/intyg.html',
+                    controller: 'fk7263.ViewCertCtrl'
+                },
+                'fragaSvar@webcert.intyg.fk' : {
+                    templateUrl: intygsTypPath + 'views/intyg/fragasvar/fragasvar.html',
+                    controller: 'fk7263.QACtrl'
+                },
+                'header@webcert.intyg.fk.fk7263' : {
+                    templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
+                    controller: 'common.IntygHeader'
+                }
+            }
+        }).
+        state('webcert.fragasvar.fk7263', {
+            data: { defaultActive : 'unhandled-qa', intygType: 'fk7263' },
+            url: '/fragasvar/fk7263/:certificateId',
+            views: {
+                'intyg@webcert.fragasvar' : {
+                    templateUrl: intygsTypPath + 'views/intyg/intyg.html',
+                    controller: 'fk7263.ViewCertCtrl'
+                },
+                'fragasvar@webcert.fragasvar' : {
+                    templateUrl: intygsTypPath + 'views/intyg/fragasvar/fragasvar.html',
+                    controller: 'fk7263.QACtrl'
+                },
+                'header@webcert.fragasvar' : {
+                    templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
+                    controller: 'common.IntygHeader'
                 }
             }
         });

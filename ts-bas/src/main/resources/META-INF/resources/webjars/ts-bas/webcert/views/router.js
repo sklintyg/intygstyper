@@ -22,112 +22,130 @@
  */
 angular.module('ts-bas').config(function($stateProvider) {
     'use strict';
+
+    var commonPath = '/web/webjars/common/webcert/';
+    var intygsTypPath = '/web/webjars/ts-bas/webcert/';
+
     $stateProvider.
         state('ts-bas-edit', {
             data: { defaultActive : 'index' },
             url : '/ts-bas/edit/:certificateId',
             views : {
                 'content@': {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/utkast.html',
+                    templateUrl: intygsTypPath + 'views/utkast/utkast.html',
                     controller: 'ts-bas.UtkastController'
                 },
                 'wcHeader@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/gui/headers/wcHeader.partial.html',
+                    templateUrl: commonPath + 'gui/headers/wcHeader.partial.html',
                     controller: 'common.wcHeaderController'
                 },
                 'header@ts-bas-edit': {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-header/utkastHeader.html',
+                    templateUrl: commonPath + 'utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'
                 },
 
                 'patient@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/patient.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/patient.html'
                 },
                 'intention@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/intention.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/intention.html',
                     controller: 'ts-bas.Utkast.IntentionController'
                 },
                 'identity@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/identity.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/identity.html'
                 },
                 'alert@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/alert.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/alert.html'
                 },
 
                 'form1@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form1.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form1.html',
                     controller: 'ts-bas.Utkast.Form1Controller'
                 },
                 'form2@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form2.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form2.html'
                 },
                 'form3@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form3.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form3.html',
                     controller: 'ts-bas.Utkast.Form3Controller'
                 },
                 'form4@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form4.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form4.html',
                     controller: 'ts-bas.Utkast.Form4Controller'
                 },
                 'form5@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form5.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form5.html',
                     controller: 'ts-bas.Utkast.Form5Controller'
                 },
                 'form6@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form6.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form6.html'
                 },
                 'form7@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form7.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form7.html',
                     controller: 'ts-bas.Utkast.Form7Controller'
                 },
                 'form8@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form8.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form8.html'
                 },
                 'form9@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form9.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form9.html'
                 },
 
                 'form10@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form10.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form10.html'
                 },
                 'form11@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form11.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form11.html',
                     controller: 'ts-bas.Utkast.Form11Controller'
                 },
                 'form12@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form12.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form12.html'
                 },
                 'form13@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form13.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form13.html'
                 },
                 'form14@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form14.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form14.html',
                     controller: 'ts-bas.Utkast.Form14Controller'
                 },
                 'form15@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form15.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form15.html',
                     controller: 'ts-bas.Utkast.Form15Controller'
                 },
                 'form16@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form16.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form16.html'
                 },
                 'form17@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form17.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form17.html',
                     controller: 'ts-bas.Utkast.Form17Controller'
                 },
                 'form18@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form18.html'
+                    templateUrl: intygsTypPath + 'views/utkast/form/form18.html'
                 },
                 'form19@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/ts-bas/webcert/views/utkast/form/form19.html',
+                    templateUrl: intygsTypPath + 'views/utkast/form/form19.html',
                     controller: 'ts-bas.Utkast.Form19Controller'
                 },
 
                 'footer@ts-bas-edit' : {
-                    templateUrl: '/web/webjars/common/webcert/utkast/utkast-footer/utkastFooter.html',
+                    templateUrl: commonPath + 'utkast/utkast-footer/utkastFooter.html',
                     controller: 'common.UtkastFooter'
                 }
 
+            }
+        }).
+        state('webcert.intyg.ts.bas', {
+            data: { defaultActive: 'index', intygType: 'ts-bas' },
+            url: '/intyg/ts-bas/:certificateId?:patientId&:hospName&:signed',
+            views: {
+                'intyg@webcert.intyg.ts': {
+                    templateUrl: intygsTypPath + 'views/intyg/intyg.html',
+                    controller: 'ts-bas.IntygController'
+                },
+                'header@webcert.intyg.ts.bas': {
+                    templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
+                    controller: 'common.IntygHeader'
+                }
             }
         });
 });

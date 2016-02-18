@@ -8,7 +8,7 @@ angular.module('luse').config(function($stateProvider) {
         state('sjukersattning-view', {
             url :'/luse/view/:certificateId',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/view-cert.html',
-            controller: 'sjukersattning.ViewCertCtrl',
+            controller: 'luse.ViewCertCtrl',
             data : { title: 'Läkarintyg sjukersättning', keepInboxTabActive: true }
         }).
         state('sjukersattning-recipients', {
@@ -20,7 +20,7 @@ angular.module('luse').config(function($stateProvider) {
         state('sjukersattning-statushistory', {
             url : '/luse/statushistory',
             templateUrl: '/web/webjars/sjukersattning/minaintyg/views/status-history.html',
-            controller: 'sjukersattning.ViewCertCtrl',
+            controller: 'luse.ViewCertCtrl',
             data : { title: 'Alla intygets händelser' }
         }).
         state('sjukersattning-summary', {

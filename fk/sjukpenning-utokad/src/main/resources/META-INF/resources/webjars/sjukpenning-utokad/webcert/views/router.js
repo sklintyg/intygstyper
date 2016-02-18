@@ -55,7 +55,7 @@ angular.module('lisu').config(function($stateProvider) {
             }
         }).
         state('webcert.intyg.fk.lisu', {
-            data: { defaultActive : 'index', intygType: 'lisu'  },
+            data: { defaultActive : 'index', intygType: 'lisu' },
             url:'/intyg/lisu/:certificateId?:patientId&:hospName&:signed',
             views: {
                 'intyg@webcert.intyg.fk' : {
@@ -63,10 +63,28 @@ angular.module('lisu').config(function($stateProvider) {
                     controller: 'lisu.ViewCertCtrl'
                 },
                 'fragaSvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'intyg/fragasvar/fragasvar.html',
+                    templateUrl: commonPath + 'intyg/fk/fragasvar/fragasvar.html',
                     controller: 'common.QACtrl'
                 },
                 'header@webcert.intyg.fk.lisu' : {
+                    templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
+                    controller: 'common.IntygHeader'
+                }
+            }
+        }).
+        state('webcert.fragasvar.lisu', {
+            data: { defaultActive : 'unhandled-qa', intygType: 'lisu'  },
+            url: '/fragasvar/lisu/:certificateId',
+            views: {
+                'intyg@webcert.fragasvar' : {
+                    templateUrl: intygsTypPath + 'views/intyg/intyg.html',
+                    controller: 'lisu.ViewCertCtrl'
+                },
+                'fragasvar@webcert.fragasvar' : {
+                    templateUrl: commonPath + 'intyg/fk/fragasvar/fragasvar.html',
+                    controller: 'common.QACtrl'
+                },
+                'header@webcert.fragasvar' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
                     controller: 'common.IntygHeader'
                 }
