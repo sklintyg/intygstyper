@@ -32,13 +32,13 @@ public abstract class Prognos {
     }
 
     @JsonCreator
-    public static Prognos create(@JsonProperty("prognos") PrognosTyp prognosTyp,
+    public static Prognos create(@JsonProperty("prognos") PrognosTyp typ,
             @JsonProperty("fortydligande") String fortydligande) {
-        return new AutoValue_Prognos(prognosTyp, fortydligande);
+        return new AutoValue_Prognos(typ, fortydligande);
     }
 
     @Nullable
-    public abstract PrognosTyp getPrognosTyp();
+    public abstract PrognosTyp getTyp();
     @Nullable
     public abstract String getFortydligande();
 
