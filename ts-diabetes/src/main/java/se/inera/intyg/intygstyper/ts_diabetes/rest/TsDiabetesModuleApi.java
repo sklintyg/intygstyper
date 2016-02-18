@@ -330,4 +330,9 @@ public class TsDiabetesModuleApi implements ModuleApi {
         return inputXml;
     }
 
+    @Override
+    public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
+        throw new UnsupportedOperationException();
+    }
+
 }

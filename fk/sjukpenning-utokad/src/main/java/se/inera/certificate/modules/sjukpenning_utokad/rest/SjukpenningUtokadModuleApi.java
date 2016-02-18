@@ -20,24 +20,21 @@
 package se.inera.certificate.modules.sjukpenning_utokad.rest;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXB;
-import javax.xml.transform.stream.StreamSource;
 
 import org.joda.time.LocalDateTime;
-import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
+import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.TransportToInternal;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.WebcertModelFactory;
@@ -59,12 +56,12 @@ import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder
 import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateType;
@@ -322,15 +319,16 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     @Override
     public Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
-        SchematronOutputType valResult = validator.validateSchematron(new StreamSource(new StringReader(xml)));
-        if (SVRLHelper.getAllFailedAssertions(valResult).size() > 0) {
-            throw new CertificateValidationException("Validation failed");
-        }
         return TransportToInternal.convert(intyg);
     }
 
     @Override
     public String transformToStatisticsService(String inputXml) throws ModuleException {
         return inputXml;
+    }
+
+    @Override
+    public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
+        return XmlValidator.validate(validator, inputXml);
     }
 }

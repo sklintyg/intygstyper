@@ -116,9 +116,9 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
 
-            IntygService.getCertificate($stateParams.certificateId, function(result) {
+            IntygService.getCertificate('fk7263', $stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result.utlatande;

@@ -161,7 +161,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'ts-bas' + '/' + $stateParams.certificateId + '/pdf';
 
             // Decide if helptext related to field 1.a) - 1.c)
             $scope.achelptext = false;
@@ -190,7 +190,7 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
                 return false;
             };
 
-            IntygService.getCertificate($stateParams.certificateId, function(result) {
+            IntygService.getCertificate('ts-bas', $stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result.utlatande;

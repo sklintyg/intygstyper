@@ -480,4 +480,9 @@ public class Fk7263ModuleApi implements ModuleApi {
         throw new UnsupportedOperationException("Module Fk7263 does not support getUtlatandeFromIntyg.");
     }
 
+    @Override
+    public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
+        throw new UnsupportedOperationException();
+    }
+
 }

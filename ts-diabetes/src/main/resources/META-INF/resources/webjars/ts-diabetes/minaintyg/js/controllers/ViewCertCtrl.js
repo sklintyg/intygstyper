@@ -156,7 +156,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'ts-diabetes' + '/' + $stateParams.certificateId + '/pdf';
 
             // Decide if helptext related to field 1.a) - 1.c)
             $scope.achelptext = false;
@@ -185,7 +185,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
                 return false;
             };
 
-            IntygService.getCertificate($stateParams.certificateId, function(result) {
+            IntygService.getCertificate('ts-diabetes', $stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $scope.cert = result.utlatande;

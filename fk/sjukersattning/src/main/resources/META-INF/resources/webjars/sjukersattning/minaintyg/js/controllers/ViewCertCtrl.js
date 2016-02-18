@@ -97,9 +97,9 @@ angular.module('luse').controller('luse.ViewCertCtrl',
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + $stateParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'luse' + '/' + $stateParams.certificateId + '/pdf';
 
-            certificateService.getCertificate($stateParams.certificateId, function(result) {
+            certificateService.getCertificate('luse', $stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $log.info('res in virecertcontr' + JSON.stringify(result));
