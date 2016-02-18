@@ -13,9 +13,9 @@ angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
 
             $scope.formFields = formFactory.getFormFields();
 
-            tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
+            tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, $scope.formFields.length - 1);
             $scope.$on('dynamicLabels.updated', function () {
-                tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, 10);
+                tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, $scope.formFields.length - 1);
             });
 
         }
