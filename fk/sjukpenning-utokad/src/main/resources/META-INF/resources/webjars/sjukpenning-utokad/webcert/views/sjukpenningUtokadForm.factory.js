@@ -6,9 +6,9 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: { category: 1, categoryName: 'grundformu' },
             fieldGroup: [
-                { type: 'label', templateOptions: { label: 'FRG_1.RBK', help: 'FRG_1.HLP' } },
-                { type: 'label', templateOptions: { label: 'DFR_1.1.RBK', help: 'DFR_1.1.HLP' } },
-                { type: 'label', templateOptions: { label: 'DFR_1.2.RBK', help: 'DFR_1.2.HLP' } },
+                { type: 'label', templateOptions: { label: 'FRG_1' } },
+                { type: 'label', templateOptions: { label: 'DFR_1.1' } },
+                { type: 'label', templateOptions: { label: 'DFR_1.2' } },
                 { key: 'undersokningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.1' } },
                 { key: 'journaluppgifter', type: 'date', templateOptions: { label: 'KV_FKMU_0001.2' } },
                 { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.3' } },
@@ -59,7 +59,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: { category: 6, categoryName: 'bedomning' },
             fieldGroup: [
-                { type: 'label', templateOptions: { label: 'FRG_32.RBK', help: 'FRG_32.HLP' } },
+                { type: 'label', templateOptions: { label: 'FRG_32' } },
                 { key: 'sjukskrivningar', type: 'sjukskrivningar',
                     templateOptions: {
                         label: 'DFR_32.1',
@@ -86,7 +86,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: { category: 7, categoryName: 'atgarder' },
             fieldGroup: [
-                { type: 'label', templateOptions: { label: 'FRG_40.RBK', help: 'FRG_40.HLP' } },
+                { type: 'label', templateOptions: { label: 'FRG_40' } },
                 { key: 'arbetslivsinriktadeAtgarder', type: 'check-group',
                     templateOptions: {
                         label: 'DFR_40.1',
