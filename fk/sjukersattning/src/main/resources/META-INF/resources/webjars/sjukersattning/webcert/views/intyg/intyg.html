@@ -26,6 +26,12 @@
                                   <div ng-switch-when="false">Nej</div>
                               </div>
                           </div>
+                          <div ng-switch-when="checkbox-inline">
+                            <div ng-switch="viewState.intygModel[field.key]">
+                              <div ng-switch-when="true">Ja</div>
+                              <div ng-switch-when="false">Nej</div>
+                            </div>
+                          </div>
                           <div ng-switch-when="underlag">
                               <div ng-repeat="underlag in viewState.intygModel[field.key]">
                                   <div>

@@ -121,7 +121,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: {category: 10, categoryName: 'kontakt'},
             fieldGroup: [
-                {key: 'kontaktMedFk', type: 'boolean', templateOptions: {label: 'DFR_26.1'}},
+                {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
