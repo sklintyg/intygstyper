@@ -329,7 +329,7 @@ public final class InternalToTransport {
         }
 
         svars.add(aSvar(PROGNOS_SVAR_ID)
-                .withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID, aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getPrognosTyp().getId())))
+                .withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID, aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId())))
                 .withDelsvar(PROGNOS_FORTYDLIGANDE_DELSVAR_ID, source.getPrognos().getFortydligande()).build());
 
         /* Build complex object */
