@@ -27,6 +27,12 @@
     padding: 2px 5px;
 }
 
+.no-space-left {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+
 /* When focused and when active is added from checkbox, add highlighted style */
 .form5 .form-control:focus,
 .form6 .form-control:focus  {

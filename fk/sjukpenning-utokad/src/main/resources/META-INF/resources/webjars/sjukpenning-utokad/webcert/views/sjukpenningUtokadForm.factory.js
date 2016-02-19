@@ -6,9 +6,9 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: 'grundformu'},
             fieldGroup: [
-                {type: 'label', templateOptions: {label: 'FRG_1'}},
-                {type: 'label', templateOptions: {label: 'DFR_1.1'}},
-                {type: 'label', templateOptions: {label: 'DFR_1.2'}},
+                {type: 'headline', templateOptions: {label: 'FRG_1'}},
+                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1'}},
+                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2'}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.2'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
@@ -69,7 +69,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: {category: 6, categoryName: 'bedomning'},
             fieldGroup: [
-                {type: 'label', templateOptions: {label: 'FRG_32'}},
+                {type: 'headline', templateOptions: {label: 'FRG_32'}},
                 {
                     key: 'sjukskrivningar', type: 'sjukskrivningar',
                     templateOptions: {
@@ -97,7 +97,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             wrapper: 'wc-field',
             templateOptions: {category: 7, categoryName: 'atgarder'},
             fieldGroup: [
-                {type: 'label', templateOptions: {label: 'FRG_40'}},
+                {type: 'headline', templateOptions: {label: 'FRG_40'}},
                 {
                     key: 'arbetslivsinriktadeAtgarder', type: 'check-group',
                     templateOptions: {
