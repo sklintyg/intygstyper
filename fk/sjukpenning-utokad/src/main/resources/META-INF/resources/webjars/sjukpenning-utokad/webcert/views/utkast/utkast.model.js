@@ -7,7 +7,7 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
             var diagnosTransform = function(diagnosArray) {
                 if (diagnosArray.length === 0) {
                     diagnosArray.push({
-                        diagnosKodSystem: undefined,
+                        diagnosKodSystem: 'ICD_10_SE',
                         diagnosKod : undefined,
                         diagnosBeskrivning : undefined
                     });

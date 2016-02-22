@@ -70,6 +70,7 @@ var sjukersattningMessages = {
         'luse.validation.diagnos.psykisk.length-4': 'Diagnoskod ska anges med minst fyra positioner då en psykisk diagnos anges.',
         'luse.validation.diagnos2.invalid': 'ICD-10 kod på ytterligare diagnoser rad 1, är ej giltig. (Fält 2)',
         'luse.validation.diagnos3.invalid': 'ICD-10 kod på ytterligare diagnoser rad 2, är ej giltig. (Fält 2)',
+        'luse.validation.diagnos.description.missing': 'Diagnostext saknas',
         'luse.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
 
         'luse.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',

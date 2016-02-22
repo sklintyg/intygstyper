@@ -160,12 +160,9 @@ public class InternalDraftValidator {
                             "lisu.validation.diagnos.invalid", validationMessages);
                 }
             }
-            if (!StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
-                validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                        "lisu.validation.diagnos.invalid", validationMessages);
-            } else {
+            if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "lisu.validation.diagnos.missing");
+                        "lisu.validation.diagnos.description.missing");
             }
         }
 
