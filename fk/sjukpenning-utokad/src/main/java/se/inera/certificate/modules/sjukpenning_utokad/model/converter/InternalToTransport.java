@@ -85,9 +85,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
 import org.joda.time.LocalDate;
-
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Tillaggsfraga;

@@ -78,9 +78,9 @@ import static se.inera.certificate.modules.fkparent.model.converter.TransportCon
 import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getDatePeriodTypeContent;
 
 import se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos.PrognosTyp;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
