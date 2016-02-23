@@ -21,6 +21,7 @@ package se.inera.certificate.modules.fkparent.model.converter;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -35,6 +36,7 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Befattning;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Specialistkompetens;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
@@ -110,6 +112,44 @@ public final class TransportConverterUtil {
             }
         }
         throw new ConverterException("Unexpected outcome while converting CVType");
+    }
+
+    /**
+     * Attempt to parse a {@link DatePeriodType} from a {@link Delsvar}.
+     * @param delsvar
+     * @throws ConverterException
+     */
+    public static DatePeriodType getDatePeriodTypeContent(Delsvar delsvar) throws ConverterException {
+        for (Object o : delsvar.getContent()) {
+            if (o instanceof Node) {
+                DatePeriodType datePeriodType = new DatePeriodType();
+                Node node = (Node) o;
+                NodeList list = node.getChildNodes();
+                for (int i = 0; i < list.getLength(); i++) {
+                    String textContent = list.item(i).getTextContent();
+                    switch (list.item(i).getNodeName()) {
+                    case "ns3:start":
+                        datePeriodType.setStart(new LocalDate(textContent));
+                        break;
+                    case "ns3:end":
+                        datePeriodType.setEnd(new LocalDate(textContent));
+                        break;
+                    default:
+                        LOG.debug("Unexpected element found while parsing DatePeriodType");
+                        break;
+                    }
+                }
+                if (datePeriodType.getStart() == null || datePeriodType.getEnd() == null) {
+                    throw new ConverterException("Error while converting DatePeriodType, missing mandatory field");
+                }
+                return datePeriodType;
+            } else if (o instanceof JAXBElement) {
+                @SuppressWarnings("unchecked")
+                JAXBElement<DatePeriodType> jaxbCvType = ((JAXBElement<DatePeriodType>) o);
+                return jaxbCvType.getValue();
+            }
+        }
+        throw new ConverterException("Unexpected outcome while converting DatePeriodType");
     }
 
     public static GrundData getGrundData(Intyg source) {

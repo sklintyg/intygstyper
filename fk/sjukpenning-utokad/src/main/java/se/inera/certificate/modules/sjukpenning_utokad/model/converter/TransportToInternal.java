@@ -75,6 +75,7 @@ import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
 import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
+import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getDatePeriodTypeContent;
 
 import se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
@@ -346,7 +347,7 @@ public final class TransportToInternal {
                 sjukskrivningsnivaString = getCVSvarContent(delsvar).getCode();
                 break;
             case BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID:
-                DatePeriodType datePeriod = getSvarContent(delsvar, DatePeriodType.class);
+                DatePeriodType datePeriod = getDatePeriodTypeContent(delsvar);
                 period = new InternalLocalDateInterval(datePeriod.getStart().toString(), datePeriod.getEnd().toString());
                 break;
             default:
@@ -449,14 +450,14 @@ public final class TransportToInternal {
         }
     }
 
-    private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) {
+    private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) throws ConverterException {
         String diagnosKod = null;
         String diagnosKodSystem = null;
         String diagnosBeskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case DIAGNOS_DELSVAR_ID:
-                CVType diagnos = getSvarContent(delsvar, CVType.class);
+                CVType diagnos = getCVSvarContent(delsvar);
                 diagnosKod = diagnos.getCode();
                 diagnosKodSystem = diagnos.getCodeSystem();
                 break;
