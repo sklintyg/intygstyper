@@ -61,7 +61,7 @@
           <div message key="ts-diabetes.label.pagedescription.archive"></div>
         </div>
         <br>
-        <button ng-click="isCollapsed1 = !isCollapsed1" class="btn-link btn-link-link margin-top-5px"
+        <button type="button" ng-click="isCollapsed1 = !isCollapsed1" class="btn-link btn-link-link margin-top-5px"
                 data-toggle="collapse">
           <span message key="ts-diabetes.label.status.{{!isCollapsed1}}"></span>
         </button>
@@ -94,7 +94,7 @@
             </div>
           </div>
           <p>
-            <button class="btn-link btn-link-link" ng-show="cert.status.length>1"
+            <button type="button" class="btn-link btn-link-link" ng-show="cert.status.length>1"
                     ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse">
               <span message key="ts-diabetes.label.showevents.{{!isCollapsedCertEvents}}"></span>
             </button>
@@ -180,7 +180,7 @@
 
                 </div>
                 <div class="col-xs-6 hidden-sm hidden-md hidden-lg pull-right">
-                  <button class="btn btn-primary pull-right" ata-toggle="modal"
+                  <button type="button" class="btn btn-primary pull-right" ata-toggle="modal"
                           title="{{messageService.getProperty('button.alt.archive')}}"
                           ng-click="openArchiveDialog(cert)">
                     <span class="glyphicon glyphicon-folder-close white"></span>

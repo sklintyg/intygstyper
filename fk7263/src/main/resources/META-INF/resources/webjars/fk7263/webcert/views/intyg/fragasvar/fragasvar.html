@@ -11,7 +11,7 @@
             ng-show="!certProperties.isRevoked && !widgetState.newQuestionOpen && (viewState.isIntygOnSendQueue || certProperties.isSent || qaList.length>0)"
             wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}">
           <div class="form-group">
-            <button class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till
+            <button type="button" class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till
               Försäkringskassan
             </button>
           </div>
@@ -51,13 +51,13 @@
 
           <!-- Form button group -->
           <div class="form-group">
-            <button class="btn btn-success" ng-click="sendQuestion(newQuestion)"
+            <button type="button" class="btn btn-success" ng-click="sendQuestion(newQuestion)"
                     ng-disabled="!questionValidForSubmit(newQuestion)" title="{{newQuestion.sendButtonToolTip}}"
                     id="sendQuestionBtn">
               <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till
               Försäkringskassan
             </button>
-            <button class="btn btn-default btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt
+            <button type="button" class="btn btn-default btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt
               fråga
             </button>
           </div>

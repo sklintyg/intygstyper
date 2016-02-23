@@ -39,7 +39,7 @@
 
         <div wc-authority="VIDAREBEFORDRA_FRAGASVAR" class="col-xs-3">
           <!--  status header -->
-          <button id="{{panelId}}-vidarebefordraEjHanterad" class="btn pull-right"
+          <button type="button" id="{{panelId}}-vidarebefordraEjHanterad" class="btn pull-right"
                   ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"
                   title="Skicka mejl med en länk till intyget för att informera den som ska hantera frågan-svaret."
                   ng-click="openMailDialog(qa)" ng-show="!certProperties.isRevoked">
@@ -117,7 +117,7 @@
         <div class="form-group">
           <!--  Oavsett hur frågan stänged skall man kunna 'öppna' den igen -->
           <div class="controls" ng-hide="qa.frageStallare!='WC' && qa.svarsText">
-            <button class="btn btn-default btn-secondary" ng-click="updateAsUnHandled(qa)"
+            <button type="button" class="btn btn-default btn-secondary" ng-click="updateAsUnHandled(qa)"
                     wc-check-vardenhet vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                     id="markAsUnhandledBtn-{{qa.internReferens}}" ng-disabled="qa.updateHandledStateInProgress">
               <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som ej hanterad
@@ -144,14 +144,14 @@
                    class="alert alert-danger">
                 <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
               </div>
-              <button class="btn btn-success" ng-click="sendAnswer(qa)"
+              <button type="button" class="btn btn-success" ng-click="sendAnswer(qa)"
                       ng-disabled="!qa.svarsText || qa.updateInProgress"
                       ng-show="!qa.answerDisabled && !certProperties.isRevoked" wc-check-vardenhet
                       vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                       id="sendAnswerBtn-{{qa.internReferens}}">
                 <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
               </button>
-              <button class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"
+              <button type="button" class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"
                       id="markAsHandledFkOriginBtn-{{qa.internReferens}}"
                       ng-disabled="qa.updateHandledStateInProgress" wc-check-vardenhet
                       vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
@@ -169,7 +169,7 @@
             <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
           </div>
           <div class="controls" wc-check-vardenhet vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}">
-            <button class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"
+            <button type="button" class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"
                     id="markAsHandledWcOriginBtn-{{qa.internReferens}}"
                     ng-disabled="qa.updateHandledStateInProgress"
                     title="När frågan-svaret markeras som hanterad kommer den att anses som avslutad. Frågan-svaret flyttas till ’Hanterade frågor och svar’ och visas inte längre i vårdenhetens översikt över ej hanterade frågor och svar.">
