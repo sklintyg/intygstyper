@@ -10,7 +10,7 @@ var sjukpenningUtokadMessages = {
         'lisu.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukpenning utökad
-        'lisu.label.certtitle': 'Läkarutlåtande för sjukpenning utökad',
+        'lisu.label.certtitle': 'Läkarintyg för sjukpenning utökat',
 
         //Labels
         'lisu.label.valjkodverk': 'Välj kodverk:',
