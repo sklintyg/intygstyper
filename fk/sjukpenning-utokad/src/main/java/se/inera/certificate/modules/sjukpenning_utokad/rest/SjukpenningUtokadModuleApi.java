@@ -99,7 +99,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     @Autowired(required = false)
     private GetCertificateResponderInterface getCertificateResponderInterface;
 
-    private RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
+    private RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
 
     /**
      * {@inheritDoc}
@@ -210,8 +210,8 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
         try {
             request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
         } catch (ConverterException e) {
-            LOG.error("Failed to convert to transport format during registerTSBas", e);
-            throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
+            LOG.error("Failed to convert to transport format during registerCertificate", e);
+            throw new ExternalServiceCallException("Failed to convert to transport format during registerCertificate", e);
         }
 
         RegisterCertificateResponseType response2 = registerCertificateResponderInterface.registerCertificate(logicalAddress, request);

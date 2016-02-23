@@ -84,6 +84,8 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import org.joda.time.LocalDate;
+
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
@@ -292,13 +294,11 @@ public final class InternalToTransport {
         }
 
         for (Sjukskrivning sjukskrivning : source.getSjukskrivningar()) {
-            DatePeriodType period = new DatePeriodType();
-            period.setStart(sjukskrivning.getPeriod().fromAsLocalDate());
-            period.setEnd(sjukskrivning.getPeriod().tomAsLocalDate());
             svars.add(aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID)
                     .withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID,
                             aCV(SJUKSKRIVNING_CODE_SYSTEM, Integer.toString(sjukskrivning.getSjukskrivningsgrad().getId())))
-                    .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID, period).build());
+                    .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID,
+                            aDatePeriod(sjukskrivning.getPeriod().fromAsLocalDate(), sjukskrivning.getPeriod().tomAsLocalDate())).build());
 
         }
 
@@ -384,6 +384,13 @@ public final class InternalToTransport {
         cv.setCodeSystem(codeSystem);
         cv.setCode(code);
         return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
+    }
+
+    private static JAXBElement<DatePeriodType> aDatePeriod(LocalDate from, LocalDate tom) {
+        DatePeriodType period = new DatePeriodType();
+        period.setStart(from);
+        period.setEnd(tom);
+        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "datePeriod"), DatePeriodType.class, null, period);
     }
 
     private static SvarBuilder aSvar(String id) {

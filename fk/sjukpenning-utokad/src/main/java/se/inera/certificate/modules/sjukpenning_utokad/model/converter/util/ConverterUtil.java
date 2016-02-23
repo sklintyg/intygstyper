@@ -34,7 +34,7 @@ import com.google.common.annotations.VisibleForTesting;
 public class ConverterUtil {
 
     @Autowired
-    @Qualifier("sjukersattning-objectMapper")
+    @Qualifier("sjukpenning-utokad-objectMapper")
     private ObjectMapper objectMapper;
 
     @VisibleForTesting
