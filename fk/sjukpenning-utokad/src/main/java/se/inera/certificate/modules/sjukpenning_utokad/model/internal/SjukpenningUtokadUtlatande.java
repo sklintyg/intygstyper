@@ -66,9 +66,6 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
     public abstract InternalDate getJournaluppgifter();
 
     @Nullable
-    public abstract InternalDate getAnhorigsBeskrivningAvPatienten();
-
-    @Nullable
     public abstract InternalDate getAnnatGrundForMU();
 
     // Fråga  1.3 Annan grund för MU
@@ -216,9 +213,6 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
 
         @JsonProperty("journaluppgifter")
         public abstract Builder setJournaluppgifter(InternalDate journaluppgifter);
-
-        @JsonProperty("anhorigsBeskrivningAvPatienten")
-        public abstract Builder setAnhorigsBeskrivningAvPatienten(InternalDate anhorigsBeskrivningAvPatienten);
 
         @JsonProperty("annatGrundForMU")
         public abstract Builder setAnnatGrundForMU(InternalDate annatGrundForMU);

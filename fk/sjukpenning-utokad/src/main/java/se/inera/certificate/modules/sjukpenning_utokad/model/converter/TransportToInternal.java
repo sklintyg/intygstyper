@@ -436,9 +436,6 @@ public final class TransportToInternal {
         case JOURNAL:
             utlatande.setJournaluppgifter(grundForMedicinsktUnderlagDatum);
             break;
-        case ANHORIGSBESKRIVNING:
-            utlatande.setAnhorigsBeskrivningAvPatienten(grundForMedicinsktUnderlagDatum);
-            break;
         case TELEFONKONTAKT:
             utlatande.setTelefonkontaktMedPatienten(grundForMedicinsktUnderlagDatum);
             break;
