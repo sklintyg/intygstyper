@@ -77,7 +77,7 @@ var sjukersattningMessages = {
 
         'luse.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
 
-        'luse.validation.medicinskaforutsattningarforarbete.missing': 'Minst en av frågorna för medicinska förutsättningar måste besvaras.',
+        'luse.validation.medicinskaforutsattningarforarbete.missing': 'Patientens medicinska förutsättningar för arbete måste anges.',
 
         'luse.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
         'luse.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
