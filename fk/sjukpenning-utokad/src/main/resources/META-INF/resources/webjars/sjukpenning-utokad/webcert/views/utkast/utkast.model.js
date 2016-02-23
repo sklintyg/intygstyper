@@ -88,7 +88,6 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                         'undersokningAvPatienten': undefined,
                         'telefonkontaktMedPatienten': undefined,
                         'journaluppgifter': undefined,
-                        'anhorigsBeskrivningAvPatienten': undefined,
                         'annatGrundForMU': undefined,
                         'annatGrundForMUBeskrivning': undefined,
 
