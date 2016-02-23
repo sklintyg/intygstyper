@@ -19,6 +19,9 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.validator;
 
+import static se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil.addValidationError;
+import static se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil.validateDiagnose;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,28 +30,22 @@ import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.common.support.validate.StringValidator;
 
-import static se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil.addValidationError;
-import static se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil.validateDiagnose;
-
 public class InternalDraftValidator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
+    private static final int MAX_ARBETSLIVSINRIKTADE_ATGARDER = 10;
 
-    @Autowired(required = false)
-    private WebcertModuleService moduleService;
+    private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
@@ -73,7 +70,7 @@ public class InternalDraftValidator {
 
         // Kategori 8 – Övrigt
         // Kategori 9 – Kontakt
-        //validateKontakt(utlatande, validationMessages);
+        // validateKontakt(utlatande, validationMessages);
 
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
@@ -87,7 +84,7 @@ public class InternalDraftValidator {
                 && utlatande.getTelefonkontaktMedPatienten() == null
                 && utlatande.getJournaluppgifter() == null
                 && utlatande.getAnnatGrundForMU() == null) {
-               addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
                     "lisu.validation.grund-for-mu.missing");
         }
 
@@ -115,16 +112,16 @@ public class InternalDraftValidator {
     }
 
     private void validateSysselsattning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if(utlatande.getSysselsattning() == null) {
+        if (utlatande.getSysselsattning() == null) {
             addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                     "lisu.validation.sysselsattning.missing");
         } else {
-            if(utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
+            if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
                     && utlatande.getNuvarandeArbete() == null) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.missing");
             }
-            if(utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
+            if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
                     && utlatande.getArbetsmarknadspolitisktProgram() == null) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.missing");
@@ -133,14 +130,14 @@ public class InternalDraftValidator {
     }
 
     private void validateFunktionsnedsattning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if(utlatande.getFunktionsnedsattning() == null) {
+        if (utlatande.getFunktionsnedsattning() == null) {
             addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
                     "lisu.validation.funktionsnedsattning.missing");
         }
     }
 
     private void validateAktivitetsbegransning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if(utlatande.getAktivitetsbegransning() == null) {
+        if (utlatande.getAktivitetsbegransning() == null) {
             addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
                     "lisu.validation.aktivitetsbegransning.missing");
         }
@@ -150,11 +147,11 @@ public class InternalDraftValidator {
         validateSjukskrivningar(utlatande, validationMessages);
 
         // Prognos
-        if(utlatande.getPrognos() == null) {
+        if (utlatande.getPrognos() == null) {
             addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                     "lisu.validation.bedomning.prognos.missing");
         } else {
-            if(utlatande.getPrognos().getFortydligande() == null) {
+            if (utlatande.getPrognos().getFortydligande() == null) {
                 addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                         "lisu.validation.bedomning.prognos.fortydligande.missing");
             }
@@ -162,31 +159,28 @@ public class InternalDraftValidator {
     }
 
     private void validateSjukskrivningar(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if(utlatande.getSjukskrivningar() == null) {
+        if (utlatande.getSjukskrivningar() == null) {
             addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                     "lisu.validation.bedomning.sjukskrivningar.missing");
         } else {
-            try
-            {
-                utlatande.getSjukskrivningar().forEach(sjukskrivning -> validateSjukskrivning(validationMessages, sjukskrivning));
-            }
-            catch(NullPointerException ex) {
-                System.out.println("ERROR: Invalid sjukskrivning. " + ex.getCause());
-            }
+            utlatande.getSjukskrivningar()
+                    .stream()
+                    .filter(e -> e != null)
+                    .forEach(sjukskrivning -> validateSjukskrivning(validationMessages, sjukskrivning));
         }
     }
 
     private void validateSjukskrivning(List<ValidationMessage> validationMessages, Sjukskrivning sjukskrivning) {
-        if(sjukskrivning.getSjukskrivningsgrad() == null) {
+        if (sjukskrivning.getSjukskrivningsgrad() == null) {
             // Should never happen but just in case
             addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                     "lisu.validation.bedomning.sjukskrivningar.sjukskrivningsgrad.missing");
         } else {
-            if(sjukskrivning.getPeriod() == null) {
+            if (sjukskrivning.getPeriod() == null) {
                 addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                         "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".missing");
             } else {
-                if (sjukskrivning.getPeriod().isValid()) {
+                if (!sjukskrivning.getPeriod().isValid()) {
                     addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                             "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".invalid_format");
                 }
@@ -195,12 +189,12 @@ public class InternalDraftValidator {
     }
 
     private void validateAtgarder(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if(utlatande.getArbetslivsinriktadeAtgarder() == null || utlatande.getArbetslivsinriktadeAtgarder().size() < 1) {
+        if (utlatande.getArbetslivsinriktadeAtgarder() == null || utlatande.getArbetslivsinriktadeAtgarder().size() < 1) {
             addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                     "lisu.validation.atgarder.missing");
         }
 
-        if(utlatande.getArbetslivsinriktadeAtgarder().size() > 10) {
+        if (utlatande.getArbetslivsinriktadeAtgarder().size() > MAX_ARBETSLIVSINRIKTADE_ATGARDER) {
             addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                     "lisu.validation.atgarder.too-many");
         }
