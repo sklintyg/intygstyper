@@ -38,7 +38,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
                         listener: function(field, newValue, oldValue, scope, stopWatching) {
                             if (newValue) {
                                 if (!scope.model.underlag || scope.model.underlag.length === 0) {
-                                    scope.model.underlag.push({});
+                                    scope.model.underlag.push({ typ: null, datum: null, hamtasFran: null });
                                 }
                             } else {
                                 scope.model.underlag = [];
