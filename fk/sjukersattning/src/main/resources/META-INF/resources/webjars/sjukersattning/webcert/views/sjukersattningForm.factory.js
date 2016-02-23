@@ -40,6 +40,8 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
                                 if (!scope.model.underlag || scope.model.underlag.length === 0) {
                                     scope.model.underlag.push({});
                                 }
+                            } else {
+                                scope.model.underlag = [];
                             }
                         }
                     }
