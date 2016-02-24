@@ -321,7 +321,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
+    public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg) throws Exception {
         throw new UnsupportedOperationException("Module TsDiabetesModuleApi does not support getUtlatandeFromIntyg.");
     }
 

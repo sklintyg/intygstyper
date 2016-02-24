@@ -318,7 +318,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     }
 
     @Override
-    public Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
+    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws Exception {
         return TransportToInternal.convert(intyg);
     }
 
