@@ -248,13 +248,13 @@ public class InternalDraftValidator {
 
     private void checkSjukskrivningPeriodOverlapAgainstList(List<ValidationMessage> validationMessages, Sjukskrivning sjukskrivning, ImmutableList<Sjukskrivning> sjukskrivningar) {
 
-        if(sjukskrivning == null) {
+        if (sjukskrivning == null) {
             return;
         }
 
-        if(isPeriodIntervalsOverlapping(sjukskrivning, sjukskrivningar) && sjukskrivning.getSjukskrivningsgrad() != null) {
+        if (isPeriodIntervalsOverlapping(sjukskrivning, sjukskrivningar) && sjukskrivning.getSjukskrivningsgrad() != null) {
             addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                    "lisu.validation.bedomning.sjukskrivningar.period"+ sjukskrivning.getSjukskrivningsgrad().getId() + ".invalidentry");
+                    "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".invalidentry");
         }
     }
 
