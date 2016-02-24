@@ -348,7 +348,7 @@ public class SjukersattningModuleApi implements ModuleApi {
         return inputXml;
     }
 
-    public Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
+    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws Exception {
         return TransportToInternal.convert(intyg);
     }
 

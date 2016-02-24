@@ -476,7 +476,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg, String xml) throws Exception {
+    public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg) throws Exception {
         throw new UnsupportedOperationException("Module Fk7263 does not support getUtlatandeFromIntyg.");
     }
 
