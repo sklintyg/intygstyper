@@ -1,7 +1,7 @@
 {
   "typ": "lisu",
   "tillaggsfragor": [],
-  "arbetslivsinriktadeAtgarderAktuelltBeskrivning": "Jobbar bra om man inte st\u00f6r honom",
+  "arbetslivsinriktadeAtgarderAktuelltBeskrivning": "Jobbar bra om man inte stör honom",
   "arbetslivsinriktadeAtgarder": [
     {
       "val": 11
@@ -11,42 +11,42 @@
     }
   ],
   "prognos": {
-    "fortydligande": "Kan bara jobba p\u00e5 n\u00e4tterna.",
+    "fortydligande": "Kan bara jobba på nätterna.",
     "typ": 4
   },
-  "formagaTrotsBegransning": "\u00c4r bra p\u00e5 att dansa!",
+  "formagaTrotsBegransning": "är bra på att dansa!",
   "arbetsresor": true,
-  "arbetstidsforlaggningMotivering": "Kan bara jobba p\u00e5 n\u00e4tterna.",
+  "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
   "arbetstidsforlaggning": true,
-  "forsakringsmedicinsktBeslutsstod": "\u00d6verskrider inte FMB",
+  "forsakringsmedicinsktBeslutsstod": "överskrider inte FMB",
   "sjukskrivningar": [
     {
       "period": {
-        "tom": "2015-12-10",
-        "from": "2015-12-07"
+        "from": "2015-12-07",
+        "tom": "2015-12-10"
       },
       "sjukskrivningsgrad": 2
     },
     {
       "period": {
-        "tom": "2015-12-14",
-        "from": "2015-12-12"
+        "from": "2015-12-12",
+        "tom": "2015-12-14"
       },
       "sjukskrivningsgrad": 3
     },
     {
       "period": {
-        "tom": "2015-12-20",
-        "from": "2015-12-15"
+        "from": "2015-12-15",
+        "tom": "2015-12-20"
       },
       "sjukskrivningsgrad": 4
     }
   ],
   "aktivitetsbegransning": "Kommer inte in i bilen",
-  "funktionsnedsattning": "Haltar n\u00e4r han dansar",
+  "funktionsnedsattning": "Haltar när han dansar",
   "diagnoser": [
     {
-      "diagnosBeskrivning": "Kl\u00e4mskada skuldra",
+      "diagnosBeskrivning": "Klämskada skuldra",
       "diagnosKodSystem": "ICD_10_SE",
       "diagnosKod": "S47"
     }
@@ -55,14 +55,14 @@
   "sysselsattning": {
     "typ": 1
   },
-  "annatGrundForMUBeskrivning": "Barndomsv\u00e4n",
+  "annatGrundForMUBeskrivning": "Barndomsvän",
   "annatGrundForMU": "2015-12-07",
   "telefonkontaktMedPatienten": "2015-12-08",
   "textVersion": "1",
   "grundData": {
     "patient": {
       "samordningsNummer": false,
-      "postort": "Stadby g\u00e4rde",
+      "postort": "Stadby gärde",
       "postnummer": "100 20",
       "postadress": "Pgatan 2",
       "efternamn": "Olsson",
