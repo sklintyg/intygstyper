@@ -69,6 +69,8 @@
       "sjukskrivningsgrad": 2
     }
   ],
+  "aktivitetsbegransning": "Kommer inte in i bilen",
+  "funktionsnedsattning": "Haltar när han dansar",
   "diagnoser": [
     {
       "diagnosBeskrivning": "Klämskada skuldra",
