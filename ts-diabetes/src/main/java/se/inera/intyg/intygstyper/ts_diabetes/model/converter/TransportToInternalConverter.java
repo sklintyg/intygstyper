@@ -165,12 +165,13 @@ public final class TransportToInternalConverter {
         return result;
     }
 
-    private static HoSPersonal readSkapadAv(SkapadAv skapadAv) {
+    protected static HoSPersonal readSkapadAv(SkapadAv skapadAv) {
         HoSPersonal result = new HoSPersonal();
         //result.setForskrivarKod(skapadAv.get);
         result.setFullstandigtNamn(skapadAv.getFullstandigtNamn());
         result.setPersonId(skapadAv.getPersonId().getExtension());
         result.setVardenhet(readVardenhet(skapadAv.getVardenhet()));
+        result.getSpecialiteter().addAll(skapadAv.getSpecialiteter());
         return result;
     }
 
