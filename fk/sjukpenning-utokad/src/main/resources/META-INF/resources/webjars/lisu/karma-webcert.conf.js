@@ -2,8 +2,8 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/webcert/views/';
-    var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/webcert/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/lisu/webcert/views/';
+    var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/lisu/webcert/';
     var BASE_WEBJAR_DIR = '../../target/webjardependencies/';
     var WEBJAR_DIR = 'target/webjardependencies/';
     var NODE_DIR = 'node_modules/';
@@ -18,8 +18,8 @@ module.exports = function(config) {
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/webcert/views/**/*.html': ['ng-html2js'],
-            'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/webcert/**/*.js': ['coverage'],
+            'src/main/resources/META-INF/resources/webjars/lisu/webcert/views/**/*.html': ['ng-html2js'],
+            'src/main/resources/META-INF/resources/webjars/lisu/webcert/**/*.js': ['coverage'],
             'src/main/resources/META-INF/resources/webjars/common/webcert/**/*.scss': ['scss']
         },
 

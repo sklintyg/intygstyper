@@ -74,9 +74,9 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukpenning-utokad/minaintyg/css/sjukpenning-utokad.css";
+            return "/web/webjars/lisu/minaintyg/css/sjukpenning-utokad.css";
         case WEBCERT:
-            return "/web/webjars/sjukpenning-utokad/webcert/css/sjukpenning-utokad.css";
+            return "/web/webjars/lisu/webcert/css/sjukpenning-utokad.css";
         default:
             return null;
         }
@@ -86,9 +86,9 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
     public String getModuleScriptPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukpenning-utokad/minaintyg/js/module";
+            return "/web/webjars/lisu/minaintyg/js/module";
         case WEBCERT:
-            return "/web/webjars/sjukpenning-utokad/webcert/module";
+            return "/web/webjars/lisu/webcert/module";
         default:
             return null;
         }
@@ -98,9 +98,9 @@ public class SjukpenningUtokadEntryPoint implements ModuleEntryPoint {
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukpenning-utokad/minaintyg/js/module-deps.json";
+            return "/web/webjars/lisu/minaintyg/js/module-deps.json";
         case WEBCERT:
-            return "/web/webjars/sjukpenning-utokad/webcert/module-deps.json";
+            return "/web/webjars/lisu/webcert/module-deps.json";
         default:
             return null;
         }

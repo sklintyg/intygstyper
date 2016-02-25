@@ -1,23 +1,23 @@
 module.exports = {
     webcert: {
-        cwd: 'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/webcert',
+        cwd: 'src/main/resources/META-INF/resources/webjars/lisu/webcert',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/sjukpenning-utokad/webcert/templates.js',
+        dest: 'target/classes/META-INF/resources/webjars/lisu/webcert/templates.js',
         options:{
             module: 'lisu',
             url: function(url) {
-                return '/web/webjars/sjukpenning-utokad/webcert/' + url;
+                return '/web/webjars/lisu/webcert/' + url;
             }
         }
     },
     minaintyg: {
-        cwd: 'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/minaintyg',
+        cwd: 'src/main/resources/META-INF/resources/webjars/lisu/minaintyg',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/sjukpenning-utokad/minaintyg/templates.js',
+        dest: 'target/classes/META-INF/resources/webjars/lisu/minaintyg/templates.js',
         options:{
             module: 'lisu',
             url: function(url) {
-                return '/web/webjars/sjukpenning-utokad/minaintyg/' + url;
+                return '/web/webjars/lisu/minaintyg/' + url;
             }
         }
     }

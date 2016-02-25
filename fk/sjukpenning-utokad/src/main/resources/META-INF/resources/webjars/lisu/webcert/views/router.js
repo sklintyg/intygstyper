@@ -21,7 +21,7 @@ angular.module('lisu').config(function($stateProvider) {
     'use strict';
 
     var commonPath = '/web/webjars/common/webcert/';
-    var intygsTypPath = '/web/webjars/sjukpenning-utokad/webcert/';
+    var intygsTypPath = '/web/webjars/lisu/webcert/';
 
     $stateProvider.
         state('lisu-edit', {
