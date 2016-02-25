@@ -68,7 +68,6 @@ public class InternalDraftValidator {
 
         // Kategori 8 – Övrigt
         // Kategori 9 – Kontakt
-        validateKontakt(utlatande, validationMessages);
 
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
