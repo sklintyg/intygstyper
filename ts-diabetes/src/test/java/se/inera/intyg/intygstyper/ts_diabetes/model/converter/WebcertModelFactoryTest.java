@@ -18,10 +18,17 @@
  */
 package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
+
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
@@ -29,11 +36,10 @@ import se.inera.intyg.common.support.modules.support.api.dto.Patient;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 public class WebcertModelFactoryTest {
 
@@ -75,5 +81,33 @@ public class WebcertModelFactoryTest {
         assertEquals("Testvägen 12", utlatande.getGrundData().getPatient().getPostadress());
         assertEquals("13337", utlatande.getGrundData().getPatient().getPostnummer());
         assertEquals("Huddinge", utlatande.getGrundData().getPatient().getPostort());
+    }
+
+    @Test
+    public void testUpdateSkapadAv() {
+        final String personId = "personid";
+        final String fullstandigtName = "fullständigt namn";
+        final String forskrivarKod = "förskrivarkod";
+        final String befattning = "befattning";
+        final List<String> specialiseringar = Arrays.asList("specialitet1", "specialitet2");
+        final LocalDateTime signingDate = LocalDateTime.now();
+
+        Utlatande utlatande = new Utlatande();
+        utlatande.getGrundData().setSkapadAv(new se.inera.intyg.common.support.model.common.internal.HoSPersonal());
+        HoSPersonal hosPerson = new HoSPersonal(personId, fullstandigtName, forskrivarKod, befattning, specialiseringar, new Vardenhet("hsaId",
+                "name", "postadress", "postnummer", "postort", "telefonnummer", "epost", "arbetsplatskod", new Vardgivare("hsaId", "namn")));
+        factory.updateSkapadAv(utlatande, hosPerson, signingDate);
+
+        assertEquals(personId, utlatande.getGrundData().getSkapadAv().getPersonId());
+        assertEquals(fullstandigtName, utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
+        assertEquals(forskrivarKod, utlatande.getGrundData().getSkapadAv().getForskrivarKod());
+        assertEquals(signingDate, utlatande.getGrundData().getSigneringsdatum());
+        assertEquals(Arrays.asList(befattning), utlatande.getGrundData().getSkapadAv().getBefattningar());
+        assertEquals(specialiseringar, utlatande.getGrundData().getSkapadAv().getSpecialiteter());
+
+        // assert befattningar and specialiteter are cleared before they are updated
+        factory.updateSkapadAv(utlatande, hosPerson, signingDate);
+        assertEquals(Arrays.asList(befattning), utlatande.getGrundData().getSkapadAv().getBefattningar());
+        assertEquals(specialiseringar, utlatande.getGrundData().getSkapadAv().getSpecialiteter());
     }
 }

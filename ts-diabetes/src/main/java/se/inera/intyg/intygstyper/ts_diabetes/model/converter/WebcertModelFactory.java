@@ -123,6 +123,7 @@ public class WebcertModelFactory {
         if (hosPerson.getBefattning() != null) {
             utlatande.getGrundData().getSkapadAv().getBefattningar().add(hosPerson.getBefattning());
         }
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().clear();
         if (hosPerson.getSpecialiseringar() != null) {
             utlatande.getGrundData().getSkapadAv().getSpecialiteter().addAll(hosPerson.getSpecialiseringar());
         }
