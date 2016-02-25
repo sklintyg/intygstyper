@@ -29,13 +29,10 @@ import java.util.Objects;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
@@ -77,15 +74,6 @@ public class InternalDraftValidator {
         validateVardenhet(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
-    }
-
-    private void validateKontakt(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-
-        // R8
-        if (utlatande.getKontaktMedFk() != null && utlatande.getKontaktMedFk() && utlatande.getAnledningTillKontakt() == null) {
-            addValidationError(validationMessages, "kontakt", ValidationMessageType.INVALID_FORMAT,
-                    "lisu.validation.kontakt.anledning.missing");
-        }
     }
 
     private void validateGrundForMU(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
@@ -140,28 +128,28 @@ public class InternalDraftValidator {
 
             // R9
             if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
-                    && utlatande.getNuvarandeArbete() == null) {
+                    && StringUtils.isBlank(utlatande.getNuvarandeArbete())) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.missing");
             }
 
             // R10
             if (utlatande.getSysselsattning().getTyp() != Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
-                    && utlatande.getNuvarandeArbete() != null) {
+                    && !StringUtils.isBlank(utlatande.getNuvarandeArbete())) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.invalid_combination");
             }
 
             // R11
             if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
-                    && utlatande.getArbetsmarknadspolitisktProgram() == null) {
+                    && StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.ampolitisktprogram.missing");
             }
 
             // R12
             if (utlatande.getSysselsattning().getTyp() != Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
-                    && utlatande.getArbetsmarknadspolitisktProgram() != null) {
+                    && !StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())) {
                 addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.ampolitisktprogram.invalid_combination");
             }
@@ -169,14 +157,14 @@ public class InternalDraftValidator {
     }
 
     private void validateFunktionsnedsattning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (utlatande.getFunktionsnedsattning() == null) {
+        if (StringUtils.isBlank(utlatande.getFunktionsnedsattning())) {
             addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
                     "lisu.validation.funktionsnedsattning.missing");
         }
     }
 
     private void validateAktivitetsbegransning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (utlatande.getAktivitetsbegransning() == null) {
+        if (StringUtils.isBlank(utlatande.getAktivitetsbegransning())) {
             addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
                     "lisu.validation.aktivitetsbegransning.missing");
         }
@@ -194,10 +182,10 @@ public class InternalDraftValidator {
         } else {
 
             // R18, R19
-            if (utlatande.getPrognos().getTyp() == Prognos.PrognosTyp.PROGNOS_OKLAR && utlatande.getPrognos().getFortydligande() == null) {
+            if (utlatande.getPrognos().getTyp() == Prognos.PrognosTyp.PROGNOS_OKLAR && StringUtils.isBlank(utlatande.getPrognos().getFortydligande())) {
                 addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                         "lisu.validation.bedomning.prognos.fortydligande.missing");
-            } else if (utlatande.getPrognos().getTyp() != Prognos.PrognosTyp.PROGNOS_OKLAR && utlatande.getPrognos().getFortydligande() != null) {
+            } else if (utlatande.getPrognos().getTyp() != Prognos.PrognosTyp.PROGNOS_OKLAR && !StringUtils.isBlank(utlatande.getPrognos().getFortydligande())) {
                 addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                         "lisu.validation.bedomning.prognos.fortydligande.invalidentry");
             }
@@ -227,12 +215,12 @@ public class InternalDraftValidator {
                     addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                             "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggning.missing");
                 } else {
-                    if (utlatande.getArbetstidsforlaggning() && utlatande.getArbetstidsforlaggningMotivering() == null) {
+                    if (utlatande.getArbetstidsforlaggning() && StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
                         addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                                 "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.missing");
                     }
                 }
-            } else if (isArbetstidsforlaggningMotiveringForbidden(utlatande) && utlatande.getArbetstidsforlaggningMotivering() != null) {
+            } else if (isArbetstidsforlaggningMotiveringForbidden(utlatande) && !StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
                 addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                         "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.invalidentry");
             }
@@ -315,28 +303,28 @@ public class InternalDraftValidator {
 
             // R23 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning() must not be answered
             if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning() != null) {
+                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
                 addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                         "lisu.validation.atgarder.invalid_combination");
             }
 
             // R24 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() must not be answered
             if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() != null) {
+                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
                 addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                         "lisu.validation.atgarder.invalid_combination");
             }
 
             // R22 If INTE_AKTUELLT is NOT checked beskrivning åtgärder aktuellt is required
             if (!utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning() == null) {
+                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
                 addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                         "lisu.validation.atgarder.aktuelltbeskrivning.missing");
             }
 
             // R25 If INTE_AKTUELLT is NOT checked beskrivning åtgärder ej aktuellt is not allowed
             if (!utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() != null) {
+                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
                 addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                         "lisu.validation.atgarder.invalid_combination");
             }
@@ -380,74 +368,4 @@ public class InternalDraftValidator {
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
         return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
-
-    /**
-     * @param validationMessages list collecting message
-     * @param fieldId            field id
-     * @param intervals          intervals
-     * @return booleans
-     */
-    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
-        if (intervals == null || allNulls(intervals)) {
-            addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
-                    "lisu.validation.nedsattning.choose-at-least-one");
-            return false;
-        }
-
-        for (int i = 0; i < intervals.length; i++) {
-            if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
-                if (oneInterval == null) {
-                    addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                            "lisu.validation.nedsattning.incorrect-date-interval");
-                    return false;
-                }
-                for (int j = i + 1; j < intervals.length; j++) {
-                    if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
-                        if (anotherInterval == null) {
-                            addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "lisu.validation.nedsattning.incorrect-date-interval");
-                            return false;
-                        }
-                        // Overlap OR abuts(one intervals tom day== another's
-                        // from day) is considered invalid
-                        if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
-                            addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "lisu.validation.nedsattning.overlapping-date-interval");
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * @param intervals intervals
-     * @return boolean
-     */
-    private boolean allNulls(InternalLocalDateInterval[] intervals) {
-        for (InternalLocalDateInterval interval : intervals) {
-            if (interval != null) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * @param start start
-     * @param end   end
-     * @return Interval
-     */
-    private Interval createInterval(LocalDate start, LocalDate end) {
-        if ((start == null || end == null || start.isAfter(end))) {
-            return null;
-        } else {
-            return new Interval(start.toDate().getTime(), end.toDate().getTime());
-        }
-    }
-
 }

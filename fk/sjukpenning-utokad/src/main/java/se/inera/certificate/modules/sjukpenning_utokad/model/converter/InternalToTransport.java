@@ -83,6 +83,7 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
@@ -226,14 +227,14 @@ public final class InternalToTransport {
     private static List<Svar> getSvar(SjukpenningUtokadUtlatande source) {
         List<Svar> svars = new ArrayList<>();
 
-        if (source.getUndersokningAvPatienten() != null) {
+        if (source.getUndersokningAvPatienten() != null && source.getUndersokningAvPatienten().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID,
                             aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT)))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getUndersokningAvPatienten().asLocalDate().toString()).build());
         }
 
-        if (source.getTelefonkontaktMedPatienten() != null) {
+        if (source.getTelefonkontaktMedPatienten() != null && source.getTelefonkontaktMedPatienten().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID,
                             aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT_MED_PATIENT)))
@@ -241,14 +242,14 @@ public final class InternalToTransport {
                     .build());
         }
 
-        if (source.getJournaluppgifter() != null) {
+        if (source.getJournaluppgifter() != null && source.getJournaluppgifter().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID,
                             aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER)))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
 
-        if (source.getAnnatGrundForMU() != null) {
+        if (source.getAnnatGrundForMU() != null && source.getAnnatGrundForMU().isValidDate()) {
             svars.add(
                     aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID)
                             .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID,
@@ -262,7 +263,7 @@ public final class InternalToTransport {
                         Integer.toString(source.getSysselsattning().getTyp().getId())))
                 .build());
 
-        if (source.getNuvarandeArbete() != null) {
+        if (!StringUtils.isBlank(source.getNuvarandeArbete())) {
             svars.add(aSvar(NUVARANDE_ARBETE_SVAR_ID)
                     .withDelsvar(NUVARANDE_ARBETE_DELSVAR_ID, source.getNuvarandeArbete()).build());
         }
@@ -277,11 +278,11 @@ public final class InternalToTransport {
 
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
 
-        if (source.getPagaendeBehandling() != null) {
+        if (!StringUtils.isBlank(source.getPagaendeBehandling())) {
             svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
         }
 
-        if (source.getPlaneradBehandling() != null) {
+        if (!StringUtils.isBlank(source.getPlaneradBehandling())) {
             svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
         }
 
@@ -291,16 +292,15 @@ public final class InternalToTransport {
                             aCV(SJUKSKRIVNING_CODE_SYSTEM, Integer.toString(sjukskrivning.getSjukskrivningsgrad().getId())))
                     .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID,
                             aDatePeriod(sjukskrivning.getPeriod().fromAsLocalDate(), sjukskrivning.getPeriod().tomAsLocalDate())).build());
-
         }
 
-        if (source.getForsakringsmedicinsktBeslutsstod() != null) {
+        if (!StringUtils.isBlank(source.getForsakringsmedicinsktBeslutsstod())) {
             svars.add(aSvar(FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID)
                     .withDelsvar(FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID, source.getForsakringsmedicinsktBeslutsstod()).build());
         }
 
         if (source.getArbetstidsforlaggning() != null) {
-            if (source.getArbetstidsforlaggning() && source.getArbetstidsforlaggningMotivering() != null) {
+            if (source.getArbetstidsforlaggning() && !StringUtils.isBlank(source.getArbetstidsforlaggningMotivering())) {
                 svars.add(aSvar(ARBETSTIDSFORLAGGNING_SVAR_ID)
                         .withDelsvar(ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID, source.getArbetstidsforlaggning().toString())
                         .withDelsvar(ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID, source.getArbetstidsforlaggningMotivering()).build());
@@ -315,7 +315,7 @@ public final class InternalToTransport {
                     .withDelsvar(ARBETSRESOR_OM_DELSVAR_ID, source.getArbetsresor().toString()).build());
         }
 
-        if (source.getFormagaTrotsBegransning() != null) {
+        if (!StringUtils.isBlank(source.getFormagaTrotsBegransning())) {
             svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID)
                     .withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getFormagaTrotsBegransning()).build());
         }
@@ -332,24 +332,24 @@ public final class InternalToTransport {
                             aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, Integer.toString(atgarder.getVal().getId())));
                 });
 
-        if (source.getArbetslivsinriktadeAtgarderAktuelltBeskrivning() != null) {
+        if (!StringUtils.isBlank(source.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
             arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID,
                     source.getArbetslivsinriktadeAtgarderAktuelltBeskrivning());
         }
 
-        if (source.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() != null) {
+        if (!StringUtils.isBlank(source.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
             arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID,
                     source.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning());
         }
         svars.add(arbetslivsinriktadeAtgarderBuilder.build());
         /* End complex object */
 
-        if (source.getOvrigt() != null) {
+        if (!StringUtils.isBlank(source.getOvrigt())) {
             svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getOvrigt()).build());
         }
 
         if (source.getKontaktMedFk() != null) {
-            if (source.getKontaktMedFk() && source.getAnledningTillKontakt() != null) {
+            if (source.getKontaktMedFk() && !StringUtils.isBlank(source.getAnledningTillKontakt())) {
                 svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString())
                         .withDelsvar(ANLEDNING_TILL_KONTAKT_DELSVAR_ID, source.getAnledningTillKontakt()).build());
             } else {
