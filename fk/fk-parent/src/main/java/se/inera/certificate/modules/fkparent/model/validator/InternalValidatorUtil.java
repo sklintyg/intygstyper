@@ -45,11 +45,11 @@ public final class InternalValidatorUtil {
     private InternalValidatorUtil() {
     }
 
-    public static void validateDiagnose(List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
+    public static void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
         if (diagnoser.size() == 0) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                    "lisu.validation.diagnos.missing");
+                    intygsTyp + ".validation.diagnos.missing");
         }
         for (Diagnos diagnos : diagnoser) {
 
@@ -58,24 +58,24 @@ public final class InternalValidatorUtil {
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "lisu.validation.diagnos.missing");
+                        intygsTyp + ".validation.diagnos.missing");
             } else {
                 String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
                 if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
                         && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
                     addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            "lisu.validation.diagnos.psykisk.length-4");
+                            intygsTyp + ".validation.diagnos.psykisk.length-4");
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
                     addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            "lisu.validation.diagnos.length-3");
+                            intygsTyp + ".validation.diagnos.length-3");
                 } else {
                     validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                            "lisu.validation.diagnos.invalid", validationMessages);
+                            intygsTyp + ".validation.diagnos.invalid", validationMessages);
                 }
             }
             if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "lisu.validation.diagnos.description.missing");
+                        intygsTyp + ".validation.diagnos.description.missing");
             }
         }
     }
