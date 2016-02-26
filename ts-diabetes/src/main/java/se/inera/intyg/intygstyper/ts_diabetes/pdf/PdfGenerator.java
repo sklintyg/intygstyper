@@ -24,9 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.*;
-
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -34,6 +31,9 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
+
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.*;
 
 public class PdfGenerator {
 
@@ -150,7 +150,7 @@ public class PdfGenerator {
     private static final StringField TELEFON = new StringField("Falt__98");
     private static final StringField NAMNFORTYDLIGANDE = new StringField("Falt__101");
 
-    private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt_102");
+    private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt__102");
 
     private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
 

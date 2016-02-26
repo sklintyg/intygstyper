@@ -156,7 +156,7 @@ public final class InternalToTransportConverter {
         return result;
     }
 
-    private static SkapadAv readSkapadAv(HoSPersonal skapadAv) {
+    protected static SkapadAv readSkapadAv(HoSPersonal skapadAv) {
         SkapadAv result = new SkapadAv();
 
         II ii = new II();
@@ -166,6 +166,7 @@ public final class InternalToTransportConverter {
         result.setPersonId(ii);
         result.setFullstandigtNamn(skapadAv.getFullstandigtNamn());
         result.setVardenhet(readVardenhet(skapadAv.getVardenhet()));
+        result.getSpecialiteter().addAll(skapadAv.getSpecialiteter());
         return result;
     }
 

@@ -19,19 +19,19 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
-    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/sjukpenning-utokad/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
-    grunt.file.write(DEST_DIR + 'webjars/sjukpenning-utokad/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
+    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/lisu/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/lisu/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
         map(function(file){ return '/web/'+file; }).
-        concat('/web/webjars/sjukpenning-utokad/minaintyg/templates.js'), null, 4));
-    minaintyg = [SRC_DIR + 'webjars/sjukpenning-utokad/minaintyg/js/module.js', DEST_DIR + 'webjars/sjukpenning-utokad/minaintyg/templates.js'].concat(minaintyg.map(function(file){
+        concat('/web/webjars/lisu/minaintyg/templates.js'), null, 4));
+    minaintyg = [SRC_DIR + 'webjars/lisu/minaintyg/js/module.js', DEST_DIR + 'webjars/lisu/minaintyg/templates.js'].concat(minaintyg.map(function(file){
         return SRC_DIR + file;
     }));
 
-    var webcert = grunt.file.expand({cwd:SRC_DIR}, ['webjars/sjukpenning-utokad/webcert/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
-    grunt.file.write(DEST_DIR + 'webjars/sjukpenning-utokad/webcert/module-deps.json', JSON.stringify(webcert.
+    var webcert = grunt.file.expand({cwd:SRC_DIR}, ['webjars/lisu/webcert/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/lisu/webcert/module-deps.json', JSON.stringify(webcert.
         map(function(file){ return '/web/'+file; }).
-        concat('/web/webjars/sjukpenning-utokad/webcert/templates.js'), null, 4));
-    webcert = [SRC_DIR + 'webjars/sjukpenning-utokad/webcert/module.js', DEST_DIR + 'webjars/sjukpenning-utokad/webcert/templates.js'].concat(webcert.map(function(file){
+        concat('/web/webjars/lisu/webcert/templates.js'), null, 4));
+    webcert = [SRC_DIR + 'webjars/lisu/webcert/module.js', DEST_DIR + 'webjars/lisu/webcert/templates.js'].concat(webcert.map(function(file){
         return SRC_DIR + file;
     }));
 
@@ -43,21 +43,21 @@ module.exports = function(grunt) {
                 force: true
             },
             minaintyg: {
-                src: [ SRC_DIR + 'webjars/sjukpenning-utokad/minaintyg/**/*.css' ]
+                src: [ SRC_DIR + 'webjars/lisu/minaintyg/**/*.css' ]
             },
             webcert: {
-                src: [ SRC_DIR + 'webjars/sjukpenning-utokad/webcert/**/*.css' ]
+                src: [ SRC_DIR + 'webjars/lisu/webcert/**/*.css' ]
             }
         },
 
         concat: {
             minaintyg: {
                 src: minaintyg,
-                dest: DEST_DIR + 'webjars/sjukpenning-utokad/minaintyg/js/module.min.js'
+                dest: DEST_DIR + 'webjars/lisu/minaintyg/js/module.min.js'
             },
             webcert: {
                 src: webcert,
-                dest: DEST_DIR + 'webjars/sjukpenning-utokad/webcert/module.min.js'
+                dest: DEST_DIR + 'webjars/lisu/webcert/module.min.js'
             }
         },
 
@@ -67,20 +67,20 @@ module.exports = function(grunt) {
                 force: true
             },
             minaintyg: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukpenning-utokad/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/lisu/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
             },
             webcert: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukpenning-utokad/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/lisu/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
             }
         },
 
         karma: {
             minaintyg: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/karma-minaintyg.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/lisu/karma-minaintyg.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/sjukpenning-utokad/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/lisu/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             }
         },
@@ -90,12 +90,12 @@ module.exports = function(grunt) {
                 singleQuotes: true
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/sjukpenning-utokad/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning-utokad/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/lisu/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/lisu/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/sjukpenning-utokad/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning-utokad/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/lisu/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/lisu/webcert/module.min.js'
             }
         },
 
@@ -104,12 +104,12 @@ module.exports = function(grunt) {
                 mangle: false
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/sjukpenning-utokad/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning-utokad/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/lisu/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/lisu/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/sjukpenning-utokad/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukpenning-utokad/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/lisu/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/lisu/webcert/module.min.js'
             }
         },
 
