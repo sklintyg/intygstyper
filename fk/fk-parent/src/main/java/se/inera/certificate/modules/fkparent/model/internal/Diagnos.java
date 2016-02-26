@@ -16,15 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package se.inera.certificate.modules.sjukpenning_utokad.model.internal;
-
-import javax.annotation.Nullable;
+package se.inera.certificate.modules.fkparent.model.internal;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
+/**
+ * Created by BESA on 2016-02-23.
+ */
 @AutoValue
 public abstract class Diagnos {
 
@@ -33,8 +35,8 @@ public abstract class Diagnos {
 
     @JsonCreator
     public static Diagnos create(@JsonProperty("diagnosKod") String diagnosKod,
-            @JsonProperty("diagnosKodSystem") String diagnosKodSystem,
-            @JsonProperty("diagnosBeskrivning") String diagnosBeskrivning) {
+                                 @JsonProperty("diagnosKodSystem") String diagnosKodSystem,
+                                 @JsonProperty("diagnosBeskrivning") String diagnosBeskrivning) {
         return new AutoValue_Diagnos(diagnosKod, diagnosKodSystem, diagnosBeskrivning);
     }
 

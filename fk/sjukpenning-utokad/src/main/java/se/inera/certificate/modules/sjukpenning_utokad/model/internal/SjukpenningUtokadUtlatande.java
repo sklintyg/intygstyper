@@ -28,6 +28,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.SitUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
@@ -35,7 +37,7 @@ import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_SjukpenningUtokadUtlatande.Builder.class)
-public abstract class SjukpenningUtokadUtlatande implements Utlatande {
+public abstract class SjukpenningUtokadUtlatande implements Utlatande, SitUtlatande {
 
     SjukpenningUtokadUtlatande() {
     }
@@ -90,6 +92,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande {
 
     // Kategori 3 - Diagnos
     // Fråga 6
+    @Override
     public abstract ImmutableList<Diagnos> getDiagnoser();
 
     // Kategori 4 - Sjukdomens konsekvenser

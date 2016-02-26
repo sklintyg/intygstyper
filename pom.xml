@@ -51,6 +51,9 @@
     <intyg-insuranceprocess.version>1.0.1</intyg-insuranceprocess.version>
     <intyg-transportstyrelsen.version>1.0.1</intyg-transportstyrelsen.version>
 
+    <!-- Override JUnit version -->
+    <junit.version>4.12</junit.version>
+
     <skip-coverage>true</skip-coverage>
   </properties>
 

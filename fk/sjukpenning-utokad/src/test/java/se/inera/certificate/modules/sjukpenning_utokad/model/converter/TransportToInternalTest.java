@@ -7,8 +7,8 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos.PrognosTyp;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;

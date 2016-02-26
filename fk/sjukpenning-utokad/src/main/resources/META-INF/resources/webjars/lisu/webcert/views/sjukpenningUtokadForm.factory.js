@@ -46,7 +46,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                     key: 'diagnoser',
                     type: 'diagnos',
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
-                },
+                }
             ]
         },
         {
@@ -54,7 +54,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             templateOptions: {category: 4, categoryName: 'funktionsnedsattning'},
             fieldGroup: [
                 {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
-                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}},
+                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
             ]
         },
         {
@@ -62,7 +62,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             templateOptions: {category: 5, categoryName: 'medicinskaBehandlingar'},
             fieldGroup: [
                 {key: 'pagaendeBehandling', type: 'multi-text', templateOptions: {label: 'DFR_19.1'}},
-                {key: 'planeradBehandling', type: 'multi-text', templateOptions: {label: 'DFR_20.1'}},
+                {key: 'planeradBehandling', type: 'multi-text', templateOptions: {label: 'DFR_20.1'}}
             ]
         },
         {
@@ -90,7 +90,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                         choices: [1, 2, 3, 4]
                     }
                 },
-                {key: 'prognos.fortydligande', type: 'multi-text', templateOptions: {label: 'DFR_39.2'}},
+                {key: 'prognos.fortydligande', type: 'multi-text', templateOptions: {label: 'DFR_39.2'}}
             ]
         },
         {
@@ -115,14 +115,14 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                     key: 'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning',
                     type: 'multi-text',
                     templateOptions: {label: 'DFR_40.3'}
-                },
+                }
             ]
         },
         {
             wrapper: 'wc-field',
             templateOptions: {category: 8, categoryName: 'ovrigt'},
             fieldGroup: [
-                {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}},
+                {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
             ]
         },
         {

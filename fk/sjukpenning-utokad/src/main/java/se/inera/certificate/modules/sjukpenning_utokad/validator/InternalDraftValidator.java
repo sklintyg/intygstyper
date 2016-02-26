@@ -19,20 +19,20 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.validator;
 
+import static se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil.addValidationError;
+import static se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil.validateDiagnose;
+import static se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Diagnos;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.service.WebcertModuleService;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
@@ -41,28 +41,41 @@ import se.inera.intyg.common.support.validate.StringValidator;
 
 public class InternalDraftValidator {
 
+    private static final int MAX_ARBETSLIVSINRIKTADE_ATGARDER = 10;
+
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
-    @Autowired(required = false)
-    private WebcertModuleService moduleService;
-
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
-
-    private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
-    private static final int MIN_SIZE_DIAGNOS = 3;
 
     public ValidateDraftResponse validateDraft(SjukpenningUtokadUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // Kategori 1 – Grund för medicinskt underlag
         validateGrundForMU(utlatande, validationMessages);
-        // Kategori 4 – Diagnos
-        validateDiagnose(utlatande, validationMessages);
-        // Kategori 6 – Aktivitetsbegränsning
+
+        // Kategori 2 – Sysselsättning
+        validateSysselsattning(utlatande, validationMessages);
+
+        // Kategori 3 – Diagnos
+        validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
+
+        // Kategori 4 – Sjukdomens konsekvenser
+        validateFunktionsnedsattning(utlatande, validationMessages);
         validateAktivitetsbegransning(utlatande, validationMessages);
-        // Kategori 7 – Medicinska behandlingar/åtgärder
-        // Kategori 9 – Övrigt
-        // Kategori 10 – Kontakt
+
+        // Kategori 5 – Medicinska behandlingar/åtgärder
+
+        // Kategori 6 – Bedömning
+        validateBedomning(utlatande, validationMessages);
+
+        // Kategori 7 – Åtgärder
+        validateAtgarder(utlatande, validationMessages);
+
+        // Kategori 8 – Övrigt
+
+        // Kategori 9 – Kontakt
+        validateKontakt(utlatande, validationMessages);
+
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
 
@@ -71,213 +84,304 @@ public class InternalDraftValidator {
 
     private void validateGrundForMU(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-//        if (utlatande.getUndersokningAvPatienten() == null && utlatande.getJournaluppgifter() == null
-//                && utlatande.getAnhorigsBeskrivningAvPatienten() == null && utlatande.getAnnatGrundForMU() == null) {
-//            addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
-//                    "sjukpenning-utokad.validation.grund-for-mu.missing");
-//        }
-//
-//        if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
-//            addValidationError(validationMessages, "grundformu.undersokning", ValidationMessageType.INVALID_FORMAT,
-//                    "sjukpenning-utokad.validation.grund-for-mu.undersokning.incorrect_format");
-//        }
-//        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
-//            addValidationError(validationMessages, "grundformu.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
-//                    "sjukpenning-utokad.validation.grund-for-mu.journaluppgifter.incorrect_format");
-//        }
-//        if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && !utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()) {
-//            addValidationError(validationMessages, "grundformu.anhorigsbeskrivning", ValidationMessageType.INVALID_FORMAT,
-//                    "sjukpenning-utokad.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format");
-//        }
-//        if (utlatande.getAnnatGrundForMU() != null && !utlatande.getAnnatGrundForMU().isValidDate()) {
-//            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
-//                    "sjukpenning-utokad.validation.grund-for-mu.annat.incorrect_format");
-//        }
-//        if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
-//            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
-//                    "sjukpenning-utokad.validation.grund-for-mu.annat.missing");
-//        }
+        // R1 - no need to check. they are already separated and cannot occur twice.
 
+        // One of the following is required
+        if (utlatande.getUndersokningAvPatienten() == null
+                && utlatande.getTelefonkontaktMedPatienten() == null
+                && utlatande.getJournaluppgifter() == null
+                && utlatande.getAnnatGrundForMU() == null) {
+            addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
+                    "lisu.validation.grund-for-mu.missing");
+        }
+
+        // Validate dates
+        if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.undersokning", ValidationMessageType.INVALID_FORMAT,
+                    "lisu.validation.grund-for-mu.undersokning.incorrect_format");
+        }
+        if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.telefonkontakt", ValidationMessageType.INVALID_FORMAT,
+                    "lisu.validation.grund-for-mu.telefonkontakt.incorrect_format");
+        }
+        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
+                    "lisu.validation.grund-for-mu.journaluppgifter.incorrect_format");
+        }
+        if (utlatande.getAnnatGrundForMU() != null && !utlatande.getAnnatGrundForMU().isValidDate()) {
+            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
+                    "lisu.validation.grund-for-mu.annat.incorrect_format");
+        }
+
+        // R2
+        if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
+                    "lisu.validation.grund-for-mu.annat.beskrivning.missing");
+        }
+
+        // R3
+        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
+                    "lisu.validation.grund-for-mu.annat.beskrivning.invalid_combination");
+        }
     }
 
-    private void validateVardenhet(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
-            addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
-                    "sjukpenning-utokad.validation.vardenhet.postadress.missing");
-        }
+    private void validateSysselsattning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (utlatande.getSysselsattning() == null || utlatande.getSysselsattning().getTyp() == null) {
+            addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
+                    "lisu.validation.sysselsattning.missing");
+        } else {
 
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
-                    "sjukpenning-utokad.validation.vardenhet.postnummer.missing");
-        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
-                    "sjukpenning-utokad.validation.vardenhet.postnummer.incorrect-format");
-        }
+            // R9
+            if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
+                    && StringUtils.isBlank(utlatande.getNuvarandeArbete())) {
+                addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
+                        "lisu.validation.sysselsattning.nuvarandearbete.missing");
+            }
 
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
-            addValidationError(validationMessages, "vardenhet.postort", ValidationMessageType.EMPTY,
-                    "sjukpenning-utokad.validation.vardenhet.postort.missing");
-        }
+            // R10
+            if (utlatande.getSysselsattning().getTyp() != Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
+                    && !StringUtils.isBlank(utlatande.getNuvarandeArbete())) {
+                addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
+                        "lisu.validation.sysselsattning.nuvarandearbete.invalid_combination");
+            }
 
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
-            addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
-                    "sjukpenning-utokad.validation.vardenhet.telefonnummer.missing");
+            // R11
+            if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
+                    && StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())) {
+                addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
+                        "lisu.validation.sysselsattning.ampolitisktprogram.missing");
+            }
+
+            // R12
+            if (utlatande.getSysselsattning().getTyp() != Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
+                    && !StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())) {
+                addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
+                        "lisu.validation.sysselsattning.ampolitisktprogram.invalid_combination");
+            }
+        }
+    }
+
+    private void validateFunktionsnedsattning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (StringUtils.isBlank(utlatande.getFunktionsnedsattning())) {
+            addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
+                    "lisu.validation.funktionsnedsattning.missing");
         }
     }
 
     private void validateAktivitetsbegransning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getAktivitetsbegransning())) {
-            addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
-                    "sjukpenning-utokad.validation.aktivitetsbegransning.missing");
+            addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
+                    "lisu.validation.aktivitetsbegransning.missing");
         }
     }
 
-    private void validateDiagnose(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateBedomning(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
-        if (utlatande.getDiagnoser().size() == 0) {
-            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                    "lisu.validation.diagnos.missing");
+        // Sjukskrivningar
+        validateSjukskrivningar(utlatande, validationMessages);
+
+        // Prognos
+        if (utlatande.getPrognos() == null) {
+            addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                    "lisu.validation.bedomning.prognos.missing");
+        } else {
+
+            // R18, R19
+            if (utlatande.getPrognos().getTyp() == Prognos.PrognosTyp.PROGNOS_OKLAR && StringUtils.isBlank(utlatande.getPrognos().getFortydligande())) {
+                addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                        "lisu.validation.bedomning.prognos.fortydligande.missing");
+            } else if (utlatande.getPrognos().getTyp() != Prognos.PrognosTyp.PROGNOS_OKLAR && !StringUtils.isBlank(utlatande.getPrognos().getFortydligande())) {
+                addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                        "lisu.validation.bedomning.prognos.fortydligande.invalid_combination");
+            }
         }
-        for (Diagnos diagnos : utlatande.getDiagnoser()) {
+    }
 
-            /* R8 För delfråga 6.2 ska diagnoskod anges med så många positioner som möjligt, men minst tre positioner (t.ex. F32).
-               R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
-               Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
-            if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "lisu.validation.diagnos.missing");
-            } else {
-                String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
-                if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
-                        && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            "lisu.validation.diagnos.psykisk.length-4");
-                } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            "lisu.validation.diagnos.length-3");
+    private void validateSjukskrivningar(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+
+        // Check if there are any at all
+        if (utlatande.getSjukskrivningar() == null || utlatande.getSjukskrivningar().size() < 1) {
+            addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                    "lisu.validation.bedomning.sjukskrivningar.missing");
+        } else {
+
+            // Validate sjukskrivningar, checks that dates exist and are valid
+            utlatande.getSjukskrivningar()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .forEach(sjukskrivning -> validateSjukskrivning(validationMessages, sjukskrivning));
+
+            // R17 Validate no sjukskrivningperiods overlap
+            validateSjukskrivningPeriodOverlap(utlatande, validationMessages);
+
+            // Arbetstidsforlaggning R13, R14, R15, R16
+            if (isArbetstidsforlaggningMandatory(utlatande)) {
+                if (utlatande.getArbetstidsforlaggning() == null) {
+                    addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                            "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggning.missing");
                 } else {
-                    validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                            "lisu.validation.diagnos.invalid", validationMessages);
+                    if (utlatande.getArbetstidsforlaggning() && StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
+                        addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                                "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.missing");
+                    } else if (!utlatande.getArbetstidsforlaggning() && !StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
+                        addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                                "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.incorrect");
+                    }
                 }
-            }
-            if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "lisu.validation.diagnos.description.missing");
+            } else if (isArbetstidsforlaggningMotiveringForbidden(utlatande) && !StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
+                addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                        "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.invalid_combination");
             }
         }
-
     }
 
-    private void validateDiagnosKod(String diagnosKod, String kodsystem, String field, String msgKey, List<ValidationMessage> validationMessages) {
-        // if moduleService is not available, skip this validation
-        if (moduleService == null) {
-            LOG.warn("Forced to skip validation of diagnosKod since an implementation of ModuleService is not available");
+    private void validateSjukskrivningPeriodOverlap(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        utlatande.getSjukskrivningar()
+                .stream()
+                .filter(Objects::nonNull)
+                .forEach(sjukskrivning -> checkSjukskrivningPeriodOverlapAgainstList(validationMessages, sjukskrivning, utlatande.getSjukskrivningar()));
+    }
+
+    private void checkSjukskrivningPeriodOverlapAgainstList(List<ValidationMessage> validationMessages, Sjukskrivning sjukskrivning, ImmutableList<Sjukskrivning> sjukskrivningar) {
+
+        if (sjukskrivning == null) {
             return;
         }
 
-        if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
-            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
+        if (isPeriodIntervalsOverlapping(sjukskrivning, sjukskrivningar) && sjukskrivning.getSjukskrivningsgrad() != null) {
+            addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                    "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".overlap");
+        }
+    }
+
+    private boolean isPeriodIntervalsOverlapping(Sjukskrivning sjukskrivning, ImmutableList<Sjukskrivning> sjukskrivningar) {
+        return sjukskrivningar
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(e -> e != sjukskrivning)
+                .anyMatch(e -> e.getPeriod() != null && e.getPeriod().overlaps(sjukskrivning.getPeriod()));
+    }
+
+    private void validateSjukskrivning(List<ValidationMessage> validationMessages, Sjukskrivning sjukskrivning) {
+        if (sjukskrivning.getSjukskrivningsgrad() == null) {
+            // Should never happen but just in case
+            addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                    "lisu.validation.bedomning.sjukskrivningar.sjukskrivningsgrad.missing");
+        } else {
+            if (sjukskrivning.getPeriod() == null) {
+                addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                        "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".missing");
+            } else {
+                if (!sjukskrivning.getPeriod().isValid()) {
+                    addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                            "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".invalid_format");
+                }
+            }
+        }
+    }
+
+    private boolean isArbetstidsforlaggningMandatory(SjukpenningUtokadUtlatande utlatande) {
+        return utlatande.getSjukskrivningar()
+                .stream()
+                .anyMatch(e -> e.getSjukskrivningsgrad() == Sjukskrivning.SjukskrivningsGrad.NEDSATT_3_4
+                        || e.getSjukskrivningsgrad() == Sjukskrivning.SjukskrivningsGrad.NEDSATT_HALFTEN
+                        || e.getSjukskrivningsgrad() == Sjukskrivning.SjukskrivningsGrad.NEDSATT_1_4);
+    }
+
+    private boolean isArbetstidsforlaggningMotiveringForbidden(SjukpenningUtokadUtlatande utlatande) {
+        return utlatande.getSjukskrivningar()
+                .stream()
+                .anyMatch(e -> e.getSjukskrivningsgrad() == Sjukskrivning.SjukskrivningsGrad.HELT_NEDSATT);
+    }
+
+    private void validateAtgarder(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+
+        // Anything checked at all?
+        if (utlatande.getArbetslivsinriktadeAtgarder() == null || utlatande.getArbetslivsinriktadeAtgarder().size() < 1) {
+            addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                    "lisu.validation.atgarder.missing");
+        } else {
+
+            // R21 If INTE_AKTUELLT is checked it must be the only selection
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+                    && utlatande.getArbetslivsinriktadeAtgarder().size() > 1) {
+                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisu.validation.atgarder.inte_aktuellt_no_combine");
+            }
+
+            // R23 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning() must not be answered
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
+                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisu.validation.atgarder.invalid_combination");
+            }
+
+            // R24 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() must not be answered
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
+                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisu.validation.atgarder.invalid_combination");
+            }
+
+            // R22 If INTE_AKTUELLT is NOT checked beskrivning åtgärder aktuellt is required
+            if (!utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
+                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisu.validation.atgarder.aktuelltbeskrivning.missing");
+            }
+
+            // R25 If INTE_AKTUELLT is NOT checked beskrivning åtgärder ej aktuellt is not allowed
+            if (!utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
+                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisu.validation.atgarder.invalid_combination");
+            }
+
+            // No more than 10 entries are allowed
+            if (utlatande.getArbetslivsinriktadeAtgarder().size() > MAX_ARBETSLIVSINRIKTADE_ATGARDER) {
+                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisu.validation.atgarder.too-many");
+            }
+        }
+    }
+
+    private void validateKontakt(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (utlatande.getKontaktMedFk() != null && !utlatande.getKontaktMedFk() && !StringUtils.isBlank(utlatande.getAnledningTillKontakt())) {
+            addValidationError(validationMessages, "kontakt", ValidationMessageType.EMPTY,
+                    "lisu.validation.kontakt.invalid_combination");
+        }
+    }
+
+    private void validateVardenhet(SjukpenningUtokadUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
+            addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
+                    "lisu.validation.vardenhet.postadress.missing");
         }
 
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
+            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
+                    "lisu.validation.vardenhet.postnummer.missing");
+        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
+            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
+                    "lisu.validation.vardenhet.postnummer.incorrect-format");
+        }
+
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
+            addValidationError(validationMessages, "vardenhet.postort", ValidationMessageType.EMPTY,
+                    "lisu.validation.vardenhet.postort.missing");
+        }
+
+        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
+            addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
+                    "lisu.validation.vardenhet.telefonnummer.missing");
+        }
     }
 
     /**
      * Check if there are validation errors.
-     *
      */
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
         return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
-
-    /**
-     * Create a ValidationMessage and add it to the list of messages.
-     *
-     * @param validationMessages
-     *            list collection messages
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
-     */
-    private void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
-        validationMessages.add(new ValidationMessage(field, type, msg));
-        LOG.debug(field + " " + msg);
-    }
-
-    /**
-     *
-     * @param validationMessages
-     *            list collecting message
-     * @param fieldId
-     *            field id
-     * @param intervals
-     *            intervals
-     * @return booleans
-     */
-    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
-        if (intervals == null || allNulls(intervals)) {
-            addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
-                    "sjukpenning-utokad.validation.nedsattning.choose-at-least-one");
-            return false;
-        }
-
-        for (int i = 0; i < intervals.length; i++) {
-            if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
-                if (oneInterval == null) {
-                    addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                            "sjukpenning-utokad.validation.nedsattning.incorrect-date-interval");
-                    return false;
-                }
-                for (int j = i + 1; j < intervals.length; j++) {
-                    if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
-                        if (anotherInterval == null) {
-                            addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "sjukpenning-utokad.validation.nedsattning.incorrect-date-interval");
-                            return false;
-                        }
-                        // Overlap OR abuts(one intervals tom day== another's
-                        // from day) is considered invalid
-                        if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
-                            addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "sjukpenning-utokad.validation.nedsattning.overlapping-date-interval");
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * @param intervals
-     *            intervals
-     * @return boolean
-     */
-    private boolean allNulls(InternalLocalDateInterval[] intervals) {
-        for (InternalLocalDateInterval interval : intervals) {
-            if (interval != null) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * @param start
-     *            start
-     * @param end
-     *            end
-     * @return Interval
-     */
-    private Interval createInterval(LocalDate start, LocalDate end) {
-        if ((start == null || end == null || start.isAfter(end))) {
-            return null;
-        } else {
-            return new Interval(start.toDate().getTime(), end.toDate().getTime());
-        }
-    }
-
 }

@@ -21,9 +21,9 @@ import com.helger.schematron.svrl.SVRLWriter;
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos.PrognosTyp;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
@@ -40,7 +40,7 @@ public class InternalToTransportTest {
 
     @Test
     public void doSchematronValidationSjukpenningUtokat() throws Exception {
-        String xmlContents = Resources.toString(getResource("sjukpenning-utokat2.xml"), Charsets.UTF_8);
+        String xmlContents = Resources.toString(getResource("transport/sjukpenning-utokat2.xml"), Charsets.UTF_8);
 
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
