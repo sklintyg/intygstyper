@@ -75,17 +75,6 @@
       </delsvar>
       <delsvar id="1.2">2015-12-08</delsvar>
     </svar>
-    <svar id="28">
-      <delsvar id="28.1">
-        <ns3:cv>
-          <ns3:code>1</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
-    </svar>
-    <svar id="29">
-      <delsvar id="29.1">Smed</delsvar>
-    </svar>
     <svar id="6">
       <delsvar id="6.1">Klämskada skuldra</delsvar>
       <delsvar id="6.2">
@@ -104,7 +93,7 @@
     <svar id="32">
       <delsvar id="32.1">
         <ns3:cv>
-          <ns3:code>1</ns3:code>
+          <ns3:code>2</ns3:code>
           <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -115,12 +104,12 @@
         </ns3:datePeriod>
       </delsvar>
     </svar>
-    <svar id="33">
-      <delsvar id="33.1">true</delsvar>
-      <delsvar id="33.2">Arbetstidsförläggning motivering</delsvar>
-    </svar>
     <svar id="37">
       <delsvar id="37.1">Överskrider inte FMB</delsvar>
+    </svar>
+    <svar id="33">
+      <delsvar id="33.1">true</delsvar>
+      <delsvar id="33.2">Kan bara jobba på nätterna.</delsvar>
     </svar>
     <svar id="34">
       <delsvar id="34.1">true</delsvar>

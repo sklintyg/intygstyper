@@ -54,6 +54,8 @@
   },
   "formagaTrotsBegransning": "är bra på att dansa!",
   "arbetsresor": true,
+  "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
+  "arbetstidsforlaggning": true,
   "forsakringsmedicinsktBeslutsstod": "överskrider inte FMB",
   "sjukskrivningar": [
     {
@@ -61,11 +63,9 @@
         "from": "2015-12-07",
         "tom": "2015-12-10"
       },
-      "sjukskrivningsgrad": 1
+      "sjukskrivningsgrad": 2
     }
   ],
-  "arbetstidsforlaggning":true,
-  "arbetstidsforlaggningMotivering": "Arbetstidsförläggning motivering",
   "aktivitetsbegransning": "Kommer inte in i bilen",
   "funktionsnedsattning": "Haltar när han dansar",
   "diagnoser": [
@@ -78,6 +78,5 @@
   "nuvarandeArbete": "Smed",
   "sysselsattning": {
     "typ": 1
-  },
-  "telefonkontaktMedPatienten": "2015-12-08"
+  }
 }

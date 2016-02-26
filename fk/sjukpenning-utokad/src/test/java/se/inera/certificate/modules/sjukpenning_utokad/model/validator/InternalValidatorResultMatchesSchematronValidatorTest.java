@@ -48,24 +48,29 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     private Scenario scenario;
     private boolean shouldFail;
 
-    public InternalValidatorResultMatchesSchematronValidatorTest(Scenario scenario, boolean shouldFail) {
+    // Used for labeling tests.
+    @SuppressWarnings("unused")
+    private String name;
+
+    public InternalValidatorResultMatchesSchematronValidatorTest(String name, Scenario scenario, boolean shouldFail) {
         this.scenario = scenario;
         this.shouldFail = shouldFail;
+        this.name = name;
     }
 
     /**
      * Process test data and supply it to the test.
      * @throws ScenarioNotFoundException
      */
-    @Parameters
+    @Parameters(name = "{index}: Scenario: {0}")
     public static Collection<Object[]> data() throws ScenarioNotFoundException {
         // The boolean in the object array determines whether the test should expect validation errors or not.
         List<Object[]> retList = ScenarioFinder.getInternalScenarios("fail-*").stream()
-            .map(u -> new Object[] { u, true })
+            .map(u -> new Object[] {u.getName(), u, true })
             .collect(Collectors.toList());
         retList.addAll(
                 ScenarioFinder.getInternalScenarios("pass-*").stream()
-                .map(u -> new Object[] { u, false })
+                .map(u -> new Object[] {u.getName(), u, false })
                 .collect(Collectors.toList()));
         return retList;
     }
