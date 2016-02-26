@@ -5,7 +5,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -15,81 +17,134 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToTransport;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
+import se.inera.certificate.modules.sjukpenning_utokad.model.utils.Scenario;
+import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioFinder;
+import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioNotFoundException;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 
-@ContextConfiguration(locations = ("/module-config.xml"))
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(Parameterized.class)
 public class InternalValidatorResultMatchesSchematronValidatorTest {
 
-    @Autowired
-    @Qualifier("sjukpenning-utokad-objectMapper")
     private ObjectMapper objectMapper;
     private ConverterUtil converterUtil;
 
+    private Scenario scenario;
+    private boolean shouldFail;
+
+    public InternalValidatorResultMatchesSchematronValidatorTest(Scenario scenario, boolean shouldFail) {
+        this.scenario = scenario;
+        this.shouldFail = shouldFail;
+    }
+
+    /**
+     * Process test data and supply it to the test.
+     * @throws ScenarioNotFoundException
+     */
+    @Parameters
+    public static Collection<Object[]> data() throws ScenarioNotFoundException {
+        // The boolean in the object array determines whether the test should expect validation errors or not.
+        List<Object[]> retList = ScenarioFinder.getInternalScenarios("fail-*").stream()
+            .map(u -> new Object[] { u, true })
+            .collect(Collectors.toList());
+        retList.addAll(
+                ScenarioFinder.getInternalScenarios("pass-*").stream()
+                .map(u -> new Object[] { u, false })
+                .collect(Collectors.toList()));
+        return retList;
+    }
+
     @Before
-    public void setUp() {
+    public void setUp() throws ScenarioNotFoundException {
+        objectMapper = new CustomObjectMapper();
         converterUtil = new ConverterUtil();
         converterUtil.setObjectMapper(objectMapper);
     }
 
     @Test
-    public void testSjukpenningUtokad1InternalValidationMatchesSchematron() throws Exception {
-        doInternalAndSchematronValidation("sjukpenning-utokat-1");
+    public void testScenarios() throws Exception {
+        doInternalAndSchematronValidation(scenario, shouldFail);
     }
 
-    @Test
-    public void testSjukpenningUtokadMinimalInternalValidationMatchesSchematron() throws Exception {
-        doInternalAndSchematronValidation("sjukpenning-utokat-minimal");
-    }
-
-    private void doInternalAndSchematronValidation(String filename) throws Exception {
-        String json = Resources.toString(getResource(filename + ".json"), Charsets.UTF_8);
-        SjukpenningUtokadUtlatande utlatandeFromJson = converterUtil.fromJsonString(json);
+    /**
+     * Perform internal and schematron validation on the supplied Scenario.
+     * @param scenario
+     * @param fail Whether the test should expect validation errors or not.
+     * @throws Exception
+     */
+    private static void doInternalAndSchematronValidation(Scenario scenario, boolean fail) throws Exception {
+        SjukpenningUtokadUtlatande utlatandeFromJson = scenario.asInternalModel();
 
         InternalDraftValidator internalValidator = new InternalDraftValidator();
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
 
-        assertTrue("Internal validation failed", internalValidationResponse.getStatus().equals(ValidationStatus.VALID));
-
-        RegisterCertificateType intyg = InternalToTransport.convert(utlatandeFromJson);
+        RegisterCertificateType intyg = scenario.asTransportModel();
         String convertedXML = getXmlFromModel(intyg);
 
         RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
 
-        assertTrue("Schematronvalidation failed", SVRLHelper.getAllFailedAssertions(result).size() == 0);
+        String internalValidationErrors = getInternalValidationErrors(internalValidationResponse);
+
+        String transportValidationErrors = getTransportValidationErrors(result);
+
+        if (fail) {
+            assertTrue(String.format("File: %s, Internal validation, expected ValidationStatus.INVALID",
+                    scenario.getName()),
+                    internalValidationResponse.getStatus().equals(ValidationStatus.INVALID));
+
+            assertTrue(String.format("File: %s, Schematronvalidation, expected errors > 0",
+                    scenario.getName()),
+                    SVRLHelper.getAllFailedAssertions(result).size() > 0);
+
+            System.out.println(String.format("Test: %s", scenario.getName()));
+            System.out.println(String.format("InternalValidation-errors: %s",  internalValidationErrors));
+            System.out.println(String.format("TransportValidation-errors: %s", transportValidationErrors));
+
+        } else {
+            assertTrue(String.format("File: %s, Internal validation, expected ValidationStatus.VALID \n Validation-errors: %s",
+                    scenario.getName(), internalValidationErrors),
+                    internalValidationResponse.getStatus().equals(ValidationStatus.VALID));
+            assertTrue(String.format("File: %s, Schematronvalidation, expected 0 errors \n Validation-errors: %s",
+                    scenario.getName(), transportValidationErrors),
+                    SVRLHelper.getAllFailedAssertions(result).size() == 0);
+        }
     }
 
-    private String getXmlFromModel(RegisterCertificateType transport) throws IOException, JAXBException {
+    private static String getTransportValidationErrors(SchematronOutputType result) {
+        return SVRLHelper.getAllFailedAssertions(result).stream()
+                .map(e -> String.format("Test: %s, Text: %s", e.getTest(), e.getText()))
+                .collect(Collectors.joining(";"));
+    }
+
+    private static String getInternalValidationErrors(ValidateDraftResponse internalValidationResponse) {
+        return internalValidationResponse.getValidationErrors().stream()
+                .map(e -> e.getMessage())
+                .collect(Collectors.joining(", "));
+    }
+
+    private static String getXmlFromModel(RegisterCertificateType transport) throws IOException, JAXBException {
         StringWriter sw = new StringWriter();
         JAXBContext jaxbContext = JAXBContext.newInstance(RegisterCertificateType.class, DatePeriodType.class);
         ObjectFactory objectFactory = new ObjectFactory();
         JAXBElement<RegisterCertificateType> requestElement = objectFactory.createRegisterCertificate(transport);
         jaxbContext.createMarshaller().marshal(requestElement, sw);
         return sw.toString();
-    }
-
-    private static URL getResource(String href) {
-        return Thread.currentThread().getContextClassLoader().getResource(href);
     }
 }

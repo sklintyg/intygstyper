@@ -217,6 +217,9 @@ public class InternalDraftValidator {
                     if (utlatande.getArbetstidsforlaggning() && StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
                         addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                                 "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.missing");
+                    } else if (!utlatande.getArbetstidsforlaggning() && !StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
+                        addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                                "lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.incorrect");
                     }
                 }
             } else if (isArbetstidsforlaggningMotiveringForbidden(utlatande) && !StringUtils.isBlank(utlatande.getArbetstidsforlaggningMotivering())) {
