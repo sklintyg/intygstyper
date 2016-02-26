@@ -166,28 +166,28 @@
             <div class="cert-body">
 
               <!-- Grund för medicinskt underlag -->
-              <div mi-category category-label="lisu.label.KAT_1.RBK">
-                <div mi-field field-label="lisu.label.FRG_1.RBK"
+              <div mi-category category-label="KAT_1.RBK">
+                <div mi-field field-dynamic-label="FRG_1.RBK"
                      filled="cert.undersokningAvPatienten!=null || cert.telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annatGrundForMU!=null">
                   <ul class="padded-list">
                     <li ng-show="cert.undersokningAvPatienten!=null">
                       <div id="undersokningAvPatienten">
-                        <span message key="lisu.label.KV_FKMU_0001.1.RBK"></span><span> | {{cert.undersokningAvPatienten | date:'longDate' }}</span>
+                        <span dynamic-label key="KV_FKMU_0001.1.RBK"></span><span> | {{cert.undersokningAvPatienten | date:'longDate' }}</span>
                       </div>
                     </li>
                     <li ng-show="cert.telefonkontaktMedPatienten !=null">
                       <div id="telefonkontaktMedPatienten">
-                        <span message key="lisu.label.KV_FKMU_0001.2.RBK"></span><span> | {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
+                        <span dynamic-label key="KV_FKMU_0001.2.RBK"></span><span> | {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
                       </div>
                     </li>
                     <li ng-show="cert.journaluppgifter!=null">
                       <div id="journaluppgifter">
-                        <span message key="lisu.label.KV_FKMU_0001.3.RBK"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
+                        <span dynamic-label key="KV_FKMU_0001.3.RBK"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
                       </div>
                     </li>
                     <li ng-show="cert.annatGrundForMU!=null">
                       <div id="anhorigsBeskrivningAvPatienten">
-                        <span message key="lisu.label.KV_FKMU_0001.5.RBK"></span><span> | {{cert.annatGrundForMU | date:'longDate' }}</span>
+                        <span dynamic-label key="KV_FKMU_0001.5.RBK"></span><span> | {{cert.annatGrundForMU | date:'longDate' }}</span>
                       </div>
                     </li>
                     <div ng-show="cert.annatGrundForMUBeskrivning!=null">
@@ -198,30 +198,30 @@
               </div>
 
               <!-- Sysselsättning -->
-              <div mi-category category-label="lisu.label.KAT_2.RBK">
-                <div mi-field field-label="lisu.label.DFR_28.1.RBK" filled="true">
-                  <span message key="lisu.label.KV_FKMU_0002.{{cert.sysselsattning.typ}}.RBK"></span>
+              <div mi-category category-label="KAT_2.RBK">
+                <div mi-field field-dynamic-label="DFR_28.1.RBK" filled="true">
+                  <span dynamic-label key="KV_FKMU_0002.{{cert.sysselsattning.typ}}.RBK"></span>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_29.1.RBK" filled="cert.nuvarandeArbete">
+                <div mi-field field-dynamic-label="DFR_29.1.RBK" filled="cert.nuvarandeArbete">
                   {{cert.nuvarandeArbete}}
                 </div>
-                <div mi-field field-label="lisu.label.DFR_30.1.RBK" filled="cert.arbetsmarknadspolitisktProgram">
+                <div mi-field field-dynamic-label="DFR_30.1.RBK" filled="cert.arbetsmarknadspolitisktProgram">
                   {{cert.arbetsmarknadspolitisktProgram}}
                 </div>
               </div>
 
               <!-- Diagnos -->
-              <div mi-category category-label="lisu.label.KAT_3.RBK">
-                <div mi-field field-label="lisu.label.KAT_3.RBK" filled="cert.diagnoser.length">
+              <div mi-category category-label="KAT_3.RBK">
+                <div mi-field field-dynamic-label="KAT_3.RBK" filled="cert.diagnoser.length">
                   <div class="row">
                     <div class="col-xs-4">
                       <label class="bold">
-                        <span message key="lisu.label.DFR_6.2.RBK"></span>
+                        <span dynamic-label key="DFR_6.2.RBK"></span>
                       </label>
                     </div>
                     <div class="col-xs-8">
                       <label class="bold">
-                        <span message key="lisu.label.DFR_6.1.RBK"></span>
+                        <span dynamic-label key="DFR_6.1.RBK"></span>
                       </label>
                     </div>
                   </div>
@@ -237,85 +237,85 @@
               </div>
 
               <!-- Sjukdomens konsekvenser -->
-              <div mi-category category-label="lisu.label.KAT_4.RBK">
-                <div mi-field field-label="lisu.label.DFR_35.1.RBK" filled="cert.funktionsnedsattning">
+              <div mi-category category-label="KAT_4.RBK">
+                <div mi-field field-dynamic-label="DFR_35.1.RBK" filled="cert.funktionsnedsattning">
                   <div id="funktionsnedsattning">{{cert.funktionsnedsattning}}</div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_17.1.RBK" filled="cert.aktivitetsbegransning">
+                <div mi-field field-dynamic-label="DFR_17.1.RBK" filled="cert.aktivitetsbegransning">
                   <div id="aktivitetsbegransning">{{cert.aktivitetsbegransning}}</div>
                 </div>
               </div>
 
               <!-- Medicinska behandlingar/åtgärder -->
-              <div mi-category category-label="lisu.label.KAT_5.RBK">
-                <div mi-field field-label="lisu.label.DFR_19.1.RBK" filled="cert.pagaendeBehandling">
+              <div mi-category category-label="KAT_5.RBK">
+                <div mi-field field-dynamic-label="DFR_19.1.RBK" filled="cert.pagaendeBehandling">
                   <div id="pagaendeBehandling">{{cert.pagaendeBehandling}}</div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_20.1.RBK" filled="cert.planeradBehandling">
+                <div mi-field field-dynamic-label="DFR_20.1.RBK" filled="cert.planeradBehandling">
                   <div id="planeradBehandling">{{cert.planeradBehandling}}</div>
                 </div>
               </div>
 
               <!-- Bedömning -->
-              <div mi-category category-label="lisu.label.KAT_6.RBK">
-                <span message key="lisu.label.FRG_32.RBK"></span>
-                <div mi-field field-label="lisu.label.DFR_32.1.RBK" filled="cert.sjukskrivningar">
+              <div mi-category category-label="KAT_6.RBK">
+                <span dynamic-label key="FRG_32.RBK"></span>
+                <div mi-field field-dynamic-label="DFR_32.1.RBK" filled="cert.sjukskrivningar">
                   <div id="sjukskrivningar" sjukskrivning-view="sjukskrivningar" field-model="cert"></div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_37.1.RBK" filled="cert.forsakringsmedicinsktBeslutsstod">
+                <div mi-field field-dynamic-label="DFR_37.1.RBK" filled="cert.forsakringsmedicinsktBeslutsstod">
                     <div id="forsakringsmedicinsktBeslutsstod" class="multiline">{{cert.forsakringsmedicinsktBeslutsstod}}</div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_33.1.RBK" filled="cert.arbetstidsforlaggning != undefined">
+                <div mi-field field-dynamic-label="DFR_33.1.RBK" filled="cert.arbetstidsforlaggning != undefined">
                   <div boolean-view="arbetstidsforlaggning" field-model="cert"></div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_33.2.RBK" filled="cert.arbetstidsforlaggningMotivering">
+                <div mi-field field-dynamic-label="DFR_33.2.RBK" filled="cert.arbetstidsforlaggningMotivering">
                   <div id="arbetstidsforlaggningMotivering" class="multiline">{{cert.arbetstidsforlaggningMotivering}}</div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_34.1.RBK" filled="cert.arbetsresor != undefined">
+                <div mi-field field-dynamic-label="DFR_34.1.RBK" filled="cert.arbetsresor != undefined">
                   <div boolean-view="arbetsresor" field-model="cert"></div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_23.1.RBK" filled="cert.formagaTrotsBegransning">
+                <div mi-field field-dynamic-label="DFR_23.1.RBK" filled="cert.formagaTrotsBegransning">
                   <div id="formagaTrotsBegransning" class="multiline">{{cert.formagaTrotsBegransning}}</div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_39.1.RBK" filled="cert.prognos.typ">
+                <div mi-field field-dynamic-label="DFR_39.1.RBK" filled="cert.prognos.typ">
                   <div id="prognosTyp">
-                    <span message key="lisu.label.KV_FKMU_0006.{{cert.prognos.typ}}.RBK"></span>
+                    <span dynamic-label key="KV_FKMU_0006.{{cert.prognos.typ}}.RBK"></span>
                   </div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_39.2.RBK" filled="cert.prognos.fortydligande">
+                <div mi-field field-dynamic-label="DFR_39.2.RBK" filled="cert.prognos.fortydligande">
                   <div id="prognosFortydligande" class="multiline">{{cert.prognos.fortydligande}}</div>
                 </div>
               </div>
 
               <!-- Åtgärder -->
-              <div mi-category category-label="lisu.label.KAT_7.RBK">
-                <span message key="lisu.label.FRG_40.RBK"></span>
-                <div mi-field field-label="lisu.label.DFR_40.1.RBK" filled="cert.arbetslivsinriktadeAtgarder">
+              <div mi-category category-label="KAT_7.RBK">
+                <span dynamic-label key="FRG_40.RBK"></span>
+                <div mi-field field-dynamic-label="DFR_40.1.RBK" filled="cert.arbetslivsinriktadeAtgarder">
                   <ul id="arbetslivsinriktadeAtgarder">
                     <li ng-repeat="atgard in cert.arbetslivsinriktadeAtgarder">
-                      <span message key="lisu.label.KV_FKMU_0004.{{atgard.val}}.RBK"></span>
+                      <span dynamic-label key="KV_FKMU_0004.{{atgard.val}}.RBK"></span>
                     </li>
                   </ul>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_40.2.RBK" filled="cert.arbetslivsinriktadeAtgarderAktuelltBeskrivning">
+                <div mi-field field-dynamic-label="DFR_40.2.RBK" filled="cert.arbetslivsinriktadeAtgarderAktuelltBeskrivning">
                   <div id="arbetslivsinriktadeAtgarderAktuelltBeskrivning" class="multiline">{{cert.arbetslivsinriktadeAtgarderAktuelltBeskrivning}}</div>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_40.3.RBK" filled="cert.arbetslivsinriktadeAtgarderEjAktuelltBeskrivning">
+                <div mi-field field-dynamic-label="DFR_40.3.RBK" filled="cert.arbetslivsinriktadeAtgarderEjAktuelltBeskrivning">
                   <div id="arbetslivsinriktadeAtgarderEjAktuelltBeskrivning" class="multiline">{{cert.arbetslivsinriktadeAtgarderEjAktuelltBeskrivning}}</div>
                 </div>
               </div>
 
               <!--  Övrigt -->
-              <div mi-category category-label="lisu.label.KAT_8.RBK">
-                <div mi-field field-label="lisu.label.KAT_8.RBK" filled="cert.ovrigt">
+              <div mi-category category-label="KAT_8.RBK">
+                <div mi-field field-dynamic-label="KAT_8.RBK" filled="cert.ovrigt">
                   <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                   <div id="kommentar" class="tag multiline">{{cert.ovrigt}}</div>
                 </div>
               </div>
 
               <!-- Kontakt med fk-->
-              <div mi-category category-label="lisu.label.KAT_9.RBK">
-                <div mi-field field-label="lisu.label.DFR_26.1.RBK" filled="true">
+              <div mi-category category-label="KAT_9.RBK">
+                <div mi-field field-dynamic-label="DFR_26.1.RBK" filled="true">
                   <span ng-show="cert.kontaktMedFk">
                     <span id="kontaktFk-yes" message key="lisu.label.yes"></span>
                   </span>
@@ -323,13 +323,20 @@
                     <span id="kontaktFk-no" message key="lisu.label.no"></span>
                   </span>
                 </div>
-                <div mi-field field-label="lisu.label.DFR_26.2.RBK" filled="cert.anledningTillKontakt">
+                <div mi-field field-dynamic-label="DFR_26.2.RBK" filled="cert.anledningTillKontakt">
                   <div id="anledningtillkontakt" class="multiline">{{cert.anledningTillKontakt}}</div>
                 </div>
               </div>
 
+              <div mi-category category-label="KAT_9999.RBK">
+                <div mi-field field-dynamic-label="DFR_{{tillaggsfraga.id}}.RBK"
+                     ng-repeat="tillaggsfraga in cert.tillaggsfragor" filled="tillaggsfraga.svar">
+                  <div id="tillaggsfraga_{{$index}}" class="multiline">{{tillaggsfraga.svar}}</div>
+                </div>
+              </div>
+
               <!-- META vara kvar ?-->
-              <!--div mi-field field-label="lisu.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">
+              <!--div mi-field field-dynamic-label="lisu.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                 <!--div id="forskrivarkodOchArbetsplatskod">{{cert.forskrivarkodOchArbetsplatskod}}</div-->
               <!--/div-->
