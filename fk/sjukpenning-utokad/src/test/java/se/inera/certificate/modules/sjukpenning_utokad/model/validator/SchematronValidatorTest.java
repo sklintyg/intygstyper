@@ -33,6 +33,13 @@ public class SchematronValidatorTest {
         assertTrue(response.getValidationErrors().isEmpty());
     }
 
+    @Test
+    public void invalidAntalDiagnoser() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/diagnosMaxTreDiagnoser.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        assertFalse(response.getValidationErrors().isEmpty());
+    }
+
     private static URL getResource(String href) {
         return Thread.currentThread().getContextClassLoader().getResource(href);
     }

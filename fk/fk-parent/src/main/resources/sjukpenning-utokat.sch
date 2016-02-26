@@ -34,7 +34,7 @@
         Ett 'MU' måste ha mellan 1 och 3 'Typ av diagnos'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='35']) = 1">
-        Ett 'MU' får ha högst ett 'Funktionsnedsättning'
+        Ett 'MU' måste ha ett 'Funktionsnedsättning'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='17']) = 1">
         Ett 'MU' måste ha ett 'Aktivitetsbegränsningar'

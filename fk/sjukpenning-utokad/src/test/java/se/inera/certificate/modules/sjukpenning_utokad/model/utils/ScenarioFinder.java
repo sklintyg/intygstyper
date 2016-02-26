@@ -39,9 +39,9 @@ public final class ScenarioFinder {
     private ScenarioFinder() {
     }
 
-    private static final String TRANSPORT_MODEL_PATH = "classpath:/transport/";
+    private static final String TRANSPORT_MODEL_PATH = "classpath:/transport/scenarios/";
 
-    private static final String INTERNAL_MODEL_PATH = "classpath:/internal/";
+    private static final String INTERNAL_MODEL_PATH = "classpath:/internal/scenarios/";
 
     private static final String TRANSPORT_MODEL_EXT = ".xml";
 
