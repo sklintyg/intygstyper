@@ -165,154 +165,186 @@
 
             <div class="cert-body">
 
-              <div mi-field field-label="luse.label.basedon"
-                   filled="cert.undersokningAvPatienten!=null || cert.telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null &&
-                   cert.kannedomOmPatient!=null">
-                <ul class="padded-list">
-                  <li ng-show="cert.undersokningAvPatienten!=null">
-                    <div id="undersokningAvPatienten">
-                      <span message key="luse.vardkontakt.undersokning"></span><span> | {{cert.undersokningAvPatienten | date:'longDate' }}</span>
-                    </div>
-                  </li>
-                  <li ng-show="cert.telefonkontaktMedPatienten!=null">
-                    <div id="telefonkontaktMedPatienten">
-                      <span message key="luse.vardkontakt.telefonkontakt"></span><span> | {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
-                    </div>
-                  </li>
-                  <li ng-show="cert.journaluppgifter!=null">
-                    <div id="journaluppgifter">
-                      <span message key="luse.referens.journal"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
-                    </div>
-                  </li>
-                  <li ng-show="cert.kannedomOmPatient!=null">
-                    <div id="kannedomOmPatient">
-                      <span message key="luse.referens.kannedomompatient"></span><span> |{{cert.kannedomOmPatient | date:'longDate' }}</span>
-                    </div>
-                  </li>
-
-                  <li ng-show="cert.underlag.length" ng-repeat="underlag in cert.underlag">
-                    <div id="certUnderlag">
-                      <span>typ: {{ underlag.typ }}</span>
-                      <span>datum: {{ underlag.datum }}</span>
-                      <span>bilaga: {{ underlag.bilaga }}</span>
-                    </div>
-                  </li>
-                </ul>
+              <div mi-category category-label="KAT_1.RBK">
+                <span dynamic-label key="FRG_1.RBK"></span>
+                <div mi-field field-dynamic-label="DFR_1.1.RBK" filled="cert.undersokningAvPatienten!=null ||
+                                                                        cert.telefonkontaktMedPatienten!=null ||
+                                                                        cert.journaluppgifter!=null ||
+                                                                        cert.anhorigsBeskrivningAvPatienten!=null">
+                  <ul class="padded-list">
+                    <li ng-show="cert.undersokningAvPatienten!=null">
+                      <div id="undersokningAvPatienten">
+                        <span dynamic-label key="KV_FKMU_0001.1.RBK"></span><span> | {{cert.undersokningAvPatienten | date:'longDate' }}</span>
+                      </div>
+                    </li>
+                    <li ng-show="cert.telefonkontaktMedPatienten!=null">
+                      <div id="telefonkontaktMedPatienten">
+                        <span dynamic-label key="KV_FKMU_0001.2.RBK"></span><span> | {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
+                      </div>
+                    </li>
+                    <li ng-show="cert.journaluppgifter!=null">
+                      <div id="journaluppgifter">
+                        <span dynamic-label key="KV_FKMU_0001.3.RBK"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
+                      </div>
+                    </li>
+                    <li ng-show="cert.anhorigsBeskrivningAvPatienten!=null">
+                      <div id="anhorigsBeskrivningAvPatienten">
+                        <span dynamic-label key="KV_FKMU_0001.4.RBK"></span><span> | {{cert.anhorigsBeskrivningAvPatienten | date:'longDate' }}</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div mi-field field-dynamic-label="DFR_2.1.RBK" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
+                  {{cert.kannedomOmPatient | date:'longDate' }}
+                </div>
               </div>
 
-
-              <div mi-field field-label="luse.label.diagnosis" filled="cert.diagnoser.length">
-                <div class="form-group" ng-show="cert.diagnoser[0].diagnosKod">
-                  <span class="tag">
-                    <span message key="luse.label.diagnosisCode"></span>
-                  </span>
-                  <span id="diagnosKod">{{cert.diagnoser[0].diagnosKod}}</span>
+              <!-- Andra medicinska utredningar och underlag -->
+              <div mi-category category-label="KAT_2.RBK">
+                <div mi-field field-dynamic-label="DFR_3.1.RBK" filled="cert.underlagFinns">
+                  <div boolean-view="underlagFinns" field-model="cert"></div>
                 </div>
+                <div mi-field filled="cert.underlag">
+                  <table class="table luse-underlag" ng-show="cert.underlag">
+                    <tr>
+                      <th><span dynamic-label key="DFR_4.1.RBK"></span></th>
+                      <th><span dynamic-label key="DFR_4.2.RBK"></span></th>
+                      <th><span dynamic-label key="DFR_4.3.RBK"></span></th>
+                    </tr>
+                    <tr class="luse-underlag" ng-repeat="underlag in cert.underlag">
+                      <td id="underlag_{{$index}}_typ"><span dynamic-label key="KV_FKMU_0005.{{underlag.typ}}.RBK"></span></td>
+                      <td id="underlag_{{$index}}_datum">{{underlag.datum | date:'longDate'}}</td>
+                      <td id="underlag_{{$index}}_hamtasFran">{{underlag.hamtasFran}}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
 
-                <div class="form-group" ng-show="cert.diagnoser[0].diagnosBeskrivning">
-                  <label class="control-label bold">
-                    <span message key="luse.label.diagnosfortydligande"></span>
-                  </label>
-                  <div class="controls">
-                    <div id="diagnosBeskrivning" class="multiline">{{cert.diagnoser[0].diagnosBeskrivning}}</div>
+              <!-- Sjukdomsförlopp -->
+              <div mi-category category-label="KAT_3.RBK">
+                <div mi-field field-dynamic-label="DFR_5.1.RBK" filled="cert.sjukdomsforlopp">
+                  <div id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</div>
+                </div>
+              </div>
+
+              <!-- Diagnos -->
+              <div mi-category category-label="KAT_4.RBK">
+                <div mi-field field-dynamic-label="KAT_4.RBK" filled="cert.diagnoser.length">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label class="bold">
+                        <span dynamic-label key="DFR_6.2.RBK"></span>
+                      </label>
+                    </div>
+                    <div class="col-xs-8">
+                      <label class="bold">
+                        <span dynamic-label key="DFR_6.1.RBK"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="row" ng-repeat="diagnos in cert.diagnoser">
+                    <div class="col-xs-4" id="diagnosKod{{$index}}">
+                      {{diagnos.diagnosKod}}
+                    </div>
+                    <div class="col-xs-8" id="diagnosBeskrivning{{$index}}" class="multiline">
+                      {{diagnos.diagnosBeskrivning}}
+                    </div>
                   </div>
                 </div>
-
-                <div class="form-group" ng-show="cert.diagnoser[1].diagnosKod">
-                  <span class="tag">
-                    <span message key="luse.label.diagnosisCode"></span>
-                  </span>
-                  <span id="diagnosKod1">{{cert.diagnoser[1].diagnosKod}}</span>
+                <div mi-field field-dynamic-label="DFR_7.1.RBK" filled="cert.diagnosgrund">
+                  <div id="diagnosgrund" class="multiline">{{cert.diagnosgrund}}</div>
                 </div>
-
-                <div class="form-group" ng-show="cert.diagnoser[1].diagnosBeskrivning">
-                  <label class="control-label bold">
-                    <span message key="luse.label.diagnosfortydligande"></span>
-                  </label>
-                  <div class="controls">
-                    <div id="diagnosBeskrivning1" class="multiline">{{cert.diagnoser[1].diagnosBeskrivning}}</div>
-                  </div>
+                <div mi-field field-dynamic-label="DFR_7.2.RBK" filled="cert.nyBedomningDiagnosgrund">
+                  <div boolean-view="nyBedomningDiagnosgrund" field-model="cert"></div>
                 </div>
+              </div>
 
-                <div class="form-group" ng-show="cert.diagnoser[2].diagnosKod">
-                  <span class="tag">
-                    <span message key="luse.label.diagnosisCode"></span>
-                  </span>
-                  <span id="diagnosKod2">{{cert.diagnoser[2].diagnosKod}}</span>
+              <!--  Funktionsnedsättning -->
+              <div mi-category category-label="KAT_5.RBK">
+                <div mi-field field-dynamic-label="DFR_8.1.RBK" filled="cert.funktionsnedsattningIntellektuell">
+                  <div id="funktionsnedsattningIntellektuell" class="multiline">{{cert.funktionsnedsattningIntellektuell}}</div>
                 </div>
-
-                <div class="form-group" ng-show="cert.diagnoser[2].diagnosBeskrivning">
-                  <label class="control-label bold">
-                    <span message key="luse.label.diagnosfortydligande"></span>
-                  </label>
-                  <div class="controls">
-                    <div id="diagnosBeskrivning2" class="multiline">{{cert.diagnoser[2].diagnosBeskrivning}}</div>
-                  </div>
+                <div mi-field field-dynamic-label="DFR_9.1.RBK" filled="cert.funktionsnedsattningKommunikation">
+                  <div id="funktionsnedsattningKommunikation" class="multiline">{{cert.funktionsnedsattningKommunikation}}</div>
                 </div>
-
+                <div mi-field field-dynamic-label="DFR_10.1.RBK" filled="cert.funktionsnedsattningKoncentration">
+                  <div id="funktionsnedsattningKoncentration" class="multiline">{{cert.funktionsnedsattningKoncentration}}</div>
+                </div>
+                <div mi-field field-dynamic-label="DFR_11.1.RBK" filled="cert.funktionsnedsattningPsykisk">
+                  <div id="funktionsnedsattningPsykisk" class="multiline">{{cert.funktionsnedsattningPsykisk}}</div>
+                </div>
+                <div mi-field field-dynamic-label="DFR_12.1.RBK" filled="cert.funktionsnedsattningSynHorselTal">
+                  <div id="funktionsnedsattningSynHorselTal" class="multiline">{{cert.funktionsnedsattningSynHorselTal}}</div>
+                </div>
+                <div mi-field field-dynamic-label="DFR_13.1.RBK" filled="cert.funktionsnedsattningBalansKoordination">
+                  <div id="funktionsnedsattningBalansKoordination" class="multiline">{{cert.funktionsnedsattningBalansKoordination}}</div>
+                </div>
+                <div mi-field field-dynamic-label="DFR_14.1.RBK" filled="cert.funktionsnedsattningAnnan">
+                  <div id="funktionsnedsattningAnnan" class="multiline">{{cert.funktionsnedsattningAnnan}}</div>
+                </div>
               </div>
 
-              <!--  Diagnosticering + ny bedomning -->
-              <div mi-field field-label="luse.label.disabilities" filled="cert.funktionsnedsattningar.length">
-                <ul class="padded-list">
-                  <li ng-repeat="nedsattning in cert.funktionsnedsattningar">
-                    <span>Nedsättning id: {{nedsattning.funktionsomrade}} </span>
-                    <span class="multiline">Nedsättning text: {{nedsattning.beskrivning}}</span>
-                  </li>
-                </ul>
+              <!--  Aktivitetsbegränsning -->
+              <div mi-category category-label="KAT_6.RBK">
+                <div mi-field field-dynamic-label="DFR_17.1.RBK" filled="cert.aktivitetsbegransning!=null">
+                  <div id="aktivitetsbegransning" class="multiline">{{cert.aktivitetsbegransning}}</div>
+                </div>
               </div>
 
-
-              <div mi-field field-label="luse.label.limitation" filled="cert.aktivitetsbegransning!=null">
-                <div id="aktivitetsbegransning" class="multiline">{{cert.aktivitetsbegransning}}</div>
+              <!-- Medicinska behandlingar/åtgärder -->
+              <div mi-category category-label="KAT_7.RBK">
+                <div mi-field field-dynamic-label="DFR_18.1.RBK" filled="cert.avslutadBehandling">
+                  <div id="avslutadBehandling" class="multiline">{{cert.avslutadBehandling}}</div></li>
+                </div>
+                <div mi-field field-dynamic-label="DFR_19.1.RBK" filled="cert.pagaendeBehandling">
+                  <div id="pagaendeBehandling" class="multiline">{{cert.pagaendeBehandling}}</div></li>
+                </div>
+                <div mi-field field-dynamic-label="DFR_20.1.RBK" filled="cert.planeradBehandling">
+                  <div id="planeradBehandling" class="multiline">{{cert.planeradBehandling}}</div></li>
+                </div>
+                <div mi-field field-dynamic-label="DFR_21.1.RBK" filled="cert.substansintag">
+                  <div id="substansintag" class="multiline">{{cert.substansintag}}</div></li>
+                </div>
               </div>
 
-              <!-- ADD avsultad behandling -->
-              <div mi-field field-label="luse.label.plannedtreatment" filled="cert.pagaendeBehandling||cert.planeradBehandling||cert.avslutadBehandling">
-                <ul class="padded-list">
-                  <li ng-show="cert.avslutadBehandling!=null">
-                    <span message key="luse.label.plannedtreatment.avslutadBehandling"></span>
-                    <div id="atgardAvslutad" class="multiline">{{cert.avslutadBehandling}}</div></li>
-                  <li ng-show="cert.pagaendeBehandling != null">
-                    <span message key="luse.label.plannedtreatment.healthcare"></span>
-                    <div id="atgardSjukvard" class="multiline">{{cert.pagaendeBehandling}}</div></li>
-                  <li ng-show="cert.planeradBehandling != null">
-                    <span message key="luse.label.plannedtreatment.other"></span>
-                    <div id="atgardAnnan" class="multiline">{{cert.planeradBehandling}}</div></li>
-                </ul>
+              <!-- Medicinska förutsättningar för arbete -->
+              <div mi-category category-label="KAT_8.RBK">
+                <div mi-field field-dynamic-label="DFR_22.1.RBK" filled="cert.medicinskaForutsattningarForArbete">
+                  <div id="medicinskaForutsattningarForArbete" class="multiline">{{cert.medicinskaForutsattningarForArbete}}</div></li>
+                </div>
+                <div mi-field field-dynamic-label="DFR_23.1.RBK" filled="cert.aktivitetsFormaga">
+                  <div id="aktivitetsFormaga" class="multiline">{{cert.aktivitetsFormaga}}</div></li>
+                </div>
               </div>
 
-
-              <!-- Prognos -->
-              <div mi-field field-label="luse.label.prognos" filled="cert.prognos!=null||cert.aktivitetsFormaga!=null">
-
-                <div id="prognos" class="multiline">{{cert.prognos}}</div>
-
-                <div id="aktivitetsFormaga" class="multiline">{{cert.aktivitetsFormaga}}</div>
-              </div>
-
-
-              <!--  Kommentar -->
-              <div mi-field field-label="luse.label.otherinformation" filled="cert.ovrigt">
-                <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div id="kommentar" class="tag multiline">{{cert.ovrigt}}</div>
+              <!-- Övrigt -->
+              <div mi-category category-label="KAT_9.RBK">
+                <div mi-field field-label="luse.label.otherinformation" filled="cert.ovrigt">
+                  <div id="kommentar" class="multiline">{{cert.ovrigt}}</div>
+                </div>
               </div>
 
               <!-- Kontakt med fk-->
-              <div mi-field field-label="luse.label.fkcontact" filled="true">
-
-                <span ng-show="cert.kontaktMedFk">
-                  <span id="kontaktFk-yes" message key="luse.label.yes"></span>
-                </span>
-                <div id="anledningtillkontakt" class="multiline" ng-show="cert.kontaktMedFk">
-                  <span id="anledningtillkontakt-label" message key="luse.label.anledningtillkontakt"></span>
-                  {{cert.anledningTillKontakt}}
+              <div mi-category category-label="KAT_10.RBK">
+                <div mi-field field-dynamic-label="DFR_26.1.RBK" filled="true">
+                  <span ng-show="cert.kontaktMedFk">
+                    <span id="kontaktFk-yes" message key="lisu.label.yes"></span>
+                  </span>
+                  <span ng-show="!cert.kontaktMedFk">
+                    <span id="kontaktFk-no" message key="lisu.label.no"></span>
+                  </span>
                 </div>
+                <div mi-field field-dynamic-label="DFR_26.2.RBK" filled="cert.anledningTillKontakt">
+                  <div id="anledningtillkontakt" class="multiline">{{cert.anledningTillKontakt}}</div>
+                </div>
+              </div>
 
-                <span ng-show="!cert.kontaktMedFk">
-                  <span id="kontaktFk-no" message key="luse.label.no"></span>
-                </span>
-
+              <!-- Tilläggsfrågor -->
+              <div mi-category category-label="KAT_9999.RBK">
+                <div mi-field field-dynamic-label="DFR_{{tillaggsfraga.id}}.RBK"
+                     ng-repeat="tillaggsfraga in cert.tillaggsfragor" filled="tillaggsfraga.svar">
+                  <div id="tillaggsfraga_{{$index}}" class="multiline">{{tillaggsfraga.svar}}</div>
+                </div>
               </div>
 
               <!-- META vara kvar ?-->

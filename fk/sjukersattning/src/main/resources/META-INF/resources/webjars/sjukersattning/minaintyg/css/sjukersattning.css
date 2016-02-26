@@ -10,3 +10,15 @@
     margin-bottom: 10px;
 }
 
+table.table.luse-underlag tbody td {
+    font-weight: normal;
+    border: none;
+}
+
+.luse-underlag {
+    margin-bottom: 10px;
+}
+
+.luse-underlag-title {
+    font-weight: bold;
+}
