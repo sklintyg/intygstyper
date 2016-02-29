@@ -19,19 +19,19 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
-    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/sjukersattning/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
-    grunt.file.write(DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
+    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/luse/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/luse/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
         map(function(file){ return '/web/'+file; }).
-        concat('/web/webjars/sjukersattning/minaintyg/templates.js'), null, 4));
-    minaintyg = [SRC_DIR + 'webjars/sjukersattning/minaintyg/js/module.js', DEST_DIR + 'webjars/sjukersattning/minaintyg/templates.js'].concat(minaintyg.map(function(file){
+        concat('/web/webjars/luse/minaintyg/templates.js'), null, 4));
+    minaintyg = [SRC_DIR + 'webjars/luse/minaintyg/js/module.js', DEST_DIR + 'webjars/luse/minaintyg/templates.js'].concat(minaintyg.map(function(file){
         return SRC_DIR + file;
     }));
 
-    var webcert = grunt.file.expand({cwd:SRC_DIR}, ['webjars/sjukersattning/webcert/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
-    grunt.file.write(DEST_DIR + 'webjars/sjukersattning/webcert/module-deps.json', JSON.stringify(webcert.
+    var webcert = grunt.file.expand({cwd:SRC_DIR}, ['webjars/luse/webcert/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/luse/webcert/module-deps.json', JSON.stringify(webcert.
         map(function(file){ return '/web/'+file; }).
-        concat('/web/webjars/sjukersattning/webcert/templates.js'), null, 4));
-    webcert = [SRC_DIR + 'webjars/sjukersattning/webcert/module.js', DEST_DIR + 'webjars/sjukersattning/webcert/templates.js'].concat(webcert.map(function(file){
+        concat('/web/webjars/luse/webcert/templates.js'), null, 4));
+    webcert = [SRC_DIR + 'webjars/luse/webcert/module.js', DEST_DIR + 'webjars/luse/webcert/templates.js'].concat(webcert.map(function(file){
         return SRC_DIR + file;
     }));
 
@@ -43,21 +43,21 @@ module.exports = function(grunt) {
                 force: true
             },
             minaintyg: {
-                src: [ SRC_DIR + 'webjars/sjukersattning/minaintyg/**/*.css' ]
+                src: [ SRC_DIR + 'webjars/luse/minaintyg/**/*.css' ]
             },
             webcert: {
-                src: [ SRC_DIR + 'webjars/sjukersattning/webcert/**/*.css' ]
+                src: [ SRC_DIR + 'webjars/luse/webcert/**/*.css' ]
             }
         },
 
         concat: {
             minaintyg: {
                 src: minaintyg,
-                dest: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js'
+                dest: DEST_DIR + 'webjars/luse/minaintyg/js/module.min.js'
             },
             webcert: {
                 src: webcert,
-                dest: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js'
+                dest: DEST_DIR + 'webjars/luse/webcert/module.min.js'
             }
         },
 
@@ -67,20 +67,20 @@ module.exports = function(grunt) {
                 force: true
             },
             minaintyg: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukersattning/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/luse/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
             },
             webcert: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/sjukersattning/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/luse/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
             }
         },
 
         karma: {
             minaintyg: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/sjukersattning/karma-minaintyg.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/luse/karma-minaintyg.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/sjukersattning/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/luse/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             }
         },
@@ -90,12 +90,12 @@ module.exports = function(grunt) {
                 singleQuotes: true
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/luse/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/luse/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/luse/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/luse/webcert/module.min.js'
             }
         },
 
@@ -104,12 +104,12 @@ module.exports = function(grunt) {
                 mangle: false
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukersattning/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/luse/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/luse/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/sjukersattning/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/luse/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/luse/webcert/module.min.js'
             }
         },
 

@@ -21,7 +21,7 @@ angular.module('luse').config(function($stateProvider) {
     'use strict';
 
     var commonPath = '/web/webjars/common/webcert/';
-    var intygsTypPath = '/web/webjars/sjukersattning/webcert/';
+    var intygsTypPath = '/web/webjars/luse/webcert/';
 
     $stateProvider.
         state('luse-edit', {

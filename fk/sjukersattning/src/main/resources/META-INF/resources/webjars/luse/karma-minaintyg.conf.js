@@ -2,7 +2,7 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/sjukersattning/minaintyg/js/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/luse/minaintyg/js/';
     var TEST_DIR = SRC_DIR;
     var WEBJAR_DIR = '../target/webjardependencies/';
 
@@ -15,7 +15,7 @@ module.exports = function(config) {
         frameworks: [ 'jasmine' ],
 
         preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/sjukersattning/minaintyg/js/**/*.js': ['coverage']
+            'src/main/resources/META-INF/resources/webjars/luse/minaintyg/js/**/*.js': ['coverage']
         },
 
         // list of files / patterns to load in the browser

@@ -73,9 +73,9 @@ public class SjukersattningEntryPoint implements ModuleEntryPoint {
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukersattning/minaintyg/css/sjukersattning.css";
+            return "/web/webjars/luse/minaintyg/css/sjukersattning.css";
         case WEBCERT:
-            return "/web/webjars/sjukersattning/webcert/css/sjukersattning.css";
+            return "/web/webjars/luse/webcert/css/sjukersattning.css";
         default:
             return null;
         }
@@ -85,9 +85,9 @@ public class SjukersattningEntryPoint implements ModuleEntryPoint {
     public String getModuleScriptPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukersattning/minaintyg/js/module";
+            return "/web/webjars/luse/minaintyg/js/module";
         case WEBCERT:
-            return "/web/webjars/sjukersattning/webcert/module";
+            return "/web/webjars/luse/webcert/module";
         default:
             return null;
         }
@@ -97,9 +97,9 @@ public class SjukersattningEntryPoint implements ModuleEntryPoint {
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/sjukersattning/minaintyg/js/module-deps.json";
+            return "/web/webjars/luse/minaintyg/js/module-deps.json";
         case WEBCERT:
-            return "/web/webjars/sjukersattning/webcert/module-deps.json";
+            return "/web/webjars/luse/webcert/module-deps.json";
         default:
             return null;
         }
