@@ -157,7 +157,7 @@ angular.module('fk7263').config(function($stateProvider) {
                     templateUrl: intygsTypPath + 'views/intyg/fragasvar/fragasvar.html',
                     controller: 'fk7263.QACtrl'
                 },
-                'header@webcert.fragasvar' : {
+                'header@webcert.fragasvar.fk7263' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
                     controller: 'common.IntygHeader'
                 }

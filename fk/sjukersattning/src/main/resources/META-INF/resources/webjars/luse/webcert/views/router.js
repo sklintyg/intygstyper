@@ -84,7 +84,7 @@ angular.module('luse').config(function($stateProvider) {
                     templateUrl: commonPath + 'intyg/fk/fragasvar/fragasvar.html',
                     controller: 'common.QACtrl'
                 },
-                'header@webcert.fragasvar' : {
+                'header@webcert.fragasvar.luse' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
                     controller: 'common.IntygHeader'
                 }
