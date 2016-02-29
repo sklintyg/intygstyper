@@ -47,8 +47,14 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                         choices: [1, 2, 3, 4, 5]
                     }
                 },
-                {key: 'nuvarandeArbete', type: 'multi-text', templateOptions: {label: 'DFR_29.1'}},
-                {key: 'arbetsmarknadspolitisktProgram', type: 'multi-text', templateOptions: {label: 'DFR_30.1'}}
+                {key: 'nuvarandeArbete', type: 'multi-text',
+                    className: 'dfr_1_3',
+                    hideExpression: 'model.sysselsattning.typ != 1',
+                    templateOptions: {label: 'DFR_29.1'}},
+                {key: 'arbetsmarknadspolitisktProgram', type: 'multi-text',
+                    className: 'dfr_1_3',
+                    hideExpression: 'model.sysselsattning.typ != 5',
+                    templateOptions: {label: 'DFR_30.1'}}
             ]
         },
         {
@@ -169,6 +175,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
+                    className: 'dfr_1_3',
                     hideExpression: '!model.kontaktMedFk',
                     templateOptions: {label: 'DFR_26.2'}
                 }

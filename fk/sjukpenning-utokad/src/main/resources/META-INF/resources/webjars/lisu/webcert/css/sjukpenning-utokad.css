@@ -43,16 +43,17 @@
 }
 
 .dfr_1_3 {
-    transition:.4s ease-out all;
+    transition:.3s ease-out all;
 }
 .dfr_1_3.ng-enter,
 .dfr_1_3.ng-leave.ng-leave-active {
-    margin-top: -44px;
+    margin-left: 20px;
     opacity: 0;
 }
 .dfr_1_3.ng-enter.ng-enter-active,
 .dfr_1_3.ng-leave {
     margin-top: 0px;
+    margin-left: 0px;
     opacity: 1;
 }
 .dfr_1_3 .form-control,
