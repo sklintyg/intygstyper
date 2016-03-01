@@ -282,14 +282,14 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande, SitUtlata
             return setArbetslivsinriktadeAtgarder(ImmutableList.copyOf(arbetslivsinriktadeAtgarder));
         }
 
+        /* package private*/
+        abstract Builder setArbetslivsinriktadeAtgarder(ImmutableList<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder);
+
         @JsonProperty("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
         public abstract Builder setArbetslivsinriktadeAtgarderAktuelltBeskrivning(String arbetslivsinriktadeAtgarderAktuelltBeskrivning);
 
         @JsonProperty("arbetslivsinriktadeAtgarderEjAktuelltBeskrivning")
         public abstract Builder setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning(String arbetslivsinriktadeAtgarderEjAktuelltBeskrivning);
-
-        /* package private*/
-        abstract Builder setArbetslivsinriktadeAtgarder(ImmutableList<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder);
 
         @JsonProperty("ovrigt")
         public abstract Builder setOvrigt(String ovrigt);
