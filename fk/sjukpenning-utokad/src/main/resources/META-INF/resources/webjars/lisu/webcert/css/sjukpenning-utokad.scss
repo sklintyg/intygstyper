@@ -1,0 +1,100 @@
+.soclink {
+  background-image: url(../img/ss16.png);
+  background-repeat: no-repeat;
+  padding-left: 25px;
+}
+
+.cert-body .alert ul {
+  padding-left: 20px;
+}
+
+.qa-block-body.komplettera-block {
+  white-space: normal;
+}
+
+.qa-block-body.komplettera-block div span {
+  white-space: pre-line;
+}
+
+.deleteUnderlag {
+  cursor: pointer;
+}
+
+.whitebg {
+  background: white;
+}
+
+.underlagRow > td, .underlagRow > th {
+  padding: 2px 5px;
+}
+
+.no-space-left {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* When focused and when active is added from checkbox, add highlighted style */
+.form5 .form-control:focus,
+.form6 .form-control:focus {
+  border-color: #eee;
+
+  /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+  /* box-shadow: none;*/
+  /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+}
+
+.popin {
+  overflow: hidden;
+  margin-left: 20px;
+  opacity: 1;
+}
+
+.popin-hidden {
+  overflow: hidden;
+  margin-left: 0px;
+  opacity: 0;
+  height: 0;
+}
+
+/*
+.fold-animation {
+  height: 100%;
+}*/
+
+/*
+.popin.ng-enter,
+.popin.ng-leave.ng-leave-active {
+  margin-left: 20px;
+  opacity: 0;
+}
+
+.popin.ng-enter.ng-enter-active,
+.popin.ng-leave {
+  margin-top: 0px;
+  margin-left: 0px;
+  opacity: 1;
+}
+
+.popin .form-control,
+.popin.form-inline .form-control {
+  width: 100%;
+  max-width: 340px;
+}
+*/
+input.ng-invalid-date {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(255, 0, 0, 0.6);
+  border-color: #ff6600;
+}
+
+.not-entered {
+  font-style: italic;
+}
+
+.intyg-field {
+  margin-bottom: 10px;
+}
+
+.intyg-field label {
+  margin-bottom: 0px;
+  font-weight: bold;
+}

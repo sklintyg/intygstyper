@@ -29,7 +29,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                 {
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text',
-                    className: 'dfr_1_3',
+                    className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 }
@@ -48,11 +48,11 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                     }
                 },
                 {key: 'nuvarandeArbete', type: 'multi-text',
-                    className: 'dfr_1_3',
+                    className: 'fold-animation',
                     hideExpression: 'model.sysselsattning.typ != 1',
                     templateOptions: {label: 'DFR_29.1'}},
                 {key: 'arbetsmarknadspolitisktProgram', type: 'multi-text',
-                    className: 'dfr_1_3',
+                    className: 'fold-animation',
                     hideExpression: 'model.sysselsattning.typ != 5',
                     templateOptions: {label: 'DFR_30.1'}}
             ]
@@ -151,11 +151,39 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                 {
                     key: 'arbetslivsinriktadeAtgarderAktuelltBeskrivning',
                     type: 'multi-text',
+                    className: 'fold-animation',
+                    hideExpression: function($viewValue, $modelValue, scope) {
+                        var arrayAtgarder = [];
+                        angular.forEach(scope.model.arbetslivsinriktadeAtgarder, function(atgard, key) {
+                            if(atgard === true) {
+                                arrayAtgarder.push(key);
+                            }
+                        });
+
+                        var results = arrayAtgarder.filter(function(item) {
+                            return Number(item) > 1;
+                        });
+                        return results.length <= 0;
+                    },
                     templateOptions: {label: 'DFR_40.2'}
                 },
                 {
                     key: 'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning',
                     type: 'multi-text',
+                    className: 'fold-animation',
+                    hideExpression: function($viewValue, $modelValue, scope) {
+                        var arrayAtgarder = [];
+                        angular.forEach(scope.model.arbetslivsinriktadeAtgarder, function(atgard, key) {
+                            if(atgard === true) {
+                                arrayAtgarder.push(key);
+                            }
+                        });
+
+                        var results = arrayAtgarder.filter(function(item) {
+                            return Number(item) === 1;
+                        });
+                        return results.length <= 0;
+                    },
                     templateOptions: {label: 'DFR_40.3'}
                 }
             ]
@@ -175,7 +203,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
-                    className: 'dfr_1_3',
+                    className: 'fold-animation',
                     hideExpression: '!model.kontaktMedFk',
                     templateOptions: {label: 'DFR_26.2'}
                 }
