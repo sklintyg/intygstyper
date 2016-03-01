@@ -96,7 +96,7 @@
       </delsvar>
     </svar>
     <svar id="35">
-      <delsvar id="35.1">Haltar när han dansar</delsvar>
+      <delsvar id="35.1">   </delsvar>
     </svar>
     <svar id="17">
       <delsvar id="17.1">Kommer inte in i bilen</delsvar>
@@ -140,16 +140,11 @@
     <svar id="40">
       <delsvar id="40.1">
         <ns3:cv>
-          <ns3:code>1</ns3:code>
+          <ns3:code>11</ns3:code>
           <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.1">
-        <ns3:cv>
-          <ns3:code>2</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
+      <delsvar id="40.2">Jobbar bra om man inte stör honom</delsvar>
     </svar>
   </ns2:intyg>
 </ns2:RegisterCertificate>

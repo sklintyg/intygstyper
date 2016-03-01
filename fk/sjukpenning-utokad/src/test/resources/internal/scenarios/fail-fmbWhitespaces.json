@@ -42,12 +42,10 @@
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
   "tillaggsfragor": [],
+  "arbetslivsinriktadeAtgarderAktuelltBeskrivning": "Jobbar bra om man inte stör honom",
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": 1
-    },
-    {
-      "val": 2
+      "val": 11
     }
   ],
   "prognos": {
@@ -58,7 +56,7 @@
   "arbetsresor": true,
   "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
   "arbetstidsforlaggning": true,
-  "forsakringsmedicinsktBeslutsstod": "överskrider inte FMB",
+  "forsakringsmedicinsktBeslutsstod": "   ",
   "sjukskrivningar": [
     {
       "period": {

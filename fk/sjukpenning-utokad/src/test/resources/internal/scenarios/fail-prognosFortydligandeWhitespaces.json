@@ -42,23 +42,21 @@
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
   "tillaggsfragor": [],
+  "arbetslivsinriktadeAtgarderAktuelltBeskrivning": "Test",
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": 1
-    },
-    {
-      "val": 2
+      "val": 11
     }
   ],
   "prognos": {
-    "fortydligande": "Kan bara jobba på nätterna.",
+    "fortydligande": "   ",
     "typ": 4
   },
-  "formagaTrotsBegransning": "är bra på att dansa!",
+  "formagaTrotsBegransning": "Test",
   "arbetsresor": true,
-  "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
+  "arbetstidsforlaggningMotivering": "Test",
   "arbetstidsforlaggning": true,
-  "forsakringsmedicinsktBeslutsstod": "överskrider inte FMB",
+  "forsakringsmedicinsktBeslutsstod": "Test",
   "sjukskrivningar": [
     {
       "period": {
@@ -68,8 +66,8 @@
       "sjukskrivningsgrad": 2
     }
   ],
-  "aktivitetsbegransning": "Kommer inte in i bilen",
-  "funktionsnedsattning": "Haltar när han dansar",
+  "aktivitetsbegransning": "Test",
+  "funktionsnedsattning": "Test",
   "diagnoser": [
     {
       "diagnosBeskrivning": "Klämskada skuldra",
@@ -77,7 +75,7 @@
       "diagnosKod": "S47"
     }
   ],
-  "nuvarandeArbete": "Smed",
+  "nuvarandeArbete": "Test",
   "sysselsattning": {
     "typ": 1
   },

@@ -49,29 +49,29 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     private boolean shouldFail;
 
     // Used for labeling tests.
-    @SuppressWarnings("unused")
-    private String name;
+    static private String name;
 
     public InternalValidatorResultMatchesSchematronValidatorTest(String name, Scenario scenario, boolean shouldFail) {
         this.scenario = scenario;
         this.shouldFail = shouldFail;
-        this.name = name;
+        InternalValidatorResultMatchesSchematronValidatorTest.name = name;
     }
 
     /**
      * Process test data and supply it to the test.
+     *
      * @throws ScenarioNotFoundException
      */
     @Parameters(name = "{index}: Scenario: {0}")
     public static Collection<Object[]> data() throws ScenarioNotFoundException {
         // The boolean in the object array determines whether the test should expect validation errors or not.
         List<Object[]> retList = ScenarioFinder.getInternalScenarios("fail-*").stream()
-            .map(u -> new Object[] {u.getName(), u, true })
-            .collect(Collectors.toList());
+                .map(u -> new Object[] { u.getName(), u, true })
+                .collect(Collectors.toList());
         retList.addAll(
                 ScenarioFinder.getInternalScenarios("pass-*").stream()
-                .map(u -> new Object[] {u.getName(), u, false })
-                .collect(Collectors.toList()));
+                        .map(u -> new Object[] { u.getName(), u, false })
+                        .collect(Collectors.toList()));
         return retList;
     }
 
@@ -105,40 +105,40 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
         RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
 
-        String internalValidationErrors = getInternalValidationErrors(internalValidationResponse);
+        String internalValidationErrors = getInternalValidationErrorString(internalValidationResponse);
 
-        String transportValidationErrors = getTransportValidationErrors(result);
+        String transportValidationErrors = getTransportValidationErrorString(result);
 
         if (fail) {
             assertTrue(String.format("File: %s, Internal validation, expected ValidationStatus.INVALID",
-                    scenario.getName()),
+                    name),
                     internalValidationResponse.getStatus().equals(ValidationStatus.INVALID));
 
             assertTrue(String.format("File: %s, Schematronvalidation, expected errors > 0",
-                    scenario.getName()),
+                    name),
                     SVRLHelper.getAllFailedAssertions(result).size() > 0);
 
-            System.out.println(String.format("Test: %s", scenario.getName()));
+            System.out.println(String.format("Test: %s", name));
             System.out.println(String.format("InternalValidation-errors: %s",  internalValidationErrors));
             System.out.println(String.format("TransportValidation-errors: %s", transportValidationErrors));
 
         } else {
             assertTrue(String.format("File: %s, Internal validation, expected ValidationStatus.VALID \n Validation-errors: %s",
-                    scenario.getName(), internalValidationErrors),
+                    name, internalValidationErrors),
                     internalValidationResponse.getStatus().equals(ValidationStatus.VALID));
             assertTrue(String.format("File: %s, Schematronvalidation, expected 0 errors \n Validation-errors: %s",
-                    scenario.getName(), transportValidationErrors),
+                    name, transportValidationErrors),
                     SVRLHelper.getAllFailedAssertions(result).size() == 0);
         }
     }
 
-    private static String getTransportValidationErrors(SchematronOutputType result) {
+    private static String getTransportValidationErrorString(SchematronOutputType result) {
         return SVRLHelper.getAllFailedAssertions(result).stream()
                 .map(e -> String.format("Test: %s, Text: %s", e.getTest(), e.getText()))
                 .collect(Collectors.joining(";"));
     }
 
-    private static String getInternalValidationErrors(ValidateDraftResponse internalValidationResponse) {
+    private static String getInternalValidationErrorString(ValidateDraftResponse internalValidationResponse) {
         return internalValidationResponse.getValidationErrors().stream()
                 .map(e -> e.getMessage())
                 .collect(Collectors.joining(", "));

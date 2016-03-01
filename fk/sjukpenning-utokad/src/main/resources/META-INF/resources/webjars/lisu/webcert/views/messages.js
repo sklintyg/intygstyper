@@ -86,6 +86,9 @@ var sjukpenningUtokadMessages = {
         'lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.missing': 'Arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.',
         'lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.invalid_combination': 'Motivering till arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.', // Should never happen
 
+        'lisu.validation.bedomning.fmb.empty' : 'Beskriv varför arbetsförmågan bedöms vara nedsatt längre tid än den som det försäkringsmedicinska beslutstödet anger kan inte fyllas i med endast blanksteg', 
+        'lisu.validation.bedomning.formagatrotsbegransning.empty' : ' Beskriv vad patienten kan göra trots sin sjukdom relaterat till sitt arbete kan inte fyllas i med endast blanksteg', 
+
         'lisu.validation.bedomning.prognos.missing': 'Prognos måste fyllas i.',
         'lisu.validation.bedomning.prognos.fortydligande.missing': 'Förtydligande måste fyllas i om prognos oklar valts.',
         'lisu.validation.bedomning.prognos.fortydligande.invalid_combination': 'Förtydligande kan bara fyllas i om prognos oklar valts.', // Should never happen because GUI should block this combination
@@ -95,6 +98,7 @@ var sjukpenningUtokadMessages = {
         'lisu.validation.atgarder.invalid_combination': 'Beskrivning för arbetslivsinriktade åtgärder kan inte kombineras med åtgärd på detta sätt.', // Should never happen because GUI should block this combination
         'lisu.validation.atgarder.aktuelltbeskrivning.missing': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
         'lisu.validation.atgarder.too-many': 'För många val på åtgärder.', // Should never happen because GUI should block this combination
+        'lisu.validation.atgarder.inte_aktuellt_missing_description' : 'Om Arbetslivsinriktade åtgärder inte är aktuellt måste fältet "Beskriv varför arbetslivsinriktade åtgärder just nu inte skulle underlätta återgång i arbete" fyllas i.',
 
         'lisu.validation.kontakt.invalid_combination': 'Anledning får inte fyllas i när man svarat nej på kontakt.',
 

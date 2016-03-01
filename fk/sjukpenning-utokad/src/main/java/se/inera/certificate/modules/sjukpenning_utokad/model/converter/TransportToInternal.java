@@ -281,7 +281,7 @@ public final class TransportToInternal {
             default:
                 throw new IllegalArgumentException();
             }
-            if (prognosKod != null && fortydligande != null) {
+            if (prognosKod != null) {
                 utlatande.setPrognos(Prognos.create(PrognosTyp.fromId(Integer.parseInt(prognosKod)), fortydligande));
             }
         }

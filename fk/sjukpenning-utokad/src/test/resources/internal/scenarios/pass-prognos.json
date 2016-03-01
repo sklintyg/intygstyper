@@ -42,17 +42,14 @@
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
   "tillaggsfragor": [],
+  "arbetslivsinriktadeAtgarderAktuelltBeskrivning": "Jobbar bra om man inte stör honom",
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": 1
-    },
-    {
-      "val": 2
+      "val": 11
     }
   ],
   "prognos": {
-    "fortydligande": "Kan bara jobba på nätterna.",
-    "typ": 4
+    "typ": 1
   },
   "formagaTrotsBegransning": "är bra på att dansa!",
   "arbetsresor": true,

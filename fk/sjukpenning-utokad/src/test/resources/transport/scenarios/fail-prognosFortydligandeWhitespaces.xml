@@ -84,7 +84,7 @@
       </delsvar>
     </svar>
     <svar id="29">
-      <delsvar id="29.1">Smed</delsvar>
+      <delsvar id="29.1">Test</delsvar>
     </svar>
     <svar id="6">
       <delsvar id="6.1">Klämskada skuldra</delsvar>
@@ -96,10 +96,10 @@
       </delsvar>
     </svar>
     <svar id="35">
-      <delsvar id="35.1">Haltar när han dansar</delsvar>
+      <delsvar id="35.1">Test</delsvar>
     </svar>
     <svar id="17">
-      <delsvar id="17.1">Kommer inte in i bilen</delsvar>
+      <delsvar id="17.1">Test</delsvar>
     </svar>
     <svar id="32">
       <delsvar id="32.1">
@@ -116,17 +116,17 @@
       </delsvar>
     </svar>
     <svar id="37">
-      <delsvar id="37.1">Överskrider inte FMB</delsvar>
+      <delsvar id="37.1">Test</delsvar>
     </svar>
     <svar id="33">
       <delsvar id="33.1">true</delsvar>
-      <delsvar id="33.2">Kan bara jobba på nätterna.</delsvar>
+      <delsvar id="33.2">Test</delsvar>
     </svar>
     <svar id="34">
       <delsvar id="34.1">true</delsvar>
     </svar>
     <svar id="23">
-      <delsvar id="23.1">Är bra på att dansa!</delsvar>
+      <delsvar id="23.1">Test</delsvar>
     </svar>
     <svar id="39">
       <delsvar id="39.1">
@@ -135,21 +135,16 @@
           <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="39.2">Kan bara jobba på nätterna.</delsvar>
+      <delsvar id="39.2">   </delsvar>
     </svar>
     <svar id="40">
       <delsvar id="40.1">
         <ns3:cv>
-          <ns3:code>1</ns3:code>
+          <ns3:code>11</ns3:code>
           <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.1">
-        <ns3:cv>
-          <ns3:code>2</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
+      <delsvar id="40.2">Test</delsvar>
     </svar>
   </ns2:intyg>
 </ns2:RegisterCertificate>

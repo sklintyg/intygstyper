@@ -320,9 +320,14 @@ public final class InternalToTransport {
                     .withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getFormagaTrotsBegransning()).build());
         }
 
-        svars.add(aSvar(PROGNOS_SVAR_ID)
-                .withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID, aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId())))
-                .withDelsvar(PROGNOS_FORTYDLIGANDE_DELSVAR_ID, source.getPrognos().getFortydligande()).build());
+        if (!StringUtils.isBlank(source.getPrognos().getFortydligande())) {
+            svars.add(aSvar(PROGNOS_SVAR_ID)
+                    .withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID, aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId())))
+                    .withDelsvar(PROGNOS_FORTYDLIGANDE_DELSVAR_ID, source.getPrognos().getFortydligande()).build());
+        } else {
+            svars.add(aSvar(PROGNOS_SVAR_ID)
+                    .withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID, aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()))).build());
+        }
 
         /* Build complex object */
         SvarBuilder arbetslivsinriktadeAtgarderBuilder = aSvar(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID);
@@ -358,7 +363,9 @@ public final class InternalToTransport {
         }
 
         for (Tillaggsfraga tillaggsfraga : source.getTillaggsfragor()) {
-            svars.add(aSvar(tillaggsfraga.getId()).withDelsvar(tillaggsfraga.getId() + ".1", tillaggsfraga.getSvar()).build());
+            if (!StringUtils.isBlank(tillaggsfraga.getSvar())) {
+                svars.add(aSvar(tillaggsfraga.getId()).withDelsvar(tillaggsfraga.getId() + ".1", tillaggsfraga.getSvar()).build());
+            }
         }
 
         return svars;

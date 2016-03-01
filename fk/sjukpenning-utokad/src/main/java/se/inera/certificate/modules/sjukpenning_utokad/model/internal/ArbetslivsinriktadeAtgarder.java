@@ -19,6 +19,8 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.model.internal;
 
+import java.util.EnumSet;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -83,6 +85,10 @@ public abstract class ArbetslivsinriktadeAtgarder {
         OVRIGT(11, "Övrigt");
         private final int id;
         private final String label;
+
+        public static final EnumSet<ArbetslivsinriktadeAtgarderVal> ATGARD_AKTUELL = EnumSet.of(ARBETSTRANING, ARBETSANPASSNING, SOKA_NYTT_ARBETE,
+                BESOK_PA_ARBETSPLATSEN, ERGONOMISK_BEDOMNING, HJALPMEDEL, KONFLIKTHANTERING, KONTAKT_MED_FORETAGSHALSOVARD, KONTAKT_MED_FORETAGSHALSOVARD,
+                OMFORDELNING_AV_ARBETSUPPGIFTER, OMFORDELNING_AV_ARBETSUPPGIFTER, OVRIGT);
 
         ArbetslivsinriktadeAtgarderVal(int id, String label) {
             this.id = id;

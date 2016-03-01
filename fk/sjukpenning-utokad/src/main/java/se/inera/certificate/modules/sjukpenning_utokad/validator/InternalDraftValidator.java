@@ -181,6 +181,18 @@ public class InternalDraftValidator {
         // Sjukskrivningar
         validateSjukskrivningar(utlatande, validationMessages);
 
+        // FMB
+        if (utlatande.getForsakringsmedicinsktBeslutsstod() != null && StringUtils.isBlank(utlatande.getForsakringsmedicinsktBeslutsstod())) {
+            addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                    "lisu.validation.bedomning.fmb.empty");
+        }
+
+        // Förmåga trots begränsning
+        if (utlatande.getFormagaTrotsBegransning() != null && StringUtils.isBlank(utlatande.getFormagaTrotsBegransning())) {
+            addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                    "lisu.validation.bedomning.formagatrotsbegransning.empty");
+        }
+
         // Prognos
         if (utlatande.getPrognos() == null) {
             addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
@@ -310,6 +322,13 @@ public class InternalDraftValidator {
                         "lisu.validation.atgarder.inte_aktuellt_no_combine");
             }
 
+            // R24 If INTE_AKTUELLT is checked, arbetslivsinriktadeAtgarderEjAktuelltBeskrivning must be specified
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
+                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisu.validation.atgarder.inte_aktuellt_missing_description");
+            }
+
             // R23 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning() must not be answered
             if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
                     && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
@@ -317,15 +336,8 @@ public class InternalDraftValidator {
                         "lisu.validation.atgarder.invalid_combination");
             }
 
-            // R24 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() must be answered
-            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
-                addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
-                        "lisu.validation.atgarder.invalid_combination");
-            }
-
-            // R22 If INTE_AKTUELLT is NOT checked beskrivning åtgärder aktuellt is required
-            if (!utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+            // R22 If other choices than INTE_AKTUELLT are checked beskrivning åtgärder aktuellt is required
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> ArbetslivsinriktadeAtgarderVal.ATGARD_AKTUELL.contains(e.getVal()))
                     && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
                 addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                         "lisu.validation.atgarder.aktuelltbeskrivning.missing");
