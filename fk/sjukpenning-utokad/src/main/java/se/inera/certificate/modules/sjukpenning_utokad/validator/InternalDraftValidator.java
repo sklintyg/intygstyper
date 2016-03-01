@@ -317,9 +317,9 @@ public class InternalDraftValidator {
                         "lisu.validation.atgarder.invalid_combination");
             }
 
-            // R24 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() must not be answered
+            // R24 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning() must be answered
             if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
+                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
                 addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                         "lisu.validation.atgarder.invalid_combination");
             }
