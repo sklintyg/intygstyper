@@ -117,6 +117,29 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                         label: 'DFR_40.1',
                         code: 'KV_FKMU_0004',
                         choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                    },
+                    expressionProperties: {
+                        // Disable option 1 if any option 2-11 is selected
+                        'templateOptions.disabled[1]': function($viewValue, $modelValue) {
+                            var disabled = false;
+                            for(var i=2; i<=11; i++) {
+                                if ($modelValue[i]) {
+                                    disabled = true;
+                                }
+                            }
+                            return disabled;
+                        },
+                        // Disable option 2-11 if option 1 is selected
+                        'templateOptions.disabled[2]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[3]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[4]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[5]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[6]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[7]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[8]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[9]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[10]': 'model.arbetslivsinriktadeAtgarder[1]',
+                        'templateOptions.disabled[11]': 'model.arbetslivsinriktadeAtgarder[1]'
                     }
                 },
                 {
