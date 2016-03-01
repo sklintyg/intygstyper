@@ -1,10 +1,23 @@
 angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
     'use strict';
 
+    var categoryNames = [
+        null,
+        'grundformu',
+        'sysselsattning',
+        'diagnos',
+        'funktionsnedsattning',
+        'medicinskaBehandlingar',
+        'bedomning',
+        'atgarder',
+        'ovrigt',
+        'kontakt'
+    ];
+
     var formFields = [
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 1, categoryName: 'grundformu'},
+            templateOptions: {category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_1'}},
                 {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1'}},
@@ -24,7 +37,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 2, categoryName: 'sysselsattning'},
+            templateOptions: {category: 2, categoryName: categoryNames[2]},
             fieldGroup: [
                 {
                     key: 'sysselsattning.typ', type: 'radio-group',
@@ -40,7 +53,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 3, categoryName: 'diagnos'},
+            templateOptions: {category: 3, categoryName: categoryNames[3]},
             fieldGroup: [
                 {
                     key: 'diagnoser',
@@ -51,7 +64,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 4, categoryName: 'funktionsnedsattning'},
+            templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
                 {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
                 {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
@@ -59,7 +72,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 5, categoryName: 'medicinskaBehandlingar'},
+            templateOptions: {category: 5, categoryName: categoryNames[5]},
             fieldGroup: [
                 {key: 'pagaendeBehandling', type: 'multi-text', templateOptions: {label: 'DFR_19.1'}},
                 {key: 'planeradBehandling', type: 'multi-text', templateOptions: {label: 'DFR_20.1'}}
@@ -67,7 +80,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 6, categoryName: 'bedomning'},
+            templateOptions: {category: 6, categoryName: categoryNames[6]},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_32'}},
                 {
@@ -95,7 +108,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 7, categoryName: 'atgarder'},
+            templateOptions: {category: 7, categoryName: categoryNames[7]},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_40'}},
                 {
@@ -120,14 +133,14 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 8, categoryName: 'ovrigt'},
+            templateOptions: {category: 8, categoryName: categoryNames[8]},
             fieldGroup: [
                 {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
             ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 9, categoryName: 'kontakt'},
+            templateOptions: {category: 9, categoryName: categoryNames[9]},
             fieldGroup: [
                 {key: 'kontaktMedFk', type: 'boolean', templateOptions: {label: 'DFR_26.1'}},
                 {
@@ -170,6 +183,9 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
     return {
         getFormFields: function() {
             return angular.copy(formFields);
+        },
+        getCategoryNames: function() {
+            return angular.copy(categoryNames);
         }
     };
 });

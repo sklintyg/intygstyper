@@ -1,9 +1,10 @@
 angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
-        'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.ViewStateService', 'common.anchorScrollService',
+        'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.ViewStateService',
+        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService) {
+            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory) {
             'use strict';
 
             /**********************************************************************************
@@ -16,6 +17,8 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
 
             // Page states
             $scope.user = UserModel;
+
+            $scope.categoryNames = formFactory.getCategoryNames();
 
             /****************************************************************************
              * Exposed interaction functions to view

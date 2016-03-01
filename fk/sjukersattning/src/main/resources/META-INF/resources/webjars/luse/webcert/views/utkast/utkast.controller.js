@@ -2,9 +2,9 @@ angular.module('luse').controller('sjukersattning.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'sjukersattning.Domain.IntygModel', 'sjukersattning.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService',
+        'common.anchorScrollService', 'sjukersattning.FormFactory',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService) {
+            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory) {
             'use strict';
 
             /**********************************************************************************
@@ -32,6 +32,7 @@ angular.module('luse').controller('sjukersattning.EditCertCtrl',
             };
             $scope.viewState.prototypes.selected = $scope.viewState.prototypes.prototypTemplates[0].id;
 
+            $scope.categoryNames = formFactory.getCategoryNames();
 
             /****************************************************************************
              * Exposed interaction functions to view

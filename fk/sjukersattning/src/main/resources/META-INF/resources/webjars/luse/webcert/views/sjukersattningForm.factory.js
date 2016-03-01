@@ -1,10 +1,24 @@
 angular.module('luse').factory('sjukersattning.FormFactory', function() {
     'use strict';
 
+    var categoryNames = [
+        null,
+        'grundformu',
+        'underlag',
+        'sjukdomsforlopp',
+        'diagnos',
+        'funktionsnedsattning',
+        'aktivitetsbegransning',
+        'medicinskabehandlingar',
+        'medicinskaforutsattningarforarbete',
+        'ovrigt',
+        'kontakt'
+    ];
+
     var formFields = [
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 1, categoryName: 'grundformu', prototypeName: 'default'},
+            templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_1', level: '4'}},
                 {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', level: '4'}},
@@ -25,7 +39,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 2, categoryName: 'underlag'},
+            templateOptions: {category: 2, categoryName: categoryNames[2]},
             fieldGroup: [
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
@@ -50,14 +64,14 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 3, categoryName: 'sjukdomsforlopp'},
+            templateOptions: {category: 3, categoryName: categoryNames[3]},
             fieldGroup: [
                 {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
             ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 4, categoryName: 'diagnos'},
+            templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
                 {
                     key: 'diagnoser',
@@ -70,7 +84,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 5, categoryName: 'funktionsnedsattning'},
+            templateOptions: {category: 5, categoryName: categoryNames[5]},
             fieldGroup: [
                 {key: 'funktionsnedsattningIntellektuell', type: 'multi-text', templateOptions: {label: 'DFR_8.1'}},
                 {key: 'funktionsnedsattningKommunikation', type: 'multi-text', templateOptions: {label: 'DFR_9.1'}},
@@ -87,7 +101,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 6, categoryName: 'aktivitetsbegransning'},
+            templateOptions: {category: 6, categoryName: categoryNames[6]},
             fieldGroup: [
                 {
                     key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}
@@ -96,7 +110,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 7, categoryName: 'medicinskabehandlingar'},
+            templateOptions: {category: 7, categoryName: categoryNames[7]},
             fieldGroup: [
                 {key: 'avslutadBehandling', type: 'multi-text', templateOptions: {label: 'DFR_18.1'}},
                 {key: 'pagaendeBehandling', type: 'multi-text', templateOptions: {label: 'DFR_19.1'}},
@@ -106,7 +120,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 8, categoryName: 'medicinskaforutsattningarforarbete'},
+            templateOptions: {category: 8, categoryName: categoryNames[8]},
             fieldGroup: [
                 {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'DFR_22.1'}},
                 {key: 'aktivitetsFormaga', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}}
@@ -114,14 +128,14 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 9, categoryName: 'ovrigt'},
+            templateOptions: {category: 9, categoryName: categoryNames[9]},
             fieldGroup: [
                 {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
             ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 10, categoryName: 'kontakt'},
+            templateOptions: {category: 10, categoryName: categoryNames[10]},
             fieldGroup: [
                 {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
                 {
@@ -164,6 +178,9 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
     return {
         getFormFields: function() {
             return angular.copy(formFields);
+        },
+        getCategoryNames: function() {
+            return angular.copy(categoryNames);
         }
     };
 });
