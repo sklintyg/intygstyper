@@ -90,6 +90,8 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import org.apache.commons.lang3.StringUtils;
+
 import se.inera.certificate.modules.sjukersattning.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.Tillaggsfraga;
@@ -285,72 +287,72 @@ public final class InternalToTransport {
                 withDelsvar(DIAGNOSGRUND_DELSVAR_ID, source.getDiagnosgrund()).
                 withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID, source.getNyBedomningDiagnosgrund().toString()).build());
 
-        if (source.getFunktionsnedsattningIntellektuell() != null) {
+        if (!StringUtils.isBlank(source.getFunktionsnedsattningIntellektuell())) {
             svars.add(aSvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID).
                     withDelsvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID, source.getFunktionsnedsattningIntellektuell()).build());
         }
 
-        if (source.getFunktionsnedsattningKommunikation() != null) {
+        if (!StringUtils.isBlank(source.getFunktionsnedsattningKommunikation())) {
             svars.add(aSvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID).
                     withDelsvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID, source.getFunktionsnedsattningKommunikation()).build());
         }
 
-        if (source.getFunktionsnedsattningKoncentration() != null) {
+        if (!StringUtils.isBlank(source.getFunktionsnedsattningKoncentration())) {
             svars.add(aSvar(FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID).
                     withDelsvar(FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID, source.getFunktionsnedsattningKoncentration()).build());
         }
 
-        if (source.getFunktionsnedsattningPsykisk() != null) {
+        if (!StringUtils.isBlank(source.getFunktionsnedsattningPsykisk())) {
             svars.add(aSvar(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID).
                     withDelsvar(FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID, source.getFunktionsnedsattningPsykisk()).build());
         }
 
-        if (source.getFunktionsnedsattningSynHorselTal() != null) {
+        if (!StringUtils.isBlank(source.getFunktionsnedsattningSynHorselTal())) {
             svars.add(aSvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID).
                     withDelsvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID, source.getFunktionsnedsattningSynHorselTal()).build());
         }
 
-        if (source.getFunktionsnedsattningBalansKoordination() != null) {
+        if (!StringUtils.isBlank(source.getFunktionsnedsattningBalansKoordination())) {
             svars.add(aSvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID).
                     withDelsvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID, source.getFunktionsnedsattningBalansKoordination()).build());
         }
 
-        if (source.getFunktionsnedsattningAnnan() != null) {
+        if (!StringUtils.isBlank(source.getFunktionsnedsattningAnnan())) {
             svars.add(aSvar(FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID).
                     withDelsvar(FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID, source.getFunktionsnedsattningAnnan()).build());
         }
 
         svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
 
-        if (source.getAvslutadBehandling() != null) {
+        if (!StringUtils.isBlank(source.getAvslutadBehandling())) {
             svars.add(aSvar(AVSLUTADBEHANDLING_SVAR_ID).withDelsvar(AVSLUTADBEHANDLING_DELSVAR_ID, source.getAvslutadBehandling()).build());
         }
 
-        if (source.getPagaendeBehandling() != null) {
+        if (!StringUtils.isBlank(source.getPagaendeBehandling())) {
             svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
         }
 
-        if (source.getPlaneradBehandling() != null) {
+        if (!StringUtils.isBlank(source.getPlaneradBehandling())) {
             svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
         }
 
-        if (source.getSubstansintag() != null) {
+        if (!StringUtils.isBlank(source.getSubstansintag())) {
             svars.add(aSvar(SUBSTANSINTAG_SVAR_ID).withDelsvar(SUBSTANSINTAG_DELSVAR_ID, source.getSubstansintag()).build());
         }
 
         svars.add(aSvar(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID).
                 withDelsvar(MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID, source.getMedicinskaForutsattningarForArbete()).build());
 
-        if (source.getAktivitetsFormaga() != null) {
+        if (!StringUtils.isBlank(source.getAktivitetsFormaga())) {
             svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getAktivitetsFormaga()).build());
         }
 
-        if (source.getOvrigt() != null) {
+        if (!StringUtils.isBlank(source.getOvrigt())) {
             svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getOvrigt()).build());
         }
 
         if (source.getKontaktMedFk() != null) {
-            if (source.getKontaktMedFk() && source.getAnledningTillKontakt() != null) {
+            if (source.getKontaktMedFk() && !StringUtils.isBlank(source.getAnledningTillKontakt())) {
                 svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).
                         withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString()).
                         withDelsvar(ANLEDNING_TILL_KONTAKT_DELSVAR_ID, source.getAnledningTillKontakt()).build());
@@ -361,8 +363,10 @@ public final class InternalToTransport {
         }
 
         for (Tillaggsfraga tillaggsfraga : source.getTillaggsfragor()) {
-            svars.add(aSvar(tillaggsfraga.getId()).
-                    withDelsvar(tillaggsfraga.getId() + ".1", tillaggsfraga.getSvar()).build());
+            if (!StringUtils.isBlank(tillaggsfraga.getSvar())) {
+                svars.add(aSvar(tillaggsfraga.getId()).
+                        withDelsvar(tillaggsfraga.getId() + ".1", tillaggsfraga.getSvar()).build());
+            }
         }
 
         return svars;

@@ -74,6 +74,7 @@ public class InternalDraftValidator {
         validateMedicinskaForutsattningarForArbete(utlatande, validationMessages);
         // Kategori 9 – Övrigt
         // Kategori 10 – Kontakt
+        validateKontaktMedFk(utlatande, validationMessages);
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
 
@@ -106,6 +107,12 @@ public class InternalDraftValidator {
         }
         if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
+                    "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
+        }
+
+        // R3
+        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+            addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luse.validation.grund-for-mu.annat.missing");
         }
 
@@ -137,6 +144,10 @@ public class InternalDraftValidator {
         } else if (utlatande.getUnderlagFinns() && utlatande.getUnderlag().isEmpty()) {
             addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luse.validation.underlagfinns.missing");
+        } else if (!utlatande.getUnderlagFinns() && !utlatande.getUnderlag().isEmpty()) {
+            // R6
+            addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+                    "luse.validation.underlagfinns.incorrect_combination");
         }
 
         for (Underlag underlag : utlatande.getUnderlag()) {
@@ -291,6 +302,14 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
         }
 
+    }
+
+    private void validateKontaktMedFk(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        // R11
+        if ((utlatande.getKontaktMedFk() == null || !utlatande.getKontaktMedFk()) && !StringUtils.isBlank(utlatande.getAnledningTillKontakt())) {
+            addValidationError(validationMessages, "Kontakt", ValidationMessageType.INVALID_FORMAT,
+                    "luse.validation.kontakt.incorrect_combination");
+        }
     }
 
     /**

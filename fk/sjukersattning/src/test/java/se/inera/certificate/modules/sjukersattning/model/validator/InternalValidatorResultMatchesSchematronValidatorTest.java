@@ -1,7 +1,7 @@
-package se.inera.certificate.modules.sjukpenning_utokad.model.validator;
+package se.inera.certificate.modules.sjukersattning.model.validator;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -27,12 +27,12 @@ import com.google.common.base.Charsets;
 import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
-import se.inera.certificate.modules.sjukpenning_utokad.model.utils.Scenario;
-import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioFinder;
-import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioNotFoundException;
-import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
+import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.utils.Scenario;
+import se.inera.certificate.modules.sjukersattning.model.utils.ScenarioFinder;
+import se.inera.certificate.modules.sjukersattning.model.utils.ScenarioNotFoundException;
+import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
@@ -95,7 +95,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
      * @throws Exception
      */
     private static void doInternalAndSchematronValidation(Scenario scenario, boolean fail) throws Exception {
-        SjukpenningUtokadUtlatande utlatandeFromJson = scenario.asInternalModel();
+        SjukersattningUtlatande utlatandeFromJson = scenario.asInternalModel();
 
         InternalDraftValidator internalValidator = new InternalDraftValidator();
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
@@ -103,7 +103,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
         RegisterCertificateType intyg = scenario.asTransportModel();
         String convertedXML = getXmlFromModel(intyg);
 
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
 
         String internalValidationErrors = getInternalValidationErrorString(internalValidationResponse);

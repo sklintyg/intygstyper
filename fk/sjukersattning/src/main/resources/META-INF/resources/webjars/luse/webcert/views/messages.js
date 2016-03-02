@@ -43,6 +43,7 @@ var sjukersattningMessages = {
 
         //Validation messages
         'luse.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
+        'luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' (Fält 4) får endast fyllas i om \'Annan referens valts\' i Fält 1.',  
         'luse.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient (Fält 1)',
         'luse.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter (Fält 1)',
         'luse.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning (Fält 1)',
@@ -55,6 +56,7 @@ var sjukersattningMessages = {
         'luse.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
 
         'luse.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
+        'luse.validation.underlagfinns.incorrect_combination' : 'Om frågan \'Finns det andra medicinska utredningar eller underlag\' besvarats med nej får underlag inte anges.',
         'luse.validation.underlag.missing': 'Du måste ange ett underlag.',
         'luse.validation.underlag.date.missing': 'Du måste ange datum för underlaget.',
         'luse.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
@@ -78,6 +80,8 @@ var sjukersattningMessages = {
         'luse.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
 
         'luse.validation.medicinskaforutsattningarforarbete.missing': 'Patientens medicinska förutsättningar för arbete måste anges.',
+
+        'luse.validation.kontakt.incorrect_combination' : 'Anledning till kontakt kan endast fyllas i om \'kontakt med FK önskas\' är vald.',
 
         'luse.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
         'luse.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
