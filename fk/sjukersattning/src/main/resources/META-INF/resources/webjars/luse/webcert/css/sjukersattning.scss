@@ -36,25 +36,6 @@
    /* box-shadow: none;*/ /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
 }
 
-.dfr_1_3 {
-    transition:.3s ease-out all;
-}
-.dfr_1_3.ng-enter,
-.dfr_1_3.ng-leave.ng-leave-active {
-    margin-left: 20px;
-    opacity: 0;
-}
-.dfr_1_3.ng-enter.ng-enter-active,
-.dfr_1_3.ng-leave {
-    margin-top: 0px;
-    margin-left: 0px;
-    opacity: 1;
-}
-.dfr_1_3 .form-control,
-.dfr_1_3.form-inline .form-control {
-    width:100%;
-    max-width:340px;
-}
 .no-space-left {
     margin-left: 0;
     padding-left: 0;

@@ -30,7 +30,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
                 {
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text',
-                    className: 'dfr_1_3',
+                    className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
@@ -43,10 +43,13 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
             fieldGroup: [
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
-                    key: 'underlag', type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: {
-                    underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
-                    typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
-                },
+                    key: 'underlag', type: 'underlag',
+                    className: 'fold-animation',
+                    hideExpression: '!model.underlagFinns',
+                    templateOptions: {
+                        underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
+                        typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                    },
                     watcher: {
                         expression: 'model.underlagFinns',
                         listener: function(field, newValue, oldValue, scope, stopWatching) {
@@ -141,6 +144,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
+                    className: 'fold-animation',
                     hideExpression: '!model.kontaktMedFk',
                     templateOptions: {label: 'DFR_26.2'}
                 }
