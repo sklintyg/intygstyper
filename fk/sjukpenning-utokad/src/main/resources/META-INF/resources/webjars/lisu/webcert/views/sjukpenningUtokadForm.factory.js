@@ -1,4 +1,6 @@
-angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
+angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
+    ['common.DateUtilsService', 'common.ObjectHelper',
+    function(DateUtils, ObjectHelper) {
     'use strict';
 
     var categoryNames = [
@@ -98,8 +100,30 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                     }
                 },
                 {key: 'forsakringsmedicinsktBeslutsstod', type: 'multi-text', templateOptions: {label: 'DFR_37.1'}},
-                {key: 'arbetstidsforlaggning', type: 'boolean', templateOptions: {label: 'DFR_33.1'}},
-                {key: 'arbetstidsforlaggningMotivering', type: 'multi-text', templateOptions: {label: 'DFR_33.2'}},
+                {key: 'arbetstidsforlaggning', type: 'boolean',
+                    className: 'fold-animation',
+                    hideExpression: function($viewValue, $modelValue, scope) {
+
+                        var sjukskrivningar = scope.model.sjukskrivningar;
+
+                        var nedsatt75under = false;
+                        angular.forEach(sjukskrivningar, function(item, key) {
+                           if(!nedsatt75under && key > 1) {
+                               if(item.period && DateUtils.isDate(item.period.from) && DateUtils.isDate(item.period.tom)) {
+                                   nedsatt75under = true;
+                               }
+                           }
+                        });
+
+                        return !nedsatt75under;
+                    },
+                    templateOptions: {label: 'DFR_33.1'}},
+                {key: 'arbetstidsforlaggningMotivering', type: 'multi-text',
+                    className: 'fold-animation',
+                    hideExpression: function($viewValue, $modelValue, scope) {
+                        return scope.model.arbetstidsforlaggning !== true;
+                    },
+                    templateOptions: {label: 'DFR_33.2'}},
                 {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
                 {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
                 { key: 'prognos.typ', type: 'radio-group',
@@ -109,7 +133,12 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
                         choices: [1, 2, 3, 4]
                     }
                 },
-                {key: 'prognos.fortydligande', type: 'multi-text', templateOptions: {label: 'DFR_39.2'}}
+                {key: 'prognos.fortydligande', type: 'multi-text',
+                    className: 'fold-animation',
+                    hideExpression: function($viewValue, $modelValue, scope) {
+                        return !ObjectHelper.isDefined(scope.model.prognos) || scope.model.prognos.typ !== 4;
+                    },
+                    templateOptions: {label: 'DFR_39.2'}}
             ]
         },
         {
@@ -246,4 +275,4 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory', function() {
             return angular.copy(categoryNames);
         }
     };
-});
+}]);

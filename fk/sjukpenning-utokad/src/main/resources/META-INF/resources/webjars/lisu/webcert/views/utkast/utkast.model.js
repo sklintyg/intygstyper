@@ -50,7 +50,7 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 for(var i = 0; i < sjukskrivningArray.length; i++){
                     resultObject[sjukskrivningArray[i].sjukskrivningsgrad] = {
                         period: sjukskrivningArray[i].period
-                    }
+                    };
                 }
 
                 return resultObject;
@@ -63,7 +63,7 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 angular.forEach(sjukskrivningObject, function(value, key) {
                     if(!ObjectHelper.isEmpty(value.period.from) || !ObjectHelper.isEmpty(value.period.tom)) {
                         resultArray.push({
-                            sjukskrivningsgrad: parseInt(key),
+                            sjukskrivningsgrad: Number(key),
                             period: {
                                 from: value.period.from,
                                 tom: value.period.tom
