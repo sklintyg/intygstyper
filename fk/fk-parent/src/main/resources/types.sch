@@ -30,6 +30,7 @@
   <iso:pattern id="date-pattern">
     <iso:rule id="date" abstract="true">
       <iso:assert test=". castable as xs:date">Värdet måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(., '^\d{4}-\d\d-\d\d')">Datumet måste uttryckas som YYYY-MM-DD.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
@@ -37,7 +38,9 @@
     <iso:rule id="period" abstract="true">
       <iso:assert test="tp:datePeriod">En period måste inneslutas av ett 'datePeriod'-element</iso:assert>
       <iso:assert test="tp:datePeriod/tp:start castable as xs:date">'from' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(tp:datePeriod/tp:start, '^\d{4}-\d\d-\d\d')">'from' måste uttryckas som YYYY-MM-DD.</iso:assert>
       <iso:assert test="tp:datePeriod/tp:end castable as xs:date">'tom' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(tp:datePeriod/tp:end, '^\d{4}-\d\d-\d\d')">'end' måste uttryckas som YYYY-MM-DD.</iso:assert>
       <iso:assert test="normalize-space(tp:datePeriod/tp:start) le normalize-space(tp:datePeriod/tp:end)">
         'from' måste vara mindre än eller lika med 'to'
       </iso:assert>
