@@ -22,12 +22,12 @@
                         <div radio-view="field" field-model="viewState.intygModel"></div>
                       </div>
                       <div ng-switch-when="date">
-                        {{viewState.intygModel[field.key] | date: 'longDate'}}
+                        <span id="{{field.key}}">{{viewState.intygModel[field.key] | date: 'longDate'}}</span>
                       </div>
                       <div ng-switch-when="boolean">
                         <div ng-switch="viewState.intygModel[field.key]">
-                          <div ng-switch-when="true">Ja</div>
-                          <div ng-switch-when="false">Nej</div>
+                          <div id="{{field.key}}-Ja" ng-switch-when="true">Ja</div>
+                          <div id="{{field.key}}-Nej" ng-switch-when="false">Nej</div>
                         </div>
                       </div>
                       <div ng-switch-when="sjukskrivningar">
@@ -38,16 +38,16 @@
                           <div>
                             <label><span dynamic-label key="{{field.templateOptions.typLabel}}.RBK"></span></label>
                           </div>
-                          <span dynamic-label key="KV_FKMU_0005.{{underlag.typ}}.RBK"></span></label>
+                          <span id="{{field.key}}-{{$index}}-typ" dynamic-label key="KV_FKMU_0005.{{underlag.typ}}.RBK"></span>
                           <div>
                             <label><span dynamic-label key="{{field.templateOptions.datumLabel}}.RBK"></span></label>
                           </div>
-                          {{underlag.datum | date: 'longDate'}}
+                          <span id="{{field.key}}-{{$index}}-datum">{{underlag.datum | date: 'longDate'}}</span>
                           <div>
                             <label><span dynamic-label
                                          key="{{field.templateOptions.hamtasFranLabel}}.RBK"></span></label>
                           </div>
-                          {{underlag.hamtasFran}}
+                          <span id="{{field.key}}-{{$index}}-hamtasFran">{{underlag.hamtasFran}}</span>
                         </div>
                       </div>
                       <div ng-switch-when="diagnos">
@@ -56,18 +56,18 @@
                             <label><span dynamic-label
                                          key="{{field.templateOptions.diagnosKodLabel}}.RBK"></span></label>
                           </div>
-                          {{diagnos.diagnosKod}}
+                          <span id="{{field.key}}-{{$index}}-kod">{{diagnos.diagnosKod}}</span>
                           <div>
                             <label><span dynamic-label
                                          key="{{field.templateOptions.diagnosBeskrivningLabel}}.RBK"></span></label>
                           </div>
-                          {{diagnos.diagnosBeskrivning}}
+                          <span id="{{field.key}}-{{$index}}-beskrivning">{{diagnos.diagnosBeskrivning}}</span>
                         </div>
                       </div>
                       <div ng-switch-when="check-group">
                         <div data-ng-repeat="asa in viewState.intygModel[field.key]">
                           <ul>
-                            <li><span dynamic-label key="{{field.templateOptions.code}}.{{asa.val}}.RBK"></span></li>
+                            <li><span id="{{field.key}}-{{asa.val}}" dynamic-label key="{{field.templateOptions.code}}.{{asa.val}}.RBK"></span></li>
                           </ul>
                         </div>
                       </div>
@@ -84,7 +84,7 @@
                   <div>
                     <label><span dynamic-label key="DFR_{{tillaggsfraga.id}}.1.RBK"></span></label>
                   </div>
-                  {{tillaggsfraga.svar}}
+                  <span id="tillaggsfraga-{{tillaggsfraga.id}}">{{tillaggsfraga.svar}}</span>
                 </div>
               </div>
 
