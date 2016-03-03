@@ -45,9 +45,9 @@ angular.module('luse').service('sjukersattning.EditCertCtrl.ViewStateService',
                     { 'id': 7, label: dynamicLabelService.getProperty('KV_FKMU_0005.7.RBK')},
                     { 'id': 9, label: dynamicLabelService.getProperty('KV_FKMU_0005.9.RBK')},
                     { 'id': 10, label: dynamicLabelService.getProperty('KV_FKMU_0005.10.RBK')},
-                    { 'id': 11, label: dynamicLabelService.getProperty('KV_FKMU_0005.11.RBK')},
+                    { 'id': 11, label: dynamicLabelService.getProperty('KV_FKMU_0005.11.RBK')}
                 ];
-            }
+            };
 
             this.reset = function() {
                 CommonViewState.reset();

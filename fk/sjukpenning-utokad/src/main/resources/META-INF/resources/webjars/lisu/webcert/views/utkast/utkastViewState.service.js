@@ -12,7 +12,6 @@ angular.module('lisu').service('sjukpenning-utokad.EditCertCtrl.ViewStateService
             this.setDraftModel = function(draftModel){
                 this.draftModel = draftModel;
                 this.intygModel = draftModel.content;
-                this.underlagOptions = [];
             };
 
             this.inputLimits = {
@@ -29,25 +28,6 @@ angular.module('lisu').service('sjukpenning-utokad.EditCertCtrl.ViewStateService
                 pagaendeBehandling: 999,
                 planeradBehandling: 999
             };
-
-            this.underlagOptions = [];
-
-            this.updateUnderlagOptions = function() {
-
-                this.underlagOptions = [
-                    { 'id': null, label: 'Ange underlag eller utredning'},
-                    { 'id': 1, label: dynamicLabelService.getProperty('KV_FKMU_0005.1.RBK')},
-                    { 'id': 2, label: dynamicLabelService.getProperty('KV_FKMU_0005.2.RBK')},
-                    { 'id': 3, label: dynamicLabelService.getProperty('KV_FKMU_0005.3.RBK')},
-                    { 'id': 4, label: dynamicLabelService.getProperty('KV_FKMU_0005.4.RBK')},
-                    { 'id': 5, label: dynamicLabelService.getProperty('KV_FKMU_0005.5.RBK')},
-                    { 'id': 6, label: dynamicLabelService.getProperty('KV_FKMU_0005.6.RBK')},
-                    { 'id': 7, label: dynamicLabelService.getProperty('KV_FKMU_0005.7.RBK')},
-                    { 'id': 9, label: dynamicLabelService.getProperty('KV_FKMU_0005.9.RBK')},
-                    { 'id': 10, label: dynamicLabelService.getProperty('KV_FKMU_0005.10.RBK')},
-                    { 'id': 11, label: dynamicLabelService.getProperty('KV_FKMU_0005.11.RBK')},
-                ];
-            }
 
             this.reset = function() {
                 CommonViewState.reset();

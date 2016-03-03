@@ -1,4 +1,4 @@
-angular.module('luse').factory('sjukersattning.FormFactory', function() {
+angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryHelper', function(FactoryHelper) {
     'use strict';
 
     var categoryNames = [
@@ -32,7 +32,11 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
                     type: 'single-text',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
+                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true},
+                    watcher: {
+                        expression: 'model.annatGrundForMU',
+                        listener: FactoryHelper.annatGrundBeskrivningListener
+                    }
                 },
                 {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
             ]
@@ -52,15 +56,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
                     },
                     watcher: {
                         expression: 'model.underlagFinns',
-                        listener: function(field, newValue, oldValue, scope, stopWatching) {
-                            if (newValue) {
-                                if (!scope.model.underlag || scope.model.underlag.length === 0) {
-                                    scope.model.underlag.push({ typ: null, datum: null, hamtasFran: null });
-                                }
-                            } else {
-                                scope.model.underlag = [];
-                            }
-                        }
+                        listener: FactoryHelper.underlagListener
                     }
                 }
             ]
@@ -146,7 +142,11 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
                     type: 'multi-text',
                     className: 'fold-animation',
                     hideExpression: '!model.kontaktMedFk',
-                    templateOptions: {label: 'DFR_26.2'}
+                    templateOptions: {label: 'DFR_26.2'},
+                    watcher: {
+                        expression: 'model.kontaktMedFk',
+                        listener: FactoryHelper.anledningKontaktListener
+                    }
                 }
             ]
         },
@@ -187,4 +187,4 @@ angular.module('luse').factory('sjukersattning.FormFactory', function() {
             return angular.copy(categoryNames);
         }
     };
-});
+}]);
