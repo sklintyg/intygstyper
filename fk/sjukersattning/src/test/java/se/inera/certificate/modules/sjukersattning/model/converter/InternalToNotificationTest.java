@@ -80,6 +80,10 @@ public class InternalToNotificationTest {
         Vardenhet vardenhet = new Vardenhet();
         vardenhet.setEnhetsid(enhetsId);
         vardenhet.setEnhetsnamn(enhetsnamn);
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid("vardgivarid");
+        vardgivare.setVardgivarnamn("vardgivarnamn");
+        vardenhet.setVardgivare(vardgivare);
         skapadAv.setVardenhet(vardenhet);
         skapadAv.setFullstandigtNamn(skapadAvFullstandigtNamn);
         skapadAv.setPersonId(skapadAvPersonId);
