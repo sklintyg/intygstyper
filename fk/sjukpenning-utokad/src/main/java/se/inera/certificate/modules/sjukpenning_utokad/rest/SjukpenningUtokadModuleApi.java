@@ -35,9 +35,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToTransport;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.TransportToInternal;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.*;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
@@ -101,6 +99,9 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     private RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
 
+    @Autowired
+    private InternalToNotification internalToNotification;
+
     /**
      * {@inheritDoc}
      */
@@ -152,7 +153,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     @Override
     public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        throw new UnsupportedOperationException("Unsupported for this module");
+        return internalToNotification.createCertificateStatusUpdateForCareType(notificationMessage);
     }
 
     @Override
