@@ -35,6 +35,7 @@ var sjukpenningUtokadMessages = {
         'lisu.label.vardenhet': 'Vårdenhetens adress',
 
         'lisu.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
+        'lisu.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
         'lisu.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
         'lisu.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
         'lisu.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om lisu. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',

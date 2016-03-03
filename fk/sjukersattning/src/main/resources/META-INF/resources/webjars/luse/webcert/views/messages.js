@@ -40,6 +40,7 @@ var sjukersattningMessages = {
         'luse.label.datum': 'Datum',
         'luse.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         'luse.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
+        'luse.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
 
         //Validation messages
         'luse.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
