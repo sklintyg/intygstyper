@@ -92,7 +92,7 @@ import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.certificate.modules.sjukersattning.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.Tillaggsfraga;
 import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;

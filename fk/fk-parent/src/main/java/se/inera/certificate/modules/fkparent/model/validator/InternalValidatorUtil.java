@@ -35,52 +35,51 @@ import java.util.List;
 public final class InternalValidatorUtil {
 
     @Autowired(required = false)
-    private static WebcertModuleService moduleService;
+    private WebcertModuleService moduleService;
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorUtil.class);
 
     private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
     private static final int MIN_SIZE_DIAGNOS = 3;
 
-    private InternalValidatorUtil() {
-    }
-
-    public static void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
+    public void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
         if (diagnoser.size() == 0) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     intygsTyp + ".validation.diagnos.missing");
         }
-        for (Diagnos diagnos : diagnoser) {
+
+        for (int i = 0; i < diagnoser.size(); i++) {
+            Diagnos diagnos = diagnoser.get(i);
 
             /* R8 För delfråga 6.2 ska diagnoskod anges med så många positioner som möjligt, men minst tre positioner (t.ex. F32).
                R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        intygsTyp + ".validation.diagnos.missing");
+                        intygsTyp + ".validation.diagnos" + i + ".missing");
             } else {
                 String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
                 if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
                         && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
                     addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            intygsTyp + ".validation.diagnos.psykisk.length-4");
+                            intygsTyp + ".validation.diagnos" + i + ".psykisk.length-4");
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
                     addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            intygsTyp + ".validation.diagnos.length-3");
+                            intygsTyp + ".validation.diagnos" + i + ".length-3");
                 } else {
                     validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                            intygsTyp + ".validation.diagnos.invalid", validationMessages);
+                            intygsTyp + ".validation.diagnos" + i + ".invalid", validationMessages);
                 }
             }
             if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
                 addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        intygsTyp + ".validation.diagnos.description.missing");
+                        intygsTyp + ".validation.diagnos" + i + ".description.missing");
             }
         }
     }
 
-    public static void validateDiagnosKod(String diagnosKod, String kodsystem, String field, String msgKey, List<ValidationMessage> validationMessages) {
+    public void validateDiagnosKod(String diagnosKod, String kodsystem, String field, String msgKey, List<ValidationMessage> validationMessages) {
         // if moduleService is not available, skip this validation
         if (moduleService == null) {
             LOG.warn("Forced to skip validation of diagnosKod since an implementation of ModuleService is not available");
@@ -103,7 +102,7 @@ public final class InternalValidatorUtil {
      * @param msg
      *            a String with an error code for the front end implementation
      */
-    public static void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
+    public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
         validationMessages.add(new ValidationMessage(field, type, msg));
         LOG.debug(field + " " + msg);
     }

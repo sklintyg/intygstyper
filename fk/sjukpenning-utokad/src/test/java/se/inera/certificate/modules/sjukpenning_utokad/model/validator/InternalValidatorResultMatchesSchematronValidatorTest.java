@@ -27,6 +27,7 @@ import com.google.common.base.Charsets;
 import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
+import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.model.utils.Scenario;
@@ -97,7 +98,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     private static void doInternalAndSchematronValidation(Scenario scenario, boolean fail) throws Exception {
         SjukpenningUtokadUtlatande utlatandeFromJson = scenario.asInternalModel();
 
-        InternalDraftValidator internalValidator = new InternalDraftValidator();
+        InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
 
         RegisterCertificateType intyg = scenario.asTransportModel();

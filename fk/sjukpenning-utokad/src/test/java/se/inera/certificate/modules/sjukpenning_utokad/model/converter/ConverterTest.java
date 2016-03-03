@@ -32,6 +32,7 @@ import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
+import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
@@ -40,7 +41,7 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 
-@ContextConfiguration(locations = ("/module-config.xml"))
+@ContextConfiguration(locations = {"/module-config.xml", "/test-config.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ConverterTest {
 
@@ -87,7 +88,7 @@ public class ConverterTest {
         assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
 
         // Why not validate internal model as well?
-        InternalDraftValidator internalValidator = new InternalDraftValidator();
+        InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
         internalValidator.validateDraft(utlatandeFromJson);
     }
 

@@ -22,6 +22,7 @@ package se.inera.certificate.modules.sjukersattning.validator;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -29,11 +30,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.modules.sjukersattning.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
@@ -44,13 +44,18 @@ public class InternalDraftValidator {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
-    @Autowired(required = false)
-    private WebcertModuleService moduleService;
-
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
-    private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
-    private static final int MIN_SIZE_DIAGNOS = 3;
+    @Autowired
+    InternalValidatorUtil validatorUtil;
+
+    public InternalDraftValidator() {
+    }
+
+    @VisibleForTesting
+    public InternalDraftValidator(InternalValidatorUtil validatorUtil) {
+        this.validatorUtil = validatorUtil;
+    }
 
     public ValidateDraftResponse validateDraft(SjukersattningUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
@@ -62,7 +67,7 @@ public class InternalDraftValidator {
         // Kategori 3 – Sjukdomsförlopp
         validateSjukdomsforlopp(utlatande, validationMessages);
         // Kategori 4 – Diagnos
-        validateDiagnose(utlatande, validationMessages);
+        validatorUtil.validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
         // Diagnosgrund
         validateDiagnosgrund(utlatande, validationMessages);
         // Kategori 5 – Funktionsnedsättning
@@ -242,42 +247,6 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateDiagnose(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
-
-        if (utlatande.getDiagnoser().size() == 0) {
-            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                    "luse.validation.diagnos.missing");
-        }
-        for (Diagnos diagnos : utlatande.getDiagnoser()) {
-
-            /* R8 För delfråga 6.2 ska diagnoskod anges med så många positioner som möjligt, men minst tre positioner (t.ex. F32).
-               R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
-               Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
-            if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "luse.validation.diagnos.missing");
-            } else {
-                String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
-                if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
-                        && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            "luse.validation.diagnos.psykisk.length-4");
-                } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            "luse.validation.diagnos.length-3");
-                } else {
-                    validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                            "luse.validation.diagnos.invalid", validationMessages);
-                }
-            }
-            if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        "luse.validation.diagnos.description.missing");
-            }
-        }
-
-    }
-
     private void validateDiagnosgrund(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         if (StringUtils.isBlank(utlatande.getDiagnosgrund())) {
@@ -289,19 +258,6 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     "luse.validation.nybedomningdiagnosgrund.missing");
         }
-    }
-
-    private void validateDiagnosKod(String diagnosKod, String kodsystem, String field, String msgKey, List<ValidationMessage> validationMessages) {
-        // if moduleService is not available, skip this validation
-        if (moduleService == null) {
-            LOG.warn("Forced to skip validation of diagnosKod since an implementation of ModuleService is not available");
-            return;
-        }
-
-        if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
-            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
-        }
-
     }
 
     private void validateKontaktMedFk(SjukersattningUtlatande utlatande, List<ValidationMessage> validationMessages) {

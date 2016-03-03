@@ -21,6 +21,7 @@ package se.inera.certificate.modules.sjukersattning.model.internal;
 
 import javax.annotation.Nullable;
 
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -32,4 +32,9 @@
         <bean id="register-fk-stub" class="se.inera.certificate.modules.fkparent.integration.stub.RegisterCertificateResponderStub" />
         <jaxws:endpoint address="/register-certificate-stub-fk-parent" implementor="#register-fk-stub" />
     </beans>
+
+    <beans>
+        <bean class="se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil"></bean>
+    </beans>
+
 </beans>
