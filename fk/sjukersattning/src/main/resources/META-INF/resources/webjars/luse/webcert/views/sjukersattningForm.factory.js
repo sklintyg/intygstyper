@@ -21,8 +21,12 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_1', level: '4'}},
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', level: '4'}},
-                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2'}},
+                {
+                    type: 'headline',
+                    className: 'col-md-6 no-space-left',
+                    templateOptions: {label: 'DFR_1.1', level: '4'}
+                },
+                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.2'}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.4'}},
@@ -40,10 +44,54 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 },
                 {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
             ]
+        }, {
+            wrapper: 'wc-field',
+            templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'prototype0'},
+            fieldGroup: [
+                {type: 'headline', templateOptions: {label: 'FRG_1', level: '5'}},
+                {
+                    type: 'headline',
+                    className: 'col-md-6 no-space-left',
+                    templateOptions: {label: 'DFR_1.1', level: '4'}
+                },
+                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.2'}},
+                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
+                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
+                {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.4'}},
+                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
+                {
+                    key: 'annatGrundForMUBeskrivning',
+                    type: 'single-text',
+                    className: 'dfr_1_3',
+                    hideExpression: '!model.annatGrundForMU',
+                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
+                },
+                //{key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
+                {key: 'underlagFinns', className: 'question-divider', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
+                {
+                    key: 'underlag', type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: {
+                    underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
+                    typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                },
+                    watcher: {
+                        expression: 'model.underlagFinns',
+                        listener: function(field, newValue, oldValue, scope, stopWatching) {
+                            if (newValue) {
+                                if (!scope.model.underlag || scope.model.underlag.length === 0) {
+                                    scope.model.underlag.push({typ: null, datum: null, hamtasFran: null});
+                                }
+                            } else {
+                                scope.model.underlag = [];
+                            }
+                        }
+                    }
+                },
+                {key: 'kannedomOmPatient', className: 'question-divider', type: 'date', templateOptions: {label: 'DFR_2.1'}}
+            ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 2, categoryName: categoryNames[2]},
+            templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
             fieldGroup: [
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
@@ -93,6 +141,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 {
                     key: 'funktionsnedsattningBalansKoordination',
                     type: 'multi-text',
+                    className:'funktionsnedsattning',
                     templateOptions: {label: 'DFR_13.1'}
                 },
                 {key: 'funktionsnedsattningAnnan', type: 'multi-text', templateOptions: {label: 'DFR_14.1'}}
@@ -114,7 +163,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 {key: 'avslutadBehandling', type: 'multi-text', templateOptions: {label: 'DFR_18.1'}},
                 {key: 'pagaendeBehandling', type: 'multi-text', templateOptions: {label: 'DFR_19.1'}},
                 {key: 'planeradBehandling', type: 'multi-text', templateOptions: {label: 'DFR_20.1'}},
-                {key: 'substansintag', type: 'multi-text', templateOptions: {label: 'DFR_21.1'}}
+                {key: 'substansintag', type: 'multi-text',  templateOptions: {label: 'DFR_21.1'}}
             ]
         },
         {
@@ -129,7 +178,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
             wrapper: 'wc-field',
             templateOptions: {category: 9, categoryName: categoryNames[9]},
             fieldGroup: [
-                {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
+                {key: 'ovrigt', type: 'multi-text'}
             ]
         },
         {

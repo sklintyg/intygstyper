@@ -1,3 +1,4 @@
+
 .soclink {
     background-image: url(../img/ss16.png);
     background-repeat: no-repeat;
@@ -15,6 +16,22 @@
     white-space: pre-line;
 }
 
+
+.formly-field {
+    h4 {
+        font-weight: bold;
+    }
+
+    h4.instruction {
+        font-weight: normal;
+        font-style: italic;
+    }
+}
+
+
+
+
+
 .deleteUnderlag {
     cursor:pointer;
 }
@@ -25,6 +42,10 @@
 
 .underlagRow > td, .underlagRow > th {
     padding: 2px 5px;
+}
+
+.indent-underlag {
+    padding-left: 1em;
 }
 
 /* When focused and when active is added from checkbox, add highlighted style */
@@ -39,6 +60,21 @@
 .no-space-left {
     margin-left: 0;
     padding-left: 0;
+}
+
+.diagnos-question-divider {
+    border-top: 1px solid #ccc;
+    margin-top: 15px;
+    padding-top: 15px;
+}
+
+.funktionsnedsattning, .behandling {
+    padding-bottom: 20px;
+}
+
+.question-divider {
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
 }
 
 input.ng-invalid-date {
