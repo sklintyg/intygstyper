@@ -99,6 +99,10 @@ public final class CertificateStateHolderConverter {
                 part.setCode("TRANSP");
                 part.setDisplayName("Transportstyrelsen");
                 break;
+            case "HV":
+                part.setCode("HSVARD");
+                part.setDisplayName("Hälso- och sjukvården");
+                break;
             default:
                 throw new IllegalArgumentException(target);
         }
