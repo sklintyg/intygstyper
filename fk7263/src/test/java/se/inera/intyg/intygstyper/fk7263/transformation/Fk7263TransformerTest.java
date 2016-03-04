@@ -16,7 +16,6 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.helger.schematron.svrl.SVRLHelper;
-import com.helger.schematron.svrl.SVRLWriter;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 
 import java.util.Arrays;
@@ -62,8 +61,7 @@ public class Fk7263TransformerTest {
         sjukpenningUtokatOutputSchema = schemaValidatorBuilder.build(rootSource);
     }
 
-    //TODO: ÅTERINFÖR TESTET NÄR XSLTRANSFORMERING FUNGERAR
-//    @Test
+    @Test
     public void testTransformation() throws Exception {
 
         List<String> testFiles = Arrays.asList("fk7263.xml", "fk7263_utanvardkontakt.xml", "fk7263_utanreferens.xml",
@@ -80,7 +78,6 @@ public class Fk7263TransformerTest {
             }
 
             String result = transformer.transform(xmlContentsInput);
-System.out.println(result);
             if (!validateIntygstjansterOutputXSD(result)) {
                 fail();
             }
@@ -98,8 +95,6 @@ System.out.println(result);
         }
         SchematronOutputType result = schematronResource
                 .applySchematronValidationToSVRL((new StreamSource(new ByteArrayInputStream(xml.getBytes(Charsets.UTF_8)))));
-
-        System.out.println(SVRLWriter.createXMLString(result));
 
         return SVRLHelper.getAllFailedAssertions(result).size() == 0;
     }

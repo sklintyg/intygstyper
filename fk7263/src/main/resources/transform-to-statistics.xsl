@@ -19,10 +19,6 @@
 
 	<xsl:output method="xml" indent="yes" />
 
-
-
-
-
 	<xsl:template match="ns0:RegisterMedicalCertificate">
 		<p1:RegisterCertificate>
 			<p1:intyg>
@@ -71,6 +67,9 @@
 						<xsl:value-of
 							select="substring-after(ns0:lakarutlatande/ns5:patient/ns3:fullstandigtNamn,' ')" />
 					</p2:efternamn>
+                    <p2:postadress>.</p2:postadress>
+                    <p2:postnummer>.</p2:postnummer>
+                    <p2:postort>.</p2:postort>
 				</p2:patient>
 				<p2:skapadAv>
 					<p2:personal-id>
