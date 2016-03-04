@@ -141,7 +141,6 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 {
                     key: 'funktionsnedsattningBalansKoordination',
                     type: 'multi-text',
-                    className:'funktionsnedsattning',
                     templateOptions: {label: 'DFR_13.1'}
                 },
                 {key: 'funktionsnedsattningAnnan', type: 'multi-text', templateOptions: {label: 'DFR_14.1'}}
