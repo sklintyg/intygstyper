@@ -228,7 +228,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 9, categoryName: categoryNames[9]},
             fieldGroup: [
-                {key: 'kontaktMedFk', type: 'boolean', templateOptions: {label: 'DFR_26.1'}},
+                {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
