@@ -19,59 +19,8 @@
 
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_DATUM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+
 import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
 import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
 
@@ -172,73 +121,73 @@ public final class TransportToInternal {
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
-            case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1:
                 handleGrundForMedicinsktUnderlag(utlatande, svar);
                 break;
-            case KANNEDOM_SVAR_ID:
+            case KANNEDOM_SVAR_ID_2:
                 handleKannedom(utlatande, svar);
                 break;
-            case UNDERLAGFINNS_SVAR_ID:
+            case UNDERLAGFINNS_SVAR_ID_3:
                 handleUnderlagFinns(utlatande, svar);
                 break;
-            case UNDERLAG_SVAR_ID:
+            case UNDERLAG_SVAR_ID_4:
                 handleUnderlag(underlag, svar);
                 break;
-            case SJUKDOMSFORLOPP_SVAR_ID:
+            case SJUKDOMSFORLOPP_SVAR_ID_5:
                 handleSjukdomsForlopp(utlatande, svar);
                 break;
-            case DIAGNOS_SVAR_ID:
+            case DIAGNOS_SVAR_ID_6:
                 handleDiagnos(diagnoser, svar);
                 break;
-            case DIAGNOSGRUND_SVAR_ID:
+            case DIAGNOSGRUND_SVAR_ID_7:
                 handleDiagnosgrund(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8:
                 handleFunktionsNedsattningIntellektuell(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID_9:
                 handleFunktionsNedsattningKommunikation(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID_10:
                 handleFunktionsNedsattningKoncentration(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11:
                 handleFunktionsNedsattningPsykisk(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID_12:
                 handleFunktionsNedsattningSynHorselTal(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID_13:
                 handleFunktionsNedsattningBalansKoordination(utlatande, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID_14:
                 handleFunktionsNedsattningAnnan(utlatande, svar);
                 break;
-            case AKTIVITETSBEGRANSNING_SVAR_ID:
+            case AKTIVITETSBEGRANSNING_SVAR_ID_17:
                 handleAktivitetsbegransning(utlatande, svar);
                 break;
-            case AVSLUTADBEHANDLING_SVAR_ID:
+            case AVSLUTADBEHANDLING_SVAR_ID_18:
                 handleAvslutadBehandling(utlatande, svar);
                 break;
-            case PAGAENDEBEHANDLING_SVAR_ID:
+            case PAGAENDEBEHANDLING_SVAR_ID_19:
                 handlePagaendeBehandling(utlatande, svar);
                 break;
-            case PLANERADBEHANDLING_SVAR_ID:
+            case PLANERADBEHANDLING_SVAR_ID_20:
                 handlePlaneradBehandling(utlatande, svar);
                 break;
-            case SUBSTANSINTAG_SVAR_ID:
+            case SUBSTANSINTAG_SVAR_ID_21:
                 handleSubstansintag(utlatande, svar);
                 break;
-            case MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID:
+            case MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22:
                 handleMedicinskaForutsattningarForArbete(utlatande, svar);
                 break;
-            case AKTIVITETSFORMAGA_SVAR_ID:
+            case AKTIVITETSFORMAGA_SVAR_ID_23:
                 handleAktivitetsformaga(utlatande, svar);
                 break;
-            case OVRIGT_SVAR_ID:
+            case OVRIGT_SVAR_ID_25:
                 handleOvrigt(utlatande, svar);
                 break;
-            case KONTAKT_ONSKAS_SVAR_ID:
+            case KONTAKT_ONSKAS_SVAR_ID_26:
                 handleOnskarKontakt(utlatande, svar);
                 break;
             default:
@@ -259,14 +208,14 @@ public final class TransportToInternal {
         ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.UNKNOWN;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1:
                 grundForMedicinsktUnderlagDatum = new InternalDate(getStringContent(delsvar));
                 break;
-            case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1:
                 String referensTypString = getCVSvarContent(delsvar).getCode();
                 grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
                 break;
-            case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1:
                 utlatande.setAnnatGrundForMUBeskrivning(getStringContent(delsvar));
                 break;
             default:
@@ -295,7 +244,7 @@ public final class TransportToInternal {
     private static void handleKannedom(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case KANNEDOM_DELSVAR_ID:
+        case KANNEDOM_DELSVAR_ID_2:
             utlatande.setKannedomOmPatient(new InternalDate(getStringContent(delsvar)));
             break;
         default:
@@ -306,7 +255,7 @@ public final class TransportToInternal {
     private static void handleUnderlagFinns(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-                case UNDERLAGFINNS_DELSVAR_ID:
+                case UNDERLAGFINNS_DELSVAR_ID_3:
                     utlatande.setUnderlagFinns(Boolean.valueOf(getStringContent(delsvar)));
                     break;
                 default:
@@ -321,14 +270,14 @@ public final class TransportToInternal {
         String hamtasFran = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case UNDERLAG_TYP_DELSVAR_ID:
+            case UNDERLAG_TYP_DELSVAR_ID_4:
                 CVType typ = getCVSvarContent(delsvar);
                 underlagsTyp = Underlag.UnderlagsTyp.fromId(Integer.parseInt(typ.getCode()));
                 break;
-            case UNDERLAG_DATUM_DELSVAR_ID:
+            case UNDERLAG_DATUM_DELSVAR_ID_4:
                 date = new InternalDate(getStringContent(delsvar));
                 break;
-            case UNDERLAG_HAMTAS_FRAN_DELSVAR_ID:
+            case UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4:
                 hamtasFran = getStringContent(delsvar);
                 break;
             default:
@@ -341,7 +290,7 @@ public final class TransportToInternal {
     private static void handleSjukdomsForlopp(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case SJUKDOMSFORLOPP_DELSVAR_ID:
+            case SJUKDOMSFORLOPP_DELSVAR_ID_5:
                 utlatande.setSjukdomsforlopp(getStringContent(delsvar));
                 break;
             default:
@@ -355,12 +304,12 @@ public final class TransportToInternal {
         String diagnosBeskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case DIAGNOS_DELSVAR_ID:
+            case DIAGNOS_DELSVAR_ID_6:
                 CVType diagnos = getCVSvarContent(delsvar);
                 diagnosKod = diagnos.getCode();
                 diagnosKodSystem = diagnos.getCodeSystem();
                 break;
-            case DIAGNOS_BESKRIVNING_DELSVAR_ID:
+            case DIAGNOS_BESKRIVNING_DELSVAR_ID_6:
                 diagnosBeskrivning = getStringContent(delsvar);
                 break;
             default:
@@ -374,10 +323,10 @@ public final class TransportToInternal {
     private static void handleDiagnosgrund(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-                case DIAGNOSGRUND_DELSVAR_ID:
+                case DIAGNOSGRUND_DELSVAR_ID_7:
                     utlatande.setDiagnosgrund(getStringContent(delsvar));
                     break;
-                case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID:
+                case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7:
                     utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getStringContent(delsvar)));
                     break;
                 default:
@@ -389,7 +338,7 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningIntellektuell(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8:
                 utlatande.setFunktionsnedsattningIntellektuell(getStringContent(delsvar));
                 break;
             default:
@@ -400,7 +349,7 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningKommunikation(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID_9:
                 utlatande.setFunktionsnedsattningKommunikation(getStringContent(delsvar));
                 break;
             default:
@@ -411,7 +360,7 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningKoncentration(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID_10:
                 utlatande.setFunktionsnedsattningKoncentration(getStringContent(delsvar));
                 break;
             default:
@@ -422,7 +371,7 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningPsykisk(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID_11:
                 utlatande.setFunktionsnedsattningPsykisk(getStringContent(delsvar));
                 break;
             default:
@@ -433,7 +382,7 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningSynHorselTal(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID_12:
                 utlatande.setFunktionsnedsattningSynHorselTal(getStringContent(delsvar));
                 break;
             default:
@@ -444,7 +393,7 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningBalansKoordination(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13:
                 utlatande.setFunktionsnedsattningBalansKoordination(getStringContent(delsvar));
                 break;
             default:
@@ -455,7 +404,7 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningAnnan(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14:
                 utlatande.setFunktionsnedsattningAnnan(getStringContent(delsvar));
                 break;
             default:
@@ -466,7 +415,7 @@ public final class TransportToInternal {
     private static void handleAktivitetsbegransning(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case AKTIVITETSBEGRANSNING_DELSVAR_ID:
+        case AKTIVITETSBEGRANSNING_DELSVAR_ID_17:
             utlatande.setAktivitetsbegransning(getStringContent(delsvar));
             break;
         default:
@@ -477,7 +426,7 @@ public final class TransportToInternal {
     private static void handlePagaendeBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case PAGAENDEBEHANDLING_DELSVAR_ID:
+        case PAGAENDEBEHANDLING_DELSVAR_ID_19:
             utlatande.setPagaendeBehandling(getStringContent(delsvar));
             break;
         default:
@@ -488,7 +437,7 @@ public final class TransportToInternal {
     private static void handleAvslutadBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case AVSLUTADBEHANDLING_DELSVAR_ID:
+        case AVSLUTADBEHANDLING_DELSVAR_ID_18:
             utlatande.setAvslutadBehandling(getStringContent(delsvar));
             break;
         default:
@@ -499,7 +448,7 @@ public final class TransportToInternal {
     private static void handlePlaneradBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case PLANERADBEHANDLING_DELSVAR_ID:
+        case PLANERADBEHANDLING_DELSVAR_ID_20:
             utlatande.setPlaneradBehandling(getStringContent(delsvar));
             break;
         default:
@@ -510,7 +459,7 @@ public final class TransportToInternal {
     private static void handleSubstansintag(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case SUBSTANSINTAG_DELSVAR_ID:
+            case SUBSTANSINTAG_DELSVAR_ID_21:
                 utlatande.setSubstansintag(getStringContent(delsvar));
                 break;
             default:
@@ -521,7 +470,7 @@ public final class TransportToInternal {
     private static void handleMedicinskaForutsattningarForArbete(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID:
+            case MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22:
                 utlatande.setMedicinskaForutsattningarForArbete(getStringContent(delsvar));
                 break;
             default:
@@ -532,7 +481,7 @@ public final class TransportToInternal {
     private static void handleAktivitetsformaga(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case AKTIVITETSFORMAGA_DELSVAR_ID:
+        case AKTIVITETSFORMAGA_DELSVAR_ID_23:
             utlatande.setAktivitetsFormaga(getStringContent(delsvar));
             break;
         default:
@@ -543,7 +492,7 @@ public final class TransportToInternal {
     private static void handleOvrigt(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case OVRIGT_DELSVAR_ID:
+        case OVRIGT_DELSVAR_ID_25:
             utlatande.setOvrigt(getStringContent(delsvar));
             return;
         default:
@@ -554,10 +503,10 @@ public final class TransportToInternal {
     private static void handleOnskarKontakt(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case KONTAKT_ONSKAS_DELSVAR_ID:
+            case KONTAKT_ONSKAS_DELSVAR_ID_26:
                 utlatande.setKontaktMedFk(Boolean.valueOf(getStringContent(delsvar)));
                 break;
-            case ANLEDNING_TILL_KONTAKT_DELSVAR_ID:
+            case ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26:
                 utlatande.setAnledningTillKontakt(getStringContent(delsvar));
                 break;
             default:

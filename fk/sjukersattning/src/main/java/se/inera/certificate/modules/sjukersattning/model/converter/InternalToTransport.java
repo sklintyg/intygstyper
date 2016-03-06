@@ -37,5 +37,4 @@ public final class InternalToTransport {
         sjukersattningType.setIntyg(UtlatandeToIntyg.convert(source));
         return sjukersattningType;
     }
-
 }
