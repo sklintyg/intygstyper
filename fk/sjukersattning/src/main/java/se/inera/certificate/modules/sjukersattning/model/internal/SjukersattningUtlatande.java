@@ -160,7 +160,7 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
     // Fråga 23.1
     @Nullable
-    public abstract String getAktivitetsFormaga();
+    public abstract String getFormagaTrotsBegransning();
 
     // Kategori 9 - Övrigt
     // Fråga 25
@@ -290,7 +290,7 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         public abstract Builder setMedicinskaForutsattningarForArbete(String medicinskaForutsattningarForArbete);
 
         @JsonProperty(AKTIVITETSFORMAGA_SVAR_JSON_ID_23)
-        public abstract Builder setAktivitetsFormaga(String aktivitetsFormaga);
+        public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
 
         @JsonProperty(OVRIGT_SVAR_JSON_ID_25)
         public abstract Builder setOvrigt(String ovrigt);
