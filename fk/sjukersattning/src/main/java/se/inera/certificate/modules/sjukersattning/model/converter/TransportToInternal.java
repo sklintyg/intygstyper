@@ -482,7 +482,7 @@ public final class TransportToInternal {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
         case AKTIVITETSFORMAGA_DELSVAR_ID_23:
-            utlatande.setAktivitetsFormaga(getStringContent(delsvar));
+            utlatande.setFormagaTrotsBegransning(getStringContent(delsvar));
             break;
         default:
             throw new IllegalArgumentException();

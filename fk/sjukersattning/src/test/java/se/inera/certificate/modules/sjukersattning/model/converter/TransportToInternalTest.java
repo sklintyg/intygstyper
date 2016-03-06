@@ -87,7 +87,7 @@ public class TransportToInternalTest {
         utlatande.setAvslutadBehandling("Gammal medicin");
         utlatande.setPlaneradBehandling("Mer medicin");
         utlatande.setMedicinskaForutsattningarForArbete("Svårt");
-        utlatande.setAktivitetsFormaga("Dansa");
+        utlatande.setFormagaTrotsBegransning("Dansa");
         utlatande.setOvrigt("Trevlig kille");
         utlatande.setKontaktMedFk(true);
         utlatande.setAnledningTillKontakt("Känner mig ensam");
