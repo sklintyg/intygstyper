@@ -31,6 +31,7 @@ import com.google.common.collect.ImmutableList;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
 
 import java.util.List;
 
@@ -194,37 +195,37 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
         public abstract SjukersattningUtlatande build();
 
-        @JsonProperty("id")
+        @JsonProperty(ID_JSON_ID)
         public abstract Builder setId(String id);
 
-        @JsonProperty("grundData")
+        @JsonProperty(GRUNDDATA_SVAR_JSON_ID)
         public abstract Builder setGrundData(GrundData grundData);
 
-        @JsonProperty("textVersion")
+        @JsonProperty(TEXTVERSION_JSON_ID)
         public abstract Builder setTextVersion(String textVersion);
 
-        @JsonProperty("undersokningAvPatienten")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1)
         public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);
 
-        @JsonProperty("journaluppgifter")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1)
         public abstract Builder setJournaluppgifter(InternalDate journaluppgifter);
 
-        @JsonProperty("anhorigsBeskrivningAvPatienten")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1)
         public abstract Builder setAnhorigsBeskrivningAvPatienten(InternalDate anhorigsBeskrivningAvPatienten);
 
-        @JsonProperty("annatGrundForMU")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1)
         public abstract Builder setAnnatGrundForMU(InternalDate annatGrundForMU);
 
-        @JsonProperty("annatGrundForMUBeskrivning")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_BESKRIVNING_DELSVAR_JSON_ID_1)
         public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
 
-        @JsonProperty("kannedomOmPatient")
+        @JsonProperty(KANNEDOM_SVAR_JSON_ID_2)
         public abstract Builder setKannedomOmPatient(InternalDate kannedomOmPatient);
 
-        @JsonProperty("underlagFinns")
+        @JsonProperty(UNDERLAGFINNS_SVAR_JSON_ID_3)
         public abstract Builder setUnderlagFinns(Boolean underlagFinns);
 
-        @JsonProperty("underlag")
+        @JsonProperty(UNDERLAG_SVAR_JSON_ID_4)
         public Builder setUnderlag(List<Underlag> underlag) {
             return setUnderlag(ImmutableList.copyOf(underlag));
         }
@@ -232,10 +233,10 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         /* package private */
         abstract Builder setUnderlag(ImmutableList<Underlag> underlag);
 
-        @JsonProperty("sjukdomsforlopp")
+        @JsonProperty(SJUKDOMSFORLOPP_SVAR_JSON_ID_5)
         public abstract Builder setSjukdomsforlopp(String sjukdomsforlopp);
 
-        @JsonProperty("diagnoser")
+        @JsonProperty(DIAGNOS_SVAR_JSON_ID_6)
         public Builder setDiagnoser(List<Diagnos> diagnoser) {
             return setDiagnoser(ImmutableList.copyOf(diagnoser));
         }
@@ -243,64 +244,64 @@ public abstract class SjukersattningUtlatande implements Utlatande {
         /* package private */
         abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
 
-        @JsonProperty("diagnosgrund")
+        @JsonProperty(DIAGNOSGRUND_SVAR_JSON_ID_7)
         public abstract Builder setDiagnosgrund(String diagnosgrund);
 
-        @JsonProperty("nyBedomningDiagnosgrund")
+        @JsonProperty(DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7)
         public abstract Builder setNyBedomningDiagnosgrund(Boolean nyBedomningDiagnosgrund);
 
-        @JsonProperty("funktionsnedsattningIntellektuell")
+        @JsonProperty(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_JSON_ID_8)
         public abstract Builder setFunktionsnedsattningIntellektuell(String funktionsnedsattningIntellektuell);
 
-        @JsonProperty("funktionsnedsattningKommunikation")
+        @JsonProperty(FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_JSON_ID_9)
         public abstract Builder setFunktionsnedsattningKommunikation(String funktionsnedsattningKommunikation);
 
-        @JsonProperty("funktionsnedsattningKoncentration")
+        @JsonProperty(FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_JSON_ID_10)
         public abstract Builder setFunktionsnedsattningKoncentration(String funktionsnedsattningKoncentration);
 
-        @JsonProperty("funktionsnedsattningPsykisk")
+        @JsonProperty(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_JSON_ID_11)
         public abstract Builder setFunktionsnedsattningPsykisk(String funktionsnedsattningPsykisk);
 
-        @JsonProperty("funktionsnedsattningSynHorselTal")
+        @JsonProperty(FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_JSON_ID_12)
         public abstract Builder setFunktionsnedsattningSynHorselTal(String funktionsnedsattningSynHorselTal);
 
-        @JsonProperty("funktionsnedsattningBalansKoordination")
+        @JsonProperty(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_JSON_ID_13)
         public abstract Builder setFunktionsnedsattningBalansKoordination(String funktionsnedsattningBalansKoordination);
 
-        @JsonProperty("funktionsnedsattningAnnan")
+        @JsonProperty(FUNKTIONSNEDSATTNING_ANNAN_SVAR_JSON_ID_14)
         public abstract Builder setFunktionsnedsattningAnnan(String funktionsnedsattningAnnan);
 
-        @JsonProperty("aktivitetsbegransning")
+        @JsonProperty(AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17)
         public abstract Builder setAktivitetsbegransning(String aktivitetsbegransning);
 
-        @JsonProperty("pagaendeBehandling")
+        @JsonProperty(PAGAENDEBEHANDLING_SVAR_JSON_ID_19)
         public abstract Builder setPagaendeBehandling(String pagaendeBehandling);
 
-        @JsonProperty("avslutadBehandling")
+        @JsonProperty(AVSLUTADBEHANDLING_SVAR_JSON_ID_18)
         public abstract Builder setAvslutadBehandling(String avslutadBehandling);
 
-        @JsonProperty("planeradBehandling")
+        @JsonProperty(PLANERADBEHANDLING_SVAR_JSON_ID_20)
         public abstract Builder setPlaneradBehandling(String planeradBehandling);
 
-        @JsonProperty("substansintag")
+        @JsonProperty(SUBSTANSINTAG_SVAR_JSON_ID_21)
         public abstract Builder setSubstansintag(String substansintag);
 
-        @JsonProperty("medicinskaForutsattningarForArbete")
+        @JsonProperty(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22)
         public abstract Builder setMedicinskaForutsattningarForArbete(String medicinskaForutsattningarForArbete);
 
-        @JsonProperty("aktivitetsFormaga")
+        @JsonProperty(AKTIVITETSFORMAGA_SVAR_JSON_ID_23)
         public abstract Builder setAktivitetsFormaga(String aktivitetsFormaga);
 
-        @JsonProperty("ovrigt")
+        @JsonProperty(OVRIGT_SVAR_JSON_ID_25)
         public abstract Builder setOvrigt(String ovrigt);
 
-        @JsonProperty("kontaktMedFk")
+        @JsonProperty(KONTAKT_ONSKAS_SVAR_JSON_ID_26)
         public abstract Builder setKontaktMedFk(Boolean kontaktMedFk);
 
-        @JsonProperty("anledningTillKontakt")
+        @JsonProperty(ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26)
         public abstract Builder setAnledningTillKontakt(String anledningTillKontakt);
 
-        @JsonProperty("tillaggsfragor")
+        @JsonProperty(TILLAGGSFRAGOR_SVAR_JSON_ID)
         public Builder setTillaggsfragor(List<Tillaggsfraga> tillaggsfragor) {
             return setTillaggsfragor(ImmutableList.copyOf(tillaggsfragor));
         }

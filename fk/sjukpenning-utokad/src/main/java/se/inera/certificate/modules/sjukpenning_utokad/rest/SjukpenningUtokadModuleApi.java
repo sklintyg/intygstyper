@@ -22,6 +22,7 @@ package se.inera.certificate.modules.sjukpenning_utokad.rest;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXB;
 
@@ -331,5 +332,10 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     @Override
     public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
         return XmlValidator.validate(validator, inputXml);
+    }
+
+    @Override
+    public Map<String, Object> getModuleSpecificArendeParameters(Utlatande utlatande) {
+        return TransportToArendeApi.getModuleSpecificArendeParameters(utlatande);
     }
 }
