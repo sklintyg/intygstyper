@@ -280,13 +280,8 @@ public final class InternalToTransport {
         svars.add(aSvar(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22).
                 withDelsvar(MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22, source.getMedicinskaForutsattningarForArbete()).build());
 
-<<<<<<< 7f8d5f129c55bd98c321b0364b7a358dafb0cccd
-        if (!StringUtils.isBlank(source.getAktivitetsFormaga())) {
-            svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID_23).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID_23, source.getAktivitetsFormaga()).build());
-=======
-        if (source.getFormagaTrotsBegransning() != null) {
+        if (!StringUtils.isBlank(source.getFormagaTrotsBegransning())) {
             svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID_23).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID_23, source.getFormagaTrotsBegransning()).build());
->>>>>>> INTYG-1967: Refactoring and module specific parts of conversion to arende moved here.
         }
 
         if (!StringUtils.isBlank(source.getOvrigt())) {
