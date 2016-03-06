@@ -19,51 +19,51 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_OM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_BESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_FORTYDLIGANDE_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_SVAR_ID;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID_17;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID_17;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID_30;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID_30;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_OM_DELSVAR_ID_34;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_SVAR_ID_34;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_SVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DELSVAR_ID_35;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SVAR_ID_35;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_DELSVAR_ID_29;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_SVAR_ID_29;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID_19;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID_19;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID_20;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID_20;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_BESKRIVNING_DELSVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_SVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_DELSVAR_ID_28;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_SVAR_ID_28;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,58 +177,58 @@ public final class TransportToInternal {
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
-            case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1:
                 handleGrundForMedicinsktUnderlag(utlatande, svar);
                 break;
-            case TYP_AV_SYSSELSATTNING_SVAR_ID:
+            case TYP_AV_SYSSELSATTNING_SVAR_ID_28:
                 handleSysselsattning(utlatande, svar);
                 break;
-            case NUVARANDE_ARBETE_SVAR_ID:
+            case NUVARANDE_ARBETE_SVAR_ID_29:
                 handleNuvarandeArbete(utlatande, svar);
                 break;
-            case ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID:
+            case ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID_30:
                 handleArbetsmarknadspolitisktProgram(utlatande, svar);
                 break;
-            case DIAGNOS_SVAR_ID:
+            case DIAGNOS_SVAR_ID_6:
                 handleDiagnos(diagnoser, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_SVAR_ID:
+            case FUNKTIONSNEDSATTNING_SVAR_ID_35:
                 handleFunktionsnedsattning(utlatande, svar);
                 break;
-            case AKTIVITETSBEGRANSNING_SVAR_ID:
+            case AKTIVITETSBEGRANSNING_SVAR_ID_17:
                 handleAktivitetsbegransning(utlatande, svar);
                 break;
-            case PAGAENDEBEHANDLING_SVAR_ID:
+            case PAGAENDEBEHANDLING_SVAR_ID_19:
                 handlePagaendeBehandling(utlatande, svar);
                 break;
-            case PLANERADBEHANDLING_SVAR_ID:
+            case PLANERADBEHANDLING_SVAR_ID_20:
                 handlePlaneradBehandling(utlatande, svar);
                 break;
-            case BEHOV_AV_SJUKSKRIVNING_SVAR_ID:
+            case BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32:
                 handleBehovAvSjukskrivning(sjukskrivningar, svar);
                 break;
-            case FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID:
+            case FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37:
                 handleForsakringsmedicinsktBeslutsstod(utlatande, svar);
                 break;
-            case ARBETSTIDSFORLAGGNING_SVAR_ID:
+            case ARBETSTIDSFORLAGGNING_SVAR_ID_33:
                 handleArbetstidsforlaggning(utlatande, svar);
                 break;
-            case ARBETSRESOR_SVAR_ID:
+            case ARBETSRESOR_SVAR_ID_34:
                 handleArbetsresor(utlatande, svar);
                 break;
-            case AKTIVITETSFORMAGA_SVAR_ID:
+            case AKTIVITETSFORMAGA_SVAR_ID_23:
                 handleFormagaTrotsBegransning(utlatande, svar);
                 break;
-            case PROGNOS_SVAR_ID:
+            case PROGNOS_SVAR_ID_39:
                 handlePrognos(utlatande, svar);
                 break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID:
+            case ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40:
                 handleArbetslivsinriktadeAtgarder(utlatande, svar);
                 break;
-            case OVRIGT_SVAR_ID:
+            case OVRIGT_SVAR_ID_25:
                 handleOvrigt(utlatande, svar);
                 break;
-            case KONTAKT_ONSKAS_SVAR_ID:
+            case KONTAKT_ONSKAS_SVAR_ID_26:
                 handleOnskarKontakt(utlatande, svar);
                 break;
             default:
@@ -249,15 +249,15 @@ public final class TransportToInternal {
 
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID:
+            case ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40:
                 String arbetslivsinriktadeAtgarderValKod = getCVSvarContent(delsvar).getCode();
                 arbetslivsinriktadeAtgarder.add(ArbetslivsinriktadeAtgarder
                         .create(ArbetslivsinriktadeAtgarderVal.fromId(Integer.parseInt(arbetslivsinriktadeAtgarderValKod))));
                 break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID:
+            case ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40:
                 utlatande.setArbetslivsinriktadeAtgarderAktuelltBeskrivning(getStringContent(delsvar));
                 break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID:
+            case ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40:
                 utlatande.setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning(getStringContent(delsvar));
                 break;
             default:
@@ -272,10 +272,10 @@ public final class TransportToInternal {
         String fortydligande = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case PROGNOS_BESKRIVNING_DELSVAR_ID:
+            case PROGNOS_BESKRIVNING_DELSVAR_ID_39:
                 prognosKod = getCVSvarContent(delsvar).getCode();
                 break;
-            case PROGNOS_FORTYDLIGANDE_DELSVAR_ID:
+            case PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39:
                 fortydligande = getStringContent(delsvar);
                 break;
             default:
@@ -290,7 +290,7 @@ public final class TransportToInternal {
     private static void handleFormagaTrotsBegransning(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case AKTIVITETSFORMAGA_DELSVAR_ID:
+            case AKTIVITETSFORMAGA_DELSVAR_ID_23:
                 utlatande.setFormagaTrotsBegransning(getStringContent(delsvar));
                 break;
             default:
@@ -302,7 +302,7 @@ public final class TransportToInternal {
     private static void handleArbetsresor(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case ARBETSRESOR_OM_DELSVAR_ID:
+            case ARBETSRESOR_OM_DELSVAR_ID_34:
                 utlatande.setArbetsresor(Boolean.valueOf(getStringContent(delsvar)));
                 break;
             default:
@@ -314,10 +314,10 @@ public final class TransportToInternal {
     private static void handleArbetstidsforlaggning(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID:
+            case ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID_33:
                 utlatande.setArbetstidsforlaggning(Boolean.valueOf(getStringContent(delsvar)));
                 break;
-            case ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID:
+            case ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID_33:
                 utlatande.setArbetstidsforlaggningMotivering(getStringContent(delsvar));
                 break;
             default:
@@ -329,7 +329,7 @@ public final class TransportToInternal {
     private static void handleForsakringsmedicinsktBeslutsstod(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID:
+            case FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37:
                 utlatande.setForsakringsmedicinsktBeslutsstod(getStringContent(delsvar));
                 break;
             default:
@@ -343,10 +343,10 @@ public final class TransportToInternal {
         InternalLocalDateInterval period = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID:
+            case BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32:
                 sjukskrivningsnivaString = getCVSvarContent(delsvar).getCode();
                 break;
-            case BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID:
+            case BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32:
                 DatePeriodType datePeriod = getDatePeriodTypeContent(delsvar);
                 period = new InternalLocalDateInterval(datePeriod.getStart().toString(), datePeriod.getEnd().toString());
                 break;
@@ -362,7 +362,7 @@ public final class TransportToInternal {
     private static void handleFunktionsnedsattning(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_DELSVAR_ID:
+            case FUNKTIONSNEDSATTNING_DELSVAR_ID_35:
                 utlatande.setFunktionsnedsattning(getStringContent(delsvar));
                 break;
             default:
@@ -375,7 +375,7 @@ public final class TransportToInternal {
     private static void handleArbetsmarknadspolitisktProgram(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID:
+            case ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID_30:
                 utlatande.setArbetsmarknadspolitisktProgram(getStringContent(delsvar));
                 break;
             default:
@@ -387,7 +387,7 @@ public final class TransportToInternal {
     private static void handleNuvarandeArbete(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case NUVARANDE_ARBETE_DELSVAR_ID:
+            case NUVARANDE_ARBETE_DELSVAR_ID_29:
                 utlatande.setNuvarandeArbete(getStringContent(delsvar));
                 break;
             default:
@@ -399,7 +399,7 @@ public final class TransportToInternal {
     private static void handleSysselsattning(Builder utlatande, Svar svar) throws ConverterException {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case TYP_AV_SYSSELSATTNING_DELSVAR_ID:
+            case TYP_AV_SYSSELSATTNING_DELSVAR_ID_28:
                 String sysselsattningsTypString = getCVSvarContent(delsvar).getCode();
                 utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.fromId(Integer.parseInt(sysselsattningsTypString))));
                 break;
@@ -414,14 +414,14 @@ public final class TransportToInternal {
         ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.UNKNOWN;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1:
                 grundForMedicinsktUnderlagDatum = new InternalDate(getStringContent(delsvar));
                 break;
-            case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1:
                 String referensTypString = getCVSvarContent(delsvar).getCode();
                 grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
                 break;
-            case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID:
+            case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1:
                 utlatande.setAnnatGrundForMUBeskrivning(getStringContent(delsvar));
                 break;
             default:
@@ -453,12 +453,12 @@ public final class TransportToInternal {
         String diagnosBeskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case DIAGNOS_DELSVAR_ID:
+            case DIAGNOS_DELSVAR_ID_6:
                 CVType diagnos = getCVSvarContent(delsvar);
                 diagnosKod = diagnos.getCode();
                 diagnosKodSystem = diagnos.getCodeSystem();
                 break;
-            case DIAGNOS_BESKRIVNING_DELSVAR_ID:
+            case DIAGNOS_BESKRIVNING_DELSVAR_ID_6:
                 diagnosBeskrivning = getStringContent(delsvar);
                 break;
             default:
@@ -472,7 +472,7 @@ public final class TransportToInternal {
     private static void handleAktivitetsbegransning(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case AKTIVITETSBEGRANSNING_DELSVAR_ID:
+        case AKTIVITETSBEGRANSNING_DELSVAR_ID_17:
             utlatande.setAktivitetsbegransning(getStringContent(delsvar));
             break;
         default:
@@ -483,7 +483,7 @@ public final class TransportToInternal {
     private static void handlePagaendeBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case PAGAENDEBEHANDLING_DELSVAR_ID:
+        case PAGAENDEBEHANDLING_DELSVAR_ID_19:
             utlatande.setPagaendeBehandling(getStringContent(delsvar));
             break;
         default:
@@ -494,7 +494,7 @@ public final class TransportToInternal {
     private static void handlePlaneradBehandling(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case PLANERADBEHANDLING_DELSVAR_ID:
+        case PLANERADBEHANDLING_DELSVAR_ID_20:
             utlatande.setPlaneradBehandling(getStringContent(delsvar));
             break;
         default:
@@ -505,7 +505,7 @@ public final class TransportToInternal {
     private static void handleOvrigt(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case OVRIGT_DELSVAR_ID:
+        case OVRIGT_DELSVAR_ID_25:
             utlatande.setOvrigt(getStringContent(delsvar));
             break;
         default:
@@ -516,10 +516,10 @@ public final class TransportToInternal {
     private static void handleOnskarKontakt(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case KONTAKT_ONSKAS_DELSVAR_ID:
+            case KONTAKT_ONSKAS_DELSVAR_ID_26:
                 utlatande.setKontaktMedFk(Boolean.valueOf(getStringContent(delsvar)));
                 break;
-            case ANLEDNING_TILL_KONTAKT_DELSVAR_ID:
+            case ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26:
                 utlatande.setAnledningTillKontakt(getStringContent(delsvar));
                 break;
             default:

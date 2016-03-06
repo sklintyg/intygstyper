@@ -19,70 +19,7 @@
 
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANHORIGSBESKRIVNING;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANNAT;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSPLATSKOD_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEFATTNING_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.CERTIFICATE_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.HSA_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.JOURNALUPPGIFTER;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PERSON_ID_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_DATUM_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERSOKNING_AV_PATIENT;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,131 +171,131 @@ public final class InternalToTransport {
         List<Svar> svars = new ArrayList<>();
 
         if (source.getUndersokningAvPatienten() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT))).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getUndersokningAvPatienten().asLocalDate().toString()).build());
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getUndersokningAvPatienten().asLocalDate().toString()).build());
         }
         if (source.getJournaluppgifter() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER))).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getJournaluppgifter().asLocalDate().toString()).build());
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
         if (source.getAnhorigsBeskrivningAvPatienten() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANHORIGSBESKRIVNING))).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getAnhorigsBeskrivningAvPatienten().asLocalDate().toString()).build());
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANHORIGSBESKRIVNING))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnhorigsBeskrivningAvPatienten().asLocalDate().toString()).build());
         }
         if (source.getAnnatGrundForMU() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT))).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID, source.getAnnatGrundForMU().asLocalDate().toString()).
-                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID, source.getAnnatGrundForMUBeskrivning()).build());
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1, aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT))).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnnatGrundForMU().asLocalDate().toString()).
+                    withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1, source.getAnnatGrundForMUBeskrivning()).build());
         }
 
         if (source.getKannedomOmPatient() != null) {
-            svars.add(aSvar(KANNEDOM_SVAR_ID).
-                    withDelsvar(KANNEDOM_DELSVAR_ID, source.getKannedomOmPatient().asLocalDate().toString()).build());
+            svars.add(aSvar(KANNEDOM_SVAR_ID_2).
+                    withDelsvar(KANNEDOM_DELSVAR_ID_2, source.getKannedomOmPatient().asLocalDate().toString()).build());
         }
 
-        svars.add(aSvar(UNDERLAGFINNS_SVAR_ID).
-                withDelsvar(UNDERLAGFINNS_DELSVAR_ID, source.getUnderlagFinns().toString()).build());
+        svars.add(aSvar(UNDERLAGFINNS_SVAR_ID_3).
+                withDelsvar(UNDERLAGFINNS_DELSVAR_ID_3, source.getUnderlagFinns().toString()).build());
 
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
-                    aSvar(UNDERLAG_SVAR_ID).withDelsvar(UNDERLAG_TYP_DELSVAR_ID,
+                    aSvar(UNDERLAG_SVAR_ID_4).withDelsvar(UNDERLAG_TYP_DELSVAR_ID_4,
                             aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()))).
-                            withDelsvar(UNDERLAG_DATUM_DELSVAR_ID,
+                            withDelsvar(UNDERLAG_DATUM_DELSVAR_ID_4,
                                     underlag.getDatum() != null ? underlag.getDatum().asLocalDate().toString() : null).
-                            withDelsvar(UNDERLAG_HAMTAS_FRAN_DELSVAR_ID, underlag.getHamtasFran()).build());
+                            withDelsvar(UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4, underlag.getHamtasFran()).build());
         }
 
-        svars.add(aSvar(SJUKDOMSFORLOPP_SVAR_ID).
-                withDelsvar(SJUKDOMSFORLOPP_DELSVAR_ID, source.getSjukdomsforlopp()).build());
+        svars.add(aSvar(SJUKDOMSFORLOPP_SVAR_ID_5).
+                withDelsvar(SJUKDOMSFORLOPP_DELSVAR_ID_5, source.getSjukdomsforlopp()).build());
 
         for (int i = 0; i < source.getDiagnoser().size(); i++) {
             Diagnos diagnos = source.getDiagnoser().get(i);
             Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-            svars.add(aSvar(DIAGNOS_SVAR_ID).
-                    withDelsvar(DIAGNOS_DELSVAR_ID, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod())).
-                    withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID, diagnos.getDiagnosBeskrivning()).build());
+            svars.add(aSvar(DIAGNOS_SVAR_ID_6).
+                    withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod())).
+                    withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
         }
 
-        svars.add(aSvar(DIAGNOSGRUND_SVAR_ID).
-                withDelsvar(DIAGNOSGRUND_DELSVAR_ID, source.getDiagnosgrund()).
-                withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID, source.getNyBedomningDiagnosgrund().toString()).build());
+        svars.add(aSvar(DIAGNOSGRUND_SVAR_ID_7).
+                withDelsvar(DIAGNOSGRUND_DELSVAR_ID_7, source.getDiagnosgrund()).
+                withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7, source.getNyBedomningDiagnosgrund().toString()).build());
 
         if (!StringUtils.isBlank(source.getFunktionsnedsattningIntellektuell())) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID, source.getFunktionsnedsattningIntellektuell()).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8).
+                    withDelsvar(FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8, source.getFunktionsnedsattningIntellektuell()).build());
         }
 
         if (!StringUtils.isBlank(source.getFunktionsnedsattningKommunikation())) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID, source.getFunktionsnedsattningKommunikation()).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID_9).
+                    withDelsvar(FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID_9, source.getFunktionsnedsattningKommunikation()).build());
         }
 
         if (!StringUtils.isBlank(source.getFunktionsnedsattningKoncentration())) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID, source.getFunktionsnedsattningKoncentration()).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID_10).
+                    withDelsvar(FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID_10, source.getFunktionsnedsattningKoncentration()).build());
         }
 
         if (!StringUtils.isBlank(source.getFunktionsnedsattningPsykisk())) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID, source.getFunktionsnedsattningPsykisk()).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11).
+                    withDelsvar(FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID_11, source.getFunktionsnedsattningPsykisk()).build());
         }
 
         if (!StringUtils.isBlank(source.getFunktionsnedsattningSynHorselTal())) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID, source.getFunktionsnedsattningSynHorselTal()).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID_12).
+                    withDelsvar(FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID_12, source.getFunktionsnedsattningSynHorselTal()).build());
         }
 
         if (!StringUtils.isBlank(source.getFunktionsnedsattningBalansKoordination())) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID, source.getFunktionsnedsattningBalansKoordination()).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID_13).
+                    withDelsvar(FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13, source.getFunktionsnedsattningBalansKoordination()).build());
         }
 
         if (!StringUtils.isBlank(source.getFunktionsnedsattningAnnan())) {
-            svars.add(aSvar(FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID).
-                    withDelsvar(FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID, source.getFunktionsnedsattningAnnan()).build());
+            svars.add(aSvar(FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID_14).
+                    withDelsvar(FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14, source.getFunktionsnedsattningAnnan()).build());
         }
 
-        svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID, source.getAktivitetsbegransning()).build());
+        svars.add(aSvar(AKTIVITETSBEGRANSNING_SVAR_ID_17).withDelsvar(AKTIVITETSBEGRANSNING_DELSVAR_ID_17, source.getAktivitetsbegransning()).build());
 
         if (!StringUtils.isBlank(source.getAvslutadBehandling())) {
-            svars.add(aSvar(AVSLUTADBEHANDLING_SVAR_ID).withDelsvar(AVSLUTADBEHANDLING_DELSVAR_ID, source.getAvslutadBehandling()).build());
+            svars.add(aSvar(AVSLUTADBEHANDLING_SVAR_ID_18).withDelsvar(AVSLUTADBEHANDLING_DELSVAR_ID_18, source.getAvslutadBehandling()).build());
         }
 
         if (!StringUtils.isBlank(source.getPagaendeBehandling())) {
-            svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID, source.getPagaendeBehandling()).build());
+            svars.add(aSvar(PAGAENDEBEHANDLING_SVAR_ID_19).withDelsvar(PAGAENDEBEHANDLING_DELSVAR_ID_19, source.getPagaendeBehandling()).build());
         }
 
         if (!StringUtils.isBlank(source.getPlaneradBehandling())) {
-            svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID, source.getPlaneradBehandling()).build());
+            svars.add(aSvar(PLANERADBEHANDLING_SVAR_ID_20).withDelsvar(PLANERADBEHANDLING_DELSVAR_ID_20, source.getPlaneradBehandling()).build());
         }
 
         if (!StringUtils.isBlank(source.getSubstansintag())) {
-            svars.add(aSvar(SUBSTANSINTAG_SVAR_ID).withDelsvar(SUBSTANSINTAG_DELSVAR_ID, source.getSubstansintag()).build());
+            svars.add(aSvar(SUBSTANSINTAG_SVAR_ID_21).withDelsvar(SUBSTANSINTAG_DELSVAR_ID_21, source.getSubstansintag()).build());
         }
 
-        svars.add(aSvar(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID).
-                withDelsvar(MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID, source.getMedicinskaForutsattningarForArbete()).build());
+        svars.add(aSvar(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22).
+                withDelsvar(MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22, source.getMedicinskaForutsattningarForArbete()).build());
 
         if (!StringUtils.isBlank(source.getAktivitetsFormaga())) {
-            svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID, source.getAktivitetsFormaga()).build());
+            svars.add(aSvar(AKTIVITETSFORMAGA_SVAR_ID_23).withDelsvar(AKTIVITETSFORMAGA_DELSVAR_ID_23, source.getAktivitetsFormaga()).build());
         }
 
         if (!StringUtils.isBlank(source.getOvrigt())) {
-            svars.add(aSvar(OVRIGT_SVAR_ID).withDelsvar(OVRIGT_DELSVAR_ID, source.getOvrigt()).build());
+            svars.add(aSvar(OVRIGT_SVAR_ID_25).withDelsvar(OVRIGT_DELSVAR_ID_25, source.getOvrigt()).build());
         }
 
         if (source.getKontaktMedFk() != null) {
             if (source.getKontaktMedFk() && !StringUtils.isBlank(source.getAnledningTillKontakt())) {
-                svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).
-                        withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString()).
-                        withDelsvar(ANLEDNING_TILL_KONTAKT_DELSVAR_ID, source.getAnledningTillKontakt()).build());
+                svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID_26).
+                        withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID_26, source.getKontaktMedFk().toString()).
+                        withDelsvar(ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26, source.getAnledningTillKontakt()).build());
             } else {
-                svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID).
-                        withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID, source.getKontaktMedFk().toString()).build());
+                svars.add(aSvar(KONTAKT_ONSKAS_SVAR_ID_26).
+                        withDelsvar(KONTAKT_ONSKAS_DELSVAR_ID_26, source.getKontaktMedFk().toString()).build());
             }
         }
 

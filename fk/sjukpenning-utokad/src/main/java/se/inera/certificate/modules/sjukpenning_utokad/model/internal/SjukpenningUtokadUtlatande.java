@@ -19,6 +19,8 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.model.internal;
 
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -34,7 +36,6 @@ import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokad
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
-
 @AutoValue
 @JsonDeserialize(builder = AutoValue_SjukpenningUtokadUtlatande.Builder.class)
 public abstract class SjukpenningUtokadUtlatande implements Utlatande, SitUtlatande {
@@ -199,40 +200,40 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande, SitUtlata
 
         public abstract SjukpenningUtokadUtlatande build();
 
-        @JsonProperty("id")
+        @JsonProperty(ID_JSON_ID)
         public abstract Builder setId(String id);
 
-        @JsonProperty("grundData")
+        @JsonProperty(GRUNDDATA_SVAR_JSON_ID)
         public abstract Builder setGrundData(GrundData grundData);
 
-        @JsonProperty("textVersion")
+        @JsonProperty(TEXTVERSION_JSON_ID)
         public abstract Builder setTextVersion(String textVersion);
 
-        @JsonProperty("undersokningAvPatienten")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1)
         public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);
 
-        @JsonProperty("telefonkontaktMedPatienten")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1)
         public abstract Builder setTelefonkontaktMedPatienten(InternalDate telefonkontaktMedPatienten);
 
-        @JsonProperty("journaluppgifter")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1)
         public abstract Builder setJournaluppgifter(InternalDate journaluppgifter);
 
-        @JsonProperty("annatGrundForMU")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1)
         public abstract Builder setAnnatGrundForMU(InternalDate annatGrundForMU);
 
-        @JsonProperty("annatGrundForMUBeskrivning")
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_BESKRIVNING_DELSVAR_JSON_ID_1)
         public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
 
-        @JsonProperty("sysselsattning")
+        @JsonProperty(TYP_AV_SYSSELSATTNING_SVAR_JSON_ID_28)
         public abstract Builder setSysselsattning(Sysselsattning sysselsattning);
 
-        @JsonProperty("nuvarandeArbete")
+        @JsonProperty(NUVARANDE_ARBETE_SVAR_JSON_ID_29)
         public abstract Builder setNuvarandeArbete(String nuvarandeArbete);
 
-        @JsonProperty("arbetsmarknadspolitisktProgram")
+        @JsonProperty(ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_JSON_ID_30)
         public abstract Builder setArbetsmarknadspolitisktProgram(String arbetsmarknadspolitisktProgram);
 
-        @JsonProperty("diagnoser")
+        @JsonProperty(DIAGNOS_SVAR_JSON_ID_6)
         public Builder setDiagnoser(List<Diagnos> diagnoser) {
             return setDiagnoser(ImmutableList.copyOf(diagnoser));
         }
@@ -240,44 +241,44 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande, SitUtlata
         /* package private */
         abstract Builder setDiagnoser(ImmutableList<Diagnos> diagnoser);
 
-        @JsonProperty("funktionsnedsattning")
+        @JsonProperty(FUNKTIONSNEDSATTNING_SVAR_JSON_ID_35)
         public abstract Builder setFunktionsnedsattning(String funktionsnedsattning);
 
-        @JsonProperty("aktivitetsbegransning")
+        @JsonProperty(AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17)
         public abstract Builder setAktivitetsbegransning(String aktivitetsbegransning);
 
-        @JsonProperty("pagaendeBehandling")
+        @JsonProperty(PAGAENDEBEHANDLING_SVAR_JSON_ID_19)
         public abstract Builder setPagaendeBehandling(String pagaendeBehandling);
 
-        @JsonProperty("planeradBehandling")
+        @JsonProperty(PLANERADBEHANDLING_SVAR_JSON_ID_20)
         public abstract Builder setPlaneradBehandling(String planeradBehandling);
 
-        @JsonProperty("sjukskrivningar")
+        @JsonProperty(BEHOV_AV_SJUKSKRIVNING_SVAR_JSON_ID_32)
         public Builder setSjukskrivningar(List<Sjukskrivning> sjukskrivningar) {
             return setSjukskrivningar(ImmutableList.copyOf(sjukskrivningar));
         }
         /* package private */
         abstract Builder setSjukskrivningar(ImmutableList<Sjukskrivning> sjukskrivningar);
 
-        @JsonProperty("forsakringsmedicinsktBeslutsstod")
+        @JsonProperty(FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_JSON_ID_37)
         public abstract Builder setForsakringsmedicinsktBeslutsstod(String forskningsmedicinsktBeslutsstod);
 
-        @JsonProperty("arbetstidsforlaggning")
+        @JsonProperty(ARBETSTIDSFORLAGGNING_SVAR_JSON_ID_33)
         public abstract Builder setArbetstidsforlaggning(Boolean arbetstidsforlaggning);
 
-        @JsonProperty("arbetstidsforlaggningMotivering")
+        @JsonProperty(ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_JSON_ID_33)
         public abstract Builder setArbetstidsforlaggningMotivering(String arbetstidsforlaggningMotivering);
 
-        @JsonProperty("arbetsresor")
+        @JsonProperty(ARBETSRESOR_SVAR_JSON_ID_34)
         public abstract Builder setArbetsresor(Boolean arbetsresor);
 
-        @JsonProperty("formagaTrotsBegransning")
+        @JsonProperty(AKTIVITETSFORMAGA_SVAR_JSON_ID_23)
         public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
 
-        @JsonProperty("prognos")
+        @JsonProperty(PROGNOS_SVAR_JSON_ID_39)
         public abstract Builder setPrognos(Prognos prognos);
 
-        @JsonProperty("arbetslivsinriktadeAtgarder")
+        @JsonProperty(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_JSON_ID_40)
         public Builder setArbetslivsinriktadeAtgarder(List<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder) {
             return setArbetslivsinriktadeAtgarder(ImmutableList.copyOf(arbetslivsinriktadeAtgarder));
         }
@@ -285,22 +286,22 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande, SitUtlata
         /* package private*/
         abstract Builder setArbetslivsinriktadeAtgarder(ImmutableList<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder);
 
-        @JsonProperty("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
+        @JsonProperty(ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40)
         public abstract Builder setArbetslivsinriktadeAtgarderAktuelltBeskrivning(String arbetslivsinriktadeAtgarderAktuelltBeskrivning);
 
-        @JsonProperty("arbetslivsinriktadeAtgarderEjAktuelltBeskrivning")
+        @JsonProperty(ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40)
         public abstract Builder setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning(String arbetslivsinriktadeAtgarderEjAktuelltBeskrivning);
 
-        @JsonProperty("ovrigt")
+        @JsonProperty(OVRIGT_SVAR_JSON_ID_25)
         public abstract Builder setOvrigt(String ovrigt);
 
-        @JsonProperty("kontaktMedFk")
+        @JsonProperty(KONTAKT_ONSKAS_SVAR_JSON_ID_26)
         public abstract Builder setKontaktMedFk(Boolean kontaktMedFk);
 
-        @JsonProperty("anledningTillKontakt")
+        @JsonProperty(ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26)
         public abstract Builder setAnledningTillKontakt(String anledningTillKontakt);
 
-        @JsonProperty("tillaggsfragor")
+        @JsonProperty(TILLAGGSFRAGOR_SVAR_JSON_ID)
         public Builder setTillaggsfragor(List<Tillaggsfraga> tillaggsfragor) {
             return setTillaggsfragor(ImmutableList.copyOf(tillaggsfragor));
         }

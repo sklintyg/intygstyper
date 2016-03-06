@@ -25,6 +25,7 @@ import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXB;
 import javax.xml.ws.soap.SOAPFaultException;
@@ -482,6 +483,11 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Override
     public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<String, Object> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) {
         throw new UnsupportedOperationException();
     }
 

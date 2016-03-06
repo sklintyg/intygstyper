@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
@@ -352,9 +353,14 @@ public class SjukersattningModuleApi implements ModuleApi {
     public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws Exception {
         return TransportToInternal.convert(intyg);
     }
-
+    
     @Override
     public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
         return XmlValidator.validate(validator, inputXml);
+    }
+
+    @Override
+    public Map<String, Object> getModuleSpecificArendeParameters(Utlatande utlatande) {
+        return TransportToArendeApi.getModuleSpecificArendeParameters(utlatande);
     }
 }
