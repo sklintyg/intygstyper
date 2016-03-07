@@ -34,7 +34,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.certificate.modules.sjukersattning.rest;
+package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
 
@@ -46,7 +46,10 @@ import java.util.Map;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
-public class TransportToArendeApi {
+public final class TransportToArendeApi {
+
+    private TransportToArendeApi() {
+    }
 
     public static Map<String, Object> getModuleSpecificArendeParameters(Utlatande utlatande) {
         List<String> filledPositions = new ArrayList<String>();

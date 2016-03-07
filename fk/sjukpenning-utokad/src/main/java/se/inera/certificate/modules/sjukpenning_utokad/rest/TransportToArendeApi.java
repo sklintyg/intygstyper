@@ -27,7 +27,10 @@ import java.util.Map;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
-public class TransportToArendeApi {
+public final class TransportToArendeApi {
+
+    private TransportToArendeApi() {
+    }
 
     public static Map<String, Object> getModuleSpecificArendeParameters(Utlatande utlatande) {
         List<String> filledPositions = new ArrayList<>();
