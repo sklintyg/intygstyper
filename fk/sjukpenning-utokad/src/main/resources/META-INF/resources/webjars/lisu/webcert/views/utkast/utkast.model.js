@@ -17,35 +17,32 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
 
             var sjukskrivningFromTransform = function(sjukskrivningArray) {
 
-                /*if (sjukskrivningArray.length < 4) {
-
-                    for(var i = 1; i <= 4; i++){
-
-                        if(i > sjukskrivningArray.length - 1)
-                        {
-                            sjukskrivningArray.push({
-                                sjukskrivningsgrad: i,
-                                period : {
-                                    from: '',
-                                    tom: ''
-                                }
-                            });
+                var resultObject = {
+                    1: {
+                        period: {
+                            from: '',
+                            tom: ''
                         }
-                        else if(sjukskrivningArray[i - 1].sjukskrivningsgrad != i){
-                            sjukskrivningArray.splice(i, 0, {
-                                sjukskrivningsgrad: i,
-                                period : {
-                                    from: '',
-                                    tom: ''
-                                }
-                            });
+                    },
+                    2: {
+                        period: {
+                            from: '',
+                            tom: ''
                         }
-
+                    },
+                    3: {
+                        period: {
+                            from: '',
+                            tom: ''
+                        }
+                    },
+                    4: {
+                        period: {
+                            from: '',
+                            tom: ''
+                        }
                     }
-
-                }*/
-
-                var resultObject = {};
+                };
 
                 for(var i = 0; i < sjukskrivningArray.length; i++){
                     resultObject[sjukskrivningArray[i].sjukskrivningsgrad] = {
@@ -138,7 +135,7 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                                 }
                             },
                             fromTransform: sjukskrivningFromTransform,
-                            toTransform: sjukskrivningToTransform,
+                            toTransform: sjukskrivningToTransform
                         }),
                         'forsakringsmedicinsktBeslutsstod': undefined,
                         'arbetstidsforlaggning': undefined,
