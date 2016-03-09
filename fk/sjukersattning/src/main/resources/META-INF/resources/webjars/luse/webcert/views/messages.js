@@ -61,6 +61,7 @@ var sjukersattningMessages = {
         'luse.validation.underlag.missing': 'Du måste ange ett underlag.',
         'luse.validation.underlag.date.missing': 'Du måste ange datum för underlaget.',
         'luse.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
+        'luse.validation.underlag.incorrect_format': 'Fel datumformat för underlag',
 
         'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
 

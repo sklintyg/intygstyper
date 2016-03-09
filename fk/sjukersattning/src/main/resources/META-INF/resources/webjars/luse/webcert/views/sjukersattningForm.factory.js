@@ -34,7 +34,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     className: 'col-md-6 no-space-left',
                     templateOptions: {label: 'DFR_1.1', level: '4'}
                 },
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.2'}},
+                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2'}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.4'}},

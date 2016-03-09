@@ -135,7 +135,7 @@ angular.module('fk7263').config(function($stateProvider) {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
                     controller: 'fk7263.ViewCertCtrl'
                 },
-                'fragaSvar@webcert.intyg.fk' : {
+                'fragasvar@webcert.intyg.fk' : {
                     templateUrl: intygsTypPath + 'views/intyg/fragasvar/fragasvar.html',
                     controller: 'fk7263.QACtrl'
                 },
