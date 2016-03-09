@@ -24,23 +24,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.CertificateStatusUpdateForCareTypeConverter;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v2.CertificateStatusUpdateForCareType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class InternalToNotification {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
-
-    private static final String TYP_CODE = SjukersattningEntryPoint.MODULE_ID.toUpperCase();
-
-    private static final String TYP_CODESYSTEM = "b64ea353-e8f6-4832-b563-fc7d46f29548";
-
-    private static final String TYP_CODESYSTEM_NAME = "KV_Intygstyp";
 
     @Autowired
     private ConverterUtil converterUtil;
@@ -51,17 +44,10 @@ public class InternalToNotification {
         LOG.debug("Creating CertificateStatusUpdateForCareType for certificate {}, event {}", notificationMessage.getIntygsId(),
                 notificationMessage.getHandelse());
 
-        Utlatande utlatandeSource = converterUtil.fromJsonString(notificationMessage.getUtkast());
+        SjukersattningUtlatande utlatandeSource = converterUtil.fromJsonString(notificationMessage.getUtkast());
+        Intyg intyg = UtlatandeToIntyg.convert(utlatandeSource);
 
-        return CertificateStatusUpdateForCareTypeConverter.convert(notificationMessage, utlatandeSource, buildTypAvIntyg());
-    }
-
-    private TypAvIntyg buildTypAvIntyg() {
-        TypAvIntyg typAvIntyg = new TypAvIntyg();
-        typAvIntyg.setCode(TYP_CODE);
-        typAvIntyg.setCodeSystem(TYP_CODESYSTEM);
-        typAvIntyg.setCodeSystemName(TYP_CODESYSTEM_NAME);
-        return typAvIntyg;
+        return CertificateStatusUpdateForCareTypeConverter.convert(notificationMessage, intyg);
     }
 
 }
