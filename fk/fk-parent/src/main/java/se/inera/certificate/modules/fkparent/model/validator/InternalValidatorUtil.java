@@ -18,16 +18,19 @@
  */
 package se.inera.certificate.modules.fkparent.model.validator;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.annotations.VisibleForTesting;
+
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-
-import java.util.List;
 
 /**
  * Created by BESA on 2016-02-23.
@@ -105,6 +108,11 @@ public final class InternalValidatorUtil {
     public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
         validationMessages.add(new ValidationMessage(field, type, msg));
         LOG.debug(field + " " + msg);
+    }
+
+    @VisibleForTesting
+    public void setModuleService(WebcertModuleService moduleService) {
+        this.moduleService = moduleService;
     }
 
 }
