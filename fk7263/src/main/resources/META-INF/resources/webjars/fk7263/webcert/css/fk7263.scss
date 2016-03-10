@@ -61,7 +61,8 @@ $socialstyrelsen-background-image: url('../img/ss16.png');
  */
 $fmb-border-color: #dddddd;
 $fmb-panelheading-color: #333333; 
-$fmb-panelheading-background-color: #fff; 
+$fmb-panelheading-background-color: #fff;
+$fmb-panelheading-background-hover-color: #E0FFFF;
 $fmb-panelheading-border-color: #fff;
 $fmb-panelcollapse-border-color: #fff;
 $fmb-diagnosis-color: #000;
@@ -69,7 +70,38 @@ $fmb-glyphicon-hover-color: #808080;
 
 .panel-fmb-info {
   border-color: $fmb-border-color;
+
+  transition-property: width, max-height;
+  transition-duration: 0.4s;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 600px;
+  max-height: 400px;
+  overflow: hidden;
+  z-index: 100;
+
+  .panel-body {
+    width: 598px;
+    max-height: 334px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &.fmb-collapse {
+    width: 65px;
+    max-height: 55px;
+    .panel-body {
+    }
+    > .panel-heading:hover {
+      background-color: $fmb-panelheading-background-hover-color
+    }
+  }
+
   > .panel-heading {
+    height: 55px;
+    transition-property: background-color;
+    transition-duration: 0.4s;
     background-color: $fmb-panelheading-background-color;
     border-color: $fmb-panelheading-border-color;
     color: $fmb-panelheading-color;
@@ -83,6 +115,19 @@ $fmb-glyphicon-hover-color: #808080;
   > .panel-footer + .panel-collapse .panel-body {
     border-bottom-color: $fmb-border-color;
     padding-top: 0;
+  }
+
+  .fmb-panel-title {
+    margin: 8px 20px 0px 50px;
+    width: 498px;
+  }
+
+  .fmb-collapse-icon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 5px;
+    right: 5px;
   }
 }
 
@@ -139,3 +184,4 @@ $fmb-glyphicon-hover-color: #808080;
     margin-top: 30px;
   }
 }
+
