@@ -156,6 +156,9 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     expressionProperties: {
                         // Disable option 1 if any option 2-11 is selected
                         'templateOptions.disabled[1]': function($viewValue, $modelValue) {
+                            if (!$modelValue) {
+                                return;
+                            }
                             var disabled = false;
                             for(var i=2; i<=11; i++) {
                                 if ($modelValue[i]) {

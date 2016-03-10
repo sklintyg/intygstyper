@@ -15,6 +15,14 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
         'kontakt'
     ];
 
+    var underlagLabelGroup = [
+        'DFR_1.2.HLP',
+        'KV_FKMU_0001.1.HLP',
+        'KV_FKMU_0001.3.HLP',
+        'KV_FKMU_0001.4.HLP',
+        'KV_FKMU_0001.5.HLP'
+    ];
+
     var formFields = [
         {
             wrapper: 'wc-field',
@@ -26,7 +34,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     className: 'col-md-6 no-space-left',
                     templateOptions: {label: 'DFR_1.1', level: '4'}
                 },
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.2'}},
+                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2'}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.4'}},
@@ -54,11 +62,19 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     className: 'col-md-6 no-space-left',
                     templateOptions: {label: 'DFR_1.1', level: '4'}
                 },
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.2'}},
-                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
-                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
-                {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.4'}},
-                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
+                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.2', level: 4, labels: underlagLabelGroup}},
+                {
+                    key: 'undersokningAvPatienten',
+                    type: 'date',
+                    templateOptions: {label: 'KV_FKMU_0001.1', disableHelp: true}
+                },
+                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3', disableHelp: true}},
+                {
+                    key: 'anhorigsBeskrivningAvPatienten',
+                    type: 'date',
+                    templateOptions: {label: 'KV_FKMU_0001.4', disableHelp: true}
+                },
+                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5', disableHelp: true}},
                 {
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text',
@@ -67,7 +83,12 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
                 //{key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
-                {key: 'underlagFinns', className: 'question-divider', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
+                {
+                    key: 'underlagFinns',
+                    className: 'question-divider',
+                    type: 'boolean',
+                    templateOptions: {label: 'DFR_3.1'}
+                },
                 {
                     key: 'underlag', type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: {
                     underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
@@ -86,7 +107,12 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                         }
                     }
                 },
-                {key: 'kannedomOmPatient', className: 'question-divider', type: 'date', templateOptions: {label: 'DFR_2.1'}}
+                {
+                    key: 'kannedomOmPatient',
+                    className: 'question-divider',
+                    type: 'date',
+                    templateOptions: {label: 'DFR_2.1'}
+                }
             ]
         },
         {
@@ -162,7 +188,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 {key: 'avslutadBehandling', type: 'multi-text', templateOptions: {label: 'DFR_18.1'}},
                 {key: 'pagaendeBehandling', type: 'multi-text', templateOptions: {label: 'DFR_19.1'}},
                 {key: 'planeradBehandling', type: 'multi-text', templateOptions: {label: 'DFR_20.1'}},
-                {key: 'substansintag', type: 'multi-text',  templateOptions: {label: 'DFR_21.1'}}
+                {key: 'substansintag', type: 'multi-text', templateOptions: {label: 'DFR_21.1'}}
             ]
         },
         {

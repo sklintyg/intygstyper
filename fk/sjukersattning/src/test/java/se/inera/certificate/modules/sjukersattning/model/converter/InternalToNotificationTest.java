@@ -67,7 +67,7 @@ public class InternalToNotificationTest {
 
         assertEquals("LUSE", res.getIntyg().getTyp().getCode());
         assertNotNull(res.getIntyg().getTyp().getCodeSystem());
-        assertNotNull(res.getIntyg().getTyp().getCodeSystemName());
+        assertNotNull(res.getIntyg().getTyp().getDisplayName());
         assertEquals(HandelsekodEnum.ANDRAT.value(), res.getHandelse().getHandelsekod().getCode());
     }
 

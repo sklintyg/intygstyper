@@ -1,9 +1,3 @@
-
-.soclink {
-    background-image: url(../img/ss16.png);
-    background-repeat: no-repeat;
-    padding-left: 25px;
-}
 .cert-body .alert ul {
     padding-left: 20px;
 }
@@ -16,7 +10,6 @@
     white-space: pre-line;
 }
 
-
 .formly-field {
     h4 {
         font-weight: bold;
@@ -28,26 +21,6 @@
     }
 }
 
-
-
-
-
-.deleteUnderlag {
-    cursor:pointer;
-}
-
-.whitebg {
-    background: white;
-}
-
-.underlagRow > td, .underlagRow > th {
-    padding: 2px 5px;
-}
-
-.indent-underlag {
-    padding-left: 1em;
-}
-
 /* When focused and when active is added from checkbox, add highlighted style */
 .form5 .form-control:focus,
 .form6 .form-control:focus  {
@@ -55,41 +28,4 @@
 
    /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
    /* box-shadow: none;*/ /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
-}
-
-.no-space-left {
-    margin-left: 0;
-    padding-left: 0;
-}
-
-.diagnos-question-divider {
-    border-top: 1px solid #ccc;
-    margin-top: 15px;
-    padding-top: 15px;
-}
-
-.funktionsnedsattning, .behandling {
-    padding-bottom: 20px;
-}
-
-.question-divider {
-    border-top: 1px solid #ccc;
-    padding-top: 15px;
-}
-
-input.ng-invalid-date {
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(255,0,0,0.6);
-    border-color: #ff6600;
-}
-
-.not-entered {
-    font-style: italic;
-}
-
-.intyg-field {
-    margin-bottom: 10px;
-}
-.intyg-field label {
-    margin-bottom: 0px;
-    font-weight: bold;
 }
