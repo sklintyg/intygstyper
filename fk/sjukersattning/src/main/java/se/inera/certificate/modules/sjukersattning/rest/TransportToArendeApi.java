@@ -70,5 +70,4 @@ public final class TransportToArendeApi {
         result.put(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, filledPositions);
         return result;
     }
-
 }
