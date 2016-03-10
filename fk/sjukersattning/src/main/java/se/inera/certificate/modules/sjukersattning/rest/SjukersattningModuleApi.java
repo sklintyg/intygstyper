@@ -360,7 +360,7 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public Map<String, Object> getModuleSpecificArendeParameters(Utlatande utlatande) {
+    public Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
         return TransportToArendeApi.getModuleSpecificArendeParameters(utlatande);
     }
 }

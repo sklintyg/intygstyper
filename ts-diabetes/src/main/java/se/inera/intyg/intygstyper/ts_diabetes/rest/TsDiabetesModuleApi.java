@@ -337,7 +337,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public Map<String, Object> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) {
+    public Map<String, List<String>> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) {
         throw new UnsupportedOperationException();
     }
 

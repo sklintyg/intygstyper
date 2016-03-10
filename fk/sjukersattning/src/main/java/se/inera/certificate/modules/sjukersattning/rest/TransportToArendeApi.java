@@ -51,7 +51,7 @@ public final class TransportToArendeApi {
     private TransportToArendeApi() {
     }
 
-    public static Map<String, Object> getModuleSpecificArendeParameters(Utlatande utlatande) {
+    public static Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
         List<String> filledPositions = new ArrayList<String>();
         SjukersattningUtlatande sjukersutlatande = (SjukersattningUtlatande) utlatande;
         if (sjukersutlatande.getUndersokningAvPatienten() != null) {
@@ -66,7 +66,7 @@ public final class TransportToArendeApi {
         if (sjukersutlatande.getAnnatGrundForMU() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1);
         }
-        Map<String, Object> result = new HashMap<>();
+        Map<String, List<String>> result = new HashMap<>();
         result.put(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, filledPositions);
         return result;
     }
