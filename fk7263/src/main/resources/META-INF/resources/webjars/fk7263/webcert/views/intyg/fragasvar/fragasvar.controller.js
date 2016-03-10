@@ -78,13 +78,20 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 isRevoked: false
             };
 
+            $rootScope.$on('intyg.loaded', function(event, cert) {
+                $scope.cert = cert;
+                $scope.certProperties.isLoaded = true;
+                $scope.certProperties.isSent = true;
+                $scope.certProperties.isRevoked = false;
+            });
+/*
             var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, cert, certProperties) {
                 $scope.cert = cert;
                 $scope.certProperties.isLoaded = true;
                 $scope.certProperties.isSent = certProperties.isSent;
                 $scope.certProperties.isRevoked = certProperties.isRevoked;
             });
-            $scope.$on('$destroy', unbindFastEvent);
+            $scope.$on('$destroy', unbindFastEvent);*/
 
             // ProxyMessage is set if question is handled and replaced by a blue context info box saying it is handled (or reopened) instead of the actual question showing.
             // Checking for proxyMessage therefore is a way to decide whether the question is shown or the message is (yes, its ugly. should be refactored)

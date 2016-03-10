@@ -32,9 +32,19 @@ angular.module('fk7263').config(function($stateProvider) {
             url : '/fk7263/edit/:certificateId?:patientId&:hospName',
             views : {
                 'content@' : {
+                    templateUrl: intygsTypPath + 'views/utkast/utkast.wrapper.html'
+                },
+
+                'utkast@fk7263-edit' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
                     controller: 'fk7263.EditCertCtrl'
                 },
+
+                'fragasvar@fk7263-edit' : {
+                    templateUrl: intygsTypPath + 'views/intyg/fragasvar/fragasvar.html',
+                    controller: 'fk7263.QACtrl'
+                },
+
 
                 'wcHeader@fk7263-edit' : {
                     templateUrl: commonPath + 'gui/headers/wcHeader.partial.html',

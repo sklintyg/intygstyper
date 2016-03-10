@@ -1,100 +1,98 @@
 <div class="row" id="anchor.rekommendationer">
-    <div class="col-md-7">
-        <div wc-field field-label="fk7263.label.rekommendationer" id="rekommendationerForm" field-number="6a, 7, 11"
-             field-help-text="fk7263.helptext.rekommendationer">
+    <div wc-field field-label="fk7263.label.rekommendationer" id="rekommendationerForm" field-number="6a, 7, 11"
+         field-help-text="fk7263.helptext.rekommendationer">
 
-            <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.rekommendationer"
-                 id="validationMessages_rekommendationer">
-                <ul>
-                    <li ng-repeat="message in viewState.common.validationMessagesGrouped.rekommendationer"><span message
-                                                                                                                 key="{{message.message}}"></span>
-                    </li>
-                </ul>
+        <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.rekommendationer"
+             id="validationMessages_rekommendationer">
+            <ul>
+                <li ng-repeat="message in viewState.common.validationMessagesGrouped.rekommendationer"><span message
+                                                                                                             key="{{message.message}}"></span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 11 -->
+        <div>Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten
+            att återgå i arbete</label> <span wc-help-mark
+                                              field-help-text="fk7263.helptext.rekommendationer.resor"></span>
+        </div>
+
+        <div class="form-group form-inline" id="rekommendationRessattRadioGroup">
+            <label class="radio-inline">
+                <input type="radio" id="rekommendationRessatt" name="recommendationsToFkTravel" value="JA"
+                       ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('JA')"> Ja</label>
+            <label class="radio-inline">
+                <input type="radio" id="rekommendationRessattEj" name="recommendationsToFkTravel" value="NEJ"
+                       ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('NEJ')"> Nej</label>
+        </div>
+
+        <!-- 6a, 7 -->
+        <div id="rekommendationer6a7" ng-hide="viewState.avstangningSmittskydd()" class="field-fade">
+
+            <!-- 6a -->
+            <div class="form-group form-inline">
+                <label class="checkbox"><input type="checkbox" id="rekommendationKontaktAf"
+                                               name="recommendationsToFk.contactAf"
+                                               ng-model="model.rekommendationKontaktArbetsformedlingen">
+                    Patienten
+                    bör komma i kontakt med arbetsförmedlingen</label> <span wc-help-mark
+                                                                             field-help-text="fk7263.helptext.rekommendationer.arbetsformedlingen"></span>
             </div>
-
-            <!-- 11 -->
-            <div>Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten
-                att återgå i arbete</label> <span wc-help-mark
-                                                  field-help-text="fk7263.helptext.rekommendationer.resor"></span>
+            <div class="form-group form-inline">
+                <label class="checkbox"><input type="checkbox" id="rekommendationKontaktForetagshalsovard"
+                                               name="recommendationsToFk.contactCompanyCare"
+                                               ng-model="model.rekommendationKontaktForetagshalsovarden">
+                    Patienten
+                    bör komma i kontakt med företagshälsovården</label> <span wc-help-mark
+                                                                              field-help-text="fk7263.helptext.rekommendationer.foretagshalsovarden"></span>
             </div>
+            <div class="form-group form-inline">
+                <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
+                                               name="recommendationsToFk.other"
+                                               ng-change="onOvrigtChange()"
+                                               ng-model="model.rekommendationOvrigtCheck"> Övrigt (ange
+                    vad)</label><span wc-help-mark
+                                      field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
 
-            <div class="form-group form-inline" id="rekommendationRessattRadioGroup">
-                <label class="radio-inline">
-                    <input type="radio" id="rekommendationRessatt" name="recommendationsToFkTravel" value="JA"
-                           ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('JA')"> Ja</label>
-                <label class="radio-inline">
-                    <input type="radio" id="rekommendationRessattEj" name="recommendationsToFkTravel" value="NEJ"
-                           ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('NEJ')"> Nej</label>
-            </div>
+                <div class="indent" ng-if="model.rekommendationOvrigtCheck">
+                    <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
+                           value=""
+                           class='form-control maxwidth' ng-model="model.rekommendationOvrigt" maxlength="80"
+                           wc-maxlength>
 
-            <!-- 6a, 7 -->
-            <div id="rekommendationer6a7" ng-hide="viewState.avstangningSmittskydd()" class="field-fade">
-
-                <!-- 6a -->
-                <div class="form-group form-inline">
-                    <label class="checkbox"><input type="checkbox" id="rekommendationKontaktAf"
-                                                   name="recommendationsToFk.contactAf"
-                                                   ng-model="model.rekommendationKontaktArbetsformedlingen">
-                        Patienten
-                        bör komma i kontakt med arbetsförmedlingen</label> <span wc-help-mark
-                                                                                 field-help-text="fk7263.helptext.rekommendationer.arbetsformedlingen"></span>
                 </div>
-                <div class="form-group form-inline">
-                    <label class="checkbox"><input type="checkbox" id="rekommendationKontaktForetagshalsovard"
-                                                   name="recommendationsToFk.contactCompanyCare"
-                                                   ng-model="model.rekommendationKontaktForetagshalsovarden">
-                        Patienten
-                        bör komma i kontakt med företagshälsovården</label> <span wc-help-mark
-                                                                                  field-help-text="fk7263.helptext.rekommendationer.foretagshalsovarden"></span>
-                </div>
-                <div class="form-group form-inline">
-                    <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
-                                                   name="recommendationsToFk.other"
-                                                   ng-change="onOvrigtChange()"
-                                                   ng-model="model.rekommendationOvrigtCheck"> Övrigt (ange
-                        vad)</label><span wc-help-mark
-                                          field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
-
-                    <div class="indent" ng-if="model.rekommendationOvrigtCheck">
-                        <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
-                               value=""
-                               class='form-control maxwidth' ng-model="model.rekommendationOvrigt" maxlength="80"
-                               wc-maxlength>
-
-                    </div>
-                </div>
-
-                <!-- 7 -->
-    <span id="recommendationsToFkReabInQuestionRadioGroup">
-      <h4 class="inline-block">Är arbetslivsinriktad rehabilitering aktuell?</h4><span wc-help-mark
-                                                                                       field-help-text="fk7263.helptext.rekommendationer.arbetslivsinriktad-rehabilitering"></span>
-
-      <!-- Rehab -->
-      <!-- YES -->
-      <div class="form-group">
-          <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion"
-                                             value="JA"
-                                             ng-model="model.rehab" id="rehabYes" ng-change="model.setrehab('JA')">
-              Ja</label>
-      </div>
-
-      <!-- NO -->
-      <div class="form-group">
-          <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
-                                             value="NEJ" ng-model="model.rehab" id="rehabNo"
-                                             ng-change="model.setrehab('NEJ')">
-              Nej</label>
-      </div>
-
-      <!-- GÅR EJ ATT BEDÖMA -->
-      <div class="form-group">
-          <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
-                                             value="GAREJ" ng-model="model.rehab" id="garej"
-                                             ng-change="model.setrehab('GAREJ')"> Går inte
-              att bedöma</label>
-      </div>
-    </span>
             </div>
+
+            <!-- 7 -->
+<span id="recommendationsToFkReabInQuestionRadioGroup">
+  <h4 class="inline-block">Är arbetslivsinriktad rehabilitering aktuell?</h4><span wc-help-mark
+                                                                                   field-help-text="fk7263.helptext.rekommendationer.arbetslivsinriktad-rehabilitering"></span>
+
+  <!-- Rehab -->
+  <!-- YES -->
+  <div class="form-group">
+      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion"
+                                         value="JA"
+                                         ng-model="model.rehab" id="rehabYes" ng-change="model.setrehab('JA')">
+          Ja</label>
+  </div>
+
+  <!-- NO -->
+  <div class="form-group">
+      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
+                                         value="NEJ" ng-model="model.rehab" id="rehabNo"
+                                         ng-change="model.setrehab('NEJ')">
+          Nej</label>
+  </div>
+
+  <!-- GÅR EJ ATT BEDÖMA -->
+  <div class="form-group">
+      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
+                                         value="GAREJ" ng-model="model.rehab" id="garej"
+                                         ng-change="model.setrehab('GAREJ')"> Går inte
+          att bedöma</label>
+  </div>
+</span>
         </div>
     </div>
 </div>
