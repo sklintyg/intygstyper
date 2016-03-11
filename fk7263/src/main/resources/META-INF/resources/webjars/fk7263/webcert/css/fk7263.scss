@@ -93,9 +93,10 @@ $fmb-glyphicon-hover-color: #808080;
     max-height: 55px;
     .panel-body {
     }
-    > .panel-heading:hover {
-      background-color: $fmb-panelheading-background-hover-color
-    }
+  }
+
+  &.fmb-collapse:hover {
+    border: 1px solid #008391;
   }
 
   > .panel-heading {
