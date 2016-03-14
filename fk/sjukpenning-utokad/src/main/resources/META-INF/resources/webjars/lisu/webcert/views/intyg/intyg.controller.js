@@ -36,7 +36,7 @@ angular.module('lisu').controller('lisu.ViewCertCtrl',
 
                         DynamicLabelService.updateDynamicLabels(ViewState.common.intyg.type, ViewState.intygModel);
 
-                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FK');
+                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FKASSA');
                         ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
                         if (ViewState.common.intyg.isRevoked) {
                             ViewState.common.intyg.printStatus = 'revoked';
