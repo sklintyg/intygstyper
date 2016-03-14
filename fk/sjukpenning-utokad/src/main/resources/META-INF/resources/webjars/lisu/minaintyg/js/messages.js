@@ -26,7 +26,7 @@ var sjukpenningUtokadMessages = {
         'lisu.label.latestevent.noevents': 'Inga händelser',
         'lisu.history.label.pagetitle': 'Intygets alla händelser',
         'lisu.status.sent': 'Mottaget av',
-        'lisu.target.fk': 'Försäkringskassan',
+        'lisu.target.fkassa': 'Försäkringskassan',
         'lisu.target.afa': 'AFA Försäkring',
         'lisu.target.skandia': 'Skandia',
 
