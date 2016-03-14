@@ -52,25 +52,6 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 });
             };
 
-            // Request loading of QA's for this certificate
-            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'fk7263', function(result) {
-                $log.debug('getQAForCertificate:success data:' + result);
-                $scope.widgetState.doneLoading = true;
-                $scope.widgetState.activeErrorMessageKey = null;
-                decorateWithGUIParameters(result);
-                $scope.qaList = result;
-
-                // Tell viewcertctrl about the intyg in case cert load fails
-                if (result.length > 0) {
-                    $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
-                }
-
-            }, function(errorData) {
-                // show error view
-                $scope.widgetState.doneLoading = true;
-                $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
-            });
-
             $scope.cert = {};
             $scope.certProperties = {
                 isLoaded: false,
@@ -78,20 +59,32 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 isRevoked: false
             };
 
-            $rootScope.$on('intyg.loaded', function(event, cert) {
-                $scope.cert = cert;
-                $scope.certProperties.isLoaded = true;
-                $scope.certProperties.isSent = true;
-                $scope.certProperties.isRevoked = false;
-            });
-/*
             var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, cert, certProperties) {
                 $scope.cert = cert;
                 $scope.certProperties.isLoaded = true;
                 $scope.certProperties.isSent = certProperties.isSent;
                 $scope.certProperties.isRevoked = certProperties.isRevoked;
+
+                // Request loading of QA's for this certificate
+                fragaSvarService.getQAForCertificate(cert.id, 'fk7263', function(result) {
+                    $log.debug('getQAForCertificate:success data:' + result);
+                    $scope.widgetState.doneLoading = true;
+                    $scope.widgetState.activeErrorMessageKey = null;
+                    decorateWithGUIParameters(result);
+                    $scope.qaList = result;
+
+                    // Tell viewcertctrl about the intyg in case cert load fails
+                    if (result.length > 0) {
+                        $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
+                    }
+
+                }, function(errorData) {
+                    // show error view
+                    $scope.widgetState.doneLoading = true;
+                    $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
+                });
             });
-            $scope.$on('$destroy', unbindFastEvent);*/
+            $scope.$on('$destroy', unbindFastEvent);
 
             // ProxyMessage is set if question is handled and replaced by a blue context info box saying it is handled (or reopened) instead of the actual question showing.
             // Checking for proxyMessage therefore is a way to decide whether the question is shown or the message is (yes, its ugly. should be refactored)
@@ -107,6 +100,10 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             function isFragaProxyMessageClosedShown(qa) {
                 return qa.proxyMessage !== undefined && qa.messageStatus === 'CLOSED';
             }
+
+            $scope.issueFilter = function(qa) {
+                return true;
+            };
 
             $scope.openIssuesFilter = function(qa) {
                 return isFragaOpen(qa) || isFragaProxyMessageOpenShown(qa);

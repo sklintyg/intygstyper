@@ -12,6 +12,17 @@
         </div>
       </div>
 
+      <div class="btn-group" role="group">
+        <a class="btn btn-secondary"
+           ng-class="{active : intyg.id == viewState.intygModel.id}"
+           ng-click="gotoRelatedIntyg(intyg)"
+           ng-repeat="intyg in viewState.relatedIntygList">
+          <span ng-if="intyg.status == 'SIGNED'">Intyg </span>
+          <span ng-if="intyg.status != 'SIGNED'">Utkast, intyg </span>
+          {{$index+1}}
+        </a>
+      </div>
+
       <!-- FK 7263 -->
       <div class="edit-form">
 
