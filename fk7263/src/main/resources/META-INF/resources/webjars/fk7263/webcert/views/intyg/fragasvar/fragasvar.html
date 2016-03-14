@@ -78,7 +78,7 @@
         </div>
       </div>
 
-      <div class="webcert-col-section qa-list-section" ng-show="(qaList.length > 0" id="unhandledQACol">
+      <div class="webcert-col-section qa-list-section" ng-show="qaList.length > 0" id="unhandledQACol">
 
         <h2 class="col-head">Ej hanterade frågor och svar</h2>
         <div ng-repeat="qa in qaList | filter:issueFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
