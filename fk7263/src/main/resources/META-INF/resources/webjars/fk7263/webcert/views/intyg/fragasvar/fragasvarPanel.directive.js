@@ -44,7 +44,20 @@ angular.module('fk7263').directive('qaPanel',
                 },
                 controller: function($scope, $element, $attrs) {
 
-                    $scope.handledPanel = $attrs.type === 'handled';
+//                    $scope.handledPanel = $attrs.type === 'handled';
+                    $scope.handledFunction = function(newState) {
+                        if (arguments.length) {
+                            if (newState) {
+                                $scope.updateAsHandled($scope.qa);
+                            }
+                            else {
+                                $scope.updateAsUnHandled($scope.qa);
+                            }
+                        }
+                        else {
+                            return $scope.qa.status === 'CLOSED';
+                        }
+                    };
 
                     function delayFindMessageAndAct(timeout, qaList, message, onFound) {
                         $timeout(function() {
@@ -60,7 +73,7 @@ angular.module('fk7263').directive('qaPanel',
                         $log.debug('Message not found:' + message.id);
                     }
 
-                    function addListMessage(qaList, qa, messageId) {
+/*                    function addListMessage(qaList, qa, messageId) {
                         var messageProxy = {};
                         messageProxy.proxyMessage = messageId;
                         messageProxy.id = qa.internReferens;
@@ -75,7 +88,7 @@ angular.module('fk7263').directive('qaPanel',
                                 qaList.splice(index, 1);
                             });
                         });
-                    }
+                    }*/
 
                     $scope.sendAnswer = function sendAnswer(qa) {
                         qa.updateInProgress = true; // trigger local spinner
@@ -86,7 +99,7 @@ angular.module('fk7263').directive('qaPanel',
                             qa.activeErrorMessageKey = null;
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                addListMessage($scope.qaList, qa, 'fk7263.fragasvar.answer.is.sent');
+                                //addListMessage($scope.qaList, qa, 'fk7263.fragasvar.answer.is.sent');
 
                                 // update real item
                                 angular.copy(result, qa);
@@ -166,7 +179,7 @@ angular.module('fk7263').directive('qaPanel',
                             qa.updateHandledStateInProgress = false;
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.hanterad');
+                                //addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.hanterad');
 
                                 angular.copy(result, qa);
                                 statService.refreshStat();
@@ -197,7 +210,7 @@ angular.module('fk7263').directive('qaPanel',
 
                             if (result !== null) {
                                 fragaSvarCommonService.decorateSingleItem(result);
-                                addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.ohanterad');
+                                //addListMessage($scope.qaList, qa, 'fk7263.fragasvar.marked.as.ohanterad');
 
                                 angular.copy(result, qa);
                                 statService.refreshStat();

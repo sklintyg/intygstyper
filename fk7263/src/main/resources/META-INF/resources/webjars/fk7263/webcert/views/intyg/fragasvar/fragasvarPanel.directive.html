@@ -9,14 +9,19 @@
 
     <div class="qa-panel" id="qa{{panelId}}-{{qa.internReferens}}" ng-show="!qa.proxyMessage">
 
-      <div ng-if="handledPanel">
+      <label class="checkbox">
+        <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
+        Hanterad
+      </label>
+
+      <div ng-if="qa.status == 'CLOSED'">
         <h3 class="inline-block">
           Ämne: <strong><span message key="qa.amne.{{qa.amne | lowercase}}"></span></strong><span
             id="fkMeddelandeRubrik-{{qa.internReferens}}" ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
         </h3>
       </div>
 
-      <div ng-if="!handledPanel" class="row">
+      <div ng-if="qa.status != 'CLOSED'" class="row">
         <div class="col-xs-9">
           <div class="status-header">
             <h3 class="inline-block">
@@ -52,7 +57,7 @@
       <!-- Frågan -->
       <div class="panel-container">
         <div class="qa-block"
-             ng-class="{'qa-block-handled' : !handledPanel && qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'wc'}">
+             ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'wc'}">
           <div class="qa-block-head clearfix">
             <div class="pull-left" ng-switch="qa.frageStallare | lowercase">
               Från: <span class="qa-sender" ng-switch-when="wc"
@@ -84,8 +89,8 @@
 
       <div class="panel-container">
         <div class="qa-block"
-             ng-class="{'qa-block-handled': handledPanel, 'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'fk'}"
-             ng-if="(handledPanel && qa.svarsText) || (!handledPanel && qa.status == 'ANSWERED')">
+             ng-class="{'qa-block-handled': qa.status == 'CLOSED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'fk'}"
+             ng-if="(qa.status == 'CLOSED' && qa.svarsText) || (qa.status == 'ANSWERED')">
 
           <!-- UNHANDLEDTYPE: frågan är redan BESVARAD -->
           <!-- HANDLEDTYPE: frågan har en svarstext -->
@@ -109,7 +114,7 @@
       </div>
 
       <!-- KNAPPAR HANTERADE FRÅGOR -->
-      <div ng-if="handledPanel">
+      <div ng-if="qa.status == 'CLOSED'">
         <!-- error message occuring when inteacting with server for this FragaSvar-->
         <div id="{{panelId}}-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey" class="alert alert-danger">
           <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
@@ -126,7 +131,7 @@
         </div>
       </div>
       <!-- KNAPPAR EJ HANTERADE FRÅGOR -->
-      <div ng-if="!handledPanel">
+      <div ng-if="qa.status != 'CLOSED'">
         <div class="form-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
           <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
           <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked">Svar</label>

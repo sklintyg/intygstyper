@@ -18,11 +18,11 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
+    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$state', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'fk7263.diagnosService',
         'common.DateUtilsService', 'common.UtilsService', 'fk7263.Domain.IntygModel',
         'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService', 'fk7263.fmb.ViewStateService', 'fk7263.fmbService',
-        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
+        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $state, $stateParams, $q,
             UtkastService, UserModel, diagnosService,
             dateUtils, utils, IntygModel, viewState, anchorScrollService, fmbViewState, fmbService) {
             'use strict';
@@ -74,19 +74,37 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
 
             // Get the certificate draft from the server.
             UtkastService.load(viewState).then(function(intygModel) {
-                    if(intygModel.diagnosKod) {
-                        fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
-                            function (formData) {
-                                fmbViewState.setState(formData, intygModel.diagnosKod);
-                            },
-                            function (rejectionData) {
-                                $log.debug('Error searching fmb help text');
-                                $log.debug(rejectionData);
-                                return [];
-                            }
-                        );
-                    }
+                if (intygModel.diagnosKod) {
+                    fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
+                        function(formData) {
+                            fmbViewState.setState(formData, intygModel.diagnosKod);
+                        },
+                        function(rejectionData) {
+                            $log.debug('Error searching fmb help text');
+                            $log.debug(rejectionData);
+                            return [];
+                        }
+                    );
                 }
-            );
+                UtkastService.loadRelations(viewState.common.intyg.type, intygModel).then(function(relatedIntygList) {
+                    relatedIntygList.push(intygModel);
+                    viewState.relatedIntygList = relatedIntygList;
+                    if (viewState.relatedIntygList.length > 1) {
+                        $rootScope.$broadcast('fk7263.ViewCertCtrl.load', viewState.relatedIntygList[0], {
+                            isSent: true,
+                            isRevoked: false
+                        });
+                    }
+                });
+            });
+
+            $scope.gotoRelatedIntyg = function(intyg) {
+                if (intyg.status === 'SIGNED') {
+                    $state.go('webcert.intyg.fk.fk7263', {certificateId: intyg.id});
+                }
+                else {
+                    $state.go('fk7263-edit', {certificateId: intyg.id});
+                }
+            };
 
         }]);
