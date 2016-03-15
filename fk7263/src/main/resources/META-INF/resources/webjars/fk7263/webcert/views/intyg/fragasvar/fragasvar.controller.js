@@ -64,27 +64,30 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $scope.certProperties.isLoaded = true;
                 $scope.certProperties.isSent = certProperties.isSent;
                 $scope.certProperties.isRevoked = certProperties.isRevoked;
-
-                // Request loading of QA's for this certificate
-                fragaSvarService.getQAForCertificate(cert.id, 'fk7263', function(result) {
-                    $log.debug('getQAForCertificate:success data:' + result);
-                    $scope.widgetState.doneLoading = true;
-                    $scope.widgetState.activeErrorMessageKey = null;
-                    decorateWithGUIParameters(result);
-                    $scope.qaList = result;
-
-                    // Tell viewcertctrl about the intyg in case cert load fails
-                    if (result.length > 0) {
-                        $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
-                    }
-
-                }, function(errorData) {
-                    // show error view
-                    $scope.widgetState.doneLoading = true;
-                    $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
-                });
             });
             $scope.$on('$destroy', unbindFastEvent);
+
+            // Request loading of QA's for this certificate
+            // IMPORTANT!! DON'T LET THIS DEPEND ON THE INTYG LOAD!
+            // Messages needs to be loaded separately from the intyg as user should be able to see messages even if intyg didn't load.
+            fragaSvarService.getQAForCertificate($stateParams.certificateId, 'fk7263', function(result) {
+                $log.debug('getQAForCertificate:success data:' + result);
+                $scope.widgetState.doneLoading = true;
+                $scope.widgetState.activeErrorMessageKey = null;
+                decorateWithGUIParameters(result);
+                $scope.qaList = result;
+
+                // Tell viewcertctrl about the intyg in case cert load fails
+                if (result.length > 0) {
+                    $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
+                }
+
+            }, function(errorData) {
+                // show error view
+                $scope.widgetState.doneLoading = true;
+                $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
+            });
+
 
             // ProxyMessage is set if question is handled and replaced by a blue context info box saying it is handled (or reopened) instead of the actual question showing.
             // Checking for proxyMessage therefore is a way to decide whether the question is shown or the message is (yes, its ugly. should be refactored)
