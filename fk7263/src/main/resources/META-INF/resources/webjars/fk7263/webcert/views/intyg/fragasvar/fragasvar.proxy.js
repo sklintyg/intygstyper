@@ -61,7 +61,7 @@ angular.module('fk7263').factory('fk7263.fragaSvarProxy',
             $log.debug('_answerWithIntyg: fragaSvarId:' + fragaSvar.internReferens + ' intygsTyp: ' + intygsTyp);
 
             var restPath = '/api/intyg/' + intygsTyp + '/' + fragaSvar.internReferens + '/komplettera';
-            $http.put(restPath).success(function(data) {
+            $http.post(restPath).success(function(data) {
                 $log.debug('got data:' + data);
                 onSuccess(data);
             }).error(function(data, status) {

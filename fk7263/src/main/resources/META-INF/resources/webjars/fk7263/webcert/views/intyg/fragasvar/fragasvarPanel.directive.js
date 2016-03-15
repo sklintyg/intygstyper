@@ -25,9 +25,9 @@
  * qaPanel directive. Common directive for both unhandled and handled questions/answers
  */
 angular.module('fk7263').directive('qaPanel',
-    [ '$window', '$log', '$timeout', 'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
+    [ '$window', '$log', '$timeout', '$state', 'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
         'common.statService', 'common.dialogService',
-        function($window, $log, $timeout, User, fragaSvarCommonService, fragaSvarProxy, statService, dialogService) {
+        function($window, $log, $timeout, $state, User, fragaSvarCommonService, fragaSvarProxy, statService, dialogService) {
             'use strict';
 
             return {
@@ -116,12 +116,18 @@ angular.module('fk7263').directive('qaPanel',
 
                     $scope.answerWithIntyg = function(qa, cert) {
                         qa.updateInProgress = true; // trigger local spinner
-                        fragaSvarProxy.answerWithIntyg(qa, 'fk7263', function(result) {
+                        fragaSvarProxy.answerWithIntyg(qa, cert.typ, function(result) {
                             qa.updateInProgress = false;
                             qa.activeErrorMessageKey = null;
                             statService.refreshStat();
 
+                            function goToDraft(type, intygId) {
+                                $state.go(type + '-edit', {
+                                    certificateId: intygId
+                                });
+                            }
 
+                            goToDraft(cert.typ, cert.id);
 
                         }, function(errorData) {
                             // show error view
