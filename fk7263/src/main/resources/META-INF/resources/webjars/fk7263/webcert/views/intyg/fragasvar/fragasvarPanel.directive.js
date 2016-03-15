@@ -114,7 +114,7 @@ angular.module('fk7263').directive('qaPanel',
                         });
                     };
 
-                    $scope.answerWithIntyg = function(qa) {
+                    $scope.answerWithIntyg = function(qa, cert) {
                         qa.updateInProgress = true; // trigger local spinner
                         fragaSvarProxy.answerWithIntyg(qa, 'fk7263', function(result) {
                             qa.updateInProgress = false;

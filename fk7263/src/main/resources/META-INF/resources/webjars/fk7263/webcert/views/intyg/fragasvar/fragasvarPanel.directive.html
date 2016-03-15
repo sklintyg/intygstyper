@@ -90,7 +90,7 @@
       <div ng-show="!qa.answerDisabled && !certProperties.isRevoked && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG'">
         <button type="button" class="btn"
                 ng-class="{'btn-success': qa.status != 'CLOSED' && !cannotKomplettera, 'btn-default btn-secondary': qa.status == 'CLOSED' || cannotKomplettera}"
-                ng-click="answerWithIntyg(qa)"
+                ng-click="answerWithIntyg(qa, cert)"
                 ng-disabled="cannotKomplettera"
                 wc-check-vardenhet vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                 id="answerWithIntygBtn-{{qa.internReferens}}">
