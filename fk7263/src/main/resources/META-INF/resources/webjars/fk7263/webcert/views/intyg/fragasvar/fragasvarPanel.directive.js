@@ -44,6 +44,8 @@ angular.module('fk7263').directive('qaPanel',
                 },
                 controller: function($scope, $element, $attrs) {
 
+                    $scope.cannotKomplettera = false;
+
 //                    $scope.handledPanel = $attrs.type === 'handled';
                     $scope.handledFunction = function(newState) {
                         if (arguments.length) {
