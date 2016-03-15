@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('fk7263').factory('fk7263.fragaSvarService',
+angular.module('fk7263').factory('fk7263.fragaSvarProxy',
     function($http, $log) {
         'use strict';
 
@@ -45,6 +45,23 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
 
             var restPath = '/moduleapi/fragasvar/' + intygsTyp + '/' + fragaSvar.internReferens + '/besvara';
             $http.put(restPath, fragaSvar.svarsText).success(function(data) {
+                $log.debug('got data:' + data);
+                onSuccess(data);
+            }).error(function(data, status) {
+                $log.error('error ' + status);
+                // Let calling code handle the error of no data response
+                onError(data);
+            });
+        }
+
+        /*
+         * answer komplettering with a new intyg (basically do a copy with a 'komplettering' relation to this intyg)
+         */
+        function _answerWithIntyg(fragaSvar, intygsTyp, onSuccess, onError) {
+            $log.debug('_answerWithIntyg: fragaSvarId:' + fragaSvar.internReferens + ' intygsTyp: ' + intygsTyp);
+
+            var restPath = '/api/intyg/' + intygsTyp + '/' + fragaSvar.internReferens + '/komplettera';
+            $http.put(restPath).success(function(data) {
                 $log.debug('got data:' + data);
                 onSuccess(data);
             }).error(function(data, status) {
@@ -132,6 +149,7 @@ angular.module('fk7263').factory('fk7263.fragaSvarService',
         return {
             getQAForCertificate: _getQAForCertificate,
             saveAnswer: _saveAnswer,
+            answerWithIntyg: _answerWithIntyg,
             saveNewQuestion: _saveNewQuestion,
             closeAsHandled: _closeAsHandled,
             closeAllAsHandled: _closeAllAsHandled,

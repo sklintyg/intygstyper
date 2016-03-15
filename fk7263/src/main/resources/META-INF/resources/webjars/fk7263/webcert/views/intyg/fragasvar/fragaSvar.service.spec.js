@@ -53,7 +53,7 @@ describe('FragaSvarService', function() {
         $provide.value('common.User', {});
     }));
 
-    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$httpBackend', 'fk7263.fragaSvarService',
+    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$httpBackend', 'fk7263.fragaSvarProxy',
         function($controller, _$rootScope_, _$httpBackend_, _fragaSvarService_) {
 
             $httpBackend = _$httpBackend_;
