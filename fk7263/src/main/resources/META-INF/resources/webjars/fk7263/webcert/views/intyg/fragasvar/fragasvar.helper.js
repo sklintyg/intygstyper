@@ -18,7 +18,7 @@
  */
 
 angular.module('fk7263').service('fk7263.QACtrl.Helper',
-    ['$log', '$timeout', 'fk7263.fragaSvarService', 'common.fragaSvarCommonService', '$window', 'common.statService',
+    ['$log', '$timeout', 'fk7263.fragaSvarProxy', 'common.fragaSvarCommonService', '$window', 'common.statService',
         function( $log, $timeout, fragaSvarService, fragaSvarCommonService, $window, statService) {
         'use strict';
 

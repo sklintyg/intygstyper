@@ -38,9 +38,9 @@ describe('qaPanel', function() {
         $provide.value('common.User', {});
         $provide.value('common.statService', {});
 
-        fragaSvarService = jasmine.createSpyObj('fk7263.fragaSvarService',
+        fragaSvarService = jasmine.createSpyObj('fk7263.fragaSvarProxy',
             [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled', 'saveNewQuestion', 'saveAnswer']);
-        $provide.value('fk7263.fragaSvarService', fragaSvarService);
+        $provide.value('fk7263.fragaSvarProxy', fragaSvarService);
     }));
 
     beforeEach(angular.mock.module('htmlTemplates'));

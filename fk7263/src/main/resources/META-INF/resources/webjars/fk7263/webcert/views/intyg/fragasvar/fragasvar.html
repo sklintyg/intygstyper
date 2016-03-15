@@ -31,6 +31,11 @@
         <!-- New question form -->
         <div ng-show="widgetState.newQuestionOpen">
           <div class="form-group">
+            <div class="alert alert-info">
+              Här kan du föra en dialog med Försäkringskassan om ett intyg. Medicinsk information ska endast skickas via signerade intyg.
+            </div>
+          </div>
+          <div class="form-group">
             <label class="control-label">Fråga</label>
             <textarea wc-maxlength ng-trim="false" maxlength="2000" rows="13" class="form-control"
                       ng-model="newQuestion.frageText" wc-focus-me="widgetState.focusQuestion"
@@ -84,8 +89,8 @@
           <div qa-panel panel-id="unhandled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
         </div>
 
-        <h2 class="col-head">Tidigare meddelanden</h2>
-        <div ng-repeat="qa in qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
+        <h2 class="col-head" ng-show="qaListFiltered.length > 0">Tidigare meddelanden</h2>
+        <div ng-repeat="qa in qaListFiltered = (qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true)" class="qa-item">
           <div qa-panel panel-id="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
         </div>
 

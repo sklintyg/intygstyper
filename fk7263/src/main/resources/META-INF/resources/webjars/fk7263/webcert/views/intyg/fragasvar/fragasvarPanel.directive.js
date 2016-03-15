@@ -25,9 +25,9 @@
  * qaPanel directive. Common directive for both unhandled and handled questions/answers
  */
 angular.module('fk7263').directive('qaPanel',
-    [ '$window', '$log', '$timeout', 'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarService',
+    [ '$window', '$log', '$timeout', 'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
         'common.statService', 'common.dialogService',
-        function($window, $log, $timeout, User, fragaSvarCommonService, fragaSvarService, statService, dialogService) {
+        function($window, $log, $timeout, User, fragaSvarCommonService, fragaSvarProxy, statService, dialogService) {
             'use strict';
 
             return {
@@ -60,7 +60,7 @@ angular.module('fk7263').directive('qaPanel',
                             return $scope.qa.status === 'CLOSED';
                         }
                     };
-
+/*
                     function delayFindMessageAndAct(timeout, qaList, message, onFound) {
                         $timeout(function() {
                             var i;
@@ -95,7 +95,7 @@ angular.module('fk7263').directive('qaPanel',
                     $scope.sendAnswer = function sendAnswer(qa) {
                         qa.updateInProgress = true; // trigger local spinner
 
-                        fragaSvarService.saveAnswer(qa, 'fk7263', function(result) {
+                        fragaSvarProxy.saveAnswer(qa, 'fk7263', function(result) {
                             $log.debug('Got saveAnswer result:' + result);
                             qa.updateInProgress = false;
                             qa.activeErrorMessageKey = null;
@@ -107,6 +107,22 @@ angular.module('fk7263').directive('qaPanel',
                                 angular.copy(result, qa);
                                 statService.refreshStat();
                             }
+                        }, function(errorData) {
+                            // show error view
+                            qa.updateInProgress = false;
+                            qa.activeErrorMessageKey = errorData.errorCode;
+                        });
+                    };
+
+                    $scope.answerWithIntyg = function(qa) {
+                        qa.updateInProgress = true; // trigger local spinner
+                        fragaSvarProxy.answerWithIntyg(qa, 'fk7263', function(result) {
+                            qa.updateInProgress = false;
+                            qa.activeErrorMessageKey = null;
+                            statService.refreshStat();
+
+
+
                         }, function(errorData) {
                             // show error view
                             qa.updateInProgress = false;
@@ -135,7 +151,7 @@ angular.module('fk7263').directive('qaPanel',
                         if(unhandledQas === undefined || unhandledQas.length === 0 ){
                             return;
                         }
-                        fragaSvarService.closeAllAsHandled(unhandledQas,
+                        fragaSvarProxy.closeAllAsHandled(unhandledQas,
                             function(qas){
                                 if(qas) {
                                     angular.forEach(qas, function(qa) { //unused parameter , key
@@ -176,7 +192,7 @@ angular.module('fk7263').directive('qaPanel',
                         $log.debug('updateAsHandled:' + qa);
                         qa.updateHandledStateInProgress = true;
 
-                        fragaSvarService.closeAsHandled(qa.internReferens, 'fk7263', function(result) {
+                        fragaSvarProxy.closeAsHandled(qa.internReferens, 'fk7263', function(result) {
                             qa.activeErrorMessageKey = null;
                             qa.updateHandledStateInProgress = false;
                             if (result !== null) {
@@ -205,7 +221,7 @@ angular.module('fk7263').directive('qaPanel',
                         $log.debug('updateAsUnHandled:' + qa);
                         qa.updateHandledStateInProgress = true; // trigger local
 
-                        fragaSvarService.openAsUnhandled(qa.internReferens, 'fk7263', function(result) {
+                        fragaSvarProxy.openAsUnhandled(qa.internReferens, 'fk7263', function(result) {
                             $log.debug('Got openAsUnhandled result:' + result);
                             qa.activeErrorMessageKey = null;
                             qa.updateHandledStateInProgress = false;
