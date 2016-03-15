@@ -30,6 +30,8 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class Diagnos {
 
+    private String displayName;
+
     Diagnos() {
     }
 
@@ -38,6 +40,12 @@ public abstract class Diagnos {
                                  @JsonProperty("diagnosKodSystem") String diagnosKodSystem,
                                  @JsonProperty("diagnosBeskrivning") String diagnosBeskrivning) {
         return new AutoValue_Diagnos(diagnosKod, diagnosKodSystem, diagnosBeskrivning);
+    }
+    
+    public Diagnos createWithDisplayName(String displayName){
+        Diagnos diagnos = create(getDiagnosKod(), getDiagnosKodSystem(), getDiagnosBeskrivning());
+        this.displayName = displayName;
+        return diagnos;
     }
 
     @Nullable
@@ -48,5 +56,9 @@ public abstract class Diagnos {
 
     @Nullable
     public abstract String getDiagnosBeskrivning();
+
+    public String getDisplayName() {
+        return displayName;
+    }
 
 }

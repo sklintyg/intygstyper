@@ -31,6 +31,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDate;
 
+import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
@@ -156,6 +157,7 @@ public final class UtlatandeToIntyg {
         TypAvRelation typAvRelation = new TypAvRelation();
         typAvRelation.setCode(source.getGrundData().getRelation().getRelationKod().value());
         typAvRelation.setCodeSystem(RELATION_CODE_SYSTEM);
+        typAvRelation.setDisplayName(source.getGrundData().getRelation().getRelationKod().getKlartext());
 
         relation.setIntygsId(intygId);
         relation.setTyp(typAvRelation);
@@ -168,40 +170,48 @@ public final class UtlatandeToIntyg {
 
         if (source.getUndersokningAvPatienten() != null && source.getUndersokningAvPatienten().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT)))
-                    .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getUndersokningAvPatienten().asLocalDate().toString()).build());
+                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT),
+                            RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT))))
+                    .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getUndersokningAvPatienten().asLocalDate().toString())
+                    .build());
         }
 
         if (source.getTelefonkontaktMedPatienten() != null && source.getTelefonkontaktMedPatienten().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT_MED_PATIENT)))
+                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT_MED_PATIENT),
+                            RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(TELEFONKONTAKT_MED_PATIENT))))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getTelefonkontaktMedPatienten().asLocalDate().toString())
                     .build());
         }
 
         if (source.getJournaluppgifter() != null && source.getJournaluppgifter().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER)))
+                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER),
+                            RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER))))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
 
         if (source.getAnnatGrundForMU() != null && source.getAnnatGrundForMU().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT)))
+                    aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT),
+                            RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT))))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnnatGrundForMU().asLocalDate().toString())
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1, source.getAnnatGrundForMUBeskrivning()).build());
         }
 
         if (source.getSysselsattning() != null) {
             svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID_28).withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID_28,
-                    aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, Integer.toString(source.getSysselsattning().getTyp().getId()))).build());
+                    aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, Integer.toString(source.getSysselsattning().getTyp().getId()), RespConstants
+                            .getDisplayName(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, Integer.toString(source.getSysselsattning().getTyp().getId()))))
+                    .build());
         }
 
         addIfNotBlank(svars, NUVARANDE_ARBETE_SVAR_ID_29, NUVARANDE_ARBETE_DELSVAR_ID_29, source.getNuvarandeArbete());
 
         for (Diagnos diagnos : source.getDiagnoser()) {
             Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-            svars.add(aSvar(DIAGNOS_SVAR_ID_6).withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod()))
+            svars.add(aSvar(DIAGNOS_SVAR_ID_6)
+                    .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDisplayName()))
                     .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
         }
 
@@ -212,12 +222,15 @@ public final class UtlatandeToIntyg {
 
         for (Sjukskrivning sjukskrivning : source.getSjukskrivningar()) {
             svars.add(aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32).withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32,
-                    aCV(SJUKSKRIVNING_CODE_SYSTEM, Integer.toString(sjukskrivning.getSjukskrivningsgrad().getId())))
+                    aCV(SJUKSKRIVNING_CODE_SYSTEM, Integer.toString(sjukskrivning.getSjukskrivningsgrad().getId()),
+                            RespConstants.SJUKSKRIVNING_CODE_SYSTEM))
                     .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32,
-                            aDatePeriod(sjukskrivning.getPeriod().fromAsLocalDate(), sjukskrivning.getPeriod().tomAsLocalDate())).build());
+                            aDatePeriod(sjukskrivning.getPeriod().fromAsLocalDate(), sjukskrivning.getPeriod().tomAsLocalDate()))
+                    .build());
         }
 
-        addIfNotBlank(svars, FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37, FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37, source.getForsakringsmedicinsktBeslutsstod());
+        addIfNotBlank(svars, FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37, FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37,
+                source.getForsakringsmedicinsktBeslutsstod());
 
         if (source.getArbetstidsforlaggning() != null) {
             if (source.getArbetstidsforlaggning() && !StringUtils.isBlank(source.getArbetstidsforlaggningMotivering())) {
@@ -239,11 +252,14 @@ public final class UtlatandeToIntyg {
         if (source.getPrognos() != null) {
             if (!StringUtils.isBlank(source.getPrognos().getFortydligande())) {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
-                        aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId())))
+                        aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()),
+                                RespConstants.getDisplayName(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()))))
                         .withDelsvar(PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39, source.getPrognos().getFortydligande()).build());
             } else {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
-                        aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()))).build());
+                        aCV(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()),
+                                RespConstants.getDisplayName(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()))))
+                        .build());
             }
         }
 
@@ -252,7 +268,8 @@ public final class UtlatandeToIntyg {
         source.getArbetslivsinriktadeAtgarder().stream()
                 .forEach((ArbetslivsinriktadeAtgarder atgarder) -> {
                     arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
-                            aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, Integer.toString(atgarder.getVal().getId())));
+                            aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, Integer.toString(atgarder.getVal().getId()), RespConstants
+                                    .getDisplayName(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, Integer.toString(atgarder.getVal().getId()))));
                 });
 
         if (!StringUtils.isBlank(source.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
@@ -300,10 +317,11 @@ public final class UtlatandeToIntyg {
         return hsaId;
     }
 
-    private static JAXBElement<CVType> aCV(String codeSystem, String code) {
+    private static JAXBElement<CVType> aCV(String codeSystem, String code, String codeSystemName) {
         CVType cv = new CVType();
         cv.setCodeSystem(codeSystem);
         cv.setCode(code);
+        cv.setDisplayName(codeSystemName);
         return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
     }
 

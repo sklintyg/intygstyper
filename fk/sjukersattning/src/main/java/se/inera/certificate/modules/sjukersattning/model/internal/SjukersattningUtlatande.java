@@ -22,6 +22,7 @@ package se.inera.certificate.modules.sjukersattning.model.internal;
 import javax.annotation.Nullable;
 
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.SitUtlatande;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -37,7 +38,7 @@ import java.util.List;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_SjukersattningUtlatande.Builder.class)
-public abstract class SjukersattningUtlatande implements Utlatande {
+public abstract class SjukersattningUtlatande implements Utlatande, SitUtlatande {
 
     SjukersattningUtlatande() {
     }
@@ -92,6 +93,7 @@ public abstract class SjukersattningUtlatande implements Utlatande {
 
     // Kategori 4 - Diagnos
     // Fråga 6
+    @Override
     public abstract ImmutableList<Diagnos> getDiagnoser();
 
     // Fråga 7.1

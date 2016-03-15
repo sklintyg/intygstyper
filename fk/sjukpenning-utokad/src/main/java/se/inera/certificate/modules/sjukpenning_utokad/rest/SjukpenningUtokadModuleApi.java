@@ -21,6 +21,7 @@ package se.inera.certificate.modules.sjukpenning_utokad.rest;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,9 +33,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.*;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
@@ -43,6 +47,7 @@ import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftVa
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
@@ -75,6 +80,9 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(SjukpenningUtokadModuleApi.class);
+
+    @Autowired
+    private WebcertModuleService moduleService;
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
@@ -197,6 +205,25 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
             LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResult().getResultText());
             throw new ModuleException("An unidentified error occured when retrieving certificate " + certificateId + ", "
                     + response.getResult().getResultText());
+        }
+    }
+
+    @Override
+    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
+        SjukpenningUtokadUtlatande utlatande;
+        try {
+            utlatande = objectMapper.readValue(utlatandeJson,
+                    SjukpenningUtokadUtlatande.class);
+            List<Diagnos> decoratedDiagnoser = new ArrayList<>();
+            for (Diagnos diagnos : utlatande.getDiagnoser()) {
+                String klartext = moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem());
+                Diagnos decoratedDiagnos = diagnos.createWithDisplayName(klartext);
+                decoratedDiagnoser.add(decoratedDiagnos);
+            }
+            SjukpenningUtokadUtlatande result = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
+            return objectMapper.writeValueAsString(result);
+        } catch (IOException e) {
+            throw new ModuleException("Could not convert json string into an Utlatande object. ");
         }
     }
 
