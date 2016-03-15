@@ -341,4 +341,9 @@ public class TsDiabetesModuleApi implements ModuleApi {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
+        return utlatandeJson;
+    }
+
 }

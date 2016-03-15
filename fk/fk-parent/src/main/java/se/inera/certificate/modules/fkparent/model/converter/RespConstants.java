@@ -41,6 +41,167 @@ public final class RespConstants {
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM = "KV_FKMU_0004";
     public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_0005";
     public static final String PROGNOS_CODE_SYSTEM = "KV_FKMU_0006";
+    
+    public static enum GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM_ENUM{
+        KV_FKMU_0001_1("1", "Min undersökning av patienten"),
+        KV_FKMU_0001_2("2", "Min telefonkontakt med patienten"),
+        KV_FKMU_0001_3("3", "Journaluppgifter från den"),
+        KV_FKMU_0001_4("4", "Anhörigs beskrivning av patienten"),
+        KV_FKMU_0001_5("5", "Annat"),;
+        
+        private final String code;
+        private final String description;
+        
+        private GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM_ENUM(String code, String description){
+            this.code = code;
+            this.description = description;
+        }
+
+        public static String getDescription( String code ) {
+            for(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM_ENUM value : values()){
+                if(code.equals(value.code)){
+                    return value.description;
+                }
+            }
+            return null;
+        }
+    }
+    
+    public static enum UNDERLAG_CODE_SYSTEM_ENUM{
+        KV_FKMU_0005_1("1", "Neuropsykiatriskt utlåtande"),
+        KV_FKMU_0005_2("2", "Underlag från habiliteringen"),
+        KV_FKMU_0005_3("3", "Underlag från arbetsterapeut"),
+        KV_FKMU_0005_4("4", "Underlag från fysioterapeut"),
+        KV_FKMU_0005_5("5", "Underlag från logoped"),
+        KV_FKMU_0005_6("6", "Underlag från psykolog"),
+        KV_FKMU_0005_7("7", "Underlag från företagshälsovård"),
+        KV_FKMU_0005_8("8", "Underlag från skolhälsovård"),
+        KV_FKMU_0005_9("9", "Utredning av annan specialistklinik"),
+        KV_FKMU_0005_10("10", "Utredning från vårdinrättning utomlands"),
+        KV_FKMU_0005_11("11", "Övrigt");
+        
+        private final String code;
+        private final String description;
+        
+        private UNDERLAG_CODE_SYSTEM_ENUM(String code, String description){
+            this.code = code;
+            this.description = description;
+        }
+
+        public static String getDescription( String code ) {
+            for(UNDERLAG_CODE_SYSTEM_ENUM value : values()){
+                if(code.equals(value.code)){
+                    return value.description;
+                }
+            }
+            return null;
+        }
+        
+    }
+    
+    public static enum TYP_AV_SYSSELSATTNING_CODE_SYSTEM_ENUM{
+        KV_FKMU_0002_1("1", "Nuvarande arbete"),
+        KV_FKMU_0002_2("2", "Arbetssökande"),
+        KV_FKMU_0002_3("3", "Föräldraledighet för vård av barn"),
+        KV_FKMU_0002_4("4", "Studier"),
+        KV_FKMU_0002_5("5", "Deltar i arbetsmarknadspolitiskt program");
+        
+        private final String code;
+        private final String description;
+        
+        private TYP_AV_SYSSELSATTNING_CODE_SYSTEM_ENUM(String code, String description){
+            this.code = code;
+            this.description = description;
+        }
+
+        public static String getDescription( String code ) {
+            for(TYP_AV_SYSSELSATTNING_CODE_SYSTEM_ENUM value : values()){
+                if(code.equals(value.code)){
+                    return value.description;
+                }
+            }
+            return null;
+        }
+    }
+    
+    public static enum SJUKSKRIVNING_CODE_SYSTEM_ENUM{
+        KV_FKMU_0003_1("1", "Helt nedsatt"),
+        KV_FKMU_0003_2("2", "Nedsatt med 3/4"),
+        KV_FKMU_0003_3("3", "Nedsatt med hälften"),
+        KV_FKMU_0003_4("4", "Nedsatt med 1/4");
+        
+        private final String code;
+        private final String description;
+        
+        private SJUKSKRIVNING_CODE_SYSTEM_ENUM(String code, String description){
+            this.code = code;
+            this.description = description;
+        }
+
+        public static String getDescription( String code ) {
+            for(SJUKSKRIVNING_CODE_SYSTEM_ENUM value : values()){
+                if(code.equals(value.code)){
+                    return value.description;
+                }
+            }
+            return null;
+        }
+    }
+    
+    public static enum PROGNOS_CODE_SYSTEM_ENUM{
+        KV_FKMU_0006_1("1", "Med stor sannolikhet"),
+        KV_FKMU_0006_2("2", "Patienten bedöms kunna återgå i nuvarande sysselsättning, men sjukskrivningstiden är sannolikt längre än 180 dagar"),
+        KV_FKMU_0006_3("3", "Patienten kan sannolikt inte återgå i nuvarande sysselsättning"),
+        KV_FKMU_0006_4("4", "Prognos för återgång i nuvarande sysselsättning är oklar");
+        
+        private final String code;
+        private final String description;
+        
+        private PROGNOS_CODE_SYSTEM_ENUM(String code, String description){
+            this.code = code;
+            this.description = description;
+        }
+
+        public static String getDescription( String code ) {
+            for(PROGNOS_CODE_SYSTEM_ENUM value : values()){
+                if(code.equals(value.code)){
+                    return value.description;
+                }
+            }
+            return null;
+        }
+    }
+    
+    public static enum ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM_ENUM{
+        KV_FKMU_0004_1("1", "Inte aktuellt"),
+        KV_FKMU_0004_2("2", "Arbetsträning"),
+        KV_FKMU_0004_3("3", "Arbetsanspassning"),
+        KV_FKMU_0004_4("4", "Söka nytt arbete"),
+        KV_FKMU_0004_5("5", "Besök på arbetsplatsen"),
+        KV_FKMU_0004_6("6", "Ergonomisk bedömning"),
+        KV_FKMU_0004_7("7", "Hjälpmedel"),
+        KV_FKMU_0004_8("8", "Konflikthantering"),
+        KV_FKMU_0004_9("9", "Kontakt med företagshälsovård"),
+        KV_FKMU_0004_10("10", "Omfördelning av arbetsuppgifter"),
+        KV_FKMU_0004_11("11", "Övrigt");
+        
+        private final String code;
+        private final String description;
+        
+        private ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM_ENUM(String code, String description){
+            this.code = code;
+            this.description = description;
+        }
+
+        public static String getDescription( String code ) {
+            for(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM_ENUM value : values()){
+                if(code.equals(value.code)){
+                    return value.description;
+                }
+            }
+            return null;
+        }
+    }
 
     public static final String GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1 = "1";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1 = "1.1";
@@ -294,6 +455,25 @@ public final class RespConstants {
                 }
             }
             throw new IllegalArgumentException();
+        }
+    }
+
+    public static String getDisplayName(String codeSystem, String code) {
+        switch(codeSystem){
+        case GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM:
+            return GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM_ENUM.getDescription(code);
+        case UNDERLAG_CODE_SYSTEM:
+            return UNDERLAG_CODE_SYSTEM_ENUM.getDescription(code);
+        case TYP_AV_SYSSELSATTNING_CODE_SYSTEM:
+            return TYP_AV_SYSSELSATTNING_CODE_SYSTEM_ENUM.getDescription(code);
+        case SJUKSKRIVNING_CODE_SYSTEM:
+            return SJUKSKRIVNING_CODE_SYSTEM_ENUM.getDescription(code);
+        case PROGNOS_CODE_SYSTEM:
+            return PROGNOS_CODE_SYSTEM_ENUM.getDescription(code);
+        case ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM:
+            return ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM_ENUM.getDescription(code);
+            default:
+                return "";
         }
     }
 
