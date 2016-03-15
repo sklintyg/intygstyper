@@ -86,6 +86,12 @@
         </div>
       </div>
 
+      <!-- error message occuring when inteacting with server for komplettering-->
+      <div id="internal-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
+           class="alert alert-danger">
+        <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
+      </div>
+
       <!-- Svara med nytt intyg button - only on komplettering -->
       <div ng-show="!qa.answerDisabled && !certProperties.isRevoked && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG'">
         <button type="button" class="btn"
