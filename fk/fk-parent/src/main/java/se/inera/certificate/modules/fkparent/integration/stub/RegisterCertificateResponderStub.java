@@ -27,6 +27,7 @@ import java.util.HashMap;
 
 import javax.xml.ws.WebServiceProvider;
 
+import org.apache.cxf.annotations.SchemaValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import se.inera.intyg.common.support.stub.MedicalCertificatesStore;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
+@SchemaValidation
 @WebServiceProvider(targetNamespace = "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2")
 public final class RegisterCertificateResponderStub implements RegisterCertificateResponderInterface {
 
