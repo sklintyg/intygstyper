@@ -29,6 +29,7 @@ import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukpennin
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Relation;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
@@ -80,6 +81,7 @@ public class WebcertModelFactory {
 
         populateWithId(templateBuilder, copyData.getCertificateId());
         populateWithSkapadAv(grundData, copyData.getSkapadAv());
+        populateWithRelation(grundData, copyData.getRelation());
 
         if (copyData.hasPatient()) {
             populateWithPatientInfo(grundData, copyData.getPatient());
@@ -117,6 +119,12 @@ public class WebcertModelFactory {
             throw new ConverterException("Got null while trying to populateWithSkapadAv");
         }
         grundData.setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
+    }
+
+    private void populateWithRelation(GrundData grundData, Relation relation) {
+        if (relation != null) {
+            grundData.setRelation(relation);
+        }
     }
 
     private void resetDataInCopy(GrundData grundData) {

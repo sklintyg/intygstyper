@@ -18,6 +18,8 @@
  */
 package se.inera.certificate.modules.fkparent.model.converter;
 
+import java.util.List;
+
 import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang3.StringUtils;
@@ -27,9 +29,11 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Relation;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
@@ -157,6 +161,9 @@ public final class TransportConverterUtil {
         grundData.setPatient(getPatient(source));
         grundData.setSkapadAv(getSkapadAv(source));
         grundData.setSigneringsdatum(source.getSigneringstidpunkt());
+        if (!isNullOrEmpty(source.getRelation())) {
+            grundData.setRelation(getRelation(source));
+        }
         return grundData;
     }
 
@@ -213,4 +220,20 @@ public final class TransportConverterUtil {
         return patient;
     }
 
+    private static Relation getRelation(Intyg source) {
+        return getOne(source.getRelation());
+    }
+
+    private static Relation getOne(List<se.riv.clinicalprocess.healthcond.certificate.v2.Relation> source) {
+        se.riv.clinicalprocess.healthcond.certificate.v2.Relation sourceRelation = source.get(0);
+        Relation relation = new Relation();
+        relation.setRelationIntygsId(sourceRelation.getIntygsId().getExtension());
+        String sourceTyp = sourceRelation.getTyp().getCode();
+        relation.setRelationKod(RelationKod.fromValue(sourceTyp));
+        return relation;
+    }
+
+    private static boolean isNullOrEmpty(List<?> list) {
+        return (list == null || list.isEmpty());
+    }
 }
