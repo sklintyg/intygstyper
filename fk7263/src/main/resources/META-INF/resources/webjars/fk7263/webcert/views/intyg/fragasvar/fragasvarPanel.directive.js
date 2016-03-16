@@ -27,9 +27,9 @@
 angular.module('fk7263').directive('qaPanel',
     [ '$window', '$log', '$timeout', '$state',
         'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
-        'common.statService', 'common.dialogService', 'common.ObjectHelper',
+        'common.statService', 'common.dialogService', 'common.ObjectHelper', 'common.IntygCopyRequestModel',
         function($window, $log, $timeout, $state,
-            User, fragaSvarCommonService, fragaSvarProxy, statService, dialogService, ObjectHelper) {
+            User, fragaSvarCommonService, fragaSvarProxy, statService, dialogService, ObjectHelper, IntygCopyRequestModel) {
             'use strict';
 
             return {
@@ -76,7 +76,7 @@ angular.module('fk7263').directive('qaPanel',
 
                         $log.debug('Message not found:' + message.id);
                     }
-
+*/
 /*                    function addListMessage(qaList, qa, messageId) {
                         var messageProxy = {};
                         messageProxy.proxyMessage = messageId;
@@ -125,7 +125,13 @@ angular.module('fk7263').directive('qaPanel',
 
                         qa.updateInProgress = true; // trigger local spinner
                         qa.activeErrorMessageKey = null;
-                        fragaSvarProxy.answerWithIntyg(qa, cert.typ, function(result) {
+                        fragaSvarProxy.answerWithIntyg(qa, cert.typ,
+                          IntygCopyRequestModel.build({
+                            intygId: cert.id,
+                            intygType: cert.typ,
+                            patientPersonnummer: cert.grundData.patient.personId
+                          }), function(result) {
+                          
                             qa.updateInProgress = false;
                             qa.activeErrorMessageKey = null;
                             statService.refreshStat();
@@ -136,7 +142,7 @@ angular.module('fk7263').directive('qaPanel',
                                 });
                             }
 
-                            goToDraft(cert.typ, cert.id);
+                            goToDraft(cert.typ, result.intygsUtkastId);
 
                         }, function(errorData) {
                             // show error view

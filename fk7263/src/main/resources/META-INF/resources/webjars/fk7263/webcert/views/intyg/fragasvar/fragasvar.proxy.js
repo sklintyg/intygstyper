@@ -57,12 +57,18 @@ angular.module('fk7263').factory('fk7263.fragaSvarProxy',
         /*
          * answer komplettering with a new intyg (basically do a copy with a 'komplettering' relation to this intyg)
          */
-        function _answerWithIntyg(fragaSvar, intygsTyp, onSuccess, onError) {
+        function _answerWithIntyg(fragaSvar, intygsTyp, intygCopyRequest, onSuccess, onError) {
             $log.debug('_answerWithIntyg: fragaSvarId:' + fragaSvar.internReferens + ' intygsTyp: ' + intygsTyp);
 
-            var restPath = '/api/intyg/' + intygsTyp + '/' + fragaSvar.internReferens + '/komplettera';
-            $http.post(restPath).success(function(data) {
-                $log.debug('got data:' + data);
+            var restPath = '/api/intyg/' + intygsTyp + '/' + intygCopyRequest.intygId + '/komplettera';
+            var payload = {};
+            payload.patientPersonnummer = intygCopyRequest.patientPersonnummer;
+            if (intygCopyRequest.nyttPatientPersonnummer) {
+                payload.nyttPatientPersonnummer = intygCopyRequest.nyttPatientPersonnummer;
+            }
+
+            $http.post(restPath, payload).success(function(data) {
+                $log.debug('got data:' + data.intygsUtkastId);
                 onSuccess(data);
             }).error(function(data, status) {
                 $log.error('error ' + status);
