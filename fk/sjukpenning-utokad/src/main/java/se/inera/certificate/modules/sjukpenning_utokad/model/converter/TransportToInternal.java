@@ -450,12 +450,14 @@ public final class TransportToInternal {
     private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) throws ConverterException {
         String diagnosKod = null;
         String diagnosKodSystem = null;
+        String diagnosDisplayName = null;
         String diagnosBeskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case DIAGNOS_DELSVAR_ID_6:
                 CVType diagnos = getCVSvarContent(delsvar);
                 diagnosKod = diagnos.getCode();
+                diagnosDisplayName = (diagnos.getDisplayName() != null) ? diagnos.getDisplayName() : "";
                 diagnosKodSystem = diagnos.getCodeSystem();
                 break;
             case DIAGNOS_BESKRIVNING_DELSVAR_ID_6:
@@ -466,7 +468,7 @@ public final class TransportToInternal {
             }
         }
         Diagnoskodverk diagnoskodverk = Diagnoskodverk.getEnumByCodeSystem(diagnosKodSystem);
-        diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning));
+        diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning, diagnosDisplayName));
     }
 
     private static void handleAktivitetsbegransning(Builder utlatande, Svar svar) {

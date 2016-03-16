@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
 
+import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;

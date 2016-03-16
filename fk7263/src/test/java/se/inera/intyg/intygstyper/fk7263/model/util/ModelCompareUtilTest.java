@@ -67,6 +67,11 @@ public class ModelCompareUtilTest extends TestCase {
             private boolean compareCodes(String codeFragment) {
                 return CORRECT_DIAGNOSKOD_FROM_FILE.equals(codeFragment) || CORRECT_DIAGNOSKOD2.equals(codeFragment);
             }
+
+            @Override
+            public String getDescriptionFromDiagnosKod(String code, String codeSystemStr) {
+                return "";
+            }
         };
         modelCompareUtil.setModuleService(mockModuleService);
     }

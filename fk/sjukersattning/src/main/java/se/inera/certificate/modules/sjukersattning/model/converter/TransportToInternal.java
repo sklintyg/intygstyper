@@ -255,11 +255,11 @@ public final class TransportToInternal {
     private static void handleUnderlagFinns(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-                case UNDERLAGFINNS_DELSVAR_ID_3:
-                    utlatande.setUnderlagFinns(Boolean.valueOf(getStringContent(delsvar)));
-                    break;
-                default:
-                    throw new IllegalArgumentException();
+            case UNDERLAGFINNS_DELSVAR_ID_3:
+                utlatande.setUnderlagFinns(Boolean.valueOf(getStringContent(delsvar)));
+                break;
+            default:
+                throw new IllegalArgumentException();
             }
         }
     }
@@ -290,23 +290,25 @@ public final class TransportToInternal {
     private static void handleSjukdomsForlopp(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case SJUKDOMSFORLOPP_DELSVAR_ID_5:
-                utlatande.setSjukdomsforlopp(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case SJUKDOMSFORLOPP_DELSVAR_ID_5:
+            utlatande.setSjukdomsforlopp(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) throws ConverterException {
         String diagnosKod = null;
         String diagnosKodSystem = null;
+        String diagnosDisplayName = null;
         String diagnosBeskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case DIAGNOS_DELSVAR_ID_6:
                 CVType diagnos = getCVSvarContent(delsvar);
                 diagnosKod = diagnos.getCode();
+                diagnosDisplayName = (diagnos.getDisplayName() != null) ? diagnos.getDisplayName() : "";
                 diagnosKodSystem = diagnos.getCodeSystem();
                 break;
             case DIAGNOS_BESKRIVNING_DELSVAR_ID_6:
@@ -317,20 +319,20 @@ public final class TransportToInternal {
             }
         }
         Diagnoskodverk diagnoskodverk = Diagnoskodverk.getEnumByCodeSystem(diagnosKodSystem);
-        diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning));
+        diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning, diagnosDisplayName));
     }
 
     private static void handleDiagnosgrund(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-                case DIAGNOSGRUND_DELSVAR_ID_7:
-                    utlatande.setDiagnosgrund(getStringContent(delsvar));
-                    break;
-                case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7:
-                    utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getStringContent(delsvar)));
-                    break;
-                default:
-                    throw new IllegalArgumentException();
+            case DIAGNOSGRUND_DELSVAR_ID_7:
+                utlatande.setDiagnosgrund(getStringContent(delsvar));
+                break;
+            case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7:
+                utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getStringContent(delsvar)));
+                break;
+            default:
+                throw new IllegalArgumentException();
             }
         }
     }
@@ -338,77 +340,77 @@ public final class TransportToInternal {
     private static void handleFunktionsNedsattningIntellektuell(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8:
-                utlatande.setFunktionsnedsattningIntellektuell(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8:
+            utlatande.setFunktionsnedsattningIntellektuell(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleFunktionsNedsattningKommunikation(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID_9:
-                utlatande.setFunktionsnedsattningKommunikation(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID_9:
+            utlatande.setFunktionsnedsattningKommunikation(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleFunktionsNedsattningKoncentration(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID_10:
-                utlatande.setFunktionsnedsattningKoncentration(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID_10:
+            utlatande.setFunktionsnedsattningKoncentration(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleFunktionsNedsattningPsykisk(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID_11:
-                utlatande.setFunktionsnedsattningPsykisk(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID_11:
+            utlatande.setFunktionsnedsattningPsykisk(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleFunktionsNedsattningSynHorselTal(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID_12:
-                utlatande.setFunktionsnedsattningSynHorselTal(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID_12:
+            utlatande.setFunktionsnedsattningSynHorselTal(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleFunktionsNedsattningBalansKoordination(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13:
-                utlatande.setFunktionsnedsattningBalansKoordination(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13:
+            utlatande.setFunktionsnedsattningBalansKoordination(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleFunktionsNedsattningAnnan(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14:
-                utlatande.setFunktionsnedsattningAnnan(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14:
+            utlatande.setFunktionsnedsattningAnnan(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
@@ -459,22 +461,22 @@ public final class TransportToInternal {
     private static void handleSubstansintag(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case SUBSTANSINTAG_DELSVAR_ID_21:
-                utlatande.setSubstansintag(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case SUBSTANSINTAG_DELSVAR_ID_21:
+            utlatande.setSubstansintag(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
     private static void handleMedicinskaForutsattningarForArbete(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-            case MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22:
-                utlatande.setMedicinskaForutsattningarForArbete(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+        case MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22:
+            utlatande.setMedicinskaForutsattningarForArbete(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
         }
     }
 
@@ -517,7 +519,7 @@ public final class TransportToInternal {
 
     private static void handleTillaggsfraga(List<Tillaggsfraga> tillaggsFragor, Svar svar) {
         // En tilläggsfråga har endast ett delsvar
-        if (svar.getDelsvar().size() >  1) {
+        if (svar.getDelsvar().size() > 1) {
             throw new IllegalArgumentException();
         }
 

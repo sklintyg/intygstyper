@@ -16,6 +16,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,22 +34,44 @@ import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUt
 import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 @ContextConfiguration(locations = {"/module-config.xml", "/test-config.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
+
 public class ConverterTest {
 
     @Autowired
     @Qualifier("sjukersattning-objectMapper")
     private ObjectMapper objectMapper;
     private ConverterUtil converterUtil;
+    
+    private WebcertModuleService webcertModuleService;
 
     @Before
     public void setUp() {
         converterUtil = new ConverterUtil();
         converterUtil.setObjectMapper(objectMapper);
+        webcertModuleService = new WebcertModuleService() {
+            
+            @Override
+            public boolean validateDiagnosisCode(String codeFragment, Diagnoskodverk codeSystem) {
+                return true;
+            }
+            
+            @Override
+            public boolean validateDiagnosisCode(String codeFragment, String codeSystemStr) {
+                return true;
+            }
+            
+            @Override
+            public String getDescriptionFromDiagnosKod(String code, String codeSystemStr) {
+                return "";
+            }
+        };
     }
 
     @Test

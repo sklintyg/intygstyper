@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.schemas.Constants;
+import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.*;
