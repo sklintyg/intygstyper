@@ -82,8 +82,8 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 public class SjukersattningModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(SjukersattningModuleApi.class);
-    
-    @Autowired
+
+    @Autowired(required = false)
     private WebcertModuleService moduleService;
 
     @Autowired
@@ -231,7 +231,7 @@ public class SjukersattningModuleApi implements ModuleApi {
                     + response.getResult().getResultText());
         }
     }
-    
+
     @Override
     public String decorateUtlatande(String utlatandeJson) throws ModuleException {
         SjukersattningUtlatande utlatande;
@@ -241,12 +241,13 @@ public class SjukersattningModuleApi implements ModuleApi {
             List<Diagnos> decoratedDiagnoser = new ArrayList<>();
             for (Diagnos diagnos : utlatande.getDiagnoser()) {
                 String klartext = moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem());
-                Diagnos decoratedDiagnos = diagnos.createWithDisplayName(klartext);
+                Diagnos decoratedDiagnos = Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(), klartext);
                 decoratedDiagnoser.add(decoratedDiagnos);
             }
             SjukersattningUtlatande result = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
             return objectMapper.writeValueAsString(result);
         } catch (IOException e) {
+            LOG.error("Failed to decorate Utlatande with diagnose descriptions.", e);
             throw new ModuleException("Could not convert json string into an Utlatande object. ");
         }
     }

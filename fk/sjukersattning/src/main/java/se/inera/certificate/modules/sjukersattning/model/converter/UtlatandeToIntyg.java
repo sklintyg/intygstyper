@@ -32,6 +32,7 @@ import org.apache.commons.lang3.StringUtils;
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
@@ -71,6 +72,7 @@ public final class UtlatandeToIntyg {
             Befattning befattning = new Befattning();
             befattning.setCodeSystem(BEFATTNING_CODE_SYSTEM);
             befattning.setCode(sourceBefattning);
+            befattning.setDisplayName(BefattningKod.getDisplayNameFromCode(sourceBefattning));
             skapadAv.getBefattning().add(befattning);
         }
         for (String sourceKompetens : sourceSkapadAv.getSpecialiteter()) {
@@ -222,7 +224,7 @@ public final class UtlatandeToIntyg {
         for (Diagnos diagnos : source.getDiagnoser()) {
             Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
             svars.add(aSvar(DIAGNOS_SVAR_ID_6)
-                    .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDisplayName()))
+                    .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
                     .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
         }
 

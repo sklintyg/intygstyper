@@ -35,7 +35,7 @@ public class TransportToInternalTest {
         utlatande.setGrundData(IntygTestDataBuilder.getGrundData());
         utlatande.setTextVersion("1.0");
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
-        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra")), Diagnos.create("S48", "ICD_10_SE", "Klämskada arm")));
+        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra")), Diagnos.create("S48", "ICD_10_SE", "Klämskada arm", "Klämskada arm")));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setPagaendeBehandling("Medicin");
         utlatande.setPlaneradBehandling("Mer medicin");

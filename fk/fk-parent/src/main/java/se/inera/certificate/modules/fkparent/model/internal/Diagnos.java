@@ -30,23 +30,17 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class Diagnos {
 
-    private String displayName;
-
     Diagnos() {
     }
 
     @JsonCreator
     public static Diagnos create(@JsonProperty("diagnosKod") String diagnosKod,
-                                 @JsonProperty("diagnosKodSystem") String diagnosKodSystem,
-                                 @JsonProperty("diagnosBeskrivning") String diagnosBeskrivning) {
-        return new AutoValue_Diagnos(diagnosKod, diagnosKodSystem, diagnosBeskrivning);
+            @JsonProperty("diagnosKodSystem") String diagnosKodSystem,
+            @JsonProperty("diagnosBeskrivning") String diagnosBeskrivning,
+            @JsonProperty("diagnosDisplayName")String diagnosDisplayName) {
+        return new AutoValue_Diagnos(diagnosKod, diagnosKodSystem, diagnosBeskrivning, diagnosDisplayName);
     }
-    
-    public Diagnos createWithDisplayName(String displayName){
-        Diagnos diagnos = create(getDiagnosKod(), getDiagnosKodSystem(), getDiagnosBeskrivning());
-        this.displayName = displayName;
-        return diagnos;
-    }
+
 
     @Nullable
     public abstract String getDiagnosKod();
@@ -57,8 +51,7 @@ public abstract class Diagnos {
     @Nullable
     public abstract String getDiagnosBeskrivning();
 
-    public String getDisplayName() {
-        return displayName;
-    }
+    @Nullable
+    public abstract String getDiagnosDisplayName();
 
 }

@@ -33,14 +33,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.*;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToNotification;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToTransport;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.TransportToInternal;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
@@ -81,7 +82,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(SjukpenningUtokadModuleApi.class);
 
-    @Autowired
+    @Autowired(required = false)
     private WebcertModuleService moduleService;
 
     @Autowired
@@ -217,7 +218,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
             List<Diagnos> decoratedDiagnoser = new ArrayList<>();
             for (Diagnos diagnos : utlatande.getDiagnoser()) {
                 String klartext = moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem());
-                Diagnos decoratedDiagnos = diagnos.createWithDisplayName(klartext);
+                Diagnos decoratedDiagnos = Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(), klartext);
                 decoratedDiagnoser.add(decoratedDiagnos);
             }
             SjukpenningUtokadUtlatande result = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();

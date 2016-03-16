@@ -82,7 +82,7 @@ public class InternalToTransportTest {
         utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.NUVARANDE_ARBETE));
         utlatande.setNuvarandeArbete("Smed");
 
-        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra"))));
+        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra"))));
 
         utlatande.setFunktionsnedsattning("Haltar när han dansar");
         utlatande.setAktivitetsbegransning("Kommer inte in i bilen");
