@@ -47,5 +47,5 @@ public enum ArbetslivsinriktadeAtgarderCodeSystem {
         }
         return "";
     }
-    
+
 }
