@@ -27,8 +27,9 @@ describe('QACtrl', function() {
     var $rootScope;
     var fragaSvarCommonService;
     var fragaSvarService;
-    var ManageCertView;
+    var IntygService;
     var deferred;
+    var ObjectHelper;
 
     var testCert = { 'id': 'intyg-2', 'typ': 'fk7263', 'grundData': {'signeringsdatum': '2012-12-23T21:00:00.000',
         'skapadAv': {'personId': 'hans', 'fullstandigtNamn': 'Hans Njurgren', 'vardenhet': {'enhetsid': 'dialys',
@@ -71,10 +72,13 @@ describe('QACtrl', function() {
         $provide.value('common.dialogService', {});
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
-        $provide.value('common.ManageCertView', { isSentToTarget: function() {} });
+        $provide.value('common.IntygService', { isSentToTarget: function() {} });
         $provide.value('common.statService', {});
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
+
+        ObjectHelper = { isDefined: function() {} }; //jasmine.createSpyObj('common.ObjectHelper', [ 'isDefined']);
+        $provide.value('common.ObjectHelper', ObjectHelper);
         fragaSvarService = jasmine.createSpyObj('fk7263.fragaSvarProxy',
             [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled', 'saveNewQuestion', 'saveAnswer']);
         $provide.value('fk7263.fragaSvarProxy', fragaSvarService);
@@ -91,15 +95,15 @@ describe('QACtrl', function() {
      $controller('test.TestCtrl', { $scope: $scope });
      }]));*/
 
-    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend', 'common.ManageCertView',
-        function($controller, _$rootScope_, _$q_, _$httpBackend_, _ManageCertView_) {
+    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend', 'common.IntygService',
+        function($controller, _$rootScope_, _$q_, _$httpBackend_, _IntygService_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $controller('fk7263.QACtrl',
                 { $scope: $scope, fragaSvarCommonService: fragaSvarCommonService, fragaSvarService: fragaSvarService });
             $q = _$q_;
             $httpBackend = _$httpBackend_;
-            ManageCertView = _ManageCertView_;
+            IntygService = _IntygService_;
 
             // arrange
             spyOn($scope, '$broadcast');
@@ -111,9 +115,12 @@ describe('QACtrl', function() {
 
             // ----- arrange
             // spies, mocks
-            spyOn(ManageCertView, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
+            spyOn(IntygService, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
                 // Statuses include a SENT object below so return true.
                 return true;
+            });
+            spyOn(ObjectHelper, 'isDefined').and.callFake(function(object) {
+                return typeof object !== 'undefined' || object === null;
             });
 
             // kick off the window change event

@@ -32,22 +32,6 @@ describe('UtkastController', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
-/*        featureService = {
-            features:{
-                HANTERA_INTYGSUTKAST: 'hanteraIntygsutkast'
-            },
-            isFeatureActive: jasmine.createSpy('isFeatureActive')
-        };
-
-        _manageCertView = jasmine.createSpyObj('common.ManageCertView', [ 'save',  'discard', 'signera', 'printWebPage', 'load' ]);
-        $provide.value('common.ManageCertView',_manageCertView);
-        $provide.value('common.User', {});
-        $provide.value('common.UserModel', {});
-        $provide.value('common.wcFocus', {});
-        $provide.value('common.diagnosService', {});
-        $provide.value('common.DateUtilsService', {});
-        $provide.value('common.UtilsService', {});
-        $provide.value('common.anchorScrollService', {});*/
         $provide.value('common.UtkastProxy', {});
         $provide.value('common.utkastNotifyService', {});
     }));

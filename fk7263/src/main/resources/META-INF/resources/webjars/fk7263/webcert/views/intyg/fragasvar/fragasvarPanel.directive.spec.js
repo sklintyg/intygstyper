@@ -26,7 +26,7 @@ describe('qaPanel', function() {
     var $rootScope;
     var fragaSvarCommonService;
     var fragaSvarService;
-    var ManageCertView;
+    var IntygService;
     var deferred;
 
     // Load the webcert module and mock away everything that is not necessary.
@@ -34,9 +34,13 @@ describe('qaPanel', function() {
         $provide.value('common.dialogService', {});
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
-        $provide.value('common.ManageCertView', { isSentToTarget: function() {} });
+        $provide.value('common.IntygService', { isSentToTarget: function() {} });
         $provide.value('common.User', {});
         $provide.value('common.statService', {});
+        $provide.value('common.ObjectHelper', jasmine.createSpyObj('common.ObjectHelper',
+            [ 'isDefined']));
+        $provide.value('common.IntygCopyRequestModel', jasmine.createSpyObj('common.IntygCopyRequestModel',
+            [ 'build']));
 
         fragaSvarService = jasmine.createSpyObj('fk7263.fragaSvarProxy',
             [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled', 'saveNewQuestion', 'saveAnswer']);
@@ -45,19 +49,18 @@ describe('qaPanel', function() {
 
     beforeEach(angular.mock.module('htmlTemplates'));
 
-    beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope', '$q', '$httpBackend', 'common.ManageCertView',
-        function($controller, $compile, _$rootScope_, _$q_, _$httpBackend_, _ManageCertView_) {
+    beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope', '$q', '$httpBackend', 'common.IntygService',
+        function($controller, $compile, _$rootScope_, _$q_, _$httpBackend_, _IntygService_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
 
             $httpBackend = _$httpBackend_;
-            ManageCertView = _ManageCertView_;
-
+            IntygService = _IntygService_;
+            $scope.qa = { status: 'CLOSED'};
             element = angular.element('<div qa-panel' +
                 ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>');
             element = $compile(element)($scope);
             $scope.$digest();
-
             $scope = element.isolateScope();
         }]));
 
