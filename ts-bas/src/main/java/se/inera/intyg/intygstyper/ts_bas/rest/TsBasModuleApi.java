@@ -369,4 +369,9 @@ public class TsBasModuleApi implements ModuleApi {
     public Map<String, List<String>> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
+        return utlatandeJson;
+    }
 }

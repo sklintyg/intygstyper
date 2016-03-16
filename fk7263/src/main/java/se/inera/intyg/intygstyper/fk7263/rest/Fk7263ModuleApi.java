@@ -491,4 +491,9 @@ public class Fk7263ModuleApi implements ModuleApi {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
+        return utlatandeJson;
+    }
+
 }
