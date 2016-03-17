@@ -13,13 +13,12 @@
       </div>
 
       <div class="btn-group" role="group">
-        <a class="btn btn-secondary"
-           ng-class="{active : intyg.id == viewState.intygModel.id}"
-           ng-click="gotoRelatedIntyg(intyg)"
-           ng-repeat="intyg in viewState.relatedIntygList">
-          <span ng-if="intyg.status == 'SIGNED'">Intyg </span>
-          <span ng-if="intyg.status != 'SIGNED'">Utkast, intyg </span>
-          {{$index+1}}
+        <a class="btn btn-secondary" ng-repeat="intyg in viewState.draftModel.relations"
+           ng-class="{active : intyg.intygsId == viewState.intygModel.id}"
+           ng-click="gotoRelatedIntyg(intyg)">
+          <span ng-if="intyg.status == 'INTYG'">Intyg </span>
+          <span ng-if="intyg.status == 'UTKAST'">Utkast, intyg </span>
+          {{viewState.draftModel.relations.length - $index}}
         </a>
       </div>
 

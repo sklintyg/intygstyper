@@ -86,7 +86,13 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         }
                     );
                 }
-                UtkastService.loadRelations(viewState.common.intyg.type, intygModel).then(function(relatedIntygList) {
+
+                $rootScope.$broadcast('fk7263.ViewCertCtrl.load', null, {
+                    isSent: false,
+                    isRevoked: false
+                });
+
+                /*UtkastService.loadRelations(viewState.common.intyg.type, intygModel).then(function(relatedIntygList) {
                     relatedIntygList.push(intygModel);
                     viewState.relatedIntygList = relatedIntygList;
                     if (viewState.relatedIntygList.length > 1) {
@@ -95,15 +101,15 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                             isRevoked: false
                         });
                     }
-                });
+                });*/
             });
 
             $scope.gotoRelatedIntyg = function(intyg) {
                 if (intyg.status === 'SIGNED') {
-                    $state.go('webcert.intyg.fk.fk7263', {certificateId: intyg.id});
+                    $state.go('webcert.intyg.fk.fk7263', {certificateId: intyg.intygsId});
                 }
                 else {
-                    $state.go('fk7263-edit', {certificateId: intyg.id});
+                    $state.go('fk7263-edit', {certificateId: intyg.intygsId});
                 }
             };
 

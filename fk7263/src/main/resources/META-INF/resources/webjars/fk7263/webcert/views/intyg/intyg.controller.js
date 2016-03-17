@@ -18,10 +18,10 @@
  */
 
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
-    [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
-        'common.messageService', 'common.UserModel', 'fk7263.IntygController.ViewStateService',
-        function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
-            messageService, UserModel, ViewState) {
+    [ '$log', '$rootScope', '$stateParams', '$scope', '$state',
+        'common.IntygService','common.IntygProxy', 'common.messageService', 'common.UserModel', 'fk7263.IntygController.ViewStateService',
+        function($log, $rootScope, $stateParams, $scope, $state,
+            IntygService, IntygProxy, messageService, UserModel, ViewState) {
             'use strict';
 
             ViewState.reset();
@@ -35,15 +35,26 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
             ViewState.intygModel.filledAlways = true;
 
+            $scope.gotoRelatedIntyg = function(intyg) {
+                if (intyg.status === 'SIGNED') {
+                    $state.go('webcert.intyg.fk.fk7263', {certificateId: intyg.intygsId});
+                }
+                else {
+                    $state.go('fk7263-edit', {certificateId: intyg.intygsId});
+                }
+            };
+
             /**
              * Private
              */
+
             function loadIntyg() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
                 IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
+                        ViewState.relations = result.relations;
 
                         ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FK');
                         ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);

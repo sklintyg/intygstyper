@@ -187,33 +187,9 @@
                         id="sendAnswerBtn-{{qa.internReferens}}">
                   <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
                 </button>
-                <!--button type="button" class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"
-                        id="markAsHandledFkOriginBtn-{{qa.internReferens}}"
-                        ng-disabled="qa.updateHandledStateInProgress" wc-check-vardenhet
-                        vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
-                        title="När frågan-svaret markeras som hanterad kommer den att anses som avslutad. Frågan-svaret flyttas till ’Hanterade frågor och svar’ och visas inte längre i vårdenhetens översikt över ej hanterade frågor och svar.">
-                  <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
-                </button-->
               </div>
             </div>
           </div>
-          <!--  fått svar eller väntar på svar från FK, skall kunna klarmarkera manuellt ändå -->
-          <!-- error message occuring when inteacting with server for this FragaSvar-->
-          <!--div class="form-group" ng-if="qa.status == 'PENDING_EXTERNAL_ACTION' || qa.status == 'ANSWERED'">
-            <div id="external-{{qa.internReferens}}-svarsText-load-error" ng-show="qa.activeErrorMessageKey"
-                 class="alert alert-danger">
-              <span message key="fk7263.error.{{qa.activeErrorMessageKey}}"></span>
-            </div>
-            <div class="controls">
-              <button type="button" class="btn btn-default btn-secondary" ng-click="updateAsHandled(qa)"
-                      id="markAsHandledWcOriginBtn-{{qa.internReferens}}"
-                      ng-disabled="qa.updateHandledStateInProgress"
-                      wc-check-vardenhet vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
-                      title="När frågan-svaret markeras som hanterad kommer den att anses som avslutad. Frågan-svaret flyttas till ’Hanterade frågor och svar’ och visas inte längre i vårdenhetens översikt över ej hanterade frågor och svar.">
-                <img src="/img/loader-small.gif" ng-show="qa.updateHandledStateInProgress"> Markera som hanterad
-              </button>
-            </div>
-          </div-->
         </div>
       </div>
     </div>
