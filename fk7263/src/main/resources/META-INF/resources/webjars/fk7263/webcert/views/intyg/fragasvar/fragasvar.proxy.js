@@ -60,7 +60,7 @@ angular.module('fk7263').factory('fk7263.fragaSvarProxy',
         function _answerWithIntyg(fragaSvar, intygsTyp, intygCopyRequest, onSuccess, onError) {
             $log.debug('_answerWithIntyg: fragaSvarId:' + fragaSvar.internReferens + ' intygsTyp: ' + intygsTyp);
 
-            var restPath = '/api/intyg/' + intygsTyp + '/' + intygCopyRequest.intygId + '/komplettera';
+            var restPath = '/api/intyg/' + intygsTyp + '/' + intygCopyRequest.intygId + '/' + fragaSvar.internReferens + '/komplettera';
             var payload = {};
             payload.patientPersonnummer = intygCopyRequest.patientPersonnummer;
             if (intygCopyRequest.nyttPatientPersonnummer) {
