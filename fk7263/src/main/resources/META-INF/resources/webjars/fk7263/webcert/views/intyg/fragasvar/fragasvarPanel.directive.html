@@ -15,6 +15,10 @@
             id="fkMeddelandeRubrik-{{qa.internReferens}}"
             ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
         </h3>
+        <label class="checkbox">
+          <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
+          Hanterad
+        </label>
       </div>
 
       <div ng-if="qa.status != 'CLOSED'" class="row">
@@ -25,15 +29,19 @@
                 id="fkMeddelandeRubrik-{{qa.internReferens}}"
                 ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
             </h3>
-            <p>
+            <h3>
               Åtgärd: <strong><span message key="qa.measure.{{qa.measureResKey}}"></span></strong>
-            </p>
-            <p ng-show="qa.sistaDatumForSvar">
-              Svara senast: {{qa.sistaDatumForSvar}} </p>
+            </h3>
+            <h3 ng-show="qa.sistaDatumForSvar">
+              Svara senast: <strong>{{qa.sistaDatumForSvar}}</strong></h3>
+            <label class="checkbox">
+              <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
+              Hanterad
+            </label>
           </div>
         </div>
 
-        <div wc-authority="VIDAREBEFORDRA_FRAGASVAR" class="col-xs-3 form-inline" ng-show="!certProperties.isRevoked">
+        <div wc-authority="VIDAREBEFORDRA_FRAGASVAR" class="col-xs-3 form-inline qa-panel__padding-top-large" ng-show="!certProperties.isRevoked">
           <!--  status header -->
           <button type="button" id="{{panelId}}-vidarebefordraEjHanterad" class="btn pull-right"
                   ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"
@@ -42,7 +50,7 @@
             <img ng-if="!qa.vidarebefordrad" src="/img/mail.png"> <img ng-if="qa.vidarebefordrad"
                                                                        src="/img/mail_dark.png">
           </button>
-          <label for="{{panelId}}-mark-as-notified-{{qa.internReferens}}" class="checkbox-inline">
+          <label for="{{panelId}}-mark-as-notified-{{qa.internReferens}}" class="checkbox-inline padding-top-small">
             <input id="{{panelId}}-mark-as-notified-{{qa.internReferens}}" type="checkbox"
                    ng-disabled="qa.forwardInProgress" ng-model="qa.vidarebefordrad"
                    ng-change="onVidareBefordradChange(qa)" /> Vidarebefordrad</label> <span
@@ -50,12 +58,7 @@
         </div>
       </div>
 
-      <label class="checkbox">
-        <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
-        Hanterad
-      </label>
-
-      <!-- Frågan -->
+     <!-- Frågan -->
       <div class="panel-container">
         <div class="qa-block"
              ng-class="{'qa-block-handled' : qa.status == 'ANSWERED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'fk', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'wc'}">
@@ -93,7 +96,7 @@
       </div>
 
       <!-- Svara med nytt intyg button - only on komplettering -->
-      <div ng-show="!qa.answerDisabled && !certProperties.isRevoked && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG'">
+      <div class="buttonbar" ng-show="!qa.answerDisabled && !certProperties.isRevoked && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG'">
         <button type="button" class="btn"
                 ng-class="{'btn-success': qa.status != 'CLOSED' && !cannotKomplettera, 'btn-default btn-secondary': qa.status == 'CLOSED' || cannotKomplettera}"
                 ng-click="answerWithIntyg(qa, cert)"
@@ -102,16 +105,17 @@
                 id="answerWithIntygBtn-{{qa.internReferens}}">
           <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Svara med nytt intyg
         </button>
-        <div>
+        <span ng-show="qa.status != 'CLOSED'">
         <label for="{{panelId}}-cant-komplettera-{{qa.internReferens}}" class="checkbox-inline">
           <input id="{{panelId}}-cant-komplettera-{{qa.internReferens}}" type="checkbox"
                  ng-model="cannotKomplettera"
-                 ng-change="onCannotKomplettera()" /> Kan ej komplettera</label>
-        </div>
+                 ng-change="onCannotKomplettera()" /> Kan ej svara med nytt intyg</label>
+        </span>
       </div>
 
       <!-- Svarsdelen -->
-      <div ng-if="(qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && cannotKomplettera) || (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG')">
+      <div ng-if="(qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && cannotKomplettera) || (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG')"
+           class="fold-animation">
         <div class="panel-container" ng-show="qa.amne != 'PAMINNELSE'">
           <div class="qa-block"
                ng-class="{'qa-block-handled': qa.status == 'CLOSED', 'qa-block-fk' : (qa.frageStallare | lowercase) == 'wc', 'qa-block-wc' : (qa.frageStallare | lowercase) == 'fk'}"
@@ -162,7 +166,7 @@
           <div class="form-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
             <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
             <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked && !cannotKomplettera">Svar</label>
-            <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked && cannotKomplettera">Ange varför du inte kan komplettera</label>
+            <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked && cannotKomplettera">Ange varför du inte kan svara med nytt intyg</label>
             <div class="controls">
               <div id="answerDisabledReasonPanel" class="alert alert-info"
                    ng-show="qa.answerDisabled && qa.answerDisabledReason">
