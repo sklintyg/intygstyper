@@ -1,4 +1,4 @@
-angular.module('luse').factory('luse.FormFactoryHelper', ['common.ObjectHelper', function(ObjectHelper) {
+angular.module('luse').factory('luse.FormFactoryHelper', ['common.ObjectHelper', 'common.UtilsService', function(ObjectHelper, UtilsService) {
     'use strict';
 
     function _annatGrundBeskrivningListener(field, newValue, oldValue, scope, stopWatching) {
@@ -7,7 +7,7 @@ angular.module('luse').factory('luse.FormFactoryHelper', ['common.ObjectHelper',
             model.updateToAttic(model.properties.annatGrundForMUBeskrivning);
             model.clear(model.properties.annatGrundForMUBeskrivning);
         } else {
-            if(model.isInAttic(model.properties.annatGrundForMUBeskrivning)){
+            if(!UtilsService.isResetByAngular(newValue, oldValue) && model.isInAttic(model.properties.annatGrundForMUBeskrivning)){
                 model.restoreFromAttic(model.properties.annatGrundForMUBeskrivning);
             }
         }
