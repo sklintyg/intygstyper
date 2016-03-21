@@ -129,7 +129,8 @@ angular.module('fk7263').directive('qaPanel',
                           IntygCopyRequestModel.build({
                             intygId: cert.id,
                             intygType: cert.typ,
-                            patientPersonnummer: cert.grundData.patient.personId
+                            patientPersonnummer: cert.grundData.patient.personId,
+                            nyttPatientPersonnummer: $stateParams.patientId 
                           }), function(result) {
                           
                             qa.updateInProgress = false;
