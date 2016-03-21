@@ -1,18 +1,6 @@
 angular.module('luse').factory('luse.FormFactoryHelper', ['common.ObjectHelper', 'common.UtilsService', function(ObjectHelper, UtilsService) {
     'use strict';
 
-    function _annatGrundBeskrivningListener(field, newValue, oldValue, scope, stopWatching) {
-        var model = scope.model;
-        if (ObjectHelper.isDefined(oldValue) && !ObjectHelper.isDefined(newValue)) {
-            model.updateToAttic(model.properties.annatGrundForMUBeskrivning);
-            model.clear(model.properties.annatGrundForMUBeskrivning);
-        } else {
-            if(!UtilsService.isResetByAngular(newValue, oldValue) && model.isInAttic(model.properties.annatGrundForMUBeskrivning)){
-                model.restoreFromAttic(model.properties.annatGrundForMUBeskrivning);
-            }
-        }
-    }
-
     function _underlagListener(field, newValue, oldValue, scope, stopWatching) {
         var model = scope.model;
         if (newValue) {
@@ -42,7 +30,6 @@ angular.module('luse').factory('luse.FormFactoryHelper', ['common.ObjectHelper',
     }
 
     return {
-        annatGrundBeskrivningListener: _annatGrundBeskrivningListener,
         underlagListener: _underlagListener,
         anledningKontaktListener: _anledningKontaktListener
     };

@@ -44,11 +44,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     type: 'single-text',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true},
-                    watcher: {
-                        expression: 'model.annatGrundForMU',
-                        listener: FactoryHelper.annatGrundBeskrivningListener
-                    }
+                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
                 {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
             ]
