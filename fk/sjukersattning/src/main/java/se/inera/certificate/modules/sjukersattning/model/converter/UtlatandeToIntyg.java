@@ -146,7 +146,7 @@ public final class UtlatandeToIntyg {
     }
 
     private static void decorateWithRelation(Intyg intyg, SjukersattningUtlatande source) {
-        if (source.getGrundData().getRelation() == null) {
+        if (source.getGrundData().getRelation() == null || source.getGrundData().getRelation().getRelationKod() == null) {
             return;
         }
         Relation relation = new Relation();
