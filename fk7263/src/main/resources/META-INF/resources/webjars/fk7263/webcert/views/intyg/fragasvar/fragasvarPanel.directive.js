@@ -25,10 +25,10 @@
  * qaPanel directive. Common directive for both unhandled and handled questions/answers
  */
 angular.module('fk7263').directive('qaPanel',
-    [ '$window', '$log', '$timeout', '$state',
+    [ '$window', '$log', '$timeout', '$state', '$stateParams',
         'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
         'common.statService', 'common.dialogService', 'common.ObjectHelper', 'common.IntygCopyRequestModel',
-        function($window, $log, $timeout, $state,
+        function($window, $log, $timeout, $state, $stateParams,
             User, fragaSvarCommonService, fragaSvarProxy, statService, dialogService, ObjectHelper, IntygCopyRequestModel) {
             'use strict';
 

@@ -22,6 +22,8 @@ import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Relation;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
@@ -76,6 +78,7 @@ public class WebcertModelFactory {
 
         populateWithId(template, copyData.getCertificateId());
         populateWithSkapadAv(template, copyData.getSkapadAv());
+        populateWithRelation(template.getGrundData(), copyData.getRelation());
 
         if (copyData.hasPatient()) {
             populateWithPatientInfo(template, copyData.getPatient());
@@ -118,6 +121,12 @@ public class WebcertModelFactory {
         }
 
         utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
+    }
+
+    private void populateWithRelation(GrundData grundData, Relation relation) {
+        if (relation != null) {
+            grundData.setRelation(relation);
+        }
     }
 
     private void resetDataInCopy(Utlatande utlatande) {
