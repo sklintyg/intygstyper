@@ -166,7 +166,10 @@
           <div class="form-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
             <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
             <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked && !cannotKomplettera">Svar</label>
-            <label class="control-label" ng-show="!qa.answerDisabled && !certProperties.isRevoked && cannotKomplettera">Ange varför du inte kan svara med nytt intyg</label>
+            <div class="alert alert-warning" ng-show="!qa.answerDisabled && !certProperties.isRevoked && cannotKomplettera">
+              <strong>Viktigt!</strong> Konsekvensen av att skicka ett meddelande om att komplettering ej kan göras kan innebära att Försäkringskassans handläggare avslår ansökan om sjukpenning.<br>
+              I det här meddelandet ska du inte skriva någon medicinsk information. Om du har behov av en dialog som innehåller medicinsk information ska du svara med nytt intyg.
+            </div>
             <div class="controls">
               <div id="answerDisabledReasonPanel" class="alert alert-info"
                    ng-show="qa.answerDisabled && qa.answerDisabledReason">

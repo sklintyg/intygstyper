@@ -4,7 +4,7 @@
 
     <div ui-view="header"></div>
 
-    <div class="btn-group" role="group">
+    <!--div class="btn-group" role="group">
       <a class="btn btn-secondary" ng-repeat="intyg in viewState.relations"
          ng-class="{active : intyg.intygsId == viewState.intygModel.id}"
          ng-click="gotoRelatedIntyg(intyg)">
@@ -12,7 +12,7 @@
         <span ng-if="intyg.status == 'UTKAST'">Utkast, intyg </span>
         {{viewState.relations.length - $index}}
       </a>
-    </div>
+    </div-->
 
     <div ng-show="!viewState.common.activeErrorMessageKey">
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : $scope.viewState.common.intyg.isRevoked}">
