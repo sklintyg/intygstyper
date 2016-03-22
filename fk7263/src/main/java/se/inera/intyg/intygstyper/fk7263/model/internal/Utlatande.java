@@ -21,18 +21,16 @@ package se.inera.intyg.intygstyper.fk7263.model.internal;
 
 import static se.inera.intyg.common.support.common.util.StringUtil.emptyToNull;
 import static se.inera.intyg.common.support.common.util.StringUtil.join;
-
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.model.LocalDateInterval;
+import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 
 /**
  * @author andreaskaltenbach
  */
 public class Utlatande implements se.inera.intyg.common.support.model.common.internal.Utlatande {
 
-    private String typ;
+    private String typ = Fk7263EntryPoint.MODULE_ID;
 
     private String id;
 

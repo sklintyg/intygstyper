@@ -19,7 +19,9 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 
@@ -58,6 +60,7 @@ public class WebcertModelFactoryTest {
         assertNotNull(copy);
 
         assertEquals("new-intyg-1", utlatande.getId());
+        assertEquals("fk7263", utlatande.getTyp());
 
         assertEquals("TST12345678", copy.getGrundData().getSkapadAv().getPersonId());
         assertNotNull(copy.getGrundData().getSkapadAv().getFullstandigtNamn());
@@ -70,7 +73,7 @@ public class WebcertModelFactoryTest {
 
         assertEquals("VG1", copy.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarid());
         assertNotNull(copy.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarnamn());
-        
+
         assertNull("Signeringsdatum should be emtpy", copy.getGrundData().getSigneringsdatum());
     }
 
@@ -86,6 +89,7 @@ public class WebcertModelFactoryTest {
         assertNotNull(copy);
 
         assertEquals("new-intyg-2", utlatande.getId());
+        assertEquals("fk7263", utlatande.getTyp());
 
         assertEquals("19121212-1212", copy.getGrundData().getPatient().getPersonId().getPersonnummer());
         assertEquals("Test", copy.getGrundData().getPatient().getFornamn());
@@ -100,7 +104,7 @@ public class WebcertModelFactoryTest {
         Utlatande utlatande = readUtlatandeFromFile("WebcertModelFactoryTest/utlatande-intyg-1.json");
 
         CreateDraftCopyHolder copyData = createDraftCopyHolder("new-intyg-3", false, true);
-        
+
         assertEquals("19121212-1212", utlatande.getGrundData().getPatient().getPersonId().getPersonnummer());
 
         Utlatande copy = factory.createCopy(copyData, utlatande);
@@ -108,12 +112,13 @@ public class WebcertModelFactoryTest {
         assertNotNull(copy);
 
         assertEquals("new-intyg-3", utlatande.getId());
+        assertEquals("fk7263", utlatande.getTyp());
 
         assertEquals("19141414-1414", copy.getGrundData().getPatient().getPersonId().getPersonnummer());
         assertEquals("Test", copy.getGrundData().getPatient().getFornamn());
         assertEquals("Testorsson", copy.getGrundData().getPatient().getEfternamn());
     }
-    
+
     private CreateDraftCopyHolder createDraftCopyHolder(String intygsCopyId, boolean addPatient, boolean addNewPersonId) {
         Vardgivare vardgivare = new Vardgivare("VG1", "Vardgivaren");
         Vardenhet vardenhet = new Vardenhet("VE1", "Sjukhuset", "Plåstergatan", null, null, null, null, null, vardgivare);
@@ -124,7 +129,7 @@ public class WebcertModelFactoryTest {
             Patient patient = new Patient("Test", "Prov", "Testorsson", new Personnummer("19121212-1212"), "Gågatan", "12345", "Staden");
             copyData.setPatient(patient);
         }
-        
+
         if (addNewPersonId) {
             copyData.setNewPersonnummer(new Personnummer("19141414-1414"));
         }
