@@ -118,7 +118,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
                     key: 'underlag', type: 'underlag',
-                    className: 'fold-animation',
+                    className: 'slide-animation',
                     hideExpression: '!model.underlagFinns',
                     templateOptions: {
                         underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
