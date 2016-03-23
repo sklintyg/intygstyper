@@ -15,7 +15,7 @@
             id="fkMeddelandeRubrik-{{qa.internReferens}}"
             ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
         </h3>
-        <label class="checkbox">
+        <label class="checkbox" ng-if="!certProperties.kompletteringOnly">
           <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
           Hanterad
         </label>
@@ -34,14 +34,14 @@
             </h3>
             <h3 ng-show="qa.sistaDatumForSvar">
               Svara senast: <strong>{{qa.sistaDatumForSvar}}</strong></h3>
-            <label class="checkbox">
+            <label class="checkbox" ng-if="!certProperties.kompletteringOnly">
               <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
               Hanterad
             </label>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" ng-if="!certProperties.kompletteringOnly">
         <div class="col-xs-9"></div>
         <div wc-authority="VIDAREBEFORDRA_FRAGASVAR" class="col-xs-3 form-inline qa-panel__vidarebefordra-placement"
              ng-show="!certProperties.isRevoked">
@@ -100,7 +100,7 @@
 
       <!-- Svara med nytt intyg button - only on komplettering -->
       <div class="buttonbar"
-           ng-show="!qa.answerDisabled && !certProperties.isRevoked && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG'">
+           ng-show="!certProperties.kompletteringOnly && !qa.answerDisabled && !certProperties.isRevoked && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG'">
         <button type="button" class="btn"
                 ng-class="{'btn-success': qa.status != 'CLOSED' && !cannotKomplettera, 'btn-default btn-secondary': qa.status == 'CLOSED' || cannotKomplettera}"
                 ng-click="answerWithIntyg(qa, cert)" ng-disabled="cannotKomplettera" wc-check-vardenhet
@@ -117,7 +117,7 @@
 
       <!-- Svarsdelen -->
       <div
-          ng-if="(qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && cannotKomplettera) || (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG')"
+          ng-if="certProperties.kompletteringOnly || (qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && cannotKomplettera) || (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG')"
           class="fold-animation">
         <div class="panel-container" ng-show="qa.amne != 'PAMINNELSE'">
           <div class="qa-block"
@@ -165,11 +165,16 @@
         </div-->
 
         <!-- KNAPPAR EJ HANTERADE FRÅGOR -->
-        <div ng-if="qa.status != 'CLOSED' && qa.amne != 'PAMINNELSE'">
+        <!-- TA BORT certProperties.kompletteringOnly NÄR "SVAR SOM FÖLJER MED" ÄR IMPLEMENTERAT -->
+        <div ng-if="!certProperties.kompletteringOnly && qa.status != 'CLOSED' && qa.amne != 'PAMINNELSE'">
           <div class="form-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
             <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
+
+            <!-- Rubrik: Svar -->
             <label class="control-label"
                    ng-show="!qa.answerDisabled && !certProperties.isRevoked && !cannotKomplettera">Svar</label>
+
+            <!-- ELLER varningsruta komplettering -->
             <div class="alert alert-warning"
                  ng-show="!qa.answerDisabled && !certProperties.isRevoked && cannotKomplettera">
               <strong>Viktigt!</strong> Konsekvensen av att skicka ett meddelande om att komplettering ej kan göras kan
@@ -177,6 +182,13 @@
               I det här meddelandet ska du inte skriva någon medicinsk information. Om du har behov av en dialog som
               innehåller medicinsk information ska du svara med nytt intyg.
             </div>
+
+            <!-- ELLER inforuta komplettering EJ IMPLEMENTERAT
+            <div class="alert alert-info"
+                 ng-show="certProperties.kompletteringOnly">
+              Här kan du föra en dialog med Försäkringskassan om ett intyg. Medicinsk information ska endast skickas via signerade intyg. När du signerat och skickar intyget till Försäkringskassan följer ditt meddelande som du skrivit med.
+            </div> -->
+
             <div class="controls">
               <div id="answerDisabledReasonPanel" class="alert alert-info"
                    ng-show="qa.answerDisabled && qa.answerDisabledReason">

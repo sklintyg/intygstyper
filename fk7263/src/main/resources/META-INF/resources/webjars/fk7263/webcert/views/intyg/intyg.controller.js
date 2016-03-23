@@ -56,16 +56,12 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                         ViewState.intygModel = result.contents;
                         ViewState.relations = result.relations;
 
-                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FK');
-                        ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
-                        if (ViewState.common.intyg.isRevoked) {
-                            ViewState.common.intyg.printStatus = 'revoked';
-                        } else {
-                            ViewState.common.intyg.printStatus = 'signed';
-                        }
                         if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
                             ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
                         }
+
+                        // Updates ViewState.common.intyg (should be named intygProperties)
+                        ViewState.common.updateIntygProperties(result.statuses);
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
 

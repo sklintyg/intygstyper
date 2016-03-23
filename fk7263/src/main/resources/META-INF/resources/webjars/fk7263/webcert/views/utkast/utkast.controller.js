@@ -18,20 +18,23 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$state', '$stateParams', '$q',
+    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$state', '$stateParams',
+        '$q',
         'common.UtkastService', 'common.UserModel', 'fk7263.diagnosService',
         'common.DateUtilsService', 'common.UtilsService', 'fk7263.Domain.IntygModel',
-        'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService', 'fk7263.fmb.ViewStateService', 'fk7263.fmbService',
+        'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService', 'fk7263.fmb.ViewStateService',
+        'fk7263.fmbService',
+        'common.ObjectHelper', 'common.IntygProxy', 'common.IntygService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $state, $stateParams, $q,
-            UtkastService, UserModel, diagnosService,
-            dateUtils, utils, IntygModel, viewState, anchorScrollService, fmbViewState, fmbService) {
+            UtkastService, UserModel, diagnosService, dateUtils, utils, IntygModel, viewState, anchorScrollService,
+            fmbViewState, fmbService, ObjectHelper, IntygProxy, IntygService) {
             'use strict';
 
             /**********************************************************************************
              * Default state
              **********************************************************************************/
 
-            // create a new intyg model and reset all viewStates
+                // create a new intyg model and reset all viewStates
             viewState.reset();
             $scope.viewState = viewState;
 
@@ -53,8 +56,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
                 var intygState = {
-                    viewState : viewState,
-                    formFail : function(){
+                    viewState: viewState,
+                    formFail: function() {
                         $scope.certForm.$setDirty();
                     }
                 };
@@ -62,18 +65,20 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             });
 
             $scope.$on('$destroy', function() {
-                if(!$scope.certForm.$dirty){
+                if (!$scope.certForm.$dirty) {
                     $scope.destroyList();
                 }
                 fmbViewState.reset();
             });
 
-            $scope.destroyList = function(){
+            $scope.destroyList = function() {
                 viewState.clearModel();
             };
 
             // Get the certificate draft from the server.
             UtkastService.load(viewState).then(function(intygModel) {
+
+                // Load FMB help text
                 if (intygModel.diagnosKod) {
                     fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
                         function(formData) {
@@ -87,21 +92,32 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     );
                 }
 
-                $rootScope.$broadcast('fk7263.ViewCertCtrl.load', null, {
-                    isSent: false,
-                    isRevoked: false
-                });
-
-                /*UtkastService.loadRelations(viewState.common.intyg.type, intygModel).then(function(relatedIntygList) {
-                    relatedIntygList.push(intygModel);
-                    viewState.relatedIntygList = relatedIntygList;
-                    if (viewState.relatedIntygList.length > 1) {
-                        $rootScope.$broadcast('fk7263.ViewCertCtrl.load', viewState.relatedIntygList[0], {
-                            isSent: true,
-                            isRevoked: false
+                // Load parentIntyg to feed fragasvar component with load event
+                if (ObjectHelper.isDefined(intygModel.grundData.relation)) {
+                    IntygProxy.getIntyg(intygModel.grundData.relation.relationIntygsId, viewState.common.intyg.type,
+                        function(result) {
+                            if (result !== null && result !== '') {
+                                var parentIntyg = result.contents;
+                                var intygMeta = {
+                                    isSent: IntygService.isSentToTarget(result.statuses, 'FK'),
+                                    isRevoked: IntygService.isRevoked(result.statuses),
+                                    forceUseProvidedIntyg: true,
+                                    kompletteringOnly: true
+                                };
+                                $rootScope.$emit('fk7263.ViewCertCtrl.load', parentIntyg, intygMeta);
+                            } else {
+                                $rootScope.$emit('fk7263.ViewCertCtrl.load', null, null);
+                            }
+                        }, function(error) {
+                            $rootScope.$emit('fk7263.ViewCertCtrl.load', null, null);
                         });
-                    }
-                });*/
+                } else {
+                    // Failed to load parent intyg. Tell frågasvar
+                    $rootScope.$broadcast('fk7263.ViewCertCtrl.load', null, {
+                        isSent: false,
+                        isRevoked: false
+                    });
+                }
             });
 
             $scope.gotoRelatedIntyg = function(intyg) {

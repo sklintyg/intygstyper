@@ -59,7 +59,7 @@ $socialstyrelsen-background-image: url('../img/ss16.png');
 /* A panel to be used instead of the regular bootstrap panels, panel-default etc.
  * Specifically targeting the FMB-accordion
  */
-$fmb-border-color: #dddddd;
+$fmb-border-color: #999;
 $fmb-panelheading-color: #333333; 
 $fmb-panelheading-background-color: #fff;
 $fmb-panelheading-background-hover-color: #E0FFFF;
@@ -74,8 +74,8 @@ $fmb-glyphicon-hover-color: #808080;
   transition-property: width, max-height;
   transition-duration: 0.4s;
   position: absolute;
-  top: 0;
-  left: 100%;
+  top: -10px;
+  left: 101%;
   width: 600px;
   max-height: 400px;
   overflow: hidden;

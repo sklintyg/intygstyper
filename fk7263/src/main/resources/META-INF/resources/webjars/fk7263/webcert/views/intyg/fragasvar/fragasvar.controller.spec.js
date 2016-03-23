@@ -108,11 +108,6 @@ describe('QACtrl', function() {
             // arrange
             spyOn($scope, '$broadcast');
 
-        }]));
-
-    describe('#testEvents', function() {
-        it('on fk7263.ViewCertCtrl.load', function() {
-
             // ----- arrange
             // spies, mocks
             spyOn(IntygService, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
@@ -120,8 +115,13 @@ describe('QACtrl', function() {
                 return true;
             });
             spyOn(ObjectHelper, 'isDefined').and.callFake(function(object) {
-                return typeof object !== 'undefined' || object === null;
+                return typeof object !== 'undefined' && object !== null;
             });
+
+        }]));
+
+    describe('#testEvents', function() {
+        it('on load fragasvar with intyg', function() {
 
             // kick off the window change event
             $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testCert, {
@@ -138,6 +138,44 @@ describe('QACtrl', function() {
             expect($scope.cert).toEqual(testCert);
             expect($scope.certProperties.isLoaded).toBe(true);
             expect($scope.certProperties.isSent).toBe(true);
+            expect($scope.certProperties.isRevoked).toBe(false);
+        });
+
+        it('on load fragasvar with utkast (forced parent intyg)', function() {
+
+            // kick off the window change event
+            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testCert, {
+                isSent: true,
+                isRevoked: false,
+                forceUseProvidedIntyg: true,
+                kompletteringOnly: true
+            });
+
+            // ------ act
+            // promises are resolved/dispatched only on next $digest cycle
+            // this will fire the event!
+            $rootScope.$apply();
+
+            // ------ assert
+            expect($scope.certProperties.isLoaded).toBe(true);
+            expect($scope.certProperties.isSent).toBe(true);
+            expect($scope.certProperties.isRevoked).toBe(false);
+        });
+
+        it('on load fragasvar with null', function() {
+
+            // kick off the window change event
+            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', null, null);
+
+            // ------ act
+            // promises are resolved/dispatched only on next $digest cycle
+            // this will fire the event!
+            $rootScope.$apply();
+
+            // ------ assert
+            expect($scope.cert).toEqual(null);
+            expect($scope.certProperties.isLoaded).toBe(false);
+            expect($scope.certProperties.isSent).toBe(false);
             expect($scope.certProperties.isRevoked).toBe(false);
         });
 
