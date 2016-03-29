@@ -75,9 +75,17 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
             templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
                 {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
-                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
+                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}},
+                {type: 'fmb', hideExpression: '!fmb.formData.FORM4'}
             ]
         },
+    /*
+         <div class="col-md-5 col-md-fmb-offset col-lg-fmb-offset">
+         <div ng-show="fmb.formData.FORM4">
+         <wc-fmb-help-display related-form-id="FALT4" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning"
+         help-text-contents="fmb.formData.FORM4"></wc-fmb-help-display>
+         </div>
+         </div>*/
         {
             wrapper: 'wc-field',
             templateOptions: {category: 5, categoryName: categoryNames[5]},

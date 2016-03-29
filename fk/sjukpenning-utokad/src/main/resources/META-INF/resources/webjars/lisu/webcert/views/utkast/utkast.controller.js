@@ -2,9 +2,10 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory',
+        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory', 'common.fmbService', 'common.fmbViewState',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory) {
+            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory,
+            fmbService, fmbViewState) {
             'use strict';
 
             /**********************************************************************************
@@ -33,7 +34,7 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            UtkastService.load(viewState).then(function(intygmodel) {
+            UtkastService.load(viewState).then(function(intygModel) {
                 if(intygModel.diagnosKod) {
                     fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
                         function (formData) {
