@@ -22,15 +22,15 @@ var sjukersattningMessages = {
         'luse.label.medicinskaforutsattningarforarbete': 'Medicinska förutsättningar för arbete',
 
         //Labels
-        'sjukersattning.label.valjkodverk': 'Välj kodverk:',
+        'sjukersattning.label.valj-version-icd-10': 'Välj version av ICD-10-SE:',
         'sjukersattning.label.spara-utkast': 'Spara',
         'sjukersattning.label.ta-bort-utkast': 'Ta bort utkast',
         'luse.label.skriv-ut-utkast': 'Skriv ut',
 
         'sjukersattning.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
         'sjukersattning.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
-        'sjukersattning.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',
-        'sjukersattning.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
+        'sjukersattning.label.diagnoskodverk.fullstandig': 'Fullständig version',
+        'sjukersattning.label.diagnoskodverk.primarvard': 'Primärvårdsversion',
 
         'luse.label.vardenhet': 'Vårdenhetens adress',
 
@@ -44,7 +44,7 @@ var sjukersattningMessages = {
 
         //Validation messages
         'luse.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
-        'luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' (Fält 4) får endast fyllas i om \'Annan referens valts\' i Fält 1.',  
+        'luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' (Fält 4) får endast fyllas i om \'Annan referens valts\' i Fält 1.',
         'luse.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient (Fält 1)',
         'luse.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter (Fält 1)',
         'luse.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning (Fält 1)',
