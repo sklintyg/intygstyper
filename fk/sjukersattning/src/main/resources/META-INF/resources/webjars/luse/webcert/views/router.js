@@ -63,7 +63,7 @@ angular.module('luse').config(function($stateProvider) {
                     controller: 'luse.ViewCertCtrl'
                 },
                 'fragaSvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'intyg/fk/fragasvar/fragasvar.html',
+                    templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
                     controller: 'common.QACtrl'
                 },
                 'header@webcert.intyg.fk.luse' : {
@@ -72,16 +72,16 @@ angular.module('luse').config(function($stateProvider) {
                 }
             }
         }).
-        state('webcert.fragasvar.luse', {
+        state('webcert.arenden.luse', {
             data: { defaultActive : 'unhandled-qa', intygType: 'luse' },
-            url: '/fragasvar/luse/:certificateId',
+            url: '/arenden/luse/:certificateId',
             views: {
                 'intyg@webcert.fragasvar' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
                     controller: 'luse.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
-                    templateUrl: commonPath + 'intyg/fk/fragasvar/fragasvar.html',
+                    templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
                     controller: 'common.QACtrl'
                 },
                 'header@webcert.fragasvar.luse' : {
