@@ -21,11 +21,10 @@ package se.inera.certificate.modules.sjukpenning_utokad.rest;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.xml.bind.JAXB;
+import javax.xml.ws.soap.SOAPFaultException;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -38,43 +37,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToNotification;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.InternalToTransport;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.TransportToInternal;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.*;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
-import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateType;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.v2.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
 
@@ -186,26 +166,13 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
         GetCertificateType request = new GetCertificateType();
         request.setIntygsId(getIntygsId(certificateId));
 
-        GetCertificateResponseType response = getCertificateResponderInterface.getCertificate(logicalAddress, request);
-
-        switch (response.getResult().getResultCode()) {
-        case INFO:
-        case OK:
-            return convert(response, false);
-        case ERROR:
-            ErrorIdType errorId = response.getResult().getErrorId();
-            String resultText = response.getResult().getResultText();
-            switch (errorId) {
-            case REVOKED:
-                return convert(response, true);
-            default:
-                LOG.error("Error of type {} occured when retrieving certificate '{}': {}", errorId, certificateId, resultText);
-                throw new ModuleException("Error of type " + errorId + " occured when retrieving certificate " + certificateId + ", " + resultText);
-            }
-        default:
-            LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResult().getResultText());
-            throw new ModuleException("An unidentified error occured when retrieving certificate " + certificateId + ", "
-                    + response.getResult().getResultText());
+        try {
+            return convert(getCertificateResponderInterface.getCertificate(logicalAddress, request));
+        } catch (SOAPFaultException e) {
+            String error = String.format("Could not get certificate with id %s and type LISU from Intygstjansten. SOAPFault: %s",
+                    certificateId, e.getMessage());
+            LOG.error(error);
+            throw new ModuleException(error);
         }
     }
 
@@ -218,7 +185,8 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
             List<Diagnos> decoratedDiagnoser = new ArrayList<>();
             for (Diagnos diagnos : utlatande.getDiagnoser()) {
                 String klartext = moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem());
-                Diagnos decoratedDiagnos = Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(), klartext);
+                Diagnos decoratedDiagnos = Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
+                        klartext);
                 decoratedDiagnoser.add(decoratedDiagnos);
             }
             SjukpenningUtokadUtlatande result = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
@@ -230,6 +198,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     private IntygId getIntygsId(String certificateId) {
         IntygId intygId = new IntygId();
+        intygId.setRoot("SE5565594230-B31");
         intygId.setExtension(certificateId);
         return intygId;
     }
@@ -293,11 +262,13 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
         return objectMapper.readValue(utlatandeJson, SjukpenningUtokadUtlatande.class);
     }
 
-    private CertificateResponse convert(GetCertificateResponseType response, boolean revoked) throws ModuleException {
+    private CertificateResponse convert(GetCertificateResponseType response) throws ModuleException {
         try {
             SjukpenningUtokadUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
             String internalModel = objectMapper.writeValueAsString(utlatande);
             CertificateMetaData metaData = TransportToInternal.getMetaData(response.getIntyg());
+            boolean revoked = response.getIntyg().getStatus().stream()
+                    .anyMatch(status -> StatusKod.CANCEL.name().equals(status.getStatus().getCode()));
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
         } catch (Exception e) {
             throw new ModuleException(e);
