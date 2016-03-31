@@ -120,6 +120,8 @@ public class WebcertModelFactory {
     private void populateWithRelation(GrundData grundData, Relation relation) {
         if (relation != null) {
             grundData.setRelation(relation);
+        } else {
+            grundData.setRelation(null);
         }
     }
 
