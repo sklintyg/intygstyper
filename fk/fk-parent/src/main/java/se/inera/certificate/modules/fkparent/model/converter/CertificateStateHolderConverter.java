@@ -19,9 +19,11 @@
 
 package se.inera.certificate.modules.fkparent.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PART_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.STATUS_KOD_CODE_SYSTEM;
+
+import java.util.*;
 
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
@@ -30,6 +32,7 @@ import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
 import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 
 public final class CertificateStateHolderConverter {
+
 
     private CertificateStateHolderConverter() {
     }
@@ -57,6 +60,7 @@ public final class CertificateStateHolderConverter {
 
     private static Statuskod toStatuskod(CertificateState state) {
         Statuskod statuskod = new Statuskod();
+        statuskod.setCodeSystem(STATUS_KOD_CODE_SYSTEM);
         switch (state) {
             case RECEIVED:
                 statuskod.setCode("RECEIV");
@@ -86,6 +90,7 @@ public final class CertificateStateHolderConverter {
 
     private static Part toPart(String target) {
         Part part = new Part();
+        part.setCodeSystem(PART_CODE_SYSTEM);
         switch (target) {
             case "FK":
                 part.setCode("FKASSA");
