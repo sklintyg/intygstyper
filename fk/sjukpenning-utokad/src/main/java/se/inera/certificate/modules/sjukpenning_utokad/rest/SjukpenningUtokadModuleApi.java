@@ -19,11 +19,11 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.rest;
 
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.*;
 
 import javax.xml.bind.JAXB;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.joda.time.LocalDateTime;
@@ -41,6 +41,7 @@ import se.inera.certificate.modules.sjukpenning_utokad.model.converter.*;
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
+import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -158,7 +159,29 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
 
     @Override
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        // TODO
+        if (internalModel == null || internalModel.getXmlModel() == null || StringUtil.isNullOrEmpty(logicalAddress)) {
+            throw new ModuleException("Internal model does not contain the original xml");
+        }
+        StringBuffer sb = new StringBuffer(internalModel.getXmlModel());
+        RegisterCertificateType request = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())), RegisterCertificateType.class);
+
+        sendCertificateToRecipient(request, logicalAddress);
+    }
+
+    private void sendCertificateToRecipient(RegisterCertificateType request, final String logicalAddress) throws ExternalServiceCallException {
+        try {
+            RegisterCertificateResponseType response = registerCertificateResponderInterface.registerCertificate(logicalAddress, request);
+
+            if (response.getResult() != null && response.getResult().getResultCode() != ResultCodeType.OK) {
+                String message = response.getResult().getResultText();
+                LOG.error("Error occured when sending certificate '{}': {}",
+                        request.getIntyg() != null ? request.getIntyg().getIntygsId() : null,
+                        message);
+                throw new ExternalServiceCallException(message);
+            }
+        } catch (SOAPFaultException e) {
+            throw new ExternalServiceCallException(e);
+        }
     }
 
     @Override
