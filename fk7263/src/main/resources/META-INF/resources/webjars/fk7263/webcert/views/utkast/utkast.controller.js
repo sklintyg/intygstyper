@@ -93,7 +93,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Load parentIntyg to feed fragasvar component with load event
-                if (ObjectHelper.isDefined(intygModel.grundData.relation)) {
+                if (ObjectHelper.isDefined(intygModel.grundData.relation) && ObjectHelper.isDefined(intygModel.grundData.relation.relationIntygsId)) {
                     IntygProxy.getIntyg(intygModel.grundData.relation.relationIntygsId, viewState.common.intyg.type,
                         function(result) {
                             if (result !== null && result !== '') {
