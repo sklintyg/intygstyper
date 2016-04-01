@@ -48,68 +48,6 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 },
                 {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
             ]
-        }, {
-            wrapper: 'wc-field',
-            templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'prototype0'},
-            fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_1', level: '5'}},
-                {
-                    type: 'headline',
-                    className: 'col-md-6 no-space-left',
-                    templateOptions: {label: 'DFR_1.1', level: '4'}
-                },
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.2', level: 4, labels: underlagLabelGroup}},
-                {
-                    key: 'undersokningAvPatienten',
-                    type: 'date',
-                    templateOptions: {label: 'KV_FKMU_0001.1', disableHelp: true}
-                },
-                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3', disableHelp: true}},
-                {
-                    key: 'anhorigsBeskrivningAvPatienten',
-                    type: 'date',
-                    templateOptions: {label: 'KV_FKMU_0001.4', disableHelp: true}
-                },
-                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5', disableHelp: true}},
-                {
-                    key: 'annatGrundForMUBeskrivning',
-                    type: 'single-text',
-                    className: 'dfr_1_3',
-                    hideExpression: '!model.annatGrundForMU',
-                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
-                },
-                //{key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
-                {
-                    key: 'underlagFinns',
-                    className: 'question-divider',
-                    type: 'boolean',
-                    templateOptions: {label: 'DFR_3.1'}
-                },
-                {
-                    key: 'underlag', type: 'underlag', hideExpression: '!model.underlagFinns', templateOptions: {
-                    underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
-                    typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
-                },
-                    watcher: {
-                        expression: 'model.underlagFinns',
-                        listener: function(field, newValue, oldValue, scope, stopWatching) {
-                            if (newValue) {
-                                if (!scope.model.underlag || scope.model.underlag.length === 0) {
-                                    scope.model.underlag.push({typ: null, datum: null, hamtasFran: null});
-                                }
-                            } else {
-                                scope.model.underlag = [];
-                            }
-                        }
-                    }
-                },
-                {
-                    key: 'kannedomOmPatient',
-                    className: 'question-divider',
-                    type: 'date',
-                    templateOptions: {label: 'DFR_2.1'}
-                }
-            ]
         },
         {
             wrapper: 'wc-field',
