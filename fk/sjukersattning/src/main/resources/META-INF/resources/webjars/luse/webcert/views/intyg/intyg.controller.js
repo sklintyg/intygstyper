@@ -34,7 +34,6 @@ angular.module('luse').controller('luse.ViewCertCtrl',
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
 
-                        var version = '0.9';
                         DynamicLabelService.updateDynamicLabels(ViewState.common.intyg.type, ViewState.intygModel);
 
                         ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FKASSA');
