@@ -2,10 +2,10 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory', 'common.fmbService', 'common.fmbViewState',
+        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory', 'common.fmbService', 'sjukpenningUttokad.fmb.ViewStateService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory,
-            fmbService, fmbViewState) {
+            fmbService, sjukpenningUttokadFmbViewState) {
             'use strict';
 
             /**********************************************************************************
@@ -38,7 +38,7 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
                 if(intygModel.diagnosKod) {
                     fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
                         function (formData) {
-                            fmbViewState.setState(formData, intygModel.diagnosKod);
+                            sjukpenningUttokadFmbViewState.setState(formData, intygModel.diagnosKod);
                         },
                         function (rejectionData) {
                             $log.debug('Error searching fmb help text');

@@ -30,6 +30,9 @@ angular.module('fk7263').factory('fk7263.fmbService', ['$http' , '$q', '$log',
 
             $http.get(restPath).success(function(response) {
                 deferred.resolve(response);
+                $log.debug('called fmb:');
+                $log.debug(response);
+
             }).error(function(response, status) {
                 $log.error('error ' + status);
                 deferred.reject(status);

@@ -83,6 +83,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                     fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
                         function(formData) {
                             fmbViewState.setState(formData, intygModel.diagnosKod);
+                            $log.debug('Setting FMB state');
                         },
                         function(rejectionData) {
                             $log.debug('Error searching fmb help text');
