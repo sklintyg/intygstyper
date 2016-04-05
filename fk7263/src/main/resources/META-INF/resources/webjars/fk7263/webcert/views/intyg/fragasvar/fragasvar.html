@@ -92,7 +92,7 @@
         </div>
 
         <div ng-show="!certProperties.kompletteringOnly">
-          <h2 class="col-head" ng-show="qaListFiltered.length > 0">Tidigare meddelanden <span wc-help-mark field-help-text="qa.help.handled"></span></h2>
+          <h2 class="col-head" ng-show="qaListFiltered.length > 0">Tidigare frågor och svar <span wc-help-mark field-help-text="qa.help.handled"></span></h2>
           <div ng-repeat="qa in qaListFiltered = (qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true)" class="qa-item">
             <div qa-panel panel-id="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
           </div>
