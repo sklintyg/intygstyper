@@ -131,13 +131,15 @@
               <div wc-field field-number="8a" field-label="fk7263.label.arbetsformaga"
                    filled="{{viewState.has8a()}}" id="field8">
                 <ul class="padded-list">
-                  <li ng-show="viewState.intygModel.nuvarandeArbetsuppgifter"><span message
-                                                                    key="fk7263.label.arbetsformaga.nuvarande-arbete"></span>
-                    <div id="nuvarandeArbetsuppgifter" class="multiline">{{viewState.intygModel.nuvarandeArbetsuppgifter}}</div>
+                  <li ng-show="viewState.intygModel.nuvarandeArbetsuppgifter">
+                      <span message key="fk7263.label.arbetsformaga.nuvarande-arbete"></span>
+                      <div id="nuvarandeArbetsuppgifter" class="multiline">{{viewState.intygModel.nuvarandeArbetsuppgifter}}</div>
                   </li>
-                  <li id="arbetsloshet" ng-show="viewState.intygModel.arbetsloshet"><span message key="fk7263.label.arbetsformaga.arbetslos"></span></li>
-                  <li id="foraldrarledighet" ng-show="viewState.intygModel.foraldrarledighet"><span message
-                                                             key="fk7263.label.arbetsformaga.foraldrarledighet"></span>
+                  <li id="arbetsloshet" ng-show="viewState.intygModel.arbetsloshet">
+                      <span message key="fk7263.label.arbetsformaga.arbetslos"></span>
+                  </li>
+                  <li id="foraldrarledighet" ng-show="viewState.intygModel.foraldrarledighet">
+                      <span message key="fk7263.label.arbetsformaga.foraldrarledighet"></span>
                   </li>
                 </ul>
               </div>

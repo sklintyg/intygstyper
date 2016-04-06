@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').service('fk7263.IntygController.ViewStateService',
-    ['$log', 'common.IntygViewStateService',
-        function($log, CommonViewState) {
+    ['$log', 'common.IntygViewStateService', 'common.ObjectHelper',
+        function($log, CommonViewState, ObjectHelper) {
             'use strict';
 
             this.common = CommonViewState;
@@ -33,10 +33,12 @@ angular.module('fk7263').service('fk7263.IntygController.ViewStateService',
 
             // Fix for Angular 1.4 / WEBCERT-2236
             this.has8a = function() {
-                if(this.intygModel.nuvarandeArbetsuppgifter != null || this.intygModel.arbetsloshet != null || this.intygModel.foraldrarledighet != null) {
-                    return 'true';
-                } else {
+                if(ObjectHelper.isFalsy(this.intygModel.nuvarandeArbetsuppgifter)
+                        &&ObjectHelper.isFalsy(this.intygModel.arbetsloshet)
+                        &&ObjectHelper.isFalsy(this.intygModel.foraldrarledighet)) {
                     return 'false';
+                } else {
+                    return 'true';
                 }
             };
 
