@@ -1,11 +1,11 @@
 angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
-        'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
+        'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService', 'common.ObjectHelper',
         'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory', 'common.fmbService', 'sjukpenningUttokad.fmb.ViewStateService',
+        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory', 'common.fmbService', 'common.fmb.ViewStateService',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory,
-            fmbService, sjukpenningUttokadFmbViewState) {
+            UtkastService, UserModel, dateUtils, utils, ObjectHelper, IntygModel, viewState, anchorScrollService, formFactory,
+            fmbService, fmbViewState) {
             'use strict';
 
             /**********************************************************************************
@@ -35,18 +35,28 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
 
             // Get the certificate draft from the server.
             UtkastService.load(viewState).then(function(intygModel) {
-                if(intygModel.diagnosKod) {
-                    fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
+                $log.debug("intygModel");
+                $log.debug(intygModel);
+                if(angular.isArray(intygModel.diagnoser.length && intygModel.diagnoser.length)) {
+                    fmbService.getFMBHelpTextsByCodeAndType(intygModel.diagnoser[0].diagnosKod, 'LISU').then(
+
                         function (formData) {
-                            sjukpenningUttokadFmbViewState.setState(formData, intygModel.diagnosKod);
+                            fmbViewState.setState(formData, intygModel.diagnosKod);
+                            $log.debug('fmbViewState from utkast controller');
+                            $log.debug(fmbViewState);
                         },
                         function (rejectionData) {
-                            $log.debug('Error searching fmb help text');
+                            $log.debug('fmbViewState from utkast controller - Error searching fmb help text');
                             $log.debug(rejectionData);
                             return [];
                         }
                     );
-                }
+                } else{  $log.debug('diagnoser not definer in viewstate utkast test')
+                    $log.debug('intygModel in utkast controller');
+                    $log.debug(intygModel)
+                };
+
+
                 if (viewState.common.textVersionUpdated) {
                     $scope.certForm.$setDirty();
                 }
@@ -63,23 +73,6 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
                 saveDeferred.resolve(intygState);
             });
 
-/*
-            UtkastService.load(viewState).then(function(intygModel) {
-                    if(intygModel.diagnosKod) {
-                        fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
-                            function (formData) {
-                                fmbViewState.setState(formData, intygModel.diagnosKod);
-                            },
-                            function (rejectionData) {
-                                $log.debug('Error searching fmb help text');
-                                $log.debug(rejectionData);
-                                return [];
-                            }
-                        );
-                    }
-                }
-            );
-   */
             $scope.$on('$destroy', function() {
                 if(!$scope.certForm.$dirty){
                     $scope.destroyList();
