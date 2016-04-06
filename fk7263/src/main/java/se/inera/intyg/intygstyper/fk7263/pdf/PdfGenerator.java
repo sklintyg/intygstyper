@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
 import se.inera.intyg.common.support.common.enumerations.Recipients;
@@ -54,17 +54,19 @@ public class PdfGenerator {
     private static final int MASK_START_Y = 670;
 
     // Constants used for watermarking
-    private static final int MARK_AS_COPY_HEIGTH = 30;
-    private static final int MARK_AS_COPY_WIDTH = 250;
-    private static final int MARK_AS_EMPLOYER_HEIGTH = 30;
-    private static final int MARK_AS_EMPLOYER_WIDTH = 410;
+    private static final int MARK_AS_COPY_HEIGTH = 34;
+    private static final int MARK_AS_COPY_WIDTH = 226;
     private static final int MARK_AS_COPY_START_X = 50;
     private static final int MARK_AS_COPY_START_Y = 690;
+    private static final int MARK_AS_EMPLOYER_HEIGTH = 55;
+    private static final int MARK_AS_EMPLOYER_WIDTH = 495;
+    private static final int MARK_AS_EMPLOYER_START_X = 50;
+    private static final int MARK_AS_EMPLOYER_START_Y = 670;
     private static final int WATERMARK_TEXT_PADDING = 10;
-    private static final int WATERMARK_FONTSIZE = 12;
+    private static final int WATERMARK_FONTSIZE = 11;
 
     private static final String WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
-    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg endast avsett för arbetsgivare.";
+    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg med minimalt innehåll. Det uppfyller sjuklönelagens krav, om inget annat regleras i kollektivavtal. Det minimala intyget kan ge arbetsgivaren sämre möjligheter att bedöma behovet av rehabilitering än ett fullständigt intyg";
 
     // Right margin texts
     private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
@@ -318,7 +320,7 @@ public class PdfGenerator {
 
     // Mark this document as a copy of an electronically signed document
     private void markAsElectronicCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
-        mark(pdfStamper, watermarkText, MARK_AS_COPY_HEIGTH, MARK_AS_COPY_WIDTH);
+        mark(pdfStamper, watermarkText, MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, MARK_AS_COPY_HEIGTH, MARK_AS_COPY_WIDTH);
     }
 
     /**
@@ -328,28 +330,31 @@ public class PdfGenerator {
      * @throws IOException
      */
     private void markAsEmployerCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
-        mark(pdfStamper, watermarkText, MARK_AS_EMPLOYER_HEIGTH, MARK_AS_EMPLOYER_WIDTH);
+        mark(pdfStamper, watermarkText, MARK_AS_EMPLOYER_START_X, MARK_AS_EMPLOYER_START_Y, MARK_AS_EMPLOYER_HEIGTH, MARK_AS_EMPLOYER_WIDTH);
     }
 
-    private void mark(PdfStamper pdfStamper, String watermarkText, int height, int width) throws DocumentException, IOException {
+    private void mark(PdfStamper pdfStamper, String watermarkText, int startX, int startY, int height, int width) throws DocumentException, IOException {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(1);
         addOverlay.saveState();
         addOverlay.setColorFill(CMYKColor.WHITE);
         addOverlay.setColorStroke(CMYKColor.RED);
-        addOverlay.rectangle(MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, width, height);
+        addOverlay.rectangle(startX, startY, width, height);
         addOverlay.stroke();
         addOverlay.restoreState();
+
         // Do text
         addOverlay = pdfStamper.getOverContent(1);
-        addOverlay.saveState();
+        ColumnText ct = new ColumnText(addOverlay);
         BaseFont bf = BaseFont.createFont();
-        addOverlay.beginText();
-        addOverlay.setFontAndSize(bf, WATERMARK_FONTSIZE);
-        addOverlay.setTextMatrix(MARK_AS_COPY_START_X + WATERMARK_TEXT_PADDING, MARK_AS_COPY_START_Y + WATERMARK_TEXT_PADDING);
-        addOverlay.showText(watermarkText);
-        addOverlay.endText();
-        addOverlay.restoreState();
+        Font font = new Font(bf, WATERMARK_FONTSIZE);
+        int llx = startX + WATERMARK_TEXT_PADDING;
+        int lly = startY + WATERMARK_TEXT_PADDING;
+        int urx = llx + width - 2 * WATERMARK_TEXT_PADDING;
+        int ury = lly + height - 2 * WATERMARK_TEXT_PADDING;
+        Phrase phrase = new Phrase(watermarkText, font);
+        ct.setSimpleColumn(phrase, llx, lly, urx, ury, WATERMARK_FONTSIZE, Element.ALIGN_LEFT | Element.ALIGN_TOP);
+        ct.go();
     }
 
     private void createRightMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {
