@@ -62,7 +62,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
-import se.inera.certificate.modules.aktivitetsersattning.support.AktivitetsersattningEntryPoint;
+import se.inera.certificate.modules.aktivitetsersattning.support.AktivitetsersattningNAEntryPoint;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.SitUtlatande;
 import se.inera.intyg.common.support.model.InternalDate;
@@ -70,13 +70,13 @@ import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 @AutoValue
-@JsonDeserialize(builder = AutoValue_AktivitetsersattningUtlatande.Builder.class)
-public abstract class AktivitetsersattningUtlatande implements Utlatande, SitUtlatande {
+@JsonDeserialize(builder = AutoValue_AktivitetsersattningUtlatandeNA.Builder.class)
+public abstract class AktivitetsersattningUtlatandeNA implements Utlatande, SitUtlatande {
 
     public abstract String getId();
 
     public String getTyp() {
-       return AktivitetsersattningEntryPoint.MODULE_ID;
+       return AktivitetsersattningNAEntryPoint.MODULE_ID;
     }
 
     public abstract GrundData getGrundData();
@@ -215,7 +215,7 @@ public abstract class AktivitetsersattningUtlatande implements Utlatande, SitUtl
     public abstract Builder toBuilder();
 
     public static Builder builder() {
-        return new AutoValue_AktivitetsersattningUtlatande.Builder().
+        return new AutoValue_AktivitetsersattningUtlatandeNA.Builder().
                 setUnderlag(ImmutableList.<Underlag> of()).
                 setDiagnoser(ImmutableList.<Diagnos> of()).
                 setTillaggsfragor(ImmutableList.<Tillaggsfraga>of());
@@ -224,7 +224,7 @@ public abstract class AktivitetsersattningUtlatande implements Utlatande, SitUtl
     @AutoValue.Builder
     public abstract static class Builder {
 
-        public abstract AktivitetsersattningUtlatande build();
+        public abstract AktivitetsersattningUtlatandeNA build();
 
         @JsonProperty(ID_JSON_ID)
         public abstract Builder setId(String id);

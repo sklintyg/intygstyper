@@ -28,7 +28,7 @@ import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
 
-public class AktivitetsersattningEntryPoint implements ModuleEntryPoint {
+public class AktivitetsersattningNAEntryPoint implements ModuleEntryPoint {
     public static final String DEFAULT_RECIPIENT_ID = "FK";
     
     public static final String MODULE_ID = "luae_na";
