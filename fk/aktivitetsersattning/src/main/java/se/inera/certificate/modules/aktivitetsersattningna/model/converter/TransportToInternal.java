@@ -18,6 +18,24 @@
  */
 package se.inera.certificate.modules.aktivitetsersattningna.model.converter;
 
-public final class TransportToInternal {
+import se.inera.certificate.modules.aktivitetsersattning.model.internal.AktivitetsersattningUtlatandeNA;
+import se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
+public final class TransportToInternal {
+    
+    private static final int TILLAGGSFRAGA_START = 9001;
+
+    private TransportToInternal() {
+    }
+    
+    public static AktivitetsersattningUtlatandeNA convert(Intyg source) throws ConverterException {
+        Builder utlatande = AktivitetsersattningUtlatandeNA.builder();
+        utlatande.setId(source.getIntygsId().getExtension());
+        utlatande.setGrundData(TransportConverterUtil.getGrundData(source));
+        utlatande.setTextVersion(source.getVersion());
+        setSvar(utlatande, source);
+        return utlatande.build();
+    }
 }
