@@ -496,4 +496,29 @@ public class Fk7263ModuleApi implements ModuleApi {
         return utlatandeJson;
     }
 
+    @Override
+    public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCopyHolder, InternalModelHolder internalModelHolder)
+            throws ModuleException {
+        try {
+            Utlatande internal = getInternal(internalModelHolder);
+            internal.setKontaktMedFk(false); //TODO: null?
+            internal.setNedsattMed100(null);
+            internal.setNedsattMed25(null);
+            internal.setNedsattMed50(null);
+            internal.setNedsattMed75(null);
+            internal.setNedsattMed25Beskrivning(null);
+            internal.setNedsattMed50Beskrivning(null);
+            internal.setNedsattMed75Beskrivning(null);
+            internal.setTjanstgoringstid(null);
+            internal.setTelefonkontaktMedPatienten(null);
+            internal.setJournaluppgifter(null);
+            internal.setAnnanReferens(null);
+            internal.setAnnanReferensBeskrivning(null);
+            return toInteralModelResponse(webcertModelFactory.createCopy(draftCopyHolder, internal));
+        } catch (ConverterException e) {
+            LOG.error("Could not create a new internal Webcert model", e);
+            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
+
 }
