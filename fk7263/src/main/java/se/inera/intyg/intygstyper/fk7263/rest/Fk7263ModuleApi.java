@@ -41,12 +41,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;
 
 import iso.v21090.dt.v1.CD;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
@@ -54,10 +59,26 @@ import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.exception.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.intyg.intygstyper.fk7263.model.converter.*;
+import se.inera.intyg.intygstyper.fk7263.model.converter.ArbetsformagaToGiltighet;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToNotification;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.fk7263.model.converter.WebcertModelFactory;
 import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
@@ -67,7 +88,6 @@ import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
-
 /**
  * @author andreaskaltenbach, marced
  */
@@ -75,7 +95,8 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
      * Must only be used to set the code system name when certificate
      * is sent to Försäkringskassan. See JIRA issue WEBCERT-1442
@@ -146,7 +167,8 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+            throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
             PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin, true);
@@ -172,7 +194,8 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template) throws ModuleException {
+    public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+            throws ModuleException {
         try {
             Utlatande internal = getInternal(template);
             return toInteralModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
@@ -230,26 +253,27 @@ public class Fk7263ModuleApi implements ModuleApi {
         GetMedicalCertificateForCareRequestType request = new GetMedicalCertificateForCareRequestType();
         request.setCertificateId(certificateId);
 
-        GetMedicalCertificateForCareResponseType response = getMedicalCertificateForCareResponderInterface.
-                getMedicalCertificateForCare(logicalAddress, request);
+        GetMedicalCertificateForCareResponseType response = getMedicalCertificateForCareResponderInterface
+                .getMedicalCertificateForCare(logicalAddress, request);
 
         switch (response.getResult().getResultCode()) {
-            case INFO:
-            case OK:
-                return convert(response, false);
-            case ERROR:
-                ErrorIdType errorId = response.getResult().getErrorId();
-                String resultText = response.getResult().getResultText();
-                switch (errorId) {
-                case REVOKED:
-                    return convert(response, true);
-                default:
-                    LOG.error("Error of type {} occured when retrieving certificate '{}': {}", errorId, certificateId, resultText);
-                    throw new ModuleException("Error of type " + errorId + " occured when retrieving certificate " + certificateId + ", " + resultText);
-                }
+        case INFO:
+        case OK:
+            return convert(response, false);
+        case ERROR:
+            ErrorIdType errorId = response.getResult().getErrorId();
+            String resultText = response.getResult().getResultText();
+            switch (errorId) {
+            case REVOKED:
+                return convert(response, true);
             default:
-                LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResult().getResultText());
-                throw new ModuleException("An unidentified error occured when retrieving certificate " + certificateId + ", " + response.getResult().getResultText());
+                LOG.error("Error of type {} occured when retrieving certificate '{}': {}", errorId, certificateId, resultText);
+                throw new ModuleException("Error of type " + errorId + " occured when retrieving certificate " + certificateId + ", " + resultText);
+            }
+        default:
+            LOG.error("An unidentified error occured when retrieving certificate '{}': {}", certificateId, response.getResult().getResultText());
+            throw new ModuleException(
+                    "An unidentified error occured when retrieving certificate " + certificateId + ", " + response.getResult().getResultText());
         }
     }
 
@@ -269,12 +293,13 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
+    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+            throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
     }
 
     @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException  {
+    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
         Utlatande oldUtlatande;
         Utlatande newUtlatande;
 
@@ -294,7 +319,8 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     // - - - - - Package scope - - - - - //
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      *
      * Hard code code system name to ICD-10.
      *
@@ -404,7 +430,8 @@ public class Fk7263ModuleApi implements ModuleApi {
         return foundAktivitet;
     }
 
-    private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId) throws ModuleException {
+    private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId)
+            throws ModuleException {
 
         // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
         if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(FK.toString())) {
@@ -415,8 +442,7 @@ public class Fk7263ModuleApi implements ModuleApi {
         address.setValue(logicalAddress);
 
         try {
-            RegisterMedicalCertificateResponseType response =
-                    registerMedicalCertificateClient.registerMedicalCertificate(address, request);
+            RegisterMedicalCertificateResponseType response = registerMedicalCertificateClient.registerMedicalCertificate(address, request);
 
             // check whether call was successful or not
             if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
@@ -433,7 +459,6 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
 
     }
-
 
     // - - - - - Private transformation methods for building responses - - - - - //
 
@@ -454,7 +479,8 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate) throws ModuleException {
+    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+            throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
             webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
@@ -501,7 +527,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             throws ModuleException {
         try {
             Utlatande internal = getInternal(internalModelHolder);
-            internal.setKontaktMedFk(false); //TODO: null?
+            internal.setKontaktMedFk(false);
             internal.setNedsattMed100(null);
             internal.setNedsattMed25(null);
             internal.setNedsattMed50(null);
@@ -514,6 +540,10 @@ public class Fk7263ModuleApi implements ModuleApi {
             internal.setJournaluppgifter(null);
             internal.setAnnanReferens(null);
             internal.setAnnanReferensBeskrivning(null);
+            se.inera.intyg.common.support.model.common.internal.Relation relation = draftCopyHolder.getRelation();
+            relation.setSistaGiltighetsDatum(internal.getGiltighet().getTom());
+            draftCopyHolder.setRelation(relation);
+
             return toInteralModelResponse(webcertModelFactory.createCopy(draftCopyHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
