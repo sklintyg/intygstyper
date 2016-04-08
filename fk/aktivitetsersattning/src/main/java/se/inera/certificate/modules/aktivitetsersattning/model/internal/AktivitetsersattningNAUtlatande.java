@@ -25,6 +25,7 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_JSON_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_JSON_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_JSON_ID_14;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_JSON_ID_13;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_JSON_ID_8;
@@ -42,7 +43,6 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_JSON_ID_2;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_JSON_ID_26;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_JSON_ID_25;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_JSON_ID_19;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_JSON_ID_20;
@@ -70,8 +70,8 @@ import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 @AutoValue
-@JsonDeserialize(builder = AutoValue_AktivitetsersattningUtlatandeNA.Builder.class)
-public abstract class AktivitetsersattningUtlatandeNA implements Utlatande, SitUtlatande {
+@JsonDeserialize(builder = AutoValue_AktivitetsersattningNAUtlatande.Builder.class)
+public abstract class AktivitetsersattningNAUtlatande implements Utlatande, SitUtlatande {
 
     public abstract String getId();
 
@@ -82,7 +82,7 @@ public abstract class AktivitetsersattningUtlatandeNA implements Utlatande, SitU
     public abstract GrundData getGrundData();
 
     public abstract String getTextVersion();
-    
+
     // Kategori 1 – Grund för medicinskt underlag
     // Fråga 1
     @Nullable
@@ -99,24 +99,24 @@ public abstract class AktivitetsersattningUtlatandeNA implements Utlatande, SitU
 
     @Nullable
     public abstract String getAnnatGrundForMUBeskrivning();
-    
+
  // Fråga 2
     @Nullable
     public abstract InternalDate getKannedomOmPatient();
-    
+
  // Kategori 2 – Andra medicinska utredningar och underlag
     // Fråga 3
     @Nullable
     public abstract Boolean getUnderlagFinns();
-    
+
  // Fråga 4
     public abstract ImmutableList<Underlag> getUnderlag();
-    
+
     // Kategori 3 - Sjukdomsförlopp
     // Fråga 5
     @Nullable
     public abstract String getSjukdomsforlopp();
-    
+
     // Kategori 4 - Diagnos
     // Fråga 6
     public abstract ImmutableList<Diagnos> getDiagnoser();
@@ -124,98 +124,98 @@ public abstract class AktivitetsersattningUtlatandeNA implements Utlatande, SitU
     // Fråga 7.1
     @Nullable
     public abstract String getDiagnosgrund();
-    
+
     // Fråga 7.2
     @Nullable
     public abstract Boolean getNyBedomningDiagnosgrund();
-    
+
     // Kategori 5 – Funktionsnedsättning
     // Fråga 8
     @Nullable
     public abstract String getFunktionsnedsattningIntellektuell();
-    
+
     // Fråga 9
     @Nullable
     public abstract String getFunktionsnedsattningKommunikation();
-    
+
  // Fråga 10
     @Nullable
     public abstract String getFunktionsnedsattningKoncentration();
-    
+
  // Fråga 11
     @Nullable
     public abstract String getFunktionsnedsattningPsykisk();
-    
+
  // Fråga 12
     @Nullable
     public abstract String getFunktionsnedsattningSynHorselTal();
-    
+
  // Fråga 13
     @Nullable
     public abstract String getFunktionsnedsattningBalansKoordination();
-    
+
  // Fråga 14
     @Nullable
     public abstract String getFunktionsnedsattningAnnan();
-    
+
  // Kategori 6 - AktivitetsbegränsningBeskrivning
     // Fråga 17
     @Nullable
     public abstract String getAktivitetsbegransning();
-    
+
  // Fråga 18
     @Nullable
     public abstract String getAvslutadBehandling();
-    
+
  // Kategori 7 – Medicinska behandlingar/åtgärder
     // Fråga 19
     @Nullable
     public abstract String getPagaendeBehandling();
-    
+
     // Fråga 20
     @Nullable
     public abstract String getPlaneradBehandling();
-    
+
     // Fråga 21
     @Nullable
     public abstract String getSubstansintag();
-    
+
  // Kategori 8 – Medicinska förutsättningar för arbete
     // Fråga 22.1
     @Nullable
     public abstract String getMedicinskaForutsattningarForArbete();
-    
+
     // Fråga 23.1
     @Nullable
     public abstract String getFormagaTrotsBegransning();
-    
+
     // Fråga 24
     @Nullable
     public abstract String getForslagTillAtgard();
-    
+
  // Kategori 9 - Övrigt
     // Fråga 25
     @Nullable
     public abstract String getOvrigt();
-    
+
     // Kategori 10 - Kontakt
     // Fråga 26.1
     @Nullable
     public abstract Boolean getKontaktMedFk();
-    
+
  // Fråga 26.2
     @Nullable
     public abstract String getAnledningTillKontakt();
-    
+
  // Tilläggsfrågor
     public abstract ImmutableList<Tillaggsfraga> getTillaggsfragor();
-    
+
     /* Retrieve a builder from an existing SjukersattningUtlatande object. The builder can then be used
     to create a new copy with modified attributes. */
     public abstract Builder toBuilder();
 
     public static Builder builder() {
-        return new AutoValue_AktivitetsersattningUtlatandeNA.Builder().
+        return new AutoValue_AktivitetsersattningNAUtlatande.Builder().
                 setUnderlag(ImmutableList.<Underlag> of()).
                 setDiagnoser(ImmutableList.<Diagnos> of()).
                 setTillaggsfragor(ImmutableList.<Tillaggsfraga>of());
@@ -224,7 +224,7 @@ public abstract class AktivitetsersattningUtlatandeNA implements Utlatande, SitU
     @AutoValue.Builder
     public abstract static class Builder {
 
-        public abstract AktivitetsersattningUtlatandeNA build();
+        public abstract AktivitetsersattningNAUtlatande build();
 
         @JsonProperty(ID_JSON_ID)
         public abstract Builder setId(String id);
@@ -322,7 +322,7 @@ public abstract class AktivitetsersattningUtlatandeNA implements Utlatande, SitU
 
         @JsonProperty(AKTIVITETSFORMAGA_SVAR_JSON_ID_23)
         public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
-        
+
         @JsonProperty(FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24)
         public abstract Builder setForslagTillAtgard(String forslagTillAtgard);
 

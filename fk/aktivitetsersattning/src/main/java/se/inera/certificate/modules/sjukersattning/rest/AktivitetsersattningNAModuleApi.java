@@ -23,9 +23,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ch.qos.logback.core.pattern.ConverterUtil;
+import se.inera.certificate.modules.aktivitetsersattningna.model.converter.InternalToNotification;
+import se.inera.certificate.modules.aktivitetsersattningna.model.converter.TransportToInternal;
+import se.inera.certificate.modules.aktivitetsersattningna.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.aktivitetsersattningna.validator.InternalDraftValidator;
+import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
@@ -40,13 +54,47 @@ import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftRespon
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
+import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class AktivitetsersattningNAModuleApi implements ModuleApi{
 
+    private static final Logger LOG = LoggerFactory.getLogger(AktivitetsersattningNAModuleApi.class);
+
+    @Autowired(required = false)
+    private WebcertModuleService moduleService;
+
+    @Autowired
+    private WebcertModelFactory webcertModelFactory;
+
+    @Autowired
+    private InternalDraftValidator internalDraftValidator;
+
+    @Autowired
+    private ConverterUtil converterUtil;
+
+    @Autowired
+    @Qualifier("aktivitetsersattning-objectMapper")
+    private ObjectMapper objectMapper;
+
+    private ModuleContainerApi moduleContainer;
+
+    @Autowired(required = false)
+    @Qualifier("registerCertificateClient")
+    private RegisterCertificateResponderInterface registerCertificateResponderInterface;
+
+    @Autowired(required = false)
+    private GetCertificateResponderInterface getCertificateResponderInterface;
+
+    private RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivititetsersattning-na.sch");
+
+    @Autowired
+    private InternalToNotification internalToNotification;
+
     public void setModuleContainer(ModuleContainerApi moduleContainer) {
         // TODO Auto-generated method stub
-        
+
     }
 
     public ModuleContainerApi getModuleContainer() {
@@ -83,12 +131,12 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi{
 
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
         // TODO Auto-generated method stub
-        
+
     }
 
     public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
         // TODO Auto-generated method stub
-        
+
     }
 
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
@@ -127,9 +175,8 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi{
         return null;
     }
 
-    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException{
+        return TransportToInternal.convert(intyg);
     }
 
     public String transformToStatisticsService(String inputXml) throws ModuleException {
