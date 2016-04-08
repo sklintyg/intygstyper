@@ -365,7 +365,7 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
             throws ModuleException {
         try {
-            SjukpenningUtokadUtlatande internal = getInternal(template); //TODO: empty values
+            SjukpenningUtokadUtlatande internal = getInternal(template);
             return toInternalModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);

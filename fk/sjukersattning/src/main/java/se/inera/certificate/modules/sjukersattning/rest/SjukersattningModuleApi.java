@@ -366,7 +366,6 @@ public class SjukersattningModuleApi implements ModuleApi {
             throws ModuleException {
         try {
             SjukersattningUtlatande internal = getInternal(template);
-            internal.toBuilder().setUnderlag(null);//TODO:
             return toInternalModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
