@@ -60,6 +60,7 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class AktivitetsersattningNAModuleApi implements ModuleApi{
 
+
     private static final Logger LOG = LoggerFactory.getLogger(AktivitetsersattningNAModuleApi.class);
 
     @Autowired(required = false)
@@ -177,6 +178,7 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi{
 
     public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException{
         return TransportToInternal.convert(intyg);
+
     }
 
     public String transformToStatisticsService(String inputXml) throws ModuleException {

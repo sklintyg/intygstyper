@@ -99,12 +99,15 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
+
+
 public final class TransportToInternal {
 
     private static final int TILLAGGSFRAGA_START = 9001;
 
     private TransportToInternal() {
     }
+
 
     public static AktivitetsersattningNAUtlatande convert(Intyg source) throws ConverterException {
         Builder utlatande = AktivitetsersattningNAUtlatande.builder();
