@@ -87,6 +87,10 @@
 
       <div class="webcert-col-section table-padding-top qa-list-section" ng-show="qaList.length > 0" id="unhandledQACol">
 
+          <div ng-show="widgetState.showAllKompletteringarHandled" id="unhandledQAColNoEntries">
+              Alla kompletteringar är hanterade.
+          </div>
+
         <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
           <div qa-panel panel-id="unhandled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
         </div>

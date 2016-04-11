@@ -18,69 +18,130 @@
  */
 
 angular.module('fk7263').service('fk7263.QACtrl.Helper',
-    ['$log', '$timeout', 'fk7263.fragaSvarProxy', 'common.fragaSvarCommonService', '$window', 'common.statService',
-        function( $log, $timeout, fragaSvarService, fragaSvarCommonService, $window, statService) {
-        'use strict';
+    ['$log', '$timeout', '$rootScope', 'fk7263.fragaSvarProxy', 'common.fragaSvarCommonService', '$window', 'common.statService', 'common.ObjectHelper',
+        function ($log, $timeout, $rootScope, fragaSvarProxy, fragaSvarCommonService, $window, statService, ObjectHelper) {
+            'use strict';
 
-        function delayFindMessageAndAct(timeout, qaList, message, onFound) {
-            $timeout(function() {
-                var i;
-                for(i = 0; i < qaList.length; i++){
-                    if(qaList[i].id === message.id && qaList[i].proxyMessage !== undefined) {
-                        onFound(i);
-                        break;
+            function delayFindMessageAndAct(timeout, qaList, message, onFound) {
+                $timeout(function () {
+                    var i;
+                    for (i = 0; i < qaList.length; i++) {
+                        if (qaList[i].id === message.id && qaList[i].proxyMessage !== undefined) {
+                            onFound(i);
+                            break;
+                        }
                     }
-                }
-            }, timeout);
+                }, timeout);
 
-            $log.debug('Message not found:' + message.id);
-        }
-
-        function addListMessage(qaList, qa, messageId) {
-            var messageProxy = {};
-            messageProxy.proxyMessage = messageId;
-            messageProxy.id = qa.id;
-            messageProxy.senasteHandelseDatum = qa.senasteHandelseDatum;
-            messageProxy.messageStatus = qa.status;
-            qaList.push(messageProxy);
-
-            delayFindMessageAndAct(5000, qaList, messageProxy, function(index) {
-                qaList[index].messageStatus = 'HIDDEN';
-                delayFindMessageAndAct(2000, qaList, messageProxy, function(index) {
-                    qaList.splice(index, 1);
-                });
-            });
-        }
-
-        this.updateAnsweredAsHandled = function(deferred, unhandledQas, fromHandledDialog){
-            if(unhandledQas === undefined || unhandledQas.length === 0 ){
-                return;
+                $log.debug('Message not found:' + message.id);
             }
-            fragaSvarService.closeAllAsHandled(unhandledQas,
-                function(qas){
-                    if(qas) {
-                        angular.forEach(qas, function(qa) { //unused parameter , key
-                            fragaSvarCommonService.decorateSingleItem(qa);
-                            if(fromHandledDialog) {
-                                qa.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
-                            } else {
-                                addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
-                            }
-                        });
-                        statService.refreshStat();
-                    }
-                    $window.doneLoading = true;
-                    if(deferred) {
-                        deferred.resolve();
-                    }
-                },function() { // unused parameter: errorData
-                    // show error view
-                    $window.doneLoading = true;
-                    if(deferred) {
-                        deferred.resolve();
-                    }
+
+            function addListMessage(qaList, qa, messageId) {
+                var messageProxy = {};
+                messageProxy.proxyMessage = messageId;
+                messageProxy.id = qa.id;
+                messageProxy.senasteHandelseDatum = qa.senasteHandelseDatum;
+                messageProxy.messageStatus = qa.status;
+                qaList.push(messageProxy);
+
+                delayFindMessageAndAct(5000, qaList, messageProxy, function (index) {
+                    qaList[index].messageStatus = 'HIDDEN';
+                    delayFindMessageAndAct(2000, qaList, messageProxy, function (index) {
+                        qaList.splice(index, 1);
+                    });
                 });
-        };
+            }
 
+            this.updateAnsweredAsHandled = function (deferred, unhandledQas, fromHandledDialog) {
+                if (unhandledQas === undefined || unhandledQas.length === 0) {
+                    return;
+                }
+                fragaSvarProxy.closeAllAsHandled(unhandledQas,
+                    function (qas) {
+                        if (qas) {
+                            angular.forEach(qas, function (qa) { //unused parameter , key
+                                fragaSvarCommonService.decorateSingleItem(qa);
+                                if (fromHandledDialog) {
+                                    qa.proxyMessage = 'fk7263.fragasvar.marked.as.hanterad';
+                                } else {
+                                    addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
+                                }
+                            });
+                            statService.refreshStat();
+                        }
+                        $window.doneLoading = true;
+                        if (deferred) {
+                            deferred.resolve();
+                        }
+                    }, function () { // unused parameter: errorData
+                        // show error view
+                        $window.doneLoading = true;
+                        if (deferred) {
+                            deferred.resolve();
+                        }
+                    });
+            };
 
-    }]);
+            function decorateWithGUIParameters(list) {
+                // answerDisabled
+                // answerButtonToolTip
+                angular.forEach(list, function (qa) {
+                    fragaSvarCommonService.decorateSingleItem(qa);
+                });
+            }
+
+            this.filterKompletteringar = function(qaList, widgetState, certProperties) {
+
+                var isAnyKompletteringarNotHandled = false;
+
+                // Filter out the komplettering the utkast was based on and only that one.
+                var filteredList = qaList.filter(function(qa) {
+
+                    var isKompletteringFraga = qa.amne === 'KOMPLETTERING_AV_LAKARINTYG';
+
+                    // Check if this komplettering isn't handled. Used to show sign if there are no more unhandled kompletteringar
+                    if(!isAnyKompletteringarNotHandled){
+                        isAnyKompletteringarNotHandled = (isKompletteringFraga && qa.status !== 'CLOSED');
+                    }
+
+                    // Filter out the komplettering the utkast was based on and only that one.
+                    return isKompletteringFraga && Number(qa.internReferens) === Number(certProperties.meddelandeId);
+                });
+
+                // If there aren't any kompletteringar that aren't handled already, we can show the sign that all kompletteringar are handled.
+                widgetState.showAllKompletteringarHandled = !isAnyKompletteringarNotHandled;
+                return filteredList;
+            };
+
+            this.fetchFragaSvar = function (scope, intygId, certProperties) {
+                // Request loading of QA's for this certificate
+                fragaSvarProxy.getQAForCertificate(intygId, 'fk7263', function (result) {
+                    $log.debug('getQAForCertificate:success data:' + result);
+                    scope.widgetState.doneLoading = true;
+                    scope.widgetState.activeErrorMessageKey = null;
+
+                    scope.widgetState.showAllKompletteringarHandled = false;
+
+                    decorateWithGUIParameters(result, ObjectHelper.isDefined(certProperties) ? certProperties.kompletteringOnly : false);
+                    if(ObjectHelper.isDefined(certProperties)){
+                        // If kompletteringsmode, only show kompletteringsissues
+                        if (certProperties.kompletteringOnly) {
+                            result = this.filterKompletteringar(result, scope.widgetState, certProperties);
+                        }
+                    }
+
+                    scope.qaList = result;
+
+                    // Tell viewcertctrl about the intyg in case cert load fails
+                    if (result.length > 0) {
+                        $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
+                    }
+
+                }, function (errorData) {
+                    // show error view
+                    scope.widgetState.doneLoading = true;
+                    scope.widgetState.activeErrorMessageKey = errorData.errorCode;
+                });
+            };
+
+        }]);

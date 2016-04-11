@@ -62,7 +62,7 @@ describe('FragaSvarService', function() {
             fragaSvarService = _fragaSvarService_;
         }]));
 
-    xdescribe('#saveNewQuestion', function() {
+    describe('#saveNewQuestion', function() {
         it('should call onSuccess callback when called', function() {
 
             var onSuccess = jasmine.createSpy('onSuccess');
@@ -87,7 +87,7 @@ describe('FragaSvarService', function() {
         });
     });
 
-    xdescribe('#saveAnswer', function() {
+    describe('#saveAnswer', function() {
         it('should call onSuccess callback when saveAnswer is called', function() {
 
             var onSuccess = jasmine.createSpy('onSuccess');

@@ -93,7 +93,9 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Load parentIntyg to feed fragasvar component with load event
-                if (ObjectHelper.isDefined(intygModel.grundData.relation) && ObjectHelper.isDefined(intygModel.grundData.relation.relationIntygsId)) {
+                if (ObjectHelper.isDefined(intygModel.grundData.relation) &&
+                    ObjectHelper.isDefined(intygModel.grundData.relation.relationIntygsId) &&
+                    ObjectHelper.isDefined(intygModel.grundData.relation.meddelandeId)) {
                     IntygProxy.getIntyg(intygModel.grundData.relation.relationIntygsId, viewState.common.intyg.type,
                         function(result) {
                             if (result !== null && result !== '') {
@@ -102,7 +104,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                                     isSent: IntygService.isSentToTarget(result.statuses, 'FK'),
                                     isRevoked: IntygService.isRevoked(result.statuses),
                                     forceUseProvidedIntyg: true,
-                                    kompletteringOnly: true
+                                    kompletteringOnly: true,
+                                    meddelandeId: intygModel.grundData.relation.meddelandeId
                                 };
                                 $rootScope.$emit('fk7263.ViewCertCtrl.load', parentIntyg, intygMeta);
                             } else {

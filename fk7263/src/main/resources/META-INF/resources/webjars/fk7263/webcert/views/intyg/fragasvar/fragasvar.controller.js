@@ -21,7 +21,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'fk7263.fragaSvarProxy', 'common.fragaSvarCommonService', 'common.statService',
         'common.UserModel', 'fk7263.QACtrl.Helper', 'common.IntygViewStateService', 'common.ObjectHelper',
-        function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarService,
+        function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarProxy,
             fragaSvarCommonService, statService, UserModel, qaHelper, CommonViewState, ObjectHelper) {
             'use strict';
 
@@ -44,49 +44,12 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $scope.widgetState.sentMessage = false;
             };
 
-            var decorateWithGUIParameters = function(list) {
-                // answerDisabled
-                // answerButtonToolTip
-                angular.forEach(list, function(qa) {
-                    fragaSvarCommonService.decorateSingleItem(qa);
-                });
-            };
-
             $scope.cert = {};
             $scope.certProperties = {
                 isLoaded: false,
                 isSent: false,
                 isRevoked: false
             };
-
-            function fetchFragaSvar(intygId, kompletteringOnly) {
-                // Request loading of QA's for this certificate
-                fragaSvarService.getQAForCertificate(intygId, 'fk7263', function(result) {
-                    $log.debug('getQAForCertificate:success data:' + result);
-                    $scope.widgetState.doneLoading = true;
-                    $scope.widgetState.activeErrorMessageKey = null;
-                    decorateWithGUIParameters(result, kompletteringOnly);
-
-                    // If kompletteringsmode, only show kompletteringsissues
-                    if (kompletteringOnly) {
-                        result = result.filter(function(qa) {
-                            return qa.amne === 'KOMPLETTERING_AV_LAKARINTYG';
-                        });
-                    }
-
-                    $scope.qaList = result;
-
-                    // Tell viewcertctrl about the intyg in case cert load fails
-                    if (result.length > 0) {
-                        $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
-                    }
-
-                }, function(errorData) {
-                    // show error view
-                    $scope.widgetState.doneLoading = true;
-                    $scope.widgetState.activeErrorMessageKey = errorData.errorCode;
-                });
-            }
 
             var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, cert, certProperties) {
 
@@ -100,19 +63,17 @@ angular.module('fk7263').controller('fk7263.QACtrl',
 
                 if(ObjectHelper.isDefined(cert) && ObjectHelper.isDefined(certProperties)) {
 
+                    $scope.certProperties = certProperties;
                     $scope.certProperties.isLoaded = true;
-                    $scope.certProperties.isSent = certProperties.isSent;
-                    $scope.certProperties.isRevoked = certProperties.isRevoked;
-                    $scope.certProperties.kompletteringOnly = certProperties.kompletteringOnly;
                     var intygId = $stateParams.certificateId;
                     if(certProperties.forceUseProvidedIntyg) {
                         // Used for utkast page. In this case we must use the id from cert because $stateParams.certificateId is the id of the utkast, not the parentIntyg
                         intygId = cert.id;
                     }
-                    fetchFragaSvar(intygId, $scope.certProperties.kompletteringOnly);
+                    qaHelper.fetchFragaSvar($scope, intygId, $scope.certProperties);
 
                 } else if(ObjectHelper.isDefined($stateParams.certificateId)) {
-                    fetchFragaSvar($stateParams.certificateId, false);
+                    qaHelper.fetchFragaSvar($scope, $stateParams.certificateId, null);
                 }
             });
             $scope.$on('$destroy', unbindFastEvent);
@@ -160,7 +121,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 newQuestion.updateInProgress = true; // trigger local spinner
                 $scope.widgetState.sentMessage = false;
 
-                fragaSvarService.saveNewQuestion($stateParams.certificateId, 'fk7263', newQuestion,
+                fragaSvarProxy.saveNewQuestion($stateParams.certificateId, 'fk7263', newQuestion,
                     function(result) {
                         $log.debug('Got saveNewQuestion result:' + result);
                         newQuestion.updateInProgress = false;
