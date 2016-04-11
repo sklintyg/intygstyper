@@ -31,6 +31,8 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_DELSVAR_ID_24;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_SVAR_ID_24;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID_14;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13;
@@ -236,6 +238,9 @@ public final class TransportToInternal {
                 break;
             case AKTIVITETSFORMAGA_SVAR_ID_23:
                 handleAktivitetsformaga(utlatande, svar);
+                break;
+            case FORSLAG_TILL_ATGARD_SVAR_ID_24:
+                handleForslagTillAtgard(utlatande, svar);
                 break;
             case OVRIGT_SVAR_ID_25:
                 handleOvrigt(utlatande, svar);
@@ -538,6 +543,17 @@ public final class TransportToInternal {
         switch (delsvar.getId()) {
         case AKTIVITETSFORMAGA_DELSVAR_ID_23:
             utlatande.setFormagaTrotsBegransning(getStringContent(delsvar));
+            break;
+        default:
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleForslagTillAtgard(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+        case FORSLAG_TILL_ATGARD_DELSVAR_ID_24:
+            utlatande.setForslagTillAtgard(getStringContent(delsvar));
             break;
         default:
             throw new IllegalArgumentException();

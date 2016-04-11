@@ -22,11 +22,7 @@ import se.inera.certificate.modules.aktivitetsersattning.model.internal.Aktivite
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
-/**
- * @author katarinaolsson
- *
- */
-public class InternalToTransport {
+public final class InternalToTransport {
     private InternalToTransport() {
     }
 

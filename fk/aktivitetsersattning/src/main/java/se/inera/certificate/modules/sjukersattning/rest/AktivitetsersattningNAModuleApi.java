@@ -58,8 +58,7 @@ import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertif
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
-public class AktivitetsersattningNAModuleApi implements ModuleApi{
-
+public class AktivitetsersattningNAModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(AktivitetsersattningNAModuleApi.class);
 
@@ -176,7 +175,7 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi{
         return null;
     }
 
-    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException{
+    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException {
         return TransportToInternal.convert(intyg);
 
     }

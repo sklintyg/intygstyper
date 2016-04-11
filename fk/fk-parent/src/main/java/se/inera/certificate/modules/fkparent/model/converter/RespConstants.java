@@ -146,7 +146,9 @@ public final class RespConstants {
     public static final String AKTIVITETSFORMAGA_SVAR_ID_23 = "23";
     public static final String AKTIVITETSFORMAGA_DELSVAR_ID_23 = "23.1";
     public static final String AKTIVITETSFORMAGA_SVAR_JSON_ID_23 = "formagaTrotsBegransning";
-    
+
+    public static final String FORSLAG_TILL_ATGARD_SVAR_ID_24 = "24";
+    public static final String FORSLAG_TILL_ATGARD_DELSVAR_ID_24 = "24.1";
     public static final String FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24 = "forslagTillAtgard";
 
     public static final String OVRIGT_SVAR_ID_25 = "25";

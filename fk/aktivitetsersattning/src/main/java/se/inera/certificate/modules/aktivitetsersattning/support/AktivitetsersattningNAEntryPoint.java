@@ -30,11 +30,11 @@ import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFacto
 
 public class AktivitetsersattningNAEntryPoint implements ModuleEntryPoint {
     public static final String DEFAULT_RECIPIENT_ID = "FK";
-    
+
     public static final String MODULE_ID = "luae_na";
     public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning";
     public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
-    
+
     @Autowired
     private AktivitetsersattningNAModuleApi moduleApi;
 
@@ -64,38 +64,38 @@ public class AktivitetsersattningNAEntryPoint implements ModuleEntryPoint {
 
     public String getModuleCssPath(ApplicationOrigin originator) {
         return null;
-//        switch (originator) {
-//        case MINA_INTYG:
-//            return "/web/webjars/luae_na/minaintyg/css/aktivitetsersattning-na.css";
-//        case WEBCERT:
-//            return "/web/webjars/luae_na/webcert/css/aktivitetsersattning-na.css";
-//        default:
-//            return null;
-//        }
+        // switch (originator) {
+        // case MINA_INTYG:
+        // return "/web/webjars/luae_na/minaintyg/css/aktivitetsersattning-na.css";
+        // case WEBCERT:
+        // return "/web/webjars/luae_na/webcert/css/aktivitetsersattning-na.css";
+        // default:
+        // return null;
+        // }
     }
 
     public String getModuleScriptPath(ApplicationOrigin originator) {
         return null;
-//        switch (originator) {
-//        case MINA_INTYG:
-//            return "/web/webjars/luae_na/minaintyg/js/module";
-//        case WEBCERT:
-//            return "/web/webjars/luae_na/webcert/module";
-//        default:
-//            return null;
-//        }
+        // switch (originator) {
+        // case MINA_INTYG:
+        // return "/web/webjars/luae_na/minaintyg/js/module";
+        // case WEBCERT:
+        // return "/web/webjars/luae_na/webcert/module";
+        // default:
+        // return null;
+        // }
     }
 
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
         return null;
-//        switch (originator) {
-//        case MINA_INTYG:
-//            return "/web/webjars/luae_na/minaintyg/js/module-deps.json";
-//        case WEBCERT:
-//            return "/web/webjars/luae_na/webcert/module-deps.json";
-//        default:
-//            return null;
-//        }
+        // switch (originator) {
+        // case MINA_INTYG:
+        // return "/web/webjars/luae_na/minaintyg/js/module-deps.json";
+        // case WEBCERT:
+        // return "/web/webjars/luae_na/webcert/module-deps.json";
+        // default:
+        // return null;
+        // }
     }
 
 }
