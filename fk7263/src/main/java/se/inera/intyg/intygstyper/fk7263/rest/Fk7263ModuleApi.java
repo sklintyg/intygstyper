@@ -537,6 +537,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             internal.setNedsattMed75Beskrivning(null);
             internal.setTjanstgoringstid(null);
             internal.setTelefonkontaktMedPatienten(null);
+            internal.setUndersokningAvPatienten(null);
             internal.setJournaluppgifter(null);
             internal.setAnnanReferens(null);
             internal.setAnnanReferensBeskrivning(null);
