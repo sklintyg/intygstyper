@@ -130,7 +130,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
             templateOptions: {category: 8, categoryName: categoryNames[8]},
             fieldGroup: [
                 {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'DFR_22.1'}},
-                {key: 'aktivitetsFormaga', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}}
+                {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}}
             ]
         },
         {
