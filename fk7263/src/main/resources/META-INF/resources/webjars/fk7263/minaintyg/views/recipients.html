@@ -90,7 +90,7 @@
       	<span message key="fk7263.recipient.label.missing.recipients-2"></span>
       </p>
       <p>
-      	<button type="button" id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" class="btn btn-success">
+        <button ng-disabled="alreadySentToRecipient()" type="button" id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" class="btn btn-success">
           <span message key="fk7263.button.next"></span>
         </button>
         <button type="button" id="cancelRecipientSelectionBtn" ng-click="backToViewCertificate()" class="btn btn-default">
