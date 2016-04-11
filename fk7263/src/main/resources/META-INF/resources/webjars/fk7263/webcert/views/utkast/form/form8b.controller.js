@@ -35,6 +35,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             var _dateRangeService = DateRangeService.FromTos.build(['nedsattMed25','nedsattMed50','nedsattMed75','nedsattMed100']);
 
+            function updateMinMaxFromLastEffectiveDate () {
+                _dateRangeService.updateMinMax({min: viewState.intygModel.grundData.relation.sistaGiltighetsDatum});
+            }
 
             // 8b. Arbetsförmåga date management
             $scope.field8b = {
@@ -49,6 +52,16 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
                     if (!$scope.field8b[nedsattModelName].workState) {
                         viewState.intygModel[nedsattModelName + 'Beskrivning'] = undefined;
+
+                        if (
+                            !$scope.field8b.nedsattMed25.workState &&
+                            !$scope.field8b.nedsattMed50.workState &&
+                            !$scope.field8b.nedsattMed75.workState &&
+                            !$scope.field8b.nedsattMed100.workState &&
+                            viewState.intygModel.grundData.relation.sistaGiltighetsDatum
+                        ) {
+                            updateMinMaxFromLastEffectiveDate();
+                        }
                     }
 
                 },
@@ -81,6 +94,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 }
                 if (newVal) {
                     _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel, $scope);
+                    if (viewState.intygModel.grundData.relation.sistaGiltighetsDatum){
+                        updateMinMaxFromLastEffectiveDate();
+                    }
                     doneLoading = true;
                 }
             });
