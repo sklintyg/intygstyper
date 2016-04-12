@@ -81,7 +81,7 @@ angular.module('luse').factory('sjukersattning.Domain.IntygModel',
 
                         // Kategori 8 Medicinska förutsättningar för arbete
                         'medicinskaForutsattningarForArbete': undefined,
-                        'aktivitetsFormaga': undefined,
+                        'formagaTrotsBegransning': undefined,
 
                         // Kategori 9 Övrigt
                         'ovrigt': undefined,

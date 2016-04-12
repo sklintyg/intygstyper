@@ -160,16 +160,17 @@ public class InternalDraftValidator {
             if (underlag.getTyp() == null) {
                 addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.missing");
-            } else if (underlag.getTyp() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD
-                && underlag.getTyp() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK
-                && underlag.getTyp() != Underlag.UnderlagsTyp.OVRIGT) {
+            } else if (underlag.getTyp().getId() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId()
+                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.OVRIGT.getId()) {
                 addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
                         "luse.validation.underlag.incorrect_format");
             }
