@@ -20,9 +20,9 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
         'fk7263.LastEffectiveDateNoticeModel',
-        'common.DateRangeService', 'fk7263.fmb.ViewStateService',
+        'common.DateRangeService', 'fk7263.fmb.ViewStateService', 'common.messageService',
         function($scope, $log, viewState, LastEffectiveDateNoticeModel,
-            DateRangeService, fmbViewState) {
+            DateRangeService, fmbViewState, messageService) {
             'use strict';
             // private vars
 
@@ -31,6 +31,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             $scope.viewState = viewState;
             $scope.fmb = fmbViewState.state;
             $scope.lastEffectiveDate = '';
+            $scope.lastEffectiveDateNoticeText = '';
 
             // 1. onload
             // 2. on check change
@@ -135,6 +136,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                     _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel, $scope);
                     if (viewState.intygModel.grundData.relation.sistaGiltighetsDatum){
                         $scope.lastEffectiveDate = viewState.intygModel.grundData.relation.sistaGiltighetsDatum;
+                        $scope.lastEffectiveDateNoticeText = messageService
+                            .getProperty('fk7263.helptext.sista-giltighets-datum')
+                            .replace('{{lastEffectiveDate}}', $scope.lastEffectiveDate);
                         updateMinMaxFromLastEffectiveDate();
                         addHelpTextToLastEffectiveDate();
                     }
