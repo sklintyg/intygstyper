@@ -59,9 +59,10 @@ var sjukersattningMessages = {
         'luse.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
         'luse.validation.underlagfinns.incorrect_combination' : 'Om frågan \'Finns det andra medicinska utredningar eller underlag\' besvarats med nej får underlag inte anges.',
         'luse.validation.underlag.missing': 'Du måste ange ett underlag.',
+        'luse.validation.underlag.incorrect_format' : 'Fel typ av underlag',
         'luse.validation.underlag.date.missing': 'Du måste ange datum för underlaget.',
         'luse.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
-        'luse.validation.underlag.incorrect_format': 'Fel datumformat för underlag',
+        'luse.validation.underlag.date.incorrect_format': 'Fel datumformat för underlag',
 
         'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
 
