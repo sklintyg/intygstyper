@@ -112,7 +112,7 @@ var fk7263Messages = {
         //Help texts
         'fk7263.helptext.smittskydd': 'Fylls i om patienten måste avstå från sitt arbete på grund av:<ul><li>Intygsskrivande läkares beslut enligt smittskyddslagen.</li><li>Läkarundersökning eller hälsokontroll som syftar till att klarlägga om hon eller han är smittad av en allmänfarlig sjukdom eller om personen har en sjukdom, en smitta, ett sår eller annan skada som gör att hon eller han inte får hantera livsmedel.</li>',
 
-        'fk7263.helptext.sista-giltighets-datum': 'Från datum är satt baserat på förra intygets sista dag',
+        'fk7263.helptext.sista-giltighets-datum': 'Från och med datum är satt baserat på förra intygets sista giltighetsdag',
 
         'fk7263.helptext.intyg-baserat-pa': 'Ange vad uppgifterna i intyget baseras på. Flera alternativ kan väljas.',
         'fk7263.helptext.intyg-baserat-pa.annat': 'Detta alternativ kan användas för annan professions bedömning, till exempel för kuratorsanteckning, sjukgymnastanteckning eller teamkonferens.',
