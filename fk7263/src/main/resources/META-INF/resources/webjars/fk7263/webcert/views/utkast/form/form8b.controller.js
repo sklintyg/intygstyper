@@ -19,8 +19,10 @@
 
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        'common.DateRangeService', 'fk7263.fmb.ViewStateService',
-        function($scope, $log, viewState, DateRangeService, fmbViewState) {
+        'fk7263.LastEffectiveDateNoticeModel',
+        'common.DateRangeService', 'fk7263.fmb.ViewStateService', 'common.messageService',
+        function($scope, $log, viewState, LastEffectiveDateNoticeModel,
+            DateRangeService, fmbViewState, messageService) {
             'use strict';
             // private vars
 
@@ -28,6 +30,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
             $scope.fmb = fmbViewState.state;
+            $scope.lastEffectiveDate = '';
+            $scope.lastEffectiveDateNoticeText = '';
 
             // 1. onload
             // 2. on check change
@@ -35,6 +39,43 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
             var _dateRangeService = DateRangeService.FromTos.build(['nedsattMed25','nedsattMed50','nedsattMed75','nedsattMed100']);
 
+            function updateMinMaxFromLastEffectiveDate () {
+                _dateRangeService.updateMinMax({
+                    min: $scope.lastEffectiveDate,
+                    max: $scope.lastEffectiveDate
+                });
+            }
+
+            function getLastEffectiveDate () {
+                return [
+                    $scope.field8b.nedsattMed25,
+                    $scope.field8b.nedsattMed50,
+                    $scope.field8b.nedsattMed75,
+                    $scope.field8b.nedsattMed100
+                ]
+                .filter(function (FromTo) {
+                    return (
+                        FromTo.workState &&
+                        FromTo.from &&
+                        FromTo.from.moment &&
+                        moment(FromTo.from.moment).subtract(1, 'days').format('YYYY-MM-DD') === $scope.lastEffectiveDate
+                    );
+                })[0];
+            }
+
+            function addHelpTextToLastEffectiveDate () {
+                var lastEffectiveDate = getLastEffectiveDate();
+                if (
+                    lastEffectiveDate &&
+                    !$scope.field8b.lastEffectiveDateNotice.hasBeenClosed() &&
+                    $scope.lastEffectiveDate
+                ) {
+                    $scope.field8b.lastEffectiveDateNotice.set(lastEffectiveDate.name);
+                    $scope.field8b.lastEffectiveDateNotice.show();
+                } else {
+                    $scope.field8b.lastEffectiveDateNotice.reset();
+                }
+            }
 
             // 8b. Arbetsförmåga date management
             $scope.field8b = {
@@ -42,6 +83,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 nedsattMed50 : _dateRangeService.nedsattMed50,
                 nedsattMed75 : _dateRangeService.nedsattMed75,
                 nedsattMed100 : _dateRangeService.nedsattMed100,
+                lastEffectiveDateNotice: new LastEffectiveDateNoticeModel(),
                 onChangeWorkStateCheck : function(nedsattModelName) {
                     $log.debug('------------------------ onChangeWorkStateCheck');
 
@@ -49,8 +91,19 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
                     if (!$scope.field8b[nedsattModelName].workState) {
                         viewState.intygModel[nedsattModelName + 'Beskrivning'] = undefined;
+
+                        if (
+                            !$scope.field8b.nedsattMed25.workState &&
+                            !$scope.field8b.nedsattMed50.workState &&
+                            !$scope.field8b.nedsattMed75.workState &&
+                            !$scope.field8b.nedsattMed100.workState &&
+                            $scope.lastEffectiveDate
+                        ) {
+                            updateMinMaxFromLastEffectiveDate();
+                        }
                     }
 
+                    addHelpTextToLastEffectiveDate();
                 },
                 info : _dateRangeService
             };
@@ -81,6 +134,14 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 }
                 if (newVal) {
                     _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel, $scope);
+                    if (viewState.intygModel.grundData.relation.sistaGiltighetsDatum){
+                        $scope.lastEffectiveDate = viewState.intygModel.grundData.relation.sistaGiltighetsDatum;
+                        $scope.lastEffectiveDateNoticeText = messageService
+                            .getProperty('fk7263.helptext.sista-giltighets-datum')
+                            .replace('{{lastEffectiveDate}}', $scope.lastEffectiveDate);
+                        updateMinMaxFromLastEffectiveDate();
+                        addHelpTextToLastEffectiveDate();
+                    }
                     doneLoading = true;
                 }
             });

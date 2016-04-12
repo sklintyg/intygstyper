@@ -360,4 +360,16 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     public Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
         return TransportToArendeApi.getModuleSpecificArendeParameters(utlatande);
     }
+
+    @Override
+    public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+            throws ModuleException {
+        try {
+            SjukpenningUtokadUtlatande internal = getInternal(template);
+            return toInternalModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
+        } catch (ConverterException e) {
+            LOG.error("Could not create a new internal Webcert model", e);
+            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
 }
