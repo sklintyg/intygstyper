@@ -69,7 +69,12 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     fieldGroup: [
                         {type: 'fmb',
                             templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'DIAGNOS'} ,
-
+                            hideExpression: function($viewValue, $modelValue, scope) {
+                                if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
+                                    return true;
+                                }
+                                return false;
+                            },
                         },
                         {
                             key: 'diagnoser',
@@ -82,17 +87,27 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 4, categoryName: categoryNames[4]},
                     fieldGroup: [
-                        {   type: 'fmb',
+                        {type: 'fmb',
                             templateOptions: { relatedFormId: categoryNames[4], helpTextContents: 'FUNKTIONSNEDSATTNING'},
                             hideExpression: function($viewValue, $modelValue, scope) {
                                 if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
                                     return true;
                                 }
                                 return false;
+
                             }
                             //hideExpression: '!!model.diagnoser[0].diagnosKod'
                         },
                         {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
+                        {type: 'fmb',
+                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'AKTIVITETSBEGRANSNING'} ,
+                            hideExpression: function($viewValue, $modelValue, scope) {
+                                if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        },
                         {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
                     ]
                 },
@@ -151,32 +166,35 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                                     }
                                 });
 
-                        return !nedsatt75under;
-                    },
-                    templateOptions: {label: 'DFR_33.1'}},
-                {key: 'arbetstidsforlaggningMotivering', type: 'multi-text',
-                    className: 'fold-animation',
-                    hideExpression: function($viewValue, $modelValue, scope) {
-                        return scope.model.arbetstidsforlaggning !== true;
-                    },
-                    templateOptions: {label: 'DFR_33.2'}},
-                {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
-                {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
-                { key: 'prognos.typ', type: 'radio-group',
-                    templateOptions: {
-                        label: 'DFR_39.1',
-                        code: 'KV_FKMU_0006',
-                        choices: [1, 3, 4, 5]
-                    },
-                    watcher: {
-                        expression: 'model.prognos.typ',
-                        listener:  function _prognosTypListener(field, newValue, oldValue, scope, stopWatching) {
-                            var model = scope.model;
-                            if (newValue === 5) {
-                                model.restoreFromAttic('prognos.dagarTillArbete');
-                            } else {
-                                model.updateToAttic('prognos.dagarTillArbete');
-                                model.clear('prognos.dagarTillArbete');
+                                return !nedsatt75under;
+                            },
+                            templateOptions: {label: 'DFR_33.1'}
+                        },
+                        {
+                            key: 'arbetstidsforlaggningMotivering', type: 'multi-text',
+                            className: 'fold-animation',
+                            hideExpression: function($viewValue, $modelValue, scope) {
+                                return scope.model.arbetstidsforlaggning !== true;
+                            },
+                            templateOptions: {label: 'DFR_33.2'}
+                        },
+                        {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
+                        {type: 'fmb',
+                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'ARBETSFORMOGA'} ,
+                            hideExpression: function($viewValue, $modelValue, scope) {
+                                if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        },
+                        {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
+                        {
+                            key: 'prognos.typ', type: 'radio-group',
+                            templateOptions: {
+                                label: 'DFR_39.1',
+                                code: 'KV_FKMU_0006',
+                                choices: [1, 2, 3, 4]
                             }
                         }
                     }
