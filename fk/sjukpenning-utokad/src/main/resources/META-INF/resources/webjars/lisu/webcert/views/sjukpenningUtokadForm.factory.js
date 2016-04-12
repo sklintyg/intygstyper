@@ -69,7 +69,12 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     fieldGroup: [
                         {type: 'fmb',
                             templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'DIAGNOS'} ,
-
+                            hideExpression: function($viewValue, $modelValue, scope) {
+                                if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
+                                    return true;
+                                }
+                                return false;
+                            },
                         },
                         {
                             key: 'diagnoser',
@@ -82,7 +87,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 4, categoryName: categoryNames[4]},
                     fieldGroup: [
-                        {   type: 'fmb',
+                        {type: 'fmb',
                             templateOptions: { relatedFormId: categoryNames[4], helpTextContents: 'FUNKTIONSNEDSATTNING'},
                             hideExpression: function($viewValue, $modelValue, scope) {
                                 if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
@@ -90,24 +95,20 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                                 }
                                 return false;
                             },
-                            //hideExpression: '!!model.diagnoser[0].diagnosKod'
                         },
                         {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
+                        {type: 'fmb',
+                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'AKTIVITETSBEGRANSNING'} ,
+                            hideExpression: function($viewValue, $modelValue, scope) {
+                                if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
+                                    return true;
+                                }
+                                return false;
+                            },
+                        },
                         {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
                     ]
                 },
-                /*
-                 <div class="col-md-5 col-md-fmb-offset col-lg-fmb-offset">
-                 <div ng-show="fmb.formData.FORM4">
-                 <wc-fmb-help-display related-form-id="FALT4" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning"
-                 help-text-contents="fmb.formData.FORM4"></wc-fmb-help-display>
-                 </div>
-                 </div>
-
-                 angular.isArray(scope.model.intygModel.diagnoser) &&
-                 scope.model.intygModel.diagnoser.length &&
-                 !ObjectHelper.isDefined(scope.model.intygModel.diagnoser[0].diagnosKod)
-                 */
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 5, categoryName: categoryNames[5]},
@@ -164,6 +165,15 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                             templateOptions: {label: 'DFR_33.2'}
                         },
                         {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
+                        {type: 'fmb',
+                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'ARBETSFORMOGA'} ,
+                            hideExpression: function($viewValue, $modelValue, scope) {
+                                if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
+                                    return true;
+                                }
+                                return false;
+                            },
+                        },
                         {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
                         {
                             key: 'prognos.typ', type: 'radio-group',
