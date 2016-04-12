@@ -30,6 +30,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
             $scope.fmb = fmbViewState.state;
+            $scope.lastEffectiveDate = '';
 
             // 1. onload
             // 2. on check change
@@ -38,12 +39,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             var _dateRangeService = DateRangeService.FromTos.build(['nedsattMed25','nedsattMed50','nedsattMed75','nedsattMed100']);
 
             function updateMinMaxFromLastEffectiveDate () {
-                var lastEffectiveDate = moment(viewState.intygModel.grundData.relation.sistaGiltighetsDatum)
-                    .subtract(1, 'days')
-                    .format('YYYY-MM-DD');
                 _dateRangeService.updateMinMax({
-                    min: lastEffectiveDate,
-                    max: lastEffectiveDate
+                    min: $scope.lastEffectiveDate,
+                    max: $scope.lastEffectiveDate
                 });
             }
 
@@ -59,7 +57,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                         FromTo.workState &&
                         FromTo.from &&
                         FromTo.from.moment &&
-                        FromTo.from.moment.format('YYYY-MM-DD') === viewState.intygModel.grundData.relation.sistaGiltighetsDatum
+                        moment(FromTo.from.moment).subtract(1, 'days').format('YYYY-MM-DD') === $scope.lastEffectiveDate
                     );
                 })[0];
             }
@@ -69,7 +67,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 if (
                     lastEffectiveDate &&
                     !$scope.field8b.lastEffectiveDateNotice.hasBeenClosed() &&
-                    viewState.intygModel.grundData.relation.sistaGiltighetsDatum
+                    $scope.lastEffectiveDate
                 ) {
                     $scope.field8b.lastEffectiveDateNotice.set(lastEffectiveDate.name);
                     $scope.field8b.lastEffectiveDateNotice.show();
@@ -98,7 +96,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                             !$scope.field8b.nedsattMed50.workState &&
                             !$scope.field8b.nedsattMed75.workState &&
                             !$scope.field8b.nedsattMed100.workState &&
-                            viewState.intygModel.grundData.relation.sistaGiltighetsDatum
+                            $scope.lastEffectiveDate
                         ) {
                             updateMinMaxFromLastEffectiveDate();
                         }
@@ -136,6 +134,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 if (newVal) {
                     _dateRangeService.linkFormAndModel($scope.form8b, viewState.intygModel, $scope);
                     if (viewState.intygModel.grundData.relation.sistaGiltighetsDatum){
+                        $scope.lastEffectiveDate = viewState.intygModel.grundData.relation.sistaGiltighetsDatum;
                         updateMinMaxFromLastEffectiveDate();
                         addHelpTextToLastEffectiveDate();
                     }
