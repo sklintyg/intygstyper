@@ -68,7 +68,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     templateOptions: {category: 3, categoryName: categoryNames[3]},
                     fieldGroup: [
                         {type: 'fmb',
-                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'DIAGNOS'} ,
+                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'DIAGNOS', truncateText: true} ,
                             hideExpression: function($viewValue, $modelValue, scope) {
                                 if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
                                     return true;
@@ -88,7 +88,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     templateOptions: {category: 4, categoryName: categoryNames[4]},
                     fieldGroup: [
                         {type: 'fmb',
-                            templateOptions: { relatedFormId: categoryNames[4], helpTextContents: 'FUNKTIONSNEDSATTNING'},
+                            templateOptions: { relatedFormId: categoryNames[4], helpTextContents: 'FUNKTIONSNEDSATTNING', truncateText: true},
                             hideExpression: function($viewValue, $modelValue, scope) {
                                 if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
                                     return true;
@@ -100,7 +100,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                         },
                         {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
                         {type: 'fmb',
-                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'AKTIVITETSBEGRANSNING'} ,
+                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'AKTIVITETSBEGRANSNING', truncateText: false} ,
                             hideExpression: function($viewValue, $modelValue, scope) {
                                 if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
                                     return true;
@@ -180,7 +180,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                         },
                         {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
                         {type: 'fmb',
-                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'ARBETSFORMOGA'} ,
+                            templateOptions: {relatedFormId: categoryNames[3], helpTextContents:'ARBETSFORMOGA', truncateText: false} ,
                             hideExpression: function($viewValue, $modelValue, scope) {
                                 if(scope.model.diagnoser !== undefined && scope.model.diagnoser[0].diagnosKod.length > 2) {
                                     return true;
