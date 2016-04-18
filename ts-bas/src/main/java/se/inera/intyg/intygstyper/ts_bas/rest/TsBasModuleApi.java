@@ -23,9 +23,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
+import javax.xml.bind.*;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPMessage;
@@ -42,39 +40,19 @@ import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
-import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
+import se.inera.intyg.common.support.modules.support.api.*;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.TransportToInternal;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.TsBasMetaDataConverter;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.WebcertModelFactory;
+import se.inera.intyg.intygstyper.ts_bas.model.converter.*;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
 import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
@@ -384,6 +362,17 @@ public class TsBasModuleApi implements ModuleApi {
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
+
+    @Override
+    public Intyg getIntygFromCertificateHolder(CertificateHolder certificateHolder) throws ModuleException {
+        try {
+            Utlatande utlatande = getUtlatandeFromJson(certificateHolder.getDocument());
+            return UtlatandeToIntyg.convert(utlatande);
+        } catch (Exception e) {
+            LOG.error("Could not get intyg from certificate holder. {}", e);
+            throw new ModuleException("Could not get intyg from certificate holder", e);
         }
     }
 }

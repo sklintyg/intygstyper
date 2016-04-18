@@ -41,8 +41,7 @@ import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
+import se.inera.intyg.common.support.modules.support.api.*;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
@@ -355,6 +354,17 @@ public class TsDiabetesModuleApi implements ModuleApi {
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
+
+    @Override
+    public Intyg getIntygFromCertificateHolder(CertificateHolder certificateHolder) throws ModuleException {
+        try {
+            Utlatande utlatande = getUtlatandeFromJson(certificateHolder.getDocument());
+            return UtlatandeToIntyg.convert(utlatande);
+        } catch (Exception e) {
+            LOG.error("Could not get intyg from certificate holder. {}", e);
+            throw new ModuleException("Could not get intyg from certificate holder", e);
         }
     }
 
