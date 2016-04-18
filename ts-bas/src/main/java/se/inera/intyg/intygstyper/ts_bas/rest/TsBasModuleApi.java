@@ -374,4 +374,16 @@ public class TsBasModuleApi implements ModuleApi {
     public String decorateUtlatande(String utlatandeJson) throws ModuleException {
         return utlatandeJson;
     }
+
+    @Override
+    public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+            throws ModuleException {
+        try {
+            Utlatande internal = getInternal(template);
+            return toInteralModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
+        } catch (ConverterException e) {
+            LOG.error("Could not create a new internal Webcert model", e);
+            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
 }

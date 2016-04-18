@@ -20,8 +20,10 @@
 package se.inera.certificate.modules.sjukpenning_utokad.model.converter;
 
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.MeddelandeReferens;
 
 public final class InternalToTransport {
 
@@ -35,7 +37,21 @@ public final class InternalToTransport {
 
         RegisterCertificateType sjukpenningUtokadType = new RegisterCertificateType();
         sjukpenningUtokadType.setIntyg(UtlatandeToIntyg.convert(source));
+        decorateWithSvarPa(sjukpenningUtokadType, source);
         return sjukpenningUtokadType;
+    }
+
+    private static void decorateWithSvarPa(RegisterCertificateType destination, SjukpenningUtokadUtlatande source) {
+        if (source.getGrundData().getRelation() == null || !RelationKod.KOMPLT.equals(source.getGrundData().getRelation().getRelationKod())) {
+            return;
+        }
+
+        MeddelandeReferens mr = new MeddelandeReferens();
+        mr.setMeddelandeId(source.getGrundData().getRelation().getMeddelandeId());
+        if (source.getGrundData().getRelation().getReferensId() != null) {
+            mr.getReferensId().add(source.getGrundData().getRelation().getReferensId());
+        }
+        destination.setSvarPa(mr);
     }
 
 }

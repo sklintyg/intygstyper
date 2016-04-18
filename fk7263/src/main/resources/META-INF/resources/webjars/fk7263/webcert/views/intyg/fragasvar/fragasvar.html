@@ -9,8 +9,7 @@
         <h2 class="col-head" ng-show="certProperties.kompletteringOnly">Kompletteringar<span wc-help-mark field-help-text="qa.help.kompletteringar"></span></h2>
 
         <!-- Question button -->
-        <div
-            ng-show="!certProperties.kompletteringOnly && !certProperties.isRevoked && !widgetState.newQuestionOpen && (viewState.isIntygOnSendQueue || certProperties.isSent || qaList.length>0)"
+        <div ng-show="!certProperties.kompletteringOnly && !certProperties.isRevoked && !widgetState.newQuestionOpen && (viewState.isIntygOnSendQueue || certProperties.isSent || qaList.length>0)"
             wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}">
           <div class="form-group">
             <button type="button" class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till

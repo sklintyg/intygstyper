@@ -269,7 +269,10 @@ angular.module('fk7263').directive('qaPanel',
                             fragaSvarCommonService.handleVidareBefodradToggle(qa, $scope.onVidareBefordradChange);
                         }, 1000);
                         // Launch mail client
-                        $window.location = fragaSvarCommonService.buildMailToLink(qa);
+                        var link = fragaSvarCommonService.buildMailToLink(qa);
+                        if(link !== 'error') {
+                            $window.location = link;
+                        }
                     };
 
                     $scope.dismissProxy = function(qa) {
