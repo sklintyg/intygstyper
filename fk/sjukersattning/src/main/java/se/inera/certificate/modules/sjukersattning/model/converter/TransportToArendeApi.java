@@ -36,7 +36,11 @@
  */
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +55,7 @@ public final class TransportToArendeApi {
     private TransportToArendeApi() {
     }
 
-    public static Map<String, Object> getModuleSpecificArendeParameters(Utlatande utlatande) {
+    public static Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
         List<String> filledPositions = new ArrayList<String>();
         SjukersattningUtlatande sjukersutlatande = (SjukersattningUtlatande) utlatande;
         if (sjukersutlatande.getUndersokningAvPatienten() != null) {
@@ -66,7 +70,7 @@ public final class TransportToArendeApi {
         if (sjukersutlatande.getAnnatGrundForMU() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1);
         }
-        Map<String, Object> result = new HashMap<>();
+        Map<String, List<String>> result = new HashMap<>();
         result.put(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, filledPositions);
         return result;
     }
