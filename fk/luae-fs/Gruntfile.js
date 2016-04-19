@@ -21,19 +21,19 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = 'target/classes/META-INF/resources/';
 
-    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/luae-fs/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
-    grunt.file.write(DEST_DIR + 'webjars/luae-fs/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
+    var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/luaefs/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/luaefs/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
         map(function(file){ return '/web/'+file; }).
-        concat('/web/webjars/luae-fs/minaintyg/templates.js'), null, 4));
-    minaintyg = [SRC_DIR + 'webjars/luae-fs/minaintyg/js/module.js', DEST_DIR + 'webjars/luae-fs/minaintyg/templates.js'].concat(minaintyg.map(function(file){
+        concat('/web/webjars/luaefs/minaintyg/templates.js'), null, 4));
+    minaintyg = [SRC_DIR + 'webjars/luaefs/minaintyg/js/module.js', DEST_DIR + 'webjars/luaefs/minaintyg/templates.js'].concat(minaintyg.map(function(file){
         return SRC_DIR + file;
     }));
 
-    var webcert = grunt.file.expand({cwd:SRC_DIR}, ['webjars/luae-fs/webcert/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
-    grunt.file.write(DEST_DIR + 'webjars/luae-fs/webcert/module-deps.json', JSON.stringify(webcert.
+    var webcert = grunt.file.expand({cwd:SRC_DIR}, ['webjars/luaefs/webcert/**/*.js', '!**/*.spec.js', '!**/*.test.js', '!**/module.js']).sort();
+    grunt.file.write(DEST_DIR + 'webjars/luaefs/webcert/module-deps.json', JSON.stringify(webcert.
         map(function(file){ return '/web/'+file; }).
-        concat('/web/webjars/luae-fs/webcert/templates.js'), null, 4));
-    webcert = [SRC_DIR + 'webjars/luae-fs/webcert/module.js', DEST_DIR + 'webjars/luae-fs/webcert/templates.js'].concat(webcert.map(function(file){
+        concat('/web/webjars/luaefs/webcert/templates.js'), null, 4));
+    webcert = [SRC_DIR + 'webjars/luaefs/webcert/module.js', DEST_DIR + 'webjars/luaefs/webcert/templates.js'].concat(webcert.map(function(file){
         return SRC_DIR + file;
     }));
 
@@ -49,11 +49,11 @@ module.exports = function(grunt) {
         concat: {
             minaintyg: {
                 src: minaintyg,
-                dest: DEST_DIR + 'webjars/luae-fs/minaintyg/js/module.min.js'
+                dest: DEST_DIR + 'webjars/luaefs/minaintyg/js/module.min.js'
             },
             webcert: {
                 src: webcert,
-                dest: DEST_DIR + 'webjars/luae-fs/webcert/module.min.js'
+                dest: DEST_DIR + 'webjars/luaefs/webcert/module.min.js'
             }
         },
 
@@ -63,20 +63,20 @@ module.exports = function(grunt) {
                 force: true
             },
             minaintyg: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/luae-fs/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/luaefs/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
             },
             webcert: {
-                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/luae-fs/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
+                src: [ 'Gruntfile.js', SRC_DIR + 'webjars/luaefs/webcert/**/*.js', TEST_DIR + 'webcert/**/*.js' ]
             }
         },
 
         karma: {
             minaintyg: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/luae-fs/karma-minaintyg.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/luaefs/karma-minaintyg.conf.ci.js',
                 reporters: [ 'mocha' ]
             },
             webcert: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/luae-fs/karma-webcert.conf.ci.js',
+                configFile: 'src/main/resources/META-INF/resources/webjars/luaefs/karma-webcert.conf.ci.js',
                 reporters: [ 'mocha' ]
             }
         },
@@ -88,16 +88,16 @@ module.exports = function(grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: SRC_DIR + 'webjars/luae-fs/webcert/css/',
+                    cwd: SRC_DIR + 'webjars/luaefs/webcert/css/',
                     src: ['*.scss'],
-                    dest: DEST_DIR + 'webjars/luae-fs/webcert/css',
+                    dest: DEST_DIR + 'webjars/luaefs/webcert/css',
                     ext: '.css'
                 },
                     {
                         expand: true,
-                        cwd: SRC_DIR + 'webjars/luae-fs/minaintyg/css/',
+                        cwd: SRC_DIR + 'webjars/luaefs/minaintyg/css/',
                         src: ['*.scss'],
-                        dest: DEST_DIR + 'webjars/luae-fs/minaintyg/css',
+                        dest: DEST_DIR + 'webjars/luaefs/minaintyg/css',
                         ext: '.css'
                     }]
             }
@@ -108,12 +108,12 @@ module.exports = function(grunt) {
                 singleQuotes: true
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/luae-fs/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/luae-fs/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/luaefs/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/luaefs/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/luae-fs/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/luae-fs/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/luaefs/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/luaefs/webcert/module.min.js'
             }
         },
 
@@ -122,12 +122,12 @@ module.exports = function(grunt) {
                 mangle: false
             },
             minaintyg: {
-                src: DEST_DIR + 'webjars/luae-fs/minaintyg/js/module.min.js',
-                dest: DEST_DIR + 'webjars/luae-fs/minaintyg/js/module.min.js'
+                src: DEST_DIR + 'webjars/luaefs/minaintyg/js/module.min.js',
+                dest: DEST_DIR + 'webjars/luaefs/minaintyg/js/module.min.js'
             },
             webcert: {
-                src: DEST_DIR + 'webjars/luae-fs/webcert/module.min.js',
-                dest: DEST_DIR + 'webjars/luae-fs/webcert/module.min.js'
+                src: DEST_DIR + 'webjars/luaefs/webcert/module.min.js',
+                dest: DEST_DIR + 'webjars/luaefs/webcert/module.min.js'
             }
         },
 
