@@ -19,6 +19,8 @@
 
 package se.inera.intyg.intygstyper.ts_parent.codes;
 
+import java.util.stream.Stream;
+
 public enum IntygAvserEnum {
 
     C1("IAV1", "Medeltung lastbil och enbart ett lätt släpfordon"),
@@ -39,8 +41,8 @@ public enum IntygAvserEnum {
     BE("IAV16", "Personbil, lätt lastbil och ett eller flera släpfordon"),
     TRAKTOR("IAV17", "Traktor");
 
-    private String code;
-    private String description;
+    final String code;
+    final String description;
 
     IntygAvserEnum(String code, String description) {
         this.code = code;
@@ -51,16 +53,12 @@ public enum IntygAvserEnum {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public static IntygAvserEnum fromCode(String code) {
+        return Stream.of(IntygAvserEnum.values()).filter(s -> code.equals(s.getCode())).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(code));
     }
-
 }
