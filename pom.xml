@@ -65,6 +65,7 @@
     <module>fk/fk-parent</module>
     <module>fk/sjukersattning</module>
     <module>fk/sjukpenning-utokad</module>
+    <module>fk/luae-fs</module>
   </modules>
 
   <scm>
