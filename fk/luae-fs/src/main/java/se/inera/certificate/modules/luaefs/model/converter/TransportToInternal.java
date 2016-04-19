@@ -90,6 +90,7 @@ import se.inera.certificate.modules.luaefs.model.internal.Sjukskrivning.Sjukskri
 import se.inera.certificate.modules.luaefs.model.internal.Sysselsattning;
 import se.inera.certificate.modules.luaefs.model.internal.Sysselsattning.SysselsattningsTyp;
 import se.inera.certificate.modules.luaefs.model.internal.Tillaggsfraga;
+import se.inera.certificate.modules.luaefs.model.internal.Underlag;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.InternalDate;
@@ -173,7 +174,7 @@ public final class TransportToInternal {
     private static void setSvar(Builder utlatande, Intyg source) throws ConverterException {
         List<Diagnos> diagnoser = new ArrayList<>();
         List<Tillaggsfraga> tillaggsfragor = new ArrayList<>();
-        List<Sjukskrivning> sjukskrivningar = new ArrayList<>();
+        List<Underlag> underlag = new ArrayList<>();
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {

@@ -119,6 +119,14 @@ public final class RespConstants {
     public static final String FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14 = "14.1";
     public static final String FUNKTIONSNEDSATTNING_ANNAN_SVAR_JSON_ID_14 = "funktionsnedsattningAnnan";
 
+    public static final String FUNKTIONSNEDSATTNING_DEBUT_SVAR_ID_15 = "15";
+    public static final String FUNKTIONSNEDSATTNING_DEBUT_DELSVAR_ID_15 = "15.1";
+    public static final String FUNKTIONSNEDSATTNING_DEBUT_SVAR_JSON_ID_15 = "funktionsnedsattningDebut";
+
+    public static final String FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_ID_16 = "16";
+    public static final String FUNKTIONSNEDSATTNING_PAVERKAN_DELSVAR_ID_16 = "16.1";
+    public static final String FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_JSON_ID_16 = "funktionsnedsattningPaverkan";
+
     public static final String AKTIVITETSBEGRANSNING_SVAR_ID_17 = "17";
     public static final String AKTIVITETSBEGRANSNING_DELSVAR_ID_17 = "17.1";
     public static final String AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17 = "aktivitetsbegransning";
