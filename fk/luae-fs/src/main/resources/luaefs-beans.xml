@@ -12,7 +12,7 @@
 
   <bean class="se.inera.certificate.modules.luaefs.model.converter.InternalToNotification"/>
 
-  <bean id="sjukpenningUtokadEntryPoint" class="se.inera.certificate.modules.luaefs.support.LuaefsEntryPoint" />
+  <bean id="luaefsEntryPoint" class="se.inera.certificate.modules.luaefs.support.LuaefsEntryPoint" />
 
   <bean id="luaefs-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
 

@@ -58,12 +58,12 @@ public class ConverterTest {
 
     @Test
     public void doSchematronValidationSjukersattning() throws Exception {
-        String xmlContents = Resources.toString(getResource("transport/sjukpenning-utokat2.xml"), Charsets.UTF_8);
+        String xmlContents = Resources.toString(getResource("transport/luaefs-2.xml"), Charsets.UTF_8);
 
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch"); //TODO: byta till aktivitetsersattning-fs.sch
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
@@ -72,7 +72,7 @@ public class ConverterTest {
     @Test
     public void outputJsonFromXml() throws Exception {
 
-        String xmlContents = Resources.toString(getResource("transport/sjukpenning-utokat2.xml"), Charsets.UTF_8);
+        String xmlContents = Resources.toString(getResource("transport/luaefs-2.xml"), Charsets.UTF_8);
         RegisterCertificateType transport = JAXB.unmarshal(new StringReader(xmlContents), RegisterCertificateType.class);
 
         String json = getJsonFromTransport(transport);
@@ -83,7 +83,7 @@ public class ConverterTest {
         String convertedXML = getXmlFromModel(transportConvertedALot);
 
         // Do schematron validation on the xml-string from the converted transport format
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");//TODO: byta till aktivitetsersattning-fs.sch
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
         assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
 

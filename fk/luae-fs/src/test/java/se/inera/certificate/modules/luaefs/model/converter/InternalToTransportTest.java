@@ -39,13 +39,13 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 public class InternalToTransportTest {
 
     @Test
-    public void doSchematronValidationSjukpenningUtokat() throws Exception {
-        String xmlContents = Resources.toString(getResource("transport/sjukpenning-utokat2.xml"), Charsets.UTF_8);
+    public void doSchematronValidationLuaefs() throws Exception {
+        String xmlContents = Resources.toString(getResource("transport/luaefs-2.xml"), Charsets.UTF_8);
 
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch"); //TODO: byta till aktivitetsersattning-fs.sch
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));

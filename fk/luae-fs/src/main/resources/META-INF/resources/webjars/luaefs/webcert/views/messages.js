@@ -10,7 +10,7 @@ var luaefsMessages = {
         'luaefs.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukpenning utökad
-        'luaefs.label.certtitle': 'Läkarintyg för sjukpenning utökat',
+        'luaefs.label.certtitle': 'Läkarutlåtande för aktivitetsersättning vid förlängd skolgång',
 
         // TODO: REMOVE THESE AND GENERATE from dynamic labels instead
         'luaefs.label.grundformu': 'Utlåtandet är baserat på',

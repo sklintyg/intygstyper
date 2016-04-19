@@ -20,7 +20,7 @@ public class SchematronValidatorTest {
 
     @Test
     public void brokenXmlFailsTest() throws Exception {
-        String inputXml = Resources.toString(getResource("transport/sjukpenning-utokat2_broken.xml"), Charsets.UTF_8);
+        String inputXml = Resources.toString(getResource("transport/luaefs-2_broken.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         response.getValidationErrors().forEach(e -> System.out.println(e));
         assertFalse(response.getValidationErrors().isEmpty());
@@ -28,7 +28,7 @@ public class SchematronValidatorTest {
 
     @Test
     public void validXmlPassesTest() throws Exception {
-        String inputXml = Resources.toString(getResource("transport/sjukpenning-utokat2.xml"), Charsets.UTF_8);
+        String inputXml = Resources.toString(getResource("transport/luaefs-2.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         assertTrue(response.getValidationErrors().isEmpty());
     }

@@ -72,10 +72,10 @@ angular.module('luaefs').factory('luaefs.Domain.IntygModel',
                 return resultArray;
             };
 
-            var sjukpenningUtokadModel = BaseAtticModel._extend({
+            var luaefsModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'sjukersattningModel', {
+                    init._super.call(this, 'luaefsModel', {
 
                         'id': undefined,
                         'textVersion': undefined,
@@ -173,13 +173,13 @@ angular.module('luaefs').factory('luaefs.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new sjukpenningUtokadModel());
+                    return new DraftModel(new luaefsModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return sjukpenningUtokadModel;
+            return luaefsModel;
 
         }]);
