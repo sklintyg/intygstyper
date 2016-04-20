@@ -4,6 +4,23 @@ angular.module('luaefs').factory('luaefs.Domain.IntygModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform, ObjectHelper) {
             'use strict';
 
+            var underlagTransform = function(underlagArray) {
+                if (underlagArray) {
+                    underlagArray.forEach(function(underlag) {
+                        if (!underlag.typ) {
+                            underlag.typ = null;
+                        }
+                        if (!underlag.datum) {
+                            underlag.datum = null;
+                        }
+                        if (!underlag.hamtasFran) {
+                            underlag.hamtasFran = null;
+                        }
+                    });
+                }
+                return underlagArray;
+            };
+
             var diagnosTransform = function(diagnosArray) {
                 if (diagnosArray.length === 0) {
                     diagnosArray.push({
@@ -15,62 +32,7 @@ angular.module('luaefs').factory('luaefs.Domain.IntygModel',
                 return diagnosArray;
             };
 
-            var sjukskrivningFromTransform = function(sjukskrivningArray) {
 
-                var resultObject = {
-                    1: {
-                        period: {
-                            from: '',
-                            tom: ''
-                        }
-                    },
-                    2: {
-                        period: {
-                            from: '',
-                            tom: ''
-                        }
-                    },
-                    3: {
-                        period: {
-                            from: '',
-                            tom: ''
-                        }
-                    },
-                    4: {
-                        period: {
-                            from: '',
-                            tom: ''
-                        }
-                    }
-                };
-
-                for(var i = 0; i < sjukskrivningArray.length; i++){
-                    resultObject[sjukskrivningArray[i].sjukskrivningsgrad] = {
-                        period: sjukskrivningArray[i].period
-                    };
-                }
-
-                return resultObject;
-            };
-
-            var sjukskrivningToTransform = function(sjukskrivningObject) {
-
-                var resultArray = [];
-
-                angular.forEach(sjukskrivningObject, function(value, key) {
-                    if(!ObjectHelper.isEmpty(value.period.from) || !ObjectHelper.isEmpty(value.period.tom)) {
-                        resultArray.push({
-                            sjukskrivningsgrad: Number(key),
-                            period: {
-                                from: value.period.from,
-                                tom: value.period.tom
-                            }
-                        });
-                    }
-                }, sjukskrivningObject);
-
-                return resultArray;
-            };
 
             var luaefsModel = BaseAtticModel._extend({
                 init: function init() {
@@ -82,83 +44,35 @@ angular.module('luaefs').factory('luaefs.Domain.IntygModel',
                         'grundData': grundData,
 
                         // Kategori 1 Grund för medicinskt underlag
-                        'undersokningAvPatienten': undefined,
-                        'telefonkontaktMedPatienten': undefined,
-                        'journaluppgifter': undefined,
-                        'annatGrundForMU': undefined,
+                        'undersokningAvPatienten': undefined,           //KV_FKMU_0001_1
+                        'journaluppgifter': undefined,                  //KV_FKMU_0001_3
+                        'anhorigsBeskrivningAvPatienten': undefined,    //KV_FKMU_0001_4
+                        'annatGrundForMU': undefined,                   //KV_FKMU_0001_5
                         'annatGrundForMUBeskrivning': undefined,
+                        'kannedomOmPatient':undefined,
 
-                        // Kategori 2 sysselsättning
-                        'sysselsattning': {
-                            typ: undefined
-                        },
-                        'nuvarandeArbete' : undefined,
-                        'arbetsmarknadspolitisktProgram': undefined,
+                        // Kategori 2 Andra medicinska utredningar och underlag
+                        'underlagFinns':undefined,
+                        'underlag':new ModelAttr('underlag', {fromTransform: underlagTransform}),
+
+
 
                         // Kategori 3 diagnos
                         'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
 
-                        // Kategori 4 Sjukdomens konsekvenser
-                        'funktionsnedsattning': undefined,
-                        'aktivitetsbegransning': undefined,
 
-                        // Kategori 5 Medicinska behandlingar / åtgärder
-                        'pagaendeBehandling': undefined,
-                        'planeradBehandling': undefined,
+                        // Kategori 4 Funktionsnedsättning
+                        'funktionsnedsattningBeskrivning': undefined,       // 15.1
+                        'funktionsnedsattningPaverkanSkolgang': undefined,  //16.1
 
-                        // Kategory 6 Bedömning
-                        'sjukskrivningar': new ModelAttr('sjukskrivningar', {
-                            defaultValue : {
-                                1: {
-                                    period: {
-                                        from: '',
-                                        tom: ''
-                                    }
-                                },
-                                2: {
-                                    period: {
-                                        from: '',
-                                        tom: ''
-                                    }
-                                },
-                                3: {
-                                    period: {
-                                        from: '',
-                                        tom: ''
-                                    }
-                                },
-                                4: {
-                                    period: {
-                                        from: '',
-                                        tom: ''
-                                    }
-                                }
-                            },
-                            fromTransform: sjukskrivningFromTransform,
-                            toTransform: sjukskrivningToTransform
-                        }),
-                        'forsakringsmedicinsktBeslutsstod': undefined,
-                        'arbetstidsforlaggning': undefined,
-                        'arbetstidsforlaggningMotivering': undefined,
-                        'arbetsresor': undefined,
-                        'formagaTrotsBegransning': undefined,
-                        'prognos': undefined,
-                        'fortydligande': undefined,
-
-                        // Kategori 7 Åtgärder
-                        'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {
-                            toTransform: ModelTransform.toTypeTransform,
-                            fromTransform: ModelTransform.fromTypeTransform
-                        }),
-                        'arbetslivsinriktadeAtgarderAktuelltBeskrivning': undefined,
-                        'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning': undefined,
-
-                        // Kategori 8 Övrigt
+                        // Kategori 5 Övrigt
                         'ovrigt': undefined,
 
-                        // Kategori 9 Kontakt
+                        // Kategori 6 Kontakt
                         'kontaktMedFk': new ModelAttr( 'kontaktMedFk', { defaultValue : false }),
                         'anledningTillKontakt': undefined,
+
+
 
                         // Kategori 9999 Tilläggsfrågor
                         'tillaggsfragor': new ModelAttr( 'tillaggsfragor', { defaultValue : [] })
