@@ -139,7 +139,7 @@
     <svar id="40">
       <delsvar id="40.1">
         <ns3:cv>
-          <ns3:code>11</ns3:code>
+          <ns3:code>OVRIGA_ATGARDER</ns3:code>
           <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
         </ns3:cv>
       </delsvar>

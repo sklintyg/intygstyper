@@ -267,10 +267,11 @@ public final class UtlatandeToIntyg {
 
         /* Build complex object */
         SvarBuilder arbetslivsinriktadeAtgarderBuilder = aSvar(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40);
+
         source.getArbetslivsinriktadeAtgarder().stream()
                 .forEach((ArbetslivsinriktadeAtgarder atgarder) -> {
                     arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
-                            aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, Integer.toString(atgarder.getVal().getId()), RespConstants
+                            aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getTransportId(), RespConstants
                                     .getDisplayName(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, Integer.toString(atgarder.getVal().getId()))));
                 });
 
@@ -283,6 +284,7 @@ public final class UtlatandeToIntyg {
             arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40,
                     source.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning());
         }
+
         if (CollectionUtils.isNotEmpty(arbetslivsinriktadeAtgarderBuilder.delSvars)) {
             svars.add(arbetslivsinriktadeAtgarderBuilder.build());
         }

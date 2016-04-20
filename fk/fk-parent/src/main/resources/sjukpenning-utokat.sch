@@ -519,13 +519,13 @@
     <iso:rule context="//gn:delsvar[@id='40.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0004'">'codeSystem' måste vara 'KV_FKMU_0004'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^([1-9]|1[01])$')">
-        'Val av arbetslivsinriktade åtgärder' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 eller 11.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(EJ_AKTUELLT|ARBETSTRANING|ARBETSANPASSNING|SOKA_NYTT_ARBETE|BESOK_ARBETSPLATS|ERGONOMISK|HJALPMEDEL|KONFLIKTHANTERING|KONTAKT_FHV|OMFORDELNING|OVRIGA_ATGARDER)$')">
+        'Val av arbetslivsinriktade åtgärder' kan ha ett av värdena EJ_AKTUELLT, ARBETSTRANING, ARBETSANPASSNING, SOKA_NYTT_ARBETE, BESOK_ARBETSPLATS, ERGONOMISK, HJALPMEDEL, KONFLIKTHANTERING, KONTAKT_FHV, OMFORDELNING eller OVRIGA_ATGARDER.
       </iso:assert>
-      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.!='1'] and tp:cv/tp:code[.='1'])">
+      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.!='EJ_AKTUELLT'] and tp:cv/tp:code[.='EJ_AKTUELLT'])">
         'Inte aktuellt' kan inte kombineras med andra svar
       </iso:assert>
-      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.='1'] and tp:cv/tp:code[.!='1'])">
+      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.='EJ_AKTUELLT'] and tp:cv/tp:code[.!='EJ_AKTUELLT'])">
         'Inte aktuellt' kan inte kombineras med andra svar
       </iso:assert>
     </iso:rule>
@@ -544,27 +544,27 @@
   </iso:pattern>
 
   <iso:pattern id="q40.1-40.2">
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != 'EJ_AKTUELLT']">
       <iso:assert test="../../../gn:delsvar[@id='40.2']">
-        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från '1' så måste 'Beskrivning arbetslivsriktade åtgärder aktuellt' anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från 'EJ_AKTUELLT' så måste 'Beskrivning arbetslivsriktade åtgärder aktuellt' anges.
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = 'EJ_AKTUELLT']">
       <iso:assert test="count(../../../gn:delsvar[@id='40.2']) = 0">
-        Om 'Val av arbetslivsinriktade åtgärder' är '1' så får 'Beskrivning arbetslivsriktade åtgärder aktuellt' inte anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är 'EJ_AKTUELLT' så får 'Beskrivning arbetslivsriktade åtgärder aktuellt' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q40.1-40.3">
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = 'EJ_AKTUELLT']">
       <iso:assert test="../../../gn:delsvar[@id='40.3']">
-        Om 'Val av arbetslivsinriktade åtgärder' är '1' så måste 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är 'EJ_AKTUELLT' så måste 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' anges.
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != 'EJ_AKTUELLT']">
       <iso:assert test="count(../../../gn:delsvar[@id='40.3']) = 0">
-        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från '1' så får 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' inte anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från 'EJ_AKTUELLT' så får 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>

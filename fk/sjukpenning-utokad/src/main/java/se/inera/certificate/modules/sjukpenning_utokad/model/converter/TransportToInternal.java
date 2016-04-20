@@ -252,7 +252,7 @@ public final class TransportToInternal {
             case ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40:
                 String arbetslivsinriktadeAtgarderValKod = getCVSvarContent(delsvar).getCode();
                 arbetslivsinriktadeAtgarder.add(ArbetslivsinriktadeAtgarder
-                        .create(ArbetslivsinriktadeAtgarderVal.fromId(Integer.parseInt(arbetslivsinriktadeAtgarderValKod))));
+                        .create(ArbetslivsinriktadeAtgarderVal.fromTransportId(arbetslivsinriktadeAtgarderValKod)));
                 break;
             case ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40:
                 utlatande.setArbetslivsinriktadeAtgarderAktuelltBeskrivning(getStringContent(delsvar));
