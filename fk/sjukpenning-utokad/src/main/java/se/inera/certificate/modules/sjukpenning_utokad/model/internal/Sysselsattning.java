@@ -28,8 +28,10 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Sysselsattning {
+
     Sysselsattning() {
     }
+
     @JsonCreator
     public static Sysselsattning create(@JsonProperty("typ") SysselsattningsTyp typ) {
         return new AutoValue_Sysselsattning(typ);
@@ -39,18 +41,18 @@ public abstract class Sysselsattning {
     public abstract SysselsattningsTyp getTyp();
 
     public enum SysselsattningsTyp {
-        NUVARANDE_ARBETE(1, ""),
-        ARBETSSOKANDE(2, ""),
-        FORADLRARLEDIGHET_VARD_AV_BARN(3, ""),
-        STUDIER(4, ""),
-        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "");
+        NUVARANDE_ARBETE(1, "NUVARANDE_ARBETE"),
+        ARBETSSOKANDE(2, "ARBETSSOKANDE"),
+        FORADLRARLEDIGHET_VARD_AV_BARN(3, "FORALDRALEDIG"),
+        STUDIER(4, "STUDIER"),
+        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "STUDIER");
 
         private final int id;
-        private final String label;
+        private final String transportId;
 
-        SysselsattningsTyp(int id, String label) {
+        SysselsattningsTyp(int id, String transportId) {
             this.id = id;
-            this.label = label;
+            this.transportId = transportId;
         }
 
         @JsonValue
@@ -58,8 +60,8 @@ public abstract class Sysselsattning {
             return id;
         }
 
-        public String getLabel() {
-            return label;
+        public String getTransportId() {
+            return transportId;
         }
 
         @JsonCreator
@@ -71,5 +73,15 @@ public abstract class Sysselsattning {
             }
             throw new IllegalArgumentException();
         }
+
+        public static SysselsattningsTyp fromTransportId(String transportId) {
+            for (SysselsattningsTyp typ : values()) {
+                if (typ.transportId.equals(transportId)) {
+                    return typ;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+
     }
 }

@@ -106,7 +106,7 @@
     <svar id="28">
       <delsvar id="28.1">
         <ns3:cv>
-          <ns3:code>1</ns3:code>
+          <ns3:code>NUVARANDE_ARBETE</ns3:code>
           <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
         </ns3:cv>
       </delsvar>

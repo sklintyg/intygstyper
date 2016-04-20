@@ -78,7 +78,7 @@
     <svar id="28">
       <delsvar id="28.1">
         <ns3:cv>
-          <ns3:code>2</ns3:code>
+          <ns3:code>ARBETSSOKANDE</ns3:code>
           <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
         </ns3:cv>
       </delsvar>

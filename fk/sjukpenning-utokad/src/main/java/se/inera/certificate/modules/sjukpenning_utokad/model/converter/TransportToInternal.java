@@ -401,7 +401,7 @@ public final class TransportToInternal {
             switch (delsvar.getId()) {
             case TYP_AV_SYSSELSATTNING_DELSVAR_ID_28:
                 String sysselsattningsTypString = getCVSvarContent(delsvar).getCode();
-                utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.fromId(Integer.parseInt(sysselsattningsTypString))));
+                utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.fromTransportId(sysselsattningsTypString)));
                 break;
             default:
                 throw new IllegalArgumentException();
