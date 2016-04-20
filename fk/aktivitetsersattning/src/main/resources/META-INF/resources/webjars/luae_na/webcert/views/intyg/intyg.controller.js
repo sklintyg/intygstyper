@@ -1,6 +1,6 @@
-angular.module('luse').controller('luse.ViewCertCtrl',
+angular.module('luae_na').controller('luae_na.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
-        'common.messageService', 'common.UserModel', 'sjukersattning.IntygController.ViewStateService',
+        'common.messageService', 'common.UserModel', 'aktivitetsersattning-na.IntygController.ViewStateService',
         'aktivitetsersattning-na.FormFactory', 'common.dynamicLabelService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService) {
@@ -71,7 +71,7 @@ angular.module('luse').controller('luse.ViewCertCtrl',
              * @type {{}}
              */
             $scope.intygBackup = {intyg: null, showBackupInfo: false};
-            var unbindFastEventFail = $rootScope.$on('sjukersattning.ViewCertCtrl.load.failed', function(event, intyg) {
+            var unbindFastEventFail = $rootScope.$on('aktivitetsersattning-na.ViewCertCtrl.load.failed', function(event, intyg) {
                 $scope.intygBackup.intyg = intyg;
             });
             $scope.$on('$destroy', unbindFastEventFail);

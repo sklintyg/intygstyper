@@ -1,0 +1,24 @@
+.soclink {
+    background-image: url(../img/ss16.png);
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+.recipentlist {
+    padding: 10px 0;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 10px;
+}
+
+table.table.luae_na-underlag tbody td {
+    font-weight: normal;
+    border: none;
+}
+
+.luae_na-underlag {
+    margin-bottom: 10px;
+}
+
+.luae_na-underlag-title {
+    font-weight: bold;
+}
