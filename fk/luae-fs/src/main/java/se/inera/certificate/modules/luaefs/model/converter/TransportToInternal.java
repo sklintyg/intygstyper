@@ -181,6 +181,7 @@ public final class TransportToInternal {
 
         utlatande.setDiagnoser(diagnoser);
         utlatande.setTillaggsfragor(tillaggsfragor);
+        utlatande.setUnderlag(underlag);
     }
 
     private static void handleFunktionsnedsattningDebut(Builder utlatande, Svar svar) {
