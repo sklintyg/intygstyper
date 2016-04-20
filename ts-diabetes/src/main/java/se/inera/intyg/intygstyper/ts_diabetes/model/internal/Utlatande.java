@@ -19,12 +19,13 @@
 package se.inera.intyg.intygstyper.ts_diabetes.model.internal;
 
 import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 
 public class Utlatande implements se.inera.intyg.common.support.model.common.internal.Utlatande {
 
     private String id;
 
-    private String typ;
+    private String typ = TsDiabetesEntryPoint.MODULE_ID;
 
     private GrundData grundData = new GrundData();
 

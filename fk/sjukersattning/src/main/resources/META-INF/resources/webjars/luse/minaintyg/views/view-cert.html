@@ -177,11 +177,6 @@
                         <span dynamic-label key="KV_FKMU_0001.1.RBK"></span><span> | {{cert.undersokningAvPatienten | date:'longDate' }}</span>
                       </div>
                     </li>
-                    <li ng-show="cert.telefonkontaktMedPatienten!=null">
-                      <div id="telefonkontaktMedPatienten">
-                        <span dynamic-label key="KV_FKMU_0001.2.RBK"></span><span> | {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
-                      </div>
-                    </li>
                     <li ng-show="cert.journaluppgifter!=null">
                       <div id="journaluppgifter">
                         <span dynamic-label key="KV_FKMU_0001.3.RBK"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
@@ -192,6 +187,14 @@
                         <span dynamic-label key="KV_FKMU_0001.4.RBK"></span><span> | {{cert.anhorigsBeskrivningAvPatienten | date:'longDate' }}</span>
                       </div>
                     </li>
+                    <li ng-show="cert.annatGrundForMU!=null">
+                      <div id="annatGrundForMU">
+                        <span dynamic-label key="KV_FKMU_0001.5.RBK"></span><span> | {{cert.annatGrundForMU | date:'longDate' }}</span>
+                      </div>
+                    </li>
+                    <div ng-show="cert.annatGrundForMUBeskrivning!=null">
+                      {{cert.annatGrundForMUBeskrivning}}
+                    </div>
                   </ul>
                 </div>
                 <div mi-field field-dynamic-label="DFR_2.1.RBK" filled="cert.kannedomOmPatient" id="kannedomOmPatient">

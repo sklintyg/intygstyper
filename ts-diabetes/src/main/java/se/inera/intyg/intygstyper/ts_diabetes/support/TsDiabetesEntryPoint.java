@@ -33,6 +33,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
     public static final String MODULE_ID = "ts-diabetes";
+    public static final String MODULE_NAME = "Transportstyrelsens läkarintyg, diabetes";
 
     @Autowired
     private TsDiabetesModuleApi tsDiabetesModuleService;
@@ -44,7 +45,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getModuleName() {
-        return "Transportstyrelsens läkarintyg, diabetes";
+        return MODULE_NAME;
     }
 
     @Override
