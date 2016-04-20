@@ -37,7 +37,7 @@ public class InternalToTransportTest {
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch"); //TODO: byta till aktivitetsersattning-fs.sch
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-fs.sch"); //TODO: byta till aktivitetsersattning-fs.sch
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         System.out.println(SVRLWriter.createXMLString(result));

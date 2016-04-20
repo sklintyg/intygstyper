@@ -41,43 +41,24 @@
     },
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
+  "underlag": [
+    {
+      "hamtasFran": "Skickas med posten",
+      "datum": "2015-09-03",
+      "typ": 6
+    }
+  ],
+  "underlagFinns": true,
   "tillaggsfragor": [],
-  "arbetslivsinriktadeAtgarderAktuelltBeskrivning": "Jobbar bra om man inte stör honom",
-  "arbetslivsinriktadeAtgarder": [
-    {
-      "val": 11
-    }
-  ],
-  "prognos": {
-    "fortydligande": "Kan bara jobba på nätterna.",
-    "typ": 4
-  },
-  "formagaTrotsBegransning": "är bra på att dansa!",
-  "arbetsresor": true,
-  "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
-  "arbetstidsforlaggning": true,
-  "forsakringsmedicinsktBeslutsstod": "överskrider inte FMB",
-  "sjukskrivningar": [
-    {
-      "period": {
-        "from": "2015-12-07",
-        "tom": "2015-12-10"
-      },
-      "sjukskrivningsgrad": 2
-    }
-  ],
-  "aktivitetsbegransning": "Kommer inte in i bilen",
-  "funktionsnedsattning": "Haltar när han dansar",
+  "kannedomOmPatient": "2015-01-07",
+  "undersokningAvPatienten": "2015-09-09",
+  "funktionsnedsattningDebut": "Skoldansen",
+  "funktionsnedsattningPaverkan": "Haltar när han dansar",
   "diagnoser": [
     {
       "diagnosBeskrivning": "Klämskada skuldra",
       "diagnosKodSystem": "ICD_10_SE",
       "diagnosKod": "S47"
     }
-  ],
-  "nuvarandeArbete": "Smed",
-  "sysselsattning": {
-    "typ": 1
-  },
-  "telefonkontaktMedPatienten": "2015-12-08"
+  ]
 }
