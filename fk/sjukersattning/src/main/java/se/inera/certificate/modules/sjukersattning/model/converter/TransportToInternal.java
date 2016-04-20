@@ -205,7 +205,7 @@ public final class TransportToInternal {
 
     private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) throws ConverterException {
         InternalDate grundForMedicinsktUnderlagDatum = null;
-        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.UNKNOWN;
+        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.ANNAT;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1:

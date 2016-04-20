@@ -68,7 +68,7 @@
     <svar id="1">
       <delsvar id="1.1">
         <ns3:cv>
-          <ns3:code>1</ns3:code>
+          <ns3:code>UNDERSOKNING</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -77,7 +77,7 @@
     <svar id="1">
       <delsvar id="1.1">
         <ns3:cv>
-          <ns3:code>3</ns3:code>
+          <ns3:code>JOURNALUPPGIFTER</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -86,7 +86,7 @@
     <svar id="1">
       <delsvar id="1.1">
         <ns3:cv>
-          <ns3:code>4</ns3:code>
+          <ns3:code>ANHORIG</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
         </ns3:cv>
       </delsvar>

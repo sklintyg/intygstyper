@@ -30,11 +30,11 @@ public final class RespConstants {
     private RespConstants() {
     }
 
-    public static final int UNDERSOKNING_AV_PATIENT = 1;
-    public static final int TELEFONKONTAKT_MED_PATIENT = 2;
-    public static final int JOURNALUPPGIFTER = 3;
-    public static final int ANHORIGSBESKRIVNING = 4;
-    public static final int ANNAT = 5;
+    public static final String UNDERSOKNING_AV_PATIENT = "UNDERSOKNING";
+    public static final String TELEFONKONTAKT_MED_PATIENT = "TELEFONKONTAKT";
+    public static final String JOURNALUPPGIFTER = "JOURNALUPPGIFTER";
+    public static final String ANHORIGSBESKRIVNING = "ANHORIG";
+    public static final String ANNAT = "ANNAT";
 
     public static final String PART_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
     public static final String STATUS_KOD_CODE_SYSTEM = "9871cd17-8755-4ed9-b894-ff3729e775a4";
@@ -288,22 +288,21 @@ public final class RespConstants {
     }
 
     public enum ReferensTyp {
-        UNDERSOKNING(1),
-        TELEFONKONTAKT(2),
-        JOURNAL(3),
-        ANHORIGSBESKRIVNING(4),
-        ANNAT(5),
-        UNKNOWN(-1);
+        UNDERSOKNING(RespConstants.UNDERSOKNING_AV_PATIENT),
+        TELEFONKONTAKT(RespConstants.TELEFONKONTAKT_MED_PATIENT),
+        JOURNAL(RespConstants.JOURNALUPPGIFTER),
+        ANHORIGSBESKRIVNING(RespConstants.ANHORIGSBESKRIVNING),
+        ANNAT(RespConstants.ANNAT);
 
-        public final int transport;
+        public final String transport;
 
-        ReferensTyp(int transport) {
+        ReferensTyp(String transport) {
             this.transport = transport;
         }
 
         public static ReferensTyp byTransport(String transport) {
             for (ReferensTyp referensTyp : values()) {
-                if (referensTyp.transport == Integer.parseInt(transport)) {
+                if (referensTyp.transport.equals(transport)) {
                     return referensTyp;
                 }
             }
