@@ -38,10 +38,10 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_JSON_ID_3;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_JSON_ID_4;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.SitUtlatande;
 import se.inera.certificate.modules.luaefs.support.LuaefsEntryPoint;
@@ -49,10 +49,8 @@ import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
+import javax.annotation.Nullable;
+import java.util.List;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_LuaefsUtlatande.Builder.class)
@@ -133,9 +131,13 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
     // - - - - - - - - - - - - - - - - - - - - - -
     // Fråga 15 Funktionsnedsättningens debut, utveckling och visar sig nu
     // Fråga 15.1 - Beskriv funktionsnedsättningens debut, utveckling och nu
+    @Nullable
+    public abstract String getFunktionsnedsattningDebut();
 
     // Fråga 16 - Funktionsnedsättningens påverkan på skolgången?
     // Fråga 16.1 - På vilket sätt har skolgången påverkats?
+    @Nullable
+    public abstract String getFunktionsnedsattningPaverkan();
 
 
     // - - - - - - - - - - - - - - - - - - - - - -
