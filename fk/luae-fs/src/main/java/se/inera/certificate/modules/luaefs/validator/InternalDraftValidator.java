@@ -38,17 +38,12 @@ import java.util.List;
 
 public class InternalDraftValidator {
 
-    private static final int MAX_ARBETSLIVSINRIKTADE_ATGARDER = 10;
-
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     @Autowired
     InternalValidatorUtil validatorUtil;
-
-    public InternalDraftValidator() {
-    }
 
     @VisibleForTesting
     public InternalDraftValidator(InternalValidatorUtil validatorUtil) {
@@ -87,7 +82,7 @@ public class InternalDraftValidator {
 
         // One of the following is required
         if (utlatande.getUndersokningAvPatienten() == null
-                && utlatande.getTelefonkontaktMedPatienten() == null
+                && utlatande.getJournaluppgifter() == null
                 && utlatande.getAnhorigsBeskrivningAvPatienten() == null
                 && utlatande.getAnnatGrundForMU() == null) {
             validatorUtil.addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
@@ -99,9 +94,9 @@ public class InternalDraftValidator {
             validatorUtil.addValidationError(validationMessages, "grundformu.undersokning", ValidationMessageType.INVALID_FORMAT,
                     "luaefs.validation.grund-for-mu.undersokning.incorrect_format");
         }
-        if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.telefonkontakt", ValidationMessageType.INVALID_FORMAT,
-                    "luaefs.validation.grund-for-mu.telefonkontakt.incorrect_format");
+        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
+            validatorUtil.addValidationError(validationMessages, "grundformu.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
+                    "luse.validation.grund-for-mu.journaluppgifter.incorrect_format");
         }
         if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && !utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()) {
             validatorUtil.addValidationError(validationMessages, "grundformu.anhorigsbeskrivning", ValidationMessageType.INVALID_FORMAT,
@@ -158,7 +153,7 @@ public class InternalDraftValidator {
         }
 
         for (Underlag underlag : utlatande.getUnderlag()) {
-            // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
+            // Alla underlagstyper är godkända här utom Underlag från företagshälsovård
             if (underlag.getTyp() == null) {
                 validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.missing");
@@ -168,7 +163,6 @@ public class InternalDraftValidator {
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId()
-                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId()
@@ -191,12 +185,14 @@ public class InternalDraftValidator {
     }
 
     private void validateFunktionsnedsattning(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
-/*
-        if (StringUtils.isBlank(utlatande.getFunktionsnedsattning())) {
-            validatorUtil.addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
-                    "luaefs.validation.funktionsnedsattning.missing");
+        if (StringUtils.isBlank(utlatande.getFunktionsnedsattningDebut())) {
+            validatorUtil.addValidationError(validationMessages, "funktionsnedsattning.debut", ValidationMessageType.EMPTY,
+                    "luaefs.validation.funktionsnedsattning.debut.missing");
         }
-*/
+        if (StringUtils.isBlank(utlatande.getFunktionsnedsattningPaverkan())) {
+            validatorUtil.addValidationError(validationMessages, "funktionsnedsattning.paverkan", ValidationMessageType.EMPTY,
+                    "luaefs.validation.funktionsnedsattning.paverkan.missing");
+        }
     }
 
     private void validateKontakt(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {

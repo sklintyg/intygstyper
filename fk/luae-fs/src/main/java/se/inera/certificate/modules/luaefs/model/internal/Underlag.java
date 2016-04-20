@@ -62,7 +62,7 @@ public abstract class Underlag {
         UTREDNING_AV_ANNAN_SPECIALISTKLINIK(9, "Utredning av annan specialistklinik"),
         UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS(10, "Utredning från vårdinrättning utomlands"),
         OVRIGT(11, "Övrigt"),
-        OKAND(-1, "Okand");
+        OKAND(-1, "Okänd");
 
         private final int id;
         private final String label;
