@@ -339,8 +339,8 @@
     <iso:rule context="//gn:delsvar[@id='32.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0003'">'codeSystem' måste vara 'KV_FKMU_0003'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-4]$')">
-        'Sjukskrivningsnivå' kan ha ett av värdena 1, 2, 3 eller 4.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(HELT_NEDSATT|TRE_FJARDEDEL|HALFTEN|EN_FJARDEDEL)$')">
+        'Sjukskrivningsnivå' kan ha ett av värdena HELT_NEDSATT, TRE_FJARDEDEL, HALFTEN, EN_FJARDEDEL.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -352,9 +352,9 @@
   </iso:pattern>
 
   <iso:pattern id="q32.1-33">
-    <iso:rule context="//gn:delsvar[@id='32.1']/tp:cv/tp:code[matches(normalize-space(.), '^[2-4]$')]">
+    <iso:rule context="//gn:delsvar[@id='32.1']/tp:cv/tp:code[matches(normalize-space(.), '^(TRE_FJARDEDEL|HALFTEN|EN_FJARDEDEL)$')]">
       <iso:assert test="count(../../../../gn:svar[@id='33']) = 1">
-        Om 'Sjukskrivningsnivå' är 2, 3 eller 4 så måste 'Arbetstidsförläggning' anges.
+        Om 'Sjukskrivningsnivå' är TRE_FJARDEDEL, HALFTEN eller EN_FJARDEDEL så måste 'Arbetstidsförläggning' anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>

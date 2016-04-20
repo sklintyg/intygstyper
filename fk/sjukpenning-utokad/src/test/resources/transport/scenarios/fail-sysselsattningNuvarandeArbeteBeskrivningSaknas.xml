@@ -101,7 +101,7 @@
     <svar id="32">
       <delsvar id="32.1">
         <ns3:cv>
-          <ns3:code>2</ns3:code>
+          <ns3:code>TRE_FJARDEDEL</ns3:code>
           <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
         </ns3:cv>
       </delsvar>

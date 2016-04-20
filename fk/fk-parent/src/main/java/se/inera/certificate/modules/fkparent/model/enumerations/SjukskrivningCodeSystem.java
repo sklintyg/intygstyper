@@ -19,10 +19,10 @@
 package se.inera.certificate.modules.fkparent.model.enumerations;
 
 public enum SjukskrivningCodeSystem {
-    KV_FKMU_0003_1("1", "Helt nedsatt"),
-    KV_FKMU_0003_2("2", "Nedsatt med 3/4"),
-    KV_FKMU_0003_3("3", "Nedsatt med hälften"),
-    KV_FKMU_0003_4("4", "Nedsatt med 1/4");
+    KV_FKMU_0003_1("1", "100%"),
+    KV_FKMU_0003_2("2", "75%"),
+    KV_FKMU_0003_3("3", "50%"),
+    KV_FKMU_0003_4("4", "25%");
 
     private final String code;
     private final String description;

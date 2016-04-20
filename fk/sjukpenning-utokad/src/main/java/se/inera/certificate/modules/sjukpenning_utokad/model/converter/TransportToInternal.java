@@ -354,7 +354,7 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
             if (sjukskrivningsnivaString != null && period != null) {
-                sjukskrivningar.add(Sjukskrivning.create(SjukskrivningsGrad.fromId(Integer.parseInt(sjukskrivningsnivaString)), period));
+                sjukskrivningar.add(Sjukskrivning.create(SjukskrivningsGrad.fromTransportId(sjukskrivningsnivaString), period));
             }
         }
     }
