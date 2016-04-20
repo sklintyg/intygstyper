@@ -54,6 +54,7 @@ import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
@@ -370,6 +371,15 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
+    }
+
+    /* (non-Javadoc)
+     * @see se.inera.intyg.common.support.modules.support.api.ModuleApi#getIntygFromCertificateHolder(se.inera.intyg.common.support.modules.support.api.CertificateHolder)
+     */
+    @Override
+    public Intyg getIntygFromCertificateHolder(CertificateHolder certificateHolder) throws ModuleException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
