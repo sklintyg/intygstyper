@@ -138,32 +138,32 @@
     <iso:rule context="//gn:delsvar[@id='28.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0002'">'codeSystem' måste vara 'KV_FKMU_0002'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-5]$')">
-        'Typ av sysselsättning' kan ha ett av värdena 1, 2, 3, 4 eller 5.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(NUVARANDE_ARBETE|ARBETSSOKANDE|FORALDRALEDIG|STUDIER|PROGRAM)$')">
+        'Typ av sysselsättning' kan ha ett av värdena NUVARANDE_ARBETE, ARBETSSOKANDE, FORALDRALEDIG, STUDIER eller PROGRAM.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q28.1-29">
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.)='1']">
+  <iso:pattern id="q28.1-q29">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) = 'NUVARANDE_ARBETE']">
       <iso:assert test="count(../../../../gn:svar[@id='29']) = 1">
         Om 'Typ av sysselsättning' besvarats med 1, måste 'Nuvarande arbete' besvaras
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != 'NUVARANDE_ARBETE']">
       <iso:assert test="count(../../../../gn:svar[@id='29']) = 0">
         Om 'Typ av sysselsättning' besvarats med något annat än 1, får 'Nuvarande arbete' inte besvaras
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q28.1-30">
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.)='5']">
+  <iso:pattern id="q28.1-q30">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) = 'PROGRAM']">
       <iso:assert test="count(../../../../gn:svar[@id='30']) = 1">
         Om 'Typ av sysselsättning' besvarats med 5, måste 'Arbetsmarknadspolitiskt program' besvaras
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != '5']">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != 'PROGRAM']">
       <iso:assert test="count(../../../../gn:svar[@id='30']) = 0">
         Om 'Typ av sysselsättning' besvarats med något annat än 5, får 'Arbetsmarknadspolitiskt program' inte besvaras
       </iso:assert>
