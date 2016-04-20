@@ -10,12 +10,6 @@
   <iso:ns prefix="gn" uri="urn:riv:clinicalprocess:healthcond:certificate:2"/>
   <iso:ns prefix="tp" uri="urn:riv:clinicalprocess:healthcond:certificate:types:2"/>
 
-  <iso:include href='types.sch#non-empty-string-pattern'/>
-  <iso:include href='types.sch#boolean-pattern'/>
-  <iso:include href='types.sch#cv-pattern'/>
-  <iso:include href='types.sch#date-pattern'/>
-  <iso:include href='types.sch#period-pattern'/>
-
   <iso:pattern id="intyg">
     <iso:rule context="//rg:intyg">
       <iso:assert test="count(gn:svar[@id='27']) le 1">
@@ -377,6 +371,47 @@
   <iso:pattern id="q9000.1">
     <iso:rule context="//gn:svar[number(@id) ge 9001]/gn:delsvar">
       <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="non-empty-string-pattern">
+    <iso:rule id="non-empty-string" abstract="true">
+      <iso:assert test="string-length(normalize-space(text())) > 0">Sträng kan inte vara tom.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="boolean-pattern">
+    <iso:rule id="boolean" abstract="true">
+      <iso:assert test=". castable as xs:boolean">Kan bara vara 'true/1' eller 'false/0'</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="cv-pattern">
+    <iso:rule id="cv" abstract="true">
+      <iso:assert test="count(tp:cv) = 1">Ett värde av typen CV måste ha ett cv-element</iso:assert>
+      <iso:assert test="count(tp:cv/tp:codeSystem) = 1">codeSystem är obligatoriskt</iso:assert>
+      <iso:assert test="count(tp:cv/tp:code) = 1">code är obligatoriskt</iso:assert>
+      <iso:assert test="count(tp:cv/tp:displayName) le 1">högst ett displayName kan anges</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="date-pattern">
+    <iso:rule id="date" abstract="true">
+      <iso:assert test=". castable as xs:date">Värdet måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(., '^\d{4}-\d\d-\d\d')">Datumet måste uttryckas som YYYY-MM-DD.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="period-pattern">
+    <iso:rule id="period" abstract="true">
+      <iso:assert test="tp:datePeriod">En period måste inneslutas av ett 'datePeriod'-element</iso:assert>
+      <iso:assert test="tp:datePeriod/tp:start castable as xs:date">'from' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(tp:datePeriod/tp:start, '^\d{4}-\d\d-\d\d')">'from' måste uttryckas som YYYY-MM-DD.</iso:assert>
+      <iso:assert test="tp:datePeriod/tp:end castable as xs:date">'tom' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(tp:datePeriod/tp:end, '^\d{4}-\d\d-\d\d')">'end' måste uttryckas som YYYY-MM-DD.</iso:assert>
+      <iso:assert test="normalize-space(tp:datePeriod/tp:start) le normalize-space(tp:datePeriod/tp:end)">
+        'from' måste vara mindre än eller lika med 'to'
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
