@@ -169,7 +169,7 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
 
 
     /*
-     * Retrieve a builder from an existing SjukersattningUtlatande object. The builder can then be used
+     * Retrieve a builder from an existing LuaefsUtlatande object. The builder can then be used
      * to create a new copy with modified attributes.
      */
     public abstract Builder toBuilder();

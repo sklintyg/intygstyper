@@ -21,8 +21,6 @@ package se.inera.certificate.modules.luaefs.validator;
 
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.luaefs.model.internal.LuaefsUtlatande;
@@ -38,15 +36,10 @@ import java.util.List;
 
 public class InternalDraftValidator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
-
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     @Autowired
     InternalValidatorUtil validatorUtil;
-
-    public InternalDraftValidator() {
-    }
 
     @VisibleForTesting
     public InternalDraftValidator(InternalValidatorUtil validatorUtil) {
@@ -79,7 +72,7 @@ public class InternalDraftValidator {
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-    private void validateGrundForMU(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    void validateGrundForMU(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         // R1 - no need to check. they are already separated and cannot occur twice.
 
@@ -142,7 +135,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateUnderlag(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    void validateUnderlag(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getUnderlagFinns() == null) {
             validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luse.validation.underlagfinns.missing");
@@ -187,7 +180,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateFunktionsnedsattning(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    void validateFunktionsnedsattning(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getFunktionsnedsattningDebut())) {
             validatorUtil.addValidationError(validationMessages, "funktionsnedsattning.debut", ValidationMessageType.EMPTY,
                     "luaefs.validation.funktionsnedsattning.debut.missing");
@@ -198,14 +191,14 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateKontakt(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    void validateKontakt(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getKontaktMedFk() != null && !utlatande.getKontaktMedFk() && !StringUtils.isBlank(utlatande.getAnledningTillKontakt())) {
             validatorUtil.addValidationError(validationMessages, "kontakt", ValidationMessageType.EMPTY,
                     "luaefs.validation.kontakt.invalid_combination");
         }
     }
 
-    private void validateVardenhet(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    void validateVardenhet(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
             validatorUtil.addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
                     "luaefs.validation.vardenhet.postadress.missing");
@@ -233,7 +226,7 @@ public class InternalDraftValidator {
     /**
      * Check if there are validation errors.
      */
-    private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
+    ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
         return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
 }
