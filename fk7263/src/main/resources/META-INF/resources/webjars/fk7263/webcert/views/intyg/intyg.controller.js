@@ -50,7 +50,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
             function loadIntyg() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
@@ -60,12 +60,11 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                             ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
                         }
 
-                        // Updates ViewState.common.intyg (should be named intygProperties)
                         ViewState.common.updateIntygProperties(result.statuses);
 
-                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
+                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intygProperties.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
