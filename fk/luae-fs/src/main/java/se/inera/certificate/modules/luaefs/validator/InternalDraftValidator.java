@@ -45,6 +45,9 @@ public class InternalDraftValidator {
     @Autowired
     InternalValidatorUtil validatorUtil;
 
+    public InternalDraftValidator() {
+    }
+
     @VisibleForTesting
     public InternalDraftValidator(InternalValidatorUtil validatorUtil) {
         this.validatorUtil = validatorUtil;
