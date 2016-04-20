@@ -9,10 +9,10 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <artifactId>aktivitetsersattning</artifactId>
+  <artifactId>aktivitetsersattning-na</artifactId>
   <packaging>jar</packaging>
 
-  <name>aktivitetsersattning</name>
+  <name>aktivitetsersattning-na</name>
   <url>http://maven.apache.org</url>
 
   <properties>

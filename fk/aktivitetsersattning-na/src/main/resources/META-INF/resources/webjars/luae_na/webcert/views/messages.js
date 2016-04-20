@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var aktivitetsersattning-naMessages = {
+var aktivitetsersattningNAMessages = {
     'sv': {
         'luae_na.error.generic': 'Kunde inte visa intyget',
         'luae_na.info.loadingcertificate': 'Hämtar intyget..',
