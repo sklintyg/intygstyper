@@ -25,7 +25,6 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,10 +81,10 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
      */
     @Parameters(name = "{index}: Scenario: {0}")
     public static Collection<Object[]> data() throws ScenarioNotFoundException {
-//        List<Object[]> retList = ScenarioFinder.getInternalScenarios("fail-*").stream()
-//                .map(u -> new Object[] { u.getName(), u, true })
-//                .collect(Collectors.toList());
-        List<Object[]> retList = new ArrayList<>();
+        List<Object[]> retList = ScenarioFinder.getInternalScenarios("fail-*").stream()
+                .map(u -> new Object[] { u.getName(), u, true })
+                .collect(Collectors.toList());
+
         retList.addAll(
                 ScenarioFinder.getInternalScenarios("pass-*").stream()
                         .map(u -> new Object[] { u.getName(), u, false })
