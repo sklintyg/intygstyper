@@ -27,7 +27,7 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_BESKRIVNING_DELSVAR_JSON_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ID_JSON_ID;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_JSON_ID_2;
@@ -82,13 +82,13 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
     public abstract InternalDate getUndersokningAvPatienten();
 
     @Nullable
-    public abstract InternalDate getTelefonkontaktMedPatienten();
-
-    @Nullable
-    public abstract InternalDate getAnnatGrundForMU();
+    public abstract InternalDate getJournaluppgifter();
 
     @Nullable
     public abstract InternalDate getAnhorigsBeskrivningAvPatienten();
+
+    @Nullable
+    public abstract InternalDate getAnnatGrundForMU();
 
     // Fråga 1.3 Vilken annan grund finns för MU
     @Nullable
@@ -199,8 +199,8 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
         @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1)
         public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);
 
-        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1)
-        public abstract Builder setTelefonkontaktMedPatienten(InternalDate telefonkontaktMedPatienten);
+        @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1)
+        public abstract Builder setJournaluppgifter(InternalDate journaluppgifter);
 
         @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1)
         public abstract Builder setAnhorigsBeskrivningAvPatienten(InternalDate anhorigsBeskrivningAvPatienten);
