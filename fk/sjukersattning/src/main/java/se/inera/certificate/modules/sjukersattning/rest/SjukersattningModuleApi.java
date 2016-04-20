@@ -48,8 +48,7 @@ import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
+import se.inera.intyg.common.support.modules.support.api.*;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
@@ -347,6 +346,7 @@ public class SjukersattningModuleApi implements ModuleApi {
         return inputXml;
     }
 
+    @Override
     public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException {
         return TransportToInternal.convert(intyg);
     }
@@ -372,5 +372,17 @@ public class SjukersattningModuleApi implements ModuleApi {
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
 
+    }
+
+    @Override
+    public Intyg getIntygFromCertificateHolder(CertificateHolder certificateHolder) throws ModuleException {
+        try {
+            RegisterCertificateType jaxbObject = JAXB.unmarshal(new StringReader(certificateHolder.getOriginalCertificate()),
+                    RegisterCertificateType.class);
+            return jaxbObject.getIntyg();
+        } catch (Exception e) {
+            LOG.error("Could not get intyg from certificate holder. {}", e);
+            throw new ModuleException("Could not get intyg from certificate holder", e);
+        }
     }
 }

@@ -18,12 +18,14 @@
  */
 package se.inera.certificate.modules.fkparent.model.enumerations;
 
+import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
+
 public enum GrundformedicinsktunderlagCodeSystem {
-    KV_FKMU_0001_1("1", "Min undersökning av patienten"),
-    KV_FKMU_0001_2("2", "Min telefonkontakt med patienten"),
-    KV_FKMU_0001_3("3", "Journaluppgifter från den"),
-    KV_FKMU_0001_4("4", "Anhörigs beskrivning av patienten"),
-    KV_FKMU_0001_5("5", "Annat");
+    KV_FKMU_0001_1(RespConstants.UNDERSOKNING_AV_PATIENT, "Min undersökning av patienten"),
+    KV_FKMU_0001_2(RespConstants.TELEFONKONTAKT_MED_PATIENT, "Min telefonkontakt med patienten"),
+    KV_FKMU_0001_3(RespConstants.JOURNALUPPGIFTER, "Journaluppgifter från den"),
+    KV_FKMU_0001_4(RespConstants.ANHORIGSBESKRIVNING, "Anhörigs beskrivning av patienten"),
+    KV_FKMU_0001_5(RespConstants.ANNAT, "Annat");
 
     private final String code;
     private final String description;

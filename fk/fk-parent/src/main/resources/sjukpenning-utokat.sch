@@ -10,12 +10,6 @@
   <iso:ns prefix="gn" uri="urn:riv:clinicalprocess:healthcond:certificate:2"/>
   <iso:ns prefix="tp" uri="urn:riv:clinicalprocess:healthcond:certificate:types:2"/>
 
-  <iso:include href='types.sch#non-empty-string-pattern'/>
-  <iso:include href='types.sch#boolean-pattern'/>
-  <iso:include href='types.sch#cv-pattern'/>
-  <iso:include href='types.sch#date-pattern'/>
-  <iso:include href='types.sch#period-pattern'/>
-
   <iso:pattern id="intyg">
     <iso:rule context="//rg:intyg">
       <iso:assert test="count(gn:svar[@id='1']) ge 1 and count(gn:svar[@id='1']) le 4">
@@ -105,8 +99,8 @@
     <iso:rule context="//gn:delsvar[@id='1.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0001'">'codeSystem' måste vara 'KV_FKMU_0001'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1235]$')">
-        'Typ av grund för MU' kan ha ett av värdena 1, 2, 3 eller 5.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(UNDERSOKNING|TELEFONKONTAKT|JOURNALUPPGIFTER|ANNAT)$')">
+        'Typ av grund för MU' kan ha ett av värdena UNDERSOKNING, TELEFONKONTAKT, JOURNALUPPGIFTER, ANNAT.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -120,14 +114,14 @@
   <iso:pattern id="q1.3">
     <iso:rule context="//gn:delsvar[@id='1.3']">
       <iso:extends rule="non-empty-string"/>
-      <iso:assert test="count(../gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) != '5']) = 0">
+      <iso:assert test="count(../gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) != 'ANNAT']) = 0">
         Om 'Typ av grund för MU' inte är 'Annat' så får 'Vilken annan grund finns för MU' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q1.1-1.3">
-    <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) = '5']">
+    <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[normalize-space(.) = 'ANNAT']">
       <iso:assert test="../../../gn:delsvar[@id='1.3']">
         Om 'Typ av grund för MU' är 'Annat' så måste 'Vilken annan grund finns för MU' anges.
       </iso:assert>
@@ -150,19 +144,19 @@
     <iso:rule context="//gn:delsvar[@id='28.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0002'">'codeSystem' måste vara 'KV_FKMU_0002'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-5]$')">
-        'Typ av sysselsättning' kan ha ett av värdena 1, 2, 3, 4 eller 5.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(NUVARANDE_ARBETE|ARBETSSOKANDE|FORALDRALEDIG|STUDIER|PROGRAM)$')">
+        'Typ av sysselsättning' kan ha ett av värdena NUVARANDE_ARBETE, ARBETSSOKANDE, FORALDRALEDIG, STUDIER eller PROGRAM.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q28.1-q29">
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) = '1']">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) = 'NUVARANDE_ARBETE']">
       <iso:assert test="count(../../../../gn:svar[@id='29']) = 1">
         Om 'Typ av sysselsättning' besvarats med 1, måste 'Nuvarande arbete' besvaras
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != 'NUVARANDE_ARBETE']">
       <iso:assert test="count(../../../../gn:svar[@id='29']) = 0">
         Om 'Typ av sysselsättning' besvarats med något annat än 1, får 'Nuvarande arbete' inte besvaras
       </iso:assert>
@@ -170,12 +164,12 @@
   </iso:pattern>
 
   <iso:pattern id="q28.1-q30">
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) = '5']">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) = 'PROGRAM']">
       <iso:assert test="count(../../../../gn:svar[@id='30']) = 1">
         Om 'Typ av sysselsättning' besvarats med 5, måste 'Arbetsmarknadspolitiskt program' besvaras
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != '5']">
+    <iso:rule context="//gn:delsvar[@id='28.1']/tp:cv/tp:code[normalize-space(.) != 'PROGRAM']">
       <iso:assert test="count(../../../../gn:svar[@id='30']) = 0">
         Om 'Typ av sysselsättning' besvarats med något annat än 5, får 'Arbetsmarknadspolitiskt program' inte besvaras
       </iso:assert>
@@ -345,8 +339,8 @@
     <iso:rule context="//gn:delsvar[@id='32.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0003'">'codeSystem' måste vara 'KV_FKMU_0003'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-4]$')">
-        'Sjukskrivningsnivå' kan ha ett av värdena 1, 2, 3 eller 4.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(HELT_NEDSATT|TRE_FJARDEDEL|HALFTEN|EN_FJARDEDEL)$')">
+        'Sjukskrivningsnivå' kan ha ett av värdena HELT_NEDSATT, TRE_FJARDEDEL, HALFTEN, EN_FJARDEDEL.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -358,9 +352,9 @@
   </iso:pattern>
 
   <iso:pattern id="q32.1-33">
-    <iso:rule context="//gn:delsvar[@id='32.1']/tp:cv/tp:code[matches(normalize-space(.), '^[2-4]$')]">
+    <iso:rule context="//gn:delsvar[@id='32.1']/tp:cv/tp:code[matches(normalize-space(.), '^(TRE_FJARDEDEL|HALFTEN|EN_FJARDEDEL)$')]">
       <iso:assert test="count(../../../../gn:svar[@id='33']) = 1">
-        Om 'Sjukskrivningsnivå' är 2, 3 eller 4 så måste 'Arbetstidsförläggning' anges.
+        Om 'Sjukskrivningsnivå' är TRE_FJARDEDEL, HALFTEN eller EN_FJARDEDEL så måste 'Arbetstidsförläggning' anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -478,8 +472,8 @@
     <iso:rule context="//gn:delsvar[@id='39.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0006'">'codeSystem' måste vara 'KV_FKMU_0006'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-4]$')">
-        'Beskrivning prognos' kan ha ett av värdena 1, 2, 3 eller 4.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(STOR_SANNOLIKHET|LANGRE_AN_180|SANNOLIKT_INTE|PROGNOS_OKLAR|ATER_X_ANTAL_DGR)$')">
+        'Beskrivning prognos' kan ha ett av värdena STOR_SANNOLIKHET, LANGRE_AN_180, SANNOLIKT_INTE, PROGNOS_OKLAR eller ATER_X_ANTAL_DGR.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -491,14 +485,14 @@
   </iso:pattern>
 
   <iso:pattern id="q39.1-39.2">
-    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) = '4']">
+    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) = 'PROGNOS_OKLAR']">
       <iso:assert test="../../../gn:delsvar[@id='39.2']">
-        Om 'Beskrivning prognos' är 4 så måste 'Förtydligande prognos' anges.
+        Om 'Beskrivning prognos' är PROGNOS_OKLAR så måste 'Förtydligande prognos' anges.
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) != '4']">
+    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) != 'PROGNOS_OKLAR']">
       <iso:assert test="count(../../../gn:delsvar[@id='39.2']) = 0">
-        Om 'Beskrivning prognos' inte är 4 så får 'Förtydligande prognos' inte anges.
+        Om 'Beskrivning prognos' inte är PROGNOS_OKLAR så får 'Förtydligande prognos' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -525,13 +519,13 @@
     <iso:rule context="//gn:delsvar[@id='40.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0004'">'codeSystem' måste vara 'KV_FKMU_0004'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^([1-9]|1[01])$')">
-        'Val av arbetslivsinriktade åtgärder' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 eller 11.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(EJ_AKTUELLT|ARBETSTRANING|ARBETSANPASSNING|SOKA_NYTT_ARBETE|BESOK_ARBETSPLATS|ERGONOMISK|HJALPMEDEL|KONFLIKTHANTERING|KONTAKT_FHV|OMFORDELNING|OVRIGA_ATGARDER)$')">
+        'Val av arbetslivsinriktade åtgärder' kan ha ett av värdena EJ_AKTUELLT, ARBETSTRANING, ARBETSANPASSNING, SOKA_NYTT_ARBETE, BESOK_ARBETSPLATS, ERGONOMISK, HJALPMEDEL, KONFLIKTHANTERING, KONTAKT_FHV, OMFORDELNING eller OVRIGA_ATGARDER.
       </iso:assert>
-      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.!='1'] and tp:cv/tp:code[.='1'])">
+      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.!='EJ_AKTUELLT'] and tp:cv/tp:code[.='EJ_AKTUELLT'])">
         'Inte aktuellt' kan inte kombineras med andra svar
       </iso:assert>
-      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.='1'] and tp:cv/tp:code[.!='1'])">
+      <iso:assert test="not(preceding-sibling::gn:delsvar[@id='40.1']/tp:cv/tp:code[.='EJ_AKTUELLT'] and tp:cv/tp:code[.!='EJ_AKTUELLT'])">
         'Inte aktuellt' kan inte kombineras med andra svar
       </iso:assert>
     </iso:rule>
@@ -550,27 +544,27 @@
   </iso:pattern>
 
   <iso:pattern id="q40.1-40.2">
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != 'EJ_AKTUELLT']">
       <iso:assert test="../../../gn:delsvar[@id='40.2']">
-        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från '1' så måste 'Beskrivning arbetslivsriktade åtgärder aktuellt' anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från 'EJ_AKTUELLT' så måste 'Beskrivning arbetslivsriktade åtgärder aktuellt' anges.
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = 'EJ_AKTUELLT']">
       <iso:assert test="count(../../../gn:delsvar[@id='40.2']) = 0">
-        Om 'Val av arbetslivsinriktade åtgärder' är '1' så får 'Beskrivning arbetslivsriktade åtgärder aktuellt' inte anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är 'EJ_AKTUELLT' så får 'Beskrivning arbetslivsriktade åtgärder aktuellt' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q40.1-40.3">
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) = 'EJ_AKTUELLT']">
       <iso:assert test="../../../gn:delsvar[@id='40.3']">
-        Om 'Val av arbetslivsinriktade åtgärder' är '1' så måste 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är 'EJ_AKTUELLT' så måste 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' anges.
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != '1']">
+    <iso:rule context="//gn:delsvar[@id='40.1']/tp:cv/tp:code[normalize-space(.) != 'EJ_AKTUELLT']">
       <iso:assert test="count(../../../gn:delsvar[@id='40.3']) = 0">
-        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från '1' så får 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' inte anges.
+        Om 'Val av arbetslivsinriktade åtgärder' är skiljt från 'EJ_AKTUELLT' så får 'Beskrivning arbetslivsriktade åtgärder ej aktuellt' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -642,6 +636,47 @@
   <iso:pattern id="q9000.1">
     <iso:rule context="//gn:svar[number(@id) ge 9001]/gn:delsvar">
       <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="non-empty-string-pattern">
+    <iso:rule id="non-empty-string" abstract="true">
+      <iso:assert test="string-length(normalize-space(text())) > 0">Sträng kan inte vara tom.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="boolean-pattern">
+    <iso:rule id="boolean" abstract="true">
+      <iso:assert test=". castable as xs:boolean">Kan bara vara 'true/1' eller 'false/0'</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="cv-pattern">
+    <iso:rule id="cv" abstract="true">
+      <iso:assert test="count(tp:cv) = 1">Ett värde av typen CV måste ha ett cv-element</iso:assert>
+      <iso:assert test="count(tp:cv/tp:codeSystem) = 1">codeSystem är obligatoriskt</iso:assert>
+      <iso:assert test="count(tp:cv/tp:code) = 1">code är obligatoriskt</iso:assert>
+      <iso:assert test="count(tp:cv/tp:displayName) le 1">högst ett displayName kan anges</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="date-pattern">
+    <iso:rule id="date" abstract="true">
+      <iso:assert test=". castable as xs:date">Värdet måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(., '^\d{4}-\d\d-\d\d')">Datumet måste uttryckas som YYYY-MM-DD.</iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="period-pattern">
+    <iso:rule id="period" abstract="true">
+      <iso:assert test="tp:datePeriod">En period måste inneslutas av ett 'datePeriod'-element</iso:assert>
+      <iso:assert test="tp:datePeriod/tp:start castable as xs:date">'from' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(tp:datePeriod/tp:start, '^\d{4}-\d\d-\d\d')">'from' måste uttryckas som YYYY-MM-DD.</iso:assert>
+      <iso:assert test="tp:datePeriod/tp:end castable as xs:date">'tom' måste vara ett giltigt datum.</iso:assert>
+      <iso:assert test="matches(tp:datePeriod/tp:end, '^\d{4}-\d\d-\d\d')">'end' måste uttryckas som YYYY-MM-DD.</iso:assert>
+      <iso:assert test="normalize-space(tp:datePeriod/tp:start) le normalize-space(tp:datePeriod/tp:end)">
+        'from' måste vara mindre än eller lika med 'to'
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 

@@ -205,7 +205,7 @@ public final class TransportToInternal {
 
     private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) throws ConverterException {
         InternalDate grundForMedicinsktUnderlagDatum = null;
-        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.UNKNOWN;
+        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.ANNAT;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1:
@@ -265,14 +265,14 @@ public final class TransportToInternal {
     }
 
     private static void handleUnderlag(List<Underlag> underlag, Svar svar) throws ConverterException {
-        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
+        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OVRIGT;
         InternalDate date = null;
         String hamtasFran = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case UNDERLAG_TYP_DELSVAR_ID_4:
                 CVType typ = getCVSvarContent(delsvar);
-                underlagsTyp = Underlag.UnderlagsTyp.fromId(Integer.parseInt(typ.getCode()));
+                underlagsTyp = Underlag.UnderlagsTyp.fromTransportId(typ.getCode());
                 break;
             case UNDERLAG_DATUM_DELSVAR_ID_4:
                 date = new InternalDate(getStringContent(delsvar));

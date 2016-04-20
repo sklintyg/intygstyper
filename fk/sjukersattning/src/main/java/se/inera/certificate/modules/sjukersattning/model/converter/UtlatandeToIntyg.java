@@ -172,31 +172,31 @@ public final class UtlatandeToIntyg {
         if (source.getUndersokningAvPatienten() != null) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT),
-                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(UNDERSOKNING_AV_PATIENT))))
+                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, UNDERSOKNING_AV_PATIENT,
+                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, UNDERSOKNING_AV_PATIENT)))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getUndersokningAvPatienten().asLocalDate().toString())
                     .build());
         }
         if (source.getJournaluppgifter() != null) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER),
-                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(JOURNALUPPGIFTER))))
+                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, JOURNALUPPGIFTER,
+                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, JOURNALUPPGIFTER)))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
         if (source.getAnhorigsBeskrivningAvPatienten() != null) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANHORIGSBESKRIVNING),
-                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANHORIGSBESKRIVNING))))
+                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ANHORIGSBESKRIVNING,
+                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ANHORIGSBESKRIVNING)))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnhorigsBeskrivningAvPatienten().asLocalDate().toString())
                     .build());
         }
         if (source.getAnnatGrundForMU() != null) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT),
-                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, Integer.toString(ANNAT))))
+                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ANNAT,
+                                    RespConstants.getDisplayName(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ANNAT)))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnnatGrundForMU().asLocalDate().toString())
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1, source.getAnnatGrundForMUBeskrivning()).build());
         }
@@ -212,7 +212,7 @@ public final class UtlatandeToIntyg {
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
                     aSvar(UNDERLAG_SVAR_ID_4).withDelsvar(UNDERLAG_TYP_DELSVAR_ID_4,
-                            aCV(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()),
+                            aCV(UNDERLAG_CODE_SYSTEM, underlag.getTyp().getTransportId(),
                                     RespConstants.getDisplayName(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()))))
                             .withDelsvar(UNDERLAG_DATUM_DELSVAR_ID_4,
                                     underlag.getDatum() != null ? underlag.getDatum().asLocalDate().toString() : null)

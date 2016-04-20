@@ -41,44 +41,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;
 
 import iso.v21090.dt.v1.CD;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
-import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
+import se.inera.intyg.common.support.modules.support.api.*;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.intyg.intygstyper.fk7263.model.converter.ArbetsformagaToGiltighet;
-import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToNotification;
-import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
-import se.inera.intyg.intygstyper.fk7263.model.converter.WebcertModelFactory;
+import se.inera.intyg.intygstyper.fk7263.model.converter.*;
 import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
@@ -549,6 +527,17 @@ public class Fk7263ModuleApi implements ModuleApi {
         } catch (ConverterException e) {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
+        }
+    }
+
+    @Override
+    public Intyg getIntygFromCertificateHolder(CertificateHolder certificateHolder) throws ModuleException {
+        try {
+            Utlatande utlatande = getUtlatandeFromJson(certificateHolder.getDocument());
+            return UtlatandeToIntyg.convert(utlatande);
+        } catch (Exception e) {
+            LOG.error("Could not get intyg from certificate holder. {}", e);
+            throw new ModuleException("Could not get intyg from certificate holder", e);
         }
     }
 

@@ -23,7 +23,7 @@ public enum TypAvSysselsattningCodeSystem {
     KV_FKMU_0002_2("2", "Arbetssökande"),
     KV_FKMU_0002_3("3", "Föräldraledighet för vård av barn"),
     KV_FKMU_0002_4("4", "Studier"),
-    KV_FKMU_0002_5("5", "Deltar i arbetsmarknadspolitiskt program");
+    KV_FKMU_0002_5("5", "Deltagande i arbetsmarknadspolitiskt program");
 
     private final String code;
     private final String description;

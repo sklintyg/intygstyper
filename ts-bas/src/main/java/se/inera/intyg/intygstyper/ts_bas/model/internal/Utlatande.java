@@ -19,12 +19,13 @@
 package se.inera.intyg.intygstyper.ts_bas.model.internal;
 
 import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
 public class Utlatande implements se.inera.intyg.common.support.model.common.internal.Utlatande {
 
     private String id;
 
-    private String typ;
+    private String typ = TsBasEntryPoint.MODULE_ID;
 
     private GrundData grundData = new GrundData();
 
