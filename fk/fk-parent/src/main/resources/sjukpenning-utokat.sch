@@ -472,8 +472,8 @@
     <iso:rule context="//gn:delsvar[@id='39.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0006'">'codeSystem' måste vara 'KV_FKMU_0006'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^[1-4]$')">
-        'Beskrivning prognos' kan ha ett av värdena 1, 2, 3 eller 4.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(STOR_SANNOLIKHET|LANGRE_AN_180|SANNOLIKT_INTE|PROGNOS_OKLAR|ATER_X_ANTAL_DGR)$')">
+        'Beskrivning prognos' kan ha ett av värdena STOR_SANNOLIKHET, LANGRE_AN_180, SANNOLIKT_INTE, PROGNOS_OKLAR eller ATER_X_ANTAL_DGR.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -485,14 +485,14 @@
   </iso:pattern>
 
   <iso:pattern id="q39.1-39.2">
-    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) = '4']">
+    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) = 'PROGNOS_OKLAR']">
       <iso:assert test="../../../gn:delsvar[@id='39.2']">
-        Om 'Beskrivning prognos' är 4 så måste 'Förtydligande prognos' anges.
+        Om 'Beskrivning prognos' är PROGNOS_OKLAR så måste 'Förtydligande prognos' anges.
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) != '4']">
+    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) != 'PROGNOS_OKLAR']">
       <iso:assert test="count(../../../gn:delsvar[@id='39.2']) = 0">
-        Om 'Beskrivning prognos' inte är 4 så får 'Förtydligande prognos' inte anges.
+        Om 'Beskrivning prognos' inte är PROGNOS_OKLAR så får 'Förtydligande prognos' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>

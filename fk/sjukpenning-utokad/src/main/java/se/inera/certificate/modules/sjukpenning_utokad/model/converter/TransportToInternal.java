@@ -282,7 +282,7 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
             if (prognosKod != null) {
-                utlatande.setPrognos(Prognos.create(PrognosTyp.fromId(Integer.parseInt(prognosKod)), fortydligande));
+                utlatande.setPrognos(Prognos.create(PrognosTyp.fromTransportId(prognosKod), fortydligande));
             }
         }
     }

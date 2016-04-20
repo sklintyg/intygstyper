@@ -127,7 +127,7 @@
     <svar id="39">
       <delsvar id="39.1">
         <ns3:cv>
-          <ns3:code>4</ns3:code>
+          <ns3:code>PROGNOS_OKLAR</ns3:code>
           <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
