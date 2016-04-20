@@ -1,40 +1,32 @@
 package se.inera.certificate.modules.luaefs.model.converter;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import com.helger.schematron.svrl.SVRLHelper;
+import com.helger.schematron.svrl.SVRLWriter;
+import org.joda.time.LocalDateTime;
+import org.junit.Test;
+import org.oclc.purl.dsdl.svrl.SchematronOutputType;
+import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
+import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
+import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.luaefs.model.internal.LuaefsUtlatande;
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Relation;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+
+import javax.xml.transform.stream.StreamSource;
+import java.io.ByteArrayInputStream;
+import java.net.URL;
+
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
-import java.io.ByteArrayInputStream;
-import java.net.URL;
-
-import javax.xml.transform.stream.StreamSource;
-
-import org.joda.time.LocalDateTime;
-import org.junit.Test;
-import org.oclc.purl.dsdl.svrl.SchematronOutputType;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-import com.helger.schematron.svrl.SVRLHelper;
-import com.helger.schematron.svrl.SVRLWriter;
-
-import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
-import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
-import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
-import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
-import se.inera.certificate.modules.luaefs.model.internal.*;
-import se.inera.certificate.modules.luaefs.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.certificate.modules.luaefs.model.internal.Prognos.PrognosTyp;
-import se.inera.certificate.modules.luaefs.model.internal.Sjukskrivning.SjukskrivningsGrad;
-import se.inera.certificate.modules.luaefs.model.internal.Sysselsattning.SysselsattningsTyp;
-import se.inera.intyg.common.support.common.enumerations.RelationKod;
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Relation;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public class InternalToTransportTest {
 
@@ -123,41 +115,13 @@ public class InternalToTransportTest {
         }
         utlatande.setGrundData(grundData);
 
-        utlatande.setTelefonkontaktMedPatienten(new InternalDate("2015-12-08"));
         utlatande.setAnnatGrundForMU(new InternalDate("2015-12-07"));
         utlatande.setAnnatGrundForMUBeskrivning("Barndomsvän");
 
-        utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.NUVARANDE_ARBETE));
-        utlatande.setNuvarandeArbete("Smed");
-
         utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra"))));
 
-        utlatande.setFunktionsnedsattning("Haltar när han dansar");
-        utlatande.setAktivitetsbegransning("Kommer inte in i bilen");
-
-        utlatande.setSjukskrivningar(asList(
-                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_3_4,
-                        new InternalLocalDateInterval(new InternalDate("2015-12-07"), new InternalDate("2015-12-10"))),
-                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_HALFTEN,
-                        new InternalLocalDateInterval(new InternalDate("2015-12-12"), new InternalDate("2015-12-14"))),
-                Sjukskrivning.create(SjukskrivningsGrad.NEDSATT_1_4,
-                        new InternalLocalDateInterval(new InternalDate("2015-12-15"), new InternalDate("2015-12-15")))));
-
-        utlatande.setForsakringsmedicinsktBeslutsstod("Överskrider inte FMB");
-
-        utlatande.setArbetstidsforlaggning(true);
-        utlatande.setArbetstidsforlaggningMotivering("Kan bara jobba på nätterna");
-
-        utlatande.setArbetsresor(true);
-
-        utlatande.setFormagaTrotsBegransning("Är bra på att dansa!");
-
-        utlatande.setPrognos(Prognos.create(PrognosTyp.PROGNOS_OKLAR, "Kan bara jobba på nätterna."));
-
-        utlatande.setArbetslivsinriktadeAtgarder(asList(
-                ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT),
-                ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONFLIKTHANTERING)));
-        utlatande.setArbetslivsinriktadeAtgarderAktuelltBeskrivning("Jobbar bra om man inte stör honom");
+        utlatande.setFunktionsnedsattningDebut("Skoldansen");
+        utlatande.setFunktionsnedsattningPaverkan("Haltar när han dansar");
 
         return utlatande.build();
     }

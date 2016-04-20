@@ -19,92 +19,57 @@
 
 package se.inera.certificate.modules.luaefs.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID_23;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID_23;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID_30;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID_30;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_OM_DELSVAR_ID_34;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_SVAR_ID_34;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID_33;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID_33;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_SVAR_ID_33;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DELSVAR_ID_35;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SVAR_ID_35;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_DELSVAR_ID_29;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_SVAR_ID_29;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID_25;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID_25;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID_19;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID_19;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID_20;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID_20;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_BESKRIVNING_DELSVAR_ID_39;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_SVAR_ID_39;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_DELSVAR_ID_28;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_SVAR_ID_28;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-
 import org.apache.commons.lang3.StringUtils;
-
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
-import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
-import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
-import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getDatePeriodTypeContent;
-
 import se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
-import se.inera.certificate.modules.luaefs.model.internal.ArbetslivsinriktadeAtgarder;
-import se.inera.certificate.modules.luaefs.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.certificate.modules.luaefs.model.internal.Prognos;
-import se.inera.certificate.modules.luaefs.model.internal.Prognos.PrognosTyp;
 import se.inera.certificate.modules.luaefs.model.internal.LuaefsUtlatande;
 import se.inera.certificate.modules.luaefs.model.internal.LuaefsUtlatande.Builder;
-import se.inera.certificate.modules.luaefs.model.internal.Sjukskrivning;
-import se.inera.certificate.modules.luaefs.model.internal.Sjukskrivning.SjukskrivningsGrad;
-import se.inera.certificate.modules.luaefs.model.internal.Sysselsattning;
-import se.inera.certificate.modules.luaefs.model.internal.Sysselsattning.SysselsattningsTyp;
 import se.inera.certificate.modules.luaefs.model.internal.Tillaggsfraga;
 import se.inera.certificate.modules.luaefs.model.internal.Underlag;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
+
+import javax.xml.bind.JAXBElement;
+import java.util.ArrayList;
+import java.util.List;
+
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DEBUT_DELSVAR_ID_15;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DEBUT_SVAR_ID_15;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PAVERKAN_DELSVAR_ID_16;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_ID_16;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_DELSVAR_ID_2;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_ID_2;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_DELSVAR_ID_3;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_ID_3;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_DATUM_DELSVAR_ID_4;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID_4;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID_4;
+import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
+import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
 
 public final class TransportToInternal {
 
@@ -181,50 +146,23 @@ public final class TransportToInternal {
             case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1:
                 handleGrundForMedicinsktUnderlag(utlatande, svar);
                 break;
-            case TYP_AV_SYSSELSATTNING_SVAR_ID_28:
-                handleSysselsattning(utlatande, svar);
+            case KANNEDOM_SVAR_ID_2:
+                handleKannedom(utlatande, svar);
                 break;
-            case NUVARANDE_ARBETE_SVAR_ID_29:
-                handleNuvarandeArbete(utlatande, svar);
+            case UNDERLAGFINNS_SVAR_ID_3:
+                handleUnderlagFinns(utlatande, svar);
                 break;
-            case ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID_30:
-                handleArbetsmarknadspolitisktProgram(utlatande, svar);
+            case UNDERLAG_SVAR_ID_4:
+                handleUnderlag(underlag, svar);
                 break;
             case DIAGNOS_SVAR_ID_6:
                 handleDiagnos(diagnoser, svar);
                 break;
-            case FUNKTIONSNEDSATTNING_SVAR_ID_35:
-                handleFunktionsnedsattning(utlatande, svar);
+            case FUNKTIONSNEDSATTNING_DEBUT_SVAR_ID_15:
+                handleFunktionsnedsattningDebut(utlatande, svar);
                 break;
-            case AKTIVITETSBEGRANSNING_SVAR_ID_17:
-                handleAktivitetsbegransning(utlatande, svar);
-                break;
-            case PAGAENDEBEHANDLING_SVAR_ID_19:
-                handlePagaendeBehandling(utlatande, svar);
-                break;
-            case PLANERADBEHANDLING_SVAR_ID_20:
-                handlePlaneradBehandling(utlatande, svar);
-                break;
-            case BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32:
-                handleBehovAvSjukskrivning(sjukskrivningar, svar);
-                break;
-            case FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37:
-                handleForsakringsmedicinsktBeslutsstod(utlatande, svar);
-                break;
-            case ARBETSTIDSFORLAGGNING_SVAR_ID_33:
-                handleArbetstidsforlaggning(utlatande, svar);
-                break;
-            case ARBETSRESOR_SVAR_ID_34:
-                handleArbetsresor(utlatande, svar);
-                break;
-            case AKTIVITETSFORMAGA_SVAR_ID_23:
-                handleFormagaTrotsBegransning(utlatande, svar);
-                break;
-            case PROGNOS_SVAR_ID_39:
-                handlePrognos(utlatande, svar);
-                break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40:
-                handleArbetslivsinriktadeAtgarder(utlatande, svar);
+            case FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_ID_16:
+                handleFunktionsnedsattningPaverkan(utlatande, svar);
                 break;
             case OVRIGT_SVAR_ID_25:
                 handleOvrigt(utlatande, svar);
@@ -232,6 +170,7 @@ public final class TransportToInternal {
             case KONTAKT_ONSKAS_SVAR_ID_26:
                 handleOnskarKontakt(utlatande, svar);
                 break;
+
             default:
                 if (StringUtils.isNumeric(svar.getId()) && Integer.parseInt(svar.getId()) >= TILLAGGSFRAGA_START) {
                     handleTillaggsfraga(tillaggsfragor, svar);
@@ -240,175 +179,70 @@ public final class TransportToInternal {
             }
         }
 
-        utlatande.setSjukskrivningar(sjukskrivningar);
         utlatande.setDiagnoser(diagnoser);
         utlatande.setTillaggsfragor(tillaggsfragor);
     }
 
-    private static void handleArbetslivsinriktadeAtgarder(Builder utlatande, Svar svar) throws ConverterException {
-        List<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder = new ArrayList<>();
-
+    private static void handleFunktionsnedsattningDebut(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40:
-                String arbetslivsinriktadeAtgarderValKod = getCVSvarContent(delsvar).getCode();
-                arbetslivsinriktadeAtgarder.add(ArbetslivsinriktadeAtgarder
-                        .create(ArbetslivsinriktadeAtgarderVal.fromId(Integer.parseInt(arbetslivsinriktadeAtgarderValKod))));
-                break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40:
-                utlatande.setArbetslivsinriktadeAtgarderAktuelltBeskrivning(getStringContent(delsvar));
-                break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40:
-                utlatande.setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-        utlatande.setArbetslivsinriktadeAtgarder(arbetslivsinriktadeAtgarder);
-    }
-
-    private static void handlePrognos(Builder utlatande, Svar svar) throws ConverterException {
-        String prognosKod = null;
-        String fortydligande = null;
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case PROGNOS_BESKRIVNING_DELSVAR_ID_39:
-                prognosKod = getCVSvarContent(delsvar).getCode();
-                break;
-            case PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39:
-                fortydligande = getStringContent(delsvar);
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-            if (prognosKod != null) {
-                utlatande.setPrognos(Prognos.create(PrognosTyp.fromId(Integer.parseInt(prognosKod)), fortydligande));
+                case FUNKTIONSNEDSATTNING_DEBUT_DELSVAR_ID_15:
+                    utlatande.setFunktionsnedsattningDebut(getStringContent(delsvar));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
             }
         }
     }
 
-    private static void handleFormagaTrotsBegransning(Builder utlatande, Svar svar) {
+    private static void handleFunktionsnedsattningPaverkan(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case AKTIVITETSFORMAGA_DELSVAR_ID_23:
-                utlatande.setFormagaTrotsBegransning(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+                case FUNKTIONSNEDSATTNING_PAVERKAN_DELSVAR_ID_16:
+                    utlatande.setFunktionsnedsattningPaverkan(getStringContent(delsvar));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
             }
         }
     }
 
-    private static void handleArbetsresor(Builder utlatande, Svar svar) {
+
+    private static void handleUnderlagFinns(Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case ARBETSRESOR_OM_DELSVAR_ID_34:
-                utlatande.setArbetsresor(Boolean.valueOf(getStringContent(delsvar)));
-                break;
-            default:
-                throw new IllegalArgumentException();
+                case UNDERLAGFINNS_DELSVAR_ID_3:
+                    utlatande.setUnderlagFinns(Boolean.valueOf(getStringContent(delsvar)));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
             }
         }
     }
 
-    private static void handleArbetstidsforlaggning(Builder utlatande, Svar svar) {
+    private static void handleUnderlag(List<Underlag> underlag, Svar svar) throws ConverterException {
+        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
+        InternalDate date = null;
+        String hamtasFran = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID_33:
-                utlatande.setArbetstidsforlaggning(Boolean.valueOf(getStringContent(delsvar)));
-                break;
-            case ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID_33:
-                utlatande.setArbetstidsforlaggningMotivering(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+                case UNDERLAG_TYP_DELSVAR_ID_4:
+                    CVType typ = getCVSvarContent(delsvar);
+                    underlagsTyp = Underlag.UnderlagsTyp.fromId(Integer.parseInt(typ.getCode()));
+                    break;
+                case UNDERLAG_DATUM_DELSVAR_ID_4:
+                    date = new InternalDate(getStringContent(delsvar));
+                    break;
+                case UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4:
+                    hamtasFran = getStringContent(delsvar);
+                    break;
+                default:
+                    throw new IllegalArgumentException();
             }
         }
+        underlag.add(Underlag.create(underlagsTyp, date, hamtasFran));
     }
 
-    private static void handleForsakringsmedicinsktBeslutsstod(Builder utlatande, Svar svar) {
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37:
-                utlatande.setForsakringsmedicinsktBeslutsstod(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
-    private static void handleBehovAvSjukskrivning(List<Sjukskrivning> sjukskrivningar, Svar svar) throws ConverterException {
-        String sjukskrivningsnivaString = null;
-        InternalLocalDateInterval period = null;
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32:
-                sjukskrivningsnivaString = getCVSvarContent(delsvar).getCode();
-                break;
-            case BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32:
-                DatePeriodType datePeriod = getDatePeriodTypeContent(delsvar);
-                period = new InternalLocalDateInterval(datePeriod.getStart().toString(), datePeriod.getEnd().toString());
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-            if (sjukskrivningsnivaString != null && period != null) {
-                sjukskrivningar.add(Sjukskrivning.create(SjukskrivningsGrad.fromId(Integer.parseInt(sjukskrivningsnivaString)), period));
-            }
-        }
-    }
-
-    private static void handleFunktionsnedsattning(Builder utlatande, Svar svar) {
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case FUNKTIONSNEDSATTNING_DELSVAR_ID_35:
-                utlatande.setFunktionsnedsattning(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-
-    }
-
-    private static void handleArbetsmarknadspolitisktProgram(Builder utlatande, Svar svar) {
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID_30:
-                utlatande.setArbetsmarknadspolitisktProgram(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
-    private static void handleNuvarandeArbete(Builder utlatande, Svar svar) {
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case NUVARANDE_ARBETE_DELSVAR_ID_29:
-                utlatande.setNuvarandeArbete(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-    }
-
-    private static void handleSysselsattning(Builder utlatande, Svar svar) throws ConverterException {
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case TYP_AV_SYSSELSATTNING_DELSVAR_ID_28:
-                String sysselsattningsTypString = getCVSvarContent(delsvar).getCode();
-                utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.fromId(Integer.parseInt(sysselsattningsTypString))));
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-    }
 
     private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) throws ConverterException {
         InternalDate grundForMedicinsktUnderlagDatum = null;
@@ -437,14 +271,25 @@ public final class TransportToInternal {
         case JOURNAL:
             utlatande.setJournaluppgifter(grundForMedicinsktUnderlagDatum);
             break;
-        case TELEFONKONTAKT:
-            utlatande.setTelefonkontaktMedPatienten(grundForMedicinsktUnderlagDatum);
+        case ANHORIGSBESKRIVNING:
+            utlatande.setAnhorigsBeskrivningAvPatienten(grundForMedicinsktUnderlagDatum);
             break;
         case ANNAT:
             utlatande.setAnnatGrundForMU(grundForMedicinsktUnderlagDatum);
             break;
         default:
             throw new IllegalArgumentException();
+        }
+    }
+
+    private static void handleKannedom(Builder utlatande, Svar svar) {
+        Delsvar delsvar = svar.getDelsvar().get(0);
+        switch (delsvar.getId()) {
+            case KANNEDOM_DELSVAR_ID_2:
+                utlatande.setKannedomOmPatient(new InternalDate(getStringContent(delsvar)));
+                break;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
@@ -472,38 +317,6 @@ public final class TransportToInternal {
         diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning, diagnosDisplayName));
     }
 
-    private static void handleAktivitetsbegransning(Builder utlatande, Svar svar) {
-        Delsvar delsvar = svar.getDelsvar().get(0);
-        switch (delsvar.getId()) {
-        case AKTIVITETSBEGRANSNING_DELSVAR_ID_17:
-            utlatande.setAktivitetsbegransning(getStringContent(delsvar));
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private static void handlePagaendeBehandling(Builder utlatande, Svar svar) {
-        Delsvar delsvar = svar.getDelsvar().get(0);
-        switch (delsvar.getId()) {
-        case PAGAENDEBEHANDLING_DELSVAR_ID_19:
-            utlatande.setPagaendeBehandling(getStringContent(delsvar));
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
-
-    private static void handlePlaneradBehandling(Builder utlatande, Svar svar) {
-        Delsvar delsvar = svar.getDelsvar().get(0);
-        switch (delsvar.getId()) {
-        case PLANERADBEHANDLING_DELSVAR_ID_20:
-            utlatande.setPlaneradBehandling(getStringContent(delsvar));
-            break;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
 
     private static void handleOvrigt(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
