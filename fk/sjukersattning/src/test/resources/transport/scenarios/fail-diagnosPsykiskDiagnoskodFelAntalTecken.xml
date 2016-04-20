@@ -81,7 +81,7 @@
     <svar id="4">
       <delsvar id="4.1">
         <ns3:cv>
-          <ns3:code>6</ns3:code>
+          <ns3:code>PSYKOLOG</ns3:code>
           <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -91,7 +91,7 @@
 	<svar id="4">
       <delsvar id="4.1">
         <ns3:cv>
-          <ns3:code>4</ns3:code>
+          <ns3:code>FYSIOTERAPEUT</ns3:code>
           <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
         </ns3:cv>
       </delsvar>

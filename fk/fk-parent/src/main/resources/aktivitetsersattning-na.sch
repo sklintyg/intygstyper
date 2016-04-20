@@ -226,8 +226,8 @@
     <iso:rule context="//gn:delsvar[@id='4.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0005'">'codeSystem' måste vara 'KV_FKMU_0005'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^([1-9]|1[01])$')">
-        'Utredning eller underlagstyp?' kan ha ett av värdena 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 eller 11.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(NEUROPSYKIATRISKT|HABILITERING|ARBETSTERAPEUT|FYSIOTERAPEUT|LOGOPED|PSYKOLOG|FORETAGSHALSOVARD|SKOLHALSOVARD|SPECIALISTKLINIK|VARD_UTOMLANDS|OVRIGT_UTLATANDE)$')">
+        'Utredning eller underlagstyp?' kan ha ett av värdena NEUROPSYKIATRISKT, HABILITERING, ARBETSTERAPEUT, FYSIOTERAPEUT, LOGOPED, PSYKOLOG, FORETAGSHALSOVARD, SKOLHALSOVARD, SPECIALISTKLINIK, VARD_UTOMLANDS, OVRIGT_UTLATANDE.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
