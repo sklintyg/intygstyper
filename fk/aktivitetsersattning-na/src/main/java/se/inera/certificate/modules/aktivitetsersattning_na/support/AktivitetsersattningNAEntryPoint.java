@@ -59,43 +59,40 @@ public class AktivitetsersattningNAEntryPoint implements ModuleEntryPoint {
     }
 
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("aktivitetsersattning-na.properties");
+        return ModuleFeaturesFactory.getFeatures("aktivitetsersattning-na-features.properties");
     }
 
     public String getModuleCssPath(ApplicationOrigin originator) {
-        return null;
-        // switch (originator) {
-        // case MINA_INTYG:
-        // return "/web/webjars/luae_na/minaintyg/css/aktivitetsersattning-na.css";
-        // case WEBCERT:
-        // return "/web/webjars/luae_na/webcert/css/aktivitetsersattning-na.css";
-        // default:
-        // return null;
-        // }
+         switch (originator) {
+         case MINA_INTYG:
+         return "/web/webjars/luae_na/minaintyg/css/aktivitetsersattning-na.css";
+         case WEBCERT:
+         return "/web/webjars/luae_na/webcert/css/aktivitetsersattning-na.css";
+         default:
+         return null;
+         }
     }
 
     public String getModuleScriptPath(ApplicationOrigin originator) {
-        return null;
-        // switch (originator) {
-        // case MINA_INTYG:
-        // return "/web/webjars/luae_na/minaintyg/js/module";
-        // case WEBCERT:
-        // return "/web/webjars/luae_na/webcert/module";
-        // default:
-        // return null;
-        // }
+         switch (originator) {
+         case MINA_INTYG:
+         return "/web/webjars/luae_na/minaintyg/js/module";
+         case WEBCERT:
+         return "/web/webjars/luae_na/webcert/module";
+         default:
+         return null;
+         }
     }
 
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
-        return null;
-        // switch (originator) {
-        // case MINA_INTYG:
-        // return "/web/webjars/luae_na/minaintyg/js/module-deps.json";
-        // case WEBCERT:
-        // return "/web/webjars/luae_na/webcert/module-deps.json";
-        // default:
-        // return null;
-        // }
+         switch (originator) {
+         case MINA_INTYG:
+         return "/web/webjars/luae_na/minaintyg/js/module-deps.json";
+         case WEBCERT:
+         return "/web/webjars/luae_na/webcert/module-deps.json";
+         default:
+         return null;
+         }
     }
 
 }

@@ -99,7 +99,7 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     private ConverterUtil converterUtil;
 
     @Autowired
-    @Qualifier("aktivitetsersattning-objectMapper")
+    @Qualifier("aktivitetsersattning-na-objectMapper")
     private ObjectMapper objectMapper;
 
     private ModuleContainerApi moduleContainer;
@@ -111,7 +111,7 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     @Autowired(required = false)
     private GetCertificateResponderInterface getCertificateResponderInterface;
 
-    private RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivititetsersattning-na.sch");
+    private RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-na.sch");
 
     @Autowired
     private InternalToNotification internalToNotification;
