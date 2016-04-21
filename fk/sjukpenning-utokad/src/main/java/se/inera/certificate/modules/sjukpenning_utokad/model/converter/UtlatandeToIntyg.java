@@ -96,8 +96,7 @@ public final class UtlatandeToIntyg {
 
         if (source.getSysselsattning() != null) {
             svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID_28).withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID_28,
-                    aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, source.getSysselsattning().getTyp().getTransportId(), RespConstants
-                            .getDisplayName(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, Integer.toString(source.getSysselsattning().getTyp().getId()))))
+                    aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, source.getSysselsattning().getTyp().getTransportId(), source.getSysselsattning().getTyp().getLabel()))
                     .build());
         }
 

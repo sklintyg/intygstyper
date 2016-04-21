@@ -41,18 +41,20 @@ public abstract class Sysselsattning {
     public abstract SysselsattningsTyp getTyp();
 
     public enum SysselsattningsTyp {
-        NUVARANDE_ARBETE(1, "NUVARANDE_ARBETE"),
-        ARBETSSOKANDE(2, "ARBETSSOKANDE"),
-        FORADLRARLEDIGHET_VARD_AV_BARN(3, "FORALDRALEDIG"),
-        STUDIER(4, "STUDIER"),
-        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "STUDIER");
+        NUVARANDE_ARBETE(1, "NUVARANDE_ARBETE", "Nuvarande arbete"),
+        ARBETSSOKANDE(2, "ARBETSSOKANDE", "Arbetssökande"),
+        FORADLRARLEDIGHET_VARD_AV_BARN(3, "FORALDRALEDIG", "Föräldraledighet för vård av barn"),
+        STUDIER(4, "STUDIER", "Studier"),
+        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "PROGRAM", "Deltagande i arbetsmarknadspolitiskt program");
 
         private final int id;
         private final String transportId;
+        private final String label;
 
-        SysselsattningsTyp(int id, String transportId) {
+        SysselsattningsTyp(int id, String transportId, String label) {
             this.id = id;
             this.transportId = transportId;
+            this.label = label;
         }
 
         @JsonValue
@@ -62,6 +64,10 @@ public abstract class Sysselsattning {
 
         public String getTransportId() {
             return transportId;
+        }
+
+        public String getLabel() {
+            return label;
         }
 
         @JsonCreator
