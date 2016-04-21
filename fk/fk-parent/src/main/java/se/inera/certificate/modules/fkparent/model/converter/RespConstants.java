@@ -19,12 +19,8 @@
 
 package se.inera.certificate.modules.fkparent.model.converter;
 
-import se.inera.certificate.modules.fkparent.model.enumerations.ArbetslivsinriktadeAtgarderCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.GrundformedicinsktunderlagCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.PrognosCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.SjukskrivningCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.TypAvSysselsattningCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.UnderlagCodeSystem;
+import se.inera.certificate.modules.fkparent.model.enumerations.*;
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 
 public final class RespConstants {
     private RespConstants() {
@@ -315,7 +311,7 @@ public final class RespConstants {
         case GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM:
             return GrundformedicinsktunderlagCodeSystem.getDescription(code);
         case UNDERLAG_CODE_SYSTEM:
-            return UnderlagCodeSystem.getDescription(code);
+            return Underlag.UnderlagsTyp.fromId(Integer.parseInt(code)).getLabel();
         case TYP_AV_SYSSELSATTNING_CODE_SYSTEM:
             return TypAvSysselsattningCodeSystem.getDescription(code);
         case SJUKSKRIVNING_CODE_SYSTEM:
