@@ -318,8 +318,6 @@ public final class RespConstants {
             return TypAvSysselsattningCodeSystem.getDescription(code);
         case SJUKSKRIVNING_CODE_SYSTEM:
             return SjukskrivningCodeSystem.getDescription(code);
-        case PROGNOS_CODE_SYSTEM:
-            return PrognosCodeSystem.getDescription(code);
         case ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM:
             return ArbetslivsinriktadeAtgarderCodeSystem.getDescription(code);
         default:

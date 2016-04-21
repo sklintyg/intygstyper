@@ -152,12 +152,12 @@ public final class UtlatandeToIntyg {
             if (!StringUtils.isBlank(source.getPrognos().getFortydligande())) {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
                         aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getTransportId(),
-                                RespConstants.getDisplayName(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()))))
+                                source.getPrognos().getTyp().getLabel()))
                         .withDelsvar(PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39, source.getPrognos().getFortydligande()).build());
             } else {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
                         aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getTransportId(),
-                                RespConstants.getDisplayName(PROGNOS_CODE_SYSTEM, Integer.toString(source.getPrognos().getTyp().getId()))))
+                                source.getPrognos().getTyp().getLabel()))
                         .build());
             }
         }
