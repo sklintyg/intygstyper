@@ -18,18 +18,22 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.rest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
+
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.*;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -47,21 +54,16 @@ import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.ResourceConverterUtils;
-import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponderInterface;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasResponseType;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.GetTSBasType;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.IntygMeta;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 /**
  * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
@@ -80,10 +82,8 @@ public class ModuleApiTest {
 
     private GetTSBasResponderInterface getTSBasResponderInterface;
 
-    /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
     private TsBasModuleApi moduleApi;
-
 
     @Autowired
     private CustomObjectMapper objectMapper;
@@ -195,7 +195,90 @@ public class ModuleApiTest {
         Assert.assertTrue(diff.toString(), diff.similar());
     }
 
+    @Test
+    public void getAdditionalInfoOneResultTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("1");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.1");
+        delsvar.getContent().add(aCV(null, "IAV6", null));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertEquals("D1E", result);
+    }
+
+    @Test
+    public void getAdditionalInfoMultipleResultsTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("1");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.1");
+        delsvar.getContent().add(aCV(null, "IAV1", null));
+        s.getDelsvar().add(delsvar);
+        Svar s2 = new Svar();
+        s2.setId("1");
+        Delsvar delsvar2 = new Delsvar();
+        delsvar2.setId("1.1");
+        delsvar2.getContent().add(aCV(null, "IAV3", null));
+        s2.getDelsvar().add(delsvar2);
+        Svar s3 = new Svar();
+        s3.setId("1");
+        Delsvar delsvar3 = new Delsvar();
+        delsvar3.setId("1.1");
+        delsvar3.getContent().add(aCV(null, "IAV9", null));
+        s3.getDelsvar().add(delsvar3);
+        intyg.getSvar().add(s);
+        intyg.getSvar().add(s2);
+        intyg.getSvar().add(s3);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertEquals("C1, C, TAXI", result);
+    }
+
+    @Test
+    public void getAdditionalInfoSvarNotFoundTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("2"); // wrong svarId
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.1");
+        delsvar.getContent().add(aCV(null, "IAV6", null));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertNull(result);
+    }
+
+    @Test
+    public void getAdditionalInfoDelsvarNotFoundTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("1");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.3"); // wrong delsvarId
+        delsvar.getContent().add(aCV(null, "IAV6", null));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertNull(result);
+    }
+
     private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
+        @Override
         public int differenceFound(Difference difference) {
             if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
                 // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
@@ -206,6 +289,7 @@ public class ModuleApiTest {
             }
         }
 
+        @Override
         public void skippedComparison(Node control, Node test) {
         }
     }
@@ -234,5 +318,13 @@ public class ModuleApiTest {
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
         return new InternalModelHolder(mapper.writeValueAsString(internalModel));
+    }
+
+    private static JAXBElement<CVType> aCV(String codeSystem, String code, String displayName) {
+        CVType cv = new CVType();
+        cv.setCodeSystem(codeSystem);
+        cv.setCode(code);
+        cv.setDisplayName(displayName);
+        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
     }
 }

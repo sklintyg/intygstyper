@@ -24,8 +24,7 @@ import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.xml.bind.JAXB;
 import javax.xml.ws.soap.SOAPFaultException;
@@ -51,6 +50,7 @@ import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.conv
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
+import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.*;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
@@ -63,8 +63,11 @@ import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 /**
  * @author andreaskaltenbach, marced
@@ -80,6 +83,10 @@ public class Fk7263ModuleApi implements ModuleApi {
      * is sent to Försäkringskassan. See JIRA issue WEBCERT-1442
      */
     static final String CODESYSTEMNAME_ICD10 = "ICD-10";
+    private static final String BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32 = "32";
+    private static final String BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32 = "32.2";
+
+    private static final Comparator<? super DatePeriodType> PERIOD_START = Comparator.comparing(DatePeriodType::getStart);
 
     @Autowired
     private WebcertModelFactory webcertModelFactory;
@@ -539,6 +546,37 @@ public class Fk7263ModuleApi implements ModuleApi {
             LOG.error("Could not get intyg from certificate holder. {}", e);
             throw new ModuleException("Could not get intyg from certificate holder", e);
         }
+    }
+
+    @Override
+    public String getAdditionalInfo(Intyg intyg) throws ModuleException {
+        List<DatePeriodType> periods = new ArrayList<>();
+        try {
+            for (Svar svar : intyg.getSvar()) {
+                if (BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32.equals(svar.getId())) {
+                    for (Delsvar delsvar : svar.getDelsvar()) {
+                        if (BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32.equals(delsvar.getId())) {
+                            DatePeriodType dtp = TransportConverterUtil.getDatePeriodTypeContent(delsvar);
+                            if (dtp != null) {
+                                periods.add(dtp);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ConverterException e) {
+            LOG.error("Failed retrieving additionalInfo for certificate {}: {}", intyg.getIntygsId().getExtension(), e.getMessage());
+            return null;
+        }
+
+        if (periods.isEmpty()) {
+            LOG.error("Failed retrieving additionalInfo for certificate {}: Found no periods.", intyg.getIntygsId().getExtension());
+            return null;
+        }
+
+        Collections.sort(periods, PERIOD_START);
+
+        return periods.get(0).getStart().toString() + " - " + periods.get(periods.size() - 1).getEnd().toString();
     }
 
 }

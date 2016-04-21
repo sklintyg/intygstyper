@@ -21,6 +21,7 @@ package se.inera.intyg.intygstyper.fk7263.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -30,12 +31,14 @@ import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
+
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.*;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +49,24 @@ import org.w3.wsaddressing10.AttributedURIType;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.utils.ResourceConverterUtils;
 import se.inera.intyg.intygstyper.fk7263.utils.ScenarioNotFoundException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 /**
  * @author andreaskaltenbach
@@ -304,7 +311,114 @@ public class Fk7263ModuleApiTest {
         Assert.assertTrue(diff.toString(), diff.similar());
     }
 
+    @Test
+    public void getAdditionalInfoOneTimePeriodTest() throws ModuleException {
+        final String fromString = "2015-12-12";
+        final String toString = "2016-03-02";
+        LocalDate from = LocalDate.parse(fromString);
+        LocalDate to = LocalDate.parse(toString);
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygsId");
+        Svar s = new Svar();
+        s.setId("32");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("32.2");
+        delsvar.getContent().add(aDatePeriod(from, to));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = fk7263ModuleApi.getAdditionalInfo(intyg);
+
+        assertEquals(fromString + " - " + toString, result);
+    }
+
+    @Test
+    public void getAdditionalInfoMultiplePeriodsTest() throws ModuleException {
+        final String fromString = "2015-12-12";
+        final String middleDate1 = "2015-12-13";
+        final String middleDate2 = "2015-12-14";
+        final String middleDate3 = "2015-12-15";
+        final String middleDate4 = "2015-12-16";
+        final String toString = "2016-03-02";
+        LocalDate from = LocalDate.parse(fromString);
+        LocalDate to = LocalDate.parse(toString);
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygsId");
+        Svar s = new Svar();
+        s.setId("32");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("32.2");
+        delsvar.getContent().add(aDatePeriod(LocalDate.parse(middleDate2), LocalDate.parse(middleDate3)));
+        s.getDelsvar().add(delsvar);
+        Svar s2 = new Svar();
+        s2.setId("32");
+        Delsvar delsvar2 = new Delsvar();
+        delsvar2.setId("32.2");
+        delsvar2.getContent().add(aDatePeriod(LocalDate.parse(middleDate4), to));
+        s2.getDelsvar().add(delsvar2);
+        Svar s3 = new Svar();
+        s3.setId("32");
+        Delsvar delsvar3 = new Delsvar();
+        delsvar3.setId("32.2");
+        delsvar3.getContent().add(aDatePeriod(from, LocalDate.parse(middleDate1)));
+        s3.getDelsvar().add(delsvar3);
+        intyg.getSvar().add(s);
+        intyg.getSvar().add(s2);
+        intyg.getSvar().add(s3);
+
+        String result = fk7263ModuleApi.getAdditionalInfo(intyg);
+
+        assertEquals(fromString + " - " + toString, result);
+    }
+
+    @Test
+    public void getAdditionalInfoSvarNotFoundTest() throws ModuleException {
+        final String fromString = "2015-12-12";
+        final String toString = "2016-03-02";
+        LocalDate from = LocalDate.parse(fromString);
+        LocalDate to = LocalDate.parse(toString);
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygsId");
+        Svar s = new Svar();
+        s.setId("30"); // wrong SvarId
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("32.2");
+        delsvar.getContent().add(aDatePeriod(from, to));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = fk7263ModuleApi.getAdditionalInfo(intyg);
+
+        assertNull(result);
+    }
+
+    @Test
+    public void getAdditionalInfoDelSvarNotFoundTest() throws ModuleException {
+        final String fromString = "2015-12-12";
+        final String toString = "2016-03-02";
+        LocalDate from = LocalDate.parse(fromString);
+        LocalDate to = LocalDate.parse(toString);
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygsId");
+        Svar s = new Svar();
+        s.setId("32");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("32.1"); // wrong delsvarId
+        delsvar.getContent().add(aDatePeriod(from, to));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = fk7263ModuleApi.getAdditionalInfo(intyg);
+
+        assertNull(result);
+    }
+
     private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
+        @Override
         public int differenceFound(Difference difference) {
             if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
                 // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
@@ -315,6 +429,7 @@ public class Fk7263ModuleApiTest {
             }
         }
 
+        @Override
         public void skippedComparison(Node control, Node test) {
         }
     }
@@ -322,14 +437,6 @@ public class Fk7263ModuleApiTest {
     private Utlatande getUtlatandeFromFile() throws IOException {
         return new CustomObjectMapper().readValue(new ClassPathResource(
                 TESTFILE_UTLATANDE).getFile(), Utlatande.class);
-    }
-
-    private Utlatande fromJsonString(String s) throws ModuleException {
-        try {
-            return objectMapper.readValue(s, Utlatande.class);
-        } catch (IOException e) {
-            throw new ModuleSystemException("Failed to deserialize internal model", e);
-        }
     }
 
     private String toJsonString(Utlatande utlatande) throws ModuleException {
@@ -356,16 +463,15 @@ public class Fk7263ModuleApiTest {
         return holder;
     }
 
-    private CreateNewDraftHolder createNewDraftHolder() {
-        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
-        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
-        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
-        Patient patient = new Patient("Kalle", null, "Kula", new Personnummer("19121212-1212"), null, null, null);
-        return new CreateNewDraftHolder("Id1", hosPersonal, patient);
+    private InternalModelHolder createInternalHolder(Utlatande utlatande) throws ModuleException {
+        return new InternalModelHolder(toJsonString(utlatande));
     }
 
-    private InternalModelHolder createInternalHolder(Utlatande utlatande) throws ModuleException {
-        //return new InternalModelHolder(objectMapper.writeValueAsString(utlatande));
-        return new InternalModelHolder(toJsonString(utlatande));
+    private static JAXBElement<DatePeriodType> aDatePeriod(LocalDate from, LocalDate tom) {
+        DatePeriodType period = new DatePeriodType();
+        period.setStart(from);
+        period.setEnd(tom);
+        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "datePeriod"), DatePeriodType.class, null,
+                period);
     }
 }

@@ -385,4 +385,10 @@ public class SjukersattningModuleApi implements ModuleApi {
             throw new ModuleException("Could not get intyg from certificate holder", e);
         }
     }
+
+    @Override
+    public String getAdditionalInfo(Intyg intyg) throws ModuleException {
+        // currently not used
+        return null;
+    }
 }

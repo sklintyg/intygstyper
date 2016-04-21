@@ -20,9 +20,8 @@
 package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
-
-import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
-import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
+import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getCVSvarContent;
+import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getStringContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,23 +29,17 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
-import se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
+import se.inera.certificate.modules.sjukersattning.model.internal.*;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
-import se.inera.certificate.modules.sjukersattning.model.internal.Tillaggsfraga;
-import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public final class TransportToInternal {
