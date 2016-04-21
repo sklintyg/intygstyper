@@ -163,8 +163,7 @@ public final class UtlatandeToIntyg {
         source.getArbetslivsinriktadeAtgarder().stream()
                 .forEach((ArbetslivsinriktadeAtgarder atgarder) -> {
                     arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
-                            aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getTransportId(), RespConstants
-                                    .getDisplayName(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, Integer.toString(atgarder.getVal().getId()))));
+                            aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getTransportId(), atgarder.getVal().getLabel()));
                 });
 
         if (!StringUtils.isBlank(source.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
