@@ -19,8 +19,9 @@
 
 package se.inera.certificate.modules.fkparent.model.converter;
 
-import se.inera.certificate.modules.fkparent.model.enumerations.*;
-import se.inera.certificate.modules.fkparent.model.internal.Underlag;
+import se.inera.certificate.modules.fkparent.model.enumerations.ArbetslivsinriktadeAtgarderCodeSystem;
+import se.inera.certificate.modules.fkparent.model.enumerations.SjukskrivningCodeSystem;
+import se.inera.certificate.modules.fkparent.model.enumerations.TypAvSysselsattningCodeSystem;
 
 public final class RespConstants {
     private RespConstants() {
@@ -195,7 +196,6 @@ public final class RespConstants {
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderAktuelltBeskrivning";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderEjAktuelltBeskrivning";
 
-    public static final String TILLAGGSFRAGOR_SVAR_ID = "9000";
     public static final String TILLAGGSFRAGOR_SVAR_JSON_ID = "tillaggsfragor";
 
     public static final String GRUNDDATA_SVAR_JSON_ID = "grundData";
@@ -304,8 +304,6 @@ public final class RespConstants {
 
     public static String getDisplayName(String codeSystem, String code) {
         switch (codeSystem) {
-        case UNDERLAG_CODE_SYSTEM:
-            return Underlag.UnderlagsTyp.fromId(Integer.parseInt(code)).getLabel();
         case TYP_AV_SYSSELSATTNING_CODE_SYSTEM:
             return TypAvSysselsattningCodeSystem.getDescription(code);
         case SJUKSKRIVNING_CODE_SYSTEM:

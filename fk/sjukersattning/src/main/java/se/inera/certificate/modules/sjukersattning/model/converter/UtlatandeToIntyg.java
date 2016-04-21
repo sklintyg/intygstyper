@@ -105,8 +105,7 @@ public final class UtlatandeToIntyg {
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
                     aSvar(UNDERLAG_SVAR_ID_4).withDelsvar(UNDERLAG_TYP_DELSVAR_ID_4,
-                            aCV(UNDERLAG_CODE_SYSTEM, underlag.getTyp().getTransportId(),
-                                    RespConstants.getDisplayName(UNDERLAG_CODE_SYSTEM, Integer.toString(underlag.getTyp().getId()))))
+                            aCV(UNDERLAG_CODE_SYSTEM, underlag.getTyp().getTransportId(), underlag.getTyp().getLabel()))
                             .withDelsvar(UNDERLAG_DATUM_DELSVAR_ID_4,
                                     underlag.getDatum() != null ? underlag.getDatum().asLocalDate().toString() : null)
                             .withDelsvar(UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4, underlag.getHamtasFran()).build());
