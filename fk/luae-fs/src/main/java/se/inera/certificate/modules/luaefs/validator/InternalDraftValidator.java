@@ -41,6 +41,9 @@ public class InternalDraftValidator {
     @Autowired
     InternalValidatorUtil validatorUtil;
 
+    public InternalDraftValidator() {
+    }
+
     @VisibleForTesting
     public InternalDraftValidator(InternalValidatorUtil validatorUtil) {
         this.validatorUtil = validatorUtil;
@@ -80,7 +83,7 @@ public class InternalDraftValidator {
         if (utlatande.getUndersokningAvPatienten() == null
                 && utlatande.getJournaluppgifter() == null
                 && utlatande.getAnhorigsBeskrivningAvPatienten() == null
-                && utlatande.getAnnatGrundForMU() == null) {
+                && utlatande.getAnnanGrundForMU() == null) {
             validatorUtil.addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
                     "luaefs.validation.grund-for-mu.missing");
         }
@@ -98,19 +101,19 @@ public class InternalDraftValidator {
             validatorUtil.addValidationError(validationMessages, "grundformu.anhorigsbeskrivning", ValidationMessageType.INVALID_FORMAT,
                     "luaefs.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format");
         }
-        if (utlatande.getAnnatGrundForMU() != null && !utlatande.getAnnatGrundForMU().isValidDate()) {
+        if (utlatande.getAnnanGrundForMU() != null && !utlatande.getAnnanGrundForMU().isValidDate()) {
             validatorUtil.addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
                     "luaefs.validation.grund-for-mu.annat.incorrect_format");
         }
 
         // R2
-        if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+        if (utlatande.getAnnanGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnanGrundForMUBeskrivning())) {
             validatorUtil.addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luaefs.validation.grund-for-mu.annat.beskrivning.missing");
         }
 
         // R3
-        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+        if (utlatande.getAnnanGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnanGrundForMUBeskrivning())) {
             validatorUtil.addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luaefs.validation.grund-for-mu.annat.beskrivning.invalid_combination");
         }
