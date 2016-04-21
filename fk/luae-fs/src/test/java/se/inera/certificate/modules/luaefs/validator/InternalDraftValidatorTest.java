@@ -6,11 +6,13 @@ import static org.junit.Assert.assertTrue;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.luaefs.model.internal.LuaefsUtlatande;
+import se.inera.certificate.modules.luaefs.model.internal.Underlag;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -73,18 +75,151 @@ public class InternalDraftValidatorTest {
     }
 
     @Test
-    public void validateGrundForMU_EjIfylltUnderlag() throws Exception {
+    public void validateGrundForMU_IngenTypOchIngenKannedomOmPatient() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate.build();
 
         validator.validateGrundForMU(utlatande, validationMessages);
 
-        assertEquals("luaefs.validation.grund-for-mu.missing", validationMessages.get(0).getMessage());
-        assertEquals("luaefs.validation.grund-for-mu.kannedom.missing", validationMessages.get(1).getMessage());
-        assertTrue(ValidationMessageType.EMPTY == validationMessages.get(0).getType());
-        assertTrue(ValidationMessageType.EMPTY == validationMessages.get(1).getType());
+        assertTrue(2 == validationMessages.size());
+
+        assertValidationMessage("luaefs.validation.grund-for-mu.missing", 0);
+        assertValidationMessage("luaefs.validation.grund-for-mu.kannedom.missing", 1);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 0);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 1);
+    }
+
+    @Test
+    public void validateGrundForMU_IngenKannedomOmPatient() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate
+                .setAnhorigsBeskrivningAvPatienten(new InternalDate(LocalDate.now()))
+                .build();
+
+        validator.validateGrundForMU(utlatande, validationMessages);
+
+        assertTrue(1 == validationMessages.size());
+
+        assertValidationMessage("luaefs.validation.grund-for-mu.kannedom.missing", 0);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 0);
+    }
+
+    @Test
+    public void validateGrundForMU_KannedomOmPatientEfterUndersokning() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate
+                .setUndersokningAvPatienten(new InternalDate(LocalDate.now()))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .build();
+
+        validator.validateGrundForMU(utlatande, validationMessages);
+
+        assertTrue(1 == validationMessages.size());
+
+        assertValidationMessage("luaefs.validation.grund-for-mu.kannedom.after.undersokning", 0);
+        assertValidationMessageType(ValidationMessageType.OTHER, 0);
+    }
+
+    @Test
+    public void validateGrundForMU_KannedomOmPatientEfterAnhorigsBeskrivning() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate
+                .setAnhorigsBeskrivningAvPatienten(new InternalDate(LocalDate.now()))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .build();
+
+        validator.validateGrundForMU(utlatande, validationMessages);
+
+        assertTrue(1 == validationMessages.size());
+
+        assertValidationMessage("luaefs.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning", 0);
+        assertValidationMessageType(ValidationMessageType.OTHER, 0);
+    }
+
+    @Test
+    public void validateGrundForMU_OmAnnanGrundBeskrivningOchInteAnnanGrundDatum() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate
+                .setAnnanGrundForMUBeskrivning("En beskrivning...")
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .build();
+
+        validator.validateGrundForMU(utlatande, validationMessages);
+
+        assertTrue(2 == validationMessages.size());
+
+        assertValidationMessage("luaefs.validation.grund-for-mu.missing", 0);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 0);
+        assertValidationMessage("luaefs.validation.grund-for-mu.annat.beskrivning.invalid_combination", 1);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 1);
+    }
+
+    @Test
+    public void validateGrundForMU_OmAnnanGrundKraverBeskrivning() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate
+                .setAnnanGrundForMU(new InternalDate(LocalDate.now()))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .build();
+
+        validator.validateGrundForMU(utlatande, validationMessages);
+
+        assertTrue(1 == validationMessages.size());
+
+        assertValidationMessage("luaefs.validation.grund-for-mu.annat.beskrivning.missing", 0);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 0);
+    }
+
+    // Kategori 2 - Andra medicinska utredningar och underlag
+
+    @Test
+    public void validateUnderlag_UnderlagFinnsInte() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate.build();
+
+        validator.validateUnderlag(utlatande, validationMessages);
+
+        assertTrue(1 == validationMessages.size());
+
+        assertValidationMessage("luse.validation.underlagfinns.missing", 0);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 0);
+    }
+
+    @Test
+    public void validateUnderlag_UnderlagFinnsMenArTomt() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate.setUnderlagFinns(true).build();
+
+        validator.validateUnderlag(utlatande, validationMessages);
+
+        assertTrue(1 == validationMessages.size());
+
+        assertValidationMessage("luse.validation.underlagfinns.missing", 0);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 0);
+    }
+
+    @Test
+    @Ignore
+    public void validateUnderlag_UnderlagFinnsInteMenArIfyllt() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate
+                .setUnderlagFinns(false)
+                .setUnderlag(buildUnderlag())
+                .build();
+
+        validator.validateUnderlag(utlatande, validationMessages);
+
+        assertTrue(1 == validationMessages.size());
+
+        assertValidationMessage("luse.validation.underlagfinns.missing", 0);
+        assertValidationMessageType(ValidationMessageType.EMPTY, 0);
+    }
+
+    private List<Underlag> buildUnderlag() {
+        return null;
     }
 
     // - - - Private scope - - -
+
+    private void assertValidationMessage(String expectedMessage, int index) {
+        assertEquals(expectedMessage, validationMessages.get(index).getMessage());
+    }
+
+    private void assertValidationMessageType(ValidationMessageType expectedType, int index) {
+        assertTrue(expectedType == validationMessages.get(index).getType());
+    }
+
     private GrundData buildGrundData(LocalDateTime timeStamp) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid(VARDGIVARE_ID);

@@ -1,5 +1,8 @@
 package se.inera.certificate.modules.luaefs.model.converter;
 
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
@@ -12,9 +15,6 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 
 import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
 
 public class TransportToInternalTest {
 
@@ -34,8 +34,8 @@ public class TransportToInternalTest {
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setAnhorigsBeskrivningAvPatienten(new InternalDate("2015-10-11"));
         utlatande.setJournaluppgifter(new InternalDate("2015-10-10"));
-        utlatande.setAnnatGrundForMU(new InternalDate("2015-10-12"));
-        utlatande.setAnnatGrundForMUBeskrivning("Lider av svår discofobi");
+        utlatande.setAnnanGrundForMU(new InternalDate("2015-10-12"));
+        utlatande.setAnnanGrundForMUBeskrivning("Lider av svår discofobi");
 
         utlatande.setKannedomOmPatient(new InternalDate("2015-10-10"));
         utlatande.setUnderlagFinns(true);

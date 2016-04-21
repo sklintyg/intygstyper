@@ -19,14 +19,13 @@
 
 package se.inera.certificate.modules.luaefs.model.internal;
 
-import javax.annotation.Nullable;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
-
 import se.inera.intyg.common.support.model.InternalDate;
+
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class MedicinsktUnderlag {
@@ -66,6 +65,7 @@ public abstract class MedicinsktUnderlag {
         public String getLabel() {
             return label;
         }
+
         @JsonCreator
         public static MedicinsktUnderlagTyp fromId(@JsonProperty("id") int id) {
             for (MedicinsktUnderlagTyp typ : values()) {

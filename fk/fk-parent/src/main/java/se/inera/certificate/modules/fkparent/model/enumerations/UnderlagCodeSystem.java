@@ -21,19 +21,14 @@ package se.inera.certificate.modules.fkparent.model.enumerations;
 public enum UnderlagCodeSystem {
     KV_FKMU_0005_1("1", "Neuropsykiatriskt utlåtande"),
     KV_FKMU_0005_2("2", "Underlag från habiliteringen"),
-    KV_FKMU_0005_3("3",
-            "Underlag från arbetsterapeut"),
+    KV_FKMU_0005_3("3", "Underlag från arbetsterapeut"),
     KV_FKMU_0005_4("4", "Underlag från fysioterapeut"),
-    KV_FKMU_0005_5("5",
-            "Underlag från logoped"),
+    KV_FKMU_0005_5("5", "Underlag från logoped"),
     KV_FKMU_0005_6("6", "Underlag från psykolog"),
-    KV_FKMU_0005_7("7",
-            "Underlag från företagshälsovård"),
+    KV_FKMU_0005_7("7", "Underlag från företagshälsovård"),
     KV_FKMU_0005_8("8", "Underlag från skolhälsovård"),
-    KV_FKMU_0005_9("9",
-            "Utredning av annan specialistklinik"),
-    KV_FKMU_0005_10("10",
-            "Utredning från vårdinrättning utomlands"),
+    KV_FKMU_0005_9("9", "Utredning av annan specialistklinik"),
+    KV_FKMU_0005_10("10", "Utredning från vårdinrättning utomlands"),
     KV_FKMU_0005_11("11", "Övrigt");
 
     private final String code;

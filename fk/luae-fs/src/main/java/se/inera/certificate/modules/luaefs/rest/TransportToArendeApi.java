@@ -49,7 +49,7 @@ public final class TransportToArendeApi {
         if (utokatUtlatande.getJournaluppgifter() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1);
         }
-        if (utokatUtlatande.getAnnatGrundForMU() != null) {
+        if (utokatUtlatande.getAnnanGrundForMU() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1);
         }
         Map<String, List<String>> result = new HashMap<>();

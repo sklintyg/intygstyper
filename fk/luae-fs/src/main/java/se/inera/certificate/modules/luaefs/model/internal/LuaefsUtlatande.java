@@ -88,11 +88,11 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
     public abstract InternalDate getAnhorigsBeskrivningAvPatienten();
 
     @Nullable
-    public abstract InternalDate getAnnatGrundForMU();
+    public abstract InternalDate getAnnanGrundForMU();
 
     // Fråga 1.3 Vilken annan grund finns för MU
     @Nullable
-    public abstract String getAnnatGrundForMUBeskrivning();
+    public abstract String getAnnanGrundForMUBeskrivning();
 
     // Fråga 2 Kännedom om patienten
     // Fråga 2.1 - Datum för kännedom om patienten
@@ -206,10 +206,10 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
         public abstract Builder setAnhorigsBeskrivningAvPatienten(InternalDate anhorigsBeskrivningAvPatienten);
 
         @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1)
-        public abstract Builder setAnnatGrundForMU(InternalDate annatGrundForMU);
+        public abstract Builder setAnnanGrundForMU(InternalDate annanGrundForMU);
 
         @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_BESKRIVNING_DELSVAR_JSON_ID_1)
-        public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
+        public abstract Builder setAnnanGrundForMUBeskrivning(String annanGrundForMUBeskrivning);
 
         // Fråga 2
         @JsonProperty(KANNEDOM_SVAR_JSON_ID_2)
