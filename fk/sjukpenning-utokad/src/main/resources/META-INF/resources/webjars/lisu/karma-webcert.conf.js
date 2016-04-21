@@ -46,7 +46,7 @@ module.exports = function(config) {
                BASE_WEBJAR_DIR + 'jquery/jquery.min.js',
                BASE_WEBJAR_DIR + 'angularjs/angular.js',
                BASE_WEBJAR_DIR + 'angularjs/angular-mocks.js',
-               BASE_WEBJAR_DIR + 'angularjs/1.4.7/angular-locale_sv-se.js',
+               BASE_WEBJAR_DIR + 'angularjs/1.4.10/angular-locale_sv-se.js',
                BASE_WEBJAR_DIR + 'angularjs/angular-cookies.js',
                BASE_WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
                BASE_WEBJAR_DIR + 'angularjs/angular-sanitize.js',

@@ -172,6 +172,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                             model[type] = isoValue;
                             return isoValue;
                         });
+
+                        dateUtils.addDateFormatter(modelProperty);
                     }
                 }, form4b);
             }
