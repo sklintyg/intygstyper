@@ -20,21 +20,11 @@
 package se.inera.certificate.modules.fkparent.model.converter;
 
 import se.inera.certificate.modules.fkparent.model.enumerations.ArbetslivsinriktadeAtgarderCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.GrundformedicinsktunderlagCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.PrognosCodeSystem;
 import se.inera.certificate.modules.fkparent.model.enumerations.SjukskrivningCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.TypAvSysselsattningCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.UnderlagCodeSystem;
 
 public final class RespConstants {
     private RespConstants() {
     }
-
-    public static final int UNDERSOKNING_AV_PATIENT = 1;
-    public static final int TELEFONKONTAKT_MED_PATIENT = 2;
-    public static final int JOURNALUPPGIFTER = 3;
-    public static final int ANHORIGSBESKRIVNING = 4;
-    public static final int ANNAT = 5;
 
     public static final String PART_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
     public static final String STATUS_KOD_CODE_SYSTEM = "9871cd17-8755-4ed9-b894-ff3729e775a4";
@@ -209,7 +199,6 @@ public final class RespConstants {
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderAktuelltBeskrivning";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderEjAktuelltBeskrivning";
 
-    public static final String TILLAGGSFRAGOR_SVAR_ID = "9000";
     public static final String TILLAGGSFRAGOR_SVAR_JSON_ID = "tillaggsfragor";
 
     public static final String GRUNDDATA_SVAR_JSON_ID = "grundData";
@@ -292,22 +281,23 @@ public final class RespConstants {
     }
 
     public enum ReferensTyp {
-        UNDERSOKNING(1),
-        TELEFONKONTAKT(2),
-        JOURNAL(3),
-        ANHORIGSBESKRIVNING(4),
-        ANNAT(5),
-        UNKNOWN(-1);
+        UNDERSOKNING("UNDERSOKNING", "Min undersökning av patienten"),
+        TELEFONKONTAKT("TELEFONKONTAKT", "Min telefonkontakt med patienten"),
+        JOURNAL("JOURNALUPPGIFTER", "Journaluppgifter från den"),
+        ANHORIGSBESKRIVNING("ANHORIG", "Anhörigs beskrivning av patienten"),
+        ANNAT("ANNAT", "Annat");
 
-        public final int transport;
+        public final String transportId;
+        public final String label;
 
-        ReferensTyp(int transport) {
-            this.transport = transport;
+        ReferensTyp(String transportId, String label) {
+            this.transportId = transportId;
+            this.label = label;
         }
 
-        public static ReferensTyp byTransport(String transport) {
+        public static ReferensTyp byTransportId(String transportId) {
             for (ReferensTyp referensTyp : values()) {
-                if (referensTyp.transport == Integer.parseInt(transport)) {
+                if (referensTyp.transportId.equals(transportId)) {
                     return referensTyp;
                 }
             }
@@ -317,20 +307,12 @@ public final class RespConstants {
 
     public static String getDisplayName(String codeSystem, String code) {
         switch (codeSystem) {
-        case GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM:
-            return GrundformedicinsktunderlagCodeSystem.getDescription(code);
-        case UNDERLAG_CODE_SYSTEM:
-            return UnderlagCodeSystem.getDescription(code);
-        case TYP_AV_SYSSELSATTNING_CODE_SYSTEM:
-            return TypAvSysselsattningCodeSystem.getDescription(code);
         case SJUKSKRIVNING_CODE_SYSTEM:
             return SjukskrivningCodeSystem.getDescription(code);
-        case PROGNOS_CODE_SYSTEM:
-            return PrognosCodeSystem.getDescription(code);
         case ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM:
             return ArbetslivsinriktadeAtgarderCodeSystem.getDescription(code);
         default:
-            return "";
+            throw new IllegalArgumentException();
         }
     }
 

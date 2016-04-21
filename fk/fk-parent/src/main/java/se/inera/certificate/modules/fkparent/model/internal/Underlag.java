@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.certificate.modules.sjukersattning.model.internal;
+package se.inera.certificate.modules.fkparent.model.internal;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -50,30 +50,35 @@ public abstract class Underlag {
     public abstract String getHamtasFran();
 
     public enum UnderlagsTyp {
-        NEUROPSYKIATRISKT_UTLATANDE(1, "Neuropsykiatriskt utlåtande"),
-        UNDERLAG_FRAN_HABILITERINGEN(2, "Underlag från habiliteringen"),
-        UNDERLAG_FRAN_ARBETSTERAPEUT(3, "Underlag från arbetsterapeut"),
-        UNDERLAG_FRAN_FYSIOTERAPEUT(4, "Underlag från fysioterapeut"),
-        UNDERLAG_FRAN_LOGOPED(5, "Underlag från logoped"),
-        UNDERLAG_FRANPSYKOLOG(6, "Underlag från psykolog"),
-        UNDERLAG_FRANFORETAGSHALSOVARD(7, "Underlag från företagshälsovård"),
-        UNDERLAG_FRANSKOLHALSOVARD(8, "Underlag från skolhälsovård"),
-        UTREDNING_AV_ANNAN_SPECIALISTKLINIK(9, "Utredning av annan specialistklinik"),
-        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS(10, "Utredning från vårdinrättning utomlands"),
-        OVRIGT(11, "Övrigt"),
-        OKAND(-1, "Okand");
+        NEUROPSYKIATRISKT_UTLATANDE(1, "NEUROPSYKIATRISKT", "Neuropsykiatriskt utlåtande"),
+        UNDERLAG_FRAN_HABILITERINGEN(2, "HABILITERING", "Underlag från habiliteringen"),
+        UNDERLAG_FRAN_ARBETSTERAPEUT(3, "ARBETSTERAPEUT", "Underlag från arbetsterapeut"),
+        UNDERLAG_FRAN_FYSIOTERAPEUT(4, "FYSIOTERAPEUT", "Underlag från fysioterapeut"),
+        UNDERLAG_FRAN_LOGOPED(5, "LOGOPED", "Underlag från logoped"),
+        UNDERLAG_FRANPSYKOLOG(6, "PSYKOLOG", "Underlag från psykolog"),
+        UNDERLAG_FRANFORETAGSHALSOVARD(7, "FORETAGSHALSOVARD", "Underlag från företagshälsovård"),
+        UNDERLAG_FRANSKOLHALSOVARD(8, "SKOLHALSOVARD", "Underlag från skolhälsovård"),
+        UTREDNING_AV_ANNAN_SPECIALISTKLINIK(9, "SPECIALISTKLINIK", "Utredning av annan specialistklinik"),
+        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS(10, "VARD_UTOMLANDS", "Utredning från vårdinrättning utomlands"),
+        OVRIGT(11, "OVRIGT_UTLATANDE", "Övrigt");
 
         private final int id;
+        private final String transportId;
         private final String label;
 
-        UnderlagsTyp(int id, String label) {
+        UnderlagsTyp(int id, String transportId, String label) {
             this.id = id;
+            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
         public int getId() {
             return id;
+        }
+
+        public String getTransportId() {
+            return transportId;
         }
 
         public String getLabel() {
@@ -84,6 +89,15 @@ public abstract class Underlag {
         public static UnderlagsTyp fromId(@JsonProperty("id") int id) {
             for (UnderlagsTyp typ : values()) {
                 if (typ.id == id) {
+                    return typ;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+
+        public static UnderlagsTyp fromTransportId(String transportId) {
+            for (UnderlagsTyp typ : values()) {
+                if (typ.transportId.equals(transportId)) {
                     return typ;
                 }
             }

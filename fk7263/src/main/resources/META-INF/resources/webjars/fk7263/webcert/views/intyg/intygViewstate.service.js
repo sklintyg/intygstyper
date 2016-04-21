@@ -28,7 +28,7 @@ angular.module('fk7263').service('fk7263.IntygController.ViewStateService',
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'FK';
-                this.common.intyg.type = 'fk7263';
+                this.common.intygProperties.type = 'fk7263';
             };
 
             // Fix for Angular 1.4 / WEBCERT-2236

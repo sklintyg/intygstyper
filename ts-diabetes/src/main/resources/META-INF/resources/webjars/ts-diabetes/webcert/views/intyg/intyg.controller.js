@@ -59,8 +59,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                 return resultString;
             }
 
-            function loadCertificate() {
-                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
+            function loadIntyg() {
+                $log.debug('Loading intyg ' + $stateParams.certificateId);
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
@@ -68,16 +69,15 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                         ViewState.intygAvser = createKorkortstypListString(ViewState.intygModel.intygAvser.korkortstyp);
                         ViewState.bedomning = createKorkortstypListString(ViewState.intygModel.bedomning.korkortstyp);
 
-                        $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result);
-                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'TS');
-                        ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
-                        if(ViewState.common.intyg.isRevoked) {
-                            ViewState.common.printStatus = 'revoked';
-                        } else {
-                            ViewState.common.printStatus = 'signed';
+                        if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
+                            ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
                         }
 
+                        ViewState.common.updateIntygProperties(result.statuses);
+
                         $scope.pdfUrl = '/moduleapi/intyg/ts-diabetes/' + ViewState.intygModel.id + '/pdf';
+
+                        $rootScope.$emit('ts-diabetes.ViewCertCtrl.load', result);
 
                     } else {
                         ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
@@ -95,7 +95,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
             /*********************************************************************
              * Page load
              *********************************************************************/
-            loadCertificate();
+            loadIntyg();
 
-            $scope.$on('loadCertificate', loadCertificate);
+            $scope.$on('loadCertificate', loadIntyg);
         }]);
