@@ -26,12 +26,6 @@ public final class RespConstants {
     private RespConstants() {
     }
 
-    public static final String UNDERSOKNING_AV_PATIENT = "UNDERSOKNING";
-    public static final String TELEFONKONTAKT_MED_PATIENT = "TELEFONKONTAKT";
-    public static final String JOURNALUPPGIFTER = "JOURNALUPPGIFTER";
-    public static final String ANHORIGSBESKRIVNING = "ANHORIG";
-    public static final String ANNAT = "ANNAT";
-
     public static final String PART_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
     public static final String STATUS_KOD_CODE_SYSTEM = "9871cd17-8755-4ed9-b894-ff3729e775a4";
     public static final String CERTIFICATE_CODE_SYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
@@ -284,11 +278,11 @@ public final class RespConstants {
     }
 
     public enum ReferensTyp {
-        UNDERSOKNING(RespConstants.UNDERSOKNING_AV_PATIENT, "Min undersökning av patienten"),
-        TELEFONKONTAKT(RespConstants.TELEFONKONTAKT_MED_PATIENT, "Min telefonkontakt med patienten"),
-        JOURNAL(RespConstants.JOURNALUPPGIFTER, "Journaluppgifter från den"),
-        ANHORIGSBESKRIVNING(RespConstants.ANHORIGSBESKRIVNING, "Anhörigs beskrivning av patienten"),
-        ANNAT(RespConstants.ANNAT, "Annat");
+        UNDERSOKNING("UNDERSOKNING", "Min undersökning av patienten"),
+        TELEFONKONTAKT("TELEFONKONTAKT", "Min telefonkontakt med patienten"),
+        JOURNAL("JOURNALUPPGIFTER", "Journaluppgifter från den"),
+        ANHORIGSBESKRIVNING("ANHORIG", "Anhörigs beskrivning av patienten"),
+        ANNAT("ANNAT", "Annat");
 
         public final String transportId;
         public final String label;
@@ -310,8 +304,6 @@ public final class RespConstants {
 
     public static String getDisplayName(String codeSystem, String code) {
         switch (codeSystem) {
-        case GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM:
-            return ReferensTyp.byTransportId(code).label;
         case UNDERLAG_CODE_SYSTEM:
             return Underlag.UnderlagsTyp.fromId(Integer.parseInt(code)).getLabel();
         case TYP_AV_SYSSELSATTNING_CODE_SYSTEM:
@@ -321,7 +313,7 @@ public final class RespConstants {
         case ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM:
             return ArbetslivsinriktadeAtgarderCodeSystem.getDescription(code);
         default:
-            return "";
+            throw new IllegalArgumentException();
         }
     }
 
