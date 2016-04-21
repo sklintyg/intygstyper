@@ -59,7 +59,7 @@ public class InternalDraftValidator {
         validateUnderlag(utlatande, validationMessages);
 
         // Kategori 3 – Diagnos
-        validatorUtil.validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
+        validateDiagnose(utlatande, validationMessages);
 
         // Kategori 4 – Funktionsnedsättning
         validateFunktionsnedsattning(utlatande, validationMessages);
@@ -142,7 +142,7 @@ public class InternalDraftValidator {
         if (utlatande.getUnderlagFinns() == null) {
             validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luae_fs.validation.underlagfinns.missing");
-        } else if (utlatande.getUnderlagFinns() && utlatande.getUnderlag().isEmpty()) {
+        } else if (utlatande.getUnderlagFinns() && (utlatande.getUnderlag() == null || utlatande.getUnderlag().isEmpty())) {
             validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luae_fs.validation.underlagfinns.missing");
         } else if (!utlatande.getUnderlagFinns() && !utlatande.getUnderlag().isEmpty()) {
@@ -181,6 +181,10 @@ public class InternalDraftValidator {
                         "luae_fs.validation.underlag.hamtas-fran.missing");
             }
         }
+    }
+
+    void validateDiagnose(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        validatorUtil.validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
     }
 
     void validateFunktionsnedsattning(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {

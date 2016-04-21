@@ -18,19 +18,17 @@
  */
 package se.inera.certificate.modules.fkparent.model.validator;
 
-import java.util.List;
-
+import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.annotations.VisibleForTesting;
-
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+
+import java.util.List;
 
 /**
  * Created by BESA on 2016-02-23.
@@ -47,7 +45,7 @@ public final class InternalValidatorUtil {
 
     public void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
-        if (diagnoser.size() == 0) {
+        if (diagnoser == null || diagnoser.isEmpty()) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     intygsTyp + ".validation.diagnos.missing");
         }
