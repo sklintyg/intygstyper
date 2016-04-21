@@ -1,0 +1,25 @@
+<div id="view-certificate-status-history-root" class="row-fluid">
+  <div id="backnav" class="row-fluid">
+    <a class="backlink" href ng-click="backToViewCertificate()"><span message key="button.goback"></span></a>
+  </div>
+  <!-- Content -->
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 ng-focus="pagefocus" tabindex="-1">
+        <span message key="history.label.pagetitle"></span>
+      </h1>
+      <div id="view-certificate-status-history-list" class="well">
+      <div ng-repeat="status in cert.status | filter: userVisibleStatusFilter">
+        {{status.timestamp | date:'short'}}
+        <span message key="luae_fs.status.{{status.type}}"></span>
+        <span message key="luae_fs.target.{{status.target}}"></span>
+      </div>
+      </div>
+      <p class="btn-row">
+        <button id="backToViewCertificateBtn" type="button" ng-click="backToViewCertificate()" class="btn btn-success">
+          <span message key="sent.button.backtocertificate"></span>
+        </button>
+      </p>
+    </div>
+  </div>
+</div>

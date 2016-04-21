@@ -33,7 +33,7 @@ public class LuaefsEntryPoint implements ModuleEntryPoint {
 
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
-    public static final String MODULE_ID = "luaefs";
+    public static final String MODULE_ID = "luae_fs";
     public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning vid förlängd skolgång";
     public static final String MODULE_DESCRIPTION = "Läkarutlåtande för aktivitetsersättning vid förlängd skolgång";
 
@@ -74,9 +74,9 @@ public class LuaefsEntryPoint implements ModuleEntryPoint {
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/luaefs/minaintyg/css/luaefs.css";
+            return "/web/webjars/luae_fs/minaintyg/css/luae_fs.css";
         case WEBCERT:
-            return "/web/webjars/luaefs/webcert/css/luaefs.css";
+            return "/web/webjars/luae_fs/webcert/css/luae_fs.css";
         default:
             return null;
         }
@@ -86,9 +86,9 @@ public class LuaefsEntryPoint implements ModuleEntryPoint {
     public String getModuleScriptPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/luaefs/minaintyg/js/module";
+            return "/web/webjars/luae_fs/minaintyg/js/module";
         case WEBCERT:
-            return "/web/webjars/luaefs/webcert/module";
+            return "/web/webjars/luae_fs/webcert/module";
         default:
             return null;
         }
@@ -98,9 +98,9 @@ public class LuaefsEntryPoint implements ModuleEntryPoint {
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/luaefs/minaintyg/js/module-deps.json";
+            return "/web/webjars/luae_fs/minaintyg/js/module-deps.json";
         case WEBCERT:
-            return "/web/webjars/luaefs/webcert/module-deps.json";
+            return "/web/webjars/luae_fs/webcert/module-deps.json";
         default:
             return null;
         }

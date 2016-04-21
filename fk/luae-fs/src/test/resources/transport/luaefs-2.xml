@@ -6,7 +6,7 @@
     <ns3:extension>1234567</ns3:extension>
   </intygs-id>
   <typ>
-    <ns3:code>luaefs</ns3:code>
+    <ns3:code>luae_fs</ns3:code>
     <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
     <ns3:displayName>Läkarutlåtande för aktivitetsersättning vid förlängd skolgång</ns3:displayName>
   </typ>

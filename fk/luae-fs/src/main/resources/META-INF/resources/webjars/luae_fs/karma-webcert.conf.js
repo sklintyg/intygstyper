@@ -3,20 +3,30 @@ module.exports = function(config) {
     'use strict';
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/luae_fs/webcert/views/';
-    var TEST_DIR = 'src/test/js/webcert/';
-    var WEBJAR_DIR = '../target/webjardependencies/';
+    var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/luae_fs/webcert/';
+    var BASE_WEBJAR_DIR = '../../target/webjardependencies/';
+    var WEBJAR_DIR = 'target/webjardependencies/';
+    var NODE_DIR = 'node_modules/';
 
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '../../../',
+        basePath: '../../../../../../../',
 
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
         // generate js files from html templates to expose them during testing.
         preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/luae_fs/webcert/views/**/*.html': ['ng-html2js']
+            'src/main/resources/META-INF/resources/webjars/luae_fs/webcert/views/**/*.html': ['ng-html2js'],
+            'src/main/resources/META-INF/resources/webjars/luae_fs/webcert/**/*.js': ['coverage'],
+            'src/main/resources/META-INF/resources/webjars/common/webcert/**/*.scss': ['scss']
+        },
+
+        scssPreprocessor: {
+            options: {
+                sourceMap: true
+            }
         },
 
         ngHtml2JsPreprocessor: {
@@ -33,25 +43,25 @@ module.exports = function(config) {
         files: [
 
             // Dependencies
-                WEBJAR_DIR + 'angularjs/angular.js',
-                WEBJAR_DIR + 'angularjs/angular-mocks.js',
-                WEBJAR_DIR + 'angularjs/1.2.27/angular-locale_sv-se.js',
-                WEBJAR_DIR + 'angularjs/angular-cookies.js',
-                WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
-                WEBJAR_DIR + 'angularjs/angular-sanitize.js',
-                WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
-                WEBJAR_DIR + 'momentjs/moment.js',
-                WEBJAR_DIR + 'common/webcert/module.min.js',
-
+               BASE_WEBJAR_DIR + 'jquery/jquery.min.js',
+               BASE_WEBJAR_DIR + 'angularjs/angular.js',
+               BASE_WEBJAR_DIR + 'angularjs/angular-mocks.js',
+               BASE_WEBJAR_DIR + 'angularjs/1.4.7/angular-locale_sv-se.js',
+               BASE_WEBJAR_DIR + 'angularjs/angular-cookies.js',
+               BASE_WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
+               BASE_WEBJAR_DIR + 'angularjs/angular-sanitize.js',
+               BASE_WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
+               BASE_WEBJAR_DIR + 'momentjs/moment.js',
+               BASE_WEBJAR_DIR + 'common/webcert/module.min.js',
+                NODE_DIR + '/karma-read-json/karma-read-json.js',
+                NODE_DIR + 'tv4/tv4.js',
 
             // Load these first
                 SRC_DIR + 'messages.js',
-                TEST_DIR + 'module-test.js',
+                TEST_DIR + 'module.test.js',
 
             { pattern: SRC_DIR + '**/*' },
-            { pattern: SRC_DIR + '**/*.spec.js' },
-            { pattern: TEST_DIR + '**/*.spec.js' },
-            { pattern: TEST_DIR + '**/*Spec.js' }
+            { pattern: TEST_DIR + '**/*.spec.js' }
         ],
 
         exclude: [ SRC_DIR + 'module.js' ],
@@ -91,7 +101,8 @@ module.exports = function(config) {
             'karma-firefox-launcher',
             'karma-phantomjs-launcher',
             'karma-mocha-reporter',
-            'karma-ng-html2js-preprocessor'
+            'karma-ng-html2js-preprocessor',
+            'karma-scss-preprocessor'
         ],
 
         reporters: [ 'progress' ]

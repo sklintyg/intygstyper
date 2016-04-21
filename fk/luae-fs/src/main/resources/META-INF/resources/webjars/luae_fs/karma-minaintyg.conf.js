@@ -3,24 +3,29 @@ module.exports = function(config) {
     'use strict';
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/luae_fs/minaintyg/js/';
-    var TEST_DIR = 'src/test/js/minaintyg/';
+    var TEST_DIR = SRC_DIR;
     var WEBJAR_DIR = '../target/webjardependencies/';
 
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '../../../',
+        basePath: '../../../../../../../',
 
         // frameworks to use
         frameworks: [ 'jasmine' ],
+
+        preprocessors: {
+            'src/main/resources/META-INF/resources/webjars/luae_fs/minaintyg/js/**/*.js': ['coverage']
+        },
 
         // list of files / patterns to load in the browser
         files: [
 
             // Dependencies
+                WEBJAR_DIR + 'jquery/jquery.min.js',
                 WEBJAR_DIR + 'angularjs/angular.js',
                 WEBJAR_DIR + 'angularjs/angular-mocks.js',
-                WEBJAR_DIR + 'angularjs/1.2.27/angular-locale_sv-se.js',
+                WEBJAR_DIR + 'angularjs/1.4.7/angular-locale_sv-se.js',
                 WEBJAR_DIR + 'angularjs/angular-cookies.js',
                 WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
                 WEBJAR_DIR + 'angularjs/angular-sanitize.js',
@@ -31,7 +36,7 @@ module.exports = function(config) {
                 SRC_DIR + 'module.js',
 
             { pattern: SRC_DIR + '**/*' },
-            { pattern: TEST_DIR + '**/*Spec.js' }
+            { pattern: TEST_DIR + '**/*.spec.js' }
         ],
 
         // web server port
