@@ -20,29 +20,29 @@
 package se.inera.certificate.modules.sjukpenning_utokad.model.converter;
 
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.CERTIFICATE_CODE_SYSTEM;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDate;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
 
@@ -50,93 +50,10 @@ public final class UtlatandeToIntyg {
     }
 
     static Intyg convert(SjukpenningUtokadUtlatande source) {
-        Intyg intyg = new Intyg();
+        Intyg intyg = InternalConverterUtil.getIntyg(source);
         intyg.setTyp(getTypAvIntyg(source));
-        intyg.setIntygsId(getIntygsId(source));
-        intyg.setVersion(getTextVersion(source));
-        intyg.setSigneringstidpunkt(source.getGrundData().getSigneringsdatum());
-        intyg.setSkickatTidpunkt(source.getGrundData().getSigneringsdatum());
-        intyg.setSkapadAv(getSkapadAv(source));
-        intyg.setPatient(getPatient(source.getGrundData().getPatient()));
-        decorateWithRelation(intyg, source);
         intyg.getSvar().addAll(getSvar(source));
         return intyg;
-    }
-
-    private static String getTextVersion(SjukpenningUtokadUtlatande source) {
-        return source.getTextVersion();
-    }
-
-    private static HosPersonal getSkapadAv(SjukpenningUtokadUtlatande source) {
-        HoSPersonal sourceSkapadAv = source.getGrundData().getSkapadAv();
-        HosPersonal skapadAv = new HosPersonal();
-        skapadAv.setPersonalId(anHsaId(sourceSkapadAv.getPersonId()));
-        skapadAv.setFullstandigtNamn(sourceSkapadAv.getFullstandigtNamn());
-        skapadAv.setForskrivarkod(sourceSkapadAv.getForskrivarKod());
-        skapadAv.setEnhet(getEnhet(sourceSkapadAv.getVardenhet()));
-        for (String sourceBefattning : sourceSkapadAv.getBefattningar()) {
-            Befattning befattning = new Befattning();
-            befattning.setCodeSystem(BEFATTNING_CODE_SYSTEM);
-            befattning.setCode(sourceBefattning);
-            befattning.setDisplayName(BefattningKod.getDisplayNameFromCode(sourceBefattning));
-            skapadAv.getBefattning().add(befattning);
-        }
-        for (String sourceKompetens : sourceSkapadAv.getSpecialiteter()) {
-            Specialistkompetens kompetens = new Specialistkompetens();
-            kompetens.setCode(sourceKompetens);
-            skapadAv.getSpecialistkompetens().add(kompetens);
-        }
-        return skapadAv;
-    }
-
-    private static Enhet getEnhet(Vardenhet sourceVardenhet) {
-        Enhet vardenhet = new Enhet();
-        vardenhet.setEnhetsId(anHsaId(sourceVardenhet.getEnhetsid()));
-        vardenhet.setEnhetsnamn(sourceVardenhet.getEnhetsnamn());
-        vardenhet.setPostnummer(sourceVardenhet.getPostnummer());
-        vardenhet.setPostadress(sourceVardenhet.getPostadress());
-        vardenhet.setPostort(sourceVardenhet.getPostort());
-        vardenhet.setTelefonnummer(sourceVardenhet.getTelefonnummer());
-        vardenhet.setEpost(sourceVardenhet.getEpost());
-        vardenhet.setVardgivare(getVardgivare(sourceVardenhet.getVardgivare()));
-        vardenhet.setArbetsplatskod(getArbetsplatsKod(sourceVardenhet.getArbetsplatsKod()));
-        return vardenhet;
-    }
-
-    private static ArbetsplatsKod getArbetsplatsKod(String sourceArbetsplatsKod) {
-        ArbetsplatsKod arbetsplatsKod = new ArbetsplatsKod();
-        arbetsplatsKod.setRoot(ARBETSPLATSKOD_CODE_SYSTEM);
-        arbetsplatsKod.setExtension(sourceArbetsplatsKod);
-        return arbetsplatsKod;
-    }
-
-    private static Vardgivare getVardgivare(se.inera.intyg.common.support.model.common.internal.Vardgivare sourceVardgivare) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivareId(anHsaId(sourceVardgivare.getVardgivarid()));
-        vardgivare.setVardgivarnamn(sourceVardgivare.getVardgivarnamn());
-        return vardgivare;
-    }
-
-    private static Patient getPatient(se.inera.intyg.common.support.model.common.internal.Patient sourcePatient) {
-        Patient patient = new se.riv.clinicalprocess.healthcond.certificate.v2.Patient();
-        patient.setEfternamn(sourcePatient.getEfternamn());
-        patient.setFornamn(sourcePatient.getFornamn());
-        patient.setMellannamn(sourcePatient.getMellannamn());
-        PersonId personId = new PersonId();
-        personId.setRoot(PERSON_ID_CODE_SYSTEM);
-        personId.setExtension(sourcePatient.getPersonId().getPersonnummer().replaceAll("-", ""));
-        patient.setPersonId(personId);
-        patient.setPostadress(sourcePatient.getPostadress());
-        patient.setPostnummer(sourcePatient.getPostnummer());
-        patient.setPostort(sourcePatient.getPostort());
-        return patient;
-    }
-
-    private static IntygId getIntygsId(SjukpenningUtokadUtlatande source) {
-        IntygId intygId = new IntygId();
-        intygId.setRoot(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        intygId.setExtension(source.getId());
-        return intygId;
     }
 
     private static TypAvIntyg getTypAvIntyg(SjukpenningUtokadUtlatande source) {
@@ -145,27 +62,6 @@ public final class UtlatandeToIntyg {
         typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
         typAvIntyg.setDisplayName(SjukpenningUtokadEntryPoint.MODULE_NAME);
         return typAvIntyg;
-    }
-
-    private static void decorateWithRelation(Intyg intyg, SjukpenningUtokadUtlatande source) {
-        if (source.getGrundData().getRelation() == null || source.getGrundData().getRelation().getRelationKod() == null) {
-            return;
-        }
-        Relation relation = new Relation();
-
-        IntygId intygId = new IntygId();
-        intygId.setRoot(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        intygId.setExtension(source.getGrundData().getRelation().getRelationIntygsId());
-
-        TypAvRelation typAvRelation = new TypAvRelation();
-        typAvRelation.setCode(source.getGrundData().getRelation().getRelationKod().value());
-        typAvRelation.setCodeSystem(RELATION_CODE_SYSTEM);
-        typAvRelation.setDisplayName(source.getGrundData().getRelation().getRelationKod().getKlartext());
-
-        relation.setIntygsId(intygId);
-        relation.setTyp(typAvRelation);
-
-        intyg.getRelation().add(relation);
     }
 
     private static List<Svar> getSvar(SjukpenningUtokadUtlatande source) {
@@ -309,60 +205,4 @@ public final class UtlatandeToIntyg {
         return svars;
     }
 
-    private static void addIfNotBlank(List<Svar> svars, String svarsId, String delsvarsId, String content) {
-        if (!StringUtils.isBlank(content)) {
-            svars.add(aSvar(svarsId).withDelsvar(delsvarsId, content).build());
-        }
-    }
-
-    private static HsaId anHsaId(String id) {
-        HsaId hsaId = new HsaId();
-        hsaId.setRoot(HSA_CODE_SYSTEM);
-        hsaId.setExtension(id);
-        return hsaId;
-    }
-
-    private static JAXBElement<CVType> aCV(String codeSystem, String code, String displayName) {
-        CVType cv = new CVType();
-        cv.setCodeSystem(codeSystem);
-        cv.setCode(code);
-        cv.setDisplayName(displayName);
-        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
-    }
-
-    private static JAXBElement<DatePeriodType> aDatePeriod(LocalDate from, LocalDate tom) {
-        DatePeriodType period = new DatePeriodType();
-        period.setStart(from);
-        period.setEnd(tom);
-        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "datePeriod"), DatePeriodType.class, null,
-                period);
-    }
-
-    private static SvarBuilder aSvar(String id) {
-        return new SvarBuilder(id);
-    }
-
-    private static class SvarBuilder {
-        private String id;
-        private List<Delsvar> delSvars = new ArrayList<>();
-
-        SvarBuilder(String id) {
-            this.id = id;
-        }
-
-        public Svar build() {
-            Svar svar = new Svar();
-            svar.setId(id);
-            svar.getDelsvar().addAll(delSvars);
-            return svar;
-        }
-
-        public SvarBuilder withDelsvar(String delsvarsId, Object content) {
-            Delsvar delsvar = new Delsvar();
-            delsvar.setId(delsvarsId);
-            delsvar.getContent().add(content);
-            delSvars.add(delsvar);
-            return this;
-        }
-    }
 }

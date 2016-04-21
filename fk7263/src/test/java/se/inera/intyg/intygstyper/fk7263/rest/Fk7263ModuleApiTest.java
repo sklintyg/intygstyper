@@ -27,12 +27,10 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
 
 import java.io.IOException;
 import java.io.StringWriter;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.*;
@@ -62,7 +60,6 @@ import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.utils.ResourceConverterUtils;
 import se.inera.intyg.intygstyper.fk7263.utils.ScenarioNotFoundException;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -467,11 +464,4 @@ public class Fk7263ModuleApiTest {
         return new InternalModelHolder(toJsonString(utlatande));
     }
 
-    private static JAXBElement<DatePeriodType> aDatePeriod(LocalDate from, LocalDate tom) {
-        DatePeriodType period = new DatePeriodType();
-        period.setStart(from);
-        period.setEnd(tom);
-        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "datePeriod"), DatePeriodType.class, null,
-                period);
-    }
 }

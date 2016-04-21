@@ -21,12 +21,10 @@ package se.inera.intyg.intygstyper.ts_diabetes.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 
 import java.io.IOException;
 import java.io.StringWriter;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.*;
@@ -51,7 +49,6 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -247,14 +244,6 @@ public class ModuleApiTest {
 
     private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
         return new InternalModelHolder(mapper.writeValueAsString(internalModel));
-    }
-
-    private static JAXBElement<CVType> aCV(String codeSystem, String code, String displayName) {
-        CVType cv = new CVType();
-        cv.setCodeSystem(codeSystem);
-        cv.setCode(code);
-        cv.setDisplayName(displayName);
-        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
     }
 
 }
