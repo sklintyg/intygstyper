@@ -284,21 +284,23 @@ public final class RespConstants {
     }
 
     public enum ReferensTyp {
-        UNDERSOKNING(RespConstants.UNDERSOKNING_AV_PATIENT),
-        TELEFONKONTAKT(RespConstants.TELEFONKONTAKT_MED_PATIENT),
-        JOURNAL(RespConstants.JOURNALUPPGIFTER),
-        ANHORIGSBESKRIVNING(RespConstants.ANHORIGSBESKRIVNING),
-        ANNAT(RespConstants.ANNAT);
+        UNDERSOKNING(RespConstants.UNDERSOKNING_AV_PATIENT, "Min undersökning av patienten"),
+        TELEFONKONTAKT(RespConstants.TELEFONKONTAKT_MED_PATIENT, "Min telefonkontakt med patienten"),
+        JOURNAL(RespConstants.JOURNALUPPGIFTER, "Journaluppgifter från den"),
+        ANHORIGSBESKRIVNING(RespConstants.ANHORIGSBESKRIVNING, "Anhörigs beskrivning av patienten"),
+        ANNAT(RespConstants.ANNAT, "Annat");
 
-        public final String transport;
+        public final String transportId;
+        public final String label;
 
-        ReferensTyp(String transport) {
-            this.transport = transport;
+        ReferensTyp(String transportId, String label) {
+            this.transportId = transportId;
+            this.label = label;
         }
 
-        public static ReferensTyp byTransport(String transport) {
+        public static ReferensTyp byTransportId(String transportId) {
             for (ReferensTyp referensTyp : values()) {
-                if (referensTyp.transport.equals(transport)) {
+                if (referensTyp.transportId.equals(transportId)) {
                     return referensTyp;
                 }
             }
@@ -309,7 +311,7 @@ public final class RespConstants {
     public static String getDisplayName(String codeSystem, String code) {
         switch (codeSystem) {
         case GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM:
-            return GrundformedicinsktunderlagCodeSystem.getDescription(code);
+            return ReferensTyp.byTransportId(code).label;
         case UNDERLAG_CODE_SYSTEM:
             return Underlag.UnderlagsTyp.fromId(Integer.parseInt(code)).getLabel();
         case TYP_AV_SYSSELSATTNING_CODE_SYSTEM:

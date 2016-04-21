@@ -208,7 +208,7 @@ public final class TransportToInternal {
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1:
                 String referensTypString = getCVSvarContent(delsvar).getCode();
-                grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
+                grundForMedicinsktUnderlagTyp = ReferensTyp.byTransportId(referensTypString);
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1:
                 utlatande.setAnnatGrundForMUBeskrivning(getStringContent(delsvar));
