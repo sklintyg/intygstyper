@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean class="se.inera.certificate.modules.aktivitetsersattning_na.model.converter.WebcertModelFactory" />
+
+  <bean class="se.inera.certificate.modules.aktivitetsersattning_na.rest.AktivitetsersattningNAModuleApi" />
+
+  <bean class="se.inera.certificate.modules.aktivitetsersattning_na.validator.InternalDraftValidator" />
+
+  <bean class="se.inera.certificate.modules.aktivitetsersattning_na.model.converter.util.ConverterUtil"/>
+
+  <bean class="se.inera.certificate.modules.aktivitetsersattning_na.model.converter.InternalToNotification"/>
+
+  <bean id="aktivitetsersattningNAEntryPoint" class="se.inera.certificate.modules.aktivitetsersattning_na.support.AktivitetsersattningNAEntryPoint" />
+
+  <bean id="aktivitetsersattning-na-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
+
+</beans>
