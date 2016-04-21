@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.SitUtlatande;
+import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
 import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
