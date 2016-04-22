@@ -25,7 +25,7 @@ public class SchematronValidatorTest {
     }
 
     @Test
-    public void validXmlFailsTestWhenDiagnosMissing() throws Exception {
+    public void failsWhenDiagnosMissing() throws Exception {
         String inputXml = Resources.toString(getResource("transport/scenarios/fail-diagnossaknas.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         response.getValidationErrors().forEach(e -> System.out.println(e));
@@ -33,7 +33,7 @@ public class SchematronValidatorTest {
     }
 
     @Test
-    public void validXmlFailsTestWhenFinnsUnderlagMissing() throws Exception {
+    public void failsWhenFinnsUnderlagMissing() throws Exception {
         String inputXml = Resources.toString(getResource("transport/scenarios/fail-nounderlagfinnes.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         response.getValidationErrors().forEach(e -> System.out.println(e));
@@ -41,12 +41,21 @@ public class SchematronValidatorTest {
     }
 
     @Test
-    public void validXmlFailsTestWhenFourDiagnoser() throws Exception {
+    public void failsWhenFourDiagnoser() throws Exception {
         String inputXml = Resources.toString(getResource("transport/scenarios/fail-fyradiagnoser.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         response.getValidationErrors().forEach(e -> System.out.println(e));
         assertEquals(1, response.getValidationErrors().size());
     }
+
+    @Test
+    public void failsWhenGrundForMuIsRepeated() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/fail-grundformuupprepas.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
+        assertEquals(1, response.getValidationErrors().size());
+    }
+
 
 //    @Test
 //    public void validXmlPassesTest() throws Exception {

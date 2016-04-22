@@ -19,17 +19,16 @@
 
 package se.inera.certificate.modules.luae_fs.model.utils;
 
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-
-import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
