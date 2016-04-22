@@ -9,6 +9,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse
 
 import java.net.URL;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class SchematronValidatorTest {
@@ -21,6 +22,30 @@ public class SchematronValidatorTest {
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         response.getValidationErrors().forEach(e -> System.out.println(e));
         assertTrue(response.getValidationErrors().isEmpty());
+    }
+
+    @Test
+    public void validXmlFailsTestWhenDiagnosMissing() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/scenarios/fail-diagnossaknas.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
+        assertEquals(1, response.getValidationErrors().size());
+    }
+
+    @Test
+    public void validXmlFailsTestWhenFinnsUnderlagMissing() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/scenarios/fail-nounderlagfinnes.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
+        assertEquals(1, response.getValidationErrors().size());
+    }
+
+    @Test
+    public void validXmlFailsTestWhenFourDiagnoser() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/scenarios/fail-fyradiagnoser.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
+        assertEquals(1, response.getValidationErrors().size());
     }
 
 //    @Test

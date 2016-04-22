@@ -20,8 +20,10 @@
 package se.inera.certificate.modules.luae_fs.validator;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.certificate.modules.luae_fs.model.internal.Underlag;
@@ -184,7 +186,15 @@ public class InternalDraftValidator {
     }
 
     void validateDiagnose(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        validateNumberOfDiagnose(utlatande.getDiagnoser(), validationMessages);
         validatorUtil.validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
+    }
+
+    private void validateNumberOfDiagnose(ImmutableList<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
+        if (diagnoser.size() > 3) {
+            validatorUtil.addValidationError(validationMessages, "diagnos", ValidationMessageType.OTHER,
+                    "luae_fs.validation.diagnos.max-diagnoser");
+        }
     }
 
     void validateFunktionsnedsattning(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {

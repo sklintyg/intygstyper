@@ -97,7 +97,7 @@ public class WebcertModelFactory {
     }
 
     private void populateWithId(Builder utlatande, String utlatandeId) throws ConverterException {
-        if (utlatandeId == null) {
+        if (utlatandeId == null || utlatandeId.trim().length() == 0) {
             throw new ConverterException("No certificateID found");
         }
         utlatande.setId(utlatandeId);
