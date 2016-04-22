@@ -83,10 +83,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
-import se.inera.certificate.modules.luae_na.model.internal.Tillaggsfraga;
-import se.inera.certificate.modules.luae_na.model.internal.Underlag;
 import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande.Builder;
+import se.inera.certificate.modules.luae_na.model.internal.Tillaggsfraga;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.InternalDate;
@@ -323,7 +323,7 @@ public final class TransportToInternal {
     }
 
     private static void handleUnderlag(List<Underlag> underlag, Svar svar) throws ConverterException {
-        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
+        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OVRIGT;
         InternalDate date = null;
         String hamtasFran = null;
         for (Delsvar delsvar : svar.getDelsvar()) {

@@ -19,9 +19,6 @@
 
 package se.inera.certificate.modules.fkparent.model.converter;
 
-import se.inera.certificate.modules.fkparent.model.enumerations.ArbetslivsinriktadeAtgarderCodeSystem;
-import se.inera.certificate.modules.fkparent.model.enumerations.SjukskrivningCodeSystem;
-
 public final class RespConstants {
     private RespConstants() {
     }
@@ -301,17 +298,6 @@ public final class RespConstants {
                     return referensTyp;
                 }
             }
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public static String getDisplayName(String codeSystem, String code) {
-        switch (codeSystem) {
-        case SJUKSKRIVNING_CODE_SYSTEM:
-            return SjukskrivningCodeSystem.getDescription(code);
-        case ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM:
-            return ArbetslivsinriktadeAtgarderCodeSystem.getDescription(code);
-        default:
             throw new IllegalArgumentException();
         }
     }
