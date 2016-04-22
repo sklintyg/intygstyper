@@ -1,6 +1,6 @@
-angular.module('luse').controller('luse.ViewCertCtrl',
+angular.module('luae_na').controller('luae_na.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
-        'common.messageService', 'common.UserModel', 'sjukersattning.IntygController.ViewStateService',
+        'common.messageService', 'common.UserModel', 'luae_na.IntygController.ViewStateService',
         'luae_na.FormFactory', 'common.dynamicLabelService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService) {
@@ -29,28 +29,27 @@ angular.module('luse').controller('luse.ViewCertCtrl',
              */
             function loadIntyg() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, function(result) {
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intyg.type, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
-                        ViewState.relations = result.relations;
 
-                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel);
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intyg.type, ViewState.intygModel);
 
-                        if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
-                            ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
+                        ViewState.common.intyg.isSent = IntygService.isSentToTarget(result.statuses, 'FKASSA');
+                        ViewState.common.intyg.isRevoked = IntygService.isRevoked(result.statuses);
+                        if (ViewState.common.intyg.isRevoked) {
+                            ViewState.common.intyg.printStatus = 'revoked';
+                        } else {
+                            ViewState.common.intyg.printStatus = 'signed';
                         }
 
-                        ViewState.common.updateIntygProperties(result.statuses);
+                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intyg.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intygProperties.type +'/' + ViewState.intygModel.id + '/pdf';
-
-                        $rootScope.$emit('ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties);
+                        $rootScope.$emit('ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intyg);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
-                        $rootScope.$emit('ViewCertCtrl.load', null, null);
-
                         if ($stateParams.signed) {
                             ViewState.common.activeErrorMessageKey = 'common.error.sign.not_ready_yet';
                         } else {
@@ -59,7 +58,6 @@ angular.module('luse').controller('luse.ViewCertCtrl',
                     }
                     $scope.intygBackup.showBackupInfo = false;
                 }, function(error) {
-                    $rootScope.$emit('ViewCertCtrl.load', null, null);
                     ViewState.common.doneLoading = true;
                     ViewState.common.updateActiveError(error, $stateParams.signed);
                     $scope.intygBackup.showBackupInfo = true;
@@ -73,7 +71,7 @@ angular.module('luse').controller('luse.ViewCertCtrl',
              * @type {{}}
              */
             $scope.intygBackup = {intyg: null, showBackupInfo: false};
-            var unbindFastEventFail = $rootScope.$on('sjukersattning.ViewCertCtrl.load.failed', function(event, intyg) {
+            var unbindFastEventFail = $rootScope.$on('luae_na.ViewCertCtrl.load.failed', function(event, intyg) {
                 $scope.intygBackup.intyg = intyg;
             });
             $scope.$on('$destroy', unbindFastEventFail);
