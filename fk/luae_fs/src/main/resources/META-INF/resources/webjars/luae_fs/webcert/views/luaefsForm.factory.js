@@ -19,6 +19,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
                     fieldGroup: [
+                        //Fråga 1 -----
                         {type: 'headline', templateOptions: {label: 'FRG_1'}},
                         {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1'}},
                         {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2'}},
@@ -30,14 +31,16 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                             templateOptions: {label: 'KV_FKMU_0001.4'}
                         },
 
-                        {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
+                        {key: 'annanGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
                         {
-                            key: 'annatGrundForMUBeskrivning',
+                            key: 'annanGrundForMUBeskrivning',
                             type: 'single-text',
                             className: 'fold-animation',
-                            hideExpression: '!model.annatGrundForMU',
+                            hideExpression: '!model.annanGrundForMU',
                             templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                         },
+                        //Fråga 2 -----
+
                         {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
                     ]
                 },
@@ -45,7 +48,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
                     fieldGroup: [
-                        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
+                        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
                         {
                             key: 'underlag', type: 'underlag',
                             className: 'slide-animation',
@@ -78,12 +81,12 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     fieldGroup: [
                         {
                             key: 'funktionsnedsattningDebut',
-                            type: 'single-text',
+                            type: 'multi-text',
                             templateOptions: {label: 'DFR_15.1'}
                         },
                         {
                             key: 'funktionsnedsattningPaverkan',
-                            type: 'single-text',
+                            type: 'multi-text',
                             templateOptions: {label: 'DFR_16.1'}
                         }
 

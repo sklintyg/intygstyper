@@ -9,18 +9,8 @@ var luae_fsMessages = {
         'luae_fs.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
         'luae_fs.button.send': 'Skicka till Försäkringskassan',
 
-        // Sjukpenning utökad
+        // title för header
         'luae_fs.label.certtitle': 'Läkarutlåtande för aktivitetsersättning vid förlängd skolgång',
-
-        // TODO: REMOVE THESE AND GENERATE from dynamic labels instead
-        'luae_fs.label.grundformu': 'Utlåtandet är baserat på',
-        'luae_fs.label.diagnos': 'Diagnos/diagnoser som orsakar nedsatt arbetsförmåga',
-        'luae_fs.label.sysselsattning': 'I relation till vilken sysselsättning gör du den medicinska bedömningen?',
-        'luae_fs.label.funktionsnedsattning': 'Funktionsnedsättning',
-        'luae_fs.label.aktivitetsbegransning': 'Aktivitetsbegränsning',
-        'luae_fs.label.bedomning': 'Bedömning',
-        'luae_fs.label.atgarder': 'Åtgärder',
-        'luae_fs.label.kontakt': 'Vill du att Försäkringskassan kontaktar dig?',
 
         //Labels
         'luae_fs.label.valjkodverk': 'Välj kodverk:',
@@ -46,16 +36,25 @@ var luae_fsMessages = {
         //Validation messages
         'luae_fs.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på.',
         'luae_fs.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient',
-        'luae_fs.validation.grund-for-mu.telefonkontakt.incorrect_format': 'Fel datumformat för telefonkontakt',
+        'luae_fs.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning',
         'luae_fs.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter',
         'luae_fs.validation.grund-for-mu.annat.incorrect_format': 'Fel datumformat för annan referens',
-        'luae_fs.validation.grund-for-mu.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat måste fyllas i.',
+        'luae_fs.validation.grund-for-mu.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat måste anges.',
+        'luae_fs.validation.grund-for-mu.kannedom.missing' : 'Fältet \'Jag har känt patienten sedan\' måste fyllas i.',
+        'luae_fs.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för kännedom om patienten',
+        'luae_fs.validation.grund-for-mu.kannedom.after.undersokning' : 'Datum förkännedom om patienten får inte vara senare än datum för undersökning',
+        'luae_fs.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning' : 'Datum förkännedom om patienten får inte vara senare än datum för anhörigs beskrivning',
 
-        'luae_fs.validation.sysselsattning.missing': 'Sysselsättning måste fyllas i.',
-        'luae_fs.validation.sysselsattning.nuvarandearbete.missing': 'När nuvarande arbete är valt måste även beskrivningen av detta fyllas i.',
-        'luae_fs.validation.sysselsattning.nuvarandearbete.invalid_combination': 'Beskrivningen får inte fyllas i när inte nuvarande arbete valts.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.sysselsattning.ampolitisktprogram.missing': 'Beskrivning för arbetsmarknadspolitiskt program måste fyllas i.',
-        'luae_fs.validation.sysselsattning.ampolitisktprogram.invalid_combination': 'Beskrivning för arbetsmarknadspolitiskt program måste bara fyllas i om arbetsmarknadspolitiskt program valts.', // Should never happen because GUI should block this combination
+        'luae_fs.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
+        'luae_fs.validation.underlagfinns.incorrect_combination' : 'Om frågan \'Finns det andra medicinska utredningar eller underlag\' besvarats med nej får underlag inte anges.',
+        'luae_fs.validation.underlag.missing': 'Du måste ange ett underlag.',
+        'luae_fs.validation.underlag.incorrect_format' : 'Fel typ av underlag',
+        'luae_fs.validation.underlag.date.missing': 'Du måste ange datum för underlaget.',
+        'luae_fs.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
+        'luae_fs.validation.underlag.date.incorrect_format': 'Fel datumformat för underlag',
+
+        'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
+
 
         'luae_fs.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'luae_fs.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
@@ -74,64 +73,17 @@ var luae_fsMessages = {
         'luae_fs.validation.diagnos2.description.missing': 'Diagnostext saknas på diagnosrad 3',
         'luae_fs.validation.diagnos.description.missing': 'Diagnostext saknas',
 
-        'luae_fs.validation.funktionsnedsattning.missing': 'Funktionsnedsättning måste fyllas i.',
-        'luae_fs.validation.aktivitetsbegransning.missing': 'Aktivitetsbegränsning måste fyllas i.',
-
-        'luae_fs.validation.bedomning.sjukskrivningar.missing': 'Minst en sjukskrivningsperiod måste anges.',
-        'luae_fs.validation.bedomning.sjukskrivningar.sjukskrivningsgrad.missing': 'Tekniskt fel. Sjukskrivningsgrad saknas.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.bedomning.sjukskrivningar.period1.missing': 'Helt nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.bedomning.sjukskrivningar.period1.invalid_format': 'Helt nedsatt: Felaktigt datumformat.',
-        'luae_fs.validation.bedomning.sjukskrivningar.period1.overlap': 'Helt nedsatt: Datumintervall överlappar.',
-        'luae_fs.validation.bedomning.sjukskrivningar.period2.missing': '75% nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.bedomning.sjukskrivningar.period2.invalid_format': '75% nedsatt: Felaktigt datumformat.',
-        'luae_fs.validation.bedomning.sjukskrivningar.period2.overlap': '75% nedsatt: Datumintervall överlappar.',
-        'luae_fs.validation.bedomning.sjukskrivningar.period3.missing': '50% nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.bedomning.sjukskrivningar.period3.invalid_format': '50% nedsatt: Felaktigt datumformat.',
-        'luae_fs.validation.bedomning.sjukskrivningar.period3.overlap': '50% nedsatt: Datumintervall överlappar.',
-        'luae_fs.validation.bedomning.sjukskrivningar.period4.missing': '25% nedsatt: Period saknas.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.bedomning.sjukskrivningar.period4.invalid_format': '25% nedsatt: Felaktigt datumformat.',
-        'luae_fs.validation.bedomning.sjukskrivningar.period4.overlap': '25% nedsatt: Datumintervall överlappar.',
-
-        'luae_fs.validation.bedomning.sjukskrivningar.arbetstidsforlaggning.missing': 'Arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.',
-        'luae_fs.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.missing': 'Arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.',
-        'luae_fs.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.invalid_combination': 'Motivering till arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.', // Should never happen
-
-        'luae_fs.validation.bedomning.fmb.empty' : 'Beskriv varför arbetsförmågan bedöms vara nedsatt längre tid än den som det försäkringsmedicinska beslutstödet anger kan inte fyllas i med endast blanksteg',
-        'luae_fs.validation.bedomning.formagatrotsbegransning.empty' : ' Beskriv vad patienten kan göra trots sin sjukdom relaterat till sitt arbete kan inte fyllas i med endast blanksteg',
-
-        'luae_fs.validation.bedomning.prognos.missing': 'Prognos måste fyllas i.',
-        'luae_fs.validation.bedomning.prognos.fortydligande.missing': 'Förtydligande måste fyllas i om prognos oklar valts.',
-        'luae_fs.validation.bedomning.prognos.fortydligande.invalid_combination': 'Förtydligande kan bara fyllas i om prognos oklar valts.', // Should never happen because GUI should block this combination
-
-        'luae_fs.validation.atgarder.missing': 'Åtgärder måste väljas eller Inte aktuellt.',
-        'luae_fs.validation.atgarder.inte_aktuellt_no_combine': 'Inte aktuellt kan inte kombineras med andra val.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.atgarder.invalid_combination': 'Beskrivning för arbetslivsinriktade åtgärder kan inte kombineras med åtgärd på detta sätt.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.atgarder.aktuelltbeskrivning.missing': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
-        'luae_fs.validation.atgarder.too-many': 'För många val på åtgärder.', // Should never happen because GUI should block this combination
-        'luae_fs.validation.atgarder.inte_aktuellt_missing_description' : 'Om Arbetslivsinriktade åtgärder inte är aktuellt måste fältet "Beskriv varför arbetslivsinriktade åtgärder just nu inte skulle underlätta återgång i arbete" fyllas i.',
+        'luae_fs.validation.funktionsnedsattning.debut.missing': 'Funktionsnedsättningens debut och utveckling måste fyllas i.',
+        'luae_fs.validation.funktionsnedsattning.paverkan.missing': 'Funktionsnedsättningens påverkan måste fyllas i.',
 
         'luae_fs.validation.kontakt.invalid_combination': 'Anledning får inte fyllas i när man svarat nej på kontakt.',
 
-        'luae_fs.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
-        'luae_fs.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
-        'luae_fs.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges (Fält 15)',
-        'luae_fs.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format (Fält 15)',
-        'luae_fs.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges (Fält 15)',
+        'luae_fs.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges.',
+        'luae_fs.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges.',
+        'luae_fs.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges.',
+        'luae_fs.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format.',
+        'luae_fs.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges.',
 
-/*
-
-         'luae_fs.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
-         'luae_fs.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
-
-         'luae_fs.validation.nedsattning.overlapping-date-interval': 'Två datuminterval med överlappande datum har angetts. (Fält 8b)',
-
-         'luae_fs.validation.nedsattning.prognos.choose-one': 'Max ett alternativ kan väljas (Fält 10)',
-
-         'luae_fs.validation.prognos.gar-ej-att-bedomma.beskrivning.missing': 'Fritextfältet som hör till alternativet Går ej att bedöma, förtydligande under \'Prognos - kommer patienten att få tillbaka sin arbetsförmåga i nuvarande arbete\' måste fyllas i. (Fält 10)',
-
-         'luae_fs.validation.forandrat-ressatt.choose-one': 'Endast ett alternativ kan anges avseende förändrat ressätt. (Fält 11)',
-
- */
         // errors
         'luae_fs.error.could_not_load_cert': '<strong>Intyget gick inte att läsa in.</strong><br>Prova att ladda om sidan. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Nationell kundservice på 0771-251010.',
         'luae_fs.error.could_not_load_cert_not_auth': '<strong>Kunde inte hämta intyget eftersom du saknar behörighet.</strong>',
