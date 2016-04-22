@@ -168,7 +168,7 @@
               <!-- Grund för medicinskt underlag -->
               <div mi-category category-label="KAT_1.RBK">
                 <div mi-field field-dynamic-label="FRG_1.RBK"
-                     filled="cert.undersokningAvPatienten!=null || cert.journaluppgifter!=null || cert.annatGrundForMU!=null">
+                     filled="cert.undersokningAvPatienten!=null || cert.journaluppgifter!=null || cert.annanGrundForMU!=null">
                   <ul class="padded-list">
                     <li ng-show="cert.undersokningAvPatienten!=null">
                       <div id="undersokningAvPatienten">
@@ -180,13 +180,13 @@
                         <span dynamic-label key="KV_FKMU_0001.3.RBK"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
                       </div>
                     </li>
-                    <li ng-show="cert.annatGrundForMU!=null">
+                    <li ng-show="cert.annanGrundForMU!=null">
                       <div id="anhorigsBeskrivningAvPatienten">
-                        <span dynamic-label key="KV_FKMU_0001.5.RBK"></span><span> | {{cert.annatGrundForMU | date:'longDate' }}</span>
+                        <span dynamic-label key="KV_FKMU_0001.5.RBK"></span><span> | {{cert.annanGrundForMU | date:'longDate' }}</span>
                       </div>
                     </li>
-                    <div ng-show="cert.annatGrundForMUBeskrivning!=null">
-                        {{cert.annatGrundForMUBeskrivning}}
+                    <div ng-show="cert.annanGrundForMUBeskrivning!=null">
+                        {{cert.annanGrundForMUBeskrivning}}
                     </div>
                   </ul>
                 </div>

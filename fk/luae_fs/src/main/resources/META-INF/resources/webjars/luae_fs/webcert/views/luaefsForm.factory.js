@@ -48,7 +48,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
                     fieldGroup: [
-                        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
+                        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                         {
                             key: 'underlag', type: 'underlag',
                             className: 'slide-animation',
