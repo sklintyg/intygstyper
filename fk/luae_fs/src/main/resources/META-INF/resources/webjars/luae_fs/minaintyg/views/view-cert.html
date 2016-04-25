@@ -168,7 +168,7 @@
               <!-- Grund för medicinskt underlag -->
               <div mi-category category-label="KAT_1.RBK">
                 <div mi-field field-dynamic-label="FRG_1.RBK"
-                     filled="cert.undersokningAvPatienten!=null || cert.journaluppgifter!=null || cert.annanGrundForMU!=null">
+                     filled="cert.undersokningAvPatienten!=null || cert.journaluppgifter!=null || cert.annatGrundForMU!=null">
                   <ul class="padded-list">
                     <li ng-show="cert.undersokningAvPatienten!=null">
                       <div id="undersokningAvPatienten">
@@ -180,13 +180,13 @@
                         <span dynamic-label key="KV_FKMU_0001.3.RBK"></span><span> | {{cert.journaluppgifter | date:'longDate' }}</span>
                       </div>
                     </li>
-                    <li ng-show="cert.annanGrundForMU!=null">
+                    <li ng-show="cert.annatGrundForMU!=null">
                       <div id="anhorigsBeskrivningAvPatienten">
-                        <span dynamic-label key="KV_FKMU_0001.5.RBK"></span><span> | {{cert.annanGrundForMU | date:'longDate' }}</span>
+                        <span dynamic-label key="KV_FKMU_0001.5.RBK"></span><span> | {{cert.annatGrundForMU | date:'longDate' }}</span>
                       </div>
                     </li>
-                    <div ng-show="cert.annanGrundForMUBeskrivning!=null">
-                        {{cert.annanGrundForMUBeskrivning}}
+                    <div ng-show="cert.annatGrundForMUBeskrivning!=null">
+                        {{cert.annatGrundForMUBeskrivning}}
                     </div>
                   </ul>
                 </div>
@@ -298,28 +298,6 @@
                 <div mi-field field-dynamic-label="KAT_8.RBK" filled="cert.ovrigt">
                   <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                   <div id="kommentar" class="tag multiline">{{cert.ovrigt}}</div>
-                </div>
-              </div>
-
-              <!-- Kontakt med fk-->
-              <div mi-category category-label="KAT_9.RBK">
-                <div mi-field field-dynamic-label="DFR_26.1.RBK" filled="true">
-                  <span ng-show="cert.kontaktMedFk">
-                    <span id="kontaktFk-yes" message key="luae_fs.label.yes"></span>
-                  </span>
-                  <span ng-show="!cert.kontaktMedFk">
-                    <span id="kontaktFk-no" message key="luae_fs.label.no"></span>
-                  </span>
-                </div>
-                <div mi-field field-dynamic-label="DFR_26.2.RBK" filled="cert.anledningTillKontakt">
-                  <div id="anledningtillkontakt" class="multiline">{{cert.anledningTillKontakt}}</div>
-                </div>
-              </div>
-
-              <div mi-category category-label="KAT_9999.RBK">
-                <div mi-field field-dynamic-label="DFR_{{tillaggsfraga.id}}.RBK"
-                     ng-repeat="tillaggsfraga in cert.tillaggsfragor" filled="tillaggsfraga.svar">
-                  <div id="tillaggsfraga_{{$index}}" class="multiline">{{tillaggsfraga.svar}}</div>
                 </div>
               </div>
 

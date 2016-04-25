@@ -31,12 +31,12 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                             templateOptions: {label: 'KV_FKMU_0001.4'}
                         },
 
-                        {key: 'annanGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
+                        {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
                         {
-                            key: 'annanGrundForMUBeskrivning',
+                            key: 'annatGrundForMUBeskrivning',
                             type: 'single-text',
                             className: 'fold-animation',
-                            hideExpression: '!model.annanGrundForMU',
+                            hideExpression: '!model.annatGrundForMU',
                             templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                         },
                         //Fråga 2 -----

@@ -147,7 +147,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateGrundForMU_OmAnnanGrundBeskrivningOchInteAnnanGrundDatum() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate
-                .setAnnanGrundForMUBeskrivning("En beskrivning...")
+                .setAnnatGrundForMUBeskrivning("En beskrivning...")
                 .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
                 .build();
 
@@ -164,7 +164,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateGrundForMU_OmAnnanGrundKraverBeskrivning() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate
-                .setAnnanGrundForMU(new InternalDate(LocalDate.now()))
+                .setAnnatGrundForMU(new InternalDate(LocalDate.now()))
                 .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
                 .build();
 

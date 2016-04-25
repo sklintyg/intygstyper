@@ -258,7 +258,7 @@ public final class TransportToInternal {
                 grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1:
-                utlatande.setAnnanGrundForMUBeskrivning(getStringContent(delsvar));
+                utlatande.setAnnatGrundForMUBeskrivning(getStringContent(delsvar));
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -276,7 +276,7 @@ public final class TransportToInternal {
             utlatande.setAnhorigsBeskrivningAvPatienten(grundForMedicinsktUnderlagDatum);
             break;
         case ANNAT:
-            utlatande.setAnnanGrundForMU(grundForMedicinsktUnderlagDatum);
+            utlatande.setAnnatGrundForMU(grundForMedicinsktUnderlagDatum);
             break;
         default:
             throw new IllegalArgumentException();

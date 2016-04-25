@@ -34,8 +34,8 @@ public class TransportToInternalTest {
         utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
         utlatande.setAnhorigsBeskrivningAvPatienten(new InternalDate("2015-10-11"));
         utlatande.setJournaluppgifter(new InternalDate("2015-10-10"));
-        utlatande.setAnnanGrundForMU(new InternalDate("2015-10-12"));
-        utlatande.setAnnanGrundForMUBeskrivning("Lider av svår discofobi");
+        utlatande.setAnnatGrundForMU(new InternalDate("2015-10-12"));
+        utlatande.setAnnatGrundForMUBeskrivning("Lider av svår discofobi");
 
         utlatande.setKannedomOmPatient(new InternalDate("2015-10-10"));
         utlatande.setUnderlagFinns(true);

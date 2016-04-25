@@ -115,8 +115,8 @@ public class InternalToTransportTest {
         }
         utlatande.setGrundData(grundData);
 
-        utlatande.setAnnanGrundForMU(new InternalDate("2015-12-07"));
-        utlatande.setAnnanGrundForMUBeskrivning("Barndomsvän");
+        utlatande.setAnnatGrundForMU(new InternalDate("2015-12-07"));
+        utlatande.setAnnatGrundForMUBeskrivning("Barndomsvän");
 
         utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra"))));
 

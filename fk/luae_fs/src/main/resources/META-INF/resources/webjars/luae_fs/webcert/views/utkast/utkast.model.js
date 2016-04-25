@@ -47,8 +47,8 @@ angular.module('luae_fs').factory('luae_fs.Domain.IntygModel',
                         'undersokningAvPatienten': undefined,           //KV_FKMU_0001_1
                         'journaluppgifter': undefined,                  //KV_FKMU_0001_3
                         'anhorigsBeskrivningAvPatienten': undefined,    //KV_FKMU_0001_4
-                        'annanGrundForMU': undefined,                   //KV_FKMU_0001_5
-                        'annanGrundForMUBeskrivning': undefined,
+                        'annatGrundForMU': undefined,                   //KV_FKMU_0001_5
+                        'annatGrundForMUBeskrivning': undefined,
                         'kannedomOmPatient':undefined,
 
                         // Kategori 2 Andra medicinska utredningar och underlag
