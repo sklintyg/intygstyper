@@ -30,9 +30,13 @@
                           <div id="{{field.key}}-Nej" ng-switch-when="false">Nej</div>
                         </div>
                       </div>
-                      <div ng-switch-when="sjukskrivningar">
-                        <div sjukskrivning-view="field" field-model="viewState.intygModel"></div>
+                      <div ng-switch-when="checkbox-inline">
+                        <div ng-switch="viewState.intygModel[field.key]">
+                          <div id="{{field.key}}-Ja" ng-switch-when="true">Ja</div>
+                          <div id="{{field.key}}-Nej" ng-switch-when="false">Nej</div>
+                        </div>
                       </div>
+
                       <div ng-switch-when="underlag">
                         <div ng-repeat="underlag in viewState.intygModel[field.key]">
                           <div>
@@ -79,14 +83,10 @@
                 </div>
               </div>
 
-              <div wc-field field-dynamic-label="KAT_9999.RBK">
-                <div ng-repeat="tillaggsfraga in viewState.intygModel.tillaggsfragor" class="intyg-field">
-                  <div>
-                    <label><span dynamic-label key="DFR_{{tillaggsfraga.id}}.1.RBK"></span></label>
-                  </div>
-                  <span id="tillaggsfraga-{{tillaggsfraga.id}}">{{tillaggsfraga.svar}}</span>
-                </div>
-              </div>
+
+
+              <tillaggs-fragor-view tillaggs-fragor="viewState.intygModel.tillaggsfragor"></tillaggs-fragor-view>
+
 
               <div class="infobox">
                 <h3>
