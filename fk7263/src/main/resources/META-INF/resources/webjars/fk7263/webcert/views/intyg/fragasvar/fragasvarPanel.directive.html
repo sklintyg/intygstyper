@@ -106,7 +106,7 @@
         <div class="alert alert-warning" ng-if="qa.svaraMedNyttIntygDisabled == true">
           {{qa.svaraMedNyttIntygDisabledReason}}
         </div>
-        <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled"
+        <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled && qa.status != 'CLOSED'"
                 ng-class="{'btn-success': qa.status != 'CLOSED' && !cannotKomplettera, 'btn-default btn-secondary': qa.status == 'CLOSED' || cannotKomplettera}"
                 ng-click="answerWithIntyg(qa, cert)" ng-disabled="cannotKomplettera" wc-check-vardenhet
                 vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
@@ -122,7 +122,7 @@
 
       <!-- Svarsdelen -->
       <div
-          ng-if="certProperties.kompletteringOnly || (qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && cannotKomplettera) || (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG')"
+          ng-if="certProperties.kompletteringOnly || (qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && (cannotKomplettera || (qa.svarsText && qa.status == 'CLOSED'))) || (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG')"
           class="fold-animation">
         <div class="panel-container" ng-show="qa.amne != 'PAMINNELSE'">
           <div class="qa-block"

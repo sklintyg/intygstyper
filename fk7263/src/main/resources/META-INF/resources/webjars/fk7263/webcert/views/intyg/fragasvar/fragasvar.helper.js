@@ -90,7 +90,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
                 });
             }
 
-            this.filterKompletteringar = function(qaList, widgetState, certProperties) {
+            function filterKompletteringar(qaList, widgetState, certProperties) {
 
                 var isAnyKompletteringarNotHandled = false;
 
@@ -113,6 +113,8 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
                 return filteredList;
             };
 
+            this.filterKompletteringar = filterKompletteringar;
+
             this.fetchFragaSvar = function (scope, intygId, certProperties) {
                 // Request loading of QA's for this certificate
                 fragaSvarProxy.getQAForCertificate(intygId, 'fk7263', function (result) {
@@ -126,7 +128,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
                     if(ObjectHelper.isDefined(certProperties)){
                         // If kompletteringsmode, only show kompletteringsissues
                         if (certProperties.kompletteringOnly) {
-                            result = this.filterKompletteringar(result, scope.widgetState, certProperties);
+                            result = filterKompletteringar(result, scope.widgetState, certProperties);
                         }
                     }
 
