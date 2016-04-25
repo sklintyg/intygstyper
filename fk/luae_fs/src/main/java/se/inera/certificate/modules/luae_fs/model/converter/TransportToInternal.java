@@ -19,31 +19,6 @@
 
 package se.inera.certificate.modules.luae_fs.model.converter;
 
-import org.apache.commons.lang3.StringUtils;
-import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
-import se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil;
-import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
-import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande.Builder;
-import se.inera.certificate.modules.luae_fs.model.internal.Tillaggsfraga;
-import se.inera.certificate.modules.luae_fs.model.internal.Underlag;
-import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
-
-import javax.xml.bind.JAXBElement;
-import java.util.ArrayList;
-import java.util.List;
-
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
@@ -68,8 +43,33 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID_4;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID_4;
-import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getCVSvarContent;
-import static se.inera.certificate.modules.fkparent.model.converter.TransportConverterUtil.getStringContent;
+import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getCVSvarContent;
+import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getGrundData;
+import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getStringContent;
+
+import org.apache.commons.lang3.StringUtils;
+import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
+import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
+import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
+import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande.Builder;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
+
+import javax.xml.bind.JAXBElement;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class TransportToInternal {
 
@@ -81,7 +81,7 @@ public final class TransportToInternal {
     public static LuaefsUtlatande convert(Intyg source) throws ConverterException {
         Builder utlatande = LuaefsUtlatande.builder();
         utlatande.setId(source.getIntygsId().getExtension());
-        utlatande.setGrundData(TransportConverterUtil.getGrundData(source));
+        utlatande.setGrundData(getGrundData(source));
         utlatande.setTextVersion(source.getVersion());
         setSvar(utlatande, source);
         return utlatande.build();
@@ -222,14 +222,14 @@ public final class TransportToInternal {
     }
 
     private static void handleUnderlag(List<Underlag> underlag, Svar svar) throws ConverterException {
-        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OKAND;
+        Underlag.UnderlagsTyp underlagsTyp = Underlag.UnderlagsTyp.OVRIGT;
         InternalDate date = null;
         String hamtasFran = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
                 case UNDERLAG_TYP_DELSVAR_ID_4:
                     CVType typ = getCVSvarContent(delsvar);
-                    underlagsTyp = Underlag.UnderlagsTyp.fromId(Integer.parseInt(typ.getCode()));
+                    underlagsTyp = Underlag.UnderlagsTyp.fromTransportId(typ.getCode());
                     break;
                 case UNDERLAG_DATUM_DELSVAR_ID_4:
                     date = new InternalDate(getStringContent(delsvar));
@@ -247,7 +247,7 @@ public final class TransportToInternal {
 
     private static void handleGrundForMedicinsktUnderlag(Builder utlatande, Svar svar) throws ConverterException {
         InternalDate grundForMedicinsktUnderlagDatum = null;
-        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.UNKNOWN;
+        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.ANNAT;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1:
@@ -255,7 +255,7 @@ public final class TransportToInternal {
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1:
                 String referensTypString = getCVSvarContent(delsvar).getCode();
-                grundForMedicinsktUnderlagTyp = ReferensTyp.byTransport(referensTypString);
+                grundForMedicinsktUnderlagTyp = ReferensTyp.byTransportId(referensTypString);
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1:
                 utlatande.setAnnatGrundForMUBeskrivning(getStringContent(delsvar));

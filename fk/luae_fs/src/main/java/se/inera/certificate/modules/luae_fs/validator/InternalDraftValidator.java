@@ -24,9 +24,9 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.certificate.modules.luae_fs.model.internal.Underlag;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InternalDraftValidator {
+
+    public static final int MAX_DIAGNOSER = 3;
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
@@ -191,7 +193,7 @@ public class InternalDraftValidator {
     }
 
     private void validateNumberOfDiagnose(ImmutableList<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
-        if (diagnoser.size() > 3) {
+        if (diagnoser.size() > MAX_DIAGNOSER) {
             validatorUtil.addValidationError(validationMessages, "diagnos", ValidationMessageType.OTHER,
                     "luae_fs.validation.diagnos.max-diagnoser");
         }

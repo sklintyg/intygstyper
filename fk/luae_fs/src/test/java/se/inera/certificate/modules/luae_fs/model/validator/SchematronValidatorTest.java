@@ -1,5 +1,8 @@
 package se.inera.certificate.modules.luae_fs.model.validator;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.Test;
@@ -8,9 +11,6 @@ import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 
 import java.net.URL;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class SchematronValidatorTest {
 

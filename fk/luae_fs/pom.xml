@@ -12,7 +12,7 @@
   </parent>
 
   <artifactId>luae_fs</artifactId>
-  <name>Läkarutlåtande för aktivitetsersättning vid förlängd skolgång</name>
+  <name>Aktivitetsersättning vid förlängd skolgång (läkarintyg)</name>
 
   <dependencies>
 

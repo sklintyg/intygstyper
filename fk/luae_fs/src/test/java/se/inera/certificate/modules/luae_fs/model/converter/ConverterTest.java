@@ -1,5 +1,8 @@
 package se.inera.certificate.modules.luae_fs.model.converter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
@@ -34,9 +37,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URL;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @ContextConfiguration(locations = {"/module-config.xml", "/test-config.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
-import static se.inera.certificate.modules.luae_fs.model.internal.Underlag.UnderlagsTyp;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -14,9 +13,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.certificate.modules.luae_fs.model.internal.Underlag;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -248,7 +247,7 @@ public class InternalDraftValidatorTest {
     public void validateUnderlag_UnderlagFinnsMenArFelaktigtIfyllt() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate
                 .setUnderlagFinns(true)
-                .setUnderlag(Arrays.asList(Underlag.create(UnderlagsTyp.fromId(1), null, null)))
+                .setUnderlag(Arrays.asList(Underlag.create(Underlag.UnderlagsTyp.fromId(1), null, null)))
                 .build();
 
         validator.validateUnderlag(utlatande, validationMessages);
@@ -442,7 +441,7 @@ public class InternalDraftValidatorTest {
         List<Underlag> underlag = new ArrayList<>();
 
         for (Integer typ : underlagsTyper) {
-            underlag.add(Underlag.create(UnderlagsTyp.fromId(typ), new InternalDate(LocalDate.now()), "Hamtas fran..."));
+            underlag.add(Underlag.create(Underlag.UnderlagsTyp.fromId(typ), new InternalDate(LocalDate.now()), "Hamtas fran..."));
         }
 
         return underlag;

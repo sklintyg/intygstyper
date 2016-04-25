@@ -7,9 +7,9 @@ import org.joda.time.LocalDate;
 import org.junit.Test;
 import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
+import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.certificate.modules.luae_fs.model.internal.Tillaggsfraga;
-import se.inera.certificate.modules.luae_fs.model.internal.Underlag;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
