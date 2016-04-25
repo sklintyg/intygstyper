@@ -19,7 +19,9 @@
 package se.inera.certificate.modules.luae_na.model.converter;
 
 import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public final class InternalToTransport {
@@ -33,6 +35,8 @@ public final class InternalToTransport {
 
         RegisterCertificateType aktivitetsersattningNA = new RegisterCertificateType();
         aktivitetsersattningNA.setIntyg(UtlatandeToIntyg.convert(source));
+        aktivitetsersattningNA.setSvarPa(InternalConverterUtil.getMeddelandeReferensOfType(source, RelationKod.KOMPLT));
         return aktivitetsersattningNA;
     }
+
 }
