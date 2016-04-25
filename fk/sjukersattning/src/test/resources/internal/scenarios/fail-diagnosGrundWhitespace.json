@@ -16,6 +16,7 @@
   "aktivitetsbegransning": "Svårt att utföra arbeten med höger arm (högerhänt). Kan lyfta lättare saker men tappar lätt föremål. Nedsatt koncentrationsförmåga vilket påverkar arbeten där han behöver övervaka processer.",
   "funktionsnedsattningKommunikation": "Nedsatt initiativförmåga, drar sig ofta undan folksamlingar.",
   "nyBedomningDiagnosgrund": true,
+  "diagnosForNyBedomning" : "Diagnos för ny bedömning",
   "diagnosgrund": "   ",
   "diagnoser": [
     {

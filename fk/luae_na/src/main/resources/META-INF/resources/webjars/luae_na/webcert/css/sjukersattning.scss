@@ -1,0 +1,31 @@
+.cert-body .alert ul {
+    padding-left: 20px;
+}
+
+
+.qa-block-body.komplettera-block {
+    white-space: normal;
+}
+.qa-block-body.komplettera-block div span {
+    white-space: pre-line;
+}
+
+.formly-field {
+    h4 {
+        font-weight: bold;
+    }
+
+    h4.instruction {
+        font-weight: normal;
+        font-style: italic;
+    }
+}
+
+/* When focused and when active is added from checkbox, add highlighted style */
+.form5 .form-control:focus,
+.form6 .form-control:focus  {
+    border-color: #eee;
+
+   /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+   /* box-shadow: none;*/ /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+}

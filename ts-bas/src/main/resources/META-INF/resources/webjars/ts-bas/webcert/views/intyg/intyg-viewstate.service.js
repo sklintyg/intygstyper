@@ -27,7 +27,7 @@ angular.module('ts-bas').service('ts-bas.IntygController.ViewStateService',
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'TS';
-                this.common.intyg.type = 'ts-bas';
+                this.common.intygProperties.type = 'ts-bas';
             };
 
             this.reset();

@@ -23,6 +23,8 @@ import javax.annotation.Nullable;
 
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.SitUtlatande;
+import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -96,13 +98,17 @@ public abstract class SjukersattningUtlatande implements Utlatande, SitUtlatande
     @Override
     public abstract ImmutableList<Diagnos> getDiagnoser();
 
-    // Fråga 7.1
+    // Delfråga 7.1
     @Nullable
     public abstract String getDiagnosgrund();
 
-    // Fråga 7.2
+    // Delfråga7.2
     @Nullable
     public abstract Boolean getNyBedomningDiagnosgrund();
+
+    // Delfråga 7.3
+    @Nullable
+    public abstract String getDiagnosForNyBedomning();
 
     // Kategori 5 – Funktionsnedsättning
     // Fråga 8
@@ -251,6 +257,9 @@ public abstract class SjukersattningUtlatande implements Utlatande, SitUtlatande
 
         @JsonProperty(DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7)
         public abstract Builder setNyBedomningDiagnosgrund(Boolean nyBedomningDiagnosgrund);
+
+        @JsonProperty(DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_7)
+        public abstract Builder setDiagnosForNyBedomning(String diagnosForNyBedomning);
 
         @JsonProperty(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_JSON_ID_8)
         public abstract Builder setFunktionsnedsattningIntellektuell(String funktionsnedsattningIntellektuell);

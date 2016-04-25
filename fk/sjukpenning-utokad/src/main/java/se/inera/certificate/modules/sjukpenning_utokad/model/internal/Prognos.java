@@ -46,31 +46,37 @@ public abstract class Prognos {
         /**
          * Med stor sannolikhet (id 1).
          */
-        MED_STOR_SANNOLIKHET(1, "Med stor sannolikhet"),
+        MED_STOR_SANNOLIKHET(1, "STOR_SANNOLIKHET", "Med stor sannolikhet"),
         /**
          * Sannolikt sjukskrivning 180 dagar (id 2).
          */
-        SANNOLIK_SJUKSKRIVNING_180_DAGAR(2, "Patienten bedöms kunna återgå i nuvarande sysselsättning, men sjukskrivningstiden är sannolikt längre än 180 dagar"),
+        SANNOLIK_SJUKSKRIVNING_180_DAGAR(2, "LANGRE_AN_180", "Patienten bedöms kunna återgå i nuvarande sysselsättning, men sjukskrivningstiden är sannolikt längre än 180 dagar"),
         /**
          * Sannolikt ej återgå till nuvarande sysselsättning (id 3).
          */
-        SANNOLIKT_EJ_ATERGA_TILL_SYSSELSATTNING(3, "Patienten kan sannolikt inte återgå till nuvarande sysselsättning"),
+        SANNOLIKT_EJ_ATERGA_TILL_SYSSELSATTNING(3, "SANNOLIKT_INTE", "Patienten kan sannolikt inte återgå till nuvarande sysselsättning"),
         /**
          * Prognos oklar (id 4).
          */
-        PROGNOS_OKLAR(4, "Prognos för återgång i nuvarande sysselsättning är oklar");
-        private final int id;
+        PROGNOS_OKLAR(4, "PROGNOS_OKLAR", "Prognos för återgång i nuvarande sysselsättning är oklar");
 
+        private final int id;
+        private final String transportId;
         private final String label;
 
-        PrognosTyp(int id, String label) {
+        PrognosTyp(int id, String transportId, String label) {
             this.id = id;
+            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
         public int getId() {
             return id;
+        }
+
+        public String getTransportId() {
+            return transportId;
         }
 
         public String getLabel() {
@@ -86,5 +92,15 @@ public abstract class Prognos {
             }
             throw new IllegalArgumentException();
         }
+
+        public static PrognosTyp fromTransportId(String transportId) {
+            for (PrognosTyp typ : values()) {
+                if (typ.transportId.equals(transportId)) {
+                    return typ;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+
     }
 }

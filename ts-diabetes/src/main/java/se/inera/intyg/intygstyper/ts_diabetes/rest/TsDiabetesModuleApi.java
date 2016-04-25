@@ -21,8 +21,8 @@ package se.inera.intyg.intygstyper.ts_diabetes.rest;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;
@@ -40,6 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
+import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.*;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
@@ -51,11 +52,15 @@ import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
 import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
+import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserEnum;
 import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
@@ -65,6 +70,9 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 public class TsDiabetesModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsDiabetesModuleApi.class);
+
+    private static final String INTYG_AVSER_SVAR_ID_1 = "1";
+    private static final String INTYG_AVSER_DELSVAR_ID_1 = "1.1";
 
     @Autowired
     private Validator validator;
@@ -366,6 +374,38 @@ public class TsDiabetesModuleApi implements ModuleApi {
             LOG.error("Could not get intyg from certificate holder. {}", e);
             throw new ModuleException("Could not get intyg from certificate holder", e);
         }
+    }
+
+    @Override
+    public String getAdditionalInfo(Intyg intyg) throws ModuleException {
+        List<CVType> types = new ArrayList<>();
+        try {
+            for (Svar svar : intyg.getSvar()) {
+                if (INTYG_AVSER_SVAR_ID_1.equals(svar.getId())) {
+                    for (Delsvar delsvar : svar.getDelsvar()) {
+                        if (INTYG_AVSER_DELSVAR_ID_1.equals(delsvar.getId())) {
+                            CVType cv = TransportConverterUtil.getCVSvarContent(delsvar);
+                            if (cv != null) {
+                                types.add(cv);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ConverterException e) {
+            LOG.error("Failed retrieving additionalInfo for certificate {}: {}", intyg.getIntygsId().getExtension(), e.getMessage());
+            return null;
+        }
+
+        if (types.isEmpty()) {
+            LOG.error("Failed retrieving additionalInfo for certificate {}: Found no types.", intyg.getIntygsId().getExtension());
+            return null;
+        }
+
+        return types.stream()
+                .map(cv -> IntygAvserEnum.fromCode(cv.getCode()))
+                .map(IntygAvserEnum::name)
+                .collect(Collectors.joining(", "));
     }
 
 }

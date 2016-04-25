@@ -72,7 +72,7 @@
     <svar id="4">
       <delsvar id="4.1">
         <ns3:cv>
-          <ns3:code>6</ns3:code>
+          <ns3:code>PSYKOLOG</ns3:code>
           <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -82,7 +82,7 @@
 	<svar id="4">
       <delsvar id="4.1">
         <ns3:cv>
-          <ns3:code>4</ns3:code>
+          <ns3:code>FYSIOTERAPEUT</ns3:code>
           <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -122,6 +122,7 @@
     <svar id="7">
       <delsvar id="7.1">Diagnoserna ställdes vid besök på AVC Södra Älvsborgs sjukhus i Borås 2014-07-09 och på Vårdenheten 2015-03-02.</delsvar>
       <delsvar id="7.2">true</delsvar>
+      <delsvar id="7.3">Diagnos för ny bedömning</delsvar>
     </svar>
     <svar id="9">
       <delsvar id="9.1">Nedsatt initiativförmåga, drar sig ofta undan folksamlingar.</delsvar>

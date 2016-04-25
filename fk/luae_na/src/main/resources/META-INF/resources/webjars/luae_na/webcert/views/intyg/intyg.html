@@ -1,0 +1,105 @@
+<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}">
+  <div wc-spinner label="luae_na.info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+       show-content="viewState.common.doneLoading">
+
+    <div ui-view="header"></div>
+
+    <div ng-show="!viewState.common.activeErrorMessageKey">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : $scope.viewState.common.intyg.isRevoked}">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="cert-body">
+
+              <div wc-field field-dynamic-label="KAT_{{group.templateOptions.category}}.RBK" ng-repeat="group in intygFields">
+                  <div ng-repeat="field in group.fieldGroup" ng-if="field.key" class="intyg-field">
+                      <label ng-if="field.templateOptions.label"><span dynamic-label key="{{field.templateOptions.label}}.RBK"></span></label>
+                      <div id="{{field.key}}" ng-if="field.key && viewState.intygModel[field.key] == null" class="not-entered">
+                          Ej angivet
+                      </div>
+                      <div ng-if="field.key && viewState.intygModel[field.key] != null" ng-switch="field.type">
+                          <div ng-switch-when="date">
+                            <span id="{{field.key}}">{{viewState.intygModel[field.key] | date: 'longDate'}}</span>
+                          </div>
+                          <div ng-switch-when="boolean">
+                              <div ng-switch="viewState.intygModel[field.key]">
+                                  <span id="{{field.key}}-Ja" ng-switch-when="true">Ja</span>
+                                  <span id="{{field.key}}-Nej" ng-switch-when="false">Nej</span>
+                              </div>
+                          </div>
+                          <div ng-switch-when="checkbox-inline">
+                            <div ng-switch="viewState.intygModel[field.key]">
+                              <span id="{{field.key}}-Ja" ng-switch-when="true">Ja</span>
+                              <span id="{{field.key}}-Nej" ng-switch-when="false">Nej</span>
+                            </div>
+                          </div>
+                          <div ng-switch-when="underlag">
+                              <div ng-repeat="underlag in viewState.intygModel[field.key]">
+                                  <div>
+                                      <label><span dynamic-label key="{{field.templateOptions.typLabel}}.RBK"></span></label>
+                                  </div>
+                                  <span id="{{field.key}}-{{$index}}-typ" dynamic-label key="KV_FKMU_0005.{{underlag.typ}}.RBK"></span>
+                                  <div>
+                                      <label><span dynamic-label key="{{field.templateOptions.datumLabel}}.RBK"></span></label>
+                                  </div>
+                                  <span id="{{field.key}}-{{$index}}-datum">{{underlag.datum | date: 'longDate'}}</span>
+                                  <div>
+                                      <label><span dynamic-label key="{{field.templateOptions.hamtasFranLabel}}.RBK"></span></label>
+                                  </div>
+                                  <span id="{{field.key}}-{{$index}}-hamtasFran">{{underlag.hamtasFran}}</span>
+                              </div>
+                          </div>
+                          <div ng-switch-when="diagnos">
+                              <div ng-repeat="diagnos in viewState.intygModel[field.key]">
+                                  <div>
+                                      <label><span dynamic-label key="{{field.templateOptions.diagnosKodLabel}}.RBK"></span></label>
+                                  </div>
+                                  <span id="{{field.key}}-{{$index}}-kod">{{diagnos.diagnosKod}}</span>
+                                  <div>
+                                      <label><span dynamic-label key="{{field.templateOptions.diagnosBeskrivningLabel}}.RBK"></span></label>
+                                  </div>
+                                  <span id="{{field.key}}-{{$index}}-beskrivning">{{diagnos.diagnosBeskrivning}}</span>
+                              </div>
+                          </div>
+                          <div ng-switch-default>
+                              <span id="{{field.key}}">{{viewState.intygModel[field.key]}}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div wc-field field-dynamic-label="KAT_9999.RBK">
+                <div ng-repeat="tillaggsfraga in viewState.intygModel.tillaggsfragor" class="intyg-field">
+                  <div>
+                    <label><span dynamic-label key="DFR_{{tillaggsfraga.id}}.1.RBK"></span></label>
+                  </div>
+                  <span id="tillaggsfraga-{{tillaggsfraga.id}}">{{tillaggsfraga.svar}}</span>
+                </div>
+              </div>
+
+              <div class="infobox">
+                <h3>
+                  <span message key="common.label.ovanstaende-har-bekraftats"></span>
+                </h3>
+                <h4>
+                  <span message key="luae_na.label.datum"></span>
+                </h4>
+                <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date:'longDate'}}</p>
+                <h4>
+                  <span message key="luae_na.label.kontakt-info"></span>
+                </h4>
+                <p>
+                  <span class="text" id="vardperson_namn">{{viewState.intygModel.grundData.skapadAv.fullstandigtNamn}}</span><br>
+                  <span class="text" id="vardperson_enhetsnamn">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br>
+                  <span class="text" id="vardperson_postadress">{{viewState.intygModel.grundData.skapadAv.vardenhet.postadress}}</span><br>
+                  <span class="text"><span id="vardperson_postnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.postnummer}}</span> <span id="vardperson_postort">{{viewState.intygModel.grundData.skapadAv.vardenhet.postort}}</span></span><br>
+                  <span class="text" id="vardperson_telefonnummer">{{viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer}}</span><br>
+                </p>
+              </div>
+
+            </div><!-- cert body -->
+          </div>
+        </div>
+      </div>
+    </div><!-- entire cert -->
+  </div><!--  spinner end -->
+</div>

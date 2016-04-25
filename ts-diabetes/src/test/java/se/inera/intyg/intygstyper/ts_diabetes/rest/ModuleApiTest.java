@@ -20,11 +20,11 @@ package se.inera.intyg.intygstyper.ts_diabetes.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 
 import java.io.IOException;
 import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
 
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.*;
@@ -38,6 +38,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
@@ -45,13 +48,11 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleExcepti
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ResourceConverterUtils;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 /**
  * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
@@ -61,12 +62,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ModuleApiTest {
 
-    /** An HTTP client proxy wired to the test HTTP server. */
     @Autowired
-    private se.inera.intyg.common.support.modules.support.api.ModuleApi moduleApi;
-
-    @Autowired
-    private JAXBContext jaxbContext;
+    private TsDiabetesModuleApi moduleApi;
 
     @Autowired
     private ObjectMapper mapper;
@@ -124,7 +121,90 @@ public class ModuleApiTest {
         Assert.assertTrue(diff.toString(), diff.similar());
     }
 
+    @Test
+    public void getAdditionalInfoOneResultTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("1");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.1");
+        delsvar.getContent().add(aCV(null, "IAV17", null));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertEquals("TRAKTOR", result);
+    }
+
+    @Test
+    public void getAdditionalInfoMultipleResultsTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("1");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.1");
+        delsvar.getContent().add(aCV(null, "IAV1", null));
+        s.getDelsvar().add(delsvar);
+        Svar s2 = new Svar();
+        s2.setId("1");
+        Delsvar delsvar2 = new Delsvar();
+        delsvar2.setId("1.1");
+        delsvar2.getContent().add(aCV(null, "IAV3", null));
+        s2.getDelsvar().add(delsvar2);
+        Svar s3 = new Svar();
+        s3.setId("1");
+        Delsvar delsvar3 = new Delsvar();
+        delsvar3.setId("1.1");
+        delsvar3.getContent().add(aCV(null, "IAV9", null));
+        s3.getDelsvar().add(delsvar3);
+        intyg.getSvar().add(s);
+        intyg.getSvar().add(s2);
+        intyg.getSvar().add(s3);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertEquals("C1, C, TAXI", result);
+    }
+
+    @Test
+    public void getAdditionalInfoSvarNotFoundTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("2"); // wrong svarId
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.1");
+        delsvar.getContent().add(aCV(null, "IAV6", null));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertNull(result);
+    }
+
+    @Test
+    public void getAdditionalInfoDelsvarNotFoundTest() throws ModuleException {
+        Intyg intyg = new Intyg();
+        intyg.setIntygsId(new IntygId());
+        intyg.getIntygsId().setExtension("intygId");
+        Svar s = new Svar();
+        s.setId("1");
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId("1.3"); // wrong delsvarId
+        delsvar.getContent().add(aCV(null, "IAV6", null));
+        s.getDelsvar().add(delsvar);
+        intyg.getSvar().add(s);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertNull(result);
+    }
+
     private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
+        @Override
         public int differenceFound(Difference difference) {
             if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
                 // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
@@ -141,6 +221,7 @@ public class ModuleApiTest {
             }
         }
 
+        @Override
         public void skippedComparison(Node control, Node test) {
         }
     }

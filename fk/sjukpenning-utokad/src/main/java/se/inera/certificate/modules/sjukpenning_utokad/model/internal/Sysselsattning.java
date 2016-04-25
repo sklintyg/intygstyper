@@ -28,8 +28,10 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Sysselsattning {
+
     Sysselsattning() {
     }
+
     @JsonCreator
     public static Sysselsattning create(@JsonProperty("typ") SysselsattningsTyp typ) {
         return new AutoValue_Sysselsattning(typ);
@@ -39,23 +41,29 @@ public abstract class Sysselsattning {
     public abstract SysselsattningsTyp getTyp();
 
     public enum SysselsattningsTyp {
-        NUVARANDE_ARBETE(1, ""),
-        ARBETSSOKANDE(2, ""),
-        FORADLRARLEDIGHET_VARD_AV_BARN(3, ""),
-        STUDIER(4, ""),
-        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "");
+        NUVARANDE_ARBETE(1, "NUVARANDE_ARBETE", "Nuvarande arbete"),
+        ARBETSSOKANDE(2, "ARBETSSOKANDE", "Arbetssökande"),
+        FORADLRARLEDIGHET_VARD_AV_BARN(3, "FORALDRALEDIG", "Föräldraledighet för vård av barn"),
+        STUDIER(4, "STUDIER", "Studier"),
+        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "PROGRAM", "Deltagande i arbetsmarknadspolitiskt program");
 
         private final int id;
+        private final String transportId;
         private final String label;
 
-        SysselsattningsTyp(int id, String label) {
+        SysselsattningsTyp(int id, String transportId, String label) {
             this.id = id;
+            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
         public int getId() {
             return id;
+        }
+
+        public String getTransportId() {
+            return transportId;
         }
 
         public String getLabel() {
@@ -71,5 +79,15 @@ public abstract class Sysselsattning {
             }
             throw new IllegalArgumentException();
         }
+
+        public static SysselsattningsTyp fromTransportId(String transportId) {
+            for (SysselsattningsTyp typ : values()) {
+                if (typ.transportId.equals(transportId)) {
+                    return typ;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+
     }
 }

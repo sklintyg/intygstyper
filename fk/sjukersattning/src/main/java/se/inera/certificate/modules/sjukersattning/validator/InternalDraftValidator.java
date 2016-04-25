@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -30,9 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.internal.Underlag;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
@@ -258,6 +260,12 @@ public class InternalDraftValidator {
         if (utlatande.getNyBedomningDiagnosgrund() == null) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     "luse.validation.nybedomningdiagnosgrund.missing");
+        }
+
+        if (utlatande.getDiagnosgrund() != null && utlatande.getNyBedomningDiagnosgrund() != null
+                && utlatande.getNyBedomningDiagnosgrund() && Strings.isNullOrEmpty(utlatande.getDiagnosForNyBedomning())) {
+            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                    "luse.validation.diagnosfornybedomning.missing");
         }
     }
 

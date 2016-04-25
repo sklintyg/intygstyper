@@ -42,62 +42,69 @@ public abstract class ArbetslivsinriktadeAtgarder {
         /**
          * id 1.
          */
-        INTE_AKTUELLT(1, "Inte aktuellt"),
+        INTE_AKTUELLT(1, "EJ_AKTUELLT", "Inte aktuellt"),
         /**
          * id 2.
          */
-        ARBETSTRANING(2, "Arbetsträning"),
+        ARBETSTRANING(2, "ARBETSTRANING", "Arbetsträning"),
         /**
          * id 3.
          */
-        ARBETSANPASSNING(3, "Arbetsanpassning"),
+        ARBETSANPASSNING(3, "ARBETSANPASSNING", "Arbetsanpassning"),
         /**
          * id 4.
          */
-        SOKA_NYTT_ARBETE(4, "Söka nytt arbete"),
+        SOKA_NYTT_ARBETE(4, "SOKA_NYTT_ARBETE", "Söka nytt arbete"),
         /**
          * id 5.
          */
-        BESOK_PA_ARBETSPLATSEN(5, "Besök på arbetsplatsen"),
+        BESOK_PA_ARBETSPLATSEN(5, "BESOK_ARBETSPLATS", "Besök på arbetsplatsen"),
         /**
          * id 6.
          */
-        ERGONOMISK_BEDOMNING(6, "Ergonomisk bedömning"),
+        ERGONOMISK_BEDOMNING(6, "ERGONOMISK", "Ergonomisk bedömning"),
         /**
          * id 7.
          */
-        HJALPMEDEL(7, "Hjälpmedel"),
+        HJALPMEDEL(7, "HJALPMEDEL", "Hjälpmedel"),
         /**
          * id 8.
          */
-        KONFLIKTHANTERING(8, "Konflikthantering"),
+        KONFLIKTHANTERING(8, "KONFLIKTHANTERING", "Konflikthantering"),
         /**
          * id 9.
          */
-        KONTAKT_MED_FORETAGSHALSOVARD(9, "Kontakt med företagshälsovård"),
+        KONTAKT_MED_FORETAGSHALSOVARD(9, "KONTAKT_FHV", "Kontakt med företagshälsovård"),
         /**
          * id 10.
          */
-        OMFORDELNING_AV_ARBETSUPPGIFTER(10, "Omfördelning av arbetsuppgifter"),
+        OMFORDELNING_AV_ARBETSUPPGIFTER(10, "OMFORDELNING", "Omfördelning av arbetsuppgifter"),
         /**
          * id 11.
          */
-        OVRIGT(11, "Övrigt");
+        OVRIGT(11, "OVRIGA_ATGARDER", "Övrigt");
+
         private final int id;
+        private final String transportId;
         private final String label;
 
         public static final EnumSet<ArbetslivsinriktadeAtgarderVal> ATGARD_AKTUELL = EnumSet.of(ARBETSTRANING, ARBETSANPASSNING, SOKA_NYTT_ARBETE,
                 BESOK_PA_ARBETSPLATSEN, ERGONOMISK_BEDOMNING, HJALPMEDEL, KONFLIKTHANTERING, KONTAKT_MED_FORETAGSHALSOVARD, KONTAKT_MED_FORETAGSHALSOVARD,
                 OMFORDELNING_AV_ARBETSUPPGIFTER, OMFORDELNING_AV_ARBETSUPPGIFTER, OVRIGT);
 
-        ArbetslivsinriktadeAtgarderVal(int id, String label) {
+        ArbetslivsinriktadeAtgarderVal(int id, String transportId, String label) {
             this.id = id;
+            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
         public int getId() {
             return id;
+        }
+
+        public String getTransportId() {
+            return transportId;
         }
 
         public String getLabel() {
@@ -113,6 +120,16 @@ public abstract class ArbetslivsinriktadeAtgarder {
             }
             throw new IllegalArgumentException();
         }
+
+        public static ArbetslivsinriktadeAtgarderVal fromTransportId(String transportId) {
+            for (ArbetslivsinriktadeAtgarderVal typ : values()) {
+                if (typ.transportId.equals(transportId)) {
+                    return typ;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+
     }
 
 }

@@ -69,7 +69,7 @@
     <svar id="1">
       <delsvar id="1.1">
         <ns3:cv>
-          <ns3:code>2</ns3:code>
+          <ns3:code>TELEFONKONTAKT</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -131,7 +131,7 @@
     <svar id="32">
       <delsvar id="32.1">
         <ns3:cv>
-          <ns3:code>2</ns3:code>
+          <ns3:code>TRE_FJARDEDEL</ns3:code>
           <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -158,7 +158,7 @@
     <svar id="39">
       <delsvar id="39.1">
         <ns3:cv>
-          <ns3:code>4</ns3:code>
+          <ns3:code>PROGNOS_OKLAR</ns3:code>
           <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -167,7 +167,7 @@
     <svar id="40">
       <delsvar id="40.1">
         <ns3:cv>
-          <ns3:code>11</ns3:code>
+          <ns3:code>OVRIGA_ATGARDER</ns3:code>
           <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
         </ns3:cv>
       </delsvar>

@@ -1,0 +1,38 @@
+<div id="send-certificate-flow-root-sent" class="row-fluid">
+  <!-- Content -->
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h1 ng-focus="pagefocus" tabindex="-1">
+        <span message key="luae_na.sent.label.pagetitle"></span>
+      </h1>
+      <div class="row-fluid">
+      	<div class="wizard">
+			<ul class="steps">
+			    <li class="wstep-completed" data-target="#step1"><span message key="luae_na.fishbone.label.valj-mottagare"></span><span class="chevron"></span></li>
+			    <li class="wstep-completed" data-target="#step2"><span message key="luae_na.fishbone.label.granska-skicka"></span><span class="chevron"></span></li>
+			    <li class="active" data-target="#step3"><span message key="luae_na.fishbone.label.bekraftelse"></span></li>
+			</ul>
+	  	</div>
+      </div>
+      <p>
+      	<span message key="luae_na.sent.label.pageinformation"></span>
+      </p>
+      <p id="send-certificate-flow-result">
+        <span message key="luae_na.sent.label.result"></span>
+        <b>{{getRecipientName(selectedRecipientId)}}</b>
+      </p>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  		<p>
+  			<span message key="luae_na.sent.label.infoaboutrecipients"></span>
+  		</p>
+  		<p class="btn-row">
+	        <button id="backToViewCertificateBtn" type="button" ng-click="backToViewCertificate()" class="btn btn-success">
+	          <span message key="luae_na.sent.button.backtocertificate"></span>
+	        </button>
+	    </p>
+  	</div>
+  </div>
+</div>

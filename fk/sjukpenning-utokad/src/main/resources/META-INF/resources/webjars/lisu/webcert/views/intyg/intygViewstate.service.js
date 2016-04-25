@@ -8,7 +8,7 @@ angular.module('lisu').service('lisu.IntygController.ViewStateService',
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'FK';
-                this.common.intyg.type = 'lisu';
+                this.common.intygProperties.type = 'lisu';
             };
 
             this.reset();

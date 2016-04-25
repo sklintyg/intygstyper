@@ -49,31 +49,37 @@ public abstract class Sjukskrivning {
         /**
          * Helt nedsatt (id 1).
          */
-        HELT_NEDSATT(1, "Helt nedsatt"),
+        HELT_NEDSATT(1, "HELT_NEDSATT", "100%"),
         /**
          * Nedsatt till 3/4 (id 2).
          */
-        NEDSATT_3_4(2, "Nedsatt med 3/4"),
+        NEDSATT_3_4(2, "TRE_FJARDEDEL", "75 % "),
         /**
          * Nedsatt till hälften (id 3).
          */
-        NEDSATT_HALFTEN(3, "Nedsatt med hälften"),
+        NEDSATT_HALFTEN(3, "HALFTEN", "50%"),
         /**
          * Nedsatt till 1/4 (id 4).
          */
-        NEDSATT_1_4(4, "Nedsatt med 1/4");
+        NEDSATT_1_4(4, "EN_FJARDEDEL", "25%");
 
         private final int id;
+        private final String transportId;
         private final String label;
 
-        SjukskrivningsGrad(int id, String label) {
+        SjukskrivningsGrad(int id, String transportId, String label) {
             this.id = id;
+            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
         public int getId() {
             return id;
+        }
+
+        public String getTransportId() {
+            return transportId;
         }
 
         public String getLabel() {
@@ -89,6 +95,16 @@ public abstract class Sjukskrivning {
             }
             throw new IllegalArgumentException();
         }
+
+        public static SjukskrivningsGrad fromTransportId(String transportId) {
+            for (SjukskrivningsGrad typ : values()) {
+                if (typ.transportId.equals(transportId)) {
+                    return typ;
+                }
+            }
+            throw new IllegalArgumentException();
+        }
+
     }
 
 }
