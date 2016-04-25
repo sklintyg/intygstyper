@@ -8,7 +8,7 @@ angular.module('luae_fs').service('luae_fs.IntygController.ViewStateService',
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'FK';
-                this.common.intyg.type = 'luae_fs';
+                this.common.intygProperties.type = 'luae_fs';
             };
 
             this.reset();
