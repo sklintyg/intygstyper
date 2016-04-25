@@ -15,6 +15,7 @@
   "medicinskaForutsattningarForArbete": "Patienten kommer sannolikt inte att kunna arbeta fullt ut med höger arm framgent. Framförallt är det nervskadorna med smärtkänslighet, nedsatt kraft, uttröttbarhet och svårigheten att koncentrera sig som försvårar ett heltidsarbete. Ett deltidsarbete måste också ta hänsyn till dessa begränsningar men bedöms kunna utföras på 50 procent av en heltid.",
   "aktivitetsbegransning": "Svårt att utföra arbeten med höger arm (högerhänt). Kan lyfta lättare saker men tappar lätt föremål. Nedsatt koncentrationsförmåga vilket påverkar arbeten där han behöver övervaka processer.",
   "nyBedomningDiagnosgrund": true,
+  "diagnosForNyBedomning" : "Diagnos för ny bedömning",
   "diagnosgrund": "Diagnoserna ställdes vid besök på AVC Södra \u00c4lvsborgs sjukhus i Borås 2014-07-09 och på Vårdenheten 2015-03-02.",
   "diagnoser": [
     {

@@ -75,8 +75,10 @@ public final class RespConstants {
     public static final String DIAGNOSGRUND_SVAR_ID_7 = "7";
     public static final String DIAGNOSGRUND_DELSVAR_ID_7 = "7.1";
     public static final String DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7 = "7.2";
+    public static final String DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7 = "7.3";
     public static final String DIAGNOSGRUND_SVAR_JSON_ID_7 = "diagnosgrund";
     public static final String DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7 = "nyBedomningDiagnosgrund";
+    public static final String DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_7 = "diagnosForNyBedomning";
 
     public static final String FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8 = "8";
     public static final String FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8 = "8.1";

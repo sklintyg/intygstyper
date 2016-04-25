@@ -76,6 +76,7 @@ public class TransportToInternalTest {
                 Diagnos.create("S48", "ICD_10_SE", "Klämskada arm", "Klämskada arm")));
         utlatande.setDiagnosgrund("Ingen som vet");
         utlatande.setNyBedomningDiagnosgrund(true);
+        utlatande.setDiagnosForNyBedomning("Diagnos för ny bedömning");
         utlatande.setFunktionsnedsattningIntellektuell("Bra");
         utlatande.setFunktionsnedsattningKommunikation("Tyst");
         utlatande.setFunktionsnedsattningKoncentration("Noll");

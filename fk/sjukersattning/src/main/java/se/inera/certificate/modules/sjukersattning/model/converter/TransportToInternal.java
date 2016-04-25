@@ -326,6 +326,9 @@ public final class TransportToInternal {
             case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7:
                 utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getStringContent(delsvar)));
                 break;
+            case DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7:
+                utlatande.setDiagnosForNyBedomning(getStringContent(delsvar));
+                break;
             default:
                 throw new IllegalArgumentException();
             }

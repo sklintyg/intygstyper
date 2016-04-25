@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -258,6 +260,12 @@ public class InternalDraftValidator {
         if (utlatande.getNyBedomningDiagnosgrund() == null) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     "luse.validation.nybedomningdiagnosgrund.missing");
+        }
+
+        if (utlatande.getDiagnosgrund() != null && utlatande.getNyBedomningDiagnosgrund() != null
+                && utlatande.getNyBedomningDiagnosgrund() && Strings.isNullOrEmpty(utlatande.getDiagnosForNyBedomning())) {
+            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                    "luse.validation.diagnosfornybedomning.missing");
         }
     }
 
