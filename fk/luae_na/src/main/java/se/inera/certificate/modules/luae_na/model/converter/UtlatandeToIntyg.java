@@ -18,75 +18,13 @@
  */
 
 package se.inera.certificate.modules.luae_na.model.converter;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID_23;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID_23;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSPLATSKOD_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_DELSVAR_ID_18;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_ID_18;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEFATTNING_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.CERTIFICATE_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_DELSVAR_ID_7;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_ID_7;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_DELSVAR_ID_24;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_SVAR_ID_24;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID_14;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID_13;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID_9;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID_9;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID_10;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID_10;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID_11;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID_12;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID_12;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.HSA_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_DELSVAR_ID_2;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_ID_2;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID_25;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID_25;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID_19;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID_19;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PERSON_ID_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID_20;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID_20;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.RELATION_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_DELSVAR_ID_5;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_SVAR_ID_5;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_DELSVAR_ID_21;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_SVAR_ID_21;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_DELSVAR_ID_3;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_ID_3;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_CODE_SYSTEM;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_DATUM_DELSVAR_ID_4;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID_4;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID_4;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.bind.JAXBElement;
-import javax.xml.namespace.QName;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -95,27 +33,11 @@ import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
 import se.inera.certificate.modules.luae_na.model.internal.Tillaggsfraga;
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.ArbetsplatsKod;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Befattning;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.HsaId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.PersonId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Specialistkompetens;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvRelation;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Enhet;
-import se.riv.clinicalprocess.healthcond.certificate.v2.HosPersonal;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Patient;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Relation;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Vardgivare;
 
 public final class UtlatandeToIntyg {
 
@@ -125,89 +47,10 @@ public final class UtlatandeToIntyg {
     }
 
     static Intyg convert(AktivitetsersattningNAUtlatande source) {
-        Intyg intyg = new Intyg();
+        Intyg intyg = InternalConverterUtil.getIntyg(source);
         intyg.setTyp(getTypAvIntyg(source));
-        intyg.setIntygsId(getIntygsId(source));
-        intyg.setVersion(getTextVersion(source));
-        intyg.setSigneringstidpunkt(source.getGrundData().getSigneringsdatum());
-        intyg.setSkickatTidpunkt(source.getGrundData().getSigneringsdatum());
-        intyg.setSkapadAv(getSkapadAv(source));
-        intyg.setPatient(getPatient(source.getGrundData().getPatient()));
-        decorateWithRelation(intyg, source);
         intyg.getSvar().addAll(getSvar(source));
         return intyg;
-    }
-
-    private static HosPersonal getSkapadAv(AktivitetsersattningNAUtlatande source) {
-        HoSPersonal sourceSkapadAv = source.getGrundData().getSkapadAv();
-        HosPersonal skapadAv = new HosPersonal();
-        skapadAv.setPersonalId(anHsaId(sourceSkapadAv.getPersonId()));
-        skapadAv.setFullstandigtNamn(sourceSkapadAv.getFullstandigtNamn());
-        skapadAv.setForskrivarkod(sourceSkapadAv.getForskrivarKod());
-        skapadAv.setEnhet(getEnhet(sourceSkapadAv.getVardenhet()));
-        for (String sourceBefattning : sourceSkapadAv.getBefattningar()) {
-            Befattning befattning = new Befattning();
-            befattning.setCodeSystem(BEFATTNING_CODE_SYSTEM);
-            befattning.setCode(sourceBefattning);
-            befattning.setDisplayName(BefattningKod.getDisplayNameFromCode(sourceBefattning));
-            skapadAv.getBefattning().add(befattning);
-        }
-        for (String sourceKompetens : sourceSkapadAv.getSpecialiteter()) {
-            Specialistkompetens kompetens = new Specialistkompetens();
-            kompetens.setCode(sourceKompetens);
-            skapadAv.getSpecialistkompetens().add(kompetens);
-        }
-        return skapadAv;
-    }
-
-    private static Enhet getEnhet(Vardenhet sourceVardenhet) {
-        Enhet vardenhet = new Enhet();
-        vardenhet.setEnhetsId(anHsaId(sourceVardenhet.getEnhetsid()));
-        vardenhet.setEnhetsnamn(sourceVardenhet.getEnhetsnamn());
-        vardenhet.setPostnummer(sourceVardenhet.getPostnummer());
-        vardenhet.setPostadress(sourceVardenhet.getPostadress());
-        vardenhet.setPostort(sourceVardenhet.getPostort());
-        vardenhet.setTelefonnummer(sourceVardenhet.getTelefonnummer());
-        vardenhet.setEpost(sourceVardenhet.getEpost());
-        vardenhet.setVardgivare(getVardgivare(sourceVardenhet.getVardgivare()));
-        vardenhet.setArbetsplatskod(getArbetsplatsKod(sourceVardenhet.getArbetsplatsKod()));
-        return vardenhet;
-    }
-
-    private static ArbetsplatsKod getArbetsplatsKod(String sourceArbetsplatsKod) {
-        ArbetsplatsKod arbetsplatsKod = new ArbetsplatsKod();
-        arbetsplatsKod.setRoot(ARBETSPLATSKOD_CODE_SYSTEM);
-        arbetsplatsKod.setExtension(sourceArbetsplatsKod);
-        return arbetsplatsKod;
-    }
-
-    private static Vardgivare getVardgivare(se.inera.intyg.common.support.model.common.internal.Vardgivare sourceVardgivare) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivareId(anHsaId(sourceVardgivare.getVardgivarid()));
-        vardgivare.setVardgivarnamn(sourceVardgivare.getVardgivarnamn());
-        return vardgivare;
-    }
-
-    private static Patient getPatient(se.inera.intyg.common.support.model.common.internal.Patient sourcePatient) {
-        Patient patient = new se.riv.clinicalprocess.healthcond.certificate.v2.Patient();
-        patient.setEfternamn(sourcePatient.getEfternamn());
-        patient.setFornamn(sourcePatient.getFornamn());
-        patient.setMellannamn(sourcePatient.getMellannamn());
-        PersonId personId = new PersonId();
-        personId.setRoot(PERSON_ID_CODE_SYSTEM);
-        personId.setExtension(sourcePatient.getPersonId().getPersonnummer().replaceAll("-", ""));
-        patient.setPersonId(personId);
-        patient.setPostadress(sourcePatient.getPostadress());
-        patient.setPostnummer(sourcePatient.getPostnummer());
-        patient.setPostort(sourcePatient.getPostort());
-        return patient;
-    }
-
-    private static IntygId getIntygsId(AktivitetsersattningNAUtlatande source) {
-        IntygId intygId = new IntygId();
-        intygId.setRoot(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        intygId.setExtension(source.getId());
-        return intygId;
     }
 
     private static TypAvIntyg getTypAvIntyg(AktivitetsersattningNAUtlatande source) {
@@ -216,31 +59,6 @@ public final class UtlatandeToIntyg {
         typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
         typAvIntyg.setDisplayName(CERTIFICATE_DISPLAY_NAME);
         return typAvIntyg;
-    }
-
-    private static String getTextVersion(AktivitetsersattningNAUtlatande source) {
-        return source.getTextVersion();
-    }
-
-    private static void decorateWithRelation(Intyg intyg, AktivitetsersattningNAUtlatande source) {
-        if (source.getGrundData().getRelation() == null || source.getGrundData().getRelation().getRelationKod() == null) {
-            return;
-        }
-        Relation relation = new Relation();
-
-        IntygId intygId = new IntygId();
-        intygId.setRoot(source.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
-        intygId.setExtension(source.getGrundData().getRelation().getRelationIntygsId());
-
-        TypAvRelation typAvRelation = new TypAvRelation();
-        typAvRelation.setCode(source.getGrundData().getRelation().getRelationKod().value());
-        typAvRelation.setCodeSystem(RELATION_CODE_SYSTEM);
-        typAvRelation.setDisplayName(source.getGrundData().getRelation().getRelationKod().getKlartext());
-
-        relation.setIntygsId(intygId);
-        relation.setTyp(typAvRelation);
-
-        intyg.getRelation().add(relation);
     }
 
     private static List<Svar> getSvar(AktivitetsersattningNAUtlatande source) {
@@ -345,52 +163,4 @@ public final class UtlatandeToIntyg {
         return svars;
     }
 
-    private static void addIfNotBlank(List<Svar> svars, String svarsId, String delsvarsId, String content) {
-        if (!StringUtils.isBlank(content)) {
-            svars.add(aSvar(svarsId).withDelsvar(delsvarsId, content).build());
-        }
-    }
-
-    private static HsaId anHsaId(String id) {
-        HsaId hsaId = new HsaId();
-        hsaId.setRoot(HSA_CODE_SYSTEM);
-        hsaId.setExtension(id);
-        return hsaId;
-    }
-
-    private static JAXBElement<CVType> aCV(String codeSystem, String code, String displayName) {
-        CVType cv = new CVType();
-        cv.setCodeSystem(codeSystem);
-        cv.setCode(code);
-        cv.setDisplayName(displayName);
-        return new JAXBElement<>(new QName("urn:riv:clinicalprocess:healthcond:certificate:types:2", "cv"), CVType.class, null, cv);
-    }
-
-    private static SvarBuilder aSvar(String id) {
-        return new SvarBuilder(id);
-    }
-
-    private static class SvarBuilder {
-        private String id;
-        private List<Delsvar> delSvars = new ArrayList<>();
-
-        SvarBuilder(String id) {
-            this.id = id;
-        }
-
-        public Svar build() {
-            Svar svar = new Svar();
-            svar.setId(id);
-            svar.getDelsvar().addAll(delSvars);
-            return svar;
-        }
-
-        public SvarBuilder withDelsvar(String delsvarsId, Object content) {
-            Delsvar delsvar = new Delsvar();
-            delsvar.setId(delsvarsId);
-            delsvar.getContent().add(content);
-            delSvars.add(delsvar);
-            return this;
-        }
-    }
 }
