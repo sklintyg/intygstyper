@@ -6,5 +6,5 @@ angular.module('luae_na').run(['common.messageService', 'common.dynamicLabelServ
     function(messageService, dynamicLabelService) {
         'use strict';
 
-        messageService.addResources(aktivitetsersattningNAMessages);
+        messageService.addResources(luae_naMessages);
     }]);

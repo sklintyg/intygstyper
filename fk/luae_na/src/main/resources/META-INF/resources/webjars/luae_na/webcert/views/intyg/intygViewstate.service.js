@@ -8,7 +8,7 @@ angular.module('luae_na').service('luae_na.IntygController.ViewStateService',
             this.reset = function() {
                 this.common.reset();
                 this.common.defaultRecipient = 'FK';
-                this.common.intyg.type = 'luae_na';
+                this.common.intygProperties.type = 'luae_na';
             };
 
             this.reset();

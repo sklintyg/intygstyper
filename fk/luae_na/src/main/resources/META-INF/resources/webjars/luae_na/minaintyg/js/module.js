@@ -55,5 +55,5 @@ angular.module('luae_na').run(['common.messageService',
     function(messageService) {
         'use strict';
 
-        messageService.addResources(aktivitetsersattningNAMessages);
+        messageService.addResources(luae_naMessages);
     }]);

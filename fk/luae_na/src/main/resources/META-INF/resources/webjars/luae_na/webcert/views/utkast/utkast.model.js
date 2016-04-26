@@ -32,10 +32,10 @@ angular.module('luae_na').factory('luae_na.Domain.IntygModel',
                 return diagnosArray;
             };
 
-            var aktivitetsersattningNAModel = BaseAtticModel._extend({
+            var luae_naModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'aktivitetsersattningNAModel', {
+                    init._super.call(this, 'luae_naModel', {
 
                         'id': undefined,
                         'textVersion': undefined,
@@ -104,13 +104,13 @@ angular.module('luae_na').factory('luae_na.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new aktivitetsersattningNAModel());
+                    return new DraftModel(new luae_naModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return aktivitetsersattningNAModel;
+            return luae_naModel;
 
         }]);

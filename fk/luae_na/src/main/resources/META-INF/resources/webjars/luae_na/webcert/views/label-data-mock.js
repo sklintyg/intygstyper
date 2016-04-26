@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var aktivitetsersattningNADynamicLabelsMock = {
+var luae_naDynamicLabelsMock = {
     'texter': {
 
         // KAT 1
