@@ -170,7 +170,7 @@
       </p:enhet>
       <xsl:for-each select="ns1:grundData/ns1:skapadAv/ns1:specialiteter">
         <xsl:element name="{$ns-prefix}:specialitet" namespace="{$ns-namespace}">
-          <xsl:attribute name="code" select="'SPEC'" />
+          <xsl:attribute name="code" select="." />
           <xsl:attribute name="codeSystem" select="'coming_soon'" />
           <xsl:attribute name="codeSystemName" select="'kv_intyg_specialitet'" />
         </xsl:element>
