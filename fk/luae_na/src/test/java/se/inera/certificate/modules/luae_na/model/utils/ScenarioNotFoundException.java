@@ -17,30 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.certificate.modules.luae_na.model.internal;
+package se.inera.certificate.modules.luae_na.model.utils;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.auto.value.AutoValue;
+/**
+ * Thrown when an expected scenario wasn't found.
+ */
+public class ScenarioNotFoundException extends Exception {
 
-import javax.annotation.Nullable;
+    private static final long serialVersionUID = 2092187161098644931L;
 
-@AutoValue
-public abstract class Tillaggsfraga {
-
-    Tillaggsfraga() {
+    public ScenarioNotFoundException(String scenario, String model) {
+        super(String.format("Could not find %s model scenario %s", model, scenario));
     }
 
-    @JsonCreator
-    public static Tillaggsfraga create(@JsonProperty("id") String id,
-                                       @JsonProperty("svar") String svar) {
-        return new AutoValue_Tillaggsfraga(id, svar);
+    public ScenarioNotFoundException(String scenario, String model, Throwable cause) {
+        super(String.format("Could not find %s model scenario %s", model, scenario), cause);
     }
-
-    @Nullable
-    public abstract String getId();
-
-    @Nullable
-    public abstract String getSvar();
-
 }

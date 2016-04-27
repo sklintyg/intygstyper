@@ -1,4 +1,4 @@
-package se.inera.certificate.modules.sjukersattning.model.converter;
+package se.inera.certificate.modules.luae_na.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -30,9 +30,9 @@ import com.helger.schematron.svrl.SVRLHelper;
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
+import se.inera.certificate.modules.luae_na.model.converter.util.ConverterUtil;
+import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
@@ -44,7 +44,7 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 public class ConverterTest {
 
     @Autowired
-    @Qualifier("sjukersattning-objectMapper")
+    @Qualifier("luae_na-objectMapper")
     private ObjectMapper objectMapper;
     private ConverterUtil converterUtil;
 
@@ -80,9 +80,10 @@ public class ConverterTest {
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-na.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
+        //System.out.println(SVRLHelper.getAllFailedAssertions(result).get(0).getText());
         assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
@@ -93,15 +94,17 @@ public class ConverterTest {
         RegisterCertificateType transport = JAXB.unmarshal(new StringReader(xmlContents), RegisterCertificateType.class);
 
         String json = getJsonFromTransport(transport);
-        SjukersattningUtlatande utlatandeFromJson = converterUtil.fromJsonString(json);
-        //System.out.println(json);
+        AktivitetsersattningNAUtlatande utlatandeFromJson = converterUtil.fromJsonString(json);
+        System.out.println(json);
 
         RegisterCertificateType transportConvertedALot = InternalToTransport.convert(utlatandeFromJson);
         String convertedXML = getXmlFromModel(transportConvertedALot);
 
         // Do schematron validation on the xml-string from the converted transport format
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-na.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
+
+        //System.out.println(SVRLHelper.getAllFailedAssertions(result).get(0).getText());
         assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
 
         // Why not validate internal model as well?
@@ -130,7 +133,7 @@ public class ConverterTest {
 
     private String getJsonFromTransport(RegisterCertificateType transport) throws ConverterException {
         StringWriter jsonWriter = new StringWriter();
-        SjukersattningUtlatande internal = TransportToInternal.convert(transport.getIntyg());
+        AktivitetsersattningNAUtlatande internal = TransportToInternal.convert(transport.getIntyg());
         try {
             objectMapper.writeValue(jsonWriter, internal);
         } catch (Exception e) {

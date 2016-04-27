@@ -1,0 +1,99 @@
+{
+  "typ": "luse",
+  "tillaggsfragor": [
+    {
+      "svar": "Skostorleken \u00e4r 37.",
+      "id": "9001"
+    },
+    {
+      "svar": "L\u00e4ngden \u00e4r 166 centimeter.",
+      "id": "9002"
+    }
+  ],
+  "ovrigt": "Patientens tillst\u00e5nd bed\u00f6ms beh\u00f6va en ny bed\u00f6mning om 12 m\u00e5nader f\u00f6r att avg\u00f6ra grad av arbetsf\u00f6rm\u00e5ga, men till \u00e5tminstone viss del kommer patientens arbetsf\u00f6rm\u00e5ga att vara fortsatt nedsatt.",
+  "aktivitetsFormaga": "Med h\u00f6ger kan patienten lyfta l\u00e4ttare saker om det inte sker f\u00f6r frekvent eller kr\u00e4ver h\u00f6g precision. Patienten kan g\u00f6ra saker med \u00f6vriga delar av kroppen i kortare stunder och \u00e4ven l\u00e4ngre stunder om det inte kr\u00e4ver h\u00f6g precision eller p\u00e5 annat s\u00e4tt f\u00f6r stor koncentration.",
+  "medicinskaForutsattningarForArbete": "Patienten kommer sannolikt inte att kunna arbeta fullt ut med h\u00f6ger arm framgent. Framf\u00f6rallt \u00e4r det nervskadorna med sm\u00e4rtk\u00e4nslighet, nedsatt kraft, uttr\u00f6ttbarhet och sv\u00e5righeten att koncentrera sig som f\u00f6rsv\u00e5rar ett heltidsarbete. Ett deltidsarbete m\u00e5ste ocks\u00e5 ta h\u00e4nsyn till dessa begr\u00e4nsningar men bed\u00f6ms kunna utf\u00f6ras p\u00e5 50 procent av en heltid.",
+  "substansintag": "Fluoxetin mot depressionen.",
+  "planeradBehandling": "Fortsatt depressionsbehandling via VC och psykolog.",
+  "avslutadBehandling": "Utretts av sm\u00e4rtspecialist (se bilaga) med flertal behandlingsf\u00f6rs\u00f6k (t ex TENS, blockader, karbamazepin, xylocain intraven\u00f6st, opioider mm) under perioden 141103-150602 men endast begr\u00e4nsad eller \u00f6verg\u00e5ende effekt (se bilaga). Utredning och behandling av fysioterapeut under perioden 140901-150630 f\u00f6r att f\u00f6rs\u00f6ka \u00e5terst\u00e4lla funktion s\u00e5 l\u00e5ngt m\u00f6jligt. Har egentr\u00e4ningsprogram.",
+  "pagaendeBehandling": "Har haft kontakt med psykolog sedan 141204, f\u00e5r nu samtalsbehandling parallellt med medicinsk behandling med l\u00e4kemedel. Har f\u00f6rb\u00e4ttrats i sin depression men \u00e4r inte helt bra.",
+  "aktivitetsbegransning": "Sv\u00e5rt att utf\u00f6ra arbeten med h\u00f6ger arm (h\u00f6gerh\u00e4nt). Kan lyfta l\u00e4ttare saker men tappar l\u00e4tt f\u00f6rem\u00e5l. Nedsatt koncentrationsf\u00f6rm\u00e5ga vilket p\u00e5verkar arbeten d\u00e4r han beh\u00f6ver \u00f6vervaka processer.",
+  "funktionsnedsattningAnnan": "Har sv\u00e5rt att lyfta f\u00f6rem\u00e5l med h\u00f6ger hand. Dels nedsatt kraft, dels l\u00e4ttutl\u00f6sta blixtrande sm\u00e4rtor upp i h\u00f6ger arm. Ser tr\u00f6tt ut och uppger s\u00f6mnsv\u00e5righeter med domningar och sm\u00e4rtor i h\u00f6ger arm, sv\u00e5rt att somna in, ytlig s\u00f6mn, t\u00e4ta uppvaknanden och frekventa intensiva mardr\u00f6mmar.",
+  "funktionsnedsattningPsykisk": "L\u00e4tt s\u00e4nkt st\u00e4mningsl\u00e4ge.",
+  "funktionsnedsattningKoncentration": "L\u00e4tt uttr\u00f6ttbar, varp\u00e5 koncentrationen blir s\u00e4mre.",
+  "funktionsnedsattningKommunikation": "Nedsatt initiativf\u00f6rm\u00e5ga, drar sig ofta undan folksamlingar.",
+  "nyBedomningDiagnosgrund": true,
+  "diagnosForNyBedomning" : "Diagnos för ny bedömning",
+  "diagnosgrund": "Diagnoserna st\u00e4lldes vid bes\u00f6k p\u00e5 AVC S\u00f6dra \u00c4lvsborgs sjukhus i Bor\u00e5s 2014-07-09 och p\u00e5 V\u00e5rdenheten 2015-03-02.",
+  "diagnoser": [
+    {
+      "diagnosBeskrivning": "Skada p\u00e5 multipla b\u00f6jmuskler och deras senor p\u00e5 handleds- och handniv\u00e5",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosKod": "S666"
+    },
+    {
+      "diagnosBeskrivning": "Icke specificerad neuralgi och neurit",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosKod": "M792"
+    },
+    {
+      "diagnosBeskrivning": "Depressiv episod",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosKod": "F320"
+    }
+  ],
+  "sjukdomsforlopp": "Arbetsplatsolycka d\u00e4r patienten fastnade med h\u00f6ger hand i en vals 2014-07-09. Omh\u00e4ndertogs initialt p\u00e5 akutmottagningen AVC S\u00f6dra \u00c4lvsborgs sjukhus i Bor\u00e5s. V\u00e4vnadsf\u00f6rluster i 3:e och 4:e fingret. Nedsatt kraft, k\u00e4nsel och funktion i handen, sm\u00e4rtsyndom i hela h\u00f6ger arm. Sedan n\u00e5gra m\u00e5nader depression som har varit sv\u00e5r att behandla medikamentellt.",
+  "underlag": [
+    {
+      "hamtasFran": "Skickas med posten",
+      "datum": "2015-09-03",
+      "typ": 6
+    },
+    {
+      "hamtasFran": "Skickas med e-mail",
+      "datum": "2015-06-30",
+      "typ": 4
+    }
+  ],
+  "underlagFinns": true,
+  "kannedomOmPatient": "2015-01-07",
+  "anhorigsBeskrivningAvPatienten": "2015-09-09",
+  "journaluppgifter": "2015-09-09",
+  "undersokningAvPatienten": "2015-09-09",
+  "textVersion": "1.0",
+  "grundData": {
+    "patient": {
+      "samordningsNummer": false,
+      "efternamn": "Olsson",
+      "fornamn": "Olivia",
+      "fullstandigtNamn": "Olivia Olsson",
+      "personId": "192703104321"
+    },
+    "skapadAv": {
+      "vardenhet": {
+        "arbetsplatsKod": "45312",
+        "vardgivare": {
+          "vardgivarnamn": "V\u00e5rdgivaren",
+          "vardgivarid": "SE2321000016-39KJ"
+        },
+        "epost": "ve1@vg1.se",
+        "telefonnummer": "0812341234",
+        "postort": "Stadby",
+        "postnummer": "100 10",
+        "postadress": "Enhetsg. 1",
+        "enhetsnamn": "V\u00e5rdenheten",
+        "enhetsid": "SE2321000016-H489"
+      },
+      "specialiteter": [],
+      "befattningar": [
+        "201010",
+        "204510"
+      ],
+      "forskrivarKod": "09874321",
+      "fullstandigtNamn": "Karl Karlsson",
+      "personId": "SE2321000016-6G5R"
+    },
+    "signeringsdatum": "2015-12-07T15:48:05.000"
+  },
+  "id": "1234567"
+}
