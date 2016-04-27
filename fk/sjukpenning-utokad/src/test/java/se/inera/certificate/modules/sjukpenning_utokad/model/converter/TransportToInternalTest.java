@@ -12,7 +12,8 @@ import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos.PrognosTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.PrognosDagarTillArbeteTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.PrognosTyp;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning.SysselsattningsTyp;
@@ -43,7 +44,7 @@ public class TransportToInternalTest {
         utlatande.setArbetslivsinriktadeAtgarder(asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)));
 
         utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.STUDIER));
-        utlatande.setPrognos(Prognos.create(PrognosTyp.MED_STOR_SANNOLIKHET, "Förtydligande"));
+        utlatande.setPrognos(Prognos.create(PrognosTyp.ATER_X_ANTAL_DGR, PrognosDagarTillArbeteTyp.DAGAR_30));
         utlatande.setFunktionsnedsattning("Funktionsnedsättning");
 
         utlatande.setOvrigt("Trevlig kille");

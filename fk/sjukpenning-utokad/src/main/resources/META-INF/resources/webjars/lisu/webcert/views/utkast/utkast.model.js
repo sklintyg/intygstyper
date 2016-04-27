@@ -142,8 +142,10 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                         'arbetstidsforlaggningMotivering': undefined,
                         'arbetsresor': undefined,
                         'formagaTrotsBegransning': undefined,
-                        'prognos': undefined,
-                        'fortydligande': undefined,
+                        'prognos': {
+                            'typ': undefined,
+                            'dagarTillArbete': undefined
+                        },
 
                         // Kategori 7 Åtgärder
                         'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {

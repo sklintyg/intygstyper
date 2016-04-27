@@ -15,7 +15,7 @@ public class InternalValidatorTest {
 
     @Test
     public void test() throws ScenarioNotFoundException {
-        int numErrors = 3;
+        final int numErrors = 3;
         SjukpenningUtokadUtlatande utlatandeFromJson = ScenarioFinder.getInternalScenario("sjukskrivningOverlappandePerioder").asInternalModel();
         InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
