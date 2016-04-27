@@ -5,7 +5,7 @@
     <div ui-view="header"></div>
 
     <div ng-show="!viewState.common.activeErrorMessageKey">
-      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : $scope.viewState.common.intyg.isRevoked}">
+      <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : $scope.viewState.common.intygProperties.isRevoked}">
         <div class="row">
           <div class="col-md-12">
             <div class="cert-body">
