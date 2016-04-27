@@ -109,6 +109,14 @@ public final class RespConstants {
     public static final String FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14 = "14.1";
     public static final String FUNKTIONSNEDSATTNING_ANNAN_SVAR_JSON_ID_14 = "funktionsnedsattningAnnan";
 
+    public static final String FUNKTIONSNEDSATTNING_DEBUT_SVAR_ID_15 = "15";
+    public static final String FUNKTIONSNEDSATTNING_DEBUT_DELSVAR_ID_15 = "15.1";
+    public static final String FUNKTIONSNEDSATTNING_DEBUT_SVAR_JSON_ID_15 = "funktionsnedsattningDebut";
+
+    public static final String FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_ID_16 = "16";
+    public static final String FUNKTIONSNEDSATTNING_PAVERKAN_DELSVAR_ID_16 = "16.1";
+    public static final String FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_JSON_ID_16 = "funktionsnedsattningPaverkan";
+
     public static final String AKTIVITETSBEGRANSNING_SVAR_ID_17 = "17";
     public static final String AKTIVITETSBEGRANSNING_DELSVAR_ID_17 = "17.1";
     public static final String AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17 = "aktivitetsbegransning";
@@ -133,9 +141,9 @@ public final class RespConstants {
     public static final String MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22 = "22.1";
     public static final String MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22 = "medicinskaForutsattningarForArbete";
 
-    public static final String AKTIVITETSFORMAGA_SVAR_ID_23 = "23";
-    public static final String AKTIVITETSFORMAGA_DELSVAR_ID_23 = "23.1";
-    public static final String AKTIVITETSFORMAGA_SVAR_JSON_ID_23 = "formagaTrotsBegransning";
+    public static final String FORMAGATROTSBEGRANSNING_SVAR_ID_23 = "23";
+    public static final String FORMAGATROTSBEGRANSNING_DELSVAR_ID_23 = "23.1";
+    public static final String FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23 = "formagaTrotsBegransning";
 
     public static final String FORSLAG_TILL_ATGARD_SVAR_ID_24 = "24";
     public static final String FORSLAG_TILL_ATGARD_DELSVAR_ID_24 = "24.1";
@@ -247,8 +255,8 @@ public final class RespConstants {
             return SUBSTANSINTAG_SVAR_JSON_ID_21;
         case MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22:
             return MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22;
-        case AKTIVITETSFORMAGA_SVAR_ID_23:
-            return AKTIVITETSFORMAGA_SVAR_JSON_ID_23;
+        case FORMAGATROTSBEGRANSNING_SVAR_ID_23:
+            return FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23;
         case OVRIGT_SVAR_ID_25:
             return OVRIGT_SVAR_JSON_ID_25;
         case KONTAKT_ONSKAS_SVAR_ID_26:

@@ -66,6 +66,7 @@
     <module>fk/sjukersattning</module>
     <module>fk/sjukpenning-utokad</module>
     <module>fk/luae_na</module>
+    <module>fk/luae_fs</module>
   </modules>
 
   <scm>
@@ -265,62 +266,6 @@
               <outputDirectory>${project.build.directory}/build-tools</outputDirectory>
             </configuration>
           </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <configLocation>${project.build.directory}/build-tools/checkstyle/checkstyle.xml</configLocation>
-          <suppressionsLocation>${project.build.directory}/build-tools/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
-          <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-          <logViolationsToConsole>true</logViolationsToConsole>
-          <failOnViolation>true</failOnViolation>
-          <violationSeverity>info</violationSeverity>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <configuration>
-            <skip>${skip-coverage}</skip>
-        </configuration>
-        <executions>
-          <execution>
-            <id>prepare-unit-test-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>generate-unit-test-report</id>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
-        <configuration>
-          <includeProperties>
-            common.version
-          </includeProperties>
-          <properties>
-            <property>
-              <name>common.version</name>
-              <version>${common.version.range}</version>
-            </property>
-          </properties>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <inherited>false</inherited>
-        <executions>
           <execution>
             <id>unpack-webjar-dependencies</id>
             <phase>process-test-resources</phase>
@@ -376,6 +321,54 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <configuration>
+          <configLocation>${project.build.directory}/build-tools/checkstyle/checkstyle.xml</configLocation>
+          <suppressionsLocation>${project.build.directory}/build-tools/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+          <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+          <logViolationsToConsole>true</logViolationsToConsole>
+          <failOnViolation>true</failOnViolation>
+          <violationSeverity>info</violationSeverity>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <configuration>
+            <skip>${skip-coverage}</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <id>prepare-unit-test-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>generate-unit-test-report</id>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <configuration>
+          <includeProperties>
+            common.version
+          </includeProperties>
+          <properties>
+            <property>
+              <name>common.version</name>
+              <version>${common.version.range}</version>
+            </property>
+          </properties>
+        </configuration>
       </plugin>
 
       <plugin>

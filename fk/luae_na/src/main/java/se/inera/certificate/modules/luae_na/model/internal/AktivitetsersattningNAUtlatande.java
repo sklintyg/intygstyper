@@ -19,7 +19,7 @@
 package se.inera.certificate.modules.luae_na.model.internal;
 
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_JSON_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_JSON_ID_18;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7;
@@ -330,7 +330,7 @@ public abstract class AktivitetsersattningNAUtlatande implements Utlatande, SitU
         @JsonProperty(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22)
         public abstract Builder setMedicinskaForutsattningarForArbete(String medicinskaForutsattningarForArbete);
 
-        @JsonProperty(AKTIVITETSFORMAGA_SVAR_JSON_ID_23)
+        @JsonProperty(FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23)
         public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
 
         @JsonProperty(FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24)
