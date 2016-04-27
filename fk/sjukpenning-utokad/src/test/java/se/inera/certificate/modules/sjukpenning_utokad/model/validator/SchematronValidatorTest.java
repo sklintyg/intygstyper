@@ -40,6 +40,14 @@ public class SchematronValidatorTest {
         assertFalse(response.getValidationErrors().isEmpty());
     }
 
+    @Test
+    // Since change request ID06 (INTYG-2286), Delfråga 39.2 is no longer in use.
+    public void delfraga392IsNoLongerValid() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/prognosMedDelfraga39-2.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        assertFalse(response.getValidationErrors().isEmpty());
+    }
+
     private static URL getResource(String href) {
         return Thread.currentThread().getContextClassLoader().getResource(href);
     }

@@ -24,6 +24,7 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_JSON_ID_18;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_JSON_ID_7;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_JSON_ID_6;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_JSON_ID_14;
@@ -64,6 +65,7 @@ import com.google.common.collect.ImmutableList;
 
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.SitUtlatande;
+import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
 import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.luae_na.support.AktivitetsersattningNAEntryPoint;
 import se.inera.intyg.common.support.model.InternalDate;
@@ -129,6 +131,10 @@ public abstract class AktivitetsersattningNAUtlatande implements Utlatande, SitU
     // Fråga 7.2
     @Nullable
     public abstract Boolean getNyBedomningDiagnosgrund();
+
+    // Delfråga 7.3
+    @Nullable
+    public abstract String getDiagnosForNyBedomning();
 
     // Kategori 5 – Funktionsnedsättning
     // Fråga 8
@@ -281,6 +287,9 @@ public abstract class AktivitetsersattningNAUtlatande implements Utlatande, SitU
 
         @JsonProperty(DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7)
         public abstract Builder setNyBedomningDiagnosgrund(Boolean nyBedomningDiagnosgrund);
+
+        @JsonProperty(DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_7)
+        public abstract Builder setDiagnosForNyBedomning(String diagnosForNyBedomning);
 
         @JsonProperty(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_JSON_ID_8)
         public abstract Builder setFunktionsnedsattningIntellektuell(String funktionsnedsattningIntellektuell);

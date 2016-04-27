@@ -296,22 +296,7 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q7">
-    <iso:rule context="//gn:svar[@id='7']">
-      <iso:assert test="count(gn:delsvar[@id='7.1']) = 1">
-        'Diagnosgrund' måste ha ett 'Diagnosgrund'.
-      </iso:assert>
-      <iso:assert test="count(gn:delsvar[@id='7.2']) = 1">
-        'Diagnosgrund' måste ha ett 'Skäl för ny bedömning av tidigare diagnosgrund?'.
-      </iso:assert>
-      <iso:let name="delsvarsIdExpr" value="'^7\.[12]$'"/>
-      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
-        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
-      </iso:assert>
-    </iso:rule>
-  </iso:pattern>
-
-  <iso:pattern id="q7.1">
+<iso:pattern id="q7.1">
     <iso:rule context="//gn:delsvar[@id='7.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
@@ -321,6 +306,25 @@
     <iso:rule context="//gn:delsvar[@id='7.2']">
       <iso:extends rule="boolean"/>
     </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q7.3">
+    <iso:rule context="//gn:delsvar[@id='7.3']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q7.2-7.3">
+      <iso:rule context="gn:delsvar[@id='7.2' and (normalize-space(.)='1' or normalize-space(.)='true')]">
+        <iso:assert test="count(../gn:delsvar[@id='7.3']) = 1">
+          'Diagnos för ny bedömning' måste ifyllas om 'Skäl för ny bedömning av tidigare diagnosgrund?' besvarats med 'JA'.
+        </iso:assert>
+      </iso:rule>
+      <iso:rule context="gn:delsvar[@id='7.2' and (normalize-space(.)='0' or normalize-space(.)='false')]">
+        <iso:assert test="count(../gn:delsvar[@id='7.3']) = 0">
+          'Diagnos för ny bedömning' får inte fyllas i om 'Skäl för ny bedömning av tidigare diagnosgrund?' besvarats med 'NEJ'.
+        </iso:assert>
+      </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="q8">

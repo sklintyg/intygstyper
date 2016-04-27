@@ -16,7 +16,6 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,7 +47,7 @@ public class ConverterTest {
     @Qualifier("sjukersattning-objectMapper")
     private ObjectMapper objectMapper;
     private ConverterUtil converterUtil;
-    
+
     private WebcertModuleService webcertModuleService;
 
     @Before
@@ -56,17 +55,17 @@ public class ConverterTest {
         converterUtil = new ConverterUtil();
         converterUtil.setObjectMapper(objectMapper);
         webcertModuleService = new WebcertModuleService() {
-            
+
             @Override
             public boolean validateDiagnosisCode(String codeFragment, Diagnoskodverk codeSystem) {
                 return true;
             }
-            
+
             @Override
             public boolean validateDiagnosisCode(String codeFragment, String codeSystemStr) {
                 return true;
             }
-            
+
             @Override
             public String getDescriptionFromDiagnosKod(String code, String codeSystemStr) {
                 return "";

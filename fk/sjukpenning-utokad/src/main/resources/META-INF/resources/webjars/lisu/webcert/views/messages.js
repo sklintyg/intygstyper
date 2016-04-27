@@ -100,8 +100,8 @@ var sjukpenningUtokadMessages = {
         'lisu.validation.bedomning.formagatrotsbegransning.empty' : ' Beskriv vad patienten kan göra trots sin sjukdom relaterat till sitt arbete kan inte fyllas i med endast blanksteg', 
 
         'lisu.validation.bedomning.prognos.missing': 'Prognos måste fyllas i.',
-        'lisu.validation.bedomning.prognos.fortydligande.missing': 'Förtydligande måste fyllas i om prognos oklar valts.',
-        'lisu.validation.bedomning.prognos.fortydligande.invalid_combination': 'Förtydligande kan bara fyllas i om prognos oklar valts.', // Should never happen because GUI should block this combination
+        'lisu.validation.bedomning.prognos.dagartillarbete.missing': 'Dagar till arbete måste fyllas i om prognosen "kan återgå helt i nuvarande sysselsättning efter x antal dagar valts"',
+        'lisu.validation.bedomning.prognos.dagartillarbete.invalid_combination': 'Dagar till arbete kan bara fyllas i om prognosen "kan återgå helt i nuvarande sysselsättning efter x antal dagar valts"', // Should never happen because GUI should block this combination
 
         'lisu.validation.atgarder.missing': 'Åtgärder måste väljas eller Inte aktuellt.',
         'lisu.validation.atgarder.inte_aktuellt_no_combine': 'Inte aktuellt kan inte kombineras med andra val.', // Should never happen because GUI should block this combination
