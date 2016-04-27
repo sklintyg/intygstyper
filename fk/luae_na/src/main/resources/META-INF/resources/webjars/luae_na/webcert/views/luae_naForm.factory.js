@@ -86,7 +86,13 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 },
                 {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'DFR_7.1'}},
-                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'DFR_7.2'}}
+                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'DFR_7.2'}},
+                {
+                    key: 'diagnosForNyBedomning',
+                    type: 'multi-text',
+                    templateOptions: {label: 'DFR_7.3'},
+                    hideExpression: '!model.nyBedomningDiagnosgrund'
+                }
             ]
         },
         {

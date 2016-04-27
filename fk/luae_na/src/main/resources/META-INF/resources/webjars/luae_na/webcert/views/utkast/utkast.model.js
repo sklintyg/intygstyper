@@ -60,6 +60,7 @@ angular.module('luae_na').factory('luae_na.Domain.IntygModel',
                         'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
                         'diagnosgrund': undefined,
                         'nyBedomningDiagnosgrund': undefined,
+                        'diagnosForNyBedomning' : undefined,
 
                         // Ketagori 5 Funktionsnedsättning
                         'funktionsnedsattningIntellektuell': undefined,
