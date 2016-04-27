@@ -36,9 +36,16 @@ import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukpennin
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande.Builder;
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
 import se.inera.intyg.common.support.common.enumerations.HandelsekodEnum;
-import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.modules.support.api.notification.*;
+import se.inera.intyg.common.support.modules.support.api.notification.FragorOchSvar;
+import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;
+import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
+import se.inera.intyg.common.support.modules.support.api.notification.NotificationVersion;
 import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v2.CertificateStatusUpdateForCareType;
 
 @RunWith(MockitoJUnitRunner.class)

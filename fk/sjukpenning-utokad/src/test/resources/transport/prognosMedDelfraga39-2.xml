@@ -131,11 +131,17 @@
     <svar id="39">
       <delsvar id="39.1">
         <ns3:cv>
-          <ns3:code>SANNOLIKT_INTE</ns3:code>
+          <ns3:code>ATER_X_ANTAL_DGR</ns3:code>
           <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="39.2">Kan bara jobba på nätterna.</delsvar>
+      <delsvar id="39.2">Error</delsvar>
+      <delsvar id="39.3">
+        <ns3:cv>
+          <ns3:code>30_DAGAR</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0007</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
     </svar>
     <svar id="40">
       <delsvar id="40.1">

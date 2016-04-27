@@ -37,6 +37,7 @@ public final class RespConstants {
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM = "KV_FKMU_0004";
     public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_0005";
     public static final String PROGNOS_CODE_SYSTEM = "KV_FKMU_0006";
+    public static final String PROGNOS_DAGAR_TILL_ARBETE_CODE_SYSTEM = "KV_FKMU_0007";
 
     public static final String GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1 = "1";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1 = "1.1";
@@ -195,7 +196,7 @@ public final class RespConstants {
 
     public static final String PROGNOS_SVAR_ID_39 = "39";
     public static final String PROGNOS_BESKRIVNING_DELSVAR_ID_39 = "39.1";
-    public static final String PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39 = "39.2";
+    public static final String PROGNOS_DAGAR_TILL_ARBETE_DELSVAR_ID_39 = "39.3";
     public static final String PROGNOS_SVAR_JSON_ID_39 = "prognos";
 
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40 = "40";

@@ -49,8 +49,7 @@
     }
   ],
   "prognos": {
-    "fortydligande": "Kan bara jobba på nätterna.",
-    "typ": 3
+    "typ": 5
   },
   "formagaTrotsBegransning": "är bra på att dansa!",
   "arbetsresor": true,

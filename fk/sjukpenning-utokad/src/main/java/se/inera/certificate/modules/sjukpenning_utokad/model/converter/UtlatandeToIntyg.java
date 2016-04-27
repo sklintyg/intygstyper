@@ -19,7 +19,55 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID_17;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID_17;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_OM_DELSVAR_ID_34;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_SVAR_ID_34;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_SVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DELSVAR_ID_35;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SVAR_ID_35;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_DELSVAR_ID_29;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_SVAR_ID_29;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID_19;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID_19;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID_20;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID_20;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_BESKRIVNING_DELSVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_DAGAR_TILL_ARBETE_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_DAGAR_TILL_ARBETE_DELSVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_SVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKSKRIVNING_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_CODE_SYSTEM;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_DELSVAR_ID_28;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_SVAR_ID_28;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.CERTIFICATE_CODE_SYSTEM;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
@@ -33,9 +81,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants;
+import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning;
 import se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
@@ -144,11 +195,13 @@ public final class UtlatandeToIntyg {
         addIfNotBlank(svars, AKTIVITETSFORMAGA_SVAR_ID_23, AKTIVITETSFORMAGA_DELSVAR_ID_23, source.getFormagaTrotsBegransning());
 
         if (source.getPrognos() != null) {
-            if (!StringUtils.isBlank(source.getPrognos().getFortydligande())) {
+            if (source.getPrognos().getDagarTillArbete() != null) {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
                         aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getTransportId(),
                                 source.getPrognos().getTyp().getLabel()))
-                        .withDelsvar(PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39, source.getPrognos().getFortydligande()).build());
+                        .withDelsvar(PROGNOS_DAGAR_TILL_ARBETE_DELSVAR_ID_39,
+                                aCV(PROGNOS_DAGAR_TILL_ARBETE_CODE_SYSTEM, source.getPrognos().getDagarTillArbete().getTransportId(),
+                                        source.getPrognos().getDagarTillArbete().getLabel())).build());
             } else {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
                         aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getTransportId(),

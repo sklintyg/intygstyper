@@ -458,10 +458,10 @@
       <iso:assert test="count(gn:delsvar[@id='39.1']) = 1">
         'Prognos' måste ha ett 'Beskrivning prognos'.
       </iso:assert>
-      <iso:assert test="count(gn:delsvar[@id='39.2']) le 1">
-        'Prognos' får ha högst ett 'Förtydligande prognos'.
+      <iso:assert test="count(gn:delsvar[@id='39.3']) le 1">
+        'Prognos' får ha högst ett 'Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar'.
       </iso:assert>
-      <iso:let name="delsvarsIdExpr" value="'^39\.[12]$'"/>
+      <iso:let name="delsvarsIdExpr" value="'^39\.[13]$'"/>
       <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
         Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
@@ -472,27 +472,31 @@
     <iso:rule context="//gn:delsvar[@id='39.1']">
       <iso:extends rule="cv"/>
       <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0006'">'codeSystem' måste vara 'KV_FKMU_0006'.</iso:assert>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(STOR_SANNOLIKHET|LANGRE_AN_180|SANNOLIKT_INTE|PROGNOS_OKLAR|ATER_X_ANTAL_DGR)$')">
-        'Beskrivning prognos' kan ha ett av värdena STOR_SANNOLIKHET, LANGRE_AN_180, SANNOLIKT_INTE, PROGNOS_OKLAR eller ATER_X_ANTAL_DGR.
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(STOR_SANNOLIKHET|SANNOLIKT_INTE|PROGNOS_OKLAR|ATER_X_ANTAL_DGR)$')">
+        'Beskrivning prognos' kan ha ett av värdena STOR_SANNOLIKHET, SANNOLIKT_INTE, PROGNOS_OKLAR eller ATER_X_ANTAL_DGR.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q39.2">
-    <iso:rule context="//gn:delsvar[@id='39.2']">
-      <iso:extends rule="non-empty-string"/>
+  <iso:pattern id="q39.3">
+    <iso:rule context="//gn:delsvar[@id='39.3']">
+      <iso:extends rule="cv"/>
+      <iso:assert test="tp:cv/tp:codeSystem = 'KV_FKMU_0007'">'codeSystem' måste vara 'KV_FKMU_0007'.</iso:assert>
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code), '^(30_DAGAR|60_DAGAR|90_DAGAR|180_DAGAR)$')">
+        'Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar' kan ha ett av värdena 30_DAGAR, 60_DAGAR, 90_DAGAR eller 180_DAGAR.
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="q39.1-39.2">
-    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) = 'PROGNOS_OKLAR']">
-      <iso:assert test="../../../gn:delsvar[@id='39.2']">
-        Om 'Beskrivning prognos' är PROGNOS_OKLAR så måste 'Förtydligande prognos' anges.
+  <iso:pattern id="q39.1-39.3">
+    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) = 'ATER_X_ANTAL_DGR']">
+      <iso:assert test="../../../gn:delsvar[@id='39.3']">
+      Om 'Beskrivning prognos' är ATER_X_ANTAL_DGR så måste 'Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar' anges.
       </iso:assert>
     </iso:rule>
-    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) != 'PROGNOS_OKLAR']">
-      <iso:assert test="count(../../../gn:delsvar[@id='39.2']) = 0">
-        Om 'Beskrivning prognos' inte är PROGNOS_OKLAR så får 'Förtydligande prognos' inte anges.
+    <iso:rule context="//gn:delsvar[@id='39.1']/tp:cv/tp:code[normalize-space(.) != 'ATER_X_ANTAL_DGR']">
+      <iso:assert test="count(../../../gn:delsvar[@id='39.3']) = 0">
+        Om 'Beskrivning prognos' inte är ATER_X_ANTAL_DGR så får 'Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar' inte anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>

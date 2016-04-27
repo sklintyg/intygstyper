@@ -19,7 +19,51 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID_17;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID_17;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID_30;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID_30;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_OM_DELSVAR_ID_34;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSRESOR_SVAR_ID_34;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_MOTIVERING_SVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSTIDSFORLAGGNING_SVAR_ID_33;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_DELSVAR_ID_37;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_ID_37;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DELSVAR_ID_35;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SVAR_ID_35;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID_26;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_DELSVAR_ID_29;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.NUVARANDE_ARBETE_SVAR_ID_29;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID_25;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID_19;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID_19;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID_20;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID_20;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_BESKRIVNING_DELSVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_DAGAR_TILL_ARBETE_DELSVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PROGNOS_SVAR_ID_39;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_DELSVAR_ID_28;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.TYP_AV_SYSSELSATTNING_SVAR_ID_28;
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getCVSvarContent;
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getDatePeriodTypeContent;
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getStringContent;
@@ -27,26 +71,37 @@ import static se.inera.intyg.common.support.modules.converter.TransportConverter
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
-
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos.PrognosTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.PrognosDagarTillArbeteTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.PrognosTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande.Builder;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning.SjukskrivningsGrad;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning.SysselsattningsTyp;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.*;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public final class TransportToInternal {
@@ -200,20 +255,21 @@ public final class TransportToInternal {
 
     private static void handlePrognos(Builder utlatande, Svar svar) throws ConverterException {
         String prognosKod = null;
-        String fortydligande = null;
+        String dagarTillArbete = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case PROGNOS_BESKRIVNING_DELSVAR_ID_39:
                 prognosKod = getCVSvarContent(delsvar).getCode();
                 break;
-            case PROGNOS_FORTYDLIGANDE_DELSVAR_ID_39:
-                fortydligande = getStringContent(delsvar);
+            case PROGNOS_DAGAR_TILL_ARBETE_DELSVAR_ID_39:
+                dagarTillArbete = getCVSvarContent(delsvar).getCode();
                 break;
             default:
                 throw new IllegalArgumentException();
             }
             if (prognosKod != null) {
-                utlatande.setPrognos(Prognos.create(PrognosTyp.fromTransportId(prognosKod), fortydligande));
+                utlatande.setPrognos(Prognos.create(PrognosTyp.fromTransportId(prognosKod),
+                        dagarTillArbete != null ? PrognosDagarTillArbeteTyp.fromTransportId(dagarTillArbete) : null));
             }
         }
     }
@@ -475,14 +531,4 @@ public final class TransportToInternal {
             throw new IllegalArgumentException();
         }
     }
-
-    @SuppressWarnings("unchecked")
-    private static <T> T getSvarContent(Delsvar delsvar, Class<T> clazz) {
-        Object content = delsvar.getContent().get(0);
-        if (content instanceof JAXBElement) {
-            return ((JAXBElement<T>) content).getValue();
-        }
-        return (T) content;
-    }
-
 }

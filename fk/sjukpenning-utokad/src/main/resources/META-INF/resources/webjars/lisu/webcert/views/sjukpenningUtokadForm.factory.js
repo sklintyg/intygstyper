@@ -130,15 +130,32 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     templateOptions: {
                         label: 'DFR_39.1',
                         code: 'KV_FKMU_0006',
-                        choices: [1, 2, 3, 4]
+                        choices: [1, 3, 4, 5]
+                    },
+                    watcher: {
+                        expression: 'model.prognos.typ',
+                        listener:  function _prognosTypListener(field, newValue, oldValue, scope, stopWatching) {
+                            var model = scope.model;
+                            if (newValue === 5) {
+                                model.restoreFromAttic('prognos.dagarTillArbete');
+                            } else {
+                                model.updateToAttic('prognos.dagarTillArbete');
+                                model.clear('prognos.dagarTillArbete');
+                            }
+                        }
                     }
                 },
-                {key: 'prognos.fortydligande', type: 'multi-text',
+                { key: 'prognos.dagarTillArbete', type: 'radio-group',
                     className: 'fold-animation',
                     hideExpression: function($viewValue, $modelValue, scope) {
-                        return !ObjectHelper.isDefined(scope.model.prognos) || scope.model.prognos.typ !== 4;
+                        return !ObjectHelper.isDefined(scope.model.prognos) || scope.model.prognos.typ !== 5;
                     },
-                    templateOptions: {label: 'DFR_39.2'}}
+                    templateOptions: {
+                        label: 'DFR_39.3',
+                        code: 'KV_FKMU_0007',
+                        choices: [1, 2, 3, 4]
+                    }
+                }
             ]
         },
         {

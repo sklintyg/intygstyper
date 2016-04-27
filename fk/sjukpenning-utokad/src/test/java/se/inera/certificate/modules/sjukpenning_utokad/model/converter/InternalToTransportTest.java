@@ -24,10 +24,14 @@ import se.inera.certificate.modules.fkparent.integration.RegisterCertificateVali
 import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos.PrognosTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Prognos;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.PrognosTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning.SjukskrivningsGrad;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning.SysselsattningsTyp;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.InternalDate;
@@ -152,7 +156,7 @@ public class InternalToTransportTest {
 
         utlatande.setFormagaTrotsBegransning("Är bra på att dansa!");
 
-        utlatande.setPrognos(Prognos.create(PrognosTyp.PROGNOS_OKLAR, "Kan bara jobba på nätterna."));
+        utlatande.setPrognos(Prognos.create(PrognosTyp.PROGNOS_OKLAR, null));
 
         utlatande.setArbetslivsinriktadeAtgarder(asList(
                 ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT),

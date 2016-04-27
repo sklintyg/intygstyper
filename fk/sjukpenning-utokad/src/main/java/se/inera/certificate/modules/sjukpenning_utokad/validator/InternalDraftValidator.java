@@ -19,21 +19,22 @@
 
 package se.inera.certificate.modules.sjukpenning_utokad.validator;
 
-import static se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.certificate.modules.sjukpenning_utokad.model.internal.*;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.PrognosTyp;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sjukskrivning;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.Sysselsattning;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
@@ -44,12 +45,10 @@ public class InternalDraftValidator {
 
     private static final int MAX_ARBETSLIVSINRIKTADE_ATGARDER = 10;
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
-
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     @Autowired
-    InternalValidatorUtil validatorUtil;
+    private InternalValidatorUtil validatorUtil;
 
     public InternalDraftValidator() {
     }
@@ -210,14 +209,13 @@ public class InternalDraftValidator {
             validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                     "lisu.validation.bedomning.prognos.missing");
         } else {
-
-            // R18, R19
-            if (utlatande.getPrognos().getTyp() == Prognos.PrognosTyp.PROGNOS_OKLAR && StringUtils.isBlank(utlatande.getPrognos().getFortydligande())) {
+            // New rule since INTYG-2286
+            if (utlatande.getPrognos().getTyp() == PrognosTyp.ATER_X_ANTAL_DGR && utlatande.getPrognos().getDagarTillArbete() == null) {
                 validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                        "lisu.validation.bedomning.prognos.fortydligande.missing");
-            } else if (utlatande.getPrognos().getTyp() != Prognos.PrognosTyp.PROGNOS_OKLAR && !StringUtils.isBlank(utlatande.getPrognos().getFortydligande())) {
+                        "lisu.validation.bedomning.prognos.dagarTillArbete.missing");
+            } else if (utlatande.getPrognos().getTyp() != PrognosTyp.ATER_X_ANTAL_DGR && utlatande.getPrognos().getDagarTillArbete() != null) {
                 validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                        "lisu.validation.bedomning.prognos.fortydligande.invalid_combination");
+                        "lisu.validation.bedomning.prognos.dagarTillArbete.invalid_combination");
             }
         }
     }
