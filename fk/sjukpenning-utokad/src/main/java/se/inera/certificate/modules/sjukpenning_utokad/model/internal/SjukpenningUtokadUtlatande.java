@@ -21,7 +21,7 @@ package se.inera.certificate.modules.sjukpenning_utokad.model.internal;
 
 
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_JSON_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40;
@@ -303,7 +303,7 @@ public abstract class SjukpenningUtokadUtlatande implements Utlatande, SitUtlata
         @JsonProperty(ARBETSRESOR_SVAR_JSON_ID_34)
         public abstract Builder setArbetsresor(Boolean arbetsresor);
 
-        @JsonProperty(AKTIVITETSFORMAGA_SVAR_JSON_ID_23)
+        @JsonProperty(FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23)
         public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
 
         @JsonProperty(PROGNOS_SVAR_JSON_ID_39)

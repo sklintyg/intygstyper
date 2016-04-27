@@ -165,8 +165,8 @@ public final class TransportToInternal {
             case MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22:
                 handleMedicinskaForutsattningarForArbete(utlatande, svar);
                 break;
-            case AKTIVITETSFORMAGA_SVAR_ID_23:
-                handleAktivitetsformaga(utlatande, svar);
+            case FORMAGATROTSBEGRANSNING_SVAR_ID_23:
+                handleFormagaTrotsBegransning(utlatande, svar);
                 break;
             case FORSLAG_TILL_ATGARD_SVAR_ID_24:
                 handleForslagTillAtgard(utlatande, svar);
@@ -467,10 +467,10 @@ public final class TransportToInternal {
         }
     }
 
-    private static void handleAktivitetsformaga(Builder utlatande, Svar svar) {
+    private static void handleFormagaTrotsBegransning(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
         switch (delsvar.getId()) {
-        case AKTIVITETSFORMAGA_DELSVAR_ID_23:
+        case FORMAGATROTSBEGRANSNING_DELSVAR_ID_23:
             utlatande.setFormagaTrotsBegransning(getStringContent(delsvar));
             break;
         default:

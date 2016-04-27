@@ -300,7 +300,7 @@ public abstract class SjukersattningUtlatande implements Utlatande, SitUtlatande
         @JsonProperty(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22)
         public abstract Builder setMedicinskaForutsattningarForArbete(String medicinskaForutsattningarForArbete);
 
-        @JsonProperty(AKTIVITETSFORMAGA_SVAR_JSON_ID_23)
+        @JsonProperty(FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23)
         public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
 
         @JsonProperty(OVRIGT_SVAR_JSON_ID_25)
