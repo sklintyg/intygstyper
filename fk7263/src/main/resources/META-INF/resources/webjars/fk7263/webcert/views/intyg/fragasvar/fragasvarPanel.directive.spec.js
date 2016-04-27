@@ -57,6 +57,8 @@ describe('qaPanel', function() {
             $httpBackend = _$httpBackend_;
             IntygService = _IntygService_;
             $scope.qa = { status: 'CLOSED'};
+            $scope.certProperties = {};
+            
             element = angular.element('<div qa-panel' +
                 ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>');
             element = $compile(element)($scope);
