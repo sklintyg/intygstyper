@@ -18,61 +18,7 @@
  */
 package se.inera.certificate.modules.luae_na.model.converter;
 
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_DELSVAR_ID_23;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSFORMAGA_SVAR_ID_23;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_DELSVAR_ID_18;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_ID_18;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_DELSVAR_ID_7;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_ID_7;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_DELSVAR_ID_24;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORSLAG_TILL_ATGARD_SVAR_ID_24;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID_14;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_ID_13;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_DELSVAR_ID_9;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KOMMUNIKATION_SVAR_ID_9;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_DELSVAR_ID_10;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_KONCENTRATION_SVAR_ID_10;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_DELSVAR_ID_11;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_DELSVAR_ID_12;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_SYNHORSELTAL_SVAR_ID_12;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_DELSVAR_ID_2;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_ID_2;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_DELSVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_ID_26;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_DELSVAR_ID_25;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.OVRIGT_SVAR_ID_25;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_DELSVAR_ID_19;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PAGAENDEBEHANDLING_SVAR_ID_19;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_DELSVAR_ID_20;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.PLANERADBEHANDLING_SVAR_ID_20;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_DELSVAR_ID_5;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SJUKDOMSFORLOPP_SVAR_ID_5;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_DELSVAR_ID_21;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.SUBSTANSINTAG_SVAR_ID_21;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_DELSVAR_ID_3;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_ID_3;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_DATUM_DELSVAR_ID_4;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_ID_4;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.UNDERLAG_TYP_DELSVAR_ID_4;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.*;
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getCVSvarContent;
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getStringContent;
 
@@ -88,17 +34,13 @@ import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningN
 import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande.Builder;
 import se.inera.certificate.modules.luae_na.model.internal.Tillaggsfraga;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 
@@ -153,20 +95,7 @@ public final class TransportToInternal {
     }
 
     private static CertificateState getState(Statuskod status) {
-        switch (status.getCode()) {
-        case "DELETE":
-            return CertificateState.DELETED;
-        case "RESTOR":
-            return CertificateState.RESTORED;
-        case "CANCEL":
-            return CertificateState.CANCELLED;
-        case "SENTTO":
-            return CertificateState.SENT;
-        case "RECEIV":
-            return CertificateState.RECEIVED;
-        default:
-            throw new IllegalArgumentException();
-        }
+        return StatusKod.valueOf(status.getCode()).toCertificateState();
     }
 
     private static void setSvar(Builder utlatande, Intyg source) throws ConverterException {

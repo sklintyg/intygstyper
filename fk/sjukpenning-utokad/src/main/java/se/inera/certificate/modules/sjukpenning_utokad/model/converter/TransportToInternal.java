@@ -98,20 +98,7 @@ public final class TransportToInternal {
     }
 
     private static CertificateState getState(Statuskod status) {
-        switch (status.getCode()) {
-        case "DELETE":
-            return CertificateState.DELETED;
-        case "RESTOR":
-            return CertificateState.RESTORED;
-        case "CANCEL":
-            return CertificateState.CANCELLED;
-        case "SENTTO":
-            return CertificateState.SENT;
-        case "RECEIV":
-            return CertificateState.RECEIVED;
-        default:
-            throw new IllegalArgumentException();
-        }
+        return StatusKod.valueOf(status.getCode()).toCertificateState();
     }
 
     private static void setSvar(Builder utlatande, Intyg source) throws ConverterException {

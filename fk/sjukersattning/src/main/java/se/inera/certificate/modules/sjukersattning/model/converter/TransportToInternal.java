@@ -29,10 +29,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
-import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
-import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
-import se.inera.certificate.modules.fkparent.model.internal.Underlag;
-import se.inera.certificate.modules.sjukersattning.model.internal.*;
+import se.inera.certificate.modules.fkparent.model.internal.*;
+import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande.Builder;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.*;
@@ -93,20 +91,7 @@ public final class TransportToInternal {
     }
 
     private static CertificateState getState(Statuskod status) {
-        switch (status.getCode()) {
-        case "DELETE":
-            return CertificateState.DELETED;
-        case "RESTOR":
-            return CertificateState.RESTORED;
-        case "CANCEL":
-            return CertificateState.CANCELLED;
-        case "SENTTO":
-            return CertificateState.SENT;
-        case "RECEIV":
-            return CertificateState.RECEIVED;
-        default:
-            throw new IllegalArgumentException();
-        }
+        return StatusKod.valueOf(status.getCode()).toCertificateState();
     }
 
     private static void setSvar(Builder utlatande, Intyg source) throws ConverterException {
