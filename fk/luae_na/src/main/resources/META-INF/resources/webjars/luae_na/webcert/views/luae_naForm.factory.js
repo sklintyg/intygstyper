@@ -59,8 +59,8 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     className: 'slide-animation',
                     hideExpression: '!model.underlagFinns',
                     templateOptions: {
-                        underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
                         typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                        underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
                     },
                     watcher: {
                         expression: 'model.underlagFinns',
@@ -131,6 +131,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
             fieldGroup: [
                 {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'DFR_22.1'}},
                 {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}}
+                {key: 'forslagTillAtgard', type: 'multi-text', templateOptions: {label: 'FRG_24'}}
             ]
         },
         {
