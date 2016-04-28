@@ -32,7 +32,7 @@ public class AktivitetsersattningNAEntryPoint implements ModuleEntryPoint {
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
     public static final String MODULE_ID = "luae_na";
-    public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning";
+    public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning vid nedsatt arbetsförmåga";
     public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
 
     @Autowired

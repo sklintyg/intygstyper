@@ -10,7 +10,7 @@ var luae_naMessages = {
         'luae_na.button.send': 'Skicka till Försäkringskassan',
 
         // luae_na
-        'luae_na.label.certtitle': 'Läkarutlåtande för aktivitetsersättning nedsatt arbetsförmåga',
+        'luae_na.label.certtitle': 'Läkarutlåtande för aktivitetsersättning vid nedsatt arbetsförmåga',
 
         // TODO: REMOVE THESE AND GENERATE from dynamic labels instead
         'luae_na.label.grundformu': 'Utlåtandet är baserat på',
