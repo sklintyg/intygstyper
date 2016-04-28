@@ -12,7 +12,7 @@
   </parent>
 
   <artifactId>luae_fs</artifactId>
-  <name>Aktivitetsersättning vid förlängd skolgång (läkarintyg)</name>
+  <name>Intygstyper (Läkarintyg aktivitetsersättning vid förlängd skolgång)</name>
 
   <dependencies>
 
