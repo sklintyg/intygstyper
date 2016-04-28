@@ -88,8 +88,6 @@ var luae_naMessages = {
 
         'luae_na.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
         
-        'luae_na.validation.forslagtillatgard.missing': 'Förslag till åtgärd ej giltig.',
-
         'luae_na.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
 
         'luae_na.validation.medicinskaforutsattningarforarbete.missing': 'Patientens medicinska förutsättningar för arbete måste anges.',

@@ -79,7 +79,6 @@ public class InternalDraftValidator {
         // Kategori 7 – Medicinska behandlingar/åtgärder
         // Kategori 8 – Medicinska förutsättningar för arbete
         validateMedicinskaForutsattningarForArbete(utlatande, validationMessages);
-        validateForslagTillAtgard(utlatande, validationMessages);
         // Kategori 9 – Övrigt
         // Kategori 10 – Kontakt
         validateKontaktMedFk(utlatande, validationMessages);
@@ -227,13 +226,6 @@ public class InternalDraftValidator {
         if (StringUtils.isBlank(utlatande.getAktivitetsbegransning())) {
             addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
                     "luea_na.validation.aktivitetsbegransning.missing");
-        }
-    }
-
-    private void validateForslagTillAtgard(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (StringUtils.isBlank(utlatande.getForslagTillAtgard())) {
-            addValidationError(validationMessages, "forslagTillAtgard", ValidationMessageType.EMPTY,
-                    "luea_na.validation.forslagtillatgard.missing");
         }
     }
 

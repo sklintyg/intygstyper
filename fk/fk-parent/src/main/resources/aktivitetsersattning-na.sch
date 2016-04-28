@@ -582,7 +582,7 @@
   <iso:pattern id="q24">
     <iso:rule context="//gn:svar[@id='24']">
       <iso:assert test="count(gn:delsvar[@id='24.1']) = 1">
-        'Förmåga trots begränsningar' måste ha ett 'Beskrivning'.
+        'Förslag till åtgärder' måste ha ett 'Beskrivning'.
       </iso:assert>
       <iso:let name="delsvarsIdExpr" value="'^24\.[1]$'"/>
       <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
