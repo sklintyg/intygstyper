@@ -9,7 +9,7 @@ angular.module('luae_fs').config(function($stateProvider) {
             url :'/luae_fs/view/:certificateId',
             templateUrl: '/web/webjars/luae_fs/minaintyg/views/view-cert.html',
             controller: 'luae_fs.ViewCertCtrl',
-            data : { title: 'Läkarintyg sjukersättning', keepInboxTabActive: true }
+            data : { title: 'Läkarutlåtande för aktivitetsersättning vid förlängd skolgång', keepInboxTabActive: true }
         }).
         state('luae_fs-recipients', {
             url : '/luae_fs/recipients',

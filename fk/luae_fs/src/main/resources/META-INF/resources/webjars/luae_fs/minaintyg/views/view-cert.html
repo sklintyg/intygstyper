@@ -211,13 +211,13 @@
                   </span>
                 </div>
                 <div mi-field filled="cert.underlag" ng-if="cert.underlagFinns">
-                  <table class="table" ng-show="cert.underlag">
+                  <table class="table luae_fs-underlag" ng-show="cert.underlag">
                     <tr>
                       <th><span dynamic-label key="DFR_4.1.RBK"></span></th>
                       <th><span dynamic-label key="DFR_4.2.RBK"></span></th>
                       <th><span dynamic-label key="DFR_4.3.RBK"></span></th>
                     </tr>
-                    <tr ng-repeat="underlag in cert.underlag">
+                    <tr class="luae_fs-underlag" ng-repeat="underlag in cert.underlag">
                       <td id="underlag_{{$index}}_typ"><span dynamic-label key="KV_FKMU_0005.{{underlag.typ}}.RBK"></span></td>
                       <td id="underlag_{{$index}}_datum">{{underlag.datum | date:'longDate'}}</td>
                       <td id="underlag_{{$index}}_hamtasFran">{{underlag.hamtasFran}}</td>

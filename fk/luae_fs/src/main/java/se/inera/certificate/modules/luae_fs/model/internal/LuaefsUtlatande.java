@@ -62,11 +62,6 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
     }
 
     @Override
-    public String getTyp() {
-        return LuaefsEntryPoint.MODULE_ID;
-    }
-
-    @Override
     public abstract String getId();
 
     @Override
@@ -75,10 +70,16 @@ public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
     @Override
     public abstract String getTextVersion();
 
+    @Override
+    public String getTyp() {
+        return LuaefsEntryPoint.MODULE_ID;
+    }
+
 
     // - - - - - - - - - - - - - - - - - - - - - -
     // Kategori 1 – Grund för medicinskt underlag
     // - - - - - - - - - - - - - - - - - - - - - -
+
     // Fråga 1
     @Nullable
     public abstract InternalDate getUndersokningAvPatienten();

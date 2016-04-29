@@ -10,3 +10,15 @@
     margin-bottom: 10px;
 }
 
+table.table.luae_fs-underlag tbody td {
+    font-weight: normal;
+    border: none;
+}
+
+.luae_fs-underlag {
+    margin-bottom: 10px;
+}
+
+.luae_fs-underlag-title {
+    font-weight: bold;
+}

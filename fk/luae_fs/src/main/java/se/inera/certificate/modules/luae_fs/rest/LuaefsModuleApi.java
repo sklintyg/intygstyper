@@ -69,6 +69,7 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
@@ -130,15 +131,12 @@ public class LuaefsModuleApi implements ModuleApi {
      */
     @Override
     public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
-        // TODO
-        return null;
+        throw new NotImplementedException();
     }
 
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
-            throws ModuleException {
-        // TODO
-        return null;
+    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+        throw new NotImplementedException();
     }
 
     /**
