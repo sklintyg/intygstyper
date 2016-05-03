@@ -112,15 +112,16 @@ public class InternalDraftValidator {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
                     "luse.validation.grund-for-mu.annat.incorrect_format");
         }
+
+        // R2
         if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
-                    "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
+                    "luse.validation.grund-for-mu.annat.missing");
         }
-
         // R3
         if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
-                    "luse.validation.grund-for-mu.annat.missing");
+                    "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
         }
 
         if (utlatande.getKannedomOmPatient() == null) {
