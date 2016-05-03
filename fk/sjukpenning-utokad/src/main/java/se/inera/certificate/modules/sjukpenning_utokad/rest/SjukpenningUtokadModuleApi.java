@@ -295,10 +295,13 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
             SjukpenningUtokadUtlatande internal = objectMapper.readValue(jsonString, SjukpenningUtokadUtlatande.class);
             RegisterCertificateType external = InternalToTransport.convert(internal);
             StringWriter writer = new StringWriter();
-            JAXB.marshal(external, writer);
+
+            JAXBElement<RegisterCertificateType> jaxbElement = new JAXBElement<RegisterCertificateType>(new QName("ns2:RegisterCertificate"),
+                    RegisterCertificateType.class, external);
+            JAXBContext.newInstance(RegisterCertificateType.class, DatePeriodType.class).createMarshaller().marshal(jaxbElement, writer);
             xmlString = writer.toString();
 
-        } catch (IOException | ConverterException e) {
+        } catch (IOException | ConverterException | JAXBException e) {
             LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
             throw new ModuleException(e);
         }
