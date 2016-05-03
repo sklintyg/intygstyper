@@ -85,8 +85,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.Strings;
-
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
