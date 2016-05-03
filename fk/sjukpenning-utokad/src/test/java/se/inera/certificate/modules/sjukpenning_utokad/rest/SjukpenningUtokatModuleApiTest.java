@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.certificate.modules.sjukersattning.rest;
+package se.inera.certificate.modules.sjukpenning_utokad.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -44,12 +44,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
-import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
-import se.inera.certificate.modules.sjukersattning.model.utils.ScenarioFinder;
-import se.inera.certificate.modules.sjukersattning.model.utils.ScenarioNotFoundException;
-import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.WebcertModelFactory;
+import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
+import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
+import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioFinder;
+import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioNotFoundException;
+import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
@@ -64,7 +64,7 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SjukersattningModuleApiTest {
+public class SjukpenningUtokatModuleApiTest {
 
     private static final String LOGICAL_ADDRESS = "logical address";
 
@@ -90,13 +90,13 @@ public class SjukersattningModuleApiTest {
     private GetCertificateResponderInterface getCertificateResponder;
 
     @InjectMocks
-    private SjukersattningModuleApi moduleApi;
+    private SjukpenningUtokadModuleApi moduleApi;
 
     @Test
     public void testSendCertificateShouldUseXml() {
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(createReturnVal(ResultCodeType.OK));
         try {
-            String xmlContents = Resources.toString(Resources.getResource("sjukersattning3.xml"), Charsets.UTF_8);
+            String xmlContents = Resources.toString(Resources.getResource("transport/sjukpenning-utokat2.xml"), Charsets.UTF_8);
             InternalModelHolder spy = spy(new InternalModelHolder("internal model", xmlContents));
             moduleApi.sendCertificateToRecipient(spy, LOGICAL_ADDRESS, null);
 
@@ -113,7 +113,7 @@ public class SjukersattningModuleApiTest {
     public void testSendCertificateShouldFailWhenErrorIsReturned() throws ModuleException {
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(createReturnVal(ResultCodeType.ERROR));
         try {
-            String xmlContents = Resources.toString(Resources.getResource("sjukersattning3.xml"), Charsets.UTF_8);
+            String xmlContents = Resources.toString(Resources.getResource("transport/sjukpenning-utokat2.xml"), Charsets.UTF_8);
             moduleApi.sendCertificateToRecipient(new InternalModelHolder("internal model", xmlContents), LOGICAL_ADDRESS, null);
         } catch (IOException e) {
             fail();
@@ -142,7 +142,7 @@ public class SjukersattningModuleApiTest {
 
     @Test
     public void testValidateShouldUseValidator() throws Exception {
-        when(objectMapper.readValue(eq("internal model"), eq(SjukersattningUtlatande.class))).thenReturn(null);
+        when(objectMapper.readValue(eq("internal model"), eq(SjukpenningUtokadUtlatande.class))).thenReturn(null);
         moduleApi.validateDraft(new InternalModelHolder("internal model"));
         verify(internalDraftValidator, times(1)).validateDraft(any());
     }
@@ -165,7 +165,7 @@ public class SjukersattningModuleApiTest {
     @Test
     public void testCreateNewInternalFromTemplate() throws Exception {
         when(webcertModelFactory.createCopy(any(), any())).thenReturn(null);
-        when(objectMapper.readValue(eq("internal model"), eq(SjukersattningUtlatande.class))).thenReturn(null);
+        when(objectMapper.readValue(eq("internal model"), eq(SjukpenningUtokadUtlatande.class))).thenReturn(null);
         doAnswer(a -> ((Writer) a.getArguments()[0]).append("internal model")).when(objectMapper).writeValue(any(Writer.class), anyString());
 
         moduleApi.createNewInternalFromTemplate(createCopyHolder(), new InternalModelHolder("internal model"));
@@ -213,7 +213,7 @@ public class SjukersattningModuleApiTest {
         final String utlatandeJson = "utlatandeJson";
         final String internalModel = "internal model";
 
-        when(objectMapper.readValue(eq(utlatandeJson), eq(SjukersattningUtlatande.class)))
+        when(objectMapper.readValue(eq(utlatandeJson), eq(SjukpenningUtokadUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(objectMapper.writeValueAsString(any())).thenReturn(internalModel);
         when(moduleService.getDescriptionFromDiagnosKod(any(), any())).thenReturn("description");
@@ -270,7 +270,7 @@ public class SjukersattningModuleApiTest {
     @Test
     public void testGetUtlatandeFromJson() throws Exception {
         final String utlatandeJson = "utlatandeJson";
-        when(objectMapper.readValue(eq(utlatandeJson), eq(SjukersattningUtlatande.class)))
+        when(objectMapper.readValue(eq(utlatandeJson), eq(SjukpenningUtokadUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         Utlatande utlatandeFromJson = moduleApi.getUtlatandeFromJson(utlatandeJson);
         assertNotNull(utlatandeFromJson);
@@ -279,8 +279,8 @@ public class SjukersattningModuleApiTest {
     @Test
     public void testMarshall() throws Exception {
         final String jsonString = "internal model";
-        when(objectMapper.readValue(eq(jsonString), eq(SjukersattningUtlatande.class)))
-                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(eq(jsonString), eq(SjukpenningUtokadUtlatande.class)))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-prognos").asInternalModel());
         String res = moduleApi.marshall(jsonString);
         assertNotNull(res);
     }
@@ -288,7 +288,7 @@ public class SjukersattningModuleApiTest {
     @Test(expected = ModuleException.class)
     public void testMarshallThrowsModuleException() throws Exception {
         final String jsonString = "internal model";
-        when(objectMapper.readValue(eq(jsonString), eq(SjukersattningUtlatande.class))).thenThrow(new IOException());
+        when(objectMapper.readValue(eq(jsonString), eq(SjukpenningUtokadUtlatande.class))).thenThrow(new IOException());
         moduleApi.marshall(jsonString);
         fail();
     }
@@ -296,7 +296,7 @@ public class SjukersattningModuleApiTest {
     @Test
     public void testUpdateBeforeSave() throws Exception {
         final String internalModel = "internal model";
-        when(objectMapper.readValue(anyString(), eq(SjukersattningUtlatande.class)))
+        when(objectMapper.readValue(anyString(), eq(SjukpenningUtokadUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
         InternalModelResponse response = moduleApi.updateBeforeSave(new InternalModelHolder(internalModel), createHosPersonal());
@@ -306,7 +306,7 @@ public class SjukersattningModuleApiTest {
     @Test
     public void testUpdateBeforeSigning() throws Exception {
         final String internalModel = "internal model";
-        when(objectMapper.readValue(anyString(), eq(SjukersattningUtlatande.class)))
+        when(objectMapper.readValue(anyString(), eq(SjukpenningUtokadUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
         InternalModelResponse response = moduleApi.updateBeforeSigning(new InternalModelHolder(internalModel), createHosPersonal(), null);
