@@ -86,8 +86,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.Strings;
-
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
@@ -179,7 +177,7 @@ public final class UtlatandeToIntyg {
         }
 
         if (source.getNyBedomningDiagnosgrund() != null) {
-            if (source.getNyBedomningDiagnosgrund() && !Strings.isNullOrEmpty(source.getDiagnosForNyBedomning())) {
+            if (source.getNyBedomningDiagnosgrund()) {
                 svars.add(aSvar(DIAGNOSGRUND_SVAR_ID_7).withDelsvar(DIAGNOSGRUND_DELSVAR_ID_7, source.getDiagnosgrund())
                         .withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7, source.getNyBedomningDiagnosgrund().toString())
                         .withDelsvar(DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7, source.getDiagnosForNyBedomning().toString())

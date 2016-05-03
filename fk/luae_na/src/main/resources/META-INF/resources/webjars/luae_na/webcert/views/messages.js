@@ -85,6 +85,8 @@ var luae_naMessages = {
         'luae_na.validation.diagnos2.psykisk.length-4': 'Diagnoskod på diagnosrad 3 ska anges med minst fyra positioner då en psykisk diagnos anges.',
         'luae_na.validation.diagnos2.description.missing': 'Diagnostext saknas på diagnosrad 3',
         'luae_na.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
+        'luae_na.validation.diagnosfornybedomning.missing' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Ja\' måste \'Diagnos för ny bedömning\' fyllas i',
+        'luae_na.validation.diagnosfornybedomning.incorrect_combination' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Nej\' får inte \'Diagnos för ny bedömning\' fyllas i',
 
         'luae_na.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
         

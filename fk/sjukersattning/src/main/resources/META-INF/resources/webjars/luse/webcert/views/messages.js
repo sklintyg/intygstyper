@@ -86,6 +86,7 @@ var sjukersattningMessages = {
         'luse.validation.diagnos2.description.missing': 'Diagnostext saknas på diagnosrad 3',
         'luse.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
         'luse.validation.diagnosfornybedomning.missing' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Ja\' måste \'Diagnos för ny bedömning\' fyllas i',
+        'luse.validation.diagnosfornybedomning.incorrect_combination' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Nej\' får inte \'Diagnos för ny bedömning\' fyllas i',
 
         'luse.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
 

@@ -261,10 +261,17 @@ public class InternalDraftValidator {
                     "luse.validation.nybedomningdiagnosgrund.missing");
         }
 
-        if (utlatande.getDiagnosgrund() != null && utlatande.getNyBedomningDiagnosgrund() != null
-                && utlatande.getNyBedomningDiagnosgrund() && Strings.isNullOrEmpty(utlatande.getDiagnosForNyBedomning())) {
+        // R13
+        if (utlatande.getNyBedomningDiagnosgrund() != null && utlatande.getNyBedomningDiagnosgrund()
+                && StringUtils.isBlank(utlatande.getDiagnosForNyBedomning())) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
                     "luse.validation.diagnosfornybedomning.missing");
+        }
+        // R14 Inverted test of R13
+        if ((utlatande.getNyBedomningDiagnosgrund() == null || !utlatande.getNyBedomningDiagnosgrund())
+                && !Strings.isNullOrEmpty(utlatande.getDiagnosForNyBedomning())) {
+            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                    "luse.validation.diagnosfornybedomning.incorrect_combination");
         }
     }
 
