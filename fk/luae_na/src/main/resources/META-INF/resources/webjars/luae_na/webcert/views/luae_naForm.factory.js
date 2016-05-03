@@ -89,6 +89,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                 {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'DFR_7.2'}},
                 {
                     key: 'diagnosForNyBedomning',
+                    className: 'fold-animation',
                     type: 'multi-text',
                     templateOptions: {label: 'DFR_7.3'},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
