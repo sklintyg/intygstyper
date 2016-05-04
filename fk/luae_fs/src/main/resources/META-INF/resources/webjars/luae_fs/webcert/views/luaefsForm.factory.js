@@ -119,7 +119,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                 },
                 {
                     wrapper: 'wc-field-static',
-                    templateOptions: {staticLabel: 'luae_fs.label.vardenhet'},
+                    templateOptions: {staticLabel: 'luae_fs.label.vardenhet', categoryName: 'vardenhet'},
                     fieldGroup: [
                         {type: 'label-vardenhet'},
                         {

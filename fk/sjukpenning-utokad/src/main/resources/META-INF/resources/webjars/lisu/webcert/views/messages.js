@@ -112,11 +112,11 @@ var sjukpenningUtokadMessages = {
 
         'lisu.validation.kontakt.invalid_combination': 'Anledning får inte fyllas i när man svarat nej på kontakt.',
 
-        'lisu.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
-        'lisu.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
-        'lisu.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges (Fält 15)',
-        'lisu.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format (Fält 15)',
-        'lisu.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges (Fält 15)',
+        'lisu.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges',
+        'lisu.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges',
+        'lisu.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges',
+        'lisu.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format',
+        'lisu.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges',
 
 /*
 

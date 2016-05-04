@@ -96,11 +96,11 @@ var sjukersattningMessages = {
 
         'luse.validation.kontakt.incorrect_combination' : 'Anledning till kontakt kan endast fyllas i om \'kontakt med FK önskas\' är vald.',
 
-        'luse.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
-        'luse.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
-        'luse.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges (Fält 15)',
-        'luse.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format (Fält 15)',
-        'luse.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges (Fält 15)',
+        'luse.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges',
+        'luse.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges',
+        'luse.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges',
+        'luse.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format',
+        'luse.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges',
 
 
         // errors

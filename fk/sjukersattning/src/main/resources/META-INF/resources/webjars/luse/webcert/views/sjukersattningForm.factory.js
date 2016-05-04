@@ -167,7 +167,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
         },
         {
             wrapper: 'wc-field-static',
-            templateOptions: {staticLabel: 'luse.label.vardenhet'},
+            templateOptions: {staticLabel: 'luse.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {type: 'label-vardenhet'},
                 {

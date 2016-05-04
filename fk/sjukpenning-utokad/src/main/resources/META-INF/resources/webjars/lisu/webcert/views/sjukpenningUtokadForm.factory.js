@@ -260,7 +260,7 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
         },
         {
             wrapper: 'wc-field-static',
-            templateOptions: {staticLabel: 'lisu.label.vardenhet'},
+            templateOptions: {staticLabel: 'lisu.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {type: 'label-vardenhet'},
                 {

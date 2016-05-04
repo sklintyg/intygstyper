@@ -96,11 +96,11 @@ var luae_naMessages = {
 
         'luae_na.validation.kontakt.incorrect_combination' : 'Anledning till kontakt kan endast fyllas i om \'kontakt med FK önskas\' är vald.',
 
-        'luae_na.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges (Fält 15)',
-        'luae_na.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges (Fält 15)',
-        'luae_na.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges (Fält 15)',
-        'luae_na.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format (Fält 15)',
-        'luae_na.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges (Fält 15)',
+        'luae_na.validation.vardenhet.telefonnummer.missing': 'Telefonnummer för vårdenhet måste anges',
+        'luae_na.validation.vardenhet.postadress.missing': 'Postadress för vårdenhet måste anges',
+        'luae_na.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges',
+        'luae_na.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format',
+        'luae_na.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges',
 
 
         // errors
