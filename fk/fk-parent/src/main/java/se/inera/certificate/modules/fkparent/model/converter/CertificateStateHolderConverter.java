@@ -25,6 +25,7 @@ import static se.inera.certificate.modules.fkparent.model.converter.RespConstant
 
 import java.util.*;
 
+import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
@@ -86,28 +87,11 @@ public final class CertificateStateHolderConverter {
     }
 
     private static Part toPart(String target) {
+        PartKod partKod = PartKod.fromValue(target);
         Part part = new Part();
+        part.setCode(partKod.name());
         part.setCodeSystem(PART_CODE_SYSTEM);
-        switch (target) {
-            case "FK":
-                part.setCode("FKASSA");
-                part.setDisplayName("Försäkringskassan");
-                break;
-            case "MI":
-                part.setCode("INVANA");
-                part.setDisplayName("Invånaren");
-                break;
-            case "TS":
-                part.setCode("TRANSP");
-                part.setDisplayName("Transportstyrelsen");
-                break;
-            case "HV":
-                part.setCode("HSVARD");
-                part.setDisplayName("Hälso- och sjukvården");
-                break;
-            default:
-                throw new IllegalArgumentException(target);
-        }
+        part.setDisplayName(partKod.getDisplayName());
         return part;
     }
 }
