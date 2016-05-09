@@ -157,11 +157,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     type: 'multi-text',
                     className: 'fold-animation',
                     hideExpression: '!model.kontaktMedFk',
-                    templateOptions: {label: 'DFR_26.2'},
-                    watcher: {
-                        expression: 'model.kontaktMedFk',
-                        listener: FactoryHelper.anledningKontaktListener
-                    }
+                    templateOptions: {label: 'DFR_26.2'}
                 }
             ]
         },

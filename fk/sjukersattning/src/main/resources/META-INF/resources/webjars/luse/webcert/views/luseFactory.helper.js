@@ -17,20 +17,7 @@ angular.module('luse').factory('luse.FormFactoryHelper', ['common.ObjectHelper',
         }
     }
 
-    function _anledningKontaktListener(field, newValue, oldValue, scope, stopWatching) {
-        var model = scope.model;
-        if (newValue === false) {
-            model.updateToAttic(model.properties.anledningTillKontakt);
-            model.clear(model.properties.anledningTillKontakt);
-        } else {
-            if(model.isInAttic(model.properties.anledningTillKontakt)){
-                model.restoreFromAttic(model.properties.anledningTillKontakt);
-            }
-        }
-    }
-
     return {
-        underlagListener: _underlagListener,
-        anledningKontaktListener: _anledningKontaktListener
+        underlagListener: _underlagListener
     };
 }]);

@@ -159,11 +159,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     type: 'multi-text',
                     className: 'fold-animation',
                     hideExpression: '!model.kontaktMedFk',
-                    templateOptions: {label: 'DFR_26.2'},
-                    watcher: {
-                        expression: 'model.kontaktMedFk',
-                        listener: FactoryHelper.anledningKontaktListener
-                    }
+                    templateOptions: {label: 'DFR_26.2'}
                 }
             ]
         },
