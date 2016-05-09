@@ -4,11 +4,11 @@ angular.module('luae_fs').factory('luae_fs.FormFactoryHelper', ['common.ObjectHe
     function _underlagListener(field, newValue, oldValue, scope, stopWatching) {
         var model = scope.model;
         if (newValue) {
-            if(model.isInAttic(model.properties.underlag)){
+            if (model.isInAttic(model.properties.underlag)) {
                 model.restoreFromAttic(model.properties.underlag);
             }
             if (!model.underlag || model.underlag.length === 0) {
-                model.underlag.push({ typ: null, datum: null, hamtasFran: null });
+                model.underlag.push({typ: null, datum: null, hamtasFran: null});
             }
         } else {
             model.updateToAttic(model.properties.underlag);
@@ -17,20 +17,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactoryHelper', ['common.ObjectHe
         }
     }
 
-    function _anledningKontaktListener(field, newValue, oldValue, scope, stopWatching) {
-        var model = scope.model;
-        if (newValue === false) {
-            model.updateToAttic(model.properties.anledningTillKontakt);
-            model.clear(model.properties.anledningTillKontakt);
-        } else {
-            if(model.isInAttic(model.properties.anledningTillKontakt)){
-                model.restoreFromAttic(model.properties.anledningTillKontakt);
-            }
-        }
-    }
-
     return {
-        underlagListener: _underlagListener,
-        anledningKontaktListener: _anledningKontaktListener
+        underlagListener: _underlagListener
     };
 }]);
