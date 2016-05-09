@@ -6,19 +6,23 @@
 
       <div class="webcert-bottom-padding-section" ng-show="certProperties.isLoaded">
 
-        <h2 class="col-head" ng-show="certProperties.kompletteringOnly">Kompletteringar<span wc-help-mark field-help-text="qa.help.kompletteringar"></span></h2>
+        <h2 class="col-head" ng-show="certProperties.kompletteringOnly">Kompletteringar<span wc-help-mark
+                                                                                             field-help-text="qa.help.kompletteringar"></span>
+        </h2>
 
         <!-- Question button -->
-        <div ng-show="!certProperties.kompletteringOnly && !certProperties.isRevoked && !widgetState.newQuestionOpen && (viewState.isIntygOnSendQueue || certProperties.isSent || qaList.length>0)"
+        <div
+            ng-show="!certProperties.kompletteringOnly && !certProperties.isRevoked && !widgetState.newQuestionOpen && (viewState.isIntygOnSendQueue || certProperties.isSent || qaList.length>0)"
             wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}">
           <div class="form-group">
-            <button type="button" class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga till
+            <button type="button" class="btn btn-success" ng-click="toggleQuestionForm()" id="askQuestionBtn">Ny fråga
+              till
               Försäkringskassan
             </button>
           </div>
         </div>
-        <div ng-if="viewState.isIntygOnSendQueue === false && certProperties.isSent === false && (qaList.length<1)" wc-check-vardenhet
-             vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}" class="alert alert-info"
+        <div ng-if="viewState.isIntygOnSendQueue === false && certProperties.isSent === false && (qaList.length<1)"
+             wc-check-vardenhet vardenhet="{{cert.grundData.skapadAv.vardenhet.enhetsid}}" class="alert alert-info"
              id="certificate-is-not-sent-to-fk-message-text">
           <strong>Intyget är inte skickat till Försäkringskassan.</strong><br> Det går därför inte att ställa frågor om
           intyget.
@@ -33,7 +37,8 @@
         <div ng-show="widgetState.newQuestionOpen">
           <div class="form-group">
             <div class="alert alert-info">
-              Här kan du föra en dialog med Försäkringskassan om ett intyg. Medicinsk information ska endast skickas via signerade intyg.
+              Här kan du föra en dialog med Försäkringskassan om ett intyg. Medicinsk information ska endast skickas via
+              signerade intyg.
             </div>
           </div>
           <div class="form-group">
@@ -63,7 +68,8 @@
               <img src="/img/loader-small-green.gif" ng-show="newQuestion.updateInProgress"> Skicka till
               Försäkringskassan
             </button>
-            <button type="button" class="btn btn-default btn-secondary" ng-click="toggleQuestionForm()" id="cancelQuestionBtn">Avbryt
+            <button type="button" class="btn btn-default btn-secondary" ng-click="toggleQuestionForm()"
+                    id="cancelQuestionBtn">Avbryt
               fråga
             </button>
           </div>
@@ -84,20 +90,27 @@
         </div>
       </div>
 
-      <div class="webcert-col-section table-padding-top qa-list-section" ng-show="qaList.length > 0" id="unhandledQACol">
+      <div class="webcert-col-section table-padding-top qa-list-section" ng-show="qaList.length > 0"
+           id="unhandledQACol">
 
-          <div ng-show="widgetState.showAllKompletteringarHandled" id="unhandledQAColNoEntries">
-              Alla kompletteringar är hanterade.
-          </div>
+        <div ng-show="widgetState.showAllKompletteringarHandled" id="unhandledQAColNoEntries">
+          Alla kompletteringar är hanterade.
+        </div>
 
         <div ng-repeat="qa in qaList | filter:openIssuesFilter | orderBy:'senasteHandelseDatum':true" class="qa-item">
-          <div qa-panel panel-id="unhandled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
+          <div qa-panel panel-id="unhandled" qa="qa" qa-list="qaList" cert="cert"
+               cert-properties="certProperties"></div>
         </div>
 
         <div ng-show="!certProperties.kompletteringOnly">
-          <h2 class="col-head" ng-show="qaListFiltered.length > 0">Tidigare frågor och svar <span wc-help-mark field-help-text="qa.help.handled"></span></h2>
-          <div ng-repeat="qa in qaListFiltered = (qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true)" class="qa-item">
-            <div qa-panel panel-id="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>
+          <h2 class="col-head" ng-show="qaListFiltered.length > 0">Tidigare frågor och svar <span wc-help-mark
+                                                                                                  field-help-text="qa.help.handled"></span>
+          </h2>
+          <div
+              ng-repeat="qa in qaListFiltered = (qaList | filter:closedIssuesFilter | orderBy:'senasteHandelseDatum':true)"
+              class="qa-item">
+            <div qa-panel panel-id="handled" qa="qa" qa-list="qaList" cert="cert"
+                 cert-properties="certProperties"></div>
           </div>
         </div>
 

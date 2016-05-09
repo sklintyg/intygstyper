@@ -111,7 +111,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
                 // If there aren't any kompletteringar that aren't handled already, we can show the sign that all kompletteringar are handled.
                 widgetState.showAllKompletteringarHandled = !isAnyKompletteringarNotHandled;
                 return filteredList;
-            };
+            }
 
             this.filterKompletteringar = filterKompletteringar;
 

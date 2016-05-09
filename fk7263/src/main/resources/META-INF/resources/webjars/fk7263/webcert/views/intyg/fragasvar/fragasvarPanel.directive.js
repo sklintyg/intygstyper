@@ -48,7 +48,6 @@ angular.module('fk7263').directive('qaPanel',
 
                     $scope.cannotKomplettera = false;
 
-//                    $scope.handledPanel = $attrs.type === 'handled';
                     $scope.handledFunction = function(newState) {
                         if (arguments.length) {
                             if (newState) {
@@ -62,37 +61,6 @@ angular.module('fk7263').directive('qaPanel',
                             return $scope.qa.status === 'CLOSED';
                         }
                     };
-/*
-                    function delayFindMessageAndAct(timeout, qaList, message, onFound) {
-                        $timeout(function() {
-                            var i;
-                            for(i = 0; i < qaList.length; i++){
-                                if(qaList[i].internReferens === message.id && qaList[i].proxyMessage !== undefined) {
-                                    onFound(i);
-                                    break;
-                                }
-                            }
-                        }, timeout);
-
-                        $log.debug('Message not found:' + message.id);
-                    }
-*/
-/*                    function addListMessage(qaList, qa, messageId) {
-                        var messageProxy = {};
-                        messageProxy.proxyMessage = messageId;
-                        messageProxy.id = qa.internReferens;
-                        messageProxy.internReferens = qa.internReferens;
-                        messageProxy.senasteHandelseDatum = qa.senasteHandelseDatum;
-                        messageProxy.messageStatus = qa.status;
-                        qaList.push(messageProxy);
-
-                        delayFindMessageAndAct(5000, qaList, messageProxy, function(index) {
-                            qaList[index].messageStatus = 'HIDDEN';
-                            delayFindMessageAndAct(2000, qaList, messageProxy, function(index) {
-                                qaList.splice(index, 1);
-                            });
-                        });
-                    }*/
 
                     $scope.sendAnswer = function sendAnswer(qa) {
                         qa.updateInProgress = true; // trigger local spinner
