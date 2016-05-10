@@ -26,6 +26,8 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
@@ -37,16 +39,17 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
 
-    private static final String CERTIFICATE_DISPLAY_NAME = TsBasEntryPoint.MODULE_NAME;
     private static final String INTYG_AVSER_CODE_SYSTEM = "24c41b8d-258a-46bf-a08a-b90738b28770";
     private static final String INTYG_AVSER_SVAR_ID_1 = "1";
     private static final String INTYG_AVSER_DELSVAR_ID_1 = "1.1";
+    private static final String NOT_AVAILABLE = "N/A";
 
     private UtlatandeToIntyg() {
     }
 
     public static Intyg convert(Utlatande source) {
         Intyg intyg = InternalConverterUtil.getIntyg(source);
+        complementArbetsplatskodIfMissing(intyg);
         intyg.setTyp(getTypAvIntyg(source));
         intyg.getSvar().addAll(getSvar(source));
         return intyg;
@@ -56,8 +59,14 @@ public final class UtlatandeToIntyg {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
         typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
-        typAvIntyg.setDisplayName(CERTIFICATE_DISPLAY_NAME);
+        typAvIntyg.setDisplayName(TsBasEntryPoint.MODULE_NAME);
         return typAvIntyg;
+    }
+
+    private static void complementArbetsplatskodIfMissing(Intyg intyg) {
+        if (StringUtils.isBlank(intyg.getSkapadAv().getEnhet().getArbetsplatskod().getExtension())) {
+            intyg.getSkapadAv().getEnhet().getArbetsplatskod().setExtension(NOT_AVAILABLE);
+        }
     }
 
     private static List<Svar> getSvar(Utlatande source) {
@@ -68,7 +77,8 @@ public final class UtlatandeToIntyg {
             for (IntygAvserKategori korkortstyp : source.getIntygAvser().getKorkortstyp()) {
                 IntygAvserEnum intygAvser = IntygAvserEnum.valueOf(korkortstyp.name());
                 svars.add(aSvar(INTYG_AVSER_SVAR_ID_1)
-                        .withDelsvar(INTYG_AVSER_DELSVAR_ID_1, aCV(INTYG_AVSER_CODE_SYSTEM, intygAvser.getCode(), intygAvser.getDescription())).build());
+                        .withDelsvar(INTYG_AVSER_DELSVAR_ID_1, aCV(INTYG_AVSER_CODE_SYSTEM, intygAvser.getCode(), intygAvser.getDescription()))
+                        .build());
             }
         }
 

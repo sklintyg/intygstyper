@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 import javax.xml.bind.JAXBElement;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
@@ -147,8 +148,42 @@ public class UtlatandeToIntygTest {
         assertEquals(IntygAvserEnum.TRAKTOR.getDescription(), o.getValue().getDisplayName());
     }
 
+    @Test
+    public void testConvertComplementsArbetsplatskodIfNull() {
+        final String arbetsplatskod = null;
+        Utlatande utlatande = buildUtlatande(arbetsplatskod);
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(StringUtils.isNotBlank(intyg.getSkapadAv().getEnhet().getArbetsplatskod().getExtension()));
+    }
+
+    @Test
+    public void testConvertComplementsArbetsplatskodIfBlank() {
+        final String arbetsplatskod = " ";
+        Utlatande utlatande = buildUtlatande(arbetsplatskod);
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(StringUtils.isNotBlank(intyg.getSkapadAv().getEnhet().getArbetsplatskod().getExtension()));
+    }
+
+    @Test
+    public void testConvertComplementsArbetsplatskodDoesNotOverride() {
+        final String arbetsplatskod = "000000";
+        Utlatande utlatande = buildUtlatande(arbetsplatskod);
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertEquals(arbetsplatskod, intyg.getSkapadAv().getEnhet().getArbetsplatskod().getExtension());
+    }
+
     private Utlatande buildUtlatande() {
         return buildUtlatande(null, null);
+    }
+
+    private Utlatande buildUtlatande(String arbetsplatskod) {
+        return buildUtlatande("intygsId", "enhetsId", "enhetsnamn", "patientPersonId",
+                "skapadAvFullstandigtNamn", "skapadAvPersonId", LocalDateTime.now(), arbetsplatskod, "postadress", "postNummer", "postOrt",
+                "epost", "telefonNummer", "vardgivarid", "vardgivarNamn", "forskrivarKod", "fornamn", "efternamn", "mellannamn", "patientPostadress",
+                "patientPostnummer", "patientPostort", null, null);
     }
 
     private Utlatande buildUtlatande(RelationKod relationKod, String relationIntygsId) {
