@@ -41,8 +41,14 @@
     },
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
-  "underlag": [],
-  "underlagFinns": false,
+  "underlag": [
+    {
+      "hamtasFran": "   ",
+      "datum": "2015-09-03",
+      "typ": 6
+    }
+  ],
+  "underlagFinns": true,
   "tillaggsfragor": [],
   "kannedomOmPatient": "2015-01-07",
   "undersokningAvPatienten": "2015-09-09",

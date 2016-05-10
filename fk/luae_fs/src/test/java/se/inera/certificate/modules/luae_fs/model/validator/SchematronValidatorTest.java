@@ -41,6 +41,14 @@ public class SchematronValidatorTest {
     }
 
     @Test
+    public void failsWhenUnderlagFinnesAndHamtasFranHasWhitespaces() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/scenarios/fail-underlagfinnes-whitespace.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
+        assertEquals(1, response.getValidationErrors().size());
+    }
+
+    @Test
     public void failsWhenFourDiagnoser() throws Exception {
         String inputXml = Resources.toString(getResource("transport/scenarios/fail-fyradiagnoser.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
@@ -56,6 +64,13 @@ public class SchematronValidatorTest {
         assertEquals(1, response.getValidationErrors().size());
     }
 
+    @Test
+    public void failsWhenFunktionsnedsattningHasOnlyWhitespaces() throws Exception {
+        String inputXml = Resources.toString(getResource("transport/scenarios/fail-funktionsnedsattning-whitespace.xml"), Charsets.UTF_8);
+        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
+        assertEquals(2, response.getValidationErrors().size());
+    }
 
 //    @Test
 //    public void validXmlPassesTest() throws Exception {

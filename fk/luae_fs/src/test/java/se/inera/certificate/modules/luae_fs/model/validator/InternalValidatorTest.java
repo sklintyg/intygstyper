@@ -1,5 +1,7 @@
 package se.inera.certificate.modules.luae_fs.model.validator;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
@@ -7,8 +9,6 @@ import se.inera.certificate.modules.luae_fs.model.utils.ScenarioFinder;
 import se.inera.certificate.modules.luae_fs.model.utils.ScenarioNotFoundException;
 import se.inera.certificate.modules.luae_fs.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-
-import static org.junit.Assert.assertEquals;
 
 public class InternalValidatorTest {
 
@@ -30,7 +30,6 @@ public class InternalValidatorTest {
         assertEquals(numErrors, getNumberOfInternalValidationErrors(internalValidationResponse));
     }
 
-
     @Test
     public void failsWhenFourDiagnosis() throws ScenarioNotFoundException {
         int numErrors = 1;
@@ -49,6 +48,23 @@ public class InternalValidatorTest {
         assertEquals(numErrors, getNumberOfInternalValidationErrors(internalValidationResponse));
     }
 
+    @Test
+    public void failsWhenUnderlagFinnesIsTrueAndHamtasFranHasOnlyWhitespaces() throws ScenarioNotFoundException {
+        int numErrors = 1;
+        LuaefsUtlatande utlatandeFromJson = ScenarioFinder.getInternalScenario("fail-underlagfinnes-whitespace").asInternalModel();
+        InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
+        ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
+        assertEquals(numErrors, getNumberOfInternalValidationErrors(internalValidationResponse));
+    }
+
+    @Test
+    public void failsWhenFunktionsnedsattningHasOnlyWhitespaces() throws ScenarioNotFoundException {
+        int numErrors = 2;
+        LuaefsUtlatande utlatandeFromJson = ScenarioFinder.getInternalScenario("fail-funktionsnedsattning-whitespace").asInternalModel();
+        InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
+        ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
+        assertEquals(numErrors, getNumberOfInternalValidationErrors(internalValidationResponse));
+    }
 
 //    @Test
 //    public void test() throws ScenarioNotFoundException {

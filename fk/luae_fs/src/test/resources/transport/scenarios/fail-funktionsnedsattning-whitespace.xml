@@ -79,7 +79,17 @@
       <delsvar id="2.1">2015-12-08</delsvar>
     </svar>
     <svar id="3">
-      <delsvar id="3.1">false</delsvar>
+      <delsvar id="3.1">true</delsvar>
+    </svar>
+    <svar id="4">
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>PSYKOLOG</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2015-12-08</delsvar>
+      <delsvar id="4.3">Hämtas på posten</delsvar>
     </svar>
     <svar id="6">
       <delsvar id="6.1">Skada på multipla böjmuskler och deras senor på handleds- och handnivå</delsvar>
@@ -91,10 +101,10 @@
       </delsvar>
     </svar>
     <svar id="15">
-      <delsvar id="15.1">Skedde vid skoldansen</delsvar>
+      <delsvar id="15.1">   </delsvar>
     </svar>
     <svar id="16">
-      <delsvar id="16.1">Har svårt för dansen på gympan</delsvar>
+      <delsvar id="16.1">   </delsvar>
     </svar>
     <svar id="26">
       <delsvar id="26.1">false</delsvar>

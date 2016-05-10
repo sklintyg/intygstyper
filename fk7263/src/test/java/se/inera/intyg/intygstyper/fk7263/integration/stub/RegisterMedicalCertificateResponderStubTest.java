@@ -19,28 +19,30 @@
 
 package se.inera.intyg.intygstyper.fk7263.integration.stub;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
-import java.util.Map;
-
-import javax.xml.bind.*;
-import javax.xml.transform.stream.StreamSource;
-
-import org.junit.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.w3.wsaddressing10.AttributedURIType;
-
-import junit.framework.Assert;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.common.support.stub.MedicalCertificatesStore;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.stream.StreamSource;
+import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterMedicalCertificateResponderStubTest {
@@ -95,6 +97,6 @@ public class RegisterMedicalCertificateResponderStubTest {
         request.getLakarutlatande().getPatient().getPersonId().setExtension("121212-1212");
 
         RegisterMedicalCertificateResponseType response = stub.registerMedicalCertificate(logicalAddress, request);
-        Assert.assertEquals(ResultCodeEnum.ERROR, response.getResult().getResultCode());
+        assertEquals(ResultCodeEnum.ERROR, response.getResult().getResultCode());
     }
 }

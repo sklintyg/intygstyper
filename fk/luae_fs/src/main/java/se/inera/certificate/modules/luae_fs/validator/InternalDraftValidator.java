@@ -149,7 +149,7 @@ public class InternalDraftValidator {
         } else if (utlatande.getUnderlagFinns() && (utlatande.getUnderlag() == null || utlatande.getUnderlag().isEmpty())) {
             validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luae_fs.validation.underlagfinns.missing");
-        } else if (!utlatande.getUnderlagFinns() && !utlatande.getUnderlag().isEmpty()) {
+        } else if (!(utlatande.getUnderlagFinns() || utlatande.getUnderlag().isEmpty())) {
             // R6
             validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
                     "luae_fs.validation.underlagfinns.incorrect_combination");
@@ -180,7 +180,7 @@ public class InternalDraftValidator {
                 validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
                         "luae_fs.validation.underlag.date.incorrect_format");
             }
-            if (underlag.getHamtasFran() == null) {
+            if (underlag.getHamtasFran() == null || underlag.getHamtasFran().trim().isEmpty()) {
                 validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                         "luae_fs.validation.underlag.hamtas-fran.missing");
             }
