@@ -22,13 +22,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.certificate.modules.fkparent.support.FkAbstractModuleEntryPoint;
 import se.inera.certificate.modules.luae_na.rest.AktivitetsersattningNAModuleApi;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
 
-public class AktivitetsersattningNAEntryPoint implements ModuleEntryPoint {
+public class AktivitetsersattningNAEntryPoint extends FkAbstractModuleEntryPoint {
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
     public static final String MODULE_ID = "luae_na";
@@ -63,36 +63,36 @@ public class AktivitetsersattningNAEntryPoint implements ModuleEntryPoint {
     }
 
     public String getModuleCssPath(ApplicationOrigin originator) {
-         switch (originator) {
-         case MINA_INTYG:
-         return "/web/webjars/luae_na/minaintyg/css/luae_na.css";
-         case WEBCERT:
-         return "/web/webjars/luae_na/webcert/css/luae_na.css";
-         default:
-         return null;
-         }
+        switch (originator) {
+        case MINA_INTYG:
+            return "/web/webjars/luae_na/minaintyg/css/luae_na.css";
+        case WEBCERT:
+            return "/web/webjars/luae_na/webcert/css/luae_na.css";
+        default:
+            return null;
+        }
     }
 
     public String getModuleScriptPath(ApplicationOrigin originator) {
-         switch (originator) {
-         case MINA_INTYG:
-         return "/web/webjars/luae_na/minaintyg/js/module";
-         case WEBCERT:
-         return "/web/webjars/luae_na/webcert/module";
-         default:
-         return null;
-         }
+        switch (originator) {
+        case MINA_INTYG:
+            return "/web/webjars/luae_na/minaintyg/js/module";
+        case WEBCERT:
+            return "/web/webjars/luae_na/webcert/module";
+        default:
+            return null;
+        }
     }
 
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
-         switch (originator) {
-         case MINA_INTYG:
-         return "/web/webjars/luae_na/minaintyg/js/module-deps.json";
-         case WEBCERT:
-         return "/web/webjars/luae_na/webcert/module-deps.json";
-         default:
-         return null;
-         }
+        switch (originator) {
+        case MINA_INTYG:
+            return "/web/webjars/luae_na/minaintyg/js/module-deps.json";
+        case WEBCERT:
+            return "/web/webjars/luae_na/webcert/module-deps.json";
+        default:
+            return null;
+        }
     }
 
 }

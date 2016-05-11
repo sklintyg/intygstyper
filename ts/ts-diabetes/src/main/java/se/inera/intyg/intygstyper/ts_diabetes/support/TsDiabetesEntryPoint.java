@@ -34,6 +34,8 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
     public static final String MODULE_ID = "ts-diabetes";
     public static final String MODULE_NAME = "Transportstyrelsens läkarintyg, diabetes";
+    private static final String MODULE_DETAILED_DESCRIPTION = "<p>Transportstyrelsens läkarintyg, diabetes ska användas vid diabetessjukdom. Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom framgår av 17 kap. i Transportstyrelsens föreskrifter (TSFS 2010:125) och allmänna råd om medicinska krav för innehav av körkort m.m.</p>Information om Transportstyrelsens föreskrifter finns på <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">www.transportstyrelsen.se</a>.";
+
 
     @Autowired
     private TsDiabetesModuleApi tsDiabetesModuleService;
@@ -51,6 +53,11 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
     @Override
     public String getModuleDescription() {
         return "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.";
+    }
+
+    @Override
+    public String getDetailedModuleDescription() {
+        return MODULE_DETAILED_DESCRIPTION;
     }
 
     /*@Override

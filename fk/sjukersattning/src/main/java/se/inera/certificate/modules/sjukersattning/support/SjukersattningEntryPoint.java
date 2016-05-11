@@ -19,16 +19,17 @@
 
 package se.inera.certificate.modules.sjukersattning.support;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import se.inera.certificate.modules.fkparent.support.FkAbstractModuleEntryPoint;
 import se.inera.certificate.modules.sjukersattning.rest.SjukersattningModuleApi;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
 
-import java.util.Map;
-
-public class SjukersattningEntryPoint implements ModuleEntryPoint {
+public class SjukersattningEntryPoint extends FkAbstractModuleEntryPoint {
 
     public static final String DEFAULT_RECIPIENT_ID = "FK";
 
