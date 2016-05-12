@@ -62,6 +62,15 @@
         </vardgivare>
       </enhet>
     </skapadAv>
+    <svar id="1">
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>UNDERSOKNING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2015-09-09</delsvar>
+    </svar>
     <svar id="2">
       <delsvar id="2.1">2015-01-07</delsvar>
     </svar>
@@ -69,6 +78,8 @@
       <delsvar id="3.1">true
       </delsvar>
     </svar>
+
+    <!-- Below follows 4 svar with id 4. This is not ok. -->
     <svar id="4">
       <delsvar id="4.1">
         <ns3:cv>
@@ -79,7 +90,7 @@
       <delsvar id="4.2">2015-09-03</delsvar>
       <delsvar id="4.3">Skickas med posten</delsvar>
     </svar>
-	<svar id="4">
+    <svar id="4">
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>FYSIOTERAPEUT</ns3:code>
@@ -88,7 +99,28 @@
       </delsvar>
       <delsvar id="4.2">2015-06-30</delsvar>
       <delsvar id="4.3">Skickas med e-mail</delsvar>
-	</svar>
+    </svar>
+    <svar id="4">
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>FYSIOTERAPEUT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2015-06-30</delsvar>
+      <delsvar id="4.3">Skickas med e-mail</delsvar>
+    </svar>
+    <svar id="4">
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>FYSIOTERAPEUT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2015-06-30</delsvar>
+      <delsvar id="4.3">Skickas med e-mail</delsvar>
+    </svar>
+    <!--  End of erroneous part of certificate -->
     <svar id="5">
       <delsvar id="5.1">Arbetsplatsolycka där patienten fastnade med höger hand i en vals 2014-07-09. Omhändertogs initialt på akutmottagningen AVC Södra Älvsborgs sjukhus i Borås. Vävnadsförluster i 3:e och 4:e fingret. Nedsatt kraft, känsel och funktion i handen, smärtsyndom i hela höger arm. Sedan några månader depression som har varit svår att behandla medikamentellt.</delsvar>
     </svar>
@@ -97,20 +129,6 @@
       <delsvar id="6.2">
         <ns3:cv>
           <ns3:code>S666</ns3:code>
-          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
-      <delsvar id="6.3">Icke specificerad neuralgi och neurit</delsvar>
-      <delsvar id="6.4">
-        <ns3:cv>
-          <ns3:code>M792</ns3:code>
-          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
-      <delsvar id="6.5">Depressiv episod</delsvar>
-      <delsvar id="6.6">
-        <ns3:cv>
-          <ns3:code>F320</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -126,23 +144,8 @@
     <svar id="17">
       <delsvar id="17.1">Svårt att utföra arbeten med höger arm (högerhänt). Kan lyfta lättare saker men tappar lätt föremål. Nedsatt koncentrationsförmåga vilket påverkar arbeten där han behöver övervaka processer. </delsvar>
     </svar>
-    <svar id="18">
-      <delsvar id="18.1">Utretts av smärtspecialist (se bilaga) med flertal behandlingsförsök (t ex TENS, blockader, karbamazepin, xylocain intravenöst, opioider mm) under perioden 141103-150602 men endast begränsad eller övergående effekt (se bilaga). Utredning och behandling av fysioterapeut under perioden 140901-150630 för att försöka återställa funktion så långt möjligt. Har egenträningsprogram. </delsvar>
-    </svar>
-    <svar id="19">
-      <delsvar id="19.1">Har haft kontakt med psykolog sedan 141204, får nu samtalsbehandling parallellt med medicinsk behandling med läkemedel. Har förbättrats i sin depression men är inte helt bra.</delsvar>
-    </svar>
-    <svar id="20">
-      <delsvar id="20.1">Fortsatt depressionsbehandling via VC och psykolog.</delsvar>
-    </svar>
-    <svar id="21">
-      <delsvar id="21.1">Fluoxetin mot depressionen.</delsvar>
-    </svar>
     <svar id="22">
       <delsvar id="22.1">Patienten kommer sannolikt inte att kunna arbeta fullt ut med höger arm framgent. Framförallt är det nervskadorna med smärtkänslighet, nedsatt kraft, uttröttbarhet och svårigheten att koncentrera sig som försvårar ett heltidsarbete. Ett deltidsarbete måste också ta hänsyn till dessa begränsningar men bedöms kunna utföras på 50 procent av en heltid.</delsvar>
-    </svar>
-    <svar id="23">
-      <delsvar id="23.1">Med höger kan patienten lyfta lättare saker om det inte sker för frekvent eller kräver hög precision. Patienten kan göra saker med övriga delar av kroppen i kortare stunder och även längre stunder om det inte kräver hög precision eller på annat sätt för stor koncentration.</delsvar>
     </svar>
     <svar id="25">
       <delsvar id="25.1">Patientens tillstånd bedöms behöva en ny bedömning om 12 månader för att avgöra grad av arbetsförmåga, men till åtminstone viss del kommer patientens arbetsförmåga att vara fortsatt nedsatt.</delsvar>

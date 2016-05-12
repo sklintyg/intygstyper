@@ -21,12 +21,14 @@
       <iso:assert test="count(gn:svar[@id='3']) = 1">
         Ett 'MU' måste ha ett 'Finns det andra medicinska utredningar eller underlag'
       </iso:assert>
-      <!-- Fråga 4 kan besvaras ett valfritt antal gånger -->
+      <iso:assert test="count(gn:svar[@id='4']) le 3">
+        Ett 'MU' måste ha mellan 0 och 3 'Ange medicinska utredningar eller underlag'
+      </iso:assert>
       <iso:assert test="count(gn:svar[@id='5']) = 1">
         Ett 'MU' måste ha ett 'Sjukdomsförlopp för aktuella sjukdomar av betydelse'
       </iso:assert>
-      <iso:assert test="count(gn:svar[@id='6']) ge 1 and count(gn:svar[@id='6']) le 3">
-        Ett 'MU' måste ha mellan 1 och 3 'Typ av diagnos'
+      <iso:assert test="count(gn:svar[@id='6']) = 1">
+        Ett 'MU' måste ha en 'Typ av diagnos'
       </iso:assert>
       <iso:assert test="count(gn:svar[@id='7']) = 1">
         Ett 'MU' måste ha en 'Diagnosgrund'
@@ -152,6 +154,14 @@
     </iso:rule>
   </iso:pattern>
 
+  <iso:pattern id="q1.1-25.1">
+    <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[matches(normalize-space(.), '^(JOURNALUPPGIFTER|ANHORIG|ANNAT)$')]">
+      <iso:assert test="count(//gn:delsvar[@id='25.1']) = 1">
+        Om 'Typ av grund för MU' besvarats med kod 3, 4 eller 5 måste 'Typ av upplysningar' anges.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
   <iso:pattern id="q2">
     <iso:rule context="//gn:svar[@id='2']">
       <iso:assert test="count(gn:delsvar[@id='2.1']) = 1">
@@ -267,7 +277,7 @@
       <iso:assert test="count(gn:delsvar[@id='6.2']) = 1">
         'Typ av diagnos' måste ha en 'Diagnoskod ICD-10'.
       </iso:assert>
-      <iso:let name="delsvarsIdExpr" value="'^6\.[12]$'"/>
+      <iso:let name="delsvarsIdExpr" value="'^6\.[123456]$'"/>
       <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
         Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
       </iso:assert>
@@ -290,6 +300,62 @@
         Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst tre positioner
         måste anges. Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra eller bindestreck, d.v.s. minst fyra
         positioner måste anges.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q6.3">
+    <iso:rule context="//gn:delsvar[@id='6.3']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q6.4">
+    <iso:rule context="//gn:delsvar[@id='6.4']"> 
+      <iso:extends rule="cv"/>
+      <iso:assert test="matches(normalize-space(tp:cv/tp:codeSystem), '(1.2.752.116.1.1.1.1.3|1.2.752.116.1.3.1.1.2)')">
+        Diagnoskodsystem måste vara OID för ICD-10-SE eller KSH97-P.
+      </iso:assert>
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code),'^([A-EG-Ya-eg-y][0-9]{2}[A-Za-z0-9-]*|[Zz][0-689][0-9][A-Za-z0-9-]*|[Zz]7[0-24-9][A-Za-z0-9-]*|[Zz]73[A-Za-z0-9-]+|[Ff][0-9]{2}[A-Za-z0-9-]+)$')">
+        Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst tre positioner
+        måste anges. Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra eller bindestreck, d.v.s. minst fyra
+        positioner måste anges.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q6.5">
+    <iso:rule context="//gn:delsvar[@id='6.5']">
+      <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q6.6">
+    <iso:rule context="//gn:delsvar[@id='6.6']"> 
+      <iso:extends rule="cv"/>
+      <iso:assert test="matches(normalize-space(tp:cv/tp:codeSystem), '(1.2.752.116.1.1.1.1.3|1.2.752.116.1.3.1.1.2)')">
+        Diagnoskodsystem måste vara OID för ICD-10-SE eller KSH97-P.
+      </iso:assert>
+      <iso:assert test="matches(normalize-space(tp:cv/tp:code),'^([A-EG-Ya-eg-y][0-9]{2}[A-Za-z0-9-]*|[Zz][0-689][0-9][A-Za-z0-9-]*|[Zz]7[0-24-9][A-Za-z0-9-]*|[Zz]73[A-Za-z0-9-]+|[Ff][0-9]{2}[A-Za-z0-9-]+)$')">
+        Diagnoskod måste anges som bokstav följt av två siffror följt av noll eller flera bokstäver, siffror eller bindestreck, d.v.s. minst tre positioner
+        måste anges. Om diagnoskoden börjar med F eller Z73 måste bokstav och två siffor följas av minst en bokstav, siffra eller bindestreck, d.v.s. minst fyra
+        positioner måste anges.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q6.3-6.4">
+    <iso:rule context="//gn:svar[@id='6']">
+      <iso:assert test="(count(gn:delsvar[@id='6.3']) = 1 and count(gn:delsvar[@id='6.4']) = 1) or (count(gn:delsvar[@id='6.3']) = 0 and count(gn:delsvar[@id='6.4']) = 0)">
+        Både 'Diagnoskod' och 'Diagnostext' måste finnas för en bidiagnos.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="q6.5-6.6-6.3">
+    <iso:rule context="//gn:svar[@id='6']">
+      <iso:assert test="(count(gn:delsvar[@id='6.5']) = 1 and count(gn:delsvar[@id='6.6']) = 1 and count(gn:delsvar[@id='6.3']) = 1) or (count(gn:delsvar[@id='6.5']) = 0 and count(gn:delsvar[@id='6.6']) = 0)">
+        Både 'Diagnoskod' och 'Diagnostext' måste finnas för en bidiagnos. Dessutom måste 6.3 och 6.4 finnas om 6.5 och 6.6 finns.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
