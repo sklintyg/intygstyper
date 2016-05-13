@@ -20,6 +20,7 @@
 package se.inera.certificate.modules.sjukpenning_utokad.rest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
@@ -51,8 +52,10 @@ import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioFinde
 import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioNotFoundException;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Patient;
@@ -61,6 +64,8 @@ import se.inera.intyg.common.support.modules.support.api.exception.ExternalServi
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -88,6 +93,9 @@ public class SjukpenningUtokatModuleApiTest {
 
     @Mock
     private GetCertificateResponderInterface getCertificateResponder;
+
+    @Mock
+    private RevokeCertificateResponderInterface revokeClient;
 
     @InjectMocks
     private SjukpenningUtokadModuleApi moduleApi;
@@ -312,7 +320,48 @@ public class SjukpenningUtokatModuleApiTest {
         InternalModelResponse response = moduleApi.updateBeforeSigning(new InternalModelHolder(internalModel), createHosPersonal(), null);
         assertEquals(internalModel, response.getInternalModel());
     }
+    @Test
+    public void testRevokeCertificate() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        String xmlContents = Resources.toString(Resources.getResource("revokerequest.xml"), Charsets.UTF_8);
 
+        RevokeCertificateResponseType returnVal = new RevokeCertificateResponseType();
+        returnVal.setResult(ResultTypeUtil.okResult());
+        when(revokeClient.revokeCertificate(eq(logicalAddress), any())).thenReturn(returnVal);
+        moduleApi.revokeCertificate(xmlContents, logicalAddress);
+        verify(revokeClient, times(1)).revokeCertificate(eq(logicalAddress), any());
+    }
+
+    @Test(expected = ExternalServiceCallException.class)
+    public void testRevokeCertificateThrowsExternalServiceCallException() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        String xmlContents = Resources.toString(Resources.getResource("revokerequest.xml"), Charsets.UTF_8);
+
+        RevokeCertificateResponseType returnVal = new RevokeCertificateResponseType();
+        returnVal.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "resultText"));
+        when(revokeClient.revokeCertificate(eq(logicalAddress), any())).thenReturn(returnVal);
+        moduleApi.revokeCertificate(xmlContents, logicalAddress);
+        fail();
+    }
+
+    @Test
+    public void testCreateRevokeRequest() throws Exception {
+        final String meddelande = "revokeMessage";
+        final String intygId = "intygId";
+
+        GrundData gd = new GrundData();
+        gd.setPatient(new se.inera.intyg.common.support.model.common.internal.Patient());
+        gd.getPatient().setPersonId(new Personnummer("191212121212"));
+        se.inera.intyg.common.support.model.common.internal.HoSPersonal skapadAv = WebcertModelFactoryUtil
+                .convertHosPersonalToEdit(createHosPersonal());
+        gd.setSkapadAv(skapadAv);
+
+        Utlatande utlatande = SjukpenningUtokadUtlatande.builder().setId(intygId).setGrundData(gd).setTextVersion("").build();
+
+        String res = moduleApi.createRevokeRequest(utlatande, skapadAv, meddelande);
+        assertNotNull(res);
+        assertNotEquals("", res);
+    }
     private GetCertificateResponseType createGetCertificateResponseType() throws ScenarioNotFoundException {
         GetCertificateResponseType res = new GetCertificateResponseType();
         RegisterCertificateType registerType = ScenarioFinder.getInternalScenario("pass-minimal").asTransportModel();

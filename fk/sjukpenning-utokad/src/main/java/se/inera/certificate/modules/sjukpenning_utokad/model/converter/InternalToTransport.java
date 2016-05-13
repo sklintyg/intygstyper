@@ -40,5 +40,4 @@ public final class InternalToTransport {
         sjukpenningUtokadType.setSvarPa(InternalConverterUtil.getMeddelandeReferensOfType(source, RelationKod.KOMPLT));
         return sjukpenningUtokadType;
     }
-
 }

@@ -19,23 +19,12 @@
 
 package se.inera.certificate.modules.luae_fs.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
@@ -47,31 +36,29 @@ import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
 
 import se.inera.certificate.modules.luae_fs.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.luae_fs.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.certificate.modules.luae_fs.support.LuaefsEntryPoint;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.StatusKod;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
@@ -80,16 +67,11 @@ import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertif
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Part;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.IntygsStatus;
-import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
-import se.riv.clinicalprocess.healthcond.certificate.v2.ResultType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
+import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
 /**
  * Created by marced on 26/04/16.
@@ -123,6 +105,9 @@ public class LuaefsModuleApiTest {
 
     @Mock
     private WebcertModuleService moduleService;
+
+    @Mock
+    private RevokeCertificateResponderInterface revokeClient;
 
     @InjectMocks
     private LuaefsModuleApi moduleApi;
@@ -248,13 +233,7 @@ public class LuaefsModuleApiTest {
     @Test
     public void testCreateNewInternal() throws Exception {
 
-        final String json = FileUtils
-                .readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
-
         CreateNewDraftHolder createNewDraftHolder = new CreateNewDraftHolder("1", createHosPersonal(), createPatient());
-
-        LuaefsUtlatande newUtlatande = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(json);
-        // when(webcertModelFactory.createNewWebcertDraft(eq(createNewDraftHolder))).thenReturn(newUtlatande);
 
         final InternalModelResponse renewalFromTemplate = moduleApi.createNewInternal(createNewDraftHolder);
 
@@ -276,7 +255,7 @@ public class LuaefsModuleApiTest {
 
     /**
      * Verify that grundData is updated with supplied hosPerson
-     * 
+     *
      * @throws IOException
      * @throws ModuleException
      */
@@ -303,7 +282,7 @@ public class LuaefsModuleApiTest {
 
     /**
      * Test that utlatande diagnoser is decorated with additional displayName
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -333,7 +312,48 @@ public class LuaefsModuleApiTest {
         final String marshalled = moduleApi.marshall(json);
         assertTrue(marshalled.length() > 0);
     }
+    @Test
+    public void testRevokeCertificate() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        String xmlContents = Resources.toString(Resources.getResource("revokerequest.xml"), Charsets.UTF_8);
 
+        RevokeCertificateResponseType returnVal = new RevokeCertificateResponseType();
+        returnVal.setResult(ResultTypeUtil.okResult());
+        when(revokeClient.revokeCertificate(eq(logicalAddress), any())).thenReturn(returnVal);
+        moduleApi.revokeCertificate(xmlContents, logicalAddress);
+        verify(revokeClient, times(1)).revokeCertificate(eq(logicalAddress), any());
+    }
+
+    @Test(expected = ExternalServiceCallException.class)
+    public void testRevokeCertificateThrowsExternalServiceCallException() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        String xmlContents = Resources.toString(Resources.getResource("revokerequest.xml"), Charsets.UTF_8);
+
+        RevokeCertificateResponseType returnVal = new RevokeCertificateResponseType();
+        returnVal.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "resultText"));
+        when(revokeClient.revokeCertificate(eq(logicalAddress), any())).thenReturn(returnVal);
+        moduleApi.revokeCertificate(xmlContents, logicalAddress);
+        fail();
+    }
+
+    @Test
+    public void testCreateRevokeRequest() throws Exception {
+        final String meddelande = "revokeMessage";
+        final String intygId = "intygId";
+
+        GrundData gd = new GrundData();
+        gd.setPatient(new se.inera.intyg.common.support.model.common.internal.Patient());
+        gd.getPatient().setPersonId(new Personnummer("191212121212"));
+        se.inera.intyg.common.support.model.common.internal.HoSPersonal skapadAv = WebcertModelFactoryUtil
+                .convertHosPersonalToEdit(createHosPersonal());
+        gd.setSkapadAv(skapadAv);
+
+        Utlatande utlatande = LuaefsUtlatande.builder().setId(intygId).setGrundData(gd).setTextVersion("").build();
+
+        String res = moduleApi.createRevokeRequest(utlatande, skapadAv, meddelande);
+        assertNotNull(res);
+        assertNotEquals("", res);
+    }
     private GetCertificateResponseType createGetCertificateResponseType(final StatusKod statusKod, final String part)
             throws IOException, ModuleException {
         GetCertificateResponseType response = new GetCertificateResponseType();

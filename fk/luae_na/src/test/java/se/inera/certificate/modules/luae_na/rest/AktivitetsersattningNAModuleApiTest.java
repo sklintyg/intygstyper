@@ -19,16 +19,14 @@
 
 package se.inera.certificate.modules.luae_na.rest;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
@@ -41,20 +39,31 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder;
+import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
-import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
-import se.riv.clinicalprocess.healthcond.certificate.v2.ResultType;
+import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SjukersattningModuleApiTest {
+public class AktivitetsersattningNAModuleApiTest {
 
     private static final String LOGICAL_ADDRESS = "logical address";
 
     @Mock
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
+
+    @Mock
+    private RevokeCertificateResponderInterface revokeClient;
 
     @InjectMocks
     private AktivitetsersattningNAModuleApi moduleApi;
@@ -86,6 +95,7 @@ public class SjukersattningModuleApiTest {
             fail();
         }
     }
+
     @Test(expected = ModuleException.class)
     public void testSendCertificateShouldFailOnNullModelHolder() throws ModuleException {
         moduleApi.sendCertificateToRecipient(null, LOGICAL_ADDRESS, null);
@@ -106,11 +116,63 @@ public class SjukersattningModuleApiTest {
         moduleApi.sendCertificateToRecipient(new InternalModelHolder("blaha", "blaha"), "", null);
     }
 
+    @Test
+    public void testRevokeCertificate() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        String xmlContents = Resources.toString(Resources.getResource("revokerequest.xml"), Charsets.UTF_8);
+
+        RevokeCertificateResponseType returnVal = new RevokeCertificateResponseType();
+        returnVal.setResult(ResultTypeUtil.okResult());
+        when(revokeClient.revokeCertificate(eq(logicalAddress), any())).thenReturn(returnVal);
+        moduleApi.revokeCertificate(xmlContents, logicalAddress);
+        verify(revokeClient, times(1)).revokeCertificate(eq(logicalAddress), any());
+    }
+
+    @Test(expected = ExternalServiceCallException.class)
+    public void testRevokeCertificateThrowsExternalServiceCallException() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        String xmlContents = Resources.toString(Resources.getResource("revokerequest.xml"), Charsets.UTF_8);
+
+        RevokeCertificateResponseType returnVal = new RevokeCertificateResponseType();
+        returnVal.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "resultText"));
+        when(revokeClient.revokeCertificate(eq(logicalAddress), any())).thenReturn(returnVal);
+        moduleApi.revokeCertificate(xmlContents, logicalAddress);
+        fail();
+    }
+
+    @Test
+    public void testCreateRevokeRequest() throws Exception {
+        final String meddelande = "revokeMessage";
+        final String intygId = "intygId";
+
+        GrundData gd = new GrundData();
+        gd.setPatient(new se.inera.intyg.common.support.model.common.internal.Patient());
+        gd.getPatient().setPersonId(new Personnummer("191212121212"));
+        se.inera.intyg.common.support.model.common.internal.HoSPersonal skapadAv = WebcertModelFactoryUtil
+                .convertHosPersonalToEdit(createHosPersonal());
+        gd.setSkapadAv(skapadAv);
+
+        Utlatande utlatande = AktivitetsersattningNAUtlatande.builder().setId(intygId).setGrundData(gd).setTextVersion("").build();
+
+        String res = moduleApi.createRevokeRequest(utlatande, skapadAv, meddelande);
+        System.err.println(res);
+        assertNotNull(res);
+        assertNotEquals("", res);
+    }
+
     private RegisterCertificateResponseType createReturnVal(ResultCodeType res) {
         RegisterCertificateResponseType retVal = new RegisterCertificateResponseType();
         ResultType value = new ResultType();
         value.setResultCode(res);
         retVal.setResult(value);
         return retVal;
+    }
+
+    private HoSPersonal createHosPersonal() {
+        return new HoSPersonal("hsaId", "Doktor A", "12345", "Läkare", null, createVardenhet());
+    }
+
+    private Vardenhet createVardenhet() {
+        return new Vardenhet("hsaId", "ve1", "gatan", "12345", "orten", "122333", null, null, new Vardgivare("vg1", "vg1"));
     }
 }

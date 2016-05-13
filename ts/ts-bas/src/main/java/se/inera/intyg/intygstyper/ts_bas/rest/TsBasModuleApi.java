@@ -18,8 +18,7 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.rest;
 
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,15 +26,22 @@ import javax.xml.bind.*;
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.stream.StreamSource;
 
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.w3.wsaddressing10.AttributedURIType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.rivtabp20.v1.RevokeMedicalCertificateResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
+import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
@@ -105,6 +111,9 @@ public class TsBasModuleApi implements ModuleApi {
     private XslTransformer xslTransformer;
 
     private ModuleContainerApi moduleContainer;
+
+    @Autowired(required = false)
+    private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
 
     @Override
     public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
@@ -416,4 +425,30 @@ public class TsBasModuleApi implements ModuleApi {
                 .collect(Collectors.joining(", "));
     }
 
+    @Override
+    public void revokeCertificate(String xmlBody, String logicalAddress) throws ModuleException {
+        AttributedURIType uri = new AttributedURIType();
+        uri.setValue(logicalAddress);
+
+        StringBuffer sb = new StringBuffer(xmlBody);
+        RevokeMedicalCertificateRequestType request = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())),
+                RevokeMedicalCertificateRequestType.class);
+        RevokeMedicalCertificateResponseType response = revokeCertificateClient.revokeMedicalCertificate(uri, request);
+        if (!response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
+            String message = "Could not send revoke to " + logicalAddress;
+            LOG.error(message);
+            throw new ExternalServiceCallException(message);
+        }
+    }
+
+    @Override
+    public String createRevokeRequest(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande,
+            se.inera.intyg.common.support.model.common.internal.HoSPersonal skapatAv, String meddelande) throws ModuleException {
+        RevokeMedicalCertificateRequestType request = new RevokeMedicalCertificateRequestType();
+        request.setRevoke(ModelConverter.buildRevokeTypeFromUtlatande(utlatande, meddelande));
+
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(request, writer);
+        return writer.toString();
+    }
 }

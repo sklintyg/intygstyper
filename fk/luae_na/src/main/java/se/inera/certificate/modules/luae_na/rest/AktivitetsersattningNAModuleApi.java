@@ -34,6 +34,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
+import se.inera.certificate.modules.fkparent.model.converter.InternalToRevoke;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
 import se.inera.certificate.modules.luae_na.model.converter.*;
@@ -53,6 +54,7 @@ import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
@@ -90,6 +92,9 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
 
     @Autowired
     private InternalToNotification internalToNotification;
+
+    @Autowired(required = false)
+    private RevokeCertificateResponderInterface revokeCertificateClient;
 
     @Override
     public void setModuleContainer(ModuleContainerApi moduleContainer) {
@@ -160,7 +165,6 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
         objectMapper.writeValue(writer, internalModel);
         return writer.toString();
     }
-
 
     @Override
     public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
@@ -354,8 +358,12 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
         }
     }
 
-    /* (non-Javadoc)
-     * @see se.inera.intyg.common.support.modules.support.api.ModuleApi#createRenewalFromTemplate(se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder, se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder)
+    /*
+     * (non-Javadoc)
+     *
+     * @see se.inera.intyg.common.support.modules.support.api.ModuleApi#createRenewalFromTemplate(se.inera.intyg.common.
+     * support.modules.support.api.dto.CreateDraftCopyHolder,
+     * se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder)
      */
     @Override
     public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
@@ -387,4 +395,28 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
         return null;
     }
 
+    @Override
+    public void revokeCertificate(String xmlBody, String logicalAddress) throws ModuleException {
+        StringBuffer sb = new StringBuffer(xmlBody);
+        RevokeCertificateType request = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())), RevokeCertificateType.class);
+        RevokeCertificateResponseType response = revokeCertificateClient.revokeCertificate(logicalAddress, request);
+        if (!response.getResult().getResultCode().equals(ResultCodeType.OK)) {
+            String message = "Could not send revoke to " + logicalAddress;
+            LOG.error(message);
+            throw new ExternalServiceCallException(message);
+        }
+    }
+
+    @Override
+    public String createRevokeRequest(Utlatande utlatande, se.inera.intyg.common.support.model.common.internal.HoSPersonal skapatAv,
+            String meddelande)
+            throws ModuleException {
+        try {
+            StringWriter writer = new StringWriter();
+            JAXB.marshal(InternalToRevoke.convert(utlatande, skapatAv, meddelande), writer);
+            return writer.toString();
+        } catch (ConverterException e) {
+            throw new ModuleException(e.getMessage());
+        }
+    }
 }

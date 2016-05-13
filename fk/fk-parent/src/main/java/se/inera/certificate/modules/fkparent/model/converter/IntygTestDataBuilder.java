@@ -21,16 +21,34 @@ package se.inera.certificate.modules.fkparent.model.converter;
 
 import org.joda.time.LocalDateTime;
 
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.common.internal.Patient;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
-import se.inera.intyg.common.support.model.common.internal.Vardgivare;
+import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 
 public final class IntygTestDataBuilder {
 
     private IntygTestDataBuilder() {
+    }
+
+    public static Utlatande getUtlatande() {
+        return new Utlatande() {
+                private GrundData grundData = IntygTestDataBuilder.getGrundData();
+
+            public String getTyp() {
+                return "testTyp";
+            }
+
+            public String getTextVersion() {
+                return "1.0";
+            }
+
+            public String getId() {
+                return "test-id";
+            }
+
+            public GrundData getGrundData() {
+                return grundData;
+            }
+        };
     }
 
     public static GrundData getGrundData() {

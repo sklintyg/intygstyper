@@ -38,5 +38,4 @@ public final class InternalToTransport {
         aktivitetsersattningNA.setSvarPa(InternalConverterUtil.getMeddelandeReferensOfType(source, RelationKod.KOMPLT));
         return aktivitetsersattningNA;
     }
-
 }

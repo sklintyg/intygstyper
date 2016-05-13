@@ -22,11 +22,11 @@ package se.inera.intyg.intygstyper.fk7263.rest;
 import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
 
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.*;
 
 import javax.xml.bind.JAXB;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.joda.time.LocalDateTime;
@@ -44,9 +44,13 @@ import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.rivtabp20.v1.RevokeMedicalCertificateResponderInterface;
+import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
+import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
@@ -119,6 +123,9 @@ public class Fk7263ModuleApi implements ModuleApi {
     private ConverterUtil converterUtil;
 
     private ModuleContainerApi moduleContainer;
+
+    @Autowired(required = false)
+    private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
 
     @VisibleForTesting
     public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
@@ -579,4 +586,30 @@ public class Fk7263ModuleApi implements ModuleApi {
         return periods.get(0).getStart().toString() + " - " + periods.get(periods.size() - 1).getEnd().toString();
     }
 
+    @Override
+    public void revokeCertificate(String xmlBody, String logicalAddress) throws ModuleException {
+        AttributedURIType uri = new AttributedURIType();
+        uri.setValue(logicalAddress);
+
+        StringBuffer sb = new StringBuffer(xmlBody);
+        RevokeMedicalCertificateRequestType request = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())),
+                RevokeMedicalCertificateRequestType.class);
+        RevokeMedicalCertificateResponseType response = revokeCertificateClient.revokeMedicalCertificate(uri, request);
+        if (!response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
+            String message = "Could not send revoke to " + logicalAddress;
+            LOG.error(message);
+            throw new ExternalServiceCallException(message);
+        }
+    }
+
+    @Override
+    public String createRevokeRequest(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande,
+            se.inera.intyg.common.support.model.common.internal.HoSPersonal skapatAv, String meddelande) throws ModuleException {
+        RevokeMedicalCertificateRequestType request = new RevokeMedicalCertificateRequestType();
+        request.setRevoke(ModelConverter.buildRevokeTypeFromUtlatande(utlatande, meddelande));
+
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(request, writer);
+        return writer.toString();
+    }
 }
