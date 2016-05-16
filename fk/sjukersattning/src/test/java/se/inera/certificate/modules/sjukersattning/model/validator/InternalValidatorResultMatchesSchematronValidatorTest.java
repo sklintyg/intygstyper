@@ -54,6 +54,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     private static final String CORRECT_DIAGNOSKODSYSTEM = "ICD_10_SE";
     private static final String CORRECT_DIAGNOSKOD1 = "S666";
     private static final String CORRECT_DIAGNOSKOD2 = "Z731";
+    private static final String CORRECT_DIAGNOSKOD3 = "A039";
 
     private Scenario scenario;
     private boolean shouldFail;
@@ -103,6 +104,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     public void testScenarios() throws Exception {
         when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD1, CORRECT_DIAGNOSKODSYSTEM)).thenReturn(true);
         when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD2, CORRECT_DIAGNOSKODSYSTEM)).thenReturn(true);
+        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD3, CORRECT_DIAGNOSKODSYSTEM)).thenReturn(true);
         doInternalAndSchematronValidation(scenario, shouldFail);
     }
 

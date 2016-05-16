@@ -44,6 +44,8 @@ import se.inera.intyg.common.support.validate.StringValidator;
 
 public class InternalDraftValidator {
 
+    private static final int MAX_UNDERLAG = 3;
+
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
@@ -124,6 +126,11 @@ public class InternalDraftValidator {
                     "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
         }
 
+        if ((utlatande.getJournaluppgifter() != null || utlatande.getAnhorigsBeskrivningAvPatienten() != null
+                || utlatande.getAnnatGrundForMU() != null) && utlatande.getOvrigt() == null) {
+            addValidationError(validationMessages, "grundformu", ValidationMessageType.INVALID_FORMAT, "luse.validation.grund-for-mu.missing_ovrigt");
+        }
+
         if (utlatande.getKannedomOmPatient() == null) {
             addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.EMPTY,
                     "luse.validation.grund-for-mu.kannedom.missing");
@@ -158,21 +165,24 @@ public class InternalDraftValidator {
                     "luse.validation.underlagfinns.incorrect_combination");
         }
 
+        if (utlatande.getUnderlag().size() > MAX_UNDERLAG) {
+            addValidationError(validationMessages, "underlag", ValidationMessageType.OTHER, "luse.validation.underlag.too_many");
+        }
         for (Underlag underlag : utlatande.getUnderlag()) {
             // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
             if (underlag.getTyp() == null) {
                 addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.missing");
             } else if (underlag.getTyp().getId() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.OVRIGT.getId()) {
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId()
+                    && underlag.getTyp().getId() != Underlag.UnderlagsTyp.OVRIGT.getId()) {
                 addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
                         "luse.validation.underlag.incorrect_format");
             }

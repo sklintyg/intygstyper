@@ -21,18 +21,22 @@ package se.inera.certificate.modules.sjukersattning.model.converter;
 
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_DELSVAR_ID_17;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AKTIVITETSBEGRANSNING_SVAR_ID_17;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORMAGATROTSBEGRANSNING_DELSVAR_ID_23;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORMAGATROTSBEGRANSNING_SVAR_ID_23;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_DELSVAR_ID_18;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.AVSLUTADBEHANDLING_SVAR_ID_18;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BIDIAGNOS_1_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.BIDIAGNOS_2_DELSVAR_ID_6;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_DELSVAR_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7;
-import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOSGRUND_SVAR_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_BESKRIVNING_DELSVAR_ID_6;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_DELSVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_ID_6;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORMAGATROTSBEGRANSNING_DELSVAR_ID_23;
+import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FORMAGATROTSBEGRANSNING_SVAR_ID_23;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_DELSVAR_ID_14;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID_14;
 import static se.inera.certificate.modules.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_BALANSKOORDINATION_DELSVAR_ID_13;
@@ -95,6 +99,7 @@ import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public final class UtlatandeToIntyg {
 
@@ -168,12 +173,30 @@ public final class UtlatandeToIntyg {
 
         addIfNotBlank(svars, SJUKDOMSFORLOPP_SVAR_ID_5, SJUKDOMSFORLOPP_DELSVAR_ID_5, source.getSjukdomsforlopp());
 
-        for (Diagnos diagnos : source.getDiagnoser()) {
+        // Handle diagnoser
+        Svar diagnosSvar = new Svar();
+        diagnosSvar.setId(DIAGNOS_SVAR_ID_6);
+        for (int i = 0; i < source.getDiagnoser().size(); i++) {
+            Diagnos diagnos = source.getDiagnoser().get(i);
             Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-            svars.add(aSvar(DIAGNOS_SVAR_ID_6)
-                    .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                    .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
+            switch (i) {
+            case 0:
+                diagnosSvar.getDelsvar().add(createDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
+                diagnosSvar.getDelsvar().add(createDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
+                break;
+            case 1:
+                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_1_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
+                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
+                break;
+            case 2:
+                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_2_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
+                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
         }
+        svars.add(diagnosSvar);
 
         if (source.getNyBedomningDiagnosgrund() != null) {
             if (source.getNyBedomningDiagnosgrund()) {
@@ -225,6 +248,13 @@ public final class UtlatandeToIntyg {
         }
 
         return svars;
+    }
+
+    private static Delsvar createDelsvar(String id, Object content) {
+        Delsvar delsvar = new Delsvar();
+        delsvar.setId(id);
+        delsvar.getContent().add(content);
+        return delsvar;
     }
 
 }

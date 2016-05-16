@@ -110,19 +110,15 @@
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-    </svar>
-    <svar id="6">
-      <delsvar id="6.1">Icke specificerad neuralgi och neurit</delsvar>
-      <delsvar id="6.2">
+      <delsvar id="6.3">Icke specificerad neuralgi och neurit</delsvar>
+      <delsvar id="6.4">
         <ns3:cv>
           <ns3:code>M792</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-    </svar>
-	<svar id="6">
-      <delsvar id="6.1">Depressiv episod</delsvar>
-      <delsvar id="6.2">
+      <delsvar id="6.5">Depressiv episod</delsvar>
+      <delsvar id="6.6">
         <ns3:cv>
           <ns3:code>F320</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
