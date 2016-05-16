@@ -19,6 +19,8 @@
 
 package se.inera.intyg.intygstyper.ts_bas.integration;
 
+import static se.inera.intyg.common.support.model.converter.util.CertificateStateHolderUtil.isArchived;
+
 import java.util.*;
 
 import org.slf4j.Logger;
@@ -105,7 +107,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
     private IntygMeta createCertificateMetaType(CertificateHolder certificate) {
         IntygMeta intygMeta = new IntygMeta();
         intygMeta.setAdditionalInfo(certificate.getAdditionalInfo());
-        intygMeta.setAvailable(certificate.isDeleted() ? "false" : "true");
+        intygMeta.setAvailable(String.valueOf(!isArchived(certificate.getCertificateStates())));
         intygMeta.getStatus().addAll(convertToStatuses(certificate.getCertificateStates()));
         return intygMeta;
     }

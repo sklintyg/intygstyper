@@ -19,6 +19,8 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.integration;
 
+import static se.inera.intyg.common.support.model.converter.util.CertificateStateHolderUtil.isArchived;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -96,7 +98,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
     private IntygMeta createMetaData(CertificateHolder certificate) {
         IntygMeta intygMeta = new IntygMeta();
         intygMeta.setAdditionalInfo(certificate.getAdditionalInfo());
-        intygMeta.setAvailable(certificate.isDeleted() ? "false" : "true");
+        intygMeta.setAvailable(String.valueOf(!isArchived(certificate.getCertificateStates())));
         intygMeta.getStatus().addAll(convertToStatuses(certificate.getCertificateStates()));
         return intygMeta;
     }
