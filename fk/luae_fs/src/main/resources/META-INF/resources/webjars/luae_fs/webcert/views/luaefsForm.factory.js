@@ -96,7 +96,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 5, categoryName: categoryNames[5]},
                     fieldGroup: [
-                        {key: 'ovrigt', type: 'multi-text'}
+                        {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
                     ]
                 },
                 {

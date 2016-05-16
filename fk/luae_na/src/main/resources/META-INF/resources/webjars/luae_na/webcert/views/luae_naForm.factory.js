@@ -15,25 +15,13 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
         'kontakt'
     ];
 
-    var underlagLabelGroup = [
-        'DFR_1.2.HLP',
-        'KV_FKMU_0001.1.HLP',
-        'KV_FKMU_0001.3.HLP',
-        'KV_FKMU_0001.4.HLP',
-        'KV_FKMU_0001.5.HLP'
-    ];
-
     var formFields = [
         {
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_1', level: '4'}},
-                {
-                    type: 'headline',
-                    className: 'col-md-6 no-space-left',
-                    templateOptions: {label: 'DFR_1.1', level: '4'}
-                },
+                {type: 'headline', templateOptions: {label: 'FRG_1'}},
+                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1'}},
                 {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2'}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
@@ -46,14 +34,14 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     hideExpression: '!model.annatGrundForMU',
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
-                {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'FRG_2'}}
+                {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
             ]
         },
         {
             wrapper: 'wc-field',
             templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
             fieldGroup: [
-                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
+                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
                     key: 'underlag', type: 'underlag',
                     className: 'slide-animation',
@@ -73,7 +61,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
             wrapper: 'wc-field',
             templateOptions: {category: 3, categoryName: categoryNames[3]},
             fieldGroup: [
-                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'FRG_5'}}
+                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
             ]
         },
         {
@@ -85,7 +73,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     type: 'diagnos',
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 },
-                {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'FRG_7'}},
+                {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'DFR_7.1'}},
                 {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'DFR_7.2'}},
                 {
                     key: 'diagnosForNyBedomning',
@@ -94,7 +82,6 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     templateOptions: {label: 'DFR_7.3'},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
-
             ]
         },
         {
@@ -137,16 +124,16 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
             wrapper: 'wc-field',
             templateOptions: {category: 8, categoryName: categoryNames[8]},
             fieldGroup: [
-                {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'FRG_22'}},
-                {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'FRG_23'}},
-                {key: 'forslagTillAtgard', type: 'multi-text', templateOptions: {label: 'FRG_24'}}
+                {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'DFR_22.1'}},
+                {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
+                {key: 'forslagTillAtgard', type: 'multi-text', templateOptions: {label: 'DFR_24.1'}}
             ]
         },
         {
             wrapper: 'wc-field',
             templateOptions: {category: 9, categoryName: categoryNames[9]},
             fieldGroup: [
-                {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'FRG_25'}}
+                {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
             ]
         },
         {

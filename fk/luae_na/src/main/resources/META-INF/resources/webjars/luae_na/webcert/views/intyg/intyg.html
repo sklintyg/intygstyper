@@ -12,7 +12,7 @@
 
               <div wc-field field-dynamic-label="KAT_{{group.templateOptions.category}}.RBK" ng-repeat="group in intygFields">
                   <div ng-repeat="field in group.fieldGroup" ng-if="field.key" class="intyg-field">
-                      <label ng-if="field.templateOptions.label"><span dynamic-label key="{{field.templateOptions.label}}.RBK"></span></label>
+                      <label wc-intyg-label="field.templateOptions.label"></label>
                       <div id="{{field.key}}" ng-if="field.key && viewState.intygModel[field.key] == null" class="not-entered">
                           Ej angivet
                       </div>
