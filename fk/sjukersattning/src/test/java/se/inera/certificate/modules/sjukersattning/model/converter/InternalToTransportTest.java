@@ -6,6 +6,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.stream.Collectors;
+
+import javax.xml.bind.JAXBElement;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
@@ -17,6 +21,9 @@ import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Relation;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public class InternalToTransportTest {
 
@@ -26,7 +33,38 @@ public class InternalToTransportTest {
         RegisterCertificateType transport = InternalToTransport.convert(expected);
         SjukersattningUtlatande actual = TransportToInternal.convert(transport.getIntyg());
 
+        // Get diagnos-related svar
+        Svar diagnos = transport.getIntyg().getSvar().stream()
+            .filter(e -> e.getId().equals("6")).collect(Collectors.toList()).get(0);
+
+        CVType huvuddiagnosKod = extractCVFromSvar(diagnos, "6.2");
+        String huvuddiagnosBeskrivning = extractStringFromSvar(diagnos, "6.1");
+        CVType bidiagnosKod = extractCVFromSvar(diagnos, "6.4");
+        String bidiagnosBeskrivning = extractStringFromSvar(diagnos, "6.3");
+
+        // Ensure huvuddiagnos and bidiagnos are converted as expected
+        assertEquals("S47", huvuddiagnosKod.getCode());
+        assertEquals("Klämskada skuldra", huvuddiagnosBeskrivning);
+        assertEquals("S48", bidiagnosKod.getCode());
+        assertEquals("Klämskada arm", bidiagnosBeskrivning);
+
         assertEquals(expected, actual);
+    }
+
+    private CVType extractCVFromSvar(Svar svar, String id) {
+        Delsvar delsvar = svar.getDelsvar().stream()
+            .filter(e -> e.getId().equals(id)).collect(Collectors.toList()).get(0);
+
+        @SuppressWarnings("unchecked")
+        JAXBElement<CVType> meh = (JAXBElement<CVType>) delsvar.getContent().stream().collect(Collectors.toList()).get(0);
+        CVType code = (CVType) meh.getValue();
+        return code;
+    }
+
+    private String extractStringFromSvar(Svar svar, String id) {
+        Delsvar delsvar = svar.getDelsvar().stream()
+                .filter(e -> e.getId().equals(id)).collect(Collectors.toList()).get(0);
+        return (String) delsvar.getContent().stream().collect(Collectors.toList()).get(0);
     }
 
     @Test
@@ -87,7 +125,8 @@ public class InternalToTransportTest {
         utlatande.setGrundData(grundData);
         utlatande.setAnnatGrundForMU(new InternalDate("2015-12-07"));
         utlatande.setAnnatGrundForMUBeskrivning("Barndomsvän");
-        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra"))));
+        utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra")),
+                Diagnos.create("S48", "ICD_10_SE", "Klämskada arm", "Klämskada arm")));
         utlatande.setAktivitetsbegransning("Kommer inte in i bilen");
         utlatande.setFormagaTrotsBegransning("Är bra på att dansa!");
 

@@ -44,6 +44,8 @@ import se.inera.intyg.common.support.validate.StringValidator;
 
 public class InternalDraftValidator {
 
+    private static final int MAX_UNDERLAG = 3;
+
     private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidator.class);
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
@@ -163,7 +165,7 @@ public class InternalDraftValidator {
                     "luse.validation.underlagfinns.incorrect_combination");
         }
 
-        if (utlatande.getUnderlag().size() > 3) {
+        if (utlatande.getUnderlag().size() > MAX_UNDERLAG) {
             addValidationError(validationMessages, "underlag", ValidationMessageType.OTHER, "luse.validation.underlag.too_many");
         }
         for (Underlag underlag : utlatande.getUnderlag()) {

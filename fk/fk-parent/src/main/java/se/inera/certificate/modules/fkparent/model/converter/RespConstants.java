@@ -71,6 +71,10 @@ public final class RespConstants {
     public static final String DIAGNOS_SVAR_ID_6 = "6";
     public static final String DIAGNOS_BESKRIVNING_DELSVAR_ID_6 = "6.1";
     public static final String DIAGNOS_DELSVAR_ID_6 = "6.2";
+    public static final String BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6 = "6.3";
+    public static final String BIDIAGNOS_1_DELSVAR_ID_6 = "6.4";
+    public static final String BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6 = "6.5";
+    public static final String BIDIAGNOS_2_DELSVAR_ID_6 = "6.6";
     public static final String DIAGNOS_SVAR_JSON_ID_6 = "diagnoser";
 
     public static final String DIAGNOSGRUND_SVAR_ID_7 = "7";
