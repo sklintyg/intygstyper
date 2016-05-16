@@ -20,7 +20,7 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
         'fk7263.LastEffectiveDateNoticeModel',
-        'common.DateRangeService', 'fk7263.fmb.ViewStateService', 'common.messageService',
+        'common.DateRangeService', 'common.fmb.ViewStateService', 'common.messageService',
         function($scope, $log, viewState, LastEffectiveDateNoticeModel,
             DateRangeService, fmbViewState, messageService) {
             'use strict';

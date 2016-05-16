@@ -18,7 +18,7 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form5Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.fmb.ViewStateService',
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.fmb.ViewStateService',
         function($scope, $log, viewState, fmbViewState) {
             'use strict';
             var model = viewState.intygModel;

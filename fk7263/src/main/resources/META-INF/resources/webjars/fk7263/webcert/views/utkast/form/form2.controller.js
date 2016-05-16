@@ -18,7 +18,7 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'fk7263.fmbService', 'fk7263.fmb.ViewStateService',
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'common.fmbService', 'common.fmb.ViewStateService',
         'fk7263.EditCertCtrl.Helper',
         function($scope, $log, viewState, diagnosService, fmbService, fmbViewState, helper) {
             'use strict';
