@@ -75,7 +75,7 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
             var sjukpenningUtokadModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'sjukersattningModel', {
+                    init._super.call(this, 'lisuModel', {
 
                         'id': undefined,
                         'textVersion': undefined,

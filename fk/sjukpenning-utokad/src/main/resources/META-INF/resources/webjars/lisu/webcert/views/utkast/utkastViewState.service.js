@@ -14,6 +14,7 @@ angular.module('lisu').service('sjukpenning-utokad.EditCertCtrl.ViewStateService
                 this.intygModel = draftModel.content;
             };
 
+
             this.inputLimits = {
                 arbetsformagaPrognos: 600,
                 nuvarandeArbetsuppgifter: 120,

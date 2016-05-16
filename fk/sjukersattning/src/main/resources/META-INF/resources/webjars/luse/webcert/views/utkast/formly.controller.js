@@ -7,8 +7,6 @@ angular.module('luse').controller('sjukersattning.EditCert.FormlyCtrl',
 
             $scope.model = viewState.intygModel;
 
-            $scope.fmb = viewState.
-
             $scope.options = {
                 formState:{viewState:viewState}
             };

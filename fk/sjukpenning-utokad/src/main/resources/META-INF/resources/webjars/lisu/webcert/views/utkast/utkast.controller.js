@@ -35,26 +35,26 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
 
             // Get the certificate draft from the server.
             UtkastService.load(viewState).then(function(intygModel) {
-                $log.debug("intygModel");
+                $log.debug("intygModel loaded");
                 $log.debug(intygModel);
-                if(angular.isArray(intygModel.diagnoser.length && intygModel.diagnoser.length)) {
+                if(angular.isArray(intygModel.diagnoser) && intygModel.diagnoser[0].diagnosKod) {
                     fmbService.getFMBHelpTextsByCodeAndType(intygModel.diagnoser[0].diagnosKod, 'LISU').then(
 
                         function (formData) {
-                            fmbViewState.setState(formData, intygModel.diagnosKod);
+                            fmbViewState.setState(formData, intygModel.diagnoser[0].diagnosKod);
                             $log.debug('fmbViewState from utkast controller');
                             $log.debug(fmbViewState);
                         },
                         function (rejectionData) {
                             $log.debug('fmbViewState from utkast controller - Error searching fmb help text');
                             $log.debug(rejectionData);
-                            return [];
+                            fmbViewState.reset();
                         }
                     );
-                } else{  $log.debug('diagnoser not definer in viewstate utkast test')
-                    $log.debug('intygModel in utkast controller');
-                    $log.debug(intygModel)
-                };
+                } else{
+                    $log.debug('intygModel does not have diagnose code set - resetting fmbViewState');
+                    fmbViewState.reset();
+                }
 
 
                 if (viewState.common.textVersionUpdated) {

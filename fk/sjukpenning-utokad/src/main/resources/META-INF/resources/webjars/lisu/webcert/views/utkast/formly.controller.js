@@ -1,14 +1,14 @@
 angular.module('lisu').controller('sjukpenning-utokad.EditCert.FormlyCtrl',
     ['$scope', 'sjukpenning-utokad.EditCertCtrl.ViewStateService', 'sjukpenning-utokad.FormFactory',
         'common.TillaggsfragorHelper', 'common.fmb.ViewStateService', '$log',
-        function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper, fmbViewState, $log) {
+        function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper, fmbViewState) {
             'use strict';
 
             $scope.viewState = viewState;
 
-            viewState.fmbViewState = fmbViewState.state;
+            $scope.model = viewState.intygModel;
 
-            $scope.formlyModel = viewState;
+            viewState.fmbViewState = fmbViewState.state;
 
             $scope.options = {
                 formState:{viewState:viewState}
