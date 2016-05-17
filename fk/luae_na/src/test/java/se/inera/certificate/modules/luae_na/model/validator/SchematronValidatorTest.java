@@ -16,7 +16,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse
 
 public class SchematronValidatorTest {
 
-    private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("sjukersattning.sch");
+    private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("luae_na.sch");
 
     @Test
     public void brokenXmlFailsTest() throws Exception {
@@ -28,7 +28,7 @@ public class SchematronValidatorTest {
 
     @Test
     public void validXmlPassesTest() throws Exception {
-        String inputXml = Resources.toString(getResource("sjukersattning2.xml"), Charsets.UTF_8);
+        String inputXml = Resources.toString(getResource("aktivitetsersattning-na2.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         assertTrue(response.getValidationErrors().isEmpty());
     }

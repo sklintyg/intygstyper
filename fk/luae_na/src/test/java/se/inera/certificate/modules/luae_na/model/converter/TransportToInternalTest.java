@@ -33,7 +33,7 @@ public class TransportToInternalTest {
 
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
-    private RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukersattning.sch");
+    private RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_na.sch");
 
     @Before
     public void suitSetup() throws JAXBException {

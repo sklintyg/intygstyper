@@ -80,7 +80,7 @@ public class ConverterTest {
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-na.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_na.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         //System.out.println(SVRLHelper.getAllFailedAssertions(result).get(0).getText());
@@ -101,7 +101,7 @@ public class ConverterTest {
         String convertedXML = getXmlFromModel(transportConvertedALot);
 
         // Do schematron validation on the xml-string from the converted transport format
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-na.sch");
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_na.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
 
         //System.out.println(SVRLHelper.getAllFailedAssertions(result).get(0).getText());
