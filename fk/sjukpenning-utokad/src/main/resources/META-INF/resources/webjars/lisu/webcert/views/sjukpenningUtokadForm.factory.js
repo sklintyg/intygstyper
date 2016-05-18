@@ -21,9 +21,9 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_1'}},
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1'}},
-                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2'}},
+                {type: 'headline', templateOptions: {label: 'FRG_1', level: 4}},
+                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
+                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
                 {key: 'telefonkontaktMedPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.2'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
@@ -162,7 +162,6 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 7, categoryName: categoryNames[7]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_40'}},
                 {
                     key: 'arbetslivsinriktadeAtgarder', type: 'check-group',
                     templateOptions: {
