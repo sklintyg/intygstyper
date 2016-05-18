@@ -26,10 +26,6 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
     var model;
     var viewState;
 
-    beforeEach(angular.mock.module('fk7263', function($provide) {
-        $provide.value('networkConfig', {});
-    }));
-
     beforeEach(angular.mock.module('common', 'fk7263', 'htmlTemplates', function($provide) {
         // Decorators that update form input names and interpolates them. Needed for datepicker directives templates dynamic name attributes
         $provide.decorator('ngModelDirective', function($delegate) {
