@@ -72,9 +72,9 @@ angular.module('lisu').config(function($stateProvider) {
                 }
             }
         }).
-        state('webcert.arenden.lisu', {
+        state('webcert.fragasvar.lisu', {
             data: { defaultActive : 'unhandled-qa', intygType: 'lisu'  },
-            url: '/arenden/lisu/:certificateId',
+            url: '/fragasvar/lisu/:certificateId',
             views: {
                 'intyg@webcert.fragasvar' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
@@ -82,7 +82,7 @@ angular.module('lisu').config(function($stateProvider) {
                 },
                 'fragasvar@webcert.fragasvar' : {
                     templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
-                    controller: 'common.QACtrl'
+                    controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.fragasvar.lisu' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',

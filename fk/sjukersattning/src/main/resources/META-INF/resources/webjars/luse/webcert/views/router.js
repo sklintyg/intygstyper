@@ -72,9 +72,9 @@ angular.module('luse').config(function($stateProvider) {
                 }
             }
         }).
-        state('webcert.arenden.luse', {
+        state('webcert.fragasvar.luse', {
             data: { defaultActive : 'unhandled-qa', intygType: 'luse' },
-            url: '/arenden/luse/:certificateId',
+            url: '/fragasvar/luse/:certificateId',
             views: {
                 'intyg@webcert.fragasvar' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
@@ -82,7 +82,7 @@ angular.module('luse').config(function($stateProvider) {
                 },
                 'fragasvar@webcert.fragasvar' : {
                     templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
-                    controller: 'common.QACtrl'
+                    controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.fragasvar.luse' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',

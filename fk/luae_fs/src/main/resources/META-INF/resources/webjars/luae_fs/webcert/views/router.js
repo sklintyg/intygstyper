@@ -72,9 +72,9 @@ angular.module('luae_fs').config(function($stateProvider) {
                 }
             }
         }).
-        state('webcert.arenden.luae_fs', {
+        state('webcert.fragasvar.luae_fs', {
             data: { defaultActive : 'unhandled-qa', intygType: 'luae_fs'  },
-            url: '/arenden/luae_fs/:certificateId',
+            url: '/fragasvar/luae_fs/:certificateId',
             views: {
                 'intyg@webcert.fragasvar' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
@@ -82,7 +82,7 @@ angular.module('luae_fs').config(function($stateProvider) {
                 },
                 'fragasvar@webcert.fragasvar' : {
                     templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
-                    controller: 'common.QACtrl'
+                    controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.fragasvar.luae_fs' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',

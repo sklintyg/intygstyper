@@ -72,9 +72,9 @@ angular.module('luae_na').config(function($stateProvider) {
                 }
             }
         }).
-        state('webcert.arenden.luae_na', {
+        state('webcert.fragasvar.luae_na', {
             data: { defaultActive : 'unhandled-qa', intygType: 'luae_na' },
-            url: '/arenden/luae_na/:certificateId',
+            url: '/fragasvar/luae_na/:certificateId',
             views: {
                 'intyg@webcert.fragasvar' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
@@ -82,7 +82,7 @@ angular.module('luae_na').config(function($stateProvider) {
                 },
                 'fragasvar@webcert.fragasvar' : {
                     templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
-                    controller: 'common.QACtrl'
+                    controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.fragasvar.luae_na' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
