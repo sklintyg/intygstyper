@@ -55,6 +55,7 @@ var sjukersattningMessages = {
         'luse.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för \'Kännedom om patienten\'',
         'luse.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
         'luse.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
+        'luse.validation.grund-for-mu.missing_ovrigt': 'När \'Grund för medicinskt underlag\' besvarats med \'Journaluppgifter\', \'Anhörigs beskrivning\' eller \'Annat\' ska ställningstagandet motiveras under \'Övriga upplysningar\'',
 
         'luse.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
         'luse.validation.underlagfinns.incorrect_combination' : 'Om frågan \'Finns det andra medicinska utredningar eller underlag\' besvarats med nej får underlag inte anges.',
@@ -64,7 +65,7 @@ var sjukersattningMessages = {
         'luse.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
         'luse.validation.underlag.date.incorrect_format': 'Fel datumformat för underlag',
 
-        'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
+        'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är %0st',
 
         'luse.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 

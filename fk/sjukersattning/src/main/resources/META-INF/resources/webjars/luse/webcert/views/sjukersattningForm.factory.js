@@ -34,6 +34,11 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     hideExpression: '!model.annatGrundForMU',
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
+                {
+                    type: 'info',
+                    className: 'fold-animation',
+                    hideExpression: '!(model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
+                    templateOptions: {label: 'luse.validation.grund-for-mu.missing_ovrigt'}},
                 {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
             ]
         },
@@ -47,6 +52,7 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     className: 'slide-animation',
                     hideExpression: '!model.underlagFinns',
                     templateOptions: {
+                        maxUnderlag: 3,
                         underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
                         typLabel: 'FRG_4', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
                     },

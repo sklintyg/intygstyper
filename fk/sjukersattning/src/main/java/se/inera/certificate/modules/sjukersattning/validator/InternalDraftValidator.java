@@ -127,8 +127,8 @@ public class InternalDraftValidator {
         }
 
         if ((utlatande.getJournaluppgifter() != null || utlatande.getAnhorigsBeskrivningAvPatienten() != null
-                || utlatande.getAnnatGrundForMU() != null) && utlatande.getOvrigt() == null) {
-            addValidationError(validationMessages, "grundformu", ValidationMessageType.INVALID_FORMAT, "luse.validation.grund-for-mu.missing_ovrigt");
+                || utlatande.getAnnatGrundForMU() != null) && StringUtils.isBlank(utlatande.getOvrigt())) {
+            addValidationError(validationMessages, "ovrigt", ValidationMessageType.EMPTY, "luse.validation.grund-for-mu.missing_ovrigt");
         }
 
         if (utlatande.getKannedomOmPatient() == null) {
