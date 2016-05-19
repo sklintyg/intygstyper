@@ -295,6 +295,21 @@
           </iso:assert>
     </iso:rule>
   </iso:pattern>
+  
+  <iso:pattern id="q7">
+    <iso:rule context="//gn:svar[@id='7']">
+      <iso:assert test="count(gn:delsvar[@id='7.1']) = 1">
+        'Diagnosgrund' måste ha ett 'Diagnosgrund'.
+      </iso:assert>
+      <iso:assert test="count(gn:delsvar[@id='7.2']) = 1">
+        'Diagnosgrund' måste ha ett 'Skäl för ny bedömning av tidigare diagnosgrund?'.
+      </iso:assert>
+      <iso:let name="delsvarsIdExpr" value="'^7\.[123]$'"/>
+      <iso:assert test="count(gn:delsvar[not(matches(@id, $delsvarsIdExpr))]) = 0">
+        Oväntat delsvars-id i delsvar till svar "<value-of select="@id"/>". Delsvars-id:n måste matcha "<value-of select="$delsvarsIdExpr"/>".
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
 
 <iso:pattern id="q7.1">
     <iso:rule context="//gn:delsvar[@id='7.1']">
