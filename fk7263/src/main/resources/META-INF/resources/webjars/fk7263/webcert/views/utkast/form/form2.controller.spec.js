@@ -25,6 +25,7 @@ describe('fk7263.EditCertCtrl.Form2Ctrl', function() {
     var $log;
     var model;
     var viewState;
+    var $httpBackend;
 
     // Load the webcert module and mock away everything that is not necessary.
 
@@ -45,6 +46,8 @@ describe('fk7263.EditCertCtrl.Form2Ctrl', function() {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $log = _$log_;
+            $httpBackend = _$httpBackend_;
+            $httpBackend.expectGET('/api/fmb/DIAGNOSKOD').respond(200, {});
 
             var IntygModel = _model_;
             model = new IntygModel();

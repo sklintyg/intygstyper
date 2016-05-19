@@ -2,9 +2,11 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory',
+        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory', 'common.fmbService', 'common.fmb.ViewStateService',
+
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory) {
+            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory,
+            fmbService, fmbViewState) {
             'use strict';
 
             /**********************************************************************************
@@ -33,10 +35,27 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
              **************************************************************************/
 
             // Get the certificate draft from the server.
-            UtkastService.load(viewState).then(function() {
+            UtkastService.load(viewState).then(function(intygModel) {
                 if (viewState.common.textVersionUpdated) {
                     $scope.certForm.$setDirty();
                 }
+
+                if(angular.isArray(intygModel.diagnoser) && intygModel.diagnoser[0].diagnosKod) {
+                    fmbService.getFMBHelpTextsByCode(intygModel.diagnoser[0].diagnosKod).then(
+                        function (formData) {
+                            $log.debug('fmbViewState from utkast controller');
+                            fmbViewState.setState(formData, intygModel.diagnoser[0].diagnosKod);
+                        },
+                        function (rejectionData) {
+                            $log.debug('fmbViewState from utkast controller - Error searching fmb help text');
+                            fmbViewState.reset();
+                        }
+                    );
+                } else{
+                    $log.debug('intygModel does not have diagnose code set - resetting fmbViewState');
+                    fmbViewState.reset();
+                }
+
             });
 
             $scope.$on('saveRequest', function($event, saveDeferred) {
@@ -54,6 +73,7 @@ angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
                 if(!$scope.certForm.$dirty){
                     $scope.destroyList();
                 }
+                fmbViewState.reset();
             });
 
             $scope.destroyList = function(){

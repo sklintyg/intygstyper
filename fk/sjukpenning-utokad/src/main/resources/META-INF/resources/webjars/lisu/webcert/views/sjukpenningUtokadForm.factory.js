@@ -1,7 +1,8 @@
 angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
-    ['common.DateUtilsService', 'common.ObjectHelper',
-    function(DateUtils, ObjectHelper) {
-    'use strict';
+    ['common.DateUtilsService', 'common.ObjectHelper', 'common.fmb.ViewStateService',
+        function(DateUtils, ObjectHelper, fmbViewState) {
+
+            'use strict';
 
     var categoryNames = [
         null,
@@ -15,6 +16,11 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
         'ovrigt',
         'kontakt'
     ];
+
+    // Determine if we have fmb data available for a specific section or not
+    var _missingInfoForFmbKey = function(scope, fmbKey) {
+        return !(ObjectHelper.isDefined(fmbViewState.state.formData[fmbKey]));
+    };
 
     var formFields = [
         {
@@ -63,9 +69,16 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 3, categoryName: categoryNames[3]},
             fieldGroup: [
+                { type: 'fmb',
+                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'DIAGNOS', panelClass: 'sit-fmb-medium'},
+                    hideExpression:  function($viewValue, $modelValue, scope) {
+                        return _missingInfoForFmbKey(scope, 'DIAGNOS');
+                    }
+                },
                 {
                     key: 'diagnoser',
                     type: 'diagnos',
+                    data: {  enableFMB: true},
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 }
             ]
@@ -74,7 +87,21 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
+                {
+                    type: 'fmb',
+                    templateOptions: {relatedFormId: categoryNames[4], helpTextContents: 'FUNKTIONSNEDSATTNING', panelClass: 'sit-fmb-small'},
+                    hideExpression:  function($viewValue, $modelValue, scope) {
+                        return _missingInfoForFmbKey(scope, 'FUNKTIONSNEDSATTNING');
+                    }
+                },
                 {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
+
+                {type: 'fmb',
+                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'AKTIVITETSBEGRANSNING', panelClass: 'sit-fmb-large'},
+                    hideExpression:  function($viewValue, $modelValue, scope) {
+                        return _missingInfoForFmbKey(scope, 'AKTIVITETSBEGRANSNING');
+                    }
+                },
                 {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
             ]
         },
@@ -91,6 +118,12 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
             templateOptions: {category: 6, categoryName: categoryNames[6]},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_32'}},
+                { type: 'fmb',
+                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'ARBETSFORMAGA', panelClass: 'sit-fmb-large'},
+                    hideExpression:  function($viewValue, $modelValue, scope) {
+                        return _missingInfoForFmbKey(scope, 'ARBETSFORMAGA');
+                    }
+                },
                 {
                     key: 'sjukskrivningar', type: 'sjukskrivningar',
                     templateOptions: {
@@ -125,7 +158,9 @@ angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
                     },
                     templateOptions: {label: 'DFR_33.2'}},
                 {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
+
                 {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
+
                 { key: 'prognos.typ', type: 'radio-group',
                     templateOptions: {
                         label: 'DFR_39.1',
