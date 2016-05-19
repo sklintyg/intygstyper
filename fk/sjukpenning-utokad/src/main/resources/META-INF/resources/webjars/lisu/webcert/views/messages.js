@@ -23,15 +23,10 @@ var sjukpenningUtokadMessages = {
         'lisu.label.kontakt': 'Vill du att Försäkringskassan kontaktar dig?',
 
         //Labels
-        'lisu.label.valjkodverk': 'Välj kodverk:',
         'lisu.label.spara-utkast': 'Spara',
         'lisu.label.ta-bort-utkast': 'Ta bort utkast',
         'lisu.label.skriv-ut-utkast': 'Skriv ut',
 
-        'lisu.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
-        'lisu.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
-        'lisu.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',
-        'lisu.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
         'lisu.label.vardenhet': 'Vårdenhetens adress',
 
         'lisu.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',

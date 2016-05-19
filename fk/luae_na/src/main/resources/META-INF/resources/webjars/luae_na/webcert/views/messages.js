@@ -22,15 +22,9 @@ var luae_naMessages = {
         'luae_na.label.medicinskaforutsattningarforarbete': 'Medicinska förutsättningar för arbete',
 
         //Labels
-        'luae_na.label.valj-version-icd-10': 'Välj version av ICD-10-SE:',
         'luae_na.label.spara-utkast': 'Spara',
         'luae_na.label.ta-bort-utkast': 'Ta bort utkast',
         'luae_na.label.skriv-ut-utkast': 'Skriv ut',
-
-        'luae_na.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
-        'luae_na.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
-        'luae_na.label.diagnoskodverk.fullstandig': 'Fullständig version',
-        'luae_na.label.diagnoskodverk.primarvard': 'Primärvårdsversion',
 
         'luae_na.label.vardenhet': 'Vårdenhetens adress',
 
@@ -63,8 +57,6 @@ var luae_naMessages = {
         'luae_na.validation.underlag.date.missing': 'Du måste ange datum för underlaget.',
         'luae_na.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
         'luae_na.validation.underlag.date.incorrect_format': 'Fel datumformat för underlag',
-
-        'luae_na.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
 
         'luae_na.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 

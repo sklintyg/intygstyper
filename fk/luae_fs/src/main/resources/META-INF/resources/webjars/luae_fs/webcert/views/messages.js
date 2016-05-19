@@ -13,15 +13,10 @@ var luae_fsMessages = {
         'luae_fs.label.certtitle': 'Läkarutlåtande för aktivitetsersättning vid förlängd skolgång',
 
         //Labels
-        'luae_fs.label.valjkodverk': 'Välj kodverk:',
         'luae_fs.label.spara-utkast': 'Spara',
         'luae_fs.label.ta-bort-utkast': 'Ta bort utkast',
         'luae_fs.label.skriv-ut-utkast': 'Skriv ut',
 
-        'luae_fs.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
-        'luae_fs.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
-        'luae_fs.label.diagnoskodverk.icd_10_se': 'ICD-10-SE',
-        'luae_fs.label.diagnoskodverk.ksh_97_p': 'KSH97-P (Primärvård)',
         'luae_fs.label.vardenhet': 'Vårdenhetens adress',
 
         'luae_fs.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
@@ -53,8 +48,6 @@ var luae_fsMessages = {
         'luae_fs.validation.underlag.date.missing': 'Du måste ange datum för underlaget.',
         'luae_fs.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
         'luae_fs.validation.underlag.date.incorrect_format': 'Fel datumformat för underlag',
-
-        'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
 
         'luae_fs.validation.diagnos.max-diagnoser': 'Du kan endast ange upp till tre st diagnoser.',
         'luae_fs.validation.diagnos.missing': 'Du måste ange en diagnos.',

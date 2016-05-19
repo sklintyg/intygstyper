@@ -22,15 +22,9 @@ var sjukersattningMessages = {
         'luse.label.medicinskaforutsattningarforarbete': 'Medicinska förutsättningar för arbete',
 
         //Labels
-        'sjukersattning.label.valj-version-icd-10': 'Välj version av ICD-10-SE:',
         'sjukersattning.label.spara-utkast': 'Spara',
         'sjukersattning.label.ta-bort-utkast': 'Ta bort utkast',
         'luse.label.skriv-ut-utkast': 'Skriv ut',
-
-        'sjukersattning.label.diagnoskod.icd': 'Diagnoskod enligt ICD-10 (huvuddiagnos): ',
-        'sjukersattning.label.diagnoskod.ksh': 'Diagnoskod enligt KSH97-P (Primärvård, huvuddiagnos): ',
-        'sjukersattning.label.diagnoskodverk.fullstandig': 'Fullständig version',
-        'sjukersattning.label.diagnoskodverk.primarvard': 'Primärvårdsversion',
 
         'luse.label.vardenhet': 'Vårdenhetens adress',
 
@@ -64,8 +58,6 @@ var sjukersattningMessages = {
         'luse.validation.underlag.date.missing': 'Du måste ange datum för underlaget.',
         'luse.validation.underlag.hamtas-fran.missing': 'Du måste ange var Försäkringskassan kan få information om utredningen.',
         'luse.validation.underlag.date.incorrect_format': 'Fel datumformat för underlag',
-
-        'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är %0st',
 
         'luse.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
