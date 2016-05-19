@@ -40,6 +40,7 @@ var luae_fsMessages = {
         'luae_fs.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter',
         'luae_fs.validation.grund-for-mu.annat.incorrect_format': 'Fel datumformat för annan referens',
         'luae_fs.validation.grund-for-mu.annat.beskrivning.missing': 'Fritextfältet som hör till alternativet Annat måste anges.',
+        'luae_fs.validation.grund-for-mu.annat.beskrivning.invalid_combination': 'Om inte alternativet Annat är angett får inte beskrivningsfältet anges',
         'luae_fs.validation.grund-for-mu.kannedom.missing' : 'Fältet \'Jag har känt patienten sedan\' måste fyllas i.',
         'luae_fs.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för kännedom om patienten',
         'luae_fs.validation.grund-for-mu.kannedom.after.undersokning' : 'Datum förkännedom om patienten får inte vara senare än datum för undersökning',
@@ -56,6 +57,7 @@ var luae_fsMessages = {
         'luse.validation.underlag.max-extra-underlag': 'Du kan inte lägga till fler utredningar, max antal är 10st',
 
         'luae_fs.validation.diagnos.max-diagnoser': 'Du kan endast ange upp till tre st diagnoser.',
+        'luae_fs.validation.diagnos.missing': 'Du måste ange en diagnos.',
 
         'luae_fs.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'luae_fs.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
@@ -72,7 +74,6 @@ var luae_fsMessages = {
         'luae_fs.validation.diagnos2.length-3': 'Diagnoskod på diagnosrad 3 ska anges med så många positioner som möjligt, men minst tre positioner.',
         'luae_fs.validation.diagnos2.psykisk.length-4': 'Diagnoskod på diagnosrad 3 ska anges med minst fyra positioner då en psykisk diagnos anges.',
         'luae_fs.validation.diagnos2.description.missing': 'Diagnostext saknas på diagnosrad 3',
-        'luae_fs.validation.diagnos.description.missing': 'Diagnostext saknas',
 
         'luae_fs.validation.funktionsnedsattning.debut.missing': 'Funktionsnedsättningens debut och utveckling måste fyllas i.',
         'luae_fs.validation.funktionsnedsattning.paverkan.missing': 'Funktionsnedsättningens påverkan måste fyllas i.',
