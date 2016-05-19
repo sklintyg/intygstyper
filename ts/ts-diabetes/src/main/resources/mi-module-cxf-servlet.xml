@@ -24,8 +24,8 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
-  <jaxws:client id="getMedicalCertificateForCareResponder"
-      serviceClass="se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface"
-      address="${certificates.getmedicalcertificateforcare.endpoint.url}">
+  <jaxws:client id="diabetesGetClient"
+      serviceClass="se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.GetTSDiabetesResponderInterface"
+      address="${certificates.gettsdiabetes.endpoint.url}">
   </jaxws:client>
 </beans>
