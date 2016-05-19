@@ -311,7 +311,7 @@
     </iso:rule>
   </iso:pattern>
 
-<iso:pattern id="q7.1">
+  <iso:pattern id="q7.1">
     <iso:rule context="//gn:delsvar[@id='7.1']">
       <iso:extends rule="non-empty-string"/>
     </iso:rule>
