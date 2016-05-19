@@ -24,16 +24,12 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import se.inera.certificate.modules.fkparent.support.FkAbstractModuleEntryPoint;
@@ -65,7 +61,7 @@ public class LuaefsEntryPointTest {
         SortedMap<String, String> map = new TreeMap<>();
         map.put(FkAbstractModuleEntryPoint.DETAILED_DESCRIPTION_TEXT_KEY, "hello");
 
-        IntygTexts intygTexts = new IntygTexts("1.0", null, null, null, map, null);
+        IntygTexts intygTexts = new IntygTexts("1.0", null, null, null, map, null, null);
         when(repoMock.getTexts(anyString(), anyString())).thenReturn(intygTexts);
 
         entryPoint = new LuaefsEntryPoint();

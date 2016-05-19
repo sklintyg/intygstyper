@@ -46,33 +46,33 @@ public class ScenarioTest {
     public void testInternalToTransport() throws ScenarioNotFoundException {
         for (Scenario internalScenario : internalScenarios) {
             Scenario transportScenario = getScenarioByName(internalScenario.getName(), transportScenarios);
-            
+
             TSDiabetesIntyg expected = transportScenario.asTransportModel().getIntyg();
             TSDiabetesIntyg actual = InternalToTransportConverter.convert(internalScenario.asInternalModel()).getIntyg();
-            
+
             ReflectionAssert.assertLenientEquals(expected, actual);
         }
     }
-    
+
     @Test
-    public void testTransportToInternal() throws ScenarioNotFoundException{
+    public void testTransportToInternal() throws ScenarioNotFoundException {
         for (Scenario scenario : transportScenarios) {
             Scenario internalScenario = getScenarioByName(scenario.getName(), internalScenarios);
-            
+
             Utlatande expected = internalScenario.asInternalModel();
             Utlatande actual = TransportToInternalConverter.convert(scenario.asTransportModel().getIntyg());
-            
+
             ReflectionAssert.assertLenientEquals(expected, actual);
         }
     }
 
     private Scenario getScenarioByName(String name, List<Scenario> scenarios) {
         for (Scenario scenario : scenarios) {
-            if(name.equalsIgnoreCase(scenario.getName())){
+            if (name.equalsIgnoreCase(scenario.getName())) {
                 return scenario;
             }
         }
-        
+
         throw new IllegalArgumentException("No such scenario found");
     }
 }

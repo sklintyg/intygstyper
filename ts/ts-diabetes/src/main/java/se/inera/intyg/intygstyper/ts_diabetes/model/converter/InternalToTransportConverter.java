@@ -34,6 +34,7 @@ import se.inera.intygstjanster.ts.services.v1.Hypoglykemier;
 
 public final class InternalToTransportConverter {
 
+    private static final String DELIMITER_REGEXP = "\\.";
     private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final Map<String, DiabetesTypVarden> TYP_VARDEN_MAP;
 
@@ -65,8 +66,15 @@ public final class InternalToTransportConverter {
         if (utlatande.getSyn().getSeparatOgonlakarintyg() != null && !utlatande.getSyn().getSeparatOgonlakarintyg()) {
             result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
         }
-        result.setUtgava(UtlatandeKod.getCurrentVersion().getTsUtgava());
-        result.setVersion(UtlatandeKod.getCurrentVersion().getTsVersion());
+
+        if (utlatande.getTextVersion() != null) {
+            String[] versionInfo = utlatande.getTextVersion().split(DELIMITER_REGEXP);
+            result.setUtgava(String.format("%02d", Integer.parseInt(versionInfo[1])));
+            result.setVersion(String.format("%02d", Integer.parseInt(versionInfo[0])));
+        } else {
+            result.setUtgava(UtlatandeKod.getCurrentVersion().getTsUtgava());
+            result.setVersion(UtlatandeKod.getCurrentVersion().getTsVersion());
+        }
         registerTsDiabetes.setIntyg(result);
         return registerTsDiabetes;
     }

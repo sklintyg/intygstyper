@@ -43,6 +43,8 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
 
     private Bedomning bedomning;
 
+    private String textVersion;
+
     @Override
     public String getId() {
         return id;
@@ -129,9 +131,12 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
         return bedomning;
     }
 
-    // Not used for this certificate
     @Override
     public String getTextVersion() {
-        return null;
+        return textVersion;
+    }
+
+    public void setTextVersion(String textVersion) {
+        this.textVersion = textVersion;
     }
 }

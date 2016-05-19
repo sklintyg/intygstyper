@@ -24,6 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.*;
+
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -31,11 +37,14 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.ObservationsKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
-
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.*;
+import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 
 public class PdfGenerator {
+
+    @Autowired(required = false)
+    private IntygTextsService texts;
+
+    private static final String PDF_PATH_V02_U06 = "pdf/TSTRK1031-utan streck.pdf";
 
     // Constants for printing ID and origin in left margin
     private static final int MARGIN_TEXT_START_X = 46;
@@ -172,7 +181,7 @@ public class PdfGenerator {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            PdfReader pdfReader = new PdfReader("pdf/TSTRK1031-utan streck.pdf");
+            PdfReader pdfReader = new PdfReader(getPdfPath(utlatande));
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
@@ -180,14 +189,14 @@ public class PdfGenerator {
 
             // Decorate PDF depending on the origin of the pdf-call
             switch (applicationOrigin) {
-                case MINA_INTYG:
-                    createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), MINA_INTYG_MARGIN_TEXT);
-                    break;
-                case WEBCERT:
-                    createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), WEBCERT_MARGIN_TEXT);
-                    break;
-                default:
-                    break;
+            case MINA_INTYG:
+                createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), MINA_INTYG_MARGIN_TEXT);
+                break;
+            case WEBCERT:
+                createLeftMarginText(pdfStamper, pdfReader.getNumberOfPages(), utlatande.getId(), WEBCERT_MARGIN_TEXT);
+                break;
+            default:
+                break;
             }
 
             pdfStamper.close();
@@ -197,6 +206,18 @@ public class PdfGenerator {
         } catch (Exception e) {
             throw new PdfGeneratorException(e);
         }
+    }
+
+    private String getPdfPath(Utlatande utlatande) throws PdfGeneratorException {
+        String textVersion = utlatande.getTextVersion();
+        if (textVersion == null) {
+            return PDF_PATH_V02_U06;
+        }
+        String path = texts.getIntygTextsPojo(TsDiabetesEntryPoint.MODULE_ID, textVersion).getPdfPath();
+        if (path == null) {
+            return PDF_PATH_V02_U06;
+        }
+        return path;
     }
 
     private void createLeftMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {
@@ -218,9 +239,11 @@ public class PdfGenerator {
     /**
      * Method for filling out the fields of a pdf with data from the internal model.
      *
-     * @param utlatande {@link se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande} containing data for
-     *                  populating the pdf
-     * @param fields    The fields of the pdf
+     * @param utlatande
+     *            {@link se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande} containing data for
+     *            populating the pdf
+     * @param fields
+     *            The fields of the pdf
      * @throws DocumentException
      * @throws IOException
      */

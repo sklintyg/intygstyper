@@ -30,6 +30,7 @@ angular.module('ts-diabetes').factory('ts-diabetes.Domain.IntygModel',
                     id: undefined,
                     typ: undefined,
                     kommentar:undefined,
+                    textVersion: undefined,
                     grundData: grundData,
                     vardkontakt: {
                         typ: undefined,

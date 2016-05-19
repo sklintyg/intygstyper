@@ -39,6 +39,8 @@ import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class TransportToInternalConverter {
+    private static final String DELIMITER = ".";
+
     private static final String VARDKONTAKT_TYP = "5880005";
 
     public static final Map<DiabetesTypVarden, String> TYP_VARDEN_MAP;
@@ -68,6 +70,7 @@ public final class TransportToInternalConverter {
         readIntygAvser(result.getIntygAvser(), transport.getIntygAvser());
         result.setVardkontakt(readVardkontakt(transport.getIdentitetStyrkt()));
         result.setKommentar(transport.getOvrigKommentar());
+        result.setTextVersion(transport.getVersion() + DELIMITER + transport.getUtgava());
         return result;
     }
 
