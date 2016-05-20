@@ -49,8 +49,6 @@ public final class TransportToInternal {
 
     private static final String DELIMITER = ".";
 
-    private static Utlatande internal;
-
     private TransportToInternal() {
     }
 
@@ -72,7 +70,7 @@ public final class TransportToInternal {
             throw new ConverterException("Source utlatande was null, cannot convert");
         }
 
-        internal = new Utlatande();
+        Utlatande internal = new Utlatande();
         internal.setGrundData(convertGrundData(source.getGrundData()));
         internal.setId(source.getIntygsId());
         internal.setTextVersion(source.getVersion() + DELIMITER + source.getUtgava());
@@ -85,23 +83,23 @@ public final class TransportToInternal {
         internal.getSomnVakenhet().setTeckenSomnstorningar(source.isHarSomnVakenhetStorning());
         internal.getNeurologi().setNeurologiskSjukdom(source.isNeurologiskaSjukdomar());
 
-        buildAlkoholNarkotikaLakemedel(source.getAlkoholNarkotikaLakemedel());
-        buildBedomning(source.getBedomning());
-        buildDiabetes(source.getDiabetes());
-        buildHjartKarl(source.getHjartKarlSjukdomar());
-        buildHorselBalans(source.getHorselBalanssinne());
-        buildIdentitetStyrkt(source.getIdentitetStyrkt());
-        buildIntygAvser(source.getIntygAvser());
-        buildMedvetandeStorning(source.getMedvetandestorning());
-        buildMedicinering(source.getOvrigMedicinering());
-        buildFunktionsnedsattning(source.getRorelseorganensFunktioner());
-        buildSjukhusvard(source.getSjukhusvard());
-        buildSynfunktioner(source.getSynfunktion());
-        buildUvecklingsstorning(source.getUtvecklingsstorning());
+        buildAlkoholNarkotikaLakemedel(internal, source.getAlkoholNarkotikaLakemedel());
+        buildBedomning(internal, source.getBedomning());
+        buildDiabetes(internal, source.getDiabetes());
+        buildHjartKarl(internal, source.getHjartKarlSjukdomar());
+        buildHorselBalans(internal, source.getHorselBalanssinne());
+        buildIdentitetStyrkt(internal, source.getIdentitetStyrkt());
+        buildIntygAvser(internal, source.getIntygAvser());
+        buildMedvetandeStorning(internal, source.getMedvetandestorning());
+        buildMedicinering(internal, source.getOvrigMedicinering());
+        buildFunktionsnedsattning(internal, source.getRorelseorganensFunktioner());
+        buildSjukhusvard(internal, source.getSjukhusvard());
+        buildSynfunktioner(internal, source.getSynfunktion());
+        buildUvecklingsstorning(internal, source.getUtvecklingsstorning());
         return internal;
     }
 
-    private static void buildAlkoholNarkotikaLakemedel(AlkoholNarkotikaLakemedel source) {
+    private static void buildAlkoholNarkotikaLakemedel(Utlatande internal, AlkoholNarkotikaLakemedel source) {
         internal.getNarkotikaLakemedel().setForemalForVardinsats(source.isHarVardinsats());
         internal.getNarkotikaLakemedel().setLakarordineratLakemedelsbruk(source.isHarLakarordineratLakemedelsbruk());
         internal.getNarkotikaLakemedel().setLakemedelOchDos(source.getLakarordineratLakemedelOchDos());
@@ -109,7 +107,7 @@ public final class TransportToInternal {
         internal.getNarkotikaLakemedel().setTeckenMissbruk(source.isHarTeckenMissbruk());
     }
 
-    private static void buildBedomning(BedomningTypBas source) {
+    private static void buildBedomning(Utlatande internal, BedomningTypBas source) {
         internal.getBedomning().setKanInteTaStallning(source.isKanInteTaStallning());
         internal.getBedomning().setLakareSpecialKompetens(source.getBehovAvLakareSpecialistKompetens());
         internal.getBedomning().getKorkortstyp().addAll(convertBedomningKorkortstyp(source.getKorkortstyp()));
@@ -123,7 +121,7 @@ public final class TransportToInternal {
         return korkortsTyper;
     }
 
-    private static void buildDiabetes(DiabetesTypBas source) {
+    private static void buildDiabetes(Utlatande internal, DiabetesTypBas source) {
         internal.getDiabetes().setHarDiabetes(source.isHarDiabetes());
         if (source.isHarDiabetes()) {
             internal.getDiabetes().setDiabetesTyp(source.getDiabetesTyp().name().equals("TYP_1") ? "DIABETES_TYP_1" : "DIABETES_TYP_2");
@@ -133,19 +131,19 @@ public final class TransportToInternal {
         }
     }
 
-    private static void buildHjartKarl(HjartKarlSjukdomar source) {
+    private static void buildHjartKarl(Utlatande internal, HjartKarlSjukdomar source) {
         internal.getHjartKarl().setBeskrivningRiskfaktorer(source.getRiskfaktorerStrokeBeskrivning());
         internal.getHjartKarl().setHjarnskadaEfterTrauma(source.isHarHjarnskadaICNS());
         internal.getHjartKarl().setHjartKarlSjukdom(source.isHarRiskForsamradHjarnFunktion());
         internal.getHjartKarl().setRiskfaktorerStroke(source.isHarRiskfaktorerStroke());
     }
 
-    private static void buildHorselBalans(HorselBalanssinne source) {
+    private static void buildHorselBalans(Utlatande internal, HorselBalanssinne source) {
         internal.getHorselBalans().setBalansrubbningar(source.isHarBalansrubbningYrsel());
         internal.getHorselBalans().setSvartUppfattaSamtal4Meter(source.isHarSvartUppfattaSamtal4Meter());
     }
 
-    private static void buildIdentitetStyrkt(IdentitetStyrkt source) {
+    private static void buildIdentitetStyrkt(Utlatande internal, IdentitetStyrkt source) {
         internal.getVardkontakt().setIdkontroll(mapToInternalIdKontroll(source.getIdkontroll().name()));
         // TODO What is this used for?
         internal.getVardkontakt().setTyp(VARDKONTAKT_TYP);
@@ -170,7 +168,7 @@ public final class TransportToInternal {
         }
     }
 
-    private static void buildIntygAvser(IntygsAvserTypBas source) {
+    private static void buildIntygAvser(Utlatande internal, IntygsAvserTypBas source) {
         internal.getIntygAvser().getKorkortstyp().addAll(convertIntygAvsergKorkortstyp(source.getKorkortstyp()));
     }
 
@@ -182,30 +180,30 @@ public final class TransportToInternal {
         return korkortsTyper;
     }
 
-    private static void buildMedvetandeStorning(Medvetandestorning source) {
+    private static void buildMedvetandeStorning(Utlatande internal, Medvetandestorning source) {
         internal.getMedvetandestorning().setBeskrivning(source.getMedvetandestorningBeskrivning());
         internal.getMedvetandestorning().setMedvetandestorning(source.isHarMedvetandestorning());
     }
 
-    private static void buildMedicinering(OvrigMedicinering source) {
+    private static void buildMedicinering(Utlatande internal, OvrigMedicinering source) {
         internal.getMedicinering().setBeskrivning(source.getStadigvarandeMedicineringBeskrivning());
         internal.getMedicinering().setStadigvarandeMedicinering(source.isHarStadigvarandeMedicinering());
     }
 
-    private static void buildFunktionsnedsattning(RorelseorganenFunktioner source) {
+    private static void buildFunktionsnedsattning(Utlatande internal, RorelseorganenFunktioner source) {
         internal.getFunktionsnedsattning().setBeskrivning(source.getRorelsebegransningBeskrivning());
         internal.getFunktionsnedsattning().setFunktionsnedsattning(source.isHarRorelsebegransning());
         internal.getFunktionsnedsattning().setOtillrackligRorelseformaga(source.isHarOtillrackligRorelseformagaPassagerare());
     }
 
-    private static void buildSjukhusvard(Sjukhusvard source) {
+    private static void buildSjukhusvard(Utlatande internal, Sjukhusvard source) {
         internal.getSjukhusvard().setAnledning(source.getSjukhusvardEllerLakarkontaktAnledning());
         internal.getSjukhusvard().setSjukhusEllerLakarkontakt(source.isHarSjukhusvardEllerLakarkontakt());
         internal.getSjukhusvard().setTidpunkt(source.getSjukhusvardEllerLakarkontaktDatum());
         internal.getSjukhusvard().setVardinrattning(source.getSjukhusvardEllerLakarkontaktVardinrattning());
     }
 
-    private static void buildSynfunktioner(SynfunktionBas source) {
+    private static void buildSynfunktioner(Utlatande internal, SynfunktionBas source) {
         internal.getSyn().setBinokulart(buildBinokulart(source));
         internal.getSyn().setHogerOga(buildHoger(source));
         internal.getSyn().setVansterOga(buildVanster(source));
@@ -255,7 +253,7 @@ public final class TransportToInternal {
         return vanster;
     }
 
-    private static void buildUvecklingsstorning(Utvecklingsstorning source) {
+    private static void buildUvecklingsstorning(Utlatande internal, Utvecklingsstorning source) {
         internal.getUtvecklingsstorning().setHarSyndrom(source.isHarAndrayndrom());
         internal.getUtvecklingsstorning().setPsykiskUtvecklingsstorning(source.isHarPsykiskUtvecklingsstorning());
     }
