@@ -26,29 +26,28 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Before;
 import org.junit.Test;
-
-import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+
+@RunWith(MockitoJUnitRunner.class)
 public class WebcertModelFactoryTest {
 
-    private WebcertModelFactory factory;
+    @Mock
+    private IntygTextsService intygTexts;
 
-    @Before
-    public void setUp() throws Exception {
-        factory = new WebcertModelFactory();
-    }
+    @InjectMocks
+    private WebcertModelFactory factory;
 
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
