@@ -84,6 +84,7 @@ public class ModuleApiTest {
     private TsBasModuleApi moduleApi;
 
     @Autowired
+    @Qualifier("tsBasObjectMapper")
     private CustomObjectMapper objectMapper;
 
     @Before

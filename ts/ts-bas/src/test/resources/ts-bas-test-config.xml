@@ -1,4 +1,4 @@
-<!--
+<!-- 
   ~ Copyright (C) 2016 Inera AB (http://www.inera.se)
   ~
   ~ This file is part of sklintyg (https://github.com/sklintyg).
@@ -23,5 +23,8 @@
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<import resource="ts-bas-beans.xml" />
+	<bean class="se.inera.intyg.common.services.texts.IntygTextsServiceImpl" />
+	<bean class="se.inera.intyg.common.services.texts.repo.IntygTextsRepositoryImpl" />
+	<bean id="customObjectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper" />
 
 </beans>

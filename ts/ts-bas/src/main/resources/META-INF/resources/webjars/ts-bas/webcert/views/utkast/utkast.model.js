@@ -34,6 +34,7 @@ angular.module('ts-bas').factory('ts-bas.Domain.IntygModel',
                     typ: undefined, // NOT intygtyp, this is TS-intyg type.
                     kommentar: undefined,
                     grundData: grundData,
+                    textVersion: undefined,
                     vardkontakt: {
                         typ: undefined,
                         idkontroll: undefined

@@ -29,6 +29,8 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
 
     private GrundData grundData = new GrundData();
 
+    private String textVersion;
+
     private String kommentar;
 
     private Vardkontakt vardkontakt;
@@ -228,10 +230,13 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
         this.grundData = grundData;
     }
 
-    // This is not used for this certificate
     @Override
     public String getTextVersion() {
-        return null;
+        return textVersion;
+    }
+
+    public void setTextVersion(String textVersion) {
+        this.textVersion = textVersion;
     }
 
 }

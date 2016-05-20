@@ -38,6 +38,7 @@ import se.inera.intygstjanster.ts.services.v1.*;
 import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
 import se.inera.intygstjanster.ts.services.v1.Sjukhusvard;
 import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
+
 /**
  * Convert from {@link se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande} to the external {@link TSBasIntyg}
  * model.
@@ -49,8 +50,10 @@ public final class InternalToTransport {
 
     private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
+    private static final String DELIMITER_REGEXP = "\\.";
 
-    private InternalToTransport() { }
+    private InternalToTransport() {
+    }
 
     /**
      * Takes an internal Utlatande and converts it to the external model.
@@ -80,8 +83,14 @@ public final class InternalToTransport {
 
         utlatande.setIntygsTyp(utlatandeKod.getCode());
 
-        utlatande.setUtgava(utlatandeKod.getTsUtgava());
-        utlatande.setVersion(utlatandeKod.getTsVersion());
+        if (source.getTextVersion() != null) {
+            String[] versionInfo = source.getTextVersion().split(DELIMITER_REGEXP);
+            utlatande.setUtgava(String.format("%02d", Integer.parseInt(versionInfo[1])));
+            utlatande.setVersion(String.format("%02d", Integer.parseInt(versionInfo[0])));
+        } else {
+            utlatande.setUtgava(utlatandeKod.getTsUtgava());
+            utlatande.setVersion(utlatandeKod.getTsVersion());
+        }
 
         utlatande.setAlkoholNarkotikaLakemedel(buildAlkoholNarkotikaLakemedel(source.getNarkotikaLakemedel()));
         utlatande.setBedomning(buildBedomningTypBas(source.getBedomning()));
@@ -167,7 +176,8 @@ public final class InternalToTransport {
         return horselBalans;
     }
 
-    private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.intyg.intygstyper.ts_bas.model.internal.Vardkontakt source) throws ConverterException {
+    private static IdentitetStyrkt buildIdentitetStyrkt(se.inera.intyg.intygstyper.ts_bas.model.internal.Vardkontakt source)
+            throws ConverterException {
         if (source.getIdkontroll() == null) {
             throw new ConverterException("Idkontroll was null");
         }

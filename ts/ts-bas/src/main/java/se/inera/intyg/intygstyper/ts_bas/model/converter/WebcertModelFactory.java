@@ -21,13 +21,12 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
@@ -35,7 +34,11 @@ import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
  * Factory for creating a editable model.
  */
 public class WebcertModelFactory {
+
     private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
+
+    @Autowired(required = false)
+    private IntygTextsService intygTexts;
 
     /**
      * Create a new TS-bas draft pre-populated with the attached data.
@@ -60,8 +63,8 @@ public class WebcertModelFactory {
         }
 
         template.setId(newDraftData.getCertificateId());
-
         template.setTyp(TsBasEntryPoint.MODULE_ID);
+        template.setTextVersion(intygTexts.getLatestVersion(TsBasEntryPoint.MODULE_ID));
 
         populateWithSkapadAv(template, newDraftData.getSkapadAv());
         populateWithPatientInfo(template, newDraftData.getPatient());

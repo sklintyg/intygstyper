@@ -20,24 +20,28 @@ package se.inera.intyg.intygstyper.ts_bas.pdf;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
 import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PdfGeneratorTest {
 
-    private PdfGenerator pdfGen;
+    @Mock
+    private IntygTextsService intygTexts;
 
-    public PdfGeneratorTest() {
-        pdfGen = new PdfGenerator(true);
-    }
+    @InjectMocks
+    private PdfGenerator pdfGen = new PdfGenerator(true);
 
     @Test
     public void testGeneratePdf() throws Exception {

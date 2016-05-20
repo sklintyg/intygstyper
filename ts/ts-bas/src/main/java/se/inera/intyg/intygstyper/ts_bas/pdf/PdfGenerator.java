@@ -24,19 +24,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
 
+import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.*;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
 public class PdfGenerator {
 
+    @Autowired(required = false)
+    private IntygTextsService intygTexts;
+
+    private static final String PDF_PATH_V06U07 = "pdf/TSTRK1007 NKL fas4 e-tjanst 2015-04-10.pdf";
     // Constants for printing ID and origin in left margin
     private static final int MARGIN_TEXT_START_X = 46;
     private static final int MARGIN_TEXT_START_Y = 137;
@@ -189,7 +199,7 @@ public class PdfGenerator {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-            PdfReader pdfReader = new PdfReader("pdf/TSTRK1007 NKL fas4 e-tjanst 2015-04-10.pdf");
+            PdfReader pdfReader = new PdfReader(getPdfPath(utlatande));
             PdfStamper pdfStamper = new PdfStamper(pdfReader, outputStream);
             pdfStamper.setFormFlattening(formFlattening);
             AcroFields fields = pdfStamper.getAcroFields();
@@ -214,6 +224,22 @@ public class PdfGenerator {
         } catch (Exception e) {
             throw new PdfGeneratorException(e);
         }
+    }
+
+    private String getPdfPath(Utlatande utlatande) throws PdfGeneratorException {
+        String textVersion = utlatande.getTextVersion();
+        if (textVersion == null) {
+            return PDF_PATH_V06U07;
+        }
+        IntygTexts texts = intygTexts.getIntygTextsPojo(TsBasEntryPoint.MODULE_ID, textVersion);
+        if (texts == null) {
+            return PDF_PATH_V06U07;
+        }
+        String path = texts.getPdfPath();
+        if (path == null) {
+            return PDF_PATH_V06U07;
+        }
+        return path;
     }
 
     private void createLeftMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {

@@ -30,6 +30,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -42,7 +43,7 @@ import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 public class PdfGenerator {
 
     @Autowired(required = false)
-    private IntygTextsService texts;
+    private IntygTextsService intygTexts;
 
     private static final String PDF_PATH_V02_U06 = "pdf/TSTRK1031-utan streck.pdf";
 
@@ -213,7 +214,11 @@ public class PdfGenerator {
         if (textVersion == null) {
             return PDF_PATH_V02_U06;
         }
-        String path = texts.getIntygTextsPojo(TsDiabetesEntryPoint.MODULE_ID, textVersion).getPdfPath();
+        IntygTexts texts = intygTexts.getIntygTextsPojo(TsDiabetesEntryPoint.MODULE_ID, textVersion);
+        if (texts == null) {
+            return PDF_PATH_V02_U06;
+        }
+        String path = texts.getPdfPath();
         if (path == null) {
             return PDF_PATH_V02_U06;
         }

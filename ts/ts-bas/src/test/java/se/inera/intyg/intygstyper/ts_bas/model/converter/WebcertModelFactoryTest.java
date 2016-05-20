@@ -20,31 +20,34 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.*;
 
 import java.io.IOException;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
+@RunWith(MockitoJUnitRunner.class)
 public class WebcertModelFactoryTest {
 
-    private WebcertModelFactory factory;
+    @Mock
+    private IntygTextsService intygTexts;
 
-    @Before
-    public void setUp() throws Exception {
-        factory = new WebcertModelFactory();
-    }
+    @InjectMocks
+    private WebcertModelFactory factory;
 
     @Test
     public void testCreateEditableModel() throws IOException {
+        when(intygTexts.getLatestVersion(eq(TsBasEntryPoint.MODULE_ID))).thenReturn("version");
         // Programmatically creating a CreateNewDraftHolder
         Patient patient = new Patient("Johnny", "Jobs", "Appleseed", new Personnummer("19121212-1212"), "Testvägen 12", "13337", "Huddinge");
         Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
@@ -73,5 +76,7 @@ public class WebcertModelFactoryTest {
         assertEquals("Testvägen 12", utlatande.getGrundData().getPatient().getPostadress());
         assertEquals("13337", utlatande.getGrundData().getPatient().getPostnummer());
         assertEquals("Huddinge", utlatande.getGrundData().getPatient().getPostort());
+
+        assertEquals("version", utlatande.getTextVersion());
     }
 }

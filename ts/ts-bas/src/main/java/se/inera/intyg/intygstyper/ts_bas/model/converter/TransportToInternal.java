@@ -47,6 +47,8 @@ public final class TransportToInternal {
 
     private static final String VARDKONTAKT_TYP = "5880005";
 
+    private static final String DELIMITER = ".";
+
     private static Utlatande internal;
 
     private TransportToInternal() {
@@ -73,6 +75,7 @@ public final class TransportToInternal {
         internal = new Utlatande();
         internal.setGrundData(convertGrundData(source.getGrundData()));
         internal.setId(source.getIntygsId());
+        internal.setTextVersion(source.getVersion() + DELIMITER + source.getUtgava());
         internal.setKommentar(source.getOvrigKommentar());
         internal.setTyp(UtlatandeKod.getCurrentVersion().getCode());
 
