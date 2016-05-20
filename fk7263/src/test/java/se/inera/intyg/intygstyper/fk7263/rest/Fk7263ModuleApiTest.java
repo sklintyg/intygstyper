@@ -57,6 +57,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.utils.ResourceConverterUtils;
 import se.inera.intyg.intygstyper.fk7263.utils.ScenarioNotFoundException;
@@ -306,6 +307,16 @@ public class Fk7263ModuleApiTest {
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
         diff.overrideElementQualifier(new ElementNameAndTextQualifier());
         Assert.assertTrue(diff.toString(), diff.similar());
+    }
+
+    @Test
+    public void getAdditionalInfoFromUtlatandeTest() throws Exception {
+        Utlatande utlatande = getUtlatandeFromFile();
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+
+        String result = fk7263ModuleApi.getAdditionalInfo(intyg);
+
+        assertEquals("2011-01-26 - 2011-05-31", result);
     }
 
     @Test

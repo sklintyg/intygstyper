@@ -47,6 +47,7 @@ import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
@@ -122,6 +123,15 @@ public class ModuleApiTest {
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
         diff.overrideElementQualifier(new ElementNameAndTextQualifier());
         Assert.assertTrue(diff.toString(), diff.similar());
+    }
+
+    @Test
+    public void getAdditionalInfoFromUtlatandeTest() throws Exception {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-maximal").asInternalModel();
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+
+        String result = moduleApi.getAdditionalInfo(intyg);
+        assertEquals("AM, A1, A2, A, B, BE, TRAKTOR, C1, C1E, C, CE, D1, D1E, D, DE, TAXI", result);
     }
 
     @Test
