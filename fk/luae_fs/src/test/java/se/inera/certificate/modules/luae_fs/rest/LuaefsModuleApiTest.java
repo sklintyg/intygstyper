@@ -56,7 +56,6 @@ import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Patient;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
@@ -359,9 +358,8 @@ public class LuaefsModuleApiTest {
         GetCertificateResponseType response = new GetCertificateResponseType();
 
         String xmlContents = Resources.toString(Resources.getResource("luae_fs-simple-valid.xml"), Charsets.UTF_8);
-        CertificateHolder certificateHolder = new CertificateHolder();
-        certificateHolder.setOriginalCertificate(xmlContents);
-        Intyg intyg = moduleApi.getIntygFromCertificateHolder(certificateHolder);
+        Utlatande utlatandeFromXml = moduleApi.getUtlatandeFromXml(xmlContents);
+        Intyg intyg = moduleApi.getIntygFromUtlatande(utlatandeFromXml);
 
         intyg.getStatus().add(createStatus(statusKod.name(), part));
 

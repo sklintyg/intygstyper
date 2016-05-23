@@ -45,7 +45,7 @@ public final class UtlatandeToIntyg {
     private UtlatandeToIntyg() {
     }
 
-    static Intyg convert(LuaefsUtlatande source) {
+    public static Intyg convert(LuaefsUtlatande source) {
         Intyg intyg = InternalConverterUtil.getIntyg(source);
         intyg.setTyp(getTypAvIntyg(source));
         intyg.getSvar().addAll(getSvar(source));

@@ -28,6 +28,7 @@ import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.integration.schema.adapter.InternalDateAdapter;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
@@ -56,7 +57,7 @@ public final class TransportToInternalConverter {
     private TransportToInternalConverter() {
     }
 
-    public static Utlatande convert(TSDiabetesIntyg transport) {
+    public static Utlatande convert(TSDiabetesIntyg transport) throws ConverterException {
         Utlatande result = new Utlatande();
 
         result.setId(transport.getIntygsId());

@@ -25,10 +25,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.unitils.reflectionassert.ReflectionAssert;
 
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 public class ScenarioTest {
@@ -55,7 +54,7 @@ public class ScenarioTest {
     }
 
     @Test
-    public void testTransportToInternal() throws ScenarioNotFoundException {
+    public void testTransportToInternal() throws ScenarioNotFoundException, ConverterException {
         for (Scenario scenario : transportScenarios) {
             Scenario internalScenario = getScenarioByName(scenario.getName(), internalScenarios);
 

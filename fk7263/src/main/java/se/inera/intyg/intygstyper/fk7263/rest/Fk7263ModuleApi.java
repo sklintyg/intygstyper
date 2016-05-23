@@ -56,7 +56,8 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.*;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
@@ -391,6 +392,18 @@ public class Fk7263ModuleApi implements ModuleApi {
         return objectMapper.readValue(utlatandeJson, Utlatande.class);
     }
 
+    @Override
+    public Utlatande getUtlatandeFromXml(String xml) throws ModuleException {
+        RegisterMedicalCertificateType jaxbObject = JAXB.unmarshal(new StringReader(xml),
+                RegisterMedicalCertificateType.class);
+        try {
+            return TransportToInternal.convert(jaxbObject.getLakarutlatande());
+        } catch (ConverterException e) {
+            LOG.error("Could not get utlatande from xml: {}", e.getMessage());
+            throw new ModuleException("Could not get utlatande from xml", e);
+        }
+    }
+
     private CertificateResponse convert(GetMedicalCertificateForCareResponseType response, boolean revoked) throws ModuleException {
         try {
             Utlatande utlatande = TransportToInternal.convert(response.getLakarutlatande());
@@ -545,13 +558,12 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public Intyg getIntygFromCertificateHolder(CertificateHolder certificateHolder) throws ModuleException {
+    public Intyg getIntygFromUtlatande(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) throws ModuleException {
         try {
-            Utlatande utlatande = getUtlatandeFromJson(certificateHolder.getDocument());
-            return UtlatandeToIntyg.convert(utlatande);
+            return UtlatandeToIntyg.convert((Utlatande) utlatande);
         } catch (Exception e) {
-            LOG.error("Could not get intyg from certificate holder. {}", e);
-            throw new ModuleException("Could not get intyg from certificate holder", e);
+            LOG.error("Could not get intyg from utlatande: {}", e.getMessage());
+            throw new ModuleException("Could not get intyg from utlatande", e);
         }
     }
 

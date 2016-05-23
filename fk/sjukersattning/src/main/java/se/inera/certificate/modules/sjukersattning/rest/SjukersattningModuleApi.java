@@ -49,7 +49,8 @@ import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.*;
+import se.inera.intyg.common.support.modules.support.api.ModuleApi;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
@@ -290,6 +291,18 @@ public class SjukersattningModuleApi implements ModuleApi {
         return objectMapper.readValue(utlatandeJson, SjukersattningUtlatande.class);
     }
 
+    @Override
+    public Utlatande getUtlatandeFromXml(String xml) throws ModuleException {
+        RegisterCertificateType jaxbObject = JAXB.unmarshal(new StringReader(xml),
+                RegisterCertificateType.class);
+        try {
+            return TransportToInternal.convert(jaxbObject.getIntyg());
+        } catch (ConverterException e) {
+            LOG.error("Could not get utlatande from xml: {}", e.getMessage());
+            throw new ModuleException("Could not get utlatande from xml", e);
+        }
+    }
+
     private CertificateResponse convert(GetCertificateResponseType response) throws ModuleException {
         try {
             SjukersattningUtlatande utlatande = TransportToInternal.convert(response.getIntyg());
@@ -380,14 +393,12 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public Intyg getIntygFromCertificateHolder(CertificateHolder certificateHolder) throws ModuleException {
+    public Intyg getIntygFromUtlatande(Utlatande utlatande) throws ModuleException {
         try {
-            RegisterCertificateType jaxbObject = JAXB.unmarshal(new StringReader(certificateHolder.getOriginalCertificate()),
-                    RegisterCertificateType.class);
-            return jaxbObject.getIntyg();
+            return UtlatandeToIntyg.convert((SjukersattningUtlatande) utlatande);
         } catch (Exception e) {
-            LOG.error("Could not get intyg from certificate holder. {}", e);
-            throw new ModuleException("Could not get intyg from certificate holder", e);
+            LOG.error("Could not get intyg from utlatande: {}", e.getMessage());
+            throw new ModuleException("Could not get intyg from utlatande", e);
         }
     }
 
