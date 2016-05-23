@@ -205,7 +205,7 @@ public class InternalDraftValidatorTest {
     public void validateUnderlag_UnderlagFinnsInteMenArIfyllt() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate
                 .setUnderlagFinns(false)
-                .setUnderlag(buildUnderlag(1))
+                .setUnderlag(buildUnderlag("NEUROPSYKIATRISKT"))
                 .build();
 
         validator.validateUnderlag(utlatande, validationMessages);
@@ -220,7 +220,17 @@ public class InternalDraftValidatorTest {
     public void validateUnderlag_GodkandaUnderlag() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate
                 .setUnderlagFinns(true)
-                .setUnderlag(buildUnderlag(1,2,3,4,5,6,8,9,10,11))
+                .setUnderlag(buildUnderlag(
+                        "NEUROPSYKIATRISKT",
+                        "HABILITERING",
+                        "ARBETSTERAPEUT",
+                        "FYSIOTERAPEUT",
+                        "LOGOPED",
+                        "PSYKOLOG",
+                        "SKOLHALSOVARD",
+                        "SPECIALISTKLINIK",
+                        "VARD_UTOMLANDS",
+                        "OVRIGT_UTLATANDE"))
                 .build();
 
         validator.validateUnderlag(utlatande, validationMessages);
@@ -232,7 +242,7 @@ public class InternalDraftValidatorTest {
     public void validateUnderlag_EjGodkantUnderlag() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate
                 .setUnderlagFinns(true)
-                .setUnderlag(buildUnderlag(7))
+                .setUnderlag(buildUnderlag("FORETAGSHALSOVARD"))
                 .build();
 
         validator.validateUnderlag(utlatande, validationMessages);
@@ -247,7 +257,7 @@ public class InternalDraftValidatorTest {
     public void validateUnderlag_UnderlagFinnsMenArFelaktigtIfyllt() throws Exception {
         LuaefsUtlatande utlatande = builderTemplate
                 .setUnderlagFinns(true)
-                .setUnderlag(Arrays.asList(Underlag.create(Underlag.UnderlagsTyp.fromId(1), null, null)))
+                .setUnderlag(Arrays.asList(Underlag.create(Underlag.UnderlagsTyp.fromId("NEUROPSYKIATRISKT"), null, null)))
                 .build();
 
         validator.validateUnderlag(utlatande, validationMessages);
@@ -437,10 +447,10 @@ public class InternalDraftValidatorTest {
         return grundData;
     }
 
-    private List<Underlag> buildUnderlag(Integer... underlagsTyper) {
+    private List<Underlag> buildUnderlag(String... underlagsTyper) {
         List<Underlag> underlag = new ArrayList<>();
 
-        for (Integer typ : underlagsTyper) {
+        for (String typ : underlagsTyper) {
             underlag.add(Underlag.create(Underlag.UnderlagsTyp.fromId(typ), new InternalDate(LocalDate.now()), "Hamtas fran..."));
         }
 

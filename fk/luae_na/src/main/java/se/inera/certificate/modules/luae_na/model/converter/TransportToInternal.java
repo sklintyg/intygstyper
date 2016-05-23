@@ -317,7 +317,7 @@ public final class TransportToInternal {
             switch (delsvar.getId()) {
             case UNDERLAG_TYP_DELSVAR_ID_4:
                 CVType typ = getCVSvarContent(delsvar);
-                underlagsTyp = Underlag.UnderlagsTyp.fromTransportId(typ.getCode());
+                underlagsTyp = Underlag.UnderlagsTyp.fromId(typ.getCode());
                 break;
             case UNDERLAG_DATUM_DELSVAR_ID_4:
                 date = new InternalDate(getStringContent(delsvar));

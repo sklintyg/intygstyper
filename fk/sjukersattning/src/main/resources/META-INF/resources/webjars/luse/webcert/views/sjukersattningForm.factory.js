@@ -23,10 +23,10 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                 {type: 'headline', templateOptions: {label: 'FRG_1', level:4}},
                 {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
                 {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
-                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
-                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
-                {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.4'}},
-                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
+                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
+                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
+                {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
+                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT'}},
                 {
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text',
@@ -53,7 +53,16 @@ angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryH
                     hideExpression: '!model.underlagFinns',
                     templateOptions: {
                         maxUnderlag: 3,
-                        underlagsTyper: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11],
+                        underlagsTyper: ['NEUROPSYKIATRISKT',
+                            'HABILITERING',
+                            'ARBETSTERAPEUT',
+                            'FYSIOTERAPEUT',
+                            'LOGOPED',
+                            'PSYKOLOG',
+                            'FORETAGSHALSOVARD',
+                            'SPECIALISTKLINIK',
+                            'VARD_UTOMLANDS',
+                            'OVRIGT_UTLATANDE'],
                         typLabel: 'FRG_4', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
                     },
                     watcher: {

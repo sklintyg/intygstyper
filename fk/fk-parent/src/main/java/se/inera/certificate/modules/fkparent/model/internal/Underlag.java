@@ -50,35 +50,29 @@ public abstract class Underlag {
     public abstract String getHamtasFran();
 
     public enum UnderlagsTyp {
-        NEUROPSYKIATRISKT_UTLATANDE(1, "NEUROPSYKIATRISKT", "Neuropsykiatriskt utlåtande"),
-        UNDERLAG_FRAN_HABILITERINGEN(2, "HABILITERING", "Underlag från habiliteringen"),
-        UNDERLAG_FRAN_ARBETSTERAPEUT(3, "ARBETSTERAPEUT", "Underlag från arbetsterapeut"),
-        UNDERLAG_FRAN_FYSIOTERAPEUT(4, "FYSIOTERAPEUT", "Underlag från fysioterapeut"),
-        UNDERLAG_FRAN_LOGOPED(5, "LOGOPED", "Underlag från logoped"),
-        UNDERLAG_FRANPSYKOLOG(6, "PSYKOLOG", "Underlag från psykolog"),
-        UNDERLAG_FRANFORETAGSHALSOVARD(7, "FORETAGSHALSOVARD", "Underlag från företagshälsovård"),
-        UNDERLAG_FRANSKOLHALSOVARD(8, "SKOLHALSOVARD", "Underlag från skolhälsovård"),
-        UTREDNING_AV_ANNAN_SPECIALISTKLINIK(9, "SPECIALISTKLINIK", "Utredning av annan specialistklinik"),
-        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS(10, "VARD_UTOMLANDS", "Utredning från vårdinrättning utomlands"),
-        OVRIGT(11, "OVRIGT_UTLATANDE", "Övrigt");
+        NEUROPSYKIATRISKT_UTLATANDE("NEUROPSYKIATRISKT", "Neuropsykiatriskt utlåtande"),
+        UNDERLAG_FRAN_HABILITERINGEN("HABILITERING", "Underlag från habiliteringen"),
+        UNDERLAG_FRAN_ARBETSTERAPEUT("ARBETSTERAPEUT", "Underlag från arbetsterapeut"),
+        UNDERLAG_FRAN_FYSIOTERAPEUT("FYSIOTERAPEUT", "Underlag från fysioterapeut"),
+        UNDERLAG_FRAN_LOGOPED("LOGOPED", "Underlag från logoped"),
+        UNDERLAG_FRANPSYKOLOG("PSYKOLOG", "Underlag från psykolog"),
+        UNDERLAG_FRANFORETAGSHALSOVARD("FORETAGSHALSOVARD", "Underlag från företagshälsovård"),
+        UNDERLAG_FRANSKOLHALSOVARD("SKOLHALSOVARD", "Underlag från skolhälsovård"),
+        UTREDNING_AV_ANNAN_SPECIALISTKLINIK("SPECIALISTKLINIK", "Utredning av annan specialistklinik"),
+        UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS("VARD_UTOMLANDS", "Utredning från vårdinrättning utomlands"),
+        OVRIGT("OVRIGT_UTLATANDE", "Övrigt");
 
-        private final int id;
-        private final String transportId;
+        private final String id;
         private final String label;
 
-        UnderlagsTyp(int id, String transportId, String label) {
+        UnderlagsTyp(String id, String label) {
             this.id = id;
-            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
-        public int getId() {
+        public String getId() {
             return id;
-        }
-
-        public String getTransportId() {
-            return transportId;
         }
 
         public String getLabel() {
@@ -86,18 +80,9 @@ public abstract class Underlag {
         }
 
         @JsonCreator
-        public static UnderlagsTyp fromId(@JsonProperty("id") int id) {
+        public static UnderlagsTyp fromId(@JsonProperty("id") String id) {
             for (UnderlagsTyp typ : values()) {
-                if (typ.id == id) {
-                    return typ;
-                }
-            }
-            throw new IllegalArgumentException();
-        }
-
-        public static UnderlagsTyp fromTransportId(String transportId) {
-            for (UnderlagsTyp typ : values()) {
-                if (typ.transportId.equals(transportId)) {
+                if (typ.id.equals(id)) {
                     return typ;
                 }
             }
