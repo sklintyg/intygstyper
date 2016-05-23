@@ -146,6 +146,8 @@ public class InternalDraftValidator {
         if (utlatande.getUnderlagFinns() == null) {
             validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luae_fs.validation.underlagfinns.missing");
+            //If the flag is null, we cant determine whether underlag should be a list or not, so we can't do any further validation..
+            return;
         } else if (utlatande.getUnderlagFinns() && (utlatande.getUnderlag() == null || utlatande.getUnderlag().isEmpty())) {
             validatorUtil.addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luae_fs.validation.underlagfinns.missing");
