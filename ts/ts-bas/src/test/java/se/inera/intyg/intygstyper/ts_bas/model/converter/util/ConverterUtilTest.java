@@ -51,21 +51,19 @@ public class ConverterUtilTest {
 
     @Test
     public void testConvertFromJsonString() throws ModuleException {
-        CertificateHolder holder = converterUtil.toCertificateHolder(jsonString);
+        Utlatande utlatande = converterUtil.fromJsonString(jsonString);
+        CertificateHolder holder = converterUtil.toCertificateHolder(utlatande);
         Assert.assertEquals("7cc59f3e-ed60-4f79-8f3c-a863a8e43c50", holder.getId());
         Assert.assertEquals("IFV1239877878-1042", holder.getCareUnitId());
         Assert.assertEquals("IFV1239877878-1041", holder.getCareGiverId());
-        Assert.assertEquals(jsonString, holder.getDocument());
     }
 
     @Test
     public void testConvertFromUtlatande() throws ModuleException {
         Utlatande utlatande = converterUtil.fromJsonString(jsonString);
-        String formattedJson = converterUtil.toJsonString(utlatande);
         CertificateHolder holder = converterUtil.toCertificateHolder(utlatande);
         Assert.assertEquals("7cc59f3e-ed60-4f79-8f3c-a863a8e43c50", holder.getId());
         Assert.assertEquals("IFV1239877878-1042", holder.getCareUnitId());
         Assert.assertEquals("IFV1239877878-1041", holder.getCareGiverId());
-        Assert.assertEquals(formattedJson, holder.getDocument());
     }
 }

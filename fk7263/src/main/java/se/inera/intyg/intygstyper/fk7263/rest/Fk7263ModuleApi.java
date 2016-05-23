@@ -62,7 +62,6 @@ import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
-import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
@@ -119,9 +118,6 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired(required = false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
-
-    @Autowired
-    private ConverterUtil converterUtil;
 
     private ModuleContainerApi moduleContainer;
 
@@ -217,11 +213,11 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
+    public void sendCertificateToRecipient(String xmlBody, String logicalAddress, String recipientId) throws ModuleException {
 
         // Check that we got any data at all
-        if (internalModel == null) {
-            throw new ModuleException("No InternalModelHolder found in call to sendCertificateToRecipient!");
+        if (xmlBody == null) {
+            throw new ModuleException("No xml body found in call to sendCertificateToRecipient!");
         }
 
         if (logicalAddress == null) {
@@ -230,15 +226,8 @@ public class Fk7263ModuleApi implements ModuleApi {
 
         // NOTE: We don't need to check for recipientId
 
-        Utlatande utlatande = converterUtil.fromJsonString(internalModel.getInternalModel());
-
-        try {
-            Object request = InternalToTransport.getJaxbObject(utlatande);
-            sendCertificateToRecipient((RegisterMedicalCertificateType) request, logicalAddress, recipientId);
-
-        } catch (ConverterException e) {
-            throw new ModuleException(e);
-        }
+        Utlatande utlatande = getUtlatandeFromXml(xmlBody);
+        sendCertificateToRecipient(utlatande, logicalAddress, recipientId);
     }
 
     @Override
@@ -272,7 +261,21 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Override
     public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
-        sendCertificateToRecipient(internalModel, logicalAddress, null);
+        // Check that we got any data at all
+        if (internalModel == null) {
+            throw new ModuleException("No internal model found in call to sendCertificateToRecipient!");
+        }
+
+        if (logicalAddress == null) {
+            throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
+        }
+        Utlatande utlatande;
+        try {
+            utlatande = getUtlatandeFromJson(internalModel.getInternalModel());
+        } catch (IOException e) {
+            throw new ModuleException(e.getMessage());
+        }
+        sendCertificateToRecipient(utlatande, logicalAddress, null);
     }
 
     @Override
@@ -435,9 +438,14 @@ public class Fk7263ModuleApi implements ModuleApi {
         return foundAktivitet;
     }
 
-    private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId)
+    private void sendCertificateToRecipient(Utlatande utlatande, final String logicalAddress, final String recipientId)
             throws ModuleException {
-
+        RegisterMedicalCertificateType request;
+        try {
+            request = InternalToTransport.getJaxbObject(utlatande);
+        } catch (ConverterException e) {
+            throw new ModuleException(e);
+        }
         // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
         if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(FK.toString())) {
             request = whenFkIsRecipientThenSetCodeSystemToICD10(request);

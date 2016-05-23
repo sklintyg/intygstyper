@@ -218,8 +218,8 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        String transformedPayload = xslTransformer.transform(internalModel.getXmlModel());
+    public void sendCertificateToRecipient(String xmlBody, String logicalAddress, String recipientId) throws ModuleException {
+        String transformedPayload = xslTransformer.transform(xmlBody);
 
         try {
             SOAPMessage response = sendTsDiabetesClient.registerCertificate(transformedPayload, logicalAddress);

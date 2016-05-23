@@ -21,15 +21,11 @@ package se.inera.intyg.intygstyper.ts_diabetes.integration;
 
 import static se.inera.intyg.common.support.model.converter.util.CertificateStateHolderUtil.isArchived;
 
-import java.io.IOException;
 import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
@@ -37,9 +33,9 @@ import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.InternalToTransportConverter;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -50,10 +46,6 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
 
     @Autowired
     private TsDiabetesModuleApi moduleService;
-
-    @Autowired
-    @Qualifier("ts-diabetes-objectMapper")
-    private ObjectMapper objectMapper;
 
     @Override
     public GetTSDiabetesResponseType getTSDiabetes(String logicalAddress, GetTSDiabetesType parameters) {
@@ -79,8 +71,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
                 response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR,
                         String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
-                Utlatande utlatande = objectMapper.readValue(certificate.getDocument(), Utlatande.class);
-                TSDiabetesIntyg tsDiabetesIntyg = InternalToTransportConverter.convert(utlatande).getIntyg();
+                TSDiabetesIntyg tsDiabetesIntyg = InternalToTransportConverter.convert(moduleService.getUtlatandeFromXml(certificate.getOriginalCertificate())).getIntyg();
                 response.setIntyg(tsDiabetesIntyg);
                 response.setMeta(createMetaData(certificate));
                 if (certificate.isRevoked()) {
@@ -89,7 +80,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
                     response.setResultat(ResultTypeUtil.okResult());
                 }
             }
-        } catch (InvalidCertificateException | IOException e) {
+        } catch (InvalidCertificateException | ModuleException e) {
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.TECHNICAL_ERROR, e.getMessage()));
         }
         return response;

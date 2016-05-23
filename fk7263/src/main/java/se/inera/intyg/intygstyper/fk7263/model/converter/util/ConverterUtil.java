@@ -25,13 +25,13 @@ import java.io.StringWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConverterUtil {
 
@@ -44,16 +44,6 @@ public class ConverterUtil {
     }
 
     public  CertificateHolder toCertificateHolder(Utlatande utlatande) throws ModuleException {
-        String document = toJsonString(utlatande);
-        return toCertificateHolder(utlatande, document);
-    }
-
-    public  CertificateHolder toCertificateHolder(String document) throws ModuleException {
-        Utlatande utlatande = fromJsonString(document);
-        return toCertificateHolder(utlatande, document);
-    }
-
-    public  CertificateHolder toCertificateHolder(Utlatande utlatande, String document) throws ModuleException {
         CertificateHolder certificateHolder = new CertificateHolder();
         certificateHolder.setId(utlatande.getId());
         certificateHolder.setCareUnitId(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
@@ -66,7 +56,6 @@ public class ConverterUtil {
         certificateHolder.setValidFromDate(utlatande.getGiltighet().getFrom().toString());
         certificateHolder.setValidToDate(utlatande.getGiltighet().getTom().toString());
         certificateHolder.setAdditionalInfo(utlatande.getGiltighet().getFrom().toString() + " - " + utlatande.getGiltighet().getTom().toString());
-        certificateHolder.setDocument(document);
         return certificateHolder;
     }
 

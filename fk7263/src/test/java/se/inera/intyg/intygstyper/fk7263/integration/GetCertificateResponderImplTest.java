@@ -18,11 +18,17 @@
  */
 package se.inera.intyg.intygstyper.fk7263.integration;
 
-import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
-import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.*;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.INFO;
+import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -47,6 +53,7 @@ import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 
 /**
@@ -57,10 +64,10 @@ public class GetCertificateResponderImplTest {
 
     private static final Personnummer civicRegistrationNumber = new Personnummer("19350108-1234");
     private static final String certificateId = "123456";
-    
+
     private CustomObjectMapper objectMapper = new CustomObjectMapper();
     private ConverterUtil converterUtil = new ConverterUtil();
-    
+
     @InjectMocks
     private GetCertificateResponderImpl responder = new GetCertificateResponderImpl();
 
@@ -78,21 +85,22 @@ public class GetCertificateResponderImplTest {
 
     @Mock
     private Marshaller marshaller = mock(Marshaller.class);
-    
+
     @Before
     public void setUpMocks() throws Exception {
         converterUtil.setObjectMapper(objectMapper);
-        responder.setConverterUtil(converterUtil);
         when(moduleRestApi.getModuleContainer()).thenReturn(moduleContainer);
         when(jaxbContext.createMarshaller()).thenReturn(marshaller);
     }
-    
+
     @Test
     public void getCertificate() throws Exception {
         String document = FileUtils.readFileToString(new ClassPathResource("GetCertificateResponderImplTest/maximalt-fk7263-internal.json").getFile());
-        CertificateHolder certificate = converterUtil.toCertificateHolder(document);
+        Utlatande utlatande = converterUtil.fromJsonString(document);
+        CertificateHolder certificate = converterUtil.toCertificateHolder(utlatande);
 
         when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenReturn(certificate);
+        when(moduleRestApi.getUtlatandeFromXml(anyString())).thenReturn(utlatande);
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 
@@ -140,7 +148,8 @@ public class GetCertificateResponderImplTest {
     public void getRevokedCertificate() throws Exception {
 
         String document = FileUtils.readFileToString(new ClassPathResource("GetCertificateResponderImplTest/maximalt-fk7263-internal.json").getFile());
-        CertificateHolder certificate = converterUtil.toCertificateHolder(document);
+        Utlatande utlatande = converterUtil.fromJsonString(document);
+        CertificateHolder certificate = converterUtil.toCertificateHolder(utlatande);
         certificate.setRevoked(true);
 
         when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenReturn(certificate);

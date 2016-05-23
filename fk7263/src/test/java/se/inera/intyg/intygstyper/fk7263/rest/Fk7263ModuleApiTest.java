@@ -32,6 +32,8 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 import java.io.IOException;
 import java.io.StringWriter;
 
+import javax.xml.bind.JAXB;
+
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.*;
 import org.joda.time.LocalDate;
@@ -174,8 +176,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testSendCertificateWhenRecipientIsOtherThanFk() throws Exception {
-        InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource(
-                TESTFILE_UTLATANDE).getFile()));
+        String xml = marshall(FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE_MINIMAL).getFile()));
 
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
@@ -188,7 +189,7 @@ public class Fk7263ModuleApiTest {
                 any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress", null);
+        fk7263ModuleApi.sendCertificateToRecipient(xml, "logicalAddress", null);
 
         // Verify
         verify(registerMedicalCertificateClient).registerMedicalCertificate(eq(address), Mockito.any(RegisterMedicalCertificateType.class));
@@ -196,10 +197,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testSendFullCertificateWhenRecipientIsFk() throws Exception {
-
-        // Given
-        InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource(
-                TESTFILE_UTLATANDE).getFile()));
+        String xml = marshall(FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE_MINIMAL).getFile()));
 
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
@@ -212,7 +210,7 @@ public class Fk7263ModuleApiTest {
                 any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress", FK.toString());
+        fk7263ModuleApi.sendCertificateToRecipient(xml, "logicalAddress", FK.toString());
 
         // Verify
         verify(registerMedicalCertificateClient).registerMedicalCertificate(Mockito.eq(address), any(RegisterMedicalCertificateType.class));
@@ -220,10 +218,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testSendMinimalCertificateWhenRecipientIsFk() throws Exception {
-
-        // Given
-        InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource(
-                TESTFILE_UTLATANDE_MINIMAL).getFile()));
+        String xml = marshall(FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE_MINIMAL).getFile()));
 
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
@@ -236,7 +231,7 @@ public class Fk7263ModuleApiTest {
                 any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress", FK.toString());
+        fk7263ModuleApi.sendCertificateToRecipient(xml, "logicalAddress", FK.toString());
 
         // Verify
         verify(registerMedicalCertificateClient).registerMedicalCertificate(eq(address), any(RegisterMedicalCertificateType.class));
@@ -253,7 +248,7 @@ public class Fk7263ModuleApiTest {
         address.setValue("logicalAddress");
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(internalModel, "logicalAddress", FK.toString());
+        fk7263ModuleApi.sendCertificateToRecipient(internalModel.getXmlModel(), "logicalAddress", FK.toString());
     }
 
     @Test
@@ -473,6 +468,14 @@ public class Fk7263ModuleApiTest {
 
     private InternalModelHolder createInternalHolder(Utlatande utlatande) throws ModuleException {
         return new InternalModelHolder(toJsonString(utlatande));
+    }
+
+    private String marshall(String jsonString) throws Exception {
+        Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
+        RegisterMedicalCertificateType external = InternalToTransport.getJaxbObject(internal);
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(external, writer);
+        return writer.toString();
     }
 
 }

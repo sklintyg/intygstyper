@@ -124,11 +124,8 @@ public class LuaefsModuleApiTest {
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(createReturnVal(ResultCodeType.OK));
         try {
             String xmlContents = Resources.toString(Resources.getResource("luae_fs-simple-valid.xml"), Charsets.UTF_8);
-            InternalModelHolder spy = spy(new InternalModelHolder("internal model", xmlContents));
-            moduleApi.sendCertificateToRecipient(spy, LOGICAL_ADDRESS, null);
+            moduleApi.sendCertificateToRecipient(xmlContents, LOGICAL_ADDRESS, null);
 
-            verify(spy, atLeast(1)).getXmlModel();
-            verify(spy, never()).getInternalModel();
             verify(registerCertificateResponderInterface, times(1)).registerCertificate(same(LOGICAL_ADDRESS), any());
 
         } catch (ModuleException | IOException e) {
@@ -139,16 +136,14 @@ public class LuaefsModuleApiTest {
     @Test(expected = ModuleException.class)
     public void testSendCertificateToRecipientFailsWithoutXmlModel() throws ModuleException {
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(createReturnVal(ResultCodeType.OK));
-        InternalModelHolder spy = spy(new InternalModelHolder("internal model", null));
-        moduleApi.sendCertificateToRecipient(spy, LOGICAL_ADDRESS, null);
+        moduleApi.sendCertificateToRecipient(null, LOGICAL_ADDRESS, null);
     }
 
     @Test(expected = ExternalServiceCallException.class)
     public void testSendCertificateToRecipientFailsForNonOkResponse() throws Exception {
         String xmlContents = Resources.toString(Resources.getResource("luae_fs-simple-valid.xml"), Charsets.UTF_8);
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(createReturnVal(ResultCodeType.ERROR));
-        InternalModelHolder spy = spy(new InternalModelHolder("internal model", xmlContents));
-        moduleApi.sendCertificateToRecipient(spy, LOGICAL_ADDRESS, null);
+        moduleApi.sendCertificateToRecipient(xmlContents, LOGICAL_ADDRESS, null);
     }
 
     @Test

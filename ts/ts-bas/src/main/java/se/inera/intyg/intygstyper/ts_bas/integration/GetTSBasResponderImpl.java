@@ -26,7 +26,6 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Throwables;
 
@@ -39,7 +38,6 @@ import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -47,10 +45,6 @@ import se.inera.intygstjanster.ts.services.v1.*;
 public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(GetTSBasResponderImpl.class);
-
-    @Autowired
-    @Qualifier("tsBasModelConverterUtil")
-    private ConverterUtil converterUtil;
 
     @Autowired
     private TsBasModuleApi moduleApi;
@@ -97,7 +91,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
 
     private void attachCertificateDocument(CertificateHolder certificate, GetTSBasResponseType response) {
         try {
-            TSBasIntyg tsBasIntyg = InternalToTransport.convert(converterUtil.fromJsonString(certificate.getDocument())).getIntyg();
+            TSBasIntyg tsBasIntyg = InternalToTransport.convert(moduleApi.getUtlatandeFromXml(certificate.getOriginalCertificate())).getIntyg();
             response.setIntyg(tsBasIntyg);
         } catch (Exception e) {
             Throwables.propagate(e);

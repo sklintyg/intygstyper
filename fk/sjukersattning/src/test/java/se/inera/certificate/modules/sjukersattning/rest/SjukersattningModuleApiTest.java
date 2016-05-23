@@ -27,7 +27,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -105,11 +108,8 @@ public class SjukersattningModuleApiTest {
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(createReturnVal(ResultCodeType.OK));
         try {
             String xmlContents = Resources.toString(Resources.getResource("sjukersattning3.xml"), Charsets.UTF_8);
-            InternalModelHolder spy = spy(new InternalModelHolder("internal model", xmlContents));
-            moduleApi.sendCertificateToRecipient(spy, LOGICAL_ADDRESS, null);
+            moduleApi.sendCertificateToRecipient(xmlContents, LOGICAL_ADDRESS, null);
 
-            verify(spy, atLeast(1)).getXmlModel();
-            verify(spy, never()).getInternalModel();
             verify(registerCertificateResponderInterface, times(1)).registerCertificate(same(LOGICAL_ADDRESS), any());
 
         } catch (ModuleException | IOException e) {
@@ -122,7 +122,7 @@ public class SjukersattningModuleApiTest {
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(createReturnVal(ResultCodeType.ERROR));
         try {
             String xmlContents = Resources.toString(Resources.getResource("sjukersattning3.xml"), Charsets.UTF_8);
-            moduleApi.sendCertificateToRecipient(new InternalModelHolder("internal model", xmlContents), LOGICAL_ADDRESS, null);
+            moduleApi.sendCertificateToRecipient(xmlContents, LOGICAL_ADDRESS, null);
         } catch (IOException e) {
             fail();
         }
@@ -135,17 +135,17 @@ public class SjukersattningModuleApiTest {
 
     @Test(expected = ModuleException.class)
     public void testSendCertificateShouldFailOnEmptyXml() throws ModuleException {
-        moduleApi.sendCertificateToRecipient(new InternalModelHolder("blaha"), LOGICAL_ADDRESS, null);
+        moduleApi.sendCertificateToRecipient(null, LOGICAL_ADDRESS, null);
     }
 
     @Test(expected = ModuleException.class)
     public void testSendCertificateShouldFailOnNullLogicalAddress() throws ModuleException {
-        moduleApi.sendCertificateToRecipient(new InternalModelHolder("blaha", "blaha"), null, null);
+        moduleApi.sendCertificateToRecipient("blaha", null, null);
     }
 
     @Test(expected = ModuleException.class)
     public void testSendCertificateShouldFailOnEmptyLogicalAddress() throws ModuleException {
-        moduleApi.sendCertificateToRecipient(new InternalModelHolder("blaha", "blaha"), "", null);
+        moduleApi.sendCertificateToRecipient("blaha", "", null);
     }
 
     @Test

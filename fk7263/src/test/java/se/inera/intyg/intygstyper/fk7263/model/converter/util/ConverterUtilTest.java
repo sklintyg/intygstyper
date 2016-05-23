@@ -43,24 +43,22 @@ public class ConverterUtilTest {
 
     @Test
     public void testConvertFromJsonString() throws ModuleException {
-        CertificateHolder holder = converterUtil.toCertificateHolder(json);
-        Assert.assertEquals("id", holder.getId());
-        Assert.assertEquals("Enhetsid", holder.getCareUnitId());
-        Assert.assertEquals("VardgivarId", holder.getCareGiverId());
-        Assert.assertSame(json, holder.getDocument());
-    }
-    
-    @Test
-    public void testConvertFromUtlatande() throws ModuleException {
         Utlatande utlatande = converterUtil.fromJsonString(json);
-        String formattedJson = converterUtil.toJsonString(utlatande);
         CertificateHolder holder = converterUtil.toCertificateHolder(utlatande);
         Assert.assertEquals("id", holder.getId());
         Assert.assertEquals("Enhetsid", holder.getCareUnitId());
         Assert.assertEquals("VardgivarId", holder.getCareGiverId());
-        Assert.assertEquals(formattedJson, holder.getDocument());
     }
-        
+
+    @Test
+    public void testConvertFromUtlatande() throws ModuleException {
+        Utlatande utlatande = converterUtil.fromJsonString(json);
+        CertificateHolder holder = converterUtil.toCertificateHolder(utlatande);
+        Assert.assertEquals("id", holder.getId());
+        Assert.assertEquals("Enhetsid", holder.getCareUnitId());
+        Assert.assertEquals("VardgivarId", holder.getCareGiverId());
+    }
+
     private static String readRequestFromFile(String filePath) {
         try {
             ClassPathResource resource = new ClassPathResource(filePath);

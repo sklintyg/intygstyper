@@ -22,16 +22,14 @@ package se.inera.intyg.intygstyper.ts_diabetes.integration;
 import java.io.StringWriter;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.*;
 import javax.xml.namespace.QName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.google.common.base.Throwables;
 
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
@@ -44,13 +42,8 @@ import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intyg.intygstyper.ts_diabetes.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
-import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponderInterface;
-import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesResponseType;
-import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Throwables;
 
 public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesResponderInterface {
 
@@ -58,10 +51,6 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
 
     @Autowired
     private TsDiabetesModuleApi moduleService;
-
-    @Autowired
-    @Qualifier("ts-diabetes-objectMapper")
-    private ObjectMapper objectMapper;
 
     @Autowired
     private ConverterUtil converterUtil;

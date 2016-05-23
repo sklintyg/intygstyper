@@ -22,21 +22,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Throwables;
+
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ModelConverter;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
-
-import com.google.common.base.Throwables;
 
 /**
  * @author andreaskaltenbach
@@ -48,13 +45,6 @@ public class GetMedicalCertificateForCareResponderImpl implements
 
     @Autowired
     private Fk7263ModuleApi moduleApi;
-
-    @Autowired
-    private ConverterUtil converterUtil;
-
-    public void setConverterUtil(ConverterUtil converterUtil) {
-        this.converterUtil = converterUtil;
-    }
 
     @Override
     public GetMedicalCertificateForCareResponseType getMedicalCertificateForCare(String logicalAddress,
@@ -94,7 +84,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
     protected void attachCertificateDocument(CertificateHolder certificate, GetMedicalCertificateForCareResponseType response) {
         try {
 
-            RegisterMedicalCertificateType jaxbObject = InternalToTransport.getJaxbObject(converterUtil.fromJsonString(certificate.getDocument()));
+            RegisterMedicalCertificateType jaxbObject = InternalToTransport.getJaxbObject(moduleApi.getUtlatandeFromXml(certificate.getOriginalCertificate()));
             response.setLakarutlatande(jaxbObject.getLakarutlatande());
 
         } catch (Exception e) {

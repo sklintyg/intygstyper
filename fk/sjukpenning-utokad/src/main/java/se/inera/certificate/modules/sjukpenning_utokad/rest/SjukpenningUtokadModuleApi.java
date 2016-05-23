@@ -165,11 +165,11 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     }
 
     @Override
-    public void sendCertificateToRecipient(InternalModelHolder internalModel, String logicalAddress, String recipientId) throws ModuleException {
-        if (internalModel == null || internalModel.getXmlModel() == null || StringUtil.isNullOrEmpty(logicalAddress)) {
-            throw new ModuleException("Internal model does not contain the original xml");
+    public void sendCertificateToRecipient(String xmlBody, String logicalAddress, String recipientId) throws ModuleException {
+        if (xmlBody == null || StringUtil.isNullOrEmpty(logicalAddress)) {
+            throw new ModuleException("Request does not contain the original xml");
         }
-        StringBuffer sb = new StringBuffer(internalModel.getXmlModel());
+        StringBuffer sb = new StringBuffer(xmlBody);
         RegisterCertificateType request = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())), RegisterCertificateType.class);
 
         sendCertificateToRecipient(request, logicalAddress);

@@ -20,21 +20,19 @@
 package se.inera.intyg.intygstyper.fk7263.integration;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
+import javax.xml.bind.*;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 
@@ -51,15 +49,12 @@ import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 
-/**
- *
- */
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterMedicalCertificateResponderImplTest {
 
     private CustomObjectMapper objectMapper = new CustomObjectMapper();
     private ConverterUtil converterUtil = new ConverterUtil();
-    
+
     @Mock
     private ModuleEntryPoint moduleEntryPoint = mock(ModuleEntryPoint.class);
 
@@ -73,7 +68,7 @@ public class RegisterMedicalCertificateResponderImplTest {
     private String xml;
     private Utlatande utlatande;
     private CertificateHolder certificateHolder;
-    
+
 
     @InjectMocks
     private RegisterMedicalCertificateResponderImpl responder = new RegisterMedicalCertificateResponderImpl();
@@ -109,23 +104,25 @@ public class RegisterMedicalCertificateResponderImplTest {
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
 
         assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
-        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolder);
+
+        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(any(CertificateHolder.class));
     }
 
     @Test
     public void testReceiveCertificateWiretapped() throws Exception {
 
         responder.setWireTapped(true);
-        certificateHolder.setWireTapped(true);
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
 
         assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
-        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolder);
+        ArgumentCaptor<CertificateHolder> certificateHolderCaptor = ArgumentCaptor.forClass(CertificateHolder.class);
+        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolderCaptor.capture());
+        assertTrue(certificateHolderCaptor.getValue().isWireTapped());
     }
 
     @Test
     public void testWithExistingCertificate() throws Exception {
-        Mockito.doThrow(new CertificateAlreadyExistsException(request.getLakarutlatande().getLakarutlatandeId())).when(moduleContainer).certificateReceived(certificateHolder);
+        Mockito.doThrow(new CertificateAlreadyExistsException(request.getLakarutlatande().getLakarutlatandeId())).when(moduleContainer).certificateReceived(any(CertificateHolder.class));
 
         RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
         assertEquals(ResultCodeEnum.INFO, response.getResult().getResultCode());

@@ -19,10 +19,7 @@
 package se.inera.intyg.intygstyper.fk7263.integration;
 
 import javax.annotation.PostConstruct;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -32,10 +29,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.w3.wsaddressing10.AttributedURIType;
 import org.w3c.dom.Document;
 
+import com.google.common.base.Throwables;
+
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.rivtabp20.v1.GetCertificateResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.*;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
@@ -46,10 +43,7 @@ import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
-
-import com.google.common.base.Throwables;
 
 /**
  * @author andreaskaltenbach
@@ -70,13 +64,6 @@ public class GetCertificateResponderImpl implements
 
     @Autowired
     private Fk7263ModuleApi moduleApi;
-
-    @Autowired
-    private ConverterUtil converterUtil;
-
-    public void setConverterUtil(ConverterUtil converterUtil) {
-        this.converterUtil = converterUtil;
-    }
 
     @Override
     public GetCertificateResponseType getCertificate(AttributedURIType logicalAddress, GetCertificateRequestType request) {
@@ -124,7 +111,7 @@ public class GetCertificateResponderImpl implements
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document document = db.newDocument();
 
-            RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(converterUtil.fromJsonString(certificate.getDocument()));
+            RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(moduleApi.getUtlatandeFromXml(certificate.getOriginalCertificate()));
             JAXBElement<RegisterMedicalCertificateType> registerMedicalCertificateElement = objectFactory
                     .createRegisterMedicalCertificate(registerMedicalCertificate);
 
