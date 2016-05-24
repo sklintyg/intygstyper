@@ -50,9 +50,9 @@ import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforc
 import se.riv.clinicalprocess.healthcond.certificate.types.v1.HandelsekodKodRestriktion;
 
 @RunWith(MockitoJUnitRunner.class)
-public class InternalToNotificationTest {
+public class Fk7263InternalToNotificationTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Fk7263InternalToNotificationTest.class);
 
     private static final String FK7263 = "fk7263";
 
@@ -67,7 +67,7 @@ public class InternalToNotificationTest {
     private ConverterUtil converterUtil = setupConverterUtil();
 
     @InjectMocks
-    private InternalToNotification converter;
+    private Fk7263InternalToNotification converter;
 
     @Before
     public void setupMockDiagnosAnswer() {
@@ -101,7 +101,7 @@ public class InternalToNotificationTest {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-1.json");
 
         NotificationMessage msg = new NotificationMessage(INTYGS_ID, FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
-                json, FragorOchSvar.getEmpty(), NotificationVersion.VERSION_1);
+                json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
@@ -149,7 +149,7 @@ public class InternalToNotificationTest {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-1b.json");
 
         NotificationMessage msg = new NotificationMessage("intyg-1b", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
-                json, FragorOchSvar.getEmpty(), NotificationVersion.VERSION_1);
+                json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1);
 
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
@@ -171,7 +171,7 @@ public class InternalToNotificationTest {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-2.json");
 
         NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_SIGNERAT, LOGISK_ADRESS,
-                json, FragorOchSvar.getEmpty(), NotificationVersion.VERSION_1);
+                json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
@@ -193,7 +193,7 @@ public class InternalToNotificationTest {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-3.json");
 
         NotificationMessage msg = new NotificationMessage("intyg-3", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
-                json, FragorOchSvar.getEmpty(), NotificationVersion.VERSION_1);
+                json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
@@ -213,7 +213,7 @@ public class InternalToNotificationTest {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-3b.json");
 
         NotificationMessage msg = new NotificationMessage("intyg-3b", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
-                json, FragorOchSvar.getEmpty(), NotificationVersion.VERSION_1);
+                json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
@@ -234,7 +234,7 @@ public class InternalToNotificationTest {
 
         FragorOchSvar fs = new FragorOchSvar(1, 0, 0, 0);
         NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelseType.FRAGA_FRAN_FK, LOGISK_ADRESS, json, fs,
-                NotificationVersion.VERSION_1);
+                SchemaVersion.VERSION_1);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
@@ -263,7 +263,7 @@ public class InternalToNotificationTest {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-4.json");
 
         NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
-                json, FragorOchSvar.getEmpty(), NotificationVersion.VERSION_1);
+                json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());

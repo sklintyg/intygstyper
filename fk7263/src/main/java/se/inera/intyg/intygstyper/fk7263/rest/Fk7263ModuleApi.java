@@ -60,7 +60,6 @@ import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
-import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
@@ -97,9 +96,6 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired
     private InternalDraftValidator internalDraftValidator;
-
-    @Autowired
-    private InternalToNotification internalToNotficationConverter;
 
     @Autowired(required = false)
     @Qualifier("fXslTransformer")
@@ -192,11 +188,6 @@ public class Fk7263ModuleApi implements ModuleApi {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
-    }
-
-    @Override
-    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        return internalToNotficationConverter.createCertificateStatusUpdateForCareType(notificationMessage);
     }
 
     @Override

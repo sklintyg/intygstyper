@@ -10,8 +10,6 @@
 
   <bean class="se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil"/>
 
-  <bean class="se.inera.certificate.modules.sjukersattning.model.converter.InternalToNotification"/>
-
   <bean id="sjukersattningEntryPoint" class="se.inera.certificate.modules.sjukersattning.support.SjukersattningEntryPoint" />
 
   <bean id="sjukersattning-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>

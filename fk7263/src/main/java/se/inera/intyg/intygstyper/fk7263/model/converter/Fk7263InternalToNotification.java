@@ -53,9 +53,9 @@ import se.riv.clinicalprocess.healthcond.certificate.types.v1.PersonId;
 import se.riv.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
 
-public class InternalToNotification {
+public class Fk7263InternalToNotification {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalToNotification.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Fk7263InternalToNotification.class);
 
     private static final String INTYGSID_ROOT = "1.2.752.129.2.1.2.1";
 

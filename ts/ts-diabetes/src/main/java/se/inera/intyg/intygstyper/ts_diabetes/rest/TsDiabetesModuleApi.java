@@ -52,7 +52,6 @@ import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
-import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGenerator;
@@ -313,11 +312,6 @@ public class TsDiabetesModuleApi implements ModuleApi {
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
         return !persistedState.equals(currentState);
-    }
-
-    @Override
-    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        throw new UnsupportedOperationException();
     }
 
     // - - - - - Private scope - - - - - //

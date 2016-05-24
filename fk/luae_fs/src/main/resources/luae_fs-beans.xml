@@ -10,8 +10,6 @@
 
   <bean class="se.inera.certificate.modules.luae_fs.model.converter.util.ConverterUtil"/>
 
-  <bean class="se.inera.certificate.modules.luae_fs.model.converter.InternalToNotification"/>
-
   <bean id="luaefsEntryPoint" class="se.inera.certificate.modules.luae_fs.support.LuaefsEntryPoint" />
 
   <bean id="luae_fs-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>

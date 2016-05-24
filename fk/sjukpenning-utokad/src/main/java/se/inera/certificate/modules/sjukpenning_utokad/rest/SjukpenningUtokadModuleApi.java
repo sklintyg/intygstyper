@@ -54,7 +54,6 @@ import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
-import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.*;
@@ -93,9 +92,6 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     private GetCertificateResponderInterface getCertificateResponderInterface;
 
     private RegisterCertificateValidator validator = new RegisterCertificateValidator("sjukpenning-utokat.sch");
-
-    @Autowired
-    private InternalToNotification internalToNotification;
 
     @Autowired(required = false)
     private RevokeCertificateResponderInterface revokeCertificateClient;
@@ -147,11 +143,6 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
-    }
-
-    @Override
-    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        return internalToNotification.createCertificateStatusUpdateForCareType(notificationMessage);
     }
 
     @Override

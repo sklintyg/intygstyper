@@ -52,7 +52,6 @@ import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
-import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.*;
@@ -90,9 +89,6 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     private GetCertificateResponderInterface getCertificateResponderInterface;
 
     private RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_na.sch");
-
-    @Autowired
-    private InternalToNotification internalToNotification;
 
     @Autowired(required = false)
     private RevokeCertificateResponderInterface revokeCertificateClient;
@@ -288,11 +284,6 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
-    }
-
-    @Override
-    public Object createNotification(NotificationMessage notificationMessage) throws ModuleException {
-        return internalToNotification.createCertificateStatusUpdateForCareType(notificationMessage);
     }
 
     @Override

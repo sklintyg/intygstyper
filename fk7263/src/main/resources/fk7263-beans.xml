@@ -30,7 +30,7 @@
 
   <bean class="se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator" />
 
-  <bean class="se.inera.intyg.intygstyper.fk7263.model.converter.InternalToNotification" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.model.converter.Fk7263InternalToNotification" />
 
   <bean id="Fk7263EntryPoint" class="se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint" />
 
