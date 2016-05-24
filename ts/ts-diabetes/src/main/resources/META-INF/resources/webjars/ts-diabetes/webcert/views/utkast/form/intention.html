@@ -1,6 +1,9 @@
 <a id="anchor.intygavser" name="anchor.intygavser"></a>
-<div wc-field field-label="ts-diabetes.label.intygavser"
-     field-help-text="ts-diabetes.helptext.intyget-avser" field-has-errors="viewState.common.validationMessagesGrouped.intygavser" id="intygetAvserForm">
+<div wc-field
+     field-dynamic-label="KAT_99.RBK"
+     field-dynamic-help-text="KAT_99.HLP"
+     field-has-errors="viewState.common.validationMessagesGrouped.intygavser"
+     id="intygetAvserForm">
   <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser" id="validationMessages_intygavser">
     <ul>
       <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygavser"><span message
@@ -12,6 +15,6 @@
     <label class="checkbox checkbox-columns col-xs-2"
            ng-repeat="typ in viewState.intygModel.intygAvser.korkortstyp track by $index"><input
         id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected">
-      <span message key="ts-diabetes.label.korkort.{{typ.type}}"></span></label>
+      <span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span></label>
   </div>
 </div>
