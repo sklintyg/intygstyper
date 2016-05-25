@@ -339,11 +339,6 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException {
-        return TransportToInternal.convert(intyg);
-    }
-
-    @Override
     public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
         return XmlValidator.validate(validator, inputXml);
     }

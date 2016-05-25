@@ -331,11 +331,6 @@ public class TsBasModuleApi implements ModuleApi {
     }
 
     @Override
-    public se.inera.intyg.common.support.model.common.internal.Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException {
-        throw new UnsupportedOperationException("Module TsBas does not support getUtlatandeFromIntyg.");
-    }
-
-    @Override
     public String transformToStatisticsService(String inputXml) throws ModuleException {
         return inputXml;
     }

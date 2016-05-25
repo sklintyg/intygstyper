@@ -277,11 +277,6 @@ public class LuaefsModuleApi implements ModuleApi {
     }
 
     @Override
-    public Utlatande getUtlatandeFromIntyg(Intyg intyg) throws ConverterException {
-        return TransportToInternal.convert(intyg);
-    }
-
-    @Override
     public String transformToStatisticsService(String inputXml) throws ModuleException {
         return inputXml;
     }
