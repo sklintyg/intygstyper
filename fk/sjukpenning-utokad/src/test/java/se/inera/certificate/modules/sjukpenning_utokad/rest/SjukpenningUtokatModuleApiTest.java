@@ -212,22 +212,6 @@ public class SjukpenningUtokatModuleApiTest {
     }
 
     @Test
-    public void testDecorateUtlatande() throws Exception {
-        final String utlatandeJson = "utlatandeJson";
-        final String internalModel = "internal model";
-
-        when(objectMapper.readValue(eq(utlatandeJson), eq(SjukpenningUtokadUtlatande.class)))
-                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
-        when(objectMapper.writeValueAsString(any())).thenReturn(internalModel);
-        when(moduleService.getDescriptionFromDiagnosKod(any(), any())).thenReturn("description");
-
-        String res = moduleApi.decorateUtlatande(utlatandeJson);
-
-        // Better validation would be nice to have
-        assertEquals(internalModel, res);
-    }
-
-    @Test
     public void testRegisterCertificate() throws Exception {
         final String logicalAddress = "logicalAddress";
         final String internalModel = "internal model";
@@ -287,6 +271,7 @@ public class SjukpenningUtokatModuleApiTest {
         doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
         String response = moduleApi.updateBeforeSave(internalModel, createHosPersonal());
         assertEquals(internalModel, response);
+        verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
     }
 
     @Test
@@ -297,6 +282,7 @@ public class SjukpenningUtokatModuleApiTest {
         doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
         String response = moduleApi.updateBeforeSigning(internalModel, createHosPersonal(), null);
         assertEquals(internalModel, response);
+        verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
     }
     @Test
     public void testRevokeCertificate() throws Exception {

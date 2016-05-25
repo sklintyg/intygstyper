@@ -82,8 +82,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.*;
 public class LuaefsModuleApiTest {
 
     private static final String LOGICAL_ADDRESS = "logical address";
-    private static final String DIAGNOS_KLARTEXT_1 = "klartext1";
-    private static final String DIAGNOS_KLARTEXT_2 = "klartext2";
     private static final String TEST_HSA_ID = "hsaId";
     private static final String TEST_PATIENT_PERSONNR = "121212121212";
 
@@ -247,13 +245,13 @@ public class LuaefsModuleApiTest {
     }
 
     /**
-     * Verify that grundData is updated with supplied hosPerson
+     * Verify that grundData is updated
      *
      * @throws IOException
      * @throws ModuleException
      */
     @Test
-    public void testUpdateBeforeSaveUpdatesHosPersonal() throws IOException, ModuleException {
+    public void testUpdateBeforeSave() throws IOException, ModuleException {
 
         final String json = FileUtils
                 .readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
@@ -270,31 +268,7 @@ public class LuaefsModuleApiTest {
         final Utlatande utlatandeFromJson = moduleApi.getUtlatandeFromJson(internalModelResponse);
         assertEquals(TEST_HSA_ID, utlatandeFromJson.getGrundData().getSkapadAv().getPersonId());
 
-    }
-
-    /**
-     * Test that utlatande diagnoser is decorated with additional displayName
-     *
-     * @throws Exception
-     */
-    @Test
-    public void testDecorateUtlatande() throws Exception {
-
-        when(moduleService.getDescriptionFromDiagnosKod(eq("S0"), eq("ICD_10_SE"))).thenReturn(DIAGNOS_KLARTEXT_1);
-        when(moduleService.getDescriptionFromDiagnosKod(eq("S1"), eq("ICD_10_SE"))).thenReturn(DIAGNOS_KLARTEXT_2);
-
-        final String json = FileUtils
-                .readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
-
-        final String decoratedJson = moduleApi.decorateUtlatande(json);
-
-        LuaefsUtlatande decoratedUtlatande = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(decoratedJson);
-
-        assertNotNull(decoratedUtlatande);
-
-        assertEquals(DIAGNOS_KLARTEXT_1, decoratedUtlatande.getDiagnoser().get(0).getDiagnosDisplayName());
-        assertEquals(DIAGNOS_KLARTEXT_2, decoratedUtlatande.getDiagnoser().get(1).getDiagnosDisplayName());
-        assertEquals(null, decoratedUtlatande.getDiagnoser().get(2).getDiagnosDisplayName());
+        verify(moduleService, times(3)).getDescriptionFromDiagnosKod(anyString(), anyString());
     }
 
     @Test

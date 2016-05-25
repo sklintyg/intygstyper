@@ -21,6 +21,7 @@ package se.inera.certificate.modules.sjukersattning.rest;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
@@ -195,27 +196,6 @@ public class SjukersattningModuleApi implements ModuleApi {
         }
     }
 
-    @Override
-    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
-        SjukersattningUtlatande utlatande;
-        try {
-            utlatande = objectMapper.readValue(utlatandeJson,
-                    SjukersattningUtlatande.class);
-            List<Diagnos> decoratedDiagnoser = new ArrayList<>();
-            for (Diagnos diagnos : utlatande.getDiagnoser()) {
-                String klartext = moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem());
-                Diagnos decoratedDiagnos = Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
-                        klartext);
-                decoratedDiagnoser.add(decoratedDiagnos);
-            }
-            SjukersattningUtlatande result = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
-            return objectMapper.writeValueAsString(result);
-        } catch (IOException e) {
-            LOG.error("Failed to decorate Utlatande with diagnose descriptions.", e);
-            throw new ModuleException("Could not convert json string into an Utlatande object. ");
-        }
-    }
-
     private IntygId getIntygsId(String certificateId) {
         IntygId intygId = new IntygId();
         intygId.setRoot("SE5565594230-B31");
@@ -312,6 +292,11 @@ public class SjukersattningModuleApi implements ModuleApi {
             throws ModuleException {
         try {
             SjukersattningUtlatande intyg = getInternal(internalModel);
+            List<Diagnos> decoratedDiagnoser = intyg.getDiagnoser().stream()
+                    .map(diagnos -> Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
+                            moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem())))
+                    .collect(Collectors.toList());
+            intyg = intyg.toBuilder().setDiagnoser(decoratedDiagnoser).build();
             webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInternalModelResponse(intyg);
         } catch (ModuleException e) {

@@ -19,6 +19,7 @@
 
 package se.inera.certificate.modules.luae_na.rest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -26,26 +27,33 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.io.Writer;
 
+import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
+import se.inera.certificate.modules.luae_na.model.converter.WebcertModelFactory;
 import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.utils.ScenarioFinder;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
@@ -66,6 +74,15 @@ public class AktivitetsersattningNAModuleApiTest {
 
     @Mock
     private RevokeCertificateResponderInterface revokeClient;
+
+    @Mock
+    private ObjectMapper objectMapper;
+
+    @Mock
+    private WebcertModuleService moduleService;
+
+    @Mock
+    private WebcertModelFactory webcertModelFactory;
 
     @InjectMocks
     private AktivitetsersattningNAModuleApi moduleApi;
@@ -154,11 +171,31 @@ public class AktivitetsersattningNAModuleApiTest {
         Utlatande utlatande = AktivitetsersattningNAUtlatande.builder().setId(intygId).setGrundData(gd).setTextVersion("").build();
 
         String res = moduleApi.createRevokeRequest(utlatande, skapadAv, meddelande);
-        System.err.println(res);
         assertNotNull(res);
         assertNotEquals("", res);
     }
 
+    @Test
+    public void testUpdateBeforeSave() throws Exception {
+        final String internalModel = "internal model";
+        when(objectMapper.readValue(anyString(), eq(AktivitetsersattningNAUtlatande.class)))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
+        String response = moduleApi.updateBeforeSave(internalModel, createHosPersonal());
+        assertEquals(internalModel, response);
+        verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
+    }
+
+    @Test
+    public void testUpdateBeforeSigning() throws Exception {
+        final String internalModel = "internal model";
+        when(objectMapper.readValue(anyString(), eq(AktivitetsersattningNAUtlatande.class)))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
+        String response = moduleApi.updateBeforeSigning(internalModel, createHosPersonal(), LocalDateTime.now());
+        assertEquals(internalModel, response);
+        verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
+    }
     private RegisterCertificateResponseType createReturnVal(ResultCodeType res) {
         RegisterCertificateResponseType retVal = new RegisterCertificateResponseType();
         ResultType value = new ResultType();

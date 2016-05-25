@@ -499,11 +499,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
-        return utlatandeJson;
-    }
-
-    @Override
     public String createRenewalFromTemplate(CreateDraftCopyHolder draftCopyHolder, String internalModelHolder)
             throws ModuleException {
         try {

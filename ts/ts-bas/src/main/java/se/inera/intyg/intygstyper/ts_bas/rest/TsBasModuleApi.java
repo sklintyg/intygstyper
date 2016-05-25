@@ -345,11 +345,6 @@ public class TsBasModuleApi implements ModuleApi {
     }
 
     @Override
-    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
-        return utlatandeJson;
-    }
-
-    @Override
     public String createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {

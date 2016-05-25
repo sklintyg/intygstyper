@@ -20,6 +20,7 @@ package se.inera.certificate.modules.luae_na.rest;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
@@ -268,6 +269,11 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
             throws ModuleException {
         try {
             AktivitetsersattningNAUtlatande intyg = getInternal(internalModel);
+            List<Diagnos> decoratedDiagnoser = intyg.getDiagnoser().stream()
+                    .map(diagnos -> Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
+                            moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem())))
+                    .collect(Collectors.toList());
+            intyg = intyg.toBuilder().setDiagnoser(decoratedDiagnoser).build();
             webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInternalModelResponse(intyg);
         } catch (ModuleException e) {
@@ -316,27 +322,6 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     @Override
     public Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
         return TransportToArendeApi.getModuleSpecificArendeParameters(utlatande);
-    }
-
-    @Override
-    public String decorateUtlatande(String utlatandeJson) throws ModuleException {
-        AktivitetsersattningNAUtlatande utlatande;
-        try {
-            utlatande = objectMapper.readValue(utlatandeJson,
-                    AktivitetsersattningNAUtlatande.class);
-            List<Diagnos> decoratedDiagnoser = new ArrayList<>();
-            for (Diagnos diagnos : utlatande.getDiagnoser()) {
-                String klartext = moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem());
-                Diagnos decoratedDiagnos = Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
-                        klartext);
-                decoratedDiagnoser.add(decoratedDiagnos);
-            }
-            AktivitetsersattningNAUtlatande result = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
-            return objectMapper.writeValueAsString(result);
-        } catch (IOException e) {
-            LOG.error("Failed to decorate Utlatande with diagnose descriptions.", e);
-            throw new ModuleException("Could not convert json string into an Utlatande object. ");
-        }
     }
 
     /*
