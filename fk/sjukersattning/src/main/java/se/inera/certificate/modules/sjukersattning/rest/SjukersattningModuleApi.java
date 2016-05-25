@@ -261,23 +261,6 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public String marshall(String jsonString) throws ModuleException {
-        String xmlString = null;
-        try {
-            SjukersattningUtlatande internal = objectMapper.readValue(jsonString, SjukersattningUtlatande.class);
-            RegisterCertificateType external = InternalToTransport.convert(internal);
-            StringWriter writer = new StringWriter();
-            JAXB.marshal(external, writer);
-            xmlString = writer.toString();
-
-        } catch (IOException | ConverterException e) {
-            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
-            throw new ModuleException(e);
-        }
-        return xmlString;
-    }
-
-    @Override
     public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
         return objectMapper.readValue(utlatandeJson, SjukersattningUtlatande.class);
     }

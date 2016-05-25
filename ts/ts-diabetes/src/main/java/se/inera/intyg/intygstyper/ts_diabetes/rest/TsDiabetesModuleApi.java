@@ -23,8 +23,8 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.*;
-import javax.xml.namespace.QName;
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.transform.stream.StreamSource;
@@ -257,27 +257,6 @@ public class TsDiabetesModuleApi implements ModuleApi {
         default:
             throw new ModuleException("getMedicalCertificateForCare WS call: ERROR :" + diabetesResponseType.getResultat().getResultText());
         }
-    }
-
-    @Override
-    public String marshall(String jsonString) throws ModuleException {
-        String xmlString = null;
-        try {
-            Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
-            RegisterTSDiabetesType external = InternalToTransportConverter.convert(internal);
-            StringWriter writer = new StringWriter();
-
-            JAXBElement<RegisterTSDiabetesType> jaxbElement = new JAXBElement<RegisterTSDiabetesType>(new QName("ns3:RegisterTSDiabetes"),
-                    RegisterTSDiabetesType.class, external);
-            JAXBContext context = JAXBContext.newInstance(RegisterTSDiabetesType.class);
-            context.createMarshaller().marshal(jaxbElement, writer);
-            xmlString = writer.toString();
-
-        } catch (JAXBException | IOException e) {
-            LOG.error("Error occured while marshalling", e);
-            throw new ModuleException(e);
-        }
-        return xmlString;
     }
 
     @Override

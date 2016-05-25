@@ -22,8 +22,7 @@ package se.inera.certificate.modules.sjukpenning_utokad.rest;
 import java.io.*;
 import java.util.*;
 
-import javax.xml.bind.*;
-import javax.xml.namespace.QName;
+import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
@@ -57,7 +56,6 @@ import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.*;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
@@ -259,26 +257,6 @@ public class SjukpenningUtokadModuleApi implements ModuleApi {
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
         return false;
-    }
-
-    @Override
-    public String marshall(String jsonString) throws ModuleException {
-        String xmlString = null;
-        try {
-            SjukpenningUtokadUtlatande internal = objectMapper.readValue(jsonString, SjukpenningUtokadUtlatande.class);
-            RegisterCertificateType external = InternalToTransport.convert(internal);
-            StringWriter writer = new StringWriter();
-
-            JAXBElement<RegisterCertificateType> jaxbElement = new JAXBElement<RegisterCertificateType>(new QName("ns2:RegisterCertificate"),
-                    RegisterCertificateType.class, external);
-            JAXBContext.newInstance(RegisterCertificateType.class, DatePeriodType.class).createMarshaller().marshal(jaxbElement, writer);
-            xmlString = writer.toString();
-
-        } catch (IOException | ConverterException | JAXBException e) {
-            LOG.error("Error occured while marshalling: {}", e.getStackTrace().toString());
-            throw new ModuleException(e);
-        }
-        return xmlString;
     }
 
     @Override

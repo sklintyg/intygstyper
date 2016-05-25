@@ -22,8 +22,7 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.*;
-import javax.xml.namespace.QName;
+import javax.xml.bind.JAXB;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.transform.stream.StreamSource;
@@ -260,27 +259,6 @@ public class TsBasModuleApi implements ModuleApi {
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
         return !persistedState.equals(currentState);
-    }
-
-    @Override
-    public String marshall(String jsonString) throws ModuleException {
-        String xmlString = null;
-        try {
-            Utlatande internal = objectMapper.readValue(jsonString, Utlatande.class);
-            RegisterTSBasType external = InternalToTransport.convert(internal);
-            StringWriter writer = new StringWriter();
-
-            JAXBElement<RegisterTSBasType> jaxbElement = new JAXBElement<RegisterTSBasType>(new QName("ns3:RegisterTSBas"), RegisterTSBasType.class,
-                    external);
-            JAXBContext context = JAXBContext.newInstance(RegisterTSBasType.class);
-            context.createMarshaller().marshal(jaxbElement, writer);
-            xmlString = writer.toString();
-
-        } catch (ConverterException | JAXBException | IOException e) {
-            LOG.error("Error occured while marshalling", e);
-            throw new ModuleException(e);
-        }
-        return xmlString;
     }
 
     @Override

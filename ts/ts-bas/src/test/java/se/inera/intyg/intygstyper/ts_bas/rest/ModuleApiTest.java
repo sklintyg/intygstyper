@@ -24,23 +24,17 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.*;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -175,26 +169,6 @@ public class ModuleApiTest {
     }
 
     @Test
-    public void testMarshall() throws ScenarioNotFoundException, ModuleException, IOException, SAXException {
-        Utlatande internal = ScenarioFinder.getInternalScenario("valid-maximal").asInternalModel();
-        StringWriter writer = new StringWriter();
-        try {
-            objectMapper.writeValue(writer, internal);
-        } catch (IOException e) {
-            throw new ModuleException("Failed to serialize internal model", e);
-        }
-        String xml = writer.toString();
-        String actual = moduleApi.marshall(xml);
-        String expected = FileUtils.readFileToString(new ClassPathResource("scenarios/transport/valid-maximal.xml").getFile());
-
-        XMLUnit.setIgnoreWhitespace(true);
-        Diff diff = XMLUnit.compareXML(expected, actual);
-        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
-        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        Assert.assertTrue(diff.toString(), diff.similar());
-    }
-
-    @Test
     public void getAdditionalInfoFromUtlatandeTest() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-maximal").asInternalModel();
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
@@ -283,23 +257,6 @@ public class ModuleApiTest {
 
         String result = moduleApi.getAdditionalInfo(intyg);
         assertNull(result);
-    }
-
-    private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
-        @Override
-        public int differenceFound(Difference difference) {
-            if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
-                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
-                // same
-                return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
-            } else {
-                return RETURN_ACCEPT_DIFFERENCE;
-            }
-        }
-
-        @Override
-        public void skippedComparison(Node control, Node test) {
-        }
     }
 
     private IntygMeta createMeta() throws ScenarioNotFoundException {

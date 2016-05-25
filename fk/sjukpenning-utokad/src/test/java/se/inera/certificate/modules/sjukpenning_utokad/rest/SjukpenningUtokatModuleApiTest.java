@@ -280,23 +280,6 @@ public class SjukpenningUtokatModuleApiTest {
     }
 
     @Test
-    public void testMarshall() throws Exception {
-        final String jsonString = "internal model";
-        when(objectMapper.readValue(eq(jsonString), eq(SjukpenningUtokadUtlatande.class)))
-                .thenReturn(ScenarioFinder.getInternalScenario("pass-prognos").asInternalModel());
-        String res = moduleApi.marshall(jsonString);
-        assertNotNull(res);
-    }
-
-    @Test(expected = ModuleException.class)
-    public void testMarshallThrowsModuleException() throws Exception {
-        final String jsonString = "internal model";
-        when(objectMapper.readValue(eq(jsonString), eq(SjukpenningUtokadUtlatande.class))).thenThrow(new IOException());
-        moduleApi.marshall(jsonString);
-        fail();
-    }
-
-    @Test
     public void testUpdateBeforeSave() throws Exception {
         final String internalModel = "internal model";
         when(objectMapper.readValue(anyString(), eq(SjukpenningUtokadUtlatande.class)))

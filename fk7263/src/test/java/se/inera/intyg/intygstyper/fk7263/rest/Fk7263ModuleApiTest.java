@@ -35,10 +35,10 @@ import java.io.StringWriter;
 import javax.xml.bind.JAXB;
 
 import org.apache.commons.io.FileUtils;
-import org.custommonkey.xmlunit.*;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +46,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -62,7 +60,6 @@ import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.utils.ResourceConverterUtils;
-import se.inera.intyg.intygstyper.fk7263.utils.ScenarioNotFoundException;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -284,27 +281,6 @@ public class Fk7263ModuleApiTest {
     }
 
     @Test
-    public void testMarshall() throws ScenarioNotFoundException, ModuleException, IOException, SAXException {
-        Utlatande internal = objectMapper.readValue(new ClassPathResource("Fk7263ModuleApiTest/utlatande.json").getFile(), Utlatande.class);
-        StringWriter writer = new StringWriter();
-        try {
-            objectMapper.writeValue(writer, internal);
-        } catch (IOException e) {
-            throw new ModuleException("Failed to serialize internal model", e);
-        }
-        String xml = writer.toString();
-        String actual = fk7263ModuleApi.marshall(xml);
-        String expected = FileUtils.readFileToString(new ClassPathResource("Fk7263ModuleApiTest/utlatande.xml").getFile());
-
-        XMLUnit.setIgnoreWhitespace(true);
-        XMLUnit.setIgnoreAttributeOrder(true);
-        Diff diff = XMLUnit.compareXML(expected, actual);
-        diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
-        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        Assert.assertTrue(diff.toString(), diff.similar());
-    }
-
-    @Test
     public void getAdditionalInfoFromUtlatandeTest() throws Exception {
         Utlatande utlatande = getUtlatandeFromFile();
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
@@ -418,23 +394,6 @@ public class Fk7263ModuleApiTest {
         String result = fk7263ModuleApi.getAdditionalInfo(intyg);
 
         assertNull(result);
-    }
-
-    private class NamespacePrefixNameIgnoringListener implements DifferenceListener {
-        @Override
-        public int differenceFound(Difference difference) {
-            if (DifferenceConstants.NAMESPACE_PREFIX_ID == difference.getId()) {
-                // differences in namespace prefix IDs are ok (eg. 'ns1' vs 'ns2'), as long as the namespace URI is the
-                // same
-                return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
-            } else {
-                return RETURN_ACCEPT_DIFFERENCE;
-            }
-        }
-
-        @Override
-        public void skippedComparison(Node control, Node test) {
-        }
     }
 
     private Utlatande getUtlatandeFromFile() throws IOException {

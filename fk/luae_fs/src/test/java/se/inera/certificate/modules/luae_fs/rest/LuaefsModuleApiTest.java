@@ -300,13 +300,6 @@ public class LuaefsModuleApiTest {
     }
 
     @Test
-    public void testMarshall() throws Exception {
-        final String json = FileUtils
-                .readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
-        final String marshalled = moduleApi.marshall(json);
-        assertTrue(marshalled.length() > 0);
-    }
-    @Test
     public void testRevokeCertificate() throws Exception {
         final String logicalAddress = "logicalAddress";
         String xmlContents = Resources.toString(Resources.getResource("revokerequest.xml"), Charsets.UTF_8);
