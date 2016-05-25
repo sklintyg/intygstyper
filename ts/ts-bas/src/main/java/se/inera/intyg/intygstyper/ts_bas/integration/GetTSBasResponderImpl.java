@@ -21,7 +21,10 @@ package se.inera.intyg.intygstyper.ts_bas.integration;
 
 import static se.inera.intyg.common.support.model.converter.util.CertificateStateHolderUtil.isArchived;
 
+import java.io.StringReader;
 import java.util.*;
+
+import javax.xml.bind.JAXB;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +40,9 @@ import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.*;
 
 public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
@@ -91,7 +94,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
 
     private void attachCertificateDocument(CertificateHolder certificate, GetTSBasResponseType response) {
         try {
-            TSBasIntyg tsBasIntyg = InternalToTransport.convert(moduleApi.getUtlatandeFromXml(certificate.getOriginalCertificate())).getIntyg();
+            TSBasIntyg tsBasIntyg = JAXB.unmarshal(new StringReader(certificate.getOriginalCertificate()), RegisterTSBasType.class).getIntyg();
             response.setIntyg(tsBasIntyg);
         } catch (Exception e) {
             Throwables.propagate(e);

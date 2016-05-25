@@ -215,10 +215,8 @@ public class Fk7263ModuleApi implements ModuleApi {
             throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
         }
 
-        // NOTE: We don't need to check for recipientId
-
-        Utlatande utlatande = getUtlatandeFromXml(xmlBody);
-        sendCertificateToRecipient(utlatande, logicalAddress, recipientId);
+        RegisterMedicalCertificateType request = JAXB.unmarshal(new StringReader(xmlBody), RegisterMedicalCertificateType.class);
+        sendCertificateToRecipient(request, logicalAddress, recipientId);
     }
 
     @Override
@@ -260,13 +258,13 @@ public class Fk7263ModuleApi implements ModuleApi {
         if (logicalAddress == null) {
             throw new ModuleException("No LogicalAddress found in call to sendCertificateToRecipient!");
         }
-        Utlatande utlatande;
+        RegisterMedicalCertificateType request;
         try {
-            utlatande = getUtlatandeFromJson(internalModel);
-        } catch (IOException e) {
+            request = InternalToTransport.getJaxbObject(getUtlatandeFromJson(internalModel));
+        } catch (IOException | ConverterException e) {
             throw new ModuleException(e.getMessage());
         }
-        sendCertificateToRecipient(utlatande, logicalAddress, null);
+        sendCertificateToRecipient(request, logicalAddress, null);
     }
 
     @Override
@@ -412,14 +410,8 @@ public class Fk7263ModuleApi implements ModuleApi {
         return foundAktivitet;
     }
 
-    private void sendCertificateToRecipient(Utlatande utlatande, final String logicalAddress, final String recipientId)
+    private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId)
             throws ModuleException {
-        RegisterMedicalCertificateType request;
-        try {
-            request = InternalToTransport.getJaxbObject(utlatande);
-        } catch (ConverterException e) {
-            throw new ModuleException(e);
-        }
         // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
         if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(FK.toString())) {
             request = whenFkIsRecipientThenSetCodeSystemToICD10(request);

@@ -21,7 +21,6 @@ package se.inera.intyg.intygstyper.fk7263.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -29,6 +28,8 @@ import static org.mockito.Mockito.when;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.ERROR;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.INFO;
 import static se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum.OK;
+
+import java.io.File;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -98,9 +99,11 @@ public class GetCertificateResponderImplTest {
         String document = FileUtils.readFileToString(new ClassPathResource("GetCertificateResponderImplTest/maximalt-fk7263-internal.json").getFile());
         Utlatande utlatande = converterUtil.fromJsonString(document);
         CertificateHolder certificate = converterUtil.toCertificateHolder(utlatande);
+        File file = new ClassPathResource("GetCertificateResponderImplTest/fk7263.xml").getFile();
+        String xmlFile = FileUtils.readFileToString(file);
+        certificate.setOriginalCertificate(xmlFile);
 
         when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenReturn(certificate);
-        when(moduleRestApi.getUtlatandeFromXml(anyString())).thenReturn(utlatande);
 
         GetCertificateRequestType parameters = createGetCertificateRequest(civicRegistrationNumber, certificateId);
 

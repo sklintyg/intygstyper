@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.intygstyper.fk7263.integration;
 
+import java.io.StringReader;
+
 import javax.annotation.PostConstruct;
 import javax.xml.bind.*;
 import javax.xml.parsers.DocumentBuilder;
@@ -42,7 +44,6 @@ import se.inera.intyg.common.support.integration.module.exception.MissingConsent
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 
 /**
@@ -111,7 +112,8 @@ public class GetCertificateResponderImpl implements
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document document = db.newDocument();
 
-            RegisterMedicalCertificateType registerMedicalCertificate = InternalToTransport.getJaxbObject(moduleApi.getUtlatandeFromXml(certificate.getOriginalCertificate()));
+            RegisterMedicalCertificateType registerMedicalCertificate = JAXB.unmarshal(new StringReader(certificate.getOriginalCertificate()),
+                    RegisterMedicalCertificateType.class);
             JAXBElement<RegisterMedicalCertificateType> registerMedicalCertificateElement = objectFactory
                     .createRegisterMedicalCertificate(registerMedicalCertificate);
 

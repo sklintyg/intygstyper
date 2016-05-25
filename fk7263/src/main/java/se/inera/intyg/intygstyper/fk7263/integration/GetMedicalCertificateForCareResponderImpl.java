@@ -18,6 +18,10 @@
  */
 package se.inera.intyg.intygstyper.fk7263.integration;
 
+import java.io.StringReader;
+
+import javax.xml.bind.JAXB;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +35,6 @@ import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.util
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 
@@ -53,7 +56,8 @@ public class GetMedicalCertificateForCareResponderImpl implements
         GetMedicalCertificateForCareResponseType response = new GetMedicalCertificateForCareResponseType();
 
         String certificateId = request.getCertificateId();
-        Personnummer nationalIdentityNumber = request.getNationalIdentityNumber() != null ? new Personnummer(request.getNationalIdentityNumber()) : null;
+        Personnummer nationalIdentityNumber = request.getNationalIdentityNumber() != null ? new Personnummer(request.getNationalIdentityNumber())
+                : null;
 
         CertificateHolder certificate = null;
 
@@ -64,12 +68,14 @@ public class GetMedicalCertificateForCareResponderImpl implements
                 return response;
             }
             if (certificate.isDeletedByCareGiver()) {
-                response.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, String.format("Certificate '%s' has been deleted by care giver", certificateId)));
+                response.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR,
+                        String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
                 response.setMeta(ModelConverter.toCertificateMetaType(certificate));
                 attachCertificateDocument(certificate, response);
                 if (certificate.isRevoked()) {
-                    response.setResult(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
+                    response.setResult(
+                            ResultTypeUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", certificateId)));
                 } else {
                     response.setResult(ResultTypeUtil.okResult());
                 }
@@ -84,7 +90,8 @@ public class GetMedicalCertificateForCareResponderImpl implements
     protected void attachCertificateDocument(CertificateHolder certificate, GetMedicalCertificateForCareResponseType response) {
         try {
 
-            RegisterMedicalCertificateType jaxbObject = InternalToTransport.getJaxbObject(moduleApi.getUtlatandeFromXml(certificate.getOriginalCertificate()));
+            RegisterMedicalCertificateType jaxbObject = JAXB.unmarshal(new StringReader(certificate.getOriginalCertificate()),
+                    RegisterMedicalCertificateType.class);
             response.setLakarutlatande(jaxbObject.getLakarutlatande());
 
         } catch (Exception e) {
@@ -92,6 +99,5 @@ public class GetMedicalCertificateForCareResponderImpl implements
             Throwables.propagate(e);
         }
     }
-
 
 }

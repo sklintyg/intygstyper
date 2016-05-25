@@ -171,7 +171,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testSendCertificateWhenRecipientIsOtherThanFk() throws Exception {
-        String xml = marshall(FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE_MINIMAL).getFile()));
+        String xml = marshall(FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE).getFile()));
 
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
@@ -192,7 +192,7 @@ public class Fk7263ModuleApiTest {
 
     @Test
     public void testSendFullCertificateWhenRecipientIsFk() throws Exception {
-        String xml = marshall(FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE_MINIMAL).getFile()));
+        String xml = marshall(FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE).getFile()));
 
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");

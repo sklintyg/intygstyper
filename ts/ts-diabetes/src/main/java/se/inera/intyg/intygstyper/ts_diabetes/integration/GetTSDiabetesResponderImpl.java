@@ -21,7 +21,10 @@ package se.inera.intyg.intygstyper.ts_diabetes.integration;
 
 import static se.inera.intyg.common.support.model.converter.util.CertificateStateHolderUtil.isArchived;
 
+import java.io.StringReader;
 import java.util.*;
+
+import javax.xml.bind.JAXB;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,11 +36,10 @@ import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.intyg.intygstyper.ts_diabetes.model.converter.InternalToTransportConverter;
 import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.*;
 
 public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterface {
@@ -71,7 +73,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
                 response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR,
                         String.format("Certificate '%s' has been deleted by care giver", certificateId)));
             } else {
-                TSDiabetesIntyg tsDiabetesIntyg = InternalToTransportConverter.convert(moduleService.getUtlatandeFromXml(certificate.getOriginalCertificate())).getIntyg();
+                TSDiabetesIntyg tsDiabetesIntyg = JAXB.unmarshal(new StringReader(certificate.getOriginalCertificate()), RegisterTSDiabetesType.class).getIntyg();
                 response.setIntyg(tsDiabetesIntyg);
                 response.setMeta(createMetaData(certificate));
                 if (certificate.isRevoked()) {
@@ -80,7 +82,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
                     response.setResultat(ResultTypeUtil.okResult());
                 }
             }
-        } catch (InvalidCertificateException | ModuleException e) {
+        } catch (InvalidCertificateException e) {
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.TECHNICAL_ERROR, e.getMessage()));
         }
         return response;
