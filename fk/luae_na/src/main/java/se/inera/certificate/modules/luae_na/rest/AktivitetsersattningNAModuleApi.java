@@ -104,15 +104,15 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     }
 
     @Override
-    public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
+    public ValidateDraftResponse validateDraft(String internalModel) throws ModuleException {
         return internalDraftValidator.validateDraft(getInternal(internalModel));
     }
 
-    private AktivitetsersattningNAUtlatande getInternal(InternalModelHolder internalModel)
+    private AktivitetsersattningNAUtlatande getInternal(String internalModel)
             throws ModuleException {
 
         try {
-            AktivitetsersattningNAUtlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
+            AktivitetsersattningNAUtlatande utlatande = objectMapper.readValue(internalModel,
                     AktivitetsersattningNAUtlatande.class);
 
             // Explicitly populate the giltighet interval since it is information derived from
@@ -127,20 +127,20 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     }
 
     @Override
-    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
             throws ModuleException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
+    public String createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
         try {
             return toInternalModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder));
         } catch (ConverterException e) {
@@ -149,9 +149,9 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse toInternalModelResponse(AktivitetsersattningNAUtlatande internalModel) throws ModuleException {
+    private String toInternalModelResponse(AktivitetsersattningNAUtlatande internalModel) throws ModuleException {
         try {
-            return new InternalModelResponse(toJsonString(internalModel));
+            return toJsonString(internalModel);
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
@@ -164,7 +164,7 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+    public String createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {
             AktivitetsersattningNAUtlatande internal = getInternal(template);
@@ -176,10 +176,10 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     }
 
     @Override
-    public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+    public void registerCertificate(String internalModel, String logicalAddress) throws ModuleException {
         RegisterCertificateType request;
         try {
-            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
+            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel));
         } catch (ConverterException e) {
             LOG.error("Failed to convert to transport format during registerAktivitetsErsattningNA", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerAktivitetsErsattningNA", e);
@@ -264,7 +264,7 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
         return false;
     }
 
-    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    private String updateInternal(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         try {
             AktivitetsersattningNAUtlatande intyg = getInternal(internalModel);
@@ -276,12 +276,12 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public String updateBeforeSave(String internalModel, HoSPersonal hosPerson) throws ModuleException {
         return updateInternal(internalModel, hosPerson, null);
     }
 
     @Override
-    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
     }
@@ -344,10 +344,10 @@ public class AktivitetsersattningNAModuleApi implements ModuleApi {
      *
      * @see se.inera.intyg.common.support.modules.support.api.ModuleApi#createRenewalFromTemplate(se.inera.intyg.common.
      * support.modules.support.api.dto.CreateDraftCopyHolder,
-     * se.inera.intyg.common.support.modules.support.api.dto.InternalModelHolder)
+     * se.inera.intyg.common.support.modules.support.api.dto.String)
      */
     @Override
-    public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+    public String createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {
             AktivitetsersattningNAUtlatande internal = getInternal(template);

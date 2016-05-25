@@ -98,7 +98,7 @@ public class SjukersattningModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
+    public ValidateDraftResponse validateDraft(String internalModel) throws ModuleException {
         return internalDraftValidator.validateDraft(getInternal(internalModel));
     }
 
@@ -106,13 +106,13 @@ public class SjukersattningModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         // TODO
         return null;
     }
 
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
             throws ModuleException {
         // TODO
         return null;
@@ -122,7 +122,7 @@ public class SjukersattningModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
+    public String createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
         try {
             return toInternalModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder));
         } catch (ConverterException e) {
@@ -132,7 +132,7 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+    public String createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {
             SjukersattningUtlatande internal = getInternal(template);
@@ -224,10 +224,10 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+    public void registerCertificate(String internalModel, String logicalAddress) throws ModuleException {
         RegisterCertificateType request;
         try {
-            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel.getInternalModel()));
+            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel));
         } catch (ConverterException e) {
             LOG.error("Failed to convert to transport format during registerSjukersattning", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerSjukersattning", e);
@@ -245,12 +245,12 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public String updateBeforeSave(String internalModel, HoSPersonal hosPerson) throws ModuleException {
         return updateInternal(internalModel, hosPerson, null);
     }
 
     @Override
-    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
     }
@@ -290,11 +290,11 @@ public class SjukersattningModuleApi implements ModuleApi {
         }
     }
 
-    private SjukersattningUtlatande getInternal(InternalModelHolder internalModel)
+    private SjukersattningUtlatande getInternal(String internalModel)
             throws ModuleException {
 
         try {
-            SjukersattningUtlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
+            SjukersattningUtlatande utlatande = objectMapper.readValue(internalModel,
                     SjukersattningUtlatande.class);
 
             // Explicitly populate the giltighet interval since it is information derived from
@@ -308,7 +308,7 @@ public class SjukersattningModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    private String updateInternal(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         try {
             SjukersattningUtlatande intyg = getInternal(internalModel);
@@ -319,9 +319,9 @@ public class SjukersattningModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse toInternalModelResponse(SjukersattningUtlatande internalModel) throws ModuleException {
+    private String toInternalModelResponse(SjukersattningUtlatande internalModel) throws ModuleException {
         try {
-            return new InternalModelResponse(toJsonString(internalModel));
+            return toJsonString(internalModel);
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
@@ -349,7 +349,7 @@ public class SjukersattningModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+    public String createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {
             SjukersattningUtlatande internal = getInternal(template);

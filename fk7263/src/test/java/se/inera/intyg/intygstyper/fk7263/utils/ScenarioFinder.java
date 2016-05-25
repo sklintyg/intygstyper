@@ -19,16 +19,17 @@
 
 package se.inera.intyg.intygstyper.fk7263.utils;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXB;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -146,8 +147,8 @@ public class ScenarioFinder {
         @Override
         public RegisterMedicalCertificateType asTransportModel() throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
-            } catch (IOException e) {
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile), RegisterMedicalCertificateType.class);
+            } catch (Exception e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "transport", e);
             }
         }
@@ -158,7 +159,7 @@ public class ScenarioFinder {
         public se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));
+                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal", e);
             }

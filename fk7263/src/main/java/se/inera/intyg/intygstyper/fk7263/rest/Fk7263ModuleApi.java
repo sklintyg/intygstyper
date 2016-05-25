@@ -129,7 +129,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
+    public ValidateDraftResponse validateDraft(String internalModel) throws ModuleException {
         return internalDraftValidator.validateDraft(getInternal(internalModel));
     }
 
@@ -137,7 +137,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
             PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin, false);
@@ -152,7 +152,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
             throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
@@ -168,7 +168,7 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
+    public String createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
         try {
             return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder));
 
@@ -179,7 +179,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+    public String createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {
             Utlatande internal = getInternal(template);
@@ -251,7 +251,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+    public void registerCertificate(String internalModel, String logicalAddress) throws ModuleException {
         // Check that we got any data at all
         if (internalModel == null) {
             throw new ModuleException("No internal model found in call to sendCertificateToRecipient!");
@@ -262,7 +262,7 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
         Utlatande utlatande;
         try {
-            utlatande = getUtlatandeFromJson(internalModel.getInternalModel());
+            utlatande = getUtlatandeFromJson(internalModel);
         } catch (IOException e) {
             throw new ModuleException(e.getMessage());
         }
@@ -275,12 +275,12 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public String updateBeforeSave(String internalModel, HoSPersonal hosPerson) throws ModuleException {
         return updateInternal(internalModel, hosPerson, null);
     }
 
     @Override
-    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
     }
@@ -449,11 +449,11 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     // - - - - - Private transformation methods for building responses - - - - - //
 
-    private se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande getInternal(InternalModelHolder internalModel)
+    private se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande getInternal(String internalModel)
             throws ModuleException {
 
         try {
-            se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande utlatande = objectMapper.readValue(internalModel.getInternalModel(),
+            se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande utlatande = objectMapper.readValue(internalModel,
                     se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande.class);
 
             // Explicitly populate the giltighet interval since it is information derived from
@@ -466,7 +466,7 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    private String updateInternal(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
@@ -477,13 +477,12 @@ public class Fk7263ModuleApi implements ModuleApi {
         }
     }
 
-    private InternalModelResponse toInteralModelResponse(
+    private String toInteralModelResponse(
             se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);
-            return new InternalModelResponse(writer.toString());
-
+            return writer.toString();
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
@@ -505,7 +504,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCopyHolder, InternalModelHolder internalModelHolder)
+    public String createRenewalFromTemplate(CreateDraftCopyHolder draftCopyHolder, String internalModelHolder)
             throws ModuleException {
         try {
             Utlatande internal = getInternal(internalModelHolder);

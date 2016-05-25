@@ -24,7 +24,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
@@ -188,8 +191,7 @@ public class LuaefsModuleApiTest {
         RegisterCertificateResponseType result = createReturnVal(ResultCodeType.OK);
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(result);
 
-        InternalModelHolder spy = spy(new InternalModelHolder(json, null));
-        moduleApi.registerCertificate(spy, LOGICAL_ADDRESS);
+        moduleApi.registerCertificate(json, LOGICAL_ADDRESS);
     }
 
     @Test
@@ -197,12 +199,11 @@ public class LuaefsModuleApiTest {
 
         final String json = FileUtils
                 .readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
-        InternalModelHolder spy = spy(new InternalModelHolder(json, null));
         CreateDraftCopyHolder draftCertificateHolder = new CreateDraftCopyHolder("1", createHosPersonal());
 
-        final InternalModelResponse renewalFromTemplate = moduleApi.createRenewalFromTemplate(draftCertificateHolder, spy);
+        final String renewalFromTemplate = moduleApi.createRenewalFromTemplate(draftCertificateHolder, json);
 
-        LuaefsUtlatande copy = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(renewalFromTemplate.getInternalModel());
+        LuaefsUtlatande copy = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(renewalFromTemplate);
         assertEquals(TEST_HSA_ID, copy.getGrundData().getSkapadAv().getPersonId());
 
         verify(webcertModelFactory).createCopy(eq(draftCertificateHolder), any(LuaefsUtlatande.class));
@@ -213,12 +214,11 @@ public class LuaefsModuleApiTest {
 
         final String json = FileUtils
                 .readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
-        InternalModelHolder spy = spy(new InternalModelHolder(json, null));
         CreateDraftCopyHolder draftCertificateHolder = new CreateDraftCopyHolder("1", createHosPersonal());
 
-        final InternalModelResponse renewalFromTemplate = moduleApi.createNewInternalFromTemplate(draftCertificateHolder, spy);
+        final String renewalFromTemplate = moduleApi.createNewInternalFromTemplate(draftCertificateHolder, json);
 
-        LuaefsUtlatande copy = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(renewalFromTemplate.getInternalModel());
+        LuaefsUtlatande copy = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(renewalFromTemplate);
         assertEquals(TEST_HSA_ID, copy.getGrundData().getSkapadAv().getPersonId());
 
         verify(webcertModelFactory).createCopy(eq(draftCertificateHolder), any(LuaefsUtlatande.class));
@@ -229,9 +229,9 @@ public class LuaefsModuleApiTest {
 
         CreateNewDraftHolder createNewDraftHolder = new CreateNewDraftHolder("1", createHosPersonal(), createPatient());
 
-        final InternalModelResponse renewalFromTemplate = moduleApi.createNewInternal(createNewDraftHolder);
+        final String renewalFromTemplate = moduleApi.createNewInternal(createNewDraftHolder);
 
-        LuaefsUtlatande copy = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(renewalFromTemplate.getInternalModel());
+        LuaefsUtlatande copy = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(renewalFromTemplate);
         assertEquals(TEST_HSA_ID, copy.getGrundData().getSkapadAv().getPersonId());
         assertEquals(TEST_PATIENT_PERSONNR, copy.getGrundData().getPatient().getPersonId().getPersonnummer());
 
@@ -243,8 +243,7 @@ public class LuaefsModuleApiTest {
         RegisterCertificateResponseType result = createReturnVal(ResultCodeType.ERROR);
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(result);
 
-        InternalModelHolder spy = spy(new InternalModelHolder("json", null));
-        moduleApi.registerCertificate(spy, LOGICAL_ADDRESS);
+        moduleApi.registerCertificate("json", LOGICAL_ADDRESS);
     }
 
     /**
@@ -267,9 +266,8 @@ public class LuaefsModuleApiTest {
         RegisterCertificateResponseType result = createReturnVal(ResultCodeType.OK);
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(result);
 
-        InternalModelHolder spy = spy(new InternalModelHolder(json, null));
-        final InternalModelResponse internalModelResponse = moduleApi.updateBeforeSave(spy, createHosPersonal());
-        final Utlatande utlatandeFromJson = moduleApi.getUtlatandeFromJson(internalModelResponse.getInternalModel());
+        final String internalModelResponse = moduleApi.updateBeforeSave(json, createHosPersonal());
+        final Utlatande utlatandeFromJson = moduleApi.getUtlatandeFromJson(internalModelResponse);
         assertEquals(TEST_HSA_ID, utlatandeFromJson.getGrundData().getSkapadAv().getPersonId());
 
     }

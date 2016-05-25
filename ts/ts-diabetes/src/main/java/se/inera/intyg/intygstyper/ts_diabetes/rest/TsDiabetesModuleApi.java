@@ -122,7 +122,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public ValidateDraftResponse validateDraft(InternalModelHolder internalModel) throws ModuleException {
+    public ValidateDraftResponse validateDraft(String internalModel) throws ModuleException {
         return validator.validateInternal(getInternal(internalModel));
     }
 
@@ -130,7 +130,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public InternalModelResponse createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
+    public String createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
         try {
             return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder, null));
 
@@ -144,7 +144,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public InternalModelResponse createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+    public String createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {
             Utlatande internal = getInternal(template);
@@ -156,12 +156,12 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse updateBeforeSave(InternalModelHolder internalModel, HoSPersonal hosPerson) throws ModuleException {
+    public String updateBeforeSave(String internalModel, HoSPersonal hosPerson) throws ModuleException {
         return updateInternal(internalModel, hosPerson, null);
     }
 
     @Override
-    public InternalModelResponse updateBeforeSigning(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
     }
@@ -178,7 +178,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public PdfResponse pdf(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
+    public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             return new PdfResponse(pdfGenerator.generatePDF(getInternal(internalModel), applicationOrigin),
                     pdfGenerator.generatePdfFilename(getInternal(internalModel)));
@@ -189,16 +189,16 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public PdfResponse pdfEmployer(InternalModelHolder internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
             throws ModuleException {
         throw new ModuleException("Feature not supported");
     }
 
     @Override
-    public void registerCertificate(InternalModelHolder internalModel, String logicalAddress) throws ModuleException {
+    public void registerCertificate(String internalModel, String logicalAddress) throws ModuleException {
         RegisterTSDiabetesType request = new RegisterTSDiabetesType();
         try {
-            Utlatande internal = objectMapper.readValue(internalModel.getInternalModel(), Utlatande.class);
+            Utlatande internal = objectMapper.readValue(internalModel, Utlatande.class);
             request = InternalToTransportConverter.convert(internal);
         } catch (IOException e) {
             LOG.error("Failed to convert to transport format during registerTSBas", e);
@@ -294,31 +294,27 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     // - - - - - Private scope - - - - - //
-    private InternalModelResponse updateInternal(InternalModelHolder internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
+    private String updateInternal(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         Utlatande utlatande = getInternal(internalModel);
         webcertModelFactory.updateSkapadAv(utlatande, hosPerson, signingDate);
         return toInteralModelResponse(utlatande);
     }
 
-    private Utlatande getInternal(InternalModelHolder internalModel)
+    private Utlatande getInternal(String internalModel)
             throws ModuleException {
         try {
-            return objectMapper.readValue(internalModel.getInternalModel(),
-                    Utlatande.class);
-
+            return objectMapper.readValue(internalModel, Utlatande.class);
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to deserialize internal model", e);
         }
     }
 
-    private InternalModelResponse toInteralModelResponse(
-            Utlatande internalModel) throws ModuleException {
+    private String toInteralModelResponse(Utlatande internalModel) throws ModuleException {
         try {
             StringWriter writer = new StringWriter();
             objectMapper.writeValue(writer, internalModel);
-            return new InternalModelResponse(writer.toString());
-
+            return writer.toString();
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
@@ -345,7 +341,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public InternalModelResponse createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, InternalModelHolder template)
+    public String createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
             throws ModuleException {
         try {
             Utlatande internal = getInternal(template);

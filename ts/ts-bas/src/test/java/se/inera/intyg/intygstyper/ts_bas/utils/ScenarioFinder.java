@@ -24,10 +24,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXB;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 
 /**
@@ -157,7 +161,7 @@ public final class ScenarioFinder {
         @Override
         public RegisterTSBasType asTransportModel() throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile), RegisterTSBasType.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "transport", e);
             }
@@ -170,7 +174,7 @@ public final class ScenarioFinder {
         public se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));
+                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), Utlatande.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal", e);
             }

@@ -93,19 +93,19 @@ public class ModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            moduleApi.pdf(createInternalHolder(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
+            moduleApi.pdf(mapper.writeValueAsString(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
         }
     }
 
     @Test
     public void copyContainsOriginalData() throws Exception {
         Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
-        InternalModelHolder internalHolder = createInternalHolder(scenario.asInternalModel());
+        String internalHolder = mapper.writeValueAsString(scenario.asInternalModel());
 
-        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
+        String holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
 
         assertNotNull(holder);
-        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        Utlatande utlatande = objectMapper.readValue(holder, Utlatande.class);
         assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
     }
 
@@ -113,9 +113,9 @@ public class ModuleApiTest {
     public void createNewInternal() throws ModuleException {
         CreateNewDraftHolder holder = createNewDraftHolder();
 
-        InternalModelResponse response = moduleApi.createNewInternal(holder);
+        String response = moduleApi.createNewInternal(holder);
 
-        assertNotNull(response.getInternalModel());
+        assertNotNull(response);
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ModuleApiTest {
         String logicalAddress = "OK";
         List<String> failResults = new ArrayList<>();
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            InternalModelHolder internalModel = createInternalHolder(scenario.asInternalModel());
+            String internalModel = mapper.writeValueAsString(scenario.asInternalModel());
             try {
                 moduleApi.registerCertificate(internalModel, logicalAddress);
             } catch (ModuleException me) {
@@ -146,7 +146,7 @@ public class ModuleApiTest {
         String logicalAddress = "FAIL";
         String failResult = "";
         Scenario scenario = ScenarioFinder.getInternalScenario("invalid-missing-identitet");
-        InternalModelHolder internalModel = createInternalHolder(scenario.asInternalModel());
+        String internalModel = mapper.writeValueAsString(scenario.asInternalModel());
         try {
             moduleApi.registerCertificate(internalModel, logicalAddress);
         } catch (ModuleException me) {
@@ -279,10 +279,6 @@ public class ModuleApiTest {
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
         HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
         return new CreateDraftCopyHolder("Id1", hosPersonal);
-    }
-
-    private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
-        return new InternalModelHolder(mapper.writeValueAsString(internalModel));
     }
 
 }

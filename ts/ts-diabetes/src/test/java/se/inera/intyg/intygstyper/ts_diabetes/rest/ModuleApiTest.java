@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -41,7 +40,8 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -70,15 +70,15 @@ public class ModuleApiTest {
     public void createNewInternal() throws ModuleException {
         CreateNewDraftHolder holder = createNewDraftHolder();
 
-        InternalModelResponse response = moduleApi.createNewInternal(holder);
+        String response = moduleApi.createNewInternal(holder);
 
-        assertNotNull(response.getInternalModel());
+        assertNotNull(response);
     }
 
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            moduleApi.pdf(createInternalHolder(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
+            moduleApi.pdf(mapper.writeValueAsString(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
 
         }
     }
@@ -86,12 +86,12 @@ public class ModuleApiTest {
     @Test
     public void copyContainsOriginalData() throws Exception {
         Scenario scenario = ScenarioFinder.getTransportScenario("valid-minimal");
-        InternalModelHolder internalHolder = createInternalHolder(scenario.asInternalModel());
+        String internalHolder = mapper.writeValueAsString(scenario.asInternalModel());
 
-        InternalModelResponse holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
+        String holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
 
         assertNotNull(holder);
-        Utlatande utlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        Utlatande utlatande = objectMapper.readValue(holder, Utlatande.class);
         assertEquals(true, utlatande.getIntygAvser().getKorkortstyp().contains(IntygAvserKategori.A1));
     }
 
@@ -200,10 +200,6 @@ public class ModuleApiTest {
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
         HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
         return new CreateDraftCopyHolder("Id1", hosPersonal);
-    }
-
-    private InternalModelHolder createInternalHolder(Utlatande internalModel) throws JsonProcessingException {
-        return new InternalModelHolder(mapper.writeValueAsString(internalModel));
     }
 
 }

@@ -151,7 +151,7 @@ public class SjukersattningModuleApiTest {
     @Test
     public void testValidateShouldUseValidator() throws Exception {
         when(objectMapper.readValue(eq("internal model"), eq(SjukersattningUtlatande.class))).thenReturn(null);
-        moduleApi.validateDraft(new InternalModelHolder("internal model"));
+        moduleApi.validateDraft("internal model");
         verify(internalDraftValidator, times(1)).validateDraft(any());
     }
 
@@ -176,7 +176,7 @@ public class SjukersattningModuleApiTest {
         when(objectMapper.readValue(eq("internal model"), eq(SjukersattningUtlatande.class))).thenReturn(null);
         doAnswer(a -> ((Writer) a.getArguments()[0]).append("internal model")).when(objectMapper).writeValue(any(Writer.class), anyString());
 
-        moduleApi.createNewInternalFromTemplate(createCopyHolder(), new InternalModelHolder("internal model"));
+        moduleApi.createNewInternalFromTemplate(createCopyHolder(), "internal model");
 
         verify(webcertModelFactory, times(1)).createCopy(any(), any());
     }
@@ -184,7 +184,7 @@ public class SjukersattningModuleApiTest {
     @Test(expected = ModuleException.class)
     public void testCreateNewInternalFromTemplateThrowsModuleException() throws Exception {
         when(webcertModelFactory.createCopy(any(), any())).thenThrow(new ConverterException());
-        moduleApi.createNewInternalFromTemplate(createCopyHolder(), new InternalModelHolder("internal model"));
+        moduleApi.createNewInternalFromTemplate(createCopyHolder(), "internal model");
         fail();
     }
 
@@ -242,7 +242,7 @@ public class SjukersattningModuleApiTest {
         when(converterUtil.fromJsonString(internalModel)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
-        moduleApi.registerCertificate(new InternalModelHolder(internalModel), logicalAddress);
+        moduleApi.registerCertificate(internalModel, logicalAddress);
 
         ArgumentCaptor<RegisterCertificateType> captor = ArgumentCaptor.forClass(RegisterCertificateType.class);
         verify(registerCertificateResponderInterface, times(1)).registerCertificate(eq(logicalAddress), captor.capture());
@@ -259,7 +259,7 @@ public class SjukersattningModuleApiTest {
         when(converterUtil.fromJsonString(internalModel)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
-        moduleApi.registerCertificate(new InternalModelHolder(internalModel), logicalAddress);
+        moduleApi.registerCertificate(internalModel, logicalAddress);
 
         fail();
     }
@@ -270,7 +270,7 @@ public class SjukersattningModuleApiTest {
         final String internalModel = "internal model";
         when(converterUtil.fromJsonString(internalModel)).thenReturn(null);
 
-        moduleApi.registerCertificate(new InternalModelHolder(internalModel), logicalAddress);
+        moduleApi.registerCertificate(internalModel, logicalAddress);
 
         fail();
     }
@@ -290,8 +290,8 @@ public class SjukersattningModuleApiTest {
         when(objectMapper.readValue(anyString(), eq(SjukersattningUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
-        InternalModelResponse response = moduleApi.updateBeforeSave(new InternalModelHolder(internalModel), createHosPersonal());
-        assertEquals(internalModel, response.getInternalModel());
+        String response = moduleApi.updateBeforeSave(internalModel, createHosPersonal());
+        assertEquals(internalModel, response);
     }
 
     @Test
@@ -300,8 +300,8 @@ public class SjukersattningModuleApiTest {
         when(objectMapper.readValue(anyString(), eq(SjukersattningUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
-        InternalModelResponse response = moduleApi.updateBeforeSigning(new InternalModelHolder(internalModel), createHosPersonal(), null);
-        assertEquals(internalModel, response.getInternalModel());
+        String response = moduleApi.updateBeforeSigning(internalModel, createHosPersonal(), null);
+        assertEquals(internalModel, response);
     }
 
     @Test

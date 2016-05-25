@@ -59,7 +59,6 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.fk7263.utils.ResourceConverterUtils;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -105,13 +104,12 @@ public class Fk7263ModuleApiTest {
     public void updateChangesHosPersonalInfo() throws IOException, ModuleException {
         Utlatande utlatande = getUtlatandeFromFile();
 
-        InternalModelHolder holder = createInternalHolder(utlatande);
         Vardgivare vardgivare = new Vardgivare("vardgivarId", "vardgivarNamn");
         Vardenhet vardenhet = new Vardenhet("enhetId", "enhetNamn", "", "", "", "", "", "", vardgivare);
         HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", null, vardenhet);
         LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
-        InternalModelResponse updatedHolder = fk7263ModuleApi.updateBeforeSigning(holder, hosPerson, signingDate);
-        Utlatande updatedIntyg = objectMapper.readValue(updatedHolder.getInternalModel(), Utlatande.class);
+        String updatedHolder = fk7263ModuleApi.updateBeforeSigning(toJsonString(utlatande), hosPerson, signingDate);
+        Utlatande updatedIntyg = objectMapper.readValue(updatedHolder, Utlatande.class);
 
         assertEquals(signingDate, updatedIntyg.getGrundData().getSigneringsdatum());
         assertEquals("nyId", updatedIntyg.getGrundData().getSkapadAv().getPersonId());
@@ -128,10 +126,10 @@ public class Fk7263ModuleApiTest {
         Patient patient = new Patient("Kalle", null, "Kula", new Personnummer("19121212-1212"), null, null, null);
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
 
-        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
+        String holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, toJsonString(utlatande));
 
         assertNotNull(holder);
-        Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        Utlatande creatededUtlatande = objectMapper.readValue(holder, Utlatande.class);
         assertEquals("2011-03-07", creatededUtlatande.getNedsattMed50().getFrom().getDate());
         assertEquals("Kalle", creatededUtlatande.getGrundData().getPatient().getFornamn());
         assertEquals("Kula", creatededUtlatande.getGrundData().getPatient().getEfternamn());
@@ -144,10 +142,10 @@ public class Fk7263ModuleApiTest {
         // create copyholder without Patient in it
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(null);
 
-        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
+        String holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, toJsonString(utlatande));
 
         assertNotNull(holder);
-        Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        Utlatande creatededUtlatande = objectMapper.readValue(holder, Utlatande.class);
         assertEquals("Test Testorsson", creatededUtlatande.getGrundData().getPatient().getEfternamn());
     }
 
@@ -162,10 +160,10 @@ public class Fk7263ModuleApiTest {
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
         copyHolder.setNewPersonnummer(newSSN);
 
-        InternalModelResponse holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, createInternalHolder(utlatande));
+        String holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, toJsonString(utlatande));
         assertNotNull(holder);
 
-        Utlatande creatededUtlatande = ResourceConverterUtils.toInternal(holder.getInternalModel());
+        Utlatande creatededUtlatande = objectMapper.readValue(holder, Utlatande.class);
         assertEquals("Kalle", creatededUtlatande.getGrundData().getPatient().getFornamn());
         assertEquals("Kula", creatededUtlatande.getGrundData().getPatient().getEfternamn());
         assertEquals(newSSN, creatededUtlatande.getGrundData().getPatient().getPersonId());
@@ -237,15 +235,11 @@ public class Fk7263ModuleApiTest {
     @Test(expected = ModuleException.class)
     public void whenFkIsRecipientAndBadCertificateThenThrowException() throws Exception {
 
-        // Given
-        InternalModelHolder internalModel = new InternalModelHolder(FileUtils.readFileToString(new ClassPathResource(
-                TESTFILE_UTLATANDE_FAIL).getFile()));
-
         AttributedURIType address = new AttributedURIType();
         address.setValue("logicalAddress");
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(internalModel.getXmlModel(), "logicalAddress", FK.toString());
+        fk7263ModuleApi.sendCertificateToRecipient(null, "logicalAddress", FK.toString());
     }
 
     @Test
@@ -423,10 +417,6 @@ public class Fk7263ModuleApiTest {
         }
 
         return holder;
-    }
-
-    private InternalModelHolder createInternalHolder(Utlatande utlatande) throws ModuleException {
-        return new InternalModelHolder(toJsonString(utlatande));
     }
 
     private String marshall(String jsonString) throws Exception {

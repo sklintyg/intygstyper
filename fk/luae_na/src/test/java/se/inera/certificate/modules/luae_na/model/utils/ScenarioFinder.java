@@ -24,11 +24,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXB;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
 import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
@@ -158,7 +161,7 @@ public final class ScenarioFinder {
         @Override
         public RegisterCertificateType asTransportModel() throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile), RegisterCertificateType.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "transport", e);
             }
@@ -171,7 +174,7 @@ public final class ScenarioFinder {
         public AktivitetsersattningNAUtlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));
+                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), AktivitetsersattningNAUtlatande.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal", e);
             }

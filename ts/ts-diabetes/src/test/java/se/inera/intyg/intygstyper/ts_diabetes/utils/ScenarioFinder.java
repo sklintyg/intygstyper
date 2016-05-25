@@ -24,10 +24,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXB;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 
 /**
@@ -45,7 +49,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified transport scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching transport scenarios.
@@ -58,7 +62,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified internal Mina Intyg scenarios that matches the wildcard string.
-     * 
+     *
      * @param scenarioWithWildcards
      *            A wildcard string matching scenarios. '*' and '?' can be used.
      * @return A list of matching internal Mina Intyg scenarios.
@@ -92,7 +96,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified transport scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching transport scenario.
@@ -105,7 +109,7 @@ public class ScenarioFinder {
 
     /**
      * Finds the specified internal Mina Intyg scenario matching the name.
-     * 
+     *
      * @param filename
      *            A name matching a scenario.
      * @return A matching internal Mina Intyg scenario.
@@ -154,7 +158,7 @@ public class ScenarioFinder {
         @Override
         public RegisterTSDiabetesType asTransportModel() throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toTransport(getTransportModelFor(scenarioFile));
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile), RegisterTSDiabetesType.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "transport", e);
             }
@@ -167,7 +171,7 @@ public class ScenarioFinder {
         public se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return ResourceConverterUtils.toInternal(getInternalModelFor(scenarioFile));
+                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), Utlatande.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal MI", e);
             }
