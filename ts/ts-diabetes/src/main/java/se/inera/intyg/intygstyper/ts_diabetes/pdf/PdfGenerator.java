@@ -45,7 +45,7 @@ public class PdfGenerator {
     @Autowired(required = false)
     private IntygTextsService intygTexts;
 
-    private static final String PDF_PATH_V02_U06 = "pdf/TSTRK1031-utan streck.pdf";
+    private static final String PDF_PATH_V02_U06 = "pdf/TSTRK1031-V02U06.pdf";
 
     // Constants for printing ID and origin in left margin
     private static final int MARGIN_TEXT_START_X = 46;
