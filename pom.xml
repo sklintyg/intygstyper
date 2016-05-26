@@ -31,7 +31,7 @@
 
   <groupId>se.inera.intyg.intygstyper</groupId>
   <artifactId>intygstyper</artifactId>
-  <version>0-SNAPSHOT</version>
+  <version>2.5.0</version>
   <packaging>pom</packaging>
 
   <name>Intygstyper</name>
@@ -39,7 +39,7 @@
   <properties>
 
     <!-- Common -->
-    <common.version>0-SNAPSHOT</common.version>
+    <common.version>2.5.0</common.version>
     <common.version.range>(,2.5.0]</common.version.range>
 
     <!-- RIVTA Schemas -->
