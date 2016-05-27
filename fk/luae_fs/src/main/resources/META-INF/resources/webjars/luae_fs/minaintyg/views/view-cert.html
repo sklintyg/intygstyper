@@ -10,19 +10,19 @@
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
         <h1 ng-focus="pagefocus" tabindex="-1">
-          <span message key="luae_fs.label.pagetitle"></span>
+          <span id="viewCertificateHeader" message key="luae_fs.label.pagetitle"></span>
         </h1>
         <p>
           <div class="mi-text" message key="luae_fs.label.pageingress"></div>
 
           <div collapse="!isCollapsed1" class="collapse mi-text">
-	          <div message key="luae_fs.label.pagedescription.sendcertificate.header"></div>
-			  <div message key="luae_fs.label.pagedescription.sendcertificate"></div>
+            <div message key="luae_fs.label.pagedescription.sendcertificate.header"></div>
+            <div message key="luae_fs.label.pagedescription.sendcertificate"></div>
 	          <!--
 	          <div message key="luae_fs.label.pagedescription.certificate.to.employer.header"></div>
 	          <div message key="luae_fs.label.pagedescription.certificate.to.employer"></div>
 	           -->
-			  <div message key="luae_fs.label.pagedescription.save.or.print.certificate.header"></div>
+			      <div message key="luae_fs.label.pagedescription.save.or.print.certificate.header"></div>
 	          <div message key="luae_fs.label.pagedescription.save.or.print.certificate"></div>
 	          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
       		  <div collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message key="luae_fs.helptext.readpdfhelp"></span></div>
@@ -51,7 +51,7 @@
         	</p>
         </div>
 
-		<!-- Show if more than one event exists -->
+		    <!-- Show if more than one event exists -->
    		  <div ng-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
             <span message key="luae_fs.status.{{cert.filteredStatuses[0].type}}"></span>
             <span message key="luae_fs.target.{{cert.filteredStatuses[0].target}}"></span><span>s system</span>
@@ -132,11 +132,6 @@
                   </h3>
                   <span id="patient-crn">{{cert.grundData.patient.personId}}</span>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <!--h3 class="tag">
-                    <span message key="luae_fs.label.nedsattning"></span>
-                  </h3-->
-                </div>
               </div>
               <div class="row border-bottom-resp">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
@@ -195,14 +190,10 @@
                     </div>
                   </ul>
                 </div>
-                <div mi-field field-dynamic-label="DFR_2.1.RBK" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
+                <div mi-field field-dynamic-label="FRG_2.RBK" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
                   {{cert.kannedomOmPatient | date:'longDate' }}
                 </div>
-              </div>
-
-              <!-- Andra medicinska utredningar och underlag -->
-              <div mi-category category-label="KAT_2.RBK">
-                <div mi-field field-dynamic-label="DFR_3.1.RBK" filled="true">
+                <div mi-field field-dynamic-label="FRG_3.RBK" filled="true">
                   <span ng-show="cert.underlagFinns">
                     <span id="underlagFinns-yes" message key="luae_fs.label.yes"></span>
                   </span>
@@ -210,7 +201,7 @@
                     <span id="underlagFinns-no" message key="luae_fs.label.no"></span>
                   </span>
                 </div>
-                <div mi-field filled="cert.underlag" ng-if="cert.underlagFinns">
+                <div mi-field field-dynamic-label="FRG_4.RBK" filled="cert.underlag" ng-if="cert.underlagFinns">
                   <table class="table luae_fs-underlag" ng-show="cert.underlag">
                     <tr>
                       <th><span dynamic-label key="DFR_4.1.RBK"></span></th>
@@ -226,21 +217,22 @@
                 </div>
               </div>
 
-
               <!-- Diagnos -->
               <div mi-category category-label="KAT_3.RBK">
-                <div mi-field field-dynamic-label="KAT_3.RBK" filled="cert.diagnoser.length">
+                <div mi-field field-dynamic-label="FRG_6.RBK" filled="cert.diagnoser.length">
                   <div class="row">
                     <div class="col-xs-4">
                       <label class="bold">
                         <span dynamic-label key="DFR_6.2.RBK"></span>
                       </label>
                     </div>
+                    <!--
                     <div class="col-xs-8">
                       <label class="bold">
                         <span dynamic-label key="DFR_6.1.RBK"></span>
                       </label>
                     </div>
+                    -->
                   </div>
                   <div class="row" ng-repeat="diagnos in cert.diagnoser">
                     <div class="col-xs-4" id="diagnosKod{{$index}}">
@@ -263,18 +255,17 @@
 
               <!--  Funktionsnedsättning -->
               <div mi-category category-label="KAT_4.RBK">
-                <div mi-field field-dynamic-label="DFR_15.1.RBK" filled="cert.funktionsnedsattningDebut">
+                <div mi-field field-dynamic-label="FRG_15.RBK" filled="cert.funktionsnedsattningDebut">
                   <div id="funktionsnedsattningDebut">{{cert.funktionsnedsattningDebut}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_16.1.RBK" filled="cert.funktionsnedsattningPaverkan">
+                <div mi-field field-dynamic-label="FRG_16.RBK" filled="cert.funktionsnedsattningPaverkan">
                   <div id="funktionsnedsattningPaverkan">{{cert.funktionsnedsattningPaverkan}}</div>
                 </div>
               </div>
 
-
               <!-- Övrigt -->
               <div mi-category category-label="KAT_5.RBK">
-                <div mi-field field-label="luae_fs.label.otherinformation" filled="cert.ovrigt">
+                <div mi-field field-dynamic-label="FRG_25.RBK" filled="cert.ovrigt">
                   <div id="kommentar" class="multiline">{{cert.ovrigt}}</div>
                 </div>
               </div>
