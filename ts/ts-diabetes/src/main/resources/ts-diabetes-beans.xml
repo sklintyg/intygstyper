@@ -23,8 +23,6 @@
   <bean class="se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi" />
 
   <bean class="se.inera.intyg.intygstyper.ts_diabetes.validator.Validator" />
-  
-  <bean class="se.inera.intyg.intygstyper.ts_diabetes.util.ConverterUtil" />
 
   <bean class="se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGenerator">
     <constructor-arg value="true" />

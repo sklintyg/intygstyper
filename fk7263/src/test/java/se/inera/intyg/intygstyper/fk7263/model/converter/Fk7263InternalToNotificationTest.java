@@ -19,9 +19,12 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -31,9 +34,7 @@ import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
@@ -41,11 +42,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.notification.*;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.CertificateStatusUpdateForCareType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v1.HandelsekodKodRestriktion;
 
@@ -64,7 +66,7 @@ public class Fk7263InternalToNotificationTest {
     private WebcertModuleService mockModuleService;
 
     @Spy
-    private ConverterUtil converterUtil = setupConverterUtil();
+    private ObjectMapper objectMapper = new CustomObjectMapper();
 
     @InjectMocks
     private Fk7263InternalToNotification converter;
@@ -276,12 +278,6 @@ public class Fk7263InternalToNotificationTest {
 
         // should contain zero since it is incomplete
         assertEquals(0, res.getUtlatande().getArbetsformaga().size());
-    }
-
-    private ConverterUtil setupConverterUtil() {
-        ConverterUtil co = new ConverterUtil();
-        co.setObjectMapper(new CustomObjectMapper());
-        return co;
     }
 
     private static String readRequestFromFile(String filePath) {

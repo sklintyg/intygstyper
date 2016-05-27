@@ -3,20 +3,13 @@ package se.inera.certificate.modules.sjukpenning_utokad.model.converter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
 import java.util.stream.Collectors;
 
-import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
+import javax.xml.bind.*;
 import javax.xml.transform.stream.StreamSource;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
@@ -33,12 +26,11 @@ import com.helger.schematron.svrl.SVRLHelper;
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 
 @ContextConfiguration(locations = {"/module-config.xml", "/test-config.xml"})
@@ -48,13 +40,6 @@ public class ConverterTest {
     @Autowired
     @Qualifier("sjukpenning-utokad-objectMapper")
     private ObjectMapper objectMapper;
-    private ConverterUtil converterUtil;
-
-    @Before
-    public void setUp() {
-        converterUtil = new ConverterUtil();
-        converterUtil.setObjectMapper(objectMapper);
-    }
 
     @Test
     public void doSchematronValidationSjukersattning() throws Exception {
@@ -76,8 +61,7 @@ public class ConverterTest {
         RegisterCertificateType transport = JAXB.unmarshal(new StringReader(xmlContents), RegisterCertificateType.class);
 
         String json = getJsonFromTransport(transport);
-        SjukpenningUtokadUtlatande utlatandeFromJson = converterUtil.fromJsonString(json);
-        //System.out.println(json);
+        SjukpenningUtokadUtlatande utlatandeFromJson = objectMapper.readValue(json, SjukpenningUtokadUtlatande.class);
 
         RegisterCertificateType transportConvertedALot = InternalToTransport.convert(utlatandeFromJson);
         String convertedXML = getXmlFromModel(transportConvertedALot);

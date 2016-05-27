@@ -49,7 +49,6 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 import se.inera.certificate.modules.sjukpenning_utokad.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukpenning_utokad.model.internal.SjukpenningUtokadUtlatande;
 import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioFinder;
 import se.inera.certificate.modules.sjukpenning_utokad.model.utils.ScenarioNotFoundException;
@@ -78,9 +77,6 @@ public class SjukpenningUtokatModuleApiTest {
 
     @Mock
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
-
-    @Mock
-    private ConverterUtil converterUtil;
 
     @Mock
     private WebcertModuleService moduleService;
@@ -218,7 +214,7 @@ public class SjukpenningUtokatModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.okResult());
 
-        when(converterUtil.fromJsonString(internalModel)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, SjukpenningUtokadUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
@@ -235,7 +231,7 @@ public class SjukpenningUtokatModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "resultText"));
 
-        when(converterUtil.fromJsonString(internalModel)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, SjukpenningUtokadUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
@@ -247,7 +243,7 @@ public class SjukpenningUtokatModuleApiTest {
     public void testRegisterCertificateShouldThrowExceptionOnBadCertificate() throws Exception {
         final String logicalAddress = "logicalAddress";
         final String internalModel = "internal model";
-        when(converterUtil.fromJsonString(internalModel)).thenReturn(null);
+        when(objectMapper.readValue(internalModel, SjukpenningUtokadUtlatande.class)).thenReturn(null);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
 

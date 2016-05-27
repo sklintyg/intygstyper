@@ -21,7 +21,6 @@ package se.inera.intyg.intygstyper.fk7263.integration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -67,29 +66,27 @@ public class GetCertificateResponderImplTest {
     private static final String certificateId = "123456";
 
     private CustomObjectMapper objectMapper = new CustomObjectMapper();
-    private ConverterUtil converterUtil = new ConverterUtil();
 
     @InjectMocks
-    private GetCertificateResponderImpl responder = new GetCertificateResponderImpl();
+    private GetCertificateResponderImpl responder;
 
     @Mock
-    private ModuleContainerApi moduleContainer = mock(ModuleContainerApi.class);
+    private ModuleContainerApi moduleContainer;
 
     @Mock
-    private Fk7263ModuleApi moduleRestApi = mock(Fk7263ModuleApi.class);
+    private Fk7263ModuleApi moduleRestApi;
 
     @Mock
-    private JAXBContext jaxbContext = mock(JAXBContext.class);
+    private JAXBContext jaxbContext;
 
     @Mock
-    private ObjectFactory objectFactory = mock(ObjectFactory.class);
+    private ObjectFactory objectFactory;
 
     @Mock
-    private Marshaller marshaller = mock(Marshaller.class);
+    private Marshaller marshaller;
 
     @Before
     public void setUpMocks() throws Exception {
-        converterUtil.setObjectMapper(objectMapper);
         when(moduleRestApi.getModuleContainer()).thenReturn(moduleContainer);
         when(jaxbContext.createMarshaller()).thenReturn(marshaller);
     }
@@ -97,8 +94,8 @@ public class GetCertificateResponderImplTest {
     @Test
     public void getCertificate() throws Exception {
         String document = FileUtils.readFileToString(new ClassPathResource("GetCertificateResponderImplTest/maximalt-fk7263-internal.json").getFile());
-        Utlatande utlatande = converterUtil.fromJsonString(document);
-        CertificateHolder certificate = converterUtil.toCertificateHolder(utlatande);
+        Utlatande utlatande = objectMapper.readValue(document, Utlatande.class);
+        CertificateHolder certificate = ConverterUtil.toCertificateHolder(utlatande);
         File file = new ClassPathResource("GetCertificateResponderImplTest/fk7263.xml").getFile();
         String xmlFile = FileUtils.readFileToString(file);
         certificate.setOriginalCertificate(xmlFile);
@@ -151,8 +148,8 @@ public class GetCertificateResponderImplTest {
     public void getRevokedCertificate() throws Exception {
 
         String document = FileUtils.readFileToString(new ClassPathResource("GetCertificateResponderImplTest/maximalt-fk7263-internal.json").getFile());
-        Utlatande utlatande = converterUtil.fromJsonString(document);
-        CertificateHolder certificate = converterUtil.toCertificateHolder(utlatande);
+        Utlatande utlatande = objectMapper.readValue(document, Utlatande.class);
+        CertificateHolder certificate = ConverterUtil.toCertificateHolder(utlatande);
         certificate.setRevoked(true);
 
         when(moduleContainer.getCertificate(certificateId, civicRegistrationNumber, true)).thenReturn(certificate);

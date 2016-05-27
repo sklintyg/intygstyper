@@ -20,7 +20,8 @@
 package se.inera.certificate.modules.luae_fs.rest;
 
 import java.io.*;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXB;
@@ -40,7 +41,6 @@ import se.inera.certificate.modules.fkparent.model.converter.InternalToRevoke;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.validator.XmlValidator;
 import se.inera.certificate.modules.luae_fs.model.converter.*;
-import se.inera.certificate.modules.luae_fs.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.certificate.modules.luae_fs.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.common.util.StringUtil;
@@ -73,9 +73,6 @@ public class LuaefsModuleApi implements ModuleApi {
 
     @Autowired
     private InternalDraftValidator internalDraftValidator;
-
-    @Autowired
-    private ConverterUtil converterUtil;
 
     @Autowired
     @Qualifier("luae_fs-objectMapper")
@@ -207,8 +204,8 @@ public class LuaefsModuleApi implements ModuleApi {
     public void registerCertificate(String internalModel, String logicalAddress) throws ModuleException {
         RegisterCertificateType request;
         try {
-            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel));
-        } catch (ConverterException e) {
+            request = InternalToTransport.convert(objectMapper.readValue(internalModel, LuaefsUtlatande.class));
+        } catch (ConverterException | IOException e) {
             LOG.error("Failed to convert to transport format during registerCertificate", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerCertificate", e);
         }

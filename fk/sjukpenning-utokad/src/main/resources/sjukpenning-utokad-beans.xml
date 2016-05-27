@@ -8,8 +8,6 @@
 
   <bean class="se.inera.certificate.modules.sjukpenning_utokad.validator.InternalDraftValidator" />
 
-  <bean class="se.inera.certificate.modules.sjukpenning_utokad.model.converter.util.ConverterUtil"/>
-
   <bean id="sjukpenningUtokadEntryPoint" class="se.inera.certificate.modules.sjukpenning_utokad.support.SjukpenningUtokadEntryPoint" />
 
   <bean id="sjukpenning-utokad-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>

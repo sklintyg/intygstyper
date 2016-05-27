@@ -8,8 +8,6 @@
 
   <bean class="se.inera.certificate.modules.luae_na.validator.InternalDraftValidator" />
 
-  <bean class="se.inera.certificate.modules.luae_na.model.converter.util.ConverterUtil"/>
-
   <bean id="aktivitetsersattningNAEntryPoint" class="se.inera.certificate.modules.luae_na.support.AktivitetsersattningNAEntryPoint" />
 
   <bean id="luae_na-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>

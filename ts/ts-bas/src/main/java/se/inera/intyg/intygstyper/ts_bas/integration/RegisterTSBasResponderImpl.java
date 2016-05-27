@@ -23,14 +23,11 @@ import java.io.StringWriter;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
+import javax.xml.bind.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.google.common.base.Throwables;
 
@@ -46,20 +43,13 @@ import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.ObjectFactory;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponderInterface;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasResponseType;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 
 public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterface {
 
     @Autowired
     private TsBasValidator validator;
-
-    @Autowired
-    @Qualifier("tsBasModelConverterUtil")
-    private ConverterUtil converterUtil;
 
     @Autowired
     private TsBasModuleApi moduleApi;
@@ -84,7 +74,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
             Utlatande utlatande = TransportToInternal.convert(registerTsBas.getIntyg());
 
             String xml = xmlToString(registerTsBas);
-            CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
+            CertificateHolder certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
 
             moduleApi.getModuleContainer().certificateReceived(certificateHolder);

@@ -19,12 +19,16 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
@@ -33,25 +37,9 @@ import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
-import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Arbetsformaga;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.CertificateStatusUpdateForCareType;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Enhet;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.FragorOchSvar;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Handelse;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.HosPersonal;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.Patient;
-import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.UtlatandeType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.DatumPeriod;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.Diagnos;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.Handelsekod;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.HandelsekodKodRestriktion;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.HsaId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.PQ;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.PersonId;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.TypAvUtlatande;
-import se.riv.clinicalprocess.healthcond.certificate.types.v1.UtlatandeId;
+import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.*;
+import se.riv.clinicalprocess.healthcond.certificate.types.v1.*;
 
 public class Fk7263InternalToNotification {
 
@@ -85,7 +73,8 @@ public class Fk7263InternalToNotification {
     private WebcertModuleService moduleService;
 
     @Autowired
-    private ConverterUtil converterUtil;
+    @Qualifier("fk7263-objectMapper")
+    private ObjectMapper objectMapper;
 
     public CertificateStatusUpdateForCareType createCertificateStatusUpdateForCareType(NotificationMessage notificationMessage)
             throws ModuleException {
@@ -93,7 +82,12 @@ public class Fk7263InternalToNotification {
         LOG.debug("Creating CertificateStatusUpdateForCareType for certificate {}, event {}", notificationMessage.getIntygsId(),
                 notificationMessage.getHandelse());
 
-        Utlatande utlatandeSource = converterUtil.fromJsonString(notificationMessage.getUtkast());
+        Utlatande utlatandeSource;
+        try {
+            utlatandeSource = objectMapper.readValue(notificationMessage.getUtkast(), Utlatande.class);
+        } catch (IOException e) {
+            throw new ModuleException("Failed to deserialize internal model", e);
+        }
 
         UtlatandeType utlatandeType = new UtlatandeType();
 

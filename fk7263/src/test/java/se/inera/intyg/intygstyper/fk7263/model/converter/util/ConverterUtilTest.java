@@ -27,33 +27,20 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 
 public class ConverterUtilTest {
 
-    private static ConverterUtil converterUtil = new ConverterUtil();
     private static CustomObjectMapper objectMapper = new CustomObjectMapper();
-    static {
-        converterUtil.setObjectMapper(objectMapper);
-    }
+
     private String json = readRequestFromFile("/ConverterUtilTest/minimalt-fk7263-internal.json");
 
     @Test
-    public void testConvertFromJsonString() throws ModuleException {
-        Utlatande utlatande = converterUtil.fromJsonString(json);
-        CertificateHolder holder = converterUtil.toCertificateHolder(utlatande);
-        Assert.assertEquals("id", holder.getId());
-        Assert.assertEquals("Enhetsid", holder.getCareUnitId());
-        Assert.assertEquals("VardgivarId", holder.getCareGiverId());
-    }
-
-    @Test
-    public void testConvertFromUtlatande() throws ModuleException {
-        Utlatande utlatande = converterUtil.fromJsonString(json);
-        CertificateHolder holder = converterUtil.toCertificateHolder(utlatande);
+    public void testConvertFromUtlatande() throws Exception {
+        Utlatande utlatande = objectMapper.readValue(json, Utlatande.class);
+        CertificateHolder holder = ConverterUtil.toCertificateHolder(utlatande);
         Assert.assertEquals("id", holder.getId());
         Assert.assertEquals("Enhetsid", holder.getCareUnitId());
         Assert.assertEquals("VardgivarId", holder.getCareGiverId());

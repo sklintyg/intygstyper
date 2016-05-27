@@ -53,9 +53,6 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
     private TsDiabetesModuleApi moduleService;
 
     @Autowired
-    private ConverterUtil converterUtil;
-
-    @Autowired
     private Validator validator;
 
     @Override
@@ -67,7 +64,7 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
             Utlatande utlatande = TransportToInternalConverter.convert(parameters.getIntyg());
             String xml = xmlToString(parameters);
 
-            CertificateHolder certificateHolder = converterUtil.toCertificateHolder(utlatande);
+            CertificateHolder certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
 
             moduleService.getModuleContainer().certificateReceived(certificateHolder);

@@ -51,7 +51,6 @@ import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.*;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGeneratorException;
@@ -100,10 +99,6 @@ public class TsBasModuleApi implements ModuleApi {
     @Autowired(required = true)
     @Qualifier("tsBasObjectMapper")
     private ObjectMapper objectMapper;
-
-    @Autowired(required = true)
-    @Qualifier("tsBasModelConverterUtil")
-    private ConverterUtil converterUtil;
 
     @Autowired(required = false)
     @Qualifier("tsBasXslTransformer")
@@ -198,8 +193,8 @@ public class TsBasModuleApi implements ModuleApi {
 
         RegisterTSBasType request = new RegisterTSBasType();
         try {
-            request = InternalToTransport.convert(converterUtil.fromJsonString(internalModel));
-        } catch (ConverterException e) {
+            request = InternalToTransport.convert(objectMapper.readValue(internalModel, Utlatande.class));
+        } catch (ConverterException | IOException e) {
             LOG.error("Failed to convert to transport format during registerTSBas", e);
             throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
         }

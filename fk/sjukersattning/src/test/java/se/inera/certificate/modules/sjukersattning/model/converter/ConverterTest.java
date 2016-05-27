@@ -3,17 +3,13 @@ package se.inera.certificate.modules.sjukersattning.model.converter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.URL;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
@@ -30,12 +26,9 @@ import com.helger.schematron.svrl.SVRLHelper;
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.validator.InternalDraftValidator;
-import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 @ContextConfiguration(locations = {"/module-config.xml", "/test-config.xml"})
@@ -46,32 +39,6 @@ public class ConverterTest {
     @Autowired
     @Qualifier("sjukersattning-objectMapper")
     private ObjectMapper objectMapper;
-    private ConverterUtil converterUtil;
-
-    private WebcertModuleService webcertModuleService;
-
-    @Before
-    public void setUp() {
-        converterUtil = new ConverterUtil();
-        converterUtil.setObjectMapper(objectMapper);
-        webcertModuleService = new WebcertModuleService() {
-
-            @Override
-            public boolean validateDiagnosisCode(String codeFragment, Diagnoskodverk codeSystem) {
-                return true;
-            }
-
-            @Override
-            public boolean validateDiagnosisCode(String codeFragment, String codeSystemStr) {
-                return true;
-            }
-
-            @Override
-            public String getDescriptionFromDiagnosKod(String code, String codeSystemStr) {
-                return "";
-            }
-        };
-    }
 
     @Test
     public void doSchematronValidationSjukersattning() throws Exception {
@@ -93,8 +60,7 @@ public class ConverterTest {
         RegisterCertificateType transport = JAXB.unmarshal(new StringReader(xmlContents), RegisterCertificateType.class);
 
         String json = getJsonFromTransport(transport);
-        SjukersattningUtlatande utlatandeFromJson = converterUtil.fromJsonString(json);
-        //System.out.println(json);
+        SjukersattningUtlatande utlatandeFromJson = objectMapper.readValue(json, SjukersattningUtlatande.class);
 
         RegisterCertificateType transportConvertedALot = InternalToTransport.convert(utlatandeFromJson);
         String convertedXML = getXmlFromModel(transportConvertedALot);

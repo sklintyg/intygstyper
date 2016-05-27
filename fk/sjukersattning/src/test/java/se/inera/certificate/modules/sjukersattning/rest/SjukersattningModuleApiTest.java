@@ -49,7 +49,6 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 import se.inera.certificate.modules.sjukersattning.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.sjukersattning.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.sjukersattning.model.internal.SjukersattningUtlatande;
 import se.inera.certificate.modules.sjukersattning.model.utils.ScenarioFinder;
 import se.inera.certificate.modules.sjukersattning.model.utils.ScenarioNotFoundException;
@@ -78,9 +77,6 @@ public class SjukersattningModuleApiTest {
 
     @Mock
     private RegisterCertificateResponderInterface registerCertificateResponderInterface;
-
-    @Mock
-    private ConverterUtil converterUtil;
 
     @Mock
     private WebcertModuleService moduleService;
@@ -167,7 +163,6 @@ public class SjukersattningModuleApiTest {
     public void testCreateNewInternalThrowsModuleException() throws Exception {
         when(webcertModelFactory.createNewWebcertDraft(any())).thenThrow(new ConverterException());
         moduleApi.createNewInternal(createDraftHolder());
-        fail();
     }
 
     @Test
@@ -185,7 +180,6 @@ public class SjukersattningModuleApiTest {
     public void testCreateNewInternalFromTemplateThrowsModuleException() throws Exception {
         when(webcertModelFactory.createCopy(any(), any())).thenThrow(new ConverterException());
         moduleApi.createNewInternalFromTemplate(createCopyHolder(), "internal model");
-        fail();
     }
 
     @Test
@@ -213,7 +207,6 @@ public class SjukersattningModuleApiTest {
         when(getCertificateResponder.getCertificate(eq(logicalAddress), any()))
                 .thenThrow(new SOAPFaultException(SOAPFactory.newInstance().createFault()));
         moduleApi.getCertificate(certificateId, logicalAddress);
-        fail();
     }
 
     @Test
@@ -223,7 +216,7 @@ public class SjukersattningModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.okResult());
 
-        when(converterUtil.fromJsonString(internalModel)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, SjukersattningUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
@@ -240,23 +233,19 @@ public class SjukersattningModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "resultText"));
 
-        when(converterUtil.fromJsonString(internalModel)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, SjukersattningUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
-
-        fail();
     }
 
     @Test(expected = ExternalServiceCallException.class)
     public void testRegisterCertificateShouldThrowExceptionOnBadCertificate() throws Exception {
         final String logicalAddress = "logicalAddress";
         final String internalModel = "internal model";
-        when(converterUtil.fromJsonString(internalModel)).thenReturn(null);
+        when(objectMapper.readValue(internalModel, SjukersattningUtlatande.class)).thenReturn(null);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
-
-        fail();
     }
 
     @Test
@@ -311,7 +300,6 @@ public class SjukersattningModuleApiTest {
         returnVal.setResult(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "resultText"));
         when(revokeClient.revokeCertificate(eq(logicalAddress), any())).thenReturn(returnVal);
         moduleApi.revokeCertificate(xmlContents, logicalAddress);
-        fail();
     }
 
     @Test

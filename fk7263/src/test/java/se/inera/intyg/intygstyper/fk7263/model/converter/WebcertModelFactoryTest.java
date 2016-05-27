@@ -34,7 +34,6 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 public class WebcertModelFactoryTest {
@@ -138,11 +137,8 @@ public class WebcertModelFactoryTest {
     }
 
     private static Utlatande readUtlatandeFromFile(String file) throws Exception {
-
         String utlatandeSrc = readStringFromFile(file);
-        ConverterUtil converter = new ConverterUtil();
-        converter.setObjectMapper(new CustomObjectMapper());
-        return converter.fromJsonString(utlatandeSrc);
+        return new CustomObjectMapper().readValue(utlatandeSrc, Utlatande.class);
     }
 
     private static String readStringFromFile(String filePath) {

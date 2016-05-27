@@ -53,7 +53,6 @@ import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 public class RegisterMedicalCertificateResponderImplTest {
 
     private CustomObjectMapper objectMapper = new CustomObjectMapper();
-    private ConverterUtil converterUtil = new ConverterUtil();
 
     @Mock
     private ModuleEntryPoint moduleEntryPoint = mock(ModuleEntryPoint.class);
@@ -90,10 +89,8 @@ public class RegisterMedicalCertificateResponderImplTest {
         request = registerMedicalCertificate.getValue();
 
         xml = FileUtils.readFileToString(file.getFile());
-        converterUtil.setObjectMapper(objectMapper);
-        responder.setConverterUtil(converterUtil);
         utlatande = TransportToInternal.convert(request.getLakarutlatande());
-        certificateHolder = converterUtil.toCertificateHolder(utlatande);
+        certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
         certificateHolder.setOriginalCertificate(xml);
         when(moduleRestApi.getModuleContainer()).thenReturn(moduleContainer);
     }

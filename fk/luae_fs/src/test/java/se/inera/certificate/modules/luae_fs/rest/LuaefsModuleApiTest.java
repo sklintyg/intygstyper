@@ -49,7 +49,6 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 import se.inera.certificate.modules.luae_fs.model.converter.WebcertModelFactory;
-import se.inera.certificate.modules.luae_fs.model.converter.util.ConverterUtil;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.certificate.modules.luae_fs.support.LuaefsEntryPoint;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
@@ -96,9 +95,6 @@ public class LuaefsModuleApiTest {
 
     @Spy
     private WebcertModelFactory webcertModelFactory;
-
-    @Mock
-    private ConverterUtil converterUtil;
 
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
@@ -184,7 +180,7 @@ public class LuaefsModuleApiTest {
                 .readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
 
         LuaefsUtlatande utlatande = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(json);
-        when(converterUtil.fromJsonString(anyString())).thenReturn(utlatande);
+        when(objectMapper.readValue(json, LuaefsUtlatande.class)).thenReturn(utlatande);
 
         RegisterCertificateResponseType result = createReturnVal(ResultCodeType.OK);
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(result);
@@ -259,7 +255,7 @@ public class LuaefsModuleApiTest {
         LuaefsUtlatande utlatandeBeforeSave = (LuaefsUtlatande) moduleApi.getUtlatandeFromJson(json);
         assertNotEquals(TEST_HSA_ID, utlatandeBeforeSave.getGrundData().getSkapadAv().getPersonId());
 
-        when(converterUtil.fromJsonString(anyString())).thenReturn(utlatandeBeforeSave);
+        when(objectMapper.readValue(json, LuaefsUtlatande.class)).thenReturn(utlatandeBeforeSave);
 
         RegisterCertificateResponseType result = createReturnVal(ResultCodeType.OK);
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(result);

@@ -19,28 +19,19 @@
 
 package se.inera.intyg.intygstyper.ts_bas.model.converter.util;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
-public class ConverterUtil {
+public final class ConverterUtil {
 
-    @Autowired(required = true)
-    @Qualifier("tsBasObjectMapper")
-    private ObjectMapper objectMapper;
+    private ConverterUtil() {
+    }
 
-    public  CertificateHolder toCertificateHolder(Utlatande utlatande) throws ModuleException {
+    public static CertificateHolder toCertificateHolder(Utlatande utlatande) throws ModuleException {
         CertificateHolder certificateHolder = new CertificateHolder();
         certificateHolder.setId(utlatande.getId());
         certificateHolder.setCareUnitId(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
@@ -54,21 +45,4 @@ public class ConverterUtil {
         return certificateHolder;
     }
 
-    public Utlatande fromJsonString(String s) throws ModuleException {
-        try {
-            return objectMapper.readValue(s, Utlatande.class);
-        } catch (IOException e) {
-            throw new ModuleSystemException("Failed to deserialize internal model", e);
-        }
-    }
-
-    public String toJsonString(Utlatande utlatande) throws ModuleException {
-        StringWriter writer = new StringWriter();
-        try {
-            objectMapper.writeValue(writer, utlatande);
-        } catch (IOException e) {
-            throw new ModuleException("Failed to serialize internal model", e);
-        }
-        return writer.toString();
-    }
 }
