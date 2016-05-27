@@ -62,9 +62,9 @@ angular.module('lisu').config(function($stateProvider) {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
                     controller: 'lisu.ViewCertCtrl'
                 },
-                'fragaSvar@webcert.intyg.fk' : {
+                'fragasvar@webcert.intyg.fk' : {
                     templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
-                    controller: 'common.QACtrl'
+                    controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.intyg.fk.lisu' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',

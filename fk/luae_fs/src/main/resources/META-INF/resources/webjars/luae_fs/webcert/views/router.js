@@ -62,9 +62,9 @@ angular.module('luae_fs').config(function($stateProvider) {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
                     controller: 'luae_fs.ViewCertCtrl'
                 },
-                'fragaSvar@webcert.intyg.fk' : {
+                'fragasvar@webcert.intyg.fk' : {
                     templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
-                    controller: 'common.QACtrl'
+                    controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.intyg.fk.luae_fs' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
