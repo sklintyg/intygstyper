@@ -1,0 +1,99 @@
+description = 'Intygstyper (FK7263 Läkarintyg)'
+
+buildscript {
+  repositories {
+    maven {
+      url 'https://plugins.gradle.org/m2/'
+    }
+  }
+
+  dependencies {
+    classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
+    classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
+  }
+}
+
+apply plugin: 'com.moowork.grunt'
+apply plugin: 'com.moowork.node'
+
+grunt {
+  colors = true
+}
+
+node {
+  version = '0.12.4'
+  download = true
+  distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
+}
+
+sourceSets {
+  main {
+    resources {
+      exclude '**/*.scss'
+      exclude '**/*.spec.js'
+      exclude '**/*.test.js'
+      exclude '**/karma*.conf.js'
+      exclude '**/karma*.conf.ci.js'
+    }
+  }
+}
+
+task jsTests(type: NodeTask, dependsOn: [npmInstall]) {
+    script = file('node_modules/grunt-cli/bin/grunt')
+    args = ['test']
+}
+
+test.dependsOn(jsTests)
+
+task jsInclude(type: NodeTask, dependsOn: [npmInstall]) {
+    script = file('node_modules/grunt-cli/bin/grunt')
+    args = ['default']
+}
+
+jar.dependsOn(jsInclude)
+
+task packageTests(type: Jar) {
+  from sourceSets.test.output
+  classifier = 'tests'
+}
+artifacts.archives packageTests
+
+dependencies {
+  compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
+  compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
+
+  compile 'se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.1'
+  compile 'se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.1'
+  compile 'se.inera.intyg.common:common-support:0-SNAPSHOT'
+  compile 'se.inera.intyg.common:common-web:0-SNAPSHOT'
+  compile 'se.inera.intyg.common:integration-util:0-SNAPSHOT'
+  compile 'se.inera.intyg.common:common-schemas:0-SNAPSHOT'
+
+  compile 'ch.qos.logback:logback-classic:1.0.11'
+  compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
+  compile 'com.fasterxml.jackson.core:jackson-databind:2.4.4'
+  compile 'com.itextpdf:itextpdf:5.3.2'
+  compile 'commons-collections:commons-collections:3.2.1'
+  compile 'org.apache.commons:commons-lang3:3.1'
+  compile 'org.springframework:spring-context:4.2.2.RELEASE'
+  compile 'org.springframework:spring-tx:4.2.2.RELEASE'
+  compile 'com.helger:ph-schematron:3.0.1'
+  compile(group: 'se.skltp.adapterservices.insuranceprocess.healthreporting', name: 'FkEintygAdapterIC-validator', version:'2.0.8-RC1') {
+    exclude(module: 'insuranceprocess-healthreporting-schemas')
+    exclude(module: 'fk-vardgivare-sjukvard-schemas')
+    exclude(module: 'ServiceContracts_itintegration_monitoring')
+  }
+
+  compileOnly 'javax.servlet:servlet-api:2.5'
+
+  testCompile 'commons-io:commons-io:2.4'
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.mockito:mockito-core:1.9.0'
+  testCompile 'org.skyscreamer:jsonassert:1.2.0'
+  testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
+  testCompile 'org.unitils:unitils-core:3.3'
+  testCompile 'xmlunit:xmlunit:1.4'
+
+  testRuntime 'javax.servlet:servlet-api:2.5'
+}
+
