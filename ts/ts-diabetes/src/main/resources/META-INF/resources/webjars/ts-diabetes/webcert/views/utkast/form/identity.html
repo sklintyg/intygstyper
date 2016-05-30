@@ -17,7 +17,7 @@
       <input
         id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
         ng-model="viewState.intygModel.vardkontakt.idkontroll">
-      <span dynamic-label key="IDENTITET_{{v.id}}.RBK"></span>
+      {{v.label}}
     </label>
   </div>
   <div class="alert alert-info">

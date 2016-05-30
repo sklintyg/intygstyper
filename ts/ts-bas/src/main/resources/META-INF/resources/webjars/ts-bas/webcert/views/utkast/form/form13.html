@@ -1,5 +1,8 @@
 <a id="anchor.utvecklingsstorning" name="anchor.utvecklingsstorning"></a>
-<div wc-field field-label="ts-bas.label.utvecklingsstorning" field-has-errors="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="utvecklingsstorningForm">
+<div wc-field
+     field-dynamic-label="KAT_13.RBK"
+     field-has-errors="viewState.common.validationMessagesGrouped.utvecklingsstorning"
+     id="utvecklingsstorningForm">
   <table class="table table-form">
     <tr ng-if="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="validationMessages_utvecklingsstorning">
       <td colspan="3">
@@ -22,7 +25,7 @@
                  ng-model="viewState.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
       <td><input name="utvecklingsstorninga" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
-      <td><span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+      <td><span dynamic-label key="FRG_28.RBK"></span>
       </td>
     </tr>
     <tr>
@@ -30,7 +33,7 @@
                  ng-model="viewState.intygModel.utvecklingsstorning.harSyndrom"></td>
       <td><input name="utvecklingsstorningb" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.utvecklingsstorning.harSyndrom"></td>
-      <td><span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span></td>
+      <td><span dynamic-label key="FRG_29.RBK"></span></td>
     </tr>
   </table>
 </div>
