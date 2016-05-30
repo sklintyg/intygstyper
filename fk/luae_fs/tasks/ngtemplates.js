@@ -2,7 +2,7 @@ module.exports = {
     webcert: {
         cwd: 'src/main/resources/META-INF/resources/webjars/luae_fs/webcert',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/luae_fs/webcert/templates.js',
+        dest: 'build/resources/main/META-INF/resources/webjars/luae_fs/webcert/templates.js',
         options:{
             module: 'luae_fs',
             url: function(url) {
@@ -13,7 +13,7 @@ module.exports = {
     minaintyg: {
         cwd: 'src/main/resources/META-INF/resources/webjars/luae_fs/minaintyg',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/luae_fs/minaintyg/templates.js',
+        dest: 'build/resources/main/META-INF/resources/webjars/luae_fs/minaintyg/templates.js',
         options:{
             module: 'luae_fs',
             url: function(url) {
