@@ -23,7 +23,7 @@ module.exports = function(config) {
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/fk7263/minaintyg/js/';
     var TEST_DIR = SRC_DIR;
-    var WEBJAR_DIR = '../target/webjardependencies/';
+    var WEBJAR_DIR = 'build/webjars/';
 
     config.set({
 

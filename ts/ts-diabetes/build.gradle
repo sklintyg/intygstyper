@@ -1,4 +1,4 @@
-description = 'Intygstyper (FK7263 Läkarintyg)'
+description = 'Intygstyper (TS Läkarintyg, diabetes)'
 
 buildscript {
   repositories {
@@ -38,6 +38,15 @@ sourceSets {
   }
 }
 
+task copyToLib(type: Copy) {
+  from { zipTree(findJarsByName(configurations.compile, 'common-build-tools')) }
+  into "$buildDir/build-tools"
+}
+
+def findJarsByName(Configuration config, String depName) {
+  config.find { it.name.startsWith(depName) }
+}
+
 // TODO: this list should not be required, copy dependencies whose group is org.webjars instead
 List webjars = [[group: 'org.webjars', name: 'angularjs', version: '1.4.10'],
                 [group: 'org.webjars', name: 'angular-ui-bootstrap', version: '0.12.1'],
@@ -66,12 +75,19 @@ task moveJsFiles(type: Copy, dependsOn: unzipWebjars) {
   into "${buildDir}/webjars"
 }
 
-task jsTests(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
+task jsTestsMI(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
     script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['test']
+    args = ['test-minaintyg']
 }
 
-test.dependsOn(jsTests)
+task jsTestsWC(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
+    script = file('node_modules/grunt-cli/bin/grunt')
+    args = ['test-webcert']
+}
+
+// TODO: check what webcert continuous is and why it's called
+test.dependsOn(jsTestsMI)
+test.dependsOn(jsTestsWC)
 
 task jsInclude(type: NodeTask, dependsOn: [npmInstall]) {
     script = file('node_modules/grunt-cli/bin/grunt')
@@ -87,41 +103,21 @@ task packageTests(type: Jar) {
 artifacts.archives packageTests
 
 dependencies {
-  compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
-  compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
-
-  compile 'se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.1'
-  compile 'se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.1'
-  compile 'se.inera.intyg.common:common-support:0-SNAPSHOT'
-  compile 'se.inera.intyg.common:common-web:0-SNAPSHOT'
-  compile 'se.inera.intyg.common:integration-util:0-SNAPSHOT'
-  compile 'se.inera.intyg.common:common-schemas:0-SNAPSHOT'
+  compile project(':ts-parent')
 
   compile 'ch.qos.logback:logback-classic:1.0.11'
+  compile 'commons-collections:commons-collections:3.2.1'
   compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
   compile 'com.fasterxml.jackson.core:jackson-databind:2.4.4'
   compile 'com.itextpdf:itextpdf:5.3.2'
-  compile 'commons-collections:commons-collections:3.2.1'
   compile 'org.apache.commons:commons-lang3:3.1'
   compile 'org.springframework:spring-context:4.2.2.RELEASE'
-  compile 'org.springframework:spring-tx:4.2.2.RELEASE'
-  compile 'com.helger:ph-schematron:3.0.1'
-  compile(group: 'se.skltp.adapterservices.insuranceprocess.healthreporting', name: 'FkEintygAdapterIC-validator', version:'2.0.8-RC1') {
-    exclude(module: 'insuranceprocess-healthreporting-schemas')
-    exclude(module: 'fk-vardgivare-sjukvard-schemas')
-    exclude(module: 'ServiceContracts_itintegration_monitoring')
-  }
-
-  compileOnly 'javax.servlet:servlet-api:2.5'
 
   testCompile 'commons-io:commons-io:2.4'
   testCompile 'junit:junit:4.12'
   testCompile 'org.mockito:mockito-core:1.9.0'
-  testCompile 'org.skyscreamer:jsonassert:1.2.0'
-  testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
   testCompile 'org.unitils:unitils-core:3.3'
+  testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
   testCompile 'xmlunit:xmlunit:1.4'
 
-  testRuntime 'javax.servlet:servlet-api:2.5'
 }
-
