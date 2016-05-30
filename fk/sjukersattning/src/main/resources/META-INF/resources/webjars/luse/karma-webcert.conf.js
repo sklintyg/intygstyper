@@ -4,8 +4,7 @@ module.exports = function(config) {
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/luse/webcert/views/';
     var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/luse/webcert/';
-    var BASE_WEBJAR_DIR = '../../target/webjardependencies/';
-    var WEBJAR_DIR = 'target/webjardependencies/';
+    var WEBJAR_DIR = 'build/webjars/';
     var NODE_DIR = 'node_modules/';
 
     config.set({
@@ -43,16 +42,16 @@ module.exports = function(config) {
         files: [
 
             // Dependencies
-               BASE_WEBJAR_DIR + 'jquery/jquery.min.js',
-               BASE_WEBJAR_DIR + 'angularjs/angular.js',
-               BASE_WEBJAR_DIR + 'angularjs/angular-mocks.js',
-               BASE_WEBJAR_DIR + 'angularjs/1.4.10/angular-locale_sv-se.js',
-               BASE_WEBJAR_DIR + 'angularjs/angular-cookies.js',
-               BASE_WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
-               BASE_WEBJAR_DIR + 'angularjs/angular-sanitize.js',
-               BASE_WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
-               BASE_WEBJAR_DIR + 'momentjs/moment.js',
-               BASE_WEBJAR_DIR + 'common/webcert/module.min.js',
+               WEBJAR_DIR + 'jquery/jquery.min.js',
+               WEBJAR_DIR + 'angularjs/angular.js',
+               WEBJAR_DIR + 'angularjs/angular-mocks.js',
+               WEBJAR_DIR + 'angularjs/1.4.10/angular-locale_sv-se.js',
+               WEBJAR_DIR + 'angularjs/angular-cookies.js',
+               WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
+               WEBJAR_DIR + 'angularjs/angular-sanitize.js',
+               WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
+               WEBJAR_DIR + 'momentjs/moment.js',
+               WEBJAR_DIR + 'common/webcert/module.min.js',
                 NODE_DIR + '/karma-read-json/karma-read-json.js',
                 NODE_DIR + 'tv4/tv4.js',
 

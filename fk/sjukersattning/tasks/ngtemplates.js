@@ -2,7 +2,7 @@ module.exports = {
     webcert: {
         cwd: 'src/main/resources/META-INF/resources/webjars/luse/webcert',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/luse/webcert/templates.js',
+        dest: 'build/resources/META-INF/resources/webjars/luse/webcert/templates.js',
         options:{
             module: 'luse',
             url: function(url) {
@@ -13,7 +13,7 @@ module.exports = {
     minaintyg: {
         cwd: 'src/main/resources/META-INF/resources/webjars/luse/minaintyg',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/luse/minaintyg/templates.js',
+        dest: 'build/resources/META-INF/resources/webjars/luse/minaintyg/templates.js',
         options:{
             module: 'luse',
             url: function(url) {

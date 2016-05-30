@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
     var TEST_DIR = 'src/test/js/';
-    var DEST_DIR = 'target/classes/META-INF/resources/';
+    var DEST_DIR = 'build/resources/META-INF/resources/';
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/luse/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
     grunt.file.write(DEST_DIR + 'webjars/luse/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
