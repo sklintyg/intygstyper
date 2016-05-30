@@ -38,7 +38,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass-lint');
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
-    var DEST_DIR = 'target/classes/META-INF/resources/';
+    var DEST_DIR = 'build/resources/main/META-INF/resources/';
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/ts-diabetes/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
     grunt.file.write(DEST_DIR + 'webjars/ts-diabetes/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
