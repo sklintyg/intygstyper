@@ -24,7 +24,7 @@ module.exports = {
     webcert: {
         cwd: 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/ts-bas/webcert/templates.js',
+        dest: 'build/resources/main/META-INF/resources/webjars/ts-bas/webcert/templates.js',
         options:{
             module: 'ts-bas',
             url: function(url) {
@@ -35,7 +35,7 @@ module.exports = {
     minaintyg: {
         cwd: 'src/main/resources/META-INF/resources/webjars/ts-bas/minaintyg',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/ts-bas/minaintyg/templates.js',
+        dest: 'build/resources/main/META-INF/resources/webjars/ts-bas/minaintyg/templates.js',
         options:{
             module: 'ts-bas',
             url: function(url) {

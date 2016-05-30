@@ -1,0 +1,118 @@
+description = 'Intygstyper (TS Läkarintyg, bas)'
+
+buildscript {
+  repositories {
+    maven {
+      url 'https://plugins.gradle.org/m2/'
+    }
+  }
+
+  dependencies {
+    classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
+    classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
+  }
+}
+
+apply plugin: 'com.moowork.grunt'
+apply plugin: 'com.moowork.node'
+
+grunt {
+  colors = true
+}
+
+node {
+  version = '0.12.4'
+  download = true
+  distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
+}
+
+sourceSets {
+  main {
+    resources {
+      exclude '**/*.scss'
+      exclude '**/*.spec.js'
+      exclude '**/*.test.js'
+      exclude '**/karma*.conf.js'
+      exclude '**/karma*.conf.ci.js'
+    }
+  }
+}
+
+task copyToLib(type: Copy) {
+  from { zipTree(findJarsByName(configurations.compile, 'common-build-tools')) }
+  into "$buildDir/build-tools"
+}
+
+def findJarsByName(Configuration config, String depName) {
+  config.find { it.name.startsWith(depName) }
+}
+
+// TODO: this list should not be required, copy dependencies whose group is org.webjars instead
+List webjars = [[group: 'org.webjars', name: 'angularjs', version: '1.4.10'],
+                [group: 'org.webjars', name: 'angular-ui-bootstrap', version: '0.12.1'],
+                [group: 'org.webjars', name: 'angular-ui-router', version: '0.2.15'],
+                [group: 'org.webjars', name: 'bootstrap', version: '3.1.1'],
+                [group: 'org.webjars', name: 'momentjs', version: '2.7.0'],
+                [group: 'org.webjars', name: 'jquery', version: '1.9.0'],
+                [group: 'se.inera.intyg.common', name: 'common-web']]
+
+task unzipWebjars(type: Copy) {
+    description 'Copies anything that is a webjar from the classpath and expands it so that we can use their static resources with karma'
+    into "$buildDir/webjars/"
+    from {
+        configurations.compile.filter{file ->
+            webjars.any{jar -> file.name.startsWith(jar.name) }
+        }.collect{zipTree(it)}
+    }
+}
+
+task moveJsFiles(type: Copy, dependsOn: unzipWebjars) {
+  description 'Moves everything up one level, which gets rid of version directory (angular/1.2.4/* -> angular/)'
+  from { "${buildDir}/webjars/META-INF/resources/webjars/" }
+  eachFile {details ->
+    details.path = details.path.replaceAll('([^/]+)/[0-9.]+(/.*)', '$1$2')
+  }
+  into "${buildDir}/webjars"
+}
+
+task jsTests(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
+    script = file('node_modules/grunt-cli/bin/grunt')
+    args = ['test']
+}
+
+test.dependsOn(jsTests)
+
+task jsInclude(type: NodeTask, dependsOn: [npmInstall]) {
+    script = file('node_modules/grunt-cli/bin/grunt')
+    args = ['default']
+}
+
+jar.dependsOn(jsInclude)
+
+task packageTests(type: Jar) {
+  from sourceSets.test.output
+  classifier = 'tests'
+}
+artifacts.archives packageTests
+
+dependencies {
+  compile project(':ts-parent')
+
+  compile 'se.inera.intyg.transportstyrelsen:intyg-transportstyrelsen-schemas:1.0.1'
+  compile 'ch.qos.logback:logback-classic:1.0.11'
+  compile 'commons-collections:commons-collections:3.2.1'
+  compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
+  compile 'com.fasterxml.jackson.core:jackson-databind:2.4.4'
+  compile 'com.itextpdf:itextpdf:5.3.2'
+  compile 'org.apache.commons:commons-lang3:3.1'
+  compile 'org.springframework:spring-context:4.2.2.RELEASE'
+  compile 'org.springframework:spring-tx:4.2.2.RELEASE'
+  compile 'net.sf.saxon:Saxon-HE:9.6.0-4'
+
+  testCompile 'commons-io:commons-io:2.4'
+  testCompile 'junit:junit:4.12'
+  testCompile 'org.mockito:mockito-core:1.9.0'
+  testCompile 'org.unitils:unitils-core:3.3'
+  testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
+  testCompile 'xmlunit:xmlunit:1.4'
+}

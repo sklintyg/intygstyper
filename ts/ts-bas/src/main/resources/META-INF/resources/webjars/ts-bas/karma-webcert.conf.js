@@ -23,7 +23,7 @@ module.exports = function(config) {
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/views/';
     var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/webcert/';
-    var WEBJAR_DIR = '../../target/webjardependencies/';
+    var WEBJAR_DIR = 'build/webjars/';
 
     config.set({
 
