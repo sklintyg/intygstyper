@@ -26,7 +26,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
 
 import java.io.IOException;
@@ -205,7 +204,7 @@ public class Fk7263ModuleApiTest {
                 any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(xml, "logicalAddress", FK.toString());
+        fk7263ModuleApi.sendCertificateToRecipient(xml, "logicalAddress", "FK");
 
         // Verify
         verify(registerMedicalCertificateClient).registerMedicalCertificate(Mockito.eq(address), any(RegisterMedicalCertificateType.class));
@@ -226,7 +225,7 @@ public class Fk7263ModuleApiTest {
                 any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(xml, "logicalAddress", FK.toString());
+        fk7263ModuleApi.sendCertificateToRecipient(xml, "logicalAddress", "FK");
 
         // Verify
         verify(registerMedicalCertificateClient).registerMedicalCertificate(eq(address), any(RegisterMedicalCertificateType.class));
@@ -239,7 +238,7 @@ public class Fk7263ModuleApiTest {
         address.setValue("logicalAddress");
 
         // Then
-        fk7263ModuleApi.sendCertificateToRecipient(null, "logicalAddress", FK.toString());
+        fk7263ModuleApi.sendCertificateToRecipient(null, "logicalAddress", "FK");
     }
 
     @Test

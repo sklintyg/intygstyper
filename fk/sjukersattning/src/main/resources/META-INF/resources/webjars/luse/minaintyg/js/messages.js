@@ -26,7 +26,7 @@ var sjukersattningMessages = {
         'luse.label.latestevent.noevents': 'Inga händelser',
         'luse.history.label.pagetitle': 'Intygets alla händelser',
         'luse.status.sent': 'Mottaget av',
-        'luse.target.fkassa': 'Försäkringskassan',
+        'luse.target.fk': 'Försäkringskassan',
         'luse.target.afa': 'AFA Försäkring',
         'luse.target.skandia': 'Skandia',
 

@@ -53,6 +53,7 @@ import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.certificate.modules.luae_fs.support.LuaefsEntryPoint;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -146,7 +147,7 @@ public class LuaefsModuleApiTest {
     @Test
     public void testGetCertificate() throws Exception {
 
-        GetCertificateResponseType result = createGetCertificateResponseType(StatusKod.SENTTO, "FK");
+        GetCertificateResponseType result = createGetCertificateResponseType(StatusKod.SENTTO, PartKod.FKASSA);
 
         when(getCertificateResponderInterface.getCertificate(anyString(), any())).thenReturn(result);
         final CertificateResponse response = moduleApi.getCertificate("id", LOGICAL_ADDRESS);
@@ -156,7 +157,7 @@ public class LuaefsModuleApiTest {
     @Test
     public void testGetCertificateWhenRevoked() throws Exception {
 
-        GetCertificateResponseType result = createGetCertificateResponseType(StatusKod.CANCEL, "FK");
+        GetCertificateResponseType result = createGetCertificateResponseType(StatusKod.CANCEL, PartKod.FKASSA);
 
         when(getCertificateResponderInterface.getCertificate(anyString(), any())).thenReturn(result);
         final CertificateResponse response = moduleApi.getCertificate("id", LOGICAL_ADDRESS);
@@ -309,7 +310,7 @@ public class LuaefsModuleApiTest {
         assertNotNull(res);
         assertNotEquals("", res);
     }
-    private GetCertificateResponseType createGetCertificateResponseType(final StatusKod statusKod, final String part)
+    private GetCertificateResponseType createGetCertificateResponseType(final StatusKod statusKod, final PartKod part)
             throws IOException, ModuleException {
         GetCertificateResponseType response = new GetCertificateResponseType();
 
@@ -317,7 +318,7 @@ public class LuaefsModuleApiTest {
         Utlatande utlatandeFromXml = moduleApi.getUtlatandeFromXml(xmlContents);
         Intyg intyg = moduleApi.getIntygFromUtlatande(utlatandeFromXml);
 
-        intyg.getStatus().add(createStatus(statusKod.name(), part));
+        intyg.getStatus().add(createStatus(statusKod.name(), part.name()));
 
         response.setIntyg(intyg);
 

@@ -29,7 +29,7 @@ var luae_fsMessages = {
 
         'luae_fs.status.sent': 'Mottaget av',
 
-        'luae_fs.target.fkassa': 'Försäkringskassan',
+        'luae_fs.target.fk': 'Försäkringskassan',
         'luae_fs.target.afa': 'AFA Försäkring',
         'luae_fs.target.skandia': 'Skandia',
 

@@ -29,7 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
-import se.inera.intyg.common.support.common.enumerations.Recipients;
+import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -256,7 +256,7 @@ public class PdfGenerator {
     private boolean isCertificateSentToFK(List<Status> statuses) {
         if (statuses != null) {
             for (Status status : statuses) {
-                if (isTargetEqualTo(status, Recipients.FK.toString()) && isTypeEqualTo(status, CertificateState.SENT)) {
+                if (isTargetEqualTo(status, PartKod.FKASSA.getValue()) && isTypeEqualTo(status, CertificateState.SENT)) {
                     return true;
                 }
             }

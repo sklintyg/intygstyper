@@ -34,12 +34,13 @@ import se.inera.certificate.modules.fkparent.model.internal.*;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.certificate.modules.luae_fs.model.internal.LuaefsUtlatande.Builder;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.*;
+import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.Statuskod;
-import se.riv.clinicalprocess.healthcond.certificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public final class TransportToInternal {
@@ -59,52 +60,7 @@ public final class TransportToInternal {
     }
 
     public static CertificateMetaData getMetaData(Intyg source) {
-        CertificateMetaData metaData = new CertificateMetaData();
-        metaData.setCertificateId(source.getIntygsId().getExtension());
-        metaData.setCertificateType(source.getTyp().getCode());
-        // TODO
-        metaData.setValidFrom(null);
-        metaData.setValidTo(null);
-        metaData.setIssuerName(source.getSkapadAv().getFullstandigtNamn());
-        metaData.setFacilityName(source.getSkapadAv().getEnhet().getEnhetsnamn());
-        metaData.setSignDate(source.getSigneringstidpunkt());
-        // TODO
-        metaData.setAdditionalInfo(null);
-        List<Status> statuses = toStatusList(source.getStatus());
-        metaData.setStatus(statuses);
-        return metaData;
-    }
-
-    private static List<Status> toStatusList(List<IntygsStatus> certificateStatuses) {
-        List<Status> statuses = new ArrayList<>(certificateStatuses.size());
-        for (IntygsStatus certificateStatus : certificateStatuses) {
-            statuses.add(toStatus(certificateStatus));
-        }
-        return statuses;
-    }
-
-    private static Status toStatus(IntygsStatus certificateStatus) {
-        return new Status(
-                getState(certificateStatus.getStatus()),
-                certificateStatus.getPart().getCode(),
-                certificateStatus.getTidpunkt());
-    }
-
-    private static CertificateState getState(Statuskod status) {
-        switch (status.getCode()) {
-        case "DELETE":
-            return CertificateState.DELETED;
-        case "RESTOR":
-            return CertificateState.RESTORED;
-        case "CANCEL":
-            return CertificateState.CANCELLED;
-        case "SENTTO":
-            return CertificateState.SENT;
-        case "RECEIV":
-            return CertificateState.RECEIVED;
-        default:
-            throw new IllegalArgumentException();
-        }
+        return TransportConverterUtil.getMetaData(source);
     }
 
     private static void setSvar(Builder utlatande, Intyg source) throws ConverterException {

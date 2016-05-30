@@ -22,12 +22,8 @@ package se.inera.intyg.intygstyper.fk7263.pdf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 
 import org.joda.time.LocalDateTime;
 import org.junit.BeforeClass;
@@ -38,7 +34,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import se.inera.intyg.common.support.common.enumerations.Recipients;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.PdfReader;
+
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -46,11 +46,6 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.utils.Scenario;
 import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfReader;
 
 /**
  * @author andreaskaltenbach
@@ -214,7 +209,7 @@ public class PdfGeneratorTest {
         Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
 
         List<Status> statuses = new ArrayList<Status>();
-        statuses.add(new Status(CertificateState.SENT, Recipients.FK.toString(), LocalDateTime.now()));
+        statuses.add(new Status(CertificateState.SENT, "FK", LocalDateTime.now()));
 
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, statuses, ApplicationOrigin.WEBCERT, false).getBytes();

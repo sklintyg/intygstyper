@@ -19,7 +19,6 @@
 
 package se.inera.intyg.intygstyper.fk7263.rest;
 
-import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
 
 import java.io.*;
@@ -51,6 +50,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
+import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
@@ -413,7 +413,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId)
             throws ModuleException {
         // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
-        if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(FK.toString())) {
+        if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(PartKod.FKASSA.getValue())) {
             request = whenFkIsRecipientThenSetCodeSystemToICD10(request);
         }
 
