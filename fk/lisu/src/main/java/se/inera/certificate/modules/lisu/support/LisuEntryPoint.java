@@ -67,7 +67,7 @@ public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("lisu.properties");
+        return ModuleFeaturesFactory.getFeatures("lisu-features.properties");
     }
 
     @Override
