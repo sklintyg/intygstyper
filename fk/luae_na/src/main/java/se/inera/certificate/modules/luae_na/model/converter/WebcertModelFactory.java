@@ -24,19 +24,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande.Builder;
-import se.inera.certificate.modules.luae_na.support.AktivitetsersattningNAEntryPoint;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande.Builder;
+import se.inera.certificate.modules.luae_na.support.LuaenaEntryPoint;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Relation;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 
 /**
  * Factory for creating an editable model.
@@ -48,18 +44,18 @@ public class WebcertModelFactory {
     private IntygTextsService intygTexts;
 
     /**
-     * Create a new aktivitetsersattning NA draft pre-populated with the attached data.
+     * Create a new luae_na draft pre-populated with the attached data.
      *
      * @param newDraftData
      *            {@link CreateNewDraftHolder}
-     * @return {@link AktivitetsersattningNAUtlatande} or throws a ConverterException if something unforeseen happens
+     * @return {@link LuaenaUtlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
-    public AktivitetsersattningNAUtlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
+    public LuaenaUtlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
         LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
 
-        Builder template = AktivitetsersattningNAUtlatande.builder();
+        Builder template = LuaenaUtlatande.builder();
         GrundData grundData = new GrundData();
 
         populateWithId(template, newDraftData.getCertificateId());
@@ -67,16 +63,16 @@ public class WebcertModelFactory {
         populateWithPatientInfo(grundData, newDraftData.getPatient());
 
         // Default to latest version available of intyg
-        template.setTextVersion(intygTexts.getLatestVersion(AktivitetsersattningNAEntryPoint.MODULE_ID));
+        template.setTextVersion(intygTexts.getLatestVersion(LuaenaEntryPoint.MODULE_ID));
 
         return template.setGrundData(grundData).build();
     }
 
-    public AktivitetsersattningNAUtlatande createCopy(CreateDraftCopyHolder copyData, AktivitetsersattningNAUtlatande template) throws ConverterException {
+    public LuaenaUtlatande createCopy(CreateDraftCopyHolder copyData, LuaenaUtlatande template) throws ConverterException {
 
         LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
 
-        AktivitetsersattningNAUtlatande.Builder templateBuilder = template.toBuilder();
+        LuaenaUtlatande.Builder templateBuilder = template.toBuilder();
         GrundData grundData = template.getGrundData();
 
         populateWithId(templateBuilder, copyData.getCertificateId());
@@ -133,7 +129,7 @@ public class WebcertModelFactory {
         grundData.setSigneringsdatum(null);
     }
 
-    public void updateSkapadAv(AktivitetsersattningNAUtlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
+    public void updateSkapadAv(LuaenaUtlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
         utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
         utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
         utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());

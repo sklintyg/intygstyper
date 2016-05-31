@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilder;
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
@@ -22,9 +22,9 @@ public class InternalToTransportTest {
 
     @Test
     public void testInternalToTransportConversion() throws Exception {
-        AktivitetsersattningNAUtlatande expected = getUtlatande();
+        LuaenaUtlatande expected = getUtlatande();
         RegisterCertificateType transport = InternalToTransport.convert(expected);
-        AktivitetsersattningNAUtlatande actual = TransportToInternal.convert(transport.getIntyg());
+        LuaenaUtlatande actual = TransportToInternal.convert(transport.getIntyg());
 
         assertEquals(expected, actual);
     }
@@ -33,7 +33,7 @@ public class InternalToTransportTest {
     public void convertDecorateSvarPaTest() throws Exception {
         final String meddelandeId = "meddelandeId";
         final String referensId = "referensId";
-        AktivitetsersattningNAUtlatande utlatande = getUtlatande(RelationKod.KOMPLT, meddelandeId, referensId);
+        LuaenaUtlatande utlatande = getUtlatande(RelationKod.KOMPLT, meddelandeId, referensId);
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNotNull(transport.getSvarPa());
         assertEquals(meddelandeId, transport.getSvarPa().getMeddelandeId());
@@ -44,7 +44,7 @@ public class InternalToTransportTest {
     @Test
     public void convertDecorateSvarPaReferensIdNullTest() throws Exception {
         final String meddelandeId = "meddelandeId";
-        AktivitetsersattningNAUtlatande utlatande = getUtlatande(RelationKod.KOMPLT, meddelandeId, null);
+        LuaenaUtlatande utlatande = getUtlatande(RelationKod.KOMPLT, meddelandeId, null);
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNotNull(transport.getSvarPa());
         assertEquals(meddelandeId, transport.getSvarPa().getMeddelandeId());
@@ -53,24 +53,24 @@ public class InternalToTransportTest {
 
     @Test
     public void convertDecorateSvarPaNoRelationTest() throws Exception {
-        AktivitetsersattningNAUtlatande utlatande = getUtlatande();
+        LuaenaUtlatande utlatande = getUtlatande();
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNull(transport.getSvarPa());
     }
 
     @Test
     public void convertDecorateSvarPaNotKompltTest() throws Exception {
-        AktivitetsersattningNAUtlatande utlatande = getUtlatande(RelationKod.FRLANG, null, null);
+        LuaenaUtlatande utlatande = getUtlatande(RelationKod.FRLANG, null, null);
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNull(transport.getSvarPa());
     }
 
-    public static AktivitetsersattningNAUtlatande getUtlatande() {
+    public static LuaenaUtlatande getUtlatande() {
         return getUtlatande(null, null, null);
     }
 
-    public static AktivitetsersattningNAUtlatande getUtlatande(RelationKod relationKod, String relationMeddelandeId, String referensId) {
-        AktivitetsersattningNAUtlatande.Builder utlatande = AktivitetsersattningNAUtlatande.builder();
+    public static LuaenaUtlatande getUtlatande(RelationKod relationKod, String relationMeddelandeId, String referensId) {
+        LuaenaUtlatande.Builder utlatande = LuaenaUtlatande.builder();
         utlatande.setId("1234567");
         utlatande.setTextVersion("1.0");
         GrundData grundData = IntygTestDataBuilder.getGrundData();

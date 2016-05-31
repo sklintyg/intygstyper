@@ -31,7 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.fkparent.model.internal.*;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
@@ -45,14 +45,14 @@ public final class UtlatandeToIntyg {
     private UtlatandeToIntyg() {
     }
 
-    public static Intyg convert(AktivitetsersattningNAUtlatande source) {
+    public static Intyg convert(LuaenaUtlatande source) {
         Intyg intyg = InternalConverterUtil.getIntyg(source);
         intyg.setTyp(getTypAvIntyg(source));
         intyg.getSvar().addAll(getSvar(source));
         return intyg;
     }
 
-    private static TypAvIntyg getTypAvIntyg(AktivitetsersattningNAUtlatande source) {
+    private static TypAvIntyg getTypAvIntyg(LuaenaUtlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
         typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
@@ -60,7 +60,7 @@ public final class UtlatandeToIntyg {
         return typAvIntyg;
     }
 
-    private static List<Svar> getSvar(AktivitetsersattningNAUtlatande source) {
+    private static List<Svar> getSvar(LuaenaUtlatande source) {
         List<Svar> svars = new ArrayList<>();
 
         if (source.getUndersokningAvPatienten() != null) {

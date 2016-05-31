@@ -24,7 +24,7 @@ import se.inera.certificate.modules.fkparent.model.converter.IntygTestDataBuilde
 import se.inera.certificate.modules.fkparent.model.internal.Diagnos;
 import se.inera.certificate.modules.fkparent.model.internal.Tillaggsfraga;
 import se.inera.certificate.modules.fkparent.model.internal.Underlag;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -43,9 +43,9 @@ public class TransportToInternalTest {
 
     @Test
     public void endToEnd() throws Exception {
-        AktivitetsersattningNAUtlatande originalUtlatande = getUtlatande();
+        LuaenaUtlatande originalUtlatande = getUtlatande();
         RegisterCertificateType transportCertificate = InternalToTransport.convert(originalUtlatande);
-        AktivitetsersattningNAUtlatande convertedIntyg = TransportToInternal.convert(transportCertificate.getIntyg());
+        LuaenaUtlatande convertedIntyg = TransportToInternal.convert(transportCertificate.getIntyg());
 
         String xml = xmlToString(transportCertificate);
         SchematronOutputType valResult = validator.validateSchematron(new StreamSource(new StringReader(xml)));
@@ -61,8 +61,8 @@ public class TransportToInternalTest {
         return stringWriter.toString();
     }
 
-    private static AktivitetsersattningNAUtlatande getUtlatande() {
-        AktivitetsersattningNAUtlatande.Builder utlatande = AktivitetsersattningNAUtlatande.builder();
+    private static LuaenaUtlatande getUtlatande() {
+        LuaenaUtlatande.Builder utlatande = LuaenaUtlatande.builder();
         utlatande.setId("1234567");
         utlatande.setGrundData(IntygTestDataBuilder.getGrundData());
         utlatande.setTextVersion("1.0");

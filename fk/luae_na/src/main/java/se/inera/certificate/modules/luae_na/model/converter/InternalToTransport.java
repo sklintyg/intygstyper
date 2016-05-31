@@ -18,7 +18,7 @@
  */
 package se.inera.certificate.modules.luae_na.model.converter;
 
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
@@ -28,14 +28,14 @@ public final class InternalToTransport {
     private InternalToTransport() {
     }
 
-    public static RegisterCertificateType convert(AktivitetsersattningNAUtlatande source) throws ConverterException {
+    public static RegisterCertificateType convert(LuaenaUtlatande source) throws ConverterException {
         if (source == null) {
             throw new ConverterException("Source utlatande was null, cannot convert");
         }
 
-        RegisterCertificateType aktivitetsersattningNA = new RegisterCertificateType();
-        aktivitetsersattningNA.setIntyg(UtlatandeToIntyg.convert(source));
-        aktivitetsersattningNA.setSvarPa(InternalConverterUtil.getMeddelandeReferensOfType(source, RelationKod.KOMPLT));
-        return aktivitetsersattningNA;
+        RegisterCertificateType luaenaType = new RegisterCertificateType();
+        luaenaType.setIntyg(UtlatandeToIntyg.convert(source));
+        luaenaType.setSvarPa(InternalConverterUtil.getMeddelandeReferensOfType(source, RelationKod.KOMPLT));
+        return luaenaType;
     }
 }

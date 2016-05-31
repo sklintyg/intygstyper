@@ -1,0 +1,15 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean class="se.inera.certificate.modules.lisu.model.converter.WebcertModelFactory" />
+
+  <bean class="se.inera.certificate.modules.lisu.rest.LisuModuleApi" />
+
+  <bean class="se.inera.certificate.modules.lisu.validator.InternalDraftValidator" />
+
+  <bean id="lisuUtokadEntryPoint" class="se.inera.certificate.modules.lisu.support.LisuEntryPoint" />
+
+  <bean id="lisu-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
+
+</beans>

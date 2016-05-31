@@ -42,13 +42,13 @@ public class ConverterTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void doSchematronValidationSjukersattning() throws Exception {
+    public void doSchematronValidationLuaeFs() throws Exception {
         String xmlContents = Resources.toString(getResource("transport/luae_fs-2.xml"), Charsets.UTF_8);
 
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
 
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-fs.sch"); //TODO: byta till aktivitetsersattning-fs.sch
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_fs.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
         assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
@@ -67,7 +67,7 @@ public class ConverterTest {
         String convertedXML = getXmlFromModel(transportConvertedALot);
 
         // Do schematron validation on the xml-string from the converted transport format
-        RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-fs.sch");//TODO: byta till aktivitetsersattning-fs.sch
+        RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_fs.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
         assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
 

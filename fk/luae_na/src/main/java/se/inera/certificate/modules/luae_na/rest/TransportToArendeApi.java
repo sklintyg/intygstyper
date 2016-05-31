@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 
 public final class TransportToArendeApi {
@@ -38,17 +38,17 @@ public final class TransportToArendeApi {
 
     public static Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
         List<String> filledPositions = new ArrayList<String>();
-        AktivitetsersattningNAUtlatande aktivitetsersattningNAUtlatande = (AktivitetsersattningNAUtlatande) utlatande;
-        if (aktivitetsersattningNAUtlatande.getUndersokningAvPatienten() != null) {
+        LuaenaUtlatande luaenaUtlatande = (LuaenaUtlatande) utlatande;
+        if (luaenaUtlatande.getUndersokningAvPatienten() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1);
         }
-        if (aktivitetsersattningNAUtlatande.getJournaluppgifter() != null) {
+        if (luaenaUtlatande.getJournaluppgifter() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1);
         }
-        if (aktivitetsersattningNAUtlatande.getAnhorigsBeskrivningAvPatienten() != null) {
+        if (luaenaUtlatande.getAnhorigsBeskrivningAvPatienten() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1);
         }
-        if (aktivitetsersattningNAUtlatande.getAnnatGrundForMU() != null) {
+        if (luaenaUtlatande.getAnnatGrundForMU() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1);
         }
         Map<String, List<String>> result = new HashMap<>();

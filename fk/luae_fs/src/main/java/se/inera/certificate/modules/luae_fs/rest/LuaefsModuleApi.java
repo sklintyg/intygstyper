@@ -87,7 +87,7 @@ public class LuaefsModuleApi implements ModuleApi {
     @Autowired(required = false)
     private GetCertificateResponderInterface getCertificateResponderInterface;
 
-    private RegisterCertificateValidator validator = new RegisterCertificateValidator("aktivitetsersattning-fs.sch");
+    private RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_fs.sch");
 
     @Autowired(required = false)
     private RevokeCertificateResponderInterface revokeCertificateClient;

@@ -4,11 +4,11 @@
 
   <bean class="se.inera.certificate.modules.luae_na.model.converter.WebcertModelFactory" />
 
-  <bean class="se.inera.certificate.modules.luae_na.rest.AktivitetsersattningNAModuleApi" />
+  <bean class="se.inera.certificate.modules.luae_na.rest.LuaenaModuleApi" />
 
   <bean class="se.inera.certificate.modules.luae_na.validator.InternalDraftValidator" />
 
-  <bean id="aktivitetsersattningNAEntryPoint" class="se.inera.certificate.modules.luae_na.support.AktivitetsersattningNAEntryPoint" />
+  <bean id="luaenaEntryPoint" class="se.inera.certificate.modules.luae_na.support.LuaenaEntryPoint" />
 
   <bean id="luae_na-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
 

@@ -30,7 +30,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
@@ -171,10 +171,10 @@ public final class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public AktivitetsersattningNAUtlatande asInternalModel()
+        public LuaenaUtlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), AktivitetsersattningNAUtlatande.class);
+                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), LuaenaUtlatande.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal", e);
             }

@@ -16,7 +16,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse
 
 public class SchematronValidatorTest {
 
-    private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("aktivitetsersattning-fs.sch");
+    private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("luae_fs.sch");
 
     @Test
     public void validXmlPassesTest() throws Exception {

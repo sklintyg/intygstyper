@@ -20,15 +20,14 @@ public class SchematronValidatorTest {
 
     @Test
     public void brokenXmlFailsTest() throws Exception {
-        String inputXml = Resources.toString(getResource("sjukersattning2_broken.xml"), Charsets.UTF_8);
+        String inputXml = Resources.toString(getResource("luae_na_broken.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
-        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertFalse(response.getValidationErrors().isEmpty());
     }
 
     @Test
     public void validXmlPassesTest() throws Exception {
-        String inputXml = Resources.toString(getResource("aktivitetsersattning-na2.xml"), Charsets.UTF_8);
+        String inputXml = Resources.toString(getResource("luae_na.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
         assertTrue(response.getValidationErrors().isEmpty());
     }

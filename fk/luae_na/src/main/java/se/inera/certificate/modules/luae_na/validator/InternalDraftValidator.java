@@ -34,7 +34,7 @@ import com.google.common.base.Strings;
 
 import se.inera.certificate.modules.fkparent.model.internal.Underlag;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
@@ -59,7 +59,7 @@ public class InternalDraftValidator {
         this.validatorUtil = validatorUtil;
     }
 
-    public ValidateDraftResponse validateDraft(AktivitetsersattningNAUtlatande utlatande) {
+    public ValidateDraftResponse validateDraft(LuaenaUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // Kategori 1 – Grund för medicinskt underlag
@@ -88,7 +88,7 @@ public class InternalDraftValidator {
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
-    private void validateGrundForMU(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateGrundForMU(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         if (utlatande.getUndersokningAvPatienten() == null && utlatande.getJournaluppgifter() == null
                 && utlatande.getAnhorigsBeskrivningAvPatienten() == null && utlatande.getAnnatGrundForMU() == null) {
@@ -145,7 +145,7 @@ public class InternalDraftValidator {
 
     }
 
-    private void validateUnderlag(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateUnderlag(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getUnderlagFinns() == null) {
             addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
                     "luae_na.validation.underlagfinns.missing");
@@ -191,14 +191,14 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateSjukdomsforlopp(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateSjukdomsforlopp(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getSjukdomsforlopp())) {
             addValidationError(validationMessages, "sjukdomsforlopp", ValidationMessageType.EMPTY,
                     "luae_na.validation.sjukdomsforlopp.missing");
         }
     }
 
-    private void validateVardenhet(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateVardenhet(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
             addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY,
                     "luae_na.validation.vardenhet.postadress.missing");
@@ -223,21 +223,21 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateAktivitetsbegransning(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateAktivitetsbegransning(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getAktivitetsbegransning())) {
             addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
                     "luae_na.validation.aktivitetsbegransning.missing");
         }
     }
 
-    private void validateMedicinskaForutsattningarForArbete(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateMedicinskaForutsattningarForArbete(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getMedicinskaForutsattningarForArbete())) {
             addValidationError(validationMessages, "medicinskaforutsattningarforarbete", ValidationMessageType.EMPTY,
                     "luae_na.validation.medicinskaforutsattningarforarbete.missing");
         }
     }
 
-    private void validateFunktionsnedsattning(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateFunktionsnedsattning(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         if (StringUtils.isBlank(utlatande.getFunktionsnedsattningAnnan())
                 && StringUtils.isBlank(utlatande.getFunktionsnedsattningBalansKoordination())
@@ -251,7 +251,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateDiagnosgrund(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateDiagnosgrund(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         if (StringUtils.isBlank(utlatande.getDiagnosgrund())) {
             addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
@@ -277,7 +277,7 @@ public class InternalDraftValidator {
         }
     }
 
-    private void validateKontaktMedFk(AktivitetsersattningNAUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    private void validateKontaktMedFk(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // R11
         if ((utlatande.getKontaktMedFk() == null || !utlatande.getKontaktMedFk()) && !StringUtils.isBlank(utlatande.getAnledningTillKontakt())) {
             addValidationError(validationMessages, "Kontakt", ValidationMessageType.INVALID_FORMAT,

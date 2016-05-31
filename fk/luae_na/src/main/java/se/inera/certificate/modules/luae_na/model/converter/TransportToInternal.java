@@ -29,8 +29,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.certificate.modules.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.certificate.modules.fkparent.model.internal.*;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande.Builder;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande.Builder;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
@@ -49,8 +49,8 @@ public final class TransportToInternal {
     private TransportToInternal() {
     }
 
-    public static AktivitetsersattningNAUtlatande convert(Intyg source) throws ConverterException {
-        Builder utlatande = AktivitetsersattningNAUtlatande.builder();
+    public static LuaenaUtlatande convert(Intyg source) throws ConverterException {
+        Builder utlatande = LuaenaUtlatande.builder();
         utlatande.setId(source.getIntygsId().getExtension());
         utlatande.setGrundData(TransportConverterUtil.getGrundData(source));
         utlatande.setTextVersion(source.getVersion());

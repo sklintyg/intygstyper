@@ -19,7 +19,7 @@
 
 package se.inera.certificate.modules.luae_na.model.utils;
 
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
@@ -57,5 +57,5 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    AktivitetsersattningNAUtlatande asInternalModel() throws ScenarioNotFoundException;
+    LuaenaUtlatande asInternalModel() throws ScenarioNotFoundException;
 }

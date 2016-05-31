@@ -31,7 +31,7 @@ import com.helger.schematron.svrl.SVRLHelper;
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.validator.InternalToSchematronValidatorTestUtil;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.certificate.modules.luae_na.model.utils.Scenario;
 import se.inera.certificate.modules.luae_na.model.utils.ScenarioFinder;
 import se.inera.certificate.modules.luae_na.model.utils.ScenarioNotFoundException;
@@ -113,7 +113,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
      * @throws Exception
      */
     private static void doInternalAndSchematronValidation(Scenario scenario, boolean fail) throws Exception {
-        AktivitetsersattningNAUtlatande utlatandeFromJson = scenario.asInternalModel();
+        LuaenaUtlatande utlatandeFromJson = scenario.asInternalModel();
 
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
 

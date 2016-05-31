@@ -26,8 +26,8 @@ import static org.junit.Assert.assertTrue;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande.Builder;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande.Builder;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -66,7 +66,7 @@ public class UtlatandeToIntygTest {
         final String patientPostnummer = "patientPostnummer";
         final String patientPostort = "patientPostort";
 
-        AktivitetsersattningNAUtlatande utlatande = buildUtlatande(intygsId, textVersion, enhetsId, enhetsnamn, patientPersonId,
+        LuaenaUtlatande utlatande = buildUtlatande(intygsId, textVersion, enhetsId, enhetsnamn, patientPersonId,
                 skapadAvFullstandigtNamn, skapadAvPersonId, signeringsdatum, arbetsplatsKod, postadress, postNummer, postOrt, epost, telefonNummer,
                 vardgivarid, vardgivarNamn, forskrivarKod, fornamn, efternamn, mellannamn, patientPostadress, patientPostnummer, patientPostort,
                 null, null);
@@ -113,7 +113,7 @@ public class UtlatandeToIntygTest {
     public void testConvertWithRelation() {
         RelationKod relationKod = RelationKod.FRLANG;
         String relationIntygsId = "relationIntygsId";
-        AktivitetsersattningNAUtlatande utlatande = buildUtlatande(relationKod, relationIntygsId);
+        LuaenaUtlatande utlatande = buildUtlatande(relationKod, relationIntygsId);
 
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
         assertNotNull(intyg.getRelation());
@@ -124,19 +124,19 @@ public class UtlatandeToIntygTest {
         assertNotNull(intyg.getRelation().get(0).getIntygsId().getRoot());
     }
 
-    private AktivitetsersattningNAUtlatande buildUtlatande(RelationKod relationKod, String relationIntygsId) {
+    private LuaenaUtlatande buildUtlatande(RelationKod relationKod, String relationIntygsId) {
         return buildUtlatande("intygsId", "textVersion", "enhetsId", "enhetsnamn", "patientPersonId",
                 "skapadAvFullstandigtNamn", "skapadAvPersonId", LocalDateTime.now(), "arbetsplatsKod", "postadress", "postNummer", "postOrt",
                 "epost", "telefonNummer", "vardgivarid", "vardgivarNamn", "forskrivarKod", "fornamn", "efternamn", "mellannamn", "patientPostadress",
                 "patientPostnummer", "patientPostort", relationKod, relationIntygsId);
     }
 
-    private AktivitetsersattningNAUtlatande buildUtlatande(String intygsId, String textVersion, String enhetsId, String enhetsnamn,
+    private LuaenaUtlatande buildUtlatande(String intygsId, String textVersion, String enhetsId, String enhetsnamn,
             String patientPersonId, String skapadAvFullstandigtNamn, String skapadAvPersonId, LocalDateTime signeringsdatum, String arbetsplatsKod,
             String postadress, String postNummer, String postOrt, String epost, String telefonNummer, String vardgivarid, String vardgivarNamn,
             String forskrivarKod, String fornamn, String efternamn, String mellannamn, String patientPostadress, String patientPostnummer,
             String patientPostort, RelationKod relationKod, String relationIntygsId) {
-        Builder template = AktivitetsersattningNAUtlatande.builder();
+        Builder template = LuaenaUtlatande.builder();
         template.setId(intygsId);
         template.setTextVersion(textVersion);
         GrundData grundData = new GrundData();

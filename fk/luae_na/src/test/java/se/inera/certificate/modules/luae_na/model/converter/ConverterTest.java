@@ -26,7 +26,7 @@ import com.helger.schematron.svrl.SVRLHelper;
 import se.inera.certificate.modules.fkparent.integration.RegisterCertificateValidator;
 import se.inera.certificate.modules.fkparent.model.converter.RegisterCertificateTestValidator;
 import se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.certificate.modules.luae_na.model.internal.AktivitetsersattningNAUtlatande;
+import se.inera.certificate.modules.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.certificate.modules.luae_na.validator.InternalDraftValidator;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -41,8 +41,8 @@ public class ConverterTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void doSchematronValidationSjukersattning() throws Exception {
-        String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
+    public void doSchematronValidationLuaeNa() throws Exception {
+        String xmlContents = Resources.toString(getResource("luae_na.xml"), Charsets.UTF_8);
 
         RegisterCertificateTestValidator generalValidator = new RegisterCertificateTestValidator();
         assertTrue(generalValidator.validateGeneral(xmlContents));
@@ -50,18 +50,17 @@ public class ConverterTest {
         RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_na.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
 
-        //System.out.println(SVRLHelper.getAllFailedAssertions(result).get(0).getText());
         assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }
 
     @Test
     public void outputJsonFromXml() throws Exception {
 
-        String xmlContents = Resources.toString(getResource("sjukersattning3.xml"), Charsets.UTF_8);
+        String xmlContents = Resources.toString(getResource("luae_na.xml"), Charsets.UTF_8);
         RegisterCertificateType transport = JAXB.unmarshal(new StringReader(xmlContents), RegisterCertificateType.class);
 
         String json = getJsonFromTransport(transport);
-        AktivitetsersattningNAUtlatande utlatandeFromJson = objectMapper.readValue(json, AktivitetsersattningNAUtlatande.class);
+        LuaenaUtlatande utlatandeFromJson = objectMapper.readValue(json, LuaenaUtlatande.class);
 
         RegisterCertificateType transportConvertedALot = InternalToTransport.convert(utlatandeFromJson);
         String convertedXML = getXmlFromModel(transportConvertedALot);
@@ -99,7 +98,7 @@ public class ConverterTest {
 
     private String getJsonFromTransport(RegisterCertificateType transport) throws ConverterException {
         StringWriter jsonWriter = new StringWriter();
-        AktivitetsersattningNAUtlatande internal = TransportToInternal.convert(transport.getIntyg());
+        LuaenaUtlatande internal = TransportToInternal.convert(transport.getIntyg());
         try {
             objectMapper.writeValue(jsonWriter, internal);
         } catch (Exception e) {
