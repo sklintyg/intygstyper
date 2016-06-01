@@ -157,7 +157,7 @@
   <iso:pattern id="q1.1-25.1">
     <iso:rule context="//gn:delsvar[@id='1.1']/tp:cv/tp:code[matches(normalize-space(.), '^(JOURNALUPPGIFTER|ANHORIG|ANNAT)$')]">
       <iso:assert test="count(//gn:delsvar[@id='25.1']) = 1">
-        Om 'Typ av grund för MU' besvarats med kod 3, 4 eller 5 måste 'Typ av upplysningar' anges.
+        Om 'Typ av grund för MU' besvarats med kod JOURNALUPPGIFTER, ANHORIG eller ANNAT måste 'Typ av upplysningar' anges.
       </iso:assert>
     </iso:rule>
   </iso:pattern>
