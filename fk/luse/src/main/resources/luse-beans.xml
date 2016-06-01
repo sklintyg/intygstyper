@@ -2,13 +2,13 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean class="se.inera.certificate.modules.luse.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.intyg.intygstyper.luse.model.converter.WebcertModelFactory" />
 
-  <bean class="se.inera.certificate.modules.luse.rest.LuseModuleApi" />
+  <bean class="se.inera.intyg.intygstyper.luse.rest.LuseModuleApi" />
 
-  <bean class="se.inera.certificate.modules.luse.validator.InternalDraftValidator" />
+  <bean class="se.inera.intyg.intygstyper.luse.validator.InternalDraftValidator" />
 
-  <bean id="luseEntryPoint" class="se.inera.certificate.modules.luse.support.LuseEntryPoint" />
+  <bean id="luseEntryPoint" class="se.inera.intyg.intygstyper.luse.support.LuseEntryPoint" />
 
   <bean id="luse-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
 
