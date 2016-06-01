@@ -1,8 +1,8 @@
-angular.module('lisu').controller('sjukpenning-utokad.EditCertCtrl',
+angular.module('lisu').controller('lisu.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
-        'sjukpenning-utokad.Domain.IntygModel', 'sjukpenning-utokad.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'sjukpenning-utokad.FormFactory', 'common.fmbService', 'common.fmb.ViewStateService',
+        'lisu.Domain.IntygModel', 'lisu.EditCertCtrl.ViewStateService',
+        'common.anchorScrollService', 'lisu.FormFactory', 'common.fmbService', 'common.fmb.ViewStateService',
 
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory,

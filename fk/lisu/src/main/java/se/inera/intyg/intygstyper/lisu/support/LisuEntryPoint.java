@@ -75,9 +75,9 @@ public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
-            return "/web/webjars/lisu/minaintyg/css/sjukpenning-utokad.css";
+            return "/web/webjars/lisu/minaintyg/css/lisu.css";
         case WEBCERT:
-            return "/web/webjars/lisu/webcert/css/sjukpenning-utokad.css";
+            return "/web/webjars/lisu/webcert/css/lisu.css";
         default:
             return null;
         }

@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var sjukpenningUtokadMessages = {
+var lisuMessages = {
     'sv': {
         'lisu.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
         'lisu.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',

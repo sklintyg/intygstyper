@@ -30,7 +30,7 @@ angular.module('lisu').config(function($stateProvider) {
             views : {
                 'content@' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
-                    controller: 'sjukpenning-utokad.EditCertCtrl'
+                    controller: 'lisu.EditCertCtrl'
                 },
 
                 'wcHeader@lisu-edit' : {
@@ -50,7 +50,7 @@ angular.module('lisu').config(function($stateProvider) {
 
                 'formly@lisu-edit' : {
                     templateUrl: intygsTypPath + 'views/utkast/formly.html',
-                    controller: 'sjukpenning-utokad.EditCert.FormlyCtrl'
+                    controller: 'lisu.EditCert.FormlyCtrl'
                 }
             }
         }).

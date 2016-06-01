@@ -41,7 +41,7 @@ angular.module('luse').controller('luse.ViewCertCtrl',
                         $location.path('#/start');
                     } else {
                         // show error view
-                        $location.path('/sjukersattning/fel/couldnotarchivecert');
+                        $location.path('/luse/fel/couldnotarchivecert');
                     }
                 });
             };
@@ -89,11 +89,11 @@ angular.module('luse').controller('luse.ViewCertCtrl',
             };
 
             $scope.showStatusHistory = function() {
-                $location.path('/sjukersattning/statushistory');
+                $location.path('/luse/statushistory');
             };
 
             $scope.backToViewCertificate = function() {
-                $location.path('/sjukersattning/view/' + $stateParams.certificateId);
+                $location.path('/luse/view/' + $stateParams.certificateId);
             };
 
             // expose calculated static link for pdf download

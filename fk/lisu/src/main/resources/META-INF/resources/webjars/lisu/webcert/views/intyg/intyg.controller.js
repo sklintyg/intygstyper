@@ -1,7 +1,7 @@
 angular.module('lisu').controller('lisu.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
         'common.messageService', 'common.UserModel', 'lisu.IntygController.ViewStateService',
-        'sjukpenning-utokad.FormFactory', 'common.dynamicLabelService',
+        'lisu.FormFactory', 'common.dynamicLabelService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService) {
             'use strict';

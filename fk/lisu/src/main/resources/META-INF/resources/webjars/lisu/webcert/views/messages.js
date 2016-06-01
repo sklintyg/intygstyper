@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var sjukpenningUtokadMessages = {
+var lisuMessages = {
     'sv': {
         'lisu.error.generic': 'Kunde inte visa intyget',
         'lisu.info.loadingcertificate': 'Hämtar intyget..',

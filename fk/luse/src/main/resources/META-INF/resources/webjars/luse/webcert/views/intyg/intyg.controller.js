@@ -1,7 +1,7 @@
 angular.module('luse').controller('luse.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
-        'common.messageService', 'common.UserModel', 'sjukersattning.IntygController.ViewStateService',
-        'sjukersattning.FormFactory', 'common.dynamicLabelService',
+        'common.messageService', 'common.UserModel', 'luse.IntygController.ViewStateService',
+        'luse.FormFactory', 'common.dynamicLabelService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService) {
             'use strict';
@@ -73,7 +73,7 @@ angular.module('luse').controller('luse.ViewCertCtrl',
              * @type {{}}
              */
             $scope.intygBackup = {intyg: null, showBackupInfo: false};
-            var unbindFastEventFail = $rootScope.$on('sjukersattning.ViewCertCtrl.load.failed', function(event, intyg) {
+            var unbindFastEventFail = $rootScope.$on('luse.ViewCertCtrl.load.failed', function(event, intyg) {
                 $scope.intygBackup.intyg = intyg;
             });
             $scope.$on('$destroy', unbindFastEventFail);

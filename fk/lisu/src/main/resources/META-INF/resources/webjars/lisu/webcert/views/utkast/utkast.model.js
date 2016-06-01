@@ -1,4 +1,4 @@
-angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
+angular.module('lisu').factory('lisu.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel', 'common.domain.ModelTransformService', 'common.ObjectHelper',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform, ObjectHelper) {
@@ -72,10 +72,10 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
                 return resultArray;
             };
 
-            var sjukpenningUtokadModel = BaseAtticModel._extend({
+            var LisuModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'sjukersattningModel', {
+                    init._super.call(this, 'lisuModel', {
 
                         'id': undefined,
                         'textVersion': undefined,
@@ -175,13 +175,13 @@ angular.module('lisu').factory('sjukpenning-utokad.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new sjukpenningUtokadModel());
+                    return new DraftModel(new LisuModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return sjukpenningUtokadModel;
+            return LisuModel;
 
         }]);

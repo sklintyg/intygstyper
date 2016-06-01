@@ -1,10 +1,10 @@
-/* global sjukpenning-utokad messages */
+/* global lisuMessages */
 angular.module('lisu', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
-angular.module('lisu').run(['common.messageService', 'common.dynamicLabelService',
-    function(messageService, dynamicLabelService) {
+angular.module('lisu').run(['common.messageService',
+    function(messageService) {
         'use strict';
 
-        messageService.addResources(sjukpenningUtokadMessages);
+        messageService.addResources(lisuMessages);
     }]);

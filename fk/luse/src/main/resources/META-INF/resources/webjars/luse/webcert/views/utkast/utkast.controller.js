@@ -1,8 +1,8 @@
-angular.module('luse').controller('sjukersattning.EditCertCtrl',
+angular.module('luse').controller('luse.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
-        'sjukersattning.Domain.IntygModel', 'sjukersattning.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'sjukersattning.FormFactory',
+        'luse.Domain.IntygModel', 'luse.EditCertCtrl.ViewStateService',
+        'common.anchorScrollService', 'luse.FormFactory',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory) {
             'use strict';

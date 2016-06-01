@@ -30,7 +30,7 @@ angular.module('luse').config(function($stateProvider) {
             views : {
                 'content@' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
-                    controller: 'sjukersattning.EditCertCtrl'
+                    controller: 'luse.EditCertCtrl'
                 },
 
                 'wcHeader@luse-edit' : {
@@ -50,7 +50,7 @@ angular.module('luse').config(function($stateProvider) {
 
                 'formly@luse-edit' : {
                     templateUrl: intygsTypPath + 'views/utkast/formly.html',
-                    controller: 'sjukersattning.EditCert.FormlyCtrl'
+                    controller: 'luse.EditCert.FormlyCtrl'
                 }
             }
         }).

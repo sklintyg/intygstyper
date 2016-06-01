@@ -1,4 +1,4 @@
-angular.module('lisu').factory('sjukpenning-utokad.FormFactory',
+angular.module('lisu').factory('lisu.FormFactory',
     ['common.DateUtilsService', 'common.ObjectHelper', 'common.fmb.ViewStateService',
         function(DateUtils, ObjectHelper, fmbViewState) {
 

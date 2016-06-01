@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var sjukersattningMessages = {
+var luseMessages = {
     'sv': {
         'luse.error.generic': 'Kunde inte visa intyget',
         'luse.info.loadingcertificate': 'Hämtar intyget..',

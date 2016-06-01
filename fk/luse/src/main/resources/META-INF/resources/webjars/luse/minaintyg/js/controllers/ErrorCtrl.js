@@ -1,4 +1,4 @@
-angular.module('luse').controller('sjukersattning.ErrorCtrl',
+angular.module('luse').controller('luse.ErrorCtrl',
     function($state, $stateParams, $scope) {
         'use strict';
 

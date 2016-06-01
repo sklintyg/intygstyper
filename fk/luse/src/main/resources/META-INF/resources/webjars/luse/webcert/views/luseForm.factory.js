@@ -1,4 +1,4 @@
-angular.module('luse').factory('sjukersattning.FormFactory', ['luse.FormFactoryHelper', function(FactoryHelper) {
+angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', function(FactoryHelper) {
     'use strict';
 
     var categoryNames = [

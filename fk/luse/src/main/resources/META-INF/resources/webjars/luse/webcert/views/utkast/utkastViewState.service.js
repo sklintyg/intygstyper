@@ -1,7 +1,6 @@
-angular.module('luse').service('sjukersattning.EditCertCtrl.ViewStateService',
-    ['$log', '$state', 'common.UtkastViewStateService', 'sjukersattning.Domain.IntygModel',
-        'common.dynamicLabelService',
-        function($log, $state, CommonViewState, IntygModel, dynamicLabelService) {
+angular.module('luse').service('luse.EditCertCtrl.ViewStateService',
+    ['$log', '$state', 'common.UtkastViewStateService', 'luse.Domain.IntygModel',
+        function($log, $state, CommonViewState, IntygModel) {
             'use strict';
 
             this.common = CommonViewState;

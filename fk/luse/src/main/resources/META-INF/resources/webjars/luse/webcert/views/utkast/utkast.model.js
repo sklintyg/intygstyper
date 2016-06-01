@@ -1,4 +1,4 @@
-angular.module('luse').factory('sjukersattning.Domain.IntygModel',
+angular.module('luse').factory('luse.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
@@ -32,10 +32,10 @@ angular.module('luse').factory('sjukersattning.Domain.IntygModel',
                 return diagnosArray;
             };
 
-            var sjukersattningModel = BaseAtticModel._extend({
+            var LuseModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'sjukersattningModel', {
+                    init._super.call(this, 'luseModel', {
 
                         'id': undefined,
                         'textVersion': undefined,
@@ -104,13 +104,13 @@ angular.module('luse').factory('sjukersattning.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new sjukersattningModel());
+                    return new DraftModel(new LuseModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return sjukersattningModel;
+            return LuseModel;
 
         }]);

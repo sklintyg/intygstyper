@@ -1,4 +1,4 @@
-angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
+angular.module('lisu').controller('lisu.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
         'common.IntygService', 'common.dialogService', 'common.messageService',
         function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService, dialogService,
@@ -41,7 +41,7 @@ angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
                         $location.path('#/start');
                     } else {
                         // show error view
-                        $location.path('/sjukpenning-utokad/fel/couldnotarchivecert');
+                        $location.path('/lisu/fel/couldnotarchivecert');
                     }
                 });
             };
@@ -89,11 +89,11 @@ angular.module('lisu').controller('sjukpenning-utokad.ViewCertCtrl',
             };
 
             $scope.showStatusHistory = function() {
-                $location.path('/sjukpenning-utokad/statushistory');
+                $location.path('/lisu/statushistory');
             };
 
             $scope.backToViewCertificate = function() {
-                $location.path('/sjukpenning-utokad/view/' + $stateParams.certificateId);
+                $location.path('/lisu/view/' + $stateParams.certificateId);
             };
 
             // expose calculated static link for pdf download

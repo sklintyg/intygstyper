@@ -1,4 +1,4 @@
-angular.module('lisu').controller('sjukpenning-utokad.ErrorCtrl',
+angular.module('lisu').controller('lisu.ErrorCtrl',
     function($state, $stateParams, $scope) {
         'use strict';
 
