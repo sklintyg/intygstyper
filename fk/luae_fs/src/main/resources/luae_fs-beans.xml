@@ -2,13 +2,13 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean class="se.inera.certificate.modules.luae_fs.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.intyg.intygstyper.luae_fs.model.converter.WebcertModelFactory" />
 
-  <bean class="se.inera.certificate.modules.luae_fs.rest.LuaefsModuleApi" />
+  <bean class="se.inera.intyg.intygstyper.luae_fs.rest.LuaefsModuleApi" />
 
-  <bean class="se.inera.certificate.modules.luae_fs.validator.InternalDraftValidator" />
+  <bean class="se.inera.intyg.intygstyper.luae_fs.validator.InternalDraftValidator" />
 
-  <bean id="luaefsEntryPoint" class="se.inera.certificate.modules.luae_fs.support.LuaefsEntryPoint" />
+  <bean id="luaefsEntryPoint" class="se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint" />
 
   <bean id="luae_fs-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
 

@@ -29,7 +29,7 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
     <beans profile="dev,it-fk-stub">
-        <bean id="register-fk-stub" class="se.inera.certificate.modules.fkparent.integration.stub.RegisterCertificateResponderStub" />
+        <bean id="register-fk-stub" class="se.inera.intyg.intygstyper.fkparent.integration.stub.RegisterCertificateResponderStub" />
         <jaxws:endpoint address="/register-certificate-stub-fk-parent" implementor="#register-fk-stub">
             <jaxws:schemaLocations>
                 <jaxws:schemaLocation>classpath:/core_components/clinicalprocess_healthcond_certificate_2.0.xsd</jaxws:schemaLocation>
@@ -40,7 +40,7 @@
     </beans>
 
     <beans>
-        <bean class="se.inera.certificate.modules.fkparent.model.validator.InternalValidatorUtil"></bean>
+        <bean class="se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil"></bean>
     </beans>
 
 </beans>
