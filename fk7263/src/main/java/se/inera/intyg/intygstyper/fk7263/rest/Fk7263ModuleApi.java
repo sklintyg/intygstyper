@@ -57,7 +57,6 @@ import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
@@ -102,7 +101,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     private XslTransformer xslTransformer;
 
     @Autowired
-    @Qualifier("fk7263-objectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired(required = false)
@@ -114,8 +112,6 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired(required = false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
-
-    private ModuleContainerApi moduleContainer;
 
     @Autowired(required = false)
     private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
@@ -188,16 +184,6 @@ public class Fk7263ModuleApi implements ModuleApi {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
-    }
-
-    @Override
-    public ModuleContainerApi getModuleContainer() {
-        return moduleContainer;
-    }
-
-    @Override
-    public void setModuleContainer(ModuleContainerApi moduleContainer) {
-        this.moduleContainer = moduleContainer;
     }
 
     /**

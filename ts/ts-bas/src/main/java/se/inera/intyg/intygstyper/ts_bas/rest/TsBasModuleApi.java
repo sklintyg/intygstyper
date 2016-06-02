@@ -47,7 +47,6 @@ import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.*;
@@ -97,14 +96,11 @@ public class TsBasModuleApi implements ModuleApi {
     private WebcertModelFactory webcertModelFactory;
 
     @Autowired(required = true)
-    @Qualifier("tsBasObjectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired(required = false)
     @Qualifier("tsBasXslTransformer")
     private XslTransformer xslTransformer;
-
-    private ModuleContainerApi moduleContainer;
 
     @Autowired(required = false)
     private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
@@ -152,17 +148,6 @@ public class TsBasModuleApi implements ModuleApi {
     public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
-    }
-
-    @Override
-    public void setModuleContainer(ModuleContainerApi moduleContainer) {
-        this.moduleContainer = moduleContainer;
-
-    }
-
-    @Override
-    public ModuleContainerApi getModuleContainer() {
-        return moduleContainer;
     }
 
     /**

@@ -35,11 +35,11 @@ import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.TransportToInternalConverter;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intyg.intygstyper.ts_diabetes.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
@@ -49,8 +49,8 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTSDiabetesResponderImpl.class);
 
-    @Autowired
-    private TsDiabetesModuleApi moduleService;
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
 
     @Autowired
     private Validator validator;
@@ -67,7 +67,7 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
             CertificateHolder certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
 
-            moduleService.getModuleContainer().certificateReceived(certificateHolder);
+            moduleContainer.certificateReceived(certificateHolder);
 
             response.setResultat(ResultTypeUtil.okResult());
 

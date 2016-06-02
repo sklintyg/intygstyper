@@ -30,7 +30,7 @@ import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValida
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSchematronValidatorTestUtil;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
-import se.inera.intyg.intygstyper.luse.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.luse.validator.InternalDraftValidatorImpl;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
@@ -66,7 +66,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @InjectMocks
     private InternalValidatorUtil validatorUtil;
 
-    private static InternalDraftValidator internalValidator;
+    private static InternalDraftValidatorImpl internalValidator;
 
     public InternalValidatorResultMatchesSchematronValidatorTest(String name, Scenario scenario, boolean shouldFail) {
         this.scenario = scenario;
@@ -95,7 +95,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        internalValidator = new InternalDraftValidator(validatorUtil);
+        internalValidator = new InternalDraftValidatorImpl(validatorUtil);
     }
 
     @Test

@@ -46,7 +46,7 @@ public class InternalDraftValidatorTest {
     private static final String ENHET_NAMN = "enhetNamn";
     private static final String INTYG_ID = "intyg-1";
 
-    InternalDraftValidator validator;
+    InternalDraftValidatorImpl validator;
     InternalValidatorUtil validatorUtil;
 
     List<ValidationMessage> validationMessages;
@@ -60,7 +60,7 @@ public class InternalDraftValidatorTest {
     public void setUp() throws Exception {
         validatorUtil = new InternalValidatorUtil();
         validatorUtil.setModuleService(moduleService);
-        validator = new InternalDraftValidator(validatorUtil);
+        validator = new InternalDraftValidatorImpl(validatorUtil);
         validationMessages = new ArrayList<>();
 
         builderTemplate = LuaefsUtlatande.builder()

@@ -32,7 +32,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -44,7 +43,6 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.utils.*;
@@ -66,8 +64,7 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 public class ModuleApiTest {
 
     @Autowired
-    @Qualifier("tsBasObjectMapper")
-    private ObjectMapper mapper;
+    private ObjectMapper objectMapper;
 
     private RegisterTSBasResponderInterface registerTSBasResponderInterface;
     private RegisterTSBasResponseType registerResponse;
@@ -76,10 +73,6 @@ public class ModuleApiTest {
 
     @Autowired
     private TsBasModuleApi moduleApi;
-
-    @Autowired
-    @Qualifier("tsBasObjectMapper")
-    private CustomObjectMapper objectMapper;
 
     @Before
     public void setUpMocks() {
@@ -93,14 +86,14 @@ public class ModuleApiTest {
     @Test
     public void testPdf() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            moduleApi.pdf(mapper.writeValueAsString(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
+            moduleApi.pdf(objectMapper.writeValueAsString(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
         }
     }
 
     @Test
     public void copyContainsOriginalData() throws Exception {
         Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
-        String internalHolder = mapper.writeValueAsString(scenario.asInternalModel());
+        String internalHolder = objectMapper.writeValueAsString(scenario.asInternalModel());
 
         String holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
 
@@ -127,7 +120,7 @@ public class ModuleApiTest {
         String logicalAddress = "OK";
         List<String> failResults = new ArrayList<>();
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            String internalModel = mapper.writeValueAsString(scenario.asInternalModel());
+            String internalModel = objectMapper.writeValueAsString(scenario.asInternalModel());
             try {
                 moduleApi.registerCertificate(internalModel, logicalAddress);
             } catch (ModuleException me) {
@@ -146,7 +139,7 @@ public class ModuleApiTest {
         String logicalAddress = "FAIL";
         String failResult = "";
         Scenario scenario = ScenarioFinder.getInternalScenario("invalid-missing-identitet");
-        String internalModel = mapper.writeValueAsString(scenario.asInternalModel());
+        String internalModel = objectMapper.writeValueAsString(scenario.asInternalModel());
         try {
             moduleApi.registerCertificate(internalModel, logicalAddress);
         } catch (ModuleException me) {

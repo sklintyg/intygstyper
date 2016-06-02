@@ -48,9 +48,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.intygstyper.luae_fs.model.converter.WebcertModelFactory;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
@@ -65,6 +62,9 @@ import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.luae_fs.model.converter.WebcertModelFactoryImpl;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
@@ -95,7 +95,7 @@ public class LuaefsModuleApiTest {
     private IntygTextsService intygTextsServiceMock;
 
     @Spy
-    private WebcertModelFactory webcertModelFactory;
+    private WebcertModelFactoryImpl webcertModelFactory;
 
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
@@ -237,8 +237,9 @@ public class LuaefsModuleApiTest {
 
         RegisterCertificateResponseType result = createReturnVal(ResultCodeType.ERROR);
         when(registerCertificateResponderInterface.registerCertificate(anyString(), any())).thenReturn(result);
+        final String json = FileUtils.readFileToString(new ClassPathResource("LuaefsModuleApiTest/valid-utkast-sample.json").getFile());
 
-        moduleApi.registerCertificate("json", LOGICAL_ADDRESS);
+        moduleApi.registerCertificate(json, LOGICAL_ADDRESS);
     }
 
     /**

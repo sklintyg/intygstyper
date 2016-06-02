@@ -19,24 +19,24 @@
 
 package se.inera.intyg.intygstyper.luae_fs.validator;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
-import se.inera.intyg.common.support.validate.StringValidator;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class InternalDraftValidator {
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
+
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.validate.StringValidator;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
+import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+
+public class InternalDraftValidatorImpl implements InternalDraftValidator<LuaefsUtlatande> {
 
     public static final int MAX_DIAGNOSER = 3;
 
@@ -45,14 +45,15 @@ public class InternalDraftValidator {
     @Autowired
     InternalValidatorUtil validatorUtil;
 
-    public InternalDraftValidator() {
+    public InternalDraftValidatorImpl() {
     }
 
     @VisibleForTesting
-    public InternalDraftValidator(InternalValidatorUtil validatorUtil) {
+    public InternalDraftValidatorImpl(InternalValidatorUtil validatorUtil) {
         this.validatorUtil = validatorUtil;
     }
 
+    @Override
     public ValidateDraftResponse validateDraft(LuaefsUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
 

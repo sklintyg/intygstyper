@@ -23,11 +23,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
-import se.inera.intyg.intygstyper.luae_fs.rest.LuaefsModuleApi;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
+import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
+import se.inera.intyg.intygstyper.luae_fs.rest.LuaefsModuleApi;
 
 public class LuaefsEntryPoint extends FkAbstractModuleEntryPoint {
 
@@ -36,6 +36,7 @@ public class LuaefsEntryPoint extends FkAbstractModuleEntryPoint {
     public static final String MODULE_ID = "luae_fs";
     public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning vid förlängd skolgång";
     public static final String MODULE_DESCRIPTION = "Läkarutlåtande för aktivitetsersättning vid förlängd skolgång";
+    public static final String SCHEMATRON_FILE = "luae_fs.sch";
 
     @Autowired
     private LuaefsModuleApi moduleApi;

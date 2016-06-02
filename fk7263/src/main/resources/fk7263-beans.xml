@@ -30,6 +30,4 @@
 
   <bean id="Fk7263EntryPoint" class="se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint" />
 
-  <bean id="fk7263-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
-
 </beans>

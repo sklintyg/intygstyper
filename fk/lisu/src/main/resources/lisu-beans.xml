@@ -2,14 +2,12 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean class="se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactoryImpl" />
 
   <bean class="se.inera.intyg.intygstyper.lisu.rest.LisuModuleApi" />
 
-  <bean class="se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidator" />
+  <bean class="se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidatorImpl" />
 
   <bean id="lisuUtokadEntryPoint" class="se.inera.intyg.intygstyper.lisu.support.LisuEntryPoint" />
-
-  <bean id="lisu-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
 
 </beans>

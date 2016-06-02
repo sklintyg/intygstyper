@@ -22,11 +22,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
-import se.inera.intyg.intygstyper.luae_na.rest.LuaenaModuleApi;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
+import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
+import se.inera.intyg.intygstyper.luae_na.rest.LuaenaModuleApi;
 
 public class LuaenaEntryPoint extends FkAbstractModuleEntryPoint {
     public static final String DEFAULT_RECIPIENT_ID = "FK";
@@ -34,34 +34,42 @@ public class LuaenaEntryPoint extends FkAbstractModuleEntryPoint {
     public static final String MODULE_ID = "luae_na";
     public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning vid nedsatt arbetsförmåga";
     public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+    public static final String SCHEMATRON_FILE = "luae_na.sch";
 
     @Autowired
     private LuaenaModuleApi moduleApi;
 
+    @Override
     public String getModuleId() {
         return MODULE_ID;
     }
 
+    @Override
     public String getModuleName() {
         return MODULE_NAME;
     }
 
+    @Override
     public String getModuleDescription() {
         return MODULE_DESCRIPTION;
     }
 
+    @Override
     public String getDefaultRecipient() {
         return DEFAULT_RECIPIENT_ID;
     }
 
+    @Override
     public ModuleApi getModuleApi() {
         return moduleApi;
     }
 
+    @Override
     public Map<String, Boolean> getModuleFeatures() {
         return ModuleFeaturesFactory.getFeatures("luae_na-features.properties");
     }
 
+    @Override
     public String getModuleCssPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
@@ -73,6 +81,7 @@ public class LuaenaEntryPoint extends FkAbstractModuleEntryPoint {
         }
     }
 
+    @Override
     public String getModuleScriptPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:
@@ -84,6 +93,7 @@ public class LuaenaEntryPoint extends FkAbstractModuleEntryPoint {
         }
     }
 
+    @Override
     public String getModuleDependencyDefinitionPath(ApplicationOrigin originator) {
         switch (originator) {
         case MINA_INTYG:

@@ -39,11 +39,9 @@ import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.*;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,8 +53,7 @@ import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.Resu
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg;
+import se.inera.intyg.intygstyper.fk7263.model.converter.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
@@ -66,22 +63,24 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 /**
  * @author andreaskaltenbach
  */
-
-@ContextConfiguration(locations = ("/fk7263-test-config.xml"))
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class Fk7263ModuleApiTest {
 
     public static final String TESTFILE_UTLATANDE         = "Fk7263ModuleApiTest/utlatande.json";
     public static final String TESTFILE_UTLATANDE_MINIMAL = "Fk7263ModuleApiTest/utlatande-minimal.json";
     public static final String TESTFILE_UTLATANDE_FAIL    = "Fk7263ModuleApiTest/utlatande-fail.json";
 
+    @Mock
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
 
-    @Autowired
+    @Spy
+    private WebcertModelFactory webcertModelFactory = new WebcertModelFactory();
+
+    @InjectMocks
     private Fk7263ModuleApi fk7263ModuleApi;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Spy
+    private ObjectMapper objectMapper = new CustomObjectMapper();
 
     @Before
     public void setUpMocks() {

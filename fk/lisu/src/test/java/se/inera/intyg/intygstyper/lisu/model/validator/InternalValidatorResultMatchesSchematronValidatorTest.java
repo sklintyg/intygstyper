@@ -29,7 +29,7 @@ import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
 import se.inera.intyg.intygstyper.lisu.model.utils.Scenario;
 import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioNotFoundException;
-import se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 import javax.xml.transform.stream.StreamSource;
@@ -65,7 +65,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @InjectMocks
     private InternalValidatorUtil validatorUtil;
 
-    private static InternalDraftValidator internalValidator;
+    private static InternalDraftValidatorImpl internalValidator;
 
     public InternalValidatorResultMatchesSchematronValidatorTest(String name, Scenario scenario, boolean shouldFail) {
         this.scenario = scenario;
@@ -94,7 +94,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        internalValidator = new InternalDraftValidator(validatorUtil);
+        internalValidator = new InternalDraftValidatorImpl(validatorUtil);
     }
 
     @Test

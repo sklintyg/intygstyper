@@ -32,8 +32,6 @@
     <constructor-arg value="true"/>
   </bean>
 
-  <bean id="tsBasObjectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
-
   <bean class="se.inera.intyg.intygstyper.ts_bas.model.converter.WebcertModelFactory"/>
 
   <bean id="tsBasEntryPoint" class="se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint"/>

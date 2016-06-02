@@ -12,33 +12,27 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.helger.schematron.svrl.SVRLHelper;
 
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RegisterCertificateTestValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidator;
-import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
-@ContextConfiguration(locations = {"/module-config.xml", "/test-config.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
-
+@RunWith(MockitoJUnitRunner.class)
 public class ConverterTest {
 
-    @Autowired
-    @Qualifier("luae_na-objectMapper")
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new CustomObjectMapper();
 
     @Test
     public void doSchematronValidationLuaeNa() throws Exception {
@@ -73,7 +67,7 @@ public class ConverterTest {
         assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
 
         // Why not validate internal model as well?
-        InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
+        InternalDraftValidatorImpl internalValidator = new InternalDraftValidatorImpl(new InternalValidatorUtil());
         internalValidator.validateDraft(utlatandeFromJson);
     }
 

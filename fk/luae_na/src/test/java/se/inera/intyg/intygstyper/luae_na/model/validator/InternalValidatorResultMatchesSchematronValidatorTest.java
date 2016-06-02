@@ -29,7 +29,7 @@ import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.intygstyper.luae_na.model.utils.Scenario;
 import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioNotFoundException;
-import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 import javax.xml.transform.stream.StreamSource;
@@ -64,7 +64,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @InjectMocks
     private InternalValidatorUtil validatorUtil;
 
-    private static InternalDraftValidator internalValidator;
+    private static InternalDraftValidatorImpl internalValidator;
 
     public InternalValidatorResultMatchesSchematronValidatorTest(String name, Scenario scenario, boolean shouldFail) {
         this.scenario = scenario;
@@ -93,7 +93,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        internalValidator = new InternalDraftValidator(validatorUtil);
+        internalValidator = new InternalDraftValidatorImpl(validatorUtil);
     }
 
     @Test

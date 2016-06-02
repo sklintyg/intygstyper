@@ -36,12 +36,12 @@ import se.inera.intyg.common.support.integration.module.exception.CertificateAlr
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.TransportToInternal;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
@@ -51,8 +51,8 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
     @Autowired
     private TsBasValidator validator;
 
-    @Autowired
-    private TsBasModuleApi moduleApi;
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
 
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
@@ -77,7 +77,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
             CertificateHolder certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
 
-            moduleApi.getModuleContainer().certificateReceived(certificateHolder);
+            moduleContainer.certificateReceived(certificateHolder);
 
             response.setResultat(ResultTypeUtil.okResult());
             LOGGER.debug("Registered intyg with id: {}", registerTsBas.getIntyg().getIntygsId());

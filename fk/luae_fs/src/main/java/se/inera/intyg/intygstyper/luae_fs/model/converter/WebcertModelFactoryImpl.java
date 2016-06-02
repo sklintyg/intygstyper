@@ -19,29 +19,25 @@
 
 package se.inera.intyg.intygstyper.luae_fs.model.converter;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
+
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Relation;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.fkparent.model.converter.WebcertModelFactory;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 
 /**
  * Factory for creating an editable model.
  */
-public class WebcertModelFactory {
-    private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactory.class);
+public class WebcertModelFactoryImpl implements WebcertModelFactory<LuaefsUtlatande> {
+    private static final Logger LOG = LoggerFactory.getLogger(WebcertModelFactoryImpl.class);
 
     @Autowired(required = false)
     private IntygTextsService intygTexts;
@@ -54,6 +50,7 @@ public class WebcertModelFactory {
      * @return {@link LuaefsUtlatande} or throws a ConverterException if something unforeseen happens
      * @throws ConverterException
      */
+    @Override
     public LuaefsUtlatande createNewWebcertDraft(CreateNewDraftHolder newDraftData) throws ConverterException {
 
         LOG.trace("Creating draft with id {}", newDraftData.getCertificateId());
@@ -62,8 +59,7 @@ public class WebcertModelFactory {
         GrundData grundData = new GrundData();
 
         populateWithId(template, newDraftData.getCertificateId());
-        populateWithSkapadAv(grundData, newDraftData.getSkapadAv());
-        populateWithPatientInfo(grundData, newDraftData.getPatient());
+        WebcertModelFactoryUtil.populateGrunddataFromCreateNewDraftHolder(grundData, newDraftData);
 
         // Default to latest version available of intyg
         template.setTextVersion(intygTexts.getLatestVersion(LuaefsEntryPoint.MODULE_ID));
@@ -71,6 +67,7 @@ public class WebcertModelFactory {
         return template.setGrundData(grundData).build();
     }
 
+    @Override
     public LuaefsUtlatande createCopy(CreateDraftCopyHolder copyData, LuaefsUtlatande template) throws ConverterException {
 
         LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
@@ -79,16 +76,7 @@ public class WebcertModelFactory {
         GrundData grundData = template.getGrundData();
 
         populateWithId(templateBuilder, copyData.getCertificateId());
-        populateWithSkapadAv(grundData, copyData.getSkapadAv());
-        populateWithRelation(grundData, copyData.getRelation());
-
-        if (copyData.hasPatient()) {
-            populateWithPatientInfo(grundData, copyData.getPatient());
-        }
-
-        if (copyData.hasNewPersonnummer()) {
-            populateWithNewPersonnummer(grundData, copyData.getNewPersonnummer());
-        }
+        WebcertModelFactoryUtil.populateGrunddataFromCreateDraftCopyHolder(grundData, copyData);
 
         resetDataInCopy(grundData);
 
@@ -102,40 +90,7 @@ public class WebcertModelFactory {
         utlatande.setId(utlatandeId);
     }
 
-    private void populateWithNewPersonnummer(GrundData grundData, Personnummer newPersonnummer) {
-        grundData.getPatient().setPersonId(newPersonnummer);
-    }
-
-    private void populateWithPatientInfo(GrundData grundData, Patient patient) throws ConverterException {
-        if (patient == null) {
-            throw new ConverterException("Got null while trying to populateWithPatientInfo");
-        }
-        grundData.setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
-    }
-
-    private void populateWithSkapadAv(GrundData grundData, HoSPersonal hoSPersonal) throws ConverterException {
-        if (hoSPersonal == null) {
-            throw new ConverterException("Got null while trying to populateWithSkapadAv");
-        }
-        grundData.setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
-    }
-
-    private void populateWithRelation(GrundData grundData, Relation relation) {
-        if (relation != null) {
-            grundData.setRelation(relation);
-        } else {
-            grundData.setRelation(null);
-        }
-    }
-
     private void resetDataInCopy(GrundData grundData) {
         grundData.setSigneringsdatum(null);
-    }
-
-    public void updateSkapadAv(LuaefsUtlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
-        utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
-        utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
-        utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
-        utlatande.getGrundData().setSigneringsdatum(signeringsdatum);
     }
 }

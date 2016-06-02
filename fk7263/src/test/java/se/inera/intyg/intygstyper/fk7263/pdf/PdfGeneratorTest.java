@@ -28,11 +28,7 @@ import java.util.*;
 import org.joda.time.LocalDateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itextpdf.text.DocumentException;
@@ -50,8 +46,6 @@ import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
 /**
  * @author andreaskaltenbach
  */
-@ContextConfiguration(locations = ("/fk7263-test-config.xml"))
-@RunWith(SpringJUnit4ClassRunner.class)
 public class PdfGeneratorTest {
 
     private static File fk7263Pdf;
@@ -60,8 +54,7 @@ public class PdfGeneratorTest {
     private static File expectedPdfContent;
     private static File expectedPdfContentEmployer;
 
-    @Autowired
-    private ObjectMapper mapper;
+    private ObjectMapper objectMapper = new CustomObjectMapper();
 
     @BeforeClass
     public static void readFiles() throws IOException {
@@ -76,9 +69,9 @@ public class PdfGeneratorTest {
     public void testPdfGeneration() throws IOException, PdfGeneratorException {
 
         @SuppressWarnings("unchecked")
-        Map<String, String> pdfContent = mapper.readValue(expectedPdfContent, Map.class);
+        Map<String, String> pdfContent = objectMapper.readValue(expectedPdfContent, Map.class);
 
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), false, ApplicationOrigin.WEBCERT, false).getBytes();
@@ -98,7 +91,7 @@ public class PdfGeneratorTest {
     @Test
     public void testPdfGenerationWithMasking() throws Exception {
 
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.MINA_INTYG, false).getBytes();
         writePdfToFile(generatorResult, "Mina-intyg");
@@ -106,7 +99,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void testPdfGenerationFromWebcert() throws Exception {
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, false).getBytes();
         writePdfToFile(generatorResult, "Webcert");
@@ -114,7 +107,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void testPdfGenerationFromWebcertWidthFalt9Borta() throws Exception {
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263falt9bortaJson, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263falt9bortaJson, Utlatande.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, false).getBytes();
         writePdfToFile(generatorResult, "Webcert");
@@ -122,7 +115,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void pdfGenerationRemovesFormFields() throws IOException, PdfGeneratorException {
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, false).getBytes();
 
         PdfReader reader = new PdfReader(generatorResult);
@@ -149,9 +142,9 @@ public class PdfGeneratorTest {
     @Test
     public void testGenerateEmployerCopy() throws Exception {
         @SuppressWarnings("unchecked")
-        Map<String, String> pdfContent = mapper.readValue(expectedPdfContentEmployer, Map.class);
+        Map<String, String> pdfContent = objectMapper.readValue(expectedPdfContentEmployer, Map.class);
 
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), false, ApplicationOrigin.WEBCERT, true).getBytes();
@@ -170,7 +163,7 @@ public class PdfGeneratorTest {
 
     @Test
     public void testPdfGenerationFromWebcertEmployerCopy() throws Exception {
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
         // generate PDF
         byte[] generatorResult = new PdfGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT, true).getBytes();
         writePdfToFile(generatorResult, "WebcertEmployer");
@@ -186,7 +179,7 @@ public class PdfGeneratorTest {
     @Test
     public void whenIntygIsSignedButNotSentToFKThenGeneratePDF() throws Exception {
         // Given
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
         List<Status> statuses = new ArrayList<Status>();
         statuses.add(new Status(CertificateState.RECEIVED, null, LocalDateTime.now()));
@@ -206,7 +199,7 @@ public class PdfGeneratorTest {
     @Test
     public void whenIntygIsSignedAndSentToFKThenGeneratePDF() throws Exception {
         // Given
-        Utlatande intyg = new CustomObjectMapper().readValue(fk7263Json, Utlatande.class);
+        Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
         List<Status> statuses = new ArrayList<Status>();
         statuses.add(new Status(CertificateState.SENT, "FK", LocalDateTime.now()));

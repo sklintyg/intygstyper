@@ -21,9 +21,6 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-  <bean id="ts-diabetes-objectMapper"
-    class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper" />
- 
   <bean id="ts-diabetes-jaxbContext" class="javax.xml.bind.JAXBContext" factory-method="newInstance">
     <constructor-arg type="java.lang.String" value="se.inera.intygstjanster.ts.services.v1" />
   </bean>

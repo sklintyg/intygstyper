@@ -23,11 +23,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
-import se.inera.intyg.intygstyper.lisu.rest.LisuModuleApi;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
+import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
+import se.inera.intyg.intygstyper.lisu.rest.LisuModuleApi;
 
 public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
 
@@ -36,6 +36,7 @@ public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
     public static final String MODULE_ID = "lisu";
     public static final String MODULE_NAME = "Läkarintyg för sjukpenning utökat";
     public static final String MODULE_DESCRIPTION = "Läkarintyg för sjukpenning utökat";
+    public static final String SCHEMATRON_FILE = "lisu.sch";
 
     @Autowired
     private LisuModuleApi moduleApi;

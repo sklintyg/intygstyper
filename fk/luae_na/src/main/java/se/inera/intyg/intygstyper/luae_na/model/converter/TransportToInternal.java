@@ -22,23 +22,22 @@ import static se.inera.intyg.common.support.modules.converter.TransportConverter
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getStringContent;
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
+
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
-import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
+import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
+import se.inera.intyg.intygstyper.fkparent.model.internal.*;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public final class TransportToInternal {
@@ -55,10 +54,6 @@ public final class TransportToInternal {
         utlatande.setTextVersion(source.getVersion());
         setSvar(utlatande, source);
         return utlatande.build();
-    }
-
-    public static CertificateMetaData getMetaData(Intyg source) {
-        return TransportConverterUtil.getMetaData(source);
     }
 
     private static void setSvar(LuaenaUtlatande.Builder utlatande, Intyg source) throws ConverterException {

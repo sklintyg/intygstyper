@@ -27,13 +27,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
@@ -46,9 +44,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactory;
-import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -58,6 +53,9 @@ import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactoryImpl;
+import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
+import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponderInterface;
@@ -82,7 +80,7 @@ public class LuaenaModuleApiTest {
     private WebcertModuleService moduleService;
 
     @Mock
-    private WebcertModelFactory webcertModelFactory;
+    private WebcertModelFactoryImpl webcertModelFactory;
 
     @InjectMocks
     private LuaenaModuleApi moduleApi;
@@ -180,7 +178,7 @@ public class LuaenaModuleApiTest {
         final String internalModel = "internal model";
         when(objectMapper.readValue(anyString(), eq(LuaenaUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
-        doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
+        when(objectMapper.writeValueAsString(any())).thenReturn(internalModel);
         String response = moduleApi.updateBeforeSave(internalModel, createHosPersonal());
         assertEquals(internalModel, response);
         verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
@@ -191,7 +189,7 @@ public class LuaenaModuleApiTest {
         final String internalModel = "internal model";
         when(objectMapper.readValue(anyString(), eq(LuaenaUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
-        doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
+        when(objectMapper.writeValueAsString(any())).thenReturn(internalModel);
         String response = moduleApi.updateBeforeSigning(internalModel, createHosPersonal(), LocalDateTime.now());
         assertEquals(internalModel, response);
         verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());

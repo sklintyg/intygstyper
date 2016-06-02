@@ -19,40 +19,22 @@
 
 package se.inera.intyg.intygstyper.luae_fs.model.internal;
 
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.DIAGNOS_SVAR_JSON_ID_6;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_DEBUT_SVAR_JSON_ID_15;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_JSON_ID_16;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDDATA_SVAR_JSON_ID;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_BESKRIVNING_DELSVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ID_JSON_ID;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.KANNEDOM_SVAR_JSON_ID_2;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.KONTAKT_ONSKAS_SVAR_JSON_ID_26;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.OVRIGT_SVAR_JSON_ID_25;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.TEXTVERSION_JSON_ID;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.TILLAGGSFRAGOR_SVAR_JSON_ID;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.UNDERLAGFINNS_SVAR_JSON_ID_3;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.UNDERLAG_SVAR_JSON_ID_4;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
+
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.SitUtlatande;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
-import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
+
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
-
-import javax.annotation.Nullable;
-import java.util.List;
+import se.inera.intyg.intygstyper.fkparent.model.internal.*;
+import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_LuaefsUtlatande.Builder.class)

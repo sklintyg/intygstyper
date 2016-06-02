@@ -27,13 +27,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
@@ -48,11 +46,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactory;
-import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
-import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioNotFoundException;
-import se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidator;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
@@ -64,6 +57,11 @@ import se.inera.intyg.common.support.modules.support.api.dto.Patient;
 import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactoryImpl;
+import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
+import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponderInterface;
@@ -82,10 +80,10 @@ public class LisuModuleApiTest {
     private WebcertModuleService moduleService;
 
     @Mock
-    private WebcertModelFactory webcertModelFactory;
+    private WebcertModelFactoryImpl webcertModelFactory;
 
     @Mock
-    private InternalDraftValidator internalDraftValidator;
+    private InternalDraftValidatorImpl internalDraftValidator;
 
     @Mock
     private ObjectMapper objectMapper;
@@ -149,7 +147,6 @@ public class LisuModuleApiTest {
     @Test
     public void testCreateNewInternal() throws Exception {
         when(webcertModelFactory.createNewWebcertDraft(any())).thenReturn(null);
-        doAnswer(a -> ((Writer) a.getArguments()[0]).append("internal model")).when(objectMapper).writeValue(any(Writer.class), anyString());
         moduleApi.createNewInternal(createDraftHolder());
         verify(webcertModelFactory, times(1)).createNewWebcertDraft(any());
     }
@@ -165,7 +162,6 @@ public class LisuModuleApiTest {
     public void testCreateNewInternalFromTemplate() throws Exception {
         when(webcertModelFactory.createCopy(any(), any())).thenReturn(null);
         when(objectMapper.readValue(eq("internal model"), eq(LisuUtlatande.class))).thenReturn(null);
-        doAnswer(a -> ((Writer) a.getArguments()[0]).append("internal model")).when(objectMapper).writeValue(any(Writer.class), anyString());
 
         moduleApi.createNewInternalFromTemplate(createCopyHolder(), "internal model");
 
@@ -264,7 +260,7 @@ public class LisuModuleApiTest {
         final String internalModel = "internal model";
         when(objectMapper.readValue(anyString(), eq(LisuUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
-        doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
+        when(objectMapper.writeValueAsString(any())).thenReturn(internalModel);
         String response = moduleApi.updateBeforeSave(internalModel, createHosPersonal());
         assertEquals(internalModel, response);
         verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
@@ -275,7 +271,7 @@ public class LisuModuleApiTest {
         final String internalModel = "internal model";
         when(objectMapper.readValue(anyString(), eq(LisuUtlatande.class)))
                 .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
-        doAnswer(a -> ((Writer) a.getArguments()[0]).append(internalModel)).when(objectMapper).writeValue(any(Writer.class), anyString());
+        when(objectMapper.writeValueAsString(any())).thenReturn(internalModel);
         String response = moduleApi.updateBeforeSigning(internalModel, createHosPersonal(), null);
         assertEquals(internalModel, response);
         verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());

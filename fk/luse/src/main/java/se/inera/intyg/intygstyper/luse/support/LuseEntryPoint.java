@@ -23,11 +23,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
-import se.inera.intyg.intygstyper.luse.rest.LuseModuleApi;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFactory;
+import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
+import se.inera.intyg.intygstyper.luse.rest.LuseModuleApi;
 
 public class LuseEntryPoint extends FkAbstractModuleEntryPoint {
 
@@ -36,6 +36,7 @@ public class LuseEntryPoint extends FkAbstractModuleEntryPoint {
     public static final String MODULE_ID = "luse";
     public static final String MODULE_NAME = "Läkarutlåtande för sjukersättning";
     public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
+    public static final String SCHEMATRON_FILE = "luse.sch";
 
     @Autowired
     private LuseModuleApi moduleApi;

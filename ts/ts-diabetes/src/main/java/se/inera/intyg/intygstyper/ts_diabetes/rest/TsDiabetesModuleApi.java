@@ -49,7 +49,6 @@ import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.*;
@@ -94,7 +93,6 @@ public class TsDiabetesModuleApi implements ModuleApi {
     private JAXBContext jaxbContext;
 
     @Autowired
-    @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired(required = false)
@@ -112,8 +110,6 @@ public class TsDiabetesModuleApi implements ModuleApi {
     @Autowired(required = false)
     @Qualifier("tsDiabetesXslTransformer")
     private XslTransformer xslTransformer;
-
-    private ModuleContainerApi moduleContainer;
 
     @Autowired(required = false)
     private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
@@ -164,17 +160,6 @@ public class TsDiabetesModuleApi implements ModuleApi {
     public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
-    }
-
-    @Override
-    public void setModuleContainer(ModuleContainerApi moduleContainer) {
-        this.moduleContainer = moduleContainer;
-
-    }
-
-    @Override
-    public ModuleContainerApi getModuleContainer() {
-        return moduleContainer;
     }
 
     @Override

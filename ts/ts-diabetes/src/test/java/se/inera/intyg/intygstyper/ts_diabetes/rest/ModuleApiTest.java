@@ -59,7 +59,6 @@ public class ModuleApiTest {
     private TsDiabetesModuleApi moduleApi;
 
     @Autowired
-    @Qualifier("ts-diabetes-objectMapper")
     private ObjectMapper mapper;
 
     @Autowired

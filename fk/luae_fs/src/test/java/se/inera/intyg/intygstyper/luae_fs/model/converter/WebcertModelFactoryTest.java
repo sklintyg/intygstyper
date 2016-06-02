@@ -1,25 +1,22 @@
 package se.inera.intyg.intygstyper.luae_fs.model.converter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
+
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardenhet;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 
 /**
  * Created by eriklupander on 2016-04-20.
@@ -32,7 +29,7 @@ public class WebcertModelFactoryTest {
     private IntygTextsService intygTextsService;
 
     @InjectMocks
-    WebcertModelFactory testee;
+    WebcertModelFactoryImpl testee;
 
     @Test
     public void testHappyPath() throws ConverterException {
@@ -61,7 +58,7 @@ public class WebcertModelFactoryTest {
     public void testUpdateSkapadAv() throws ConverterException {
         when(intygTextsService.getLatestVersion(LuaefsEntryPoint.MODULE_ID)).thenReturn("1.0");
         LuaefsUtlatande draft = testee.createNewWebcertDraft(buildNewDraftData(INTYG_ID));
-        testee.updateSkapadAv(draft, buildHosPersonal(), LocalDateTime.now());
+        WebcertModelFactoryUtil.updateSkapadAv(draft, buildHosPersonal(), LocalDateTime.now());
     }
 
     private CreateNewDraftHolder buildNewDraftData(String intygId) {

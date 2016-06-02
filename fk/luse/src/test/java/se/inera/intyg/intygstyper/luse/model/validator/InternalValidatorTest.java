@@ -8,7 +8,7 @@ import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.model.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.luse.model.utils.ScenarioNotFoundException;
-import se.inera.intyg.intygstyper.luse.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.luse.validator.InternalDraftValidatorImpl;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 
 public class InternalValidatorTest {
@@ -17,7 +17,7 @@ public class InternalValidatorTest {
     public void testValidateMinimaltUtkast() throws ScenarioNotFoundException {
         final int numErrors = 0;
         LuseUtlatande utlatandeFromJson = ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel();
-        InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
+        InternalDraftValidatorImpl internalValidator = new InternalDraftValidatorImpl(new InternalValidatorUtil());
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
         assertEquals(String.format("Expected %s validation errors", numErrors), numErrors, getNumberOfInternalValidationErrors(internalValidationResponse));
     }
@@ -26,7 +26,7 @@ public class InternalValidatorTest {
     public void testUnderlagSkolhalsovardGerFel() throws ScenarioNotFoundException {
         final int numErrors = 1;
         LuseUtlatande utlatandeFromJson = ScenarioFinder.getInternalScenario("underlagSkolhalsovard").asInternalModel();
-        InternalDraftValidator internalValidator = new InternalDraftValidator(new InternalValidatorUtil());
+        InternalDraftValidatorImpl internalValidator = new InternalDraftValidatorImpl(new InternalValidatorUtil());
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
         assertEquals(String.format("Expected %s validation errors", numErrors), numErrors, getNumberOfInternalValidationErrors(internalValidationResponse));
     }
