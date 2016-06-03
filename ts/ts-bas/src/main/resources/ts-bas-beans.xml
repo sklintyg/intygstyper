@@ -28,11 +28,11 @@
 
   <bean class="se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport"/>
 
-  <bean class="se.inera.intyg.intygstyper.ts_bas.pdf.PdfGenerator">
+  <bean class="se.inera.intyg.intygstyper.ts_bas.pdf.PdfGeneratorImpl">
     <constructor-arg value="true"/>
   </bean>
 
-  <bean class="se.inera.intyg.intygstyper.ts_bas.model.converter.WebcertModelFactory"/>
+  <bean class="se.inera.intyg.intygstyper.ts_bas.model.converter.WebcertModelFactoryImpl"/>
 
   <bean id="tsBasEntryPoint" class="se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint"/>
 

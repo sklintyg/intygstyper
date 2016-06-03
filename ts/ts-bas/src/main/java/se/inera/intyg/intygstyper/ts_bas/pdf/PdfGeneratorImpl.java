@@ -40,8 +40,10 @@ import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGenerator;
+import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGeneratorException;
 
-public class PdfGenerator {
+public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
 
     @Autowired(required = false)
     private IntygTextsService intygTexts;
@@ -183,10 +185,11 @@ public class PdfGenerator {
 
     private final boolean formFlattening;
 
-    public PdfGenerator(boolean formFlattening) {
+    public PdfGeneratorImpl(boolean formFlattening) {
         this.formFlattening = formFlattening;
     }
 
+    @Override
     public String generatePdfFilename(Utlatande utlatande) {
         Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
         final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
@@ -195,6 +198,7 @@ public class PdfGenerator {
         return String.format("lakarutlatande_%s_-%s.pdf", personnummerString, certificateSignatureDate);
     }
 
+    @Override
     public byte[] generatePDF(Utlatande utlatande, ApplicationOrigin applicationOrigin) throws PdfGeneratorException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

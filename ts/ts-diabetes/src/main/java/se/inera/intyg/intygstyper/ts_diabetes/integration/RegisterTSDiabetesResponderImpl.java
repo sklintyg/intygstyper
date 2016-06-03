@@ -41,7 +41,7 @@ import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.TransportToInternalConverter;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.util.ConverterUtil;
-import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 
@@ -52,8 +52,7 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
     @Autowired(required = false)
     private ModuleContainerApi moduleContainer;
 
-    @Autowired
-    private Validator validator;
+    private TransportValidatorInstance validator = new TransportValidatorInstance();
 
     @Override
     public RegisterTSDiabetesResponseType registerTSDiabetes(String logicalAddress, RegisterTSDiabetesType parameters) {
@@ -99,7 +98,7 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
     }
 
     private void validate(RegisterTSDiabetesType parameters) throws CertificateValidationException {
-        List<String> validationErrors = validator.validateTransport(parameters.getIntyg());
+        List<String> validationErrors = validator.validate(parameters.getIntyg());
         if (!validationErrors.isEmpty()) {
             throw new CertificateValidationException(validationErrors);
         }

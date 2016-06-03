@@ -48,7 +48,7 @@ public class InternalValidatorTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -68,7 +68,7 @@ public class InternalValidatorTest {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("invalid-*")) {
 
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
             assertEquals(String.format("Error in test: %s", scenario.getName()), ValidationStatus.INVALID, validationResponse.getStatus());
         }
@@ -77,7 +77,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidSynskarpa() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-korrigerad-synskarpa").asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("syn.vanster.medKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
     }
@@ -85,7 +85,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidOgonlakarintygSaknasCorrectSortOrder() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-ogonlakarintyg").asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
         assertEquals(5, validationResponse.getValidationErrors().size());
         int index = 0;
         assertEquals("syn.provningUtanAnmarkning", validationResponse.getValidationErrors().get(index++).getField());
@@ -98,7 +98,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidAllmanDiabetesSaknasCorrectSortOrder() throws Exception {
         Utlatande utlatande = buildUtlatandeWithoutDiabetesFieldsSet();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
         assertEquals(3, validationResponse.getValidationErrors().size());
         int index = 0;
         assertEquals("diabetes.observationsperiod", validationResponse.getValidationErrors().get(index++).getField());
@@ -121,7 +121,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidDateFormatHypoglykemi() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-date-format-hypoglykemi").asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("hypoglykemier.allvarligForekomstVakenTidObservationstid",
                 getSingleElement(validationResponse.getValidationErrors()).getField());
@@ -130,7 +130,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidDiabetesMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-diabetes").asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals(T3, validationResponse.getValidationErrors().size());
     }
@@ -138,7 +138,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidDiabetesInsulinperiod() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-insulinperiod").asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("diabetes.insulin",
                 getSingleElement(validationResponse.getValidationErrors()).getField());
@@ -150,17 +150,17 @@ public class InternalValidatorTest {
         ValidateDraftResponse validationResponse;
 
         utlatande.getDiabetes().setInsulinBehandlingsperiod("1111");
-        validationResponse = validator.validateInternal(utlatande);
+        validationResponse = validator.validateDraft(utlatande);
         assertEquals("diabetes.insulin",
                 getSingleElement(validationResponse.getValidationErrors()).getField());
 
         utlatande.getDiabetes().setInsulinBehandlingsperiod("");
-        validationResponse = validator.validateInternal(utlatande);
+        validationResponse = validator.validateDraft(utlatande);
         assertEquals("diabetes.insulin",
                 getSingleElement(validationResponse.getValidationErrors()).getField());
 
         utlatande.getDiabetes().setInsulinBehandlingsperiod("aaaaaaaaaaaaaaa");
-        validationResponse = validator.validateInternal(utlatande);
+        validationResponse = validator.validateDraft(utlatande);
         assertEquals("diabetes.insulin",
                 getSingleElement(validationResponse.getValidationErrors()).getField());
 
@@ -171,7 +171,7 @@ public class InternalValidatorTest {
     public void testInvalidHypoglykemierMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-hypoglykemier-kunskap")
                 .asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("hypoglykemier.kunskapOmAtgarder", getSingleElement(validationResponse.getValidationErrors())
                 .getField());

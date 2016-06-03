@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.ts_bas.pdf;
+package se.inera.intyg.intygstyper.ts_parent.pdf;
 
 public class PdfGeneratorException extends Exception {
 

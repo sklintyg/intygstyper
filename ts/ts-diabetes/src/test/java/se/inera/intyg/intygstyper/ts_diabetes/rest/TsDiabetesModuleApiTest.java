@@ -16,40 +16,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.ts_bas.rest;
+package se.inera.intyg.intygstyper.ts_diabetes.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.*;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.intygstyper.ts_bas.model.converter.UtlatandeToIntyg;
-import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.*;
-import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
-import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
-import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
-import se.inera.intygstjanster.ts.services.v1.IntygMeta;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.UtlatandeToIntyg;
+import se.inera.intyg.intygstyper.ts_diabetes.model.converter.WebcertModelFactoryImpl;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorImpl;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -59,47 +57,30 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
  * Sets up an actual HTTP server and client to test the {@link ModuleApi} service. This is the place to verify that
  * response headers and response statuses etc are correct.
  */
-@ContextConfiguration(locations = ("/ts-bas-test-config.xml"))
-@RunWith(SpringJUnit4ClassRunner.class)
-public class ModuleApiTest {
+@RunWith(MockitoJUnitRunner.class)
+public class TsDiabetesModuleApiTest {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @InjectMocks
+    private TsDiabetesModuleApi moduleApi;
 
-    private RegisterTSBasResponderInterface registerTSBasResponderInterface;
-    private RegisterTSBasResponseType registerResponse;
+    @Spy
+    private ObjectMapper objectMapper = new CustomObjectMapper();
 
-    private GetTSBasResponderInterface getTSBasResponderInterface;
+    @Spy
+    private WebcertModelFactoryImpl webcertModelFactory = new WebcertModelFactoryImpl();
 
-    @Autowired
-    private TsBasModuleApi moduleApi;
+    @Mock
+    private PdfGeneratorImpl pdfGenerator;
+
+    @Mock
+    private IntygTextsService intygTexts;
 
     @Before
-    public void setUpMocks() {
-        registerTSBasResponderInterface = Mockito.mock(RegisterTSBasResponderInterface.class);
-        getTSBasResponderInterface = Mockito.mock(GetTSBasResponderInterface.class);
-        moduleApi.setRegisterTSBasResponderClient(registerTSBasResponderInterface);
-        moduleApi.setGetTSBasResponderClient(getTSBasResponderInterface);
-        registerResponse = new RegisterTSBasResponseType();
-    }
-
-    @Test
-    public void testPdf() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            moduleApi.pdf(objectMapper.writeValueAsString(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
-        }
-    }
-
-    @Test
-    public void copyContainsOriginalData() throws Exception {
-        Scenario scenario = ScenarioFinder.getInternalScenario("valid-maximal");
-        String internalHolder = objectMapper.writeValueAsString(scenario.asInternalModel());
-
-        String holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
-
-        assertNotNull(holder);
-        Utlatande utlatande = objectMapper.readValue(holder, Utlatande.class);
-        assertEquals(true, utlatande.getSyn().getSynfaltsdefekter());
+    public void setup() throws Exception {
+        // use reflection to set IntygTextsService mock in webcertModelFactory
+        Field field = WebcertModelFactoryImpl.class.getDeclaredField("intygTexts");
+        field.setAccessible(true);
+        field.set(webcertModelFactory, intygTexts);
     }
 
     @Test
@@ -112,53 +93,24 @@ public class ModuleApiTest {
     }
 
     @Test
-    public void testRegisterCertificate() throws JsonProcessingException, ScenarioNotFoundException {
-        registerResponse.setResultat(ResultTypeUtil.okResult());
-        Mockito.when(registerTSBasResponderInterface.registerTSBas(Mockito.eq("OK"), Mockito.any(RegisterTSBasType.class)))
-                .thenReturn(registerResponse);
-
-        String logicalAddress = "OK";
-        List<String> failResults = new ArrayList<>();
+    public void testPdf() throws Exception {
+        when(pdfGenerator.generatePDF(any(Utlatande.class), any(ApplicationOrigin.class))).thenReturn(new byte[] {});
+        when(pdfGenerator.generatePdfFilename(any(Utlatande.class))).thenReturn("filename");
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            String internalModel = objectMapper.writeValueAsString(scenario.asInternalModel());
-            try {
-                moduleApi.registerCertificate(internalModel, logicalAddress);
-            } catch (ModuleException me) {
-                failResults.add(me.getMessage());
-            }
+            moduleApi.pdf(objectMapper.writeValueAsString(scenario.asInternalModel()), null, ApplicationOrigin.MINA_INTYG);
         }
-        assertTrue(failResults.isEmpty());
     }
 
     @Test
-    public void testRegisterCertificateFailed() throws JsonProcessingException, ScenarioNotFoundException {
-        registerResponse.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "failed"));
-        Mockito.when(registerTSBasResponderInterface.registerTSBas(Mockito.eq("FAIL"), Mockito.any(RegisterTSBasType.class)))
-                .thenReturn(registerResponse);
+    public void copyContainsOriginalData() throws Exception {
+        Scenario scenario = ScenarioFinder.getTransportScenario("valid-minimal");
+        String internalHolder = objectMapper.writeValueAsString(scenario.asInternalModel());
 
-        String logicalAddress = "FAIL";
-        String failResult = "";
-        Scenario scenario = ScenarioFinder.getInternalScenario("invalid-missing-identitet");
-        String internalModel = objectMapper.writeValueAsString(scenario.asInternalModel());
-        try {
-            moduleApi.registerCertificate(internalModel, logicalAddress);
-        } catch (ModuleException me) {
-            failResult = me.getMessage();
-        }
-        assertTrue(!failResult.isEmpty());
-    }
+        String holder = moduleApi.createNewInternalFromTemplate(createNewDraftCopyHolder(), internalHolder);
 
-    @Test
-    public void testGetCertificate() throws ModuleException, ScenarioNotFoundException {
-        GetTSBasResponseType result = new GetTSBasResponseType();
-        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel().getIntyg());
-        result.setMeta(createMeta());
-        result.setResultat(ResultTypeUtil.okResult());
-        Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
-            .thenReturn(result);
-
-        CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
-        assertNotNull(internal);
+        assertNotNull(holder);
+        Utlatande utlatande = objectMapper.readValue(holder, Utlatande.class);
+        assertEquals(true, utlatande.getIntygAvser().getKorkortstyp().contains(IntygAvserKategori.A1));
     }
 
     @Test
@@ -167,7 +119,7 @@ public class ModuleApiTest {
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
 
         String result = moduleApi.getAdditionalInfo(intyg);
-        assertEquals("C1, C1E, C, CE, D1, D1E, D, DE, TAXI, ANNAT", result);
+        assertEquals("AM, A1, A2, A, B, BE, TRAKTOR, C1, C1E, C, CE, D1, D1E, D, DE, TAXI", result);
     }
 
     @Test
@@ -179,12 +131,12 @@ public class ModuleApiTest {
         s.setId("1");
         Delsvar delsvar = new Delsvar();
         delsvar.setId("1.1");
-        delsvar.getContent().add(aCV(null, "IAV6", null));
+        delsvar.getContent().add(aCV(null, "IAV17", null));
         s.getDelsvar().add(delsvar);
         intyg.getSvar().add(s);
 
         String result = moduleApi.getAdditionalInfo(intyg);
-        assertEquals("D1E", result);
+        assertEquals("TRAKTOR", result);
     }
 
     @Test
@@ -252,13 +204,7 @@ public class ModuleApiTest {
         assertNull(result);
     }
 
-    private IntygMeta createMeta() throws ScenarioNotFoundException {
-        IntygMeta meta = new IntygMeta();
-        meta.setAdditionalInfo("C");
-        meta.setAvailable("true");
-        return meta;
-    }
-
+    // Private helpers
     private CreateNewDraftHolder createNewDraftHolder() {
         Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
         Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);

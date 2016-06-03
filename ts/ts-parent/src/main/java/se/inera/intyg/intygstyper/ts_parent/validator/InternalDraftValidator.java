@@ -16,26 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.ts_diabetes.validator;
 
+package se.inera.intyg.intygstyper.ts_parent.validator;
+
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_diabetes.validator.internal.InternalValidatorInstance;
-import se.inera.intyg.intygstyper.ts_parent.validator.InternalDraftValidator;
 
-public class Validator implements InternalDraftValidator<Utlatande> {
+public interface InternalDraftValidator<T extends Utlatande> {
 
-    /**
-     * Validates an external Utlatande.
-     *
-     * @param utlatande
-     *            se.inera.intyg.intygstyper.ts_diabetes.model.external.Utlatande
-     * @return List of validation errors, or an empty string if validated correctly
-     */
-    @Override
-    public ValidateDraftResponse validateDraft(Utlatande utlatande) {
-        InternalValidatorInstance instance = new InternalValidatorInstance();
-        return instance.validate(utlatande);
-    }
-
+    ValidateDraftResponse validateDraft(T utlatande);
 }

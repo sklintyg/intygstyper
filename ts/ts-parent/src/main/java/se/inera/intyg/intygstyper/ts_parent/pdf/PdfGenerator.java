@@ -16,28 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.ts_diabetes.pdf;
+package se.inera.intyg.intygstyper.ts_parent.pdf;
 
-public class PdfGeneratorException extends Exception {
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 
-    private static final long serialVersionUID = 1L;
+public interface PdfGenerator<T extends Utlatande> {
 
-    public PdfGeneratorException() {
-    }
+    String generatePdfFilename(T utlatande);
 
-    public PdfGeneratorException(String message) {
-        super(message);
-    }
+    byte[] generatePDF(T utlatande, ApplicationOrigin applicationOrigin) throws PdfGeneratorException;
 
-    public PdfGeneratorException(Throwable cause) {
-        super(cause);
-    }
-
-    public PdfGeneratorException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public PdfGeneratorException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

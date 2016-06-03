@@ -42,14 +42,13 @@ import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.TransportToInternal;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
+import se.inera.intyg.intygstyper.ts_bas.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 
 public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterface {
 
-    @Autowired
-    private TsBasValidator validator;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTSBasResponderImpl.class);
 
     @Autowired(required = false)
     private ModuleContainerApi moduleContainer;
@@ -57,7 +56,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTSBasResponderImpl.class);
+    private TransportValidatorInstance validator = new TransportValidatorInstance();
 
     @PostConstruct
     public void initializeJaxbContext() throws JAXBException {
@@ -122,7 +121,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
     }
 
     private void validateTransport(RegisterTSBasType registerTsBas) throws CertificateValidationException {
-        List<String> validationErrors = validator.validateTransport(registerTsBas.getIntyg());
+        List<String> validationErrors = validator.validate(registerTsBas.getIntyg());
         if (!validationErrors.isEmpty()) {
             throw new CertificateValidationException(validationErrors);
         }

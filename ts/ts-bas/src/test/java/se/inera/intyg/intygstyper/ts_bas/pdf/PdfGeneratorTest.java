@@ -41,7 +41,7 @@ public class PdfGeneratorTest {
     private IntygTextsService intygTexts;
 
     @InjectMocks
-    private PdfGenerator pdfGen = new PdfGenerator(true);
+    private PdfGeneratorImpl pdfGen = new PdfGeneratorImpl(true);
 
     @Test
     public void testGeneratePdf() throws Exception {
