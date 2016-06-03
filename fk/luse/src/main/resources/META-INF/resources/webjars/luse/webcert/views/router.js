@@ -63,7 +63,7 @@ angular.module('luse').config(function($stateProvider) {
                     controller: 'luse.ViewCertCtrl'
                 },
                 'fragasvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
+                    templateUrl: commonPath + 'fk/arenden/arenden.html',
                     controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.intyg.fk.luse' : {
@@ -81,7 +81,7 @@ angular.module('luse').config(function($stateProvider) {
                     controller: 'luse.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
-                    templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
+                    templateUrl: commonPath + 'fk/arenden/arenden.html',
                     controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.fragasvar.luse' : {
