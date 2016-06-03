@@ -20,10 +20,8 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
-import static org.mockito.Matchers.*;
-
-import java.io.IOException;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +30,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
-import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
@@ -43,10 +40,10 @@ public class WebcertModelFactoryTest {
     private IntygTextsService intygTexts;
 
     @InjectMocks
-    private WebcertModelFactory factory;
+    private WebcertModelFactoryImpl factory;
 
     @Test
-    public void testCreateEditableModel() throws IOException {
+    public void testCreateEditableModel() throws Exception {
         when(intygTexts.getLatestVersion(eq(TsBasEntryPoint.MODULE_ID))).thenReturn("version");
         // Programmatically creating a CreateNewDraftHolder
         Patient patient = new Patient("Johnny", "Jobs", "Appleseed", new Personnummer("19121212-1212"), "Testvägen 12", "13337", "Huddinge");
@@ -58,11 +55,7 @@ public class WebcertModelFactoryTest {
 
         se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande utlatande = null;
 
-        try {
-            utlatande = factory.createNewWebcertDraft(draftCertHolder, null);
-        } catch (ConverterException e) {
-            e.printStackTrace();
-        }
+        utlatande = factory.createNewWebcertDraft(draftCertHolder);
 
         assertNotNull(utlatande);
         assertNotNull(utlatande.getId());

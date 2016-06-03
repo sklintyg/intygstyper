@@ -1,5 +1,8 @@
 <a id="anchor.medicinering" name="anchor.medicinering"></a>
-<div wc-field field-label="ts-bas.label.medicinering" field-has-errors="viewState.common.validationMessagesGrouped.medicinering" id="medicineringForm">
+<div wc-field
+     field-dynamic-label="KAT_15.RBK"
+     field-has-errors="viewState.common.validationMessagesGrouped.medicinering"
+     id="medicineringForm">
   <table class="table table-form">
     <tr ng-if="viewState.common.validationMessagesGrouped.medicinering" id="validationMessages_medicinering">
       <td colspan="3">
@@ -23,12 +26,12 @@
       <td><input name="medicineringa" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.medicinering.stadigvarandeMedicinering"></td>
       <td>
-        <p><span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span></p>
+        <p><span dynamic-label key="FRG_31.RBK"></span></p>
 
         <div ng-show="viewState.intygModel.medicinering.stadigvarandeMedicinering">
-          <p><span message key="ts-bas.label.medicinering.beskrivning"></span></p>
-                            <textarea class="form-control" data-ng-model="viewState.intygModel.medicinering.beskrivning" wc-maxlength ng-trim="false"
-                                      id="beskrivningMedicinering" maxlength="{{viewState.inputLimits.medicinering}}" rows="4"></textarea>
+          <p><span dynamic-label key="DFR_31.2.RBK"></span></p>
+          <textarea class="form-control" data-ng-model="viewState.intygModel.medicinering.beskrivning" wc-maxlength ng-trim="false"
+                    id="beskrivningMedicinering" maxlength="{{viewState.inputLimits.medicinering}}" rows="4"></textarea>
         </div>
       </td>
     </tr>

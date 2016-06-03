@@ -18,14 +18,12 @@
  */
 package se.inera.intyg.intygstyper.ts_diabetes.validator;
 
-import java.util.List;
-
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.validator.internal.InternalValidatorInstance;
-import se.inera.intyg.intygstyper.ts_diabetes.validator.transport.TransportValidatorInstance;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intyg.intygstyper.ts_parent.validator.InternalDraftValidator;
 
-public class Validator {
+public class Validator implements InternalDraftValidator<Utlatande> {
 
     /**
      * Validates an external Utlatande.
@@ -34,14 +32,10 @@ public class Validator {
      *            se.inera.intyg.intygstyper.ts_diabetes.model.external.Utlatande
      * @return List of validation errors, or an empty string if validated correctly
      */
-    public ValidateDraftResponse validateInternal(
-            se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande utlatande) {
+    @Override
+    public ValidateDraftResponse validateDraft(Utlatande utlatande) {
         InternalValidatorInstance instance = new InternalValidatorInstance();
         return instance.validate(utlatande);
     }
 
-    public List<String> validateTransport(TSDiabetesIntyg intyg) {
-        TransportValidatorInstance instance = new TransportValidatorInstance();
-        return instance.validate(intyg);
-    }
 }

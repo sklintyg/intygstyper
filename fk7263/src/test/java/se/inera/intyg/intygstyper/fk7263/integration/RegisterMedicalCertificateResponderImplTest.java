@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import javax.xml.bind.*;
 import javax.xml.transform.stream.StreamSource;
@@ -43,7 +42,6 @@ import se.inera.intyg.common.support.integration.module.exception.CertificateAlr
 import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
 import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
@@ -51,8 +49,6 @@ import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterMedicalCertificateResponderImplTest {
-
-    private CustomObjectMapper objectMapper = new CustomObjectMapper();
 
     @Mock
     private ModuleEntryPoint moduleEntryPoint = mock(ModuleEntryPoint.class);
@@ -92,7 +88,6 @@ public class RegisterMedicalCertificateResponderImplTest {
         utlatande = TransportToInternal.convert(request.getLakarutlatande());
         certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
         certificateHolder.setOriginalCertificate(xml);
-        when(moduleRestApi.getModuleContainer()).thenReturn(moduleContainer);
     }
 
     @Test

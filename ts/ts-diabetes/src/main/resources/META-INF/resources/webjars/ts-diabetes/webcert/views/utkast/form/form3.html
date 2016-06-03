@@ -1,5 +1,9 @@
 <a id="anchor.syn" name="anchor.syn"></a>
-<div wc-field field-label="ts-diabetes.label.synintyg" field-has-errors="viewState.common.validationMessagesGrouped.syn" ng-form
+<div wc-field
+     field-dynamic-label="KAT_3.RBK"
+     field-dynamic-help-text="KAT_3.HLP"
+     field-has-errors="viewState.common.validationMessagesGrouped.syn"
+     ng-form
      name="synForm" id="synForm">
   <table class="table table-form">
     <tr ng-if="viewState.common.validationMessagesGrouped.syn" id="validationMessages_syn">
@@ -37,7 +41,7 @@
                  ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
-      <td><span message key="ts-diabetes.label.syn.separat-ogonlakarintyg"></span></td>
+      <td><span dynamic-label key="FRG_43.RBK"></span></td>
     </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
@@ -57,14 +61,14 @@
       <td><input id="synbn" name="synb" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning"></td>
       <td>
-        <span message key="ts-diabetes.label.syn.synfaltsprovning-utan-anmarkning"></span>
+        <span dynamic-label key="FRG_44.RBK"></span>
       </td>
     </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
       <td></td>
       <td>
-        <p><span message key="ts-diabetes.label.syn.synskarpa"></span></p>
+        <p><span dynamic-label key="FRG_8.RBK"></span></p>
 
         <div class="alert alert-info">
           <span message key="ts-diabetes.helptext.synfunktioner.synskarpa"></span>
@@ -108,7 +112,7 @@
       </td>
       <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
       </td>
-      <td>d) Förekommer dubbelseende?</td>
+      <td><span dynamic-label key="FRG_6.RBK"></span></td>
     </tr>
   </table>
 </div>

@@ -158,11 +158,11 @@
                 <div
                     class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-6 col-sm-offset-6 col-md-offset-6 col-lg-offset-6 margin-top-5px">
                   <span class="tag"><message key="ts-bas.label.identitet" /></span>
-                  <span id="identitet" message key="ts-bas.label.identitet.{{cert.vardkontakt.idkontroll}}"></span>
+                  <span id="identitet" dynamic-label key="IDENTITET_{{cert.vardkontakt.idkontroll}}.RBK"></span>
                 </div>
               </div>
               <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">ts-bas.inbox.complementaryinfo
                   <span class="tag"><message key="ts-bas.label.unit" /></span> <span id="careunit">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -171,7 +171,7 @@
               </div>
               <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                  <span class="tag"><message key="ts-bas.label.intygavser" /></span>
+                  <span class="tag"><dynamic-label key="KAT_99.RBK" /></span>
 
                   <span class="text no-padding-bottom">
                       <span id="intygAvser" class="cert-answer">{{view.intygAvser}}</span>
@@ -193,40 +193,40 @@
             <div class="cert-body">
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.synfunktioner"></span>
+                  <span dynamic-label key="KAT_1.RBK"></span>
                 </h3>
             		<span class="text no-padding-bottom">
-                  <span message key="ts-bas.label.syn.synfaltsdefekter"></span>
+                  <span dynamic-label key="FRG_3.RBK"></span>
                   <span id="synfaltsdefekter" class="cert-answer" message key="{{cert.syn.synfaltsdefekter | BoolToTextFilter}}"></span>
                 </span>
                 <span class="text no-padding-bottom">
-                  <span message key="ts-bas.label.syn.nattblindhet"></span>
+                  <span dynamic-label key="FRG_4.RBK"></span>
                   <span id="nattblindhet" class="cert-answer" message key="{{cert.syn.nattblindhet | BoolToTextFilter}}"></span>
                 </span>
                 <span class="text no-padding-bottom">
-                  <span message key="ts-bas.label.syn.progressivogonsjukdom"></span>
+                  <span dynamic-label key="FRG_5.RBK"></span>
                   <span id="progressivOgonsjukdom" class="cert-answer" message
                         key="{{cert.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span>
                 </span>
 
                 <span class="text no-padding-bottom" ng-show="achelptext == true">
                   <div class="alert alert-info">
-                    <span message key="ts-bas.helptext.synfunktioner.a-c"></span>
+                    <span dynamic-label key="FRG_3-5.INF"></span>
                   </div>
                 </span>
 
                 <span class="text no-padding-bottom">
-                  <span message key="ts-bas.label.syn.diplopi"></span>
+                  <span dynamic-label key="FRG_6.RBK"></span>
                   <span id="diplopi" class="cert-answer" message key="{{cert.syn.diplopi | BoolToTextFilter}}"></span>
                 </span>
 
                 <span class="text no-padding-bottom">
-                  <span message key="ts-bas.label.syn.nystagmus"></span>
+                  <span dynamic-label key="FRG_7.RBK"></span>
                   <span id="nystagmus" class="cert-answer" message key="{{cert.syn.nystagmus | BoolToTextFilter}}"></span>
             		</span>
 
             		<span class="text no-padding-bottom">
-            			<span message key="ts-bas.label.syn.synvarden"></span>
+            			<span dynamic-label key="FRG_8.RBK"></span>
             		</span>
             		<span class="text ts-text-field-wide">
                   <table class="table table-condensed ts-table">
@@ -258,10 +258,10 @@
                 </span>
                 <span class="text">
                   <h3><span message key="ts-bas.label.syn.korrektionsglasens-styrka"></span></h3>
-                  <span message key="ts-bas.label.syn.8-dioptrier"></span>
+                  <span dynamic-label key="FRG_9.RBK"></span>
                   <span id="korrektionsglasensStyrka" class="cert-answer" message key="{{cert.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span>
                   <div class="alert alert-info" ng-show="cert.syn.korrektionsglasensStyrka == true">
-                    <span message key="ts-bas.helptext.synfunktioner.8-dioptrier"></span>
+                    <span dynamic-label key="FRG_9.INF"></span>
                   </div>
                 </span>
               </div>
@@ -269,16 +269,16 @@
               <!-- 2 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.horselbalans"></span>
+                  <span dynamic-label key="KAT_2.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.horselbalans.balansrubbningar"></span>
+            			<span dynamic-label key="FRG_10.RBK"></span>
             			<span id="horselBalansbalansrubbningar" class="cert-answer" message
                         key="{{cert.horselBalans.balansrubbningar | BoolToTextFilter}}"></span>
             		</span>
 
             		<span class="text" ng-show="cert.horselBalans.svartUppfattaSamtal4Meter">
-            			<span message key="ts-bas.label.horselbalans.samtal4meter"></span>
+            			<span dynamic-label key="FRG_11.RBK"></span>
             			<span id="horselBalanssvartUppfattaSamtal4Meter" class="cert-answer"
                         ng-show="cert.horselBalans.svartUppfattaSamtal4Meter" message
                         key="{{cert.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span>
@@ -291,23 +291,23 @@
               <!-- 3 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.funktionsnedsattning"></span>
+                  <span dynamic-label key="KAT_3.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.funktionsnedsattning.funktionsnedsattning"></span>
+            			<span dynamic-label key="FRG_12.RBK"></span>
             			<span id="funktionsnedsattning" class="cert-answer" message
                         key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
             		</span>
 
                 <div class="indent">
                   <span class="text" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
-                    <span message key="ts-bas.label.funktionsnedsattning.beskrivning"></span><br />
+                    <span dynamic-label key="DFR_12.2.RBK"></span><br />
                     <span id="funktionsnedsattningbeskrivning" class="cert-answer">{{cert.funktionsnedsattning.beskrivning}}</span>
                   </span>
                 </div>
 
             		<span class="text" ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
-            			<span message key="ts-bas.label.funktionsnedsattning.otillracklig-rorelseformaga"></span>
+            			<span dynamic-label key="FRG_13.RBK"></span>
             			<span id="funktionsnedsattningotillrackligRorelseformaga"
                         ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
                         key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span>
@@ -320,26 +320,26 @@
               <!-- 4 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.hjartkarl"></span>
+                  <span dynamic-label key="KAT_4.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.hjartkarl.hjart-karlsjukdom"></span>
+            			<span dynamic-label key="FRG_14.RBK"></span>
             			<span id="hjartKarlSjukdom" class="cert-answer" message
                         key="{{cert.hjartKarl.hjartKarlSjukdom | BoolToTextFilter}}"></span>
             		</span>
         		    <span class="text">
-            			<span message key="ts-bas.label.hjartkarl.hjarnskada-efter-trauma"></span>
+            			<span dynamic-label key="FRG_15.RBK"></span>
             			<span id="hjarnskadaEfterTrauma" class="cert-answer" message
                         key="{{cert.hjartKarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span>
             		</span>
         		    <span class="text">
-            			<span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke"></span>
+            			<span dynamic-label key="FRG_16.RBK"></span>
             			<span id="riskfaktorerStroke" class="cert-answer" message
                         key="{{cert.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span>
             		</span>
                 <div class="indent">
                   <span class="text" ng-show="cert.hjartKarl.riskfaktorerStroke">
-                    <span message key="ts-bas.label.hjartkarl.riskfaktorer-stroke.beskrivning"></span><br />
+                    <span dynamic-label key="DFR_16.2.RBK"></span><br />
                     <span id="beskrivningRiskfaktorer" class="cert-answer">{{cert.hjartKarl.beskrivningRiskfaktorer}}</span>
                   </span>
                 </div>
@@ -348,33 +348,33 @@
               <!-- 5 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.diabetes"></span>
+                  <span dynamic-label key="KAT_5.RBK"></span>
             			<span>
             				<span></span>
             			</span>
                 </h3>
        		   		<span class="text">
-            			<span message key="ts-bas.label.diabetes.har-diabetes"></span><br>
+            			<span dynamic-label key="FRG_17.RBK"></span><br>
             			<span id="harDiabetes" class="cert-answer" message key="{{cert.diabetes.harDiabetes | BoolToTextFilter}}"></span>
             		</span>
                 <div ng-show="cert.diabetes.harDiabetes">
                   <span class="text">
-                    <span message key="ts-bas.label.diabetes.diabetestyp"></span><br>
+                    <span dynamic-label key="FRG_18.RBK"></span><br>
                     <span id="diabetesTyp" class="cert-answer" message
                           key="ts-bas.label.diabetes.diabetestyp.{{cert.diabetes.diabetesTyp}}"></span>
                   </span>
                   <span class="text" ng-show="cert.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
-                    <span message key="ts-bas.label.diabetes.behandling"></span><br>
-                    <span id="kost" class="cert-answer" ng-show="cert.diabetes.kost" message
-                          key="ts-bas.label.diabetes.behandling.kost"></span>
-                    <span id="tabletter" class="cert-answer" ng-show="cert.diabetes.tabletter" message
-                          key="ts-bas.label.diabetes.behandling.tabletter"></span>
-                    <span id="insulin" class="cert-answer" ng-show="cert.diabetes.insulin" message
-                          key="ts-bas.label.diabetes.behandling.insulin"></span>
+                    <span dynamic-label key="FRG_19.RBK"></span><br>
+                    <span id="kost" class="cert-answer" ng-show="cert.diabetes.kost" dynamic-label
+                          key="DFR_19.1.RBK"></span>
+                    <span id="tabletter" class="cert-answer" ng-show="cert.diabetes.tabletter" dynamic-label
+                          key="DFR_19.2.RBK"></span>
+                    <span id="insulin" class="cert-answer" ng-show="cert.diabetes.insulin" dynamic-label
+                          key="DFR_19.3.RBK"></span>
                   </span>
                   <span class="text" ng-show="cert.diabetes.insulin || cert.diabetes.tabletter">
                       <div class="alert alert-info">
-                        <span message key="ts-bas.helptext.diabetes.behandling"></span>
+                        <span dynamic-label key="DFR_19.3.INF"></span>
                       </div>
                   </span>
                 </div>
@@ -383,10 +383,10 @@
               <!-- 6 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.neurologi"></span>
+                  <span dynamic-label key="KAT_6.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.neurologi.neurologisksjukdom"></span>
+            			<span dynamic-label key="FRG_20.RBK"></span>
             			<span id="neurologiskSjukdom" class="cert-answer" message
                         key="{{cert.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span>
             		</span>
@@ -395,17 +395,17 @@
               <!-- 7 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.medvetandestorning"></span>
+                  <span dynamic-label key="KAT_7.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span>
+            			<span dynamic-label key="FRG_21.RBK"></span>
             			<span id="medvetandestorning" class="cert-answer" message
                         key="{{cert.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span>
             		</span>
 
                 <div class="indent">
                   <span class="text" ng-show="cert.medvetandestorning.medvetandestorning">
-                    <span message key="ts-bas.label.medvetandestorning.beskrivning"></span><br />
+                    <span dynamic-label key="DFR_21.2.RBK"></span><br />
                     <span id="medvetandestorningbeskrivning" class="cert-answer">
                       {{cert.medvetandestorning.beskrivning}}</span>
                   </span>
@@ -415,10 +415,10 @@
               <!-- 8 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.njurar"></span>
+                  <span dynamic-label key="KAT_8.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.njurar.nedsatt-njurfunktion"></span>
+            			<span dynamic-label key="FRG_22.RBK"></span>
             			<span id="nedsattNjurfunktion" class="cert-answer" message
                         key="{{cert.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span>
             		</span>
@@ -427,10 +427,10 @@
               <!-- 9 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.kognitivt"></span>
+                  <span dynamic-label key="KAT_9.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.kognitivt.sviktande-kognitiv-funktion"></span>
+            			<span dynamic-label key="FRG_23.RBK"></span>
             			<span id="sviktandeKognitivFunktion" class="cert-answer" message
                         key="{{cert.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span>
             		</span>
@@ -439,10 +439,10 @@
               <!-- 10 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.somn-vakenhet"></span>
+                  <span dynamic-label key="KAT_10.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.somn-vakenhet.tecken-somnstorningar"></span>
+            			<span dynamic-label key="FRG_24.RBK"></span>
             			<span id="teckenSomnstorningar" class="cert-answer" message
                         key="{{cert.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span>
             		</span>
@@ -451,43 +451,43 @@
               <!-- 11 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.narkotika-lakemedel"></span>
+                  <span dynamic-label key="KAT_11,RBK"></span>
                 </h3>
 
             		<span class="text no-padding-bottom">
-            			<span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span>
+            			<span dynamic-label key="DFR_25.1.RBK"></span>
             			<span id="teckenMissbruk" class="cert-answer" message
                         key="{{cert.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span>
             		</span>
 
             		<span class="text no-padding-bottom">
-            			<span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span>
+            			<span dynamic-label key="DFR_25.2.RBK"></span>
             			<span id="foremalForVardinsats" class="cert-answer" message
                         key="{{cert.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span>
             		</span>
 
                 <div ng-show="cert.narkotikaLakemedel.foremalForVardinsats || cert.narkotikaLakemedel.teckenMissbruk">
 	            		<span class="text no-padding-bottom">
-	            			<span message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></span>
+	            			<span dynamic-label key="DFR_25.3.RBK"></span>
 	            			<span id="provtagningBehovs" class="cert-answer" message
                           key="{{cert.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span>
 	            		</span>
 	            		<span class="text no-padding-bottom">
 	            			<div class="alert alert-info">
-                      <span message key="ts-bas.helptext.narkotika-lakemedel.provtagning"></span>
+                      <span dynamic-label key="DFR_25.3.INF"></span>
                     </div>
 	            		</span>
                 </div>
 
             		<span class="text">
-            			<span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+            			<span dynamic-label key="FRG_26.RBK"></span>
             			<span id="lakarordineratLakemedelsbruk" class="cert-answer" message
                         key="{{cert.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span>
             		</span>
 
                 <div class="indent">
                   <span class="text" ng-show="cert.narkotikaLakemedel.lakarordineratLakemedelsbruk">
-                    <span message key="ts-bas.label.narkotika-lakemedel.beskrivning"></span><br />
+                    <span dynamic-label key="DFR_26.1.RBK"></span><br />
                     <span id="lakemedelOchDos" class="cert-answer">{{cert.narkotikaLakemedel.lakemedelOchDos}}</span>
                   </span>
                 </div>
@@ -496,10 +496,10 @@
               <!-- 12 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.psykiskt"></span>
+                  <span dynamic-label key="KAT_12.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.psykiskt.psykisksjukdom"></span>
+            			<span dynamic-label key="FRG_27.RBK"></span>
             			<span id="psykiskSjukdom" class="cert-answer" message key="{{cert.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span>
             		</span>
               </div>
@@ -507,15 +507,15 @@
               <!-- 13 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.utvecklingsstorning"></span>
+                  <span dynamic-label key="KAT_13.RBK"></span>
                 </h3>
             		<span class="text">
-            			<span message key="ts-bas.label.utvecklingsstorning.psykisk-utvecklingsstorning"></span>
+            			<span dynamic-label key="FRG_28.RBK"></span>
             			<span id="psykiskUtvecklingsstorning" class="cert-answer" message
                         key="{{cert.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span>
             		</span>
             		<span class="text">
-            			<span message key="ts-bas.label.utvecklingsstorning.har-syndrom"></span>
+            			<span dynamic-label key="FRG_29.RBK"></span>
             			<span id="harSyndrom" class="cert-answer" message
                         key="{{cert.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span>
             		</span>
@@ -524,22 +524,22 @@
               <!-- 14 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.sjukhusvard"></span>
+                  <span dynamic-label key="KAT_14.RBK"></span>
                 </h3>
             		<span class="text">
-            		    <span message key="ts-bas.label.sjukhusvard.sjukhus-eller-lakarkontakt"></span>
+            		    <span dynamic-label key="FRG_30.RBK"></span>
             		    <span class="cert-answer" message
                           key="{{cert.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span>
             		</span>
                 <div class="indent">
                   <span class="text" ng-show="cert.sjukhusvard.sjukhusEllerLakarkontakt">
-                    <span message key="ts-bas.label.sjukhusvard.tidpunkt"></span>
+                    <span dynamic-label key="DFR_30.2.RBK"></span>
                     <span class="cert-answer">{{cert.sjukhusvard.tidpunkt}}</span><br />
 
-                    <span message key="ts-bas.label.sjukhusvard.vardinrattning"></span>
+                    <span dynamic-label key="DFR_30.3.RBK"></span>
                     <span class="cert-answer">{{cert.sjukhusvard.vardinrattning}}</span><br />
 
-                    <span message key="ts-bas.label.sjukhusvard.anledning"></span>
+                    <span dynamic-label key="DFR_30.4.RBK"></span>
                     <span class="cert-answer">{{cert.sjukhusvard.anledning}}</span><br />
             	  	</span>
                 </div>
@@ -548,17 +548,17 @@
               <!-- 15 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.medicinering"></span>
+                  <span dynamic-label key="KAT_15.RBK"></span>
                 </h3>
             		<span class="text">
-                  <span message key="ts-bas.label.medicinering.stadigvarande-medicinering"></span>
+                  <span dynamic-label key="FRG_31.RBK"></span>
                   <span id="stadigvarandeMedicinering" class="cert-answer" message
                         key="{{cert.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span>
             		</span>
 
                 <div class="indent">
                   <span class="text" ng-show="cert.medicinering.stadigvarandeMedicinering">
-                    <span message key="ts-bas.label.medicinering.beskrivning"></span><br />
+                    <span dynamic-label key="DFR_31.2.RBK"></span><br />
                     <span id="medicineringbeskrivning" class="cert-answer">{{cert.medicinering.beskrivning}}</span>
                   </span>
                 </div>
@@ -568,7 +568,7 @@
               <!-- Övrig kommentar -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.ovrigkommentar"></span>
+                  <span dynamic-label key="KAT_16.RBK"></span>
                 </h3>
 
              		<span class="text" ng-show="cert.kommentar.length > 0">
@@ -583,21 +583,21 @@
               <!-- Bedömning -->
               <div class="body-row">
                 <h3 class="title">
-                  <span message key="ts-bas.label.bedomning">{{ts-bas.label.bedomning}}</span>
+                  <span dynamic-label key="KAT_101.RBK"></span>
                 </h3>
 
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
-                  <span class="text no-padding-bottom" message key="ts-bas.label.bedomning-info-alt-1"></span>
+                  <span class="text no-padding-bottom" dynamic-label key="FRG_33.RBK"></span>
                   <span class="text no-padding-bottom">
                       <span id="bedomning" class="cert-answer">{{view.bedomning}}</span>
                   </span>
                 </div>
                 <div ng-show="cert.bedomning.kanInteTaStallning">
-                  <span id="bedomningKanInteTaStallning" class="text no-padding-bottom cert-answer" message key="ts-bas.label.bedomning.kan-inte-ta-stallning"></span>
+                  <span id="bedomningKanInteTaStallning" class="text no-padding-bottom cert-answer" dynamic-label key="DFR_33.2.RBK"></span>
                 </div>
 
                 <div class="text">
-                  <span message key="ts-bas.label.bedomning-info-undersokas-med-specialkompetens"></span><br>
+                  <span dynamic-label key="FRG_34.RBK"></span><br>
                   <span id="lakareSpecialKompetens" class="cert-answer" ng-show="cert.bedomning.lakareSpecialKompetens.length > 0">{{cert.bedomning.lakareSpecialKompetens}}</span>
                   <span id="lakareSpecialKompetensEjAngivet" class="cert-answer" ng-show="!cert.bedomning.lakareSpecialKompetens" message key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </div>

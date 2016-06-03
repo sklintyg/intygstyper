@@ -34,8 +34,8 @@ import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.conv
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 
 /**
@@ -46,8 +46,8 @@ public class GetMedicalCertificateForCareResponderImpl implements
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetMedicalCertificateForCareResponderImpl.class);
 
-    @Autowired
-    private Fk7263ModuleApi moduleApi;
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
 
     @Override
     public GetMedicalCertificateForCareResponseType getMedicalCertificateForCare(String logicalAddress,
@@ -62,7 +62,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
         CertificateHolder certificate = null;
 
         try {
-            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, nationalIdentityNumber, false);
+            certificate = moduleContainer.getCertificate(certificateId, nationalIdentityNumber, false);
             if (nationalIdentityNumber != null && !certificate.getCivicRegistrationNumber().equals(nationalIdentityNumber)) {
                 response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;

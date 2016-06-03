@@ -1,5 +1,8 @@
 <a id="anchor.syn" name="anchor.syn"></a>
-<div wc-field field-label="ts-bas.label.syn"  field-has-errors="viewState.common.validationMessagesGrouped.syn" ng-form
+<div wc-field
+     field-dynamic-label="KAT_1.RBK"
+     field-has-errors="viewState.common.validationMessagesGrouped.syn"
+     ng-form
      name="synForm" id="synForm">
 
   <table class="table table-form">
@@ -24,14 +27,14 @@
                  ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
-      <td><span message key="ts-bas.label.syn.synfaltsdefekter"></span></td>
+      <td><span dynamic-label key="FRG_3.RBK"></span></td>
     </tr>
     <tr>
       <td><input id="synby" name="synb" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.syn.nattblindhet"></td>
       <td><input id="synbn" name="synb" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.syn.nattblindhet"></td>
-      <td><span message key="ts-bas.label.syn.nattblindhet"></span></td>
+      <td><span dynamic-label key="FRG_4.RBK"></span></td>
     </tr>
     <tr>
       <td><input id="syncy" name="sync" type="radio" ng-value="true"
@@ -41,11 +44,11 @@
                  ng-model="viewState.intygModel.syn.progressivOgonsjukdom">
       </td>
       <td>
-        <p><span message key="ts-bas.label.syn.progressivogonsjukdom"></span></p>
+        <p><span dynamic-label key="FRG_5.RBK"></span></p>
 
         <div class="alert alert-info"
              ng-if="viewState.intygModel.syn.progressivOgonsjukdom || viewState.intygModel.syn.nattblindhet || viewState.intygModel.syn.synfaltsdefekter">
-          <span message key="ts-bas.helptext.synfunktioner.om-nagon-av-a-c"></span>
+          <span dynamic-label key="FRG_3-5.INF"></span>
         </div>
       </td>
     </tr>
@@ -54,21 +57,21 @@
       </td>
       <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
       </td>
-      <td><span message key="ts-bas.label.syn.diplopi"></span></td>
+      <td><span dynamic-label key="FRG_6.RBK"></span></td>
     </tr>
     <tr>
       <td><input id="syney" name="syne" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.nystagmus">
       </td>
       <td><input id="synen" name="syne" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.nystagmus">
       </td>
-      <td><span message key="ts-bas.label.syn.nystagmus"></span></td>
+      <td><span dynamic-label key="FRG_7.RBK"></span></td>
     </tr>
     <tr>
       <td></td>
       <td></td>
-      <td><p><span message key="ts-bas.label.syn.synskarpa"></span></p>
+      <td><p><span dynamic-label key="FRG_8.RBK"></span></p>
         <div class="alert alert-info">
-          <span message key="ts-bas.helptext.synfunktioner.synskarpa"></span>
+          <span dynamic-label key="FRG_8.INF"></span>
         </div>
 
         <table class="table table-form">
@@ -109,12 +112,14 @@
         </table>
 
         <h4><span message key="ts-bas.label.syn.korrektionsglasens-styrka"></span></h4>
-        <label class="checkbox"><input name="dioptrier" type="checkbox" id="dioptrier"
-                                       ng-model="viewState.intygModel.syn.korrektionsglasensStyrka"><span message
-                                                                                          key="ts-bas.label.syn.8-dioptrier"></span></label>
+        <label class="checkbox">
+          <input name="dioptrier" type="checkbox" id="dioptrier"
+                 ng-model="viewState.intygModel.syn.korrektionsglasensStyrka">
+          <span dynamic-label key="FRG_9.RBK"></span>
+        </label>
 
         <div class="alert alert-info" ng-show="viewState.intygModel.syn.korrektionsglasensStyrka == true">
-          <span message key="ts-bas.helptext.synfunktioner.info-8-dioptrier"></span>
+          <span dynamic-label key="FRG_9.INF"></span>
         </div>
 
       </td>

@@ -30,9 +30,7 @@ import org.junit.Test;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.ts_bas.utils.*;
 import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
 
 public class InternalValidatorTest {
@@ -48,7 +46,7 @@ public class InternalValidatorTest {
     public void testValidate() throws Exception {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -68,7 +66,7 @@ public class InternalValidatorTest {
         for (Scenario scenario : ScenarioFinder.getInternalScenarios("invalid-*")) {
 
             Utlatande utlatande = scenario.asInternalModel();
-            ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+            ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
             assertEquals(ValidationStatus.INVALID, validationResponse.getStatus());
         }
@@ -78,7 +76,7 @@ public class InternalValidatorTest {
     public void testInvalidDiabetesTyp2MissingBehandling() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-diabetes-typ2-missing-behandling")
                 .asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("diabetes.diabetesTyp", getSingleElement(validationResponse.getValidationErrors()).getField());
     }
@@ -86,7 +84,7 @@ public class InternalValidatorTest {
     @Test
     public void testInvalidSynskarpa() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-korrigerad-synskarpa").asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("syn.vansterOga.utanKorrektion", getSingleElement(validationResponse.getValidationErrors()).getField());
     }
@@ -95,7 +93,7 @@ public class InternalValidatorTest {
     public void testFunktionshinderBeskrivningMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-funktionshinder-beskrivning-missing")
                 .asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("funktionsnedsattning.beskrivning", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
@@ -105,7 +103,7 @@ public class InternalValidatorTest {
     public void testIdentitetMissing() throws Exception {
         Utlatande utlatande = ScenarioFinder.getInternalScenario("invalid-missing-identitet")
                 .asInternalModel();
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
         assertEquals("identitet", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
@@ -118,7 +116,7 @@ public class InternalValidatorTest {
         utlatande.getSjukhusvard().setVardinrattning(null);
         utlatande.getSjukhusvard().setTidpunkt(null);
 
-        ValidateDraftResponse validationResponse = validator.validateInternal(utlatande);
+        ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
         int index = 0;
         assertEquals("sjukhusvard.tidpunkt", validationResponse.getValidationErrors().get(index++).getField());
         assertEquals("sjukhusvard.vardinrattning", validationResponse.getValidationErrors().get(index++).getField());

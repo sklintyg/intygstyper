@@ -1,12 +1,15 @@
 <a id="anchor.medvetandestorning" name="anchor.medvetandestorning"></a>
-<div wc-field field-label="ts-bas.label.medvetandestorning" field-has-errors="viewState.common.validationMessagesGrouped.medvetandestorning" id="medvetandestorningForm">
+<div wc-field
+     field-dynamic-label="KAT_7.RBK"
+     field-has-errors="viewState.common.validationMessagesGrouped.medvetandestorning"
+     id="medvetandestorningForm">
   <table class="table table-form">
     <tr ng-if="viewState.common.validationMessagesGrouped.medvetandestorning" id="validationMessages_medvetandestorning">
       <td colspan="3">
         <div class="alert alert-danger">
           <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.medvetandestorning"><span message
-                                                                                                           key="{{message.message}}"></span>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.medvetandestorning">
+              <span message key="{{message.message}}"></span>
             </li>
           </ul>
         </div>
@@ -23,14 +26,15 @@
       <td><input id="medvetandestorningan" name="medvetandestorninga" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.medvetandestorning.medvetandestorning"></td>
       <td>
-        <p><span message key="ts-bas.label.medvetandestorning.medvetandestorning"></span></p>
+        <p><span dynamic-label key="FRG_21.RBK"></span></p>
 
         <div ng-show="viewState.intygModel.medvetandestorning.medvetandestorning">
-          <p><span message
-                   key="ts-bas.label.medvetandestorning.medvetandestorning-ange-datum-orsak"></span>
+          <p>
+            <span dynamic-label key="DFR_21.2.RBK"></span>
           </p>
-                            <textarea class="form-control" rows="4" data-ng-model="viewState.intygModel.medvetandestorning.beskrivning"
-                                      id="beskrivningMedvetandestorning" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.medvetandestorning}}"></textarea>
+          <textarea class="form-control" rows="4" data-ng-model="viewState.intygModel.medvetandestorning.beskrivning"
+                    id="beskrivningMedvetandestorning" wc-maxlength ng-trim="false"
+                    maxlength="{{viewState.inputLimits.medvetandestorning}}"></textarea>
         </div>
       </td>
     </tr>

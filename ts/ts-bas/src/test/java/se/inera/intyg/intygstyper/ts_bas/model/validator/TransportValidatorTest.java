@@ -24,28 +24,21 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
-import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
+import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intyg.intygstyper.ts_bas.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 public class TransportValidatorTest {
-    private TsBasValidator validator;
 
-    @Before
-    public void setUp() throws Exception {
-        validator = new TsBasValidator();
-    }
+    private TransportValidatorInstance validator = new TransportValidatorInstance();
 
     @Test
     public void testValidate() throws ScenarioNotFoundException {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             TSBasIntyg utlatande = scenario.asTransportModel().getIntyg();
-            List<String> validationResponse = validator.validateTransport(utlatande);
+            List<String> validationResponse = validator.validate(utlatande);
 
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -58,7 +51,7 @@ public class TransportValidatorTest {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("programmatic-invalid-*")) {
 
             TSBasIntyg utlatande = scenario.asTransportModel().getIntyg();
-            List<String> validationResponse = validator.validateTransport(utlatande);
+            List<String> validationResponse = validator.validate(utlatande);
 
             assertTrue("Expected validation error in test " + scenario.getName(), !validationResponse.isEmpty());
         }

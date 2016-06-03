@@ -20,9 +20,9 @@
 angular.module('ts-bas').controller('ts-bas.IntygController',
     [ '$log', '$rootScope', '$stateParams', '$scope',
         'common.IntygService', 'common.IntygProxy', 'common.messageService','common.User',
-        'ts-bas.IntygController.ViewStateService',
+        'ts-bas.IntygController.ViewStateService', 'common.dynamicLabelService',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
-            messageService, User, ViewState) {
+            messageService, User, ViewState, DynamicLabelService) {
             'use strict';
 
             /*********************************************************************
@@ -70,6 +70,9 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
+
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel);
+
                         if (ViewState.intygModel.syn.synfaltsdefekter === true || ViewState.intygModel.syn.nattblindhet === true ||
                             ViewState.intygModel.syn.progressivOgonsjukdom === true) {
                             $scope.achelptext = true;

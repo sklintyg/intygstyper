@@ -33,11 +33,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
-import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
+import se.inera.intyg.common.support.modules.support.api.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -46,8 +44,8 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetTSDiabetesResponderImpl.class);
 
-    @Autowired
-    private TsDiabetesModuleApi moduleService;
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
 
     @Override
     public GetTSDiabetesResponseType getTSDiabetes(String logicalAddress, GetTSDiabetesType parameters) {
@@ -64,7 +62,7 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
         }
 
         try {
-            certificate = moduleService.getModuleContainer().getCertificate(certificateId, personNummer, false);
+            certificate = moduleContainer.getCertificate(certificateId, personNummer, false);
             if (personNummer != null && !certificate.getCivicRegistrationNumber().equals(personNummer)) {
                 response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;

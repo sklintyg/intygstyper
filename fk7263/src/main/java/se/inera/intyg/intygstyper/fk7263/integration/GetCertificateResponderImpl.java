@@ -42,9 +42,9 @@ import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.Resu
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.integration.module.exception.MissingConsentException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 
 /**
  * @author andreaskaltenbach
@@ -63,8 +63,8 @@ public class GetCertificateResponderImpl implements
         objectFactory = new ObjectFactory();
     }
 
-    @Autowired
-    private Fk7263ModuleApi moduleApi;
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
 
     @Override
     public GetCertificateResponseType getCertificate(AttributedURIType logicalAddress, GetCertificateRequestType request) {
@@ -89,7 +89,7 @@ public class GetCertificateResponderImpl implements
         CertificateHolder certificate = null;
 
         try {
-            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, personnummer, true);
+            certificate = moduleContainer.getCertificate(certificateId, personnummer, true);
             if (certificate.isRevoked()) {
                 response.setResult(ResultOfCallUtil.infoResult(String.format("Certificate '%s' has been revoked", certificateId)));
             } else {

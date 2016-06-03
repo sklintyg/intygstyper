@@ -4,6 +4,8 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -18,9 +20,6 @@ import com.google.common.io.Resources;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 
-import java.util.Arrays;
-import java.util.List;
-
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
 
@@ -33,14 +32,14 @@ public class Fk7263TransformerTest {
 
     private static final String ROOT_LEVEL_UTLATANDE_SCHEMA = "interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateResponder_3.1.xsd";
 
-    private static final String ROOT_LEVEL_SJUKPENNING_UTOKAT_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd";
+    private static final String ROOT_LEVEL_LISU_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd";
 
-    private static final String ROOT_LEVEL_SJUKPENNING_GENERAL_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_2.0.xsd";
+    private static final String ROOT_LEVEL_LISU_GENERAL_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_2.0.xsd";
 
     private static final String CLINICAL_UTLATANDE_TYPES_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_types_2.0.xsd";
 
     private static Schema lakarutlatandeInputSchema;
-    private static Schema sjukpenningUtokatOutputSchema;
+    private static Schema lisuOutputSchema;
 
     @BeforeClass
     public static void initIntygstjansterSchema() throws Exception {
@@ -53,12 +52,12 @@ public class Fk7263TransformerTest {
     }
 
     @BeforeClass
-    public static void initGeneralSjukpenningUtokatSchema() throws Exception {
+    public static void initGeneralLisuSchema() throws Exception {
         SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
-        Source rootSource = schemaValidatorBuilder.registerResource(ROOT_LEVEL_SJUKPENNING_UTOKAT_SCHEMA);
-        schemaValidatorBuilder.registerResource(ROOT_LEVEL_SJUKPENNING_GENERAL_SCHEMA);
+        Source rootSource = schemaValidatorBuilder.registerResource(ROOT_LEVEL_LISU_SCHEMA);
+        schemaValidatorBuilder.registerResource(ROOT_LEVEL_LISU_GENERAL_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_UTLATANDE_TYPES_SCHEMA);
-        sjukpenningUtokatOutputSchema = schemaValidatorBuilder.build(rootSource);
+        lisuOutputSchema = schemaValidatorBuilder.build(rootSource);
     }
 
     @Test
@@ -82,14 +81,14 @@ public class Fk7263TransformerTest {
                 fail();
             }
 
-            if (!validateSjukpenningUtokatOutputSchematron(result)) {
+            if (!validateLisuOutputSchematron(result)) {
                 fail();
             }
         }
     }
 
-    private boolean validateSjukpenningUtokatOutputSchematron(String xml) throws Exception {
-        SchematronResourceSCH schematronResource = SchematronResourceSCH.fromClassPath("sjukpenning-utokat.sch");
+    private boolean validateLisuOutputSchematron(String xml) throws Exception {
+        SchematronResourceSCH schematronResource = SchematronResourceSCH.fromClassPath("lisu.sch");
         if (!schematronResource.isValidSchematron()) {
             throw new IllegalArgumentException("Invalid Schematron!");
         }
@@ -113,7 +112,7 @@ public class Fk7263TransformerTest {
     private boolean validateIntygstjansterOutputXSD(String xml) {
         StreamSource xmlSource = new StreamSource(new ByteArrayInputStream(xml.getBytes(Charsets.UTF_8)));
         try {
-            sjukpenningUtokatOutputSchema.newValidator().validate(xmlSource);
+            lisuOutputSchema.newValidator().validate(xmlSource);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

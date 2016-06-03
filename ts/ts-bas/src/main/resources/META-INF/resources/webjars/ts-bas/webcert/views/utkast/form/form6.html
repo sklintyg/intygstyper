@@ -1,5 +1,8 @@
 <a id="anchor.neurologi" name="anchor.neurologi"></a>
-<div wc-field field-label="ts-bas.label.neurologi" field-has-errors="viewState.common.validationMessagesGrouped.neurologi" id="neurologiForm">
+<div wc-field
+     field-dynamic-label="KAT_6.RBK"
+     field-has-errors="viewState.common.validationMessagesGrouped.neurologi"
+     id="neurologiForm">
   <table class="table table-form">
     <tr ng-if="viewState.common.validationMessagesGrouped.neurologi" id="validationMessages_neurologi">
       <td colspan="3">
@@ -23,7 +26,7 @@
       <td><input id="neurologian" name="neurologia" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.neurologi.neurologiskSjukdom"></td>
       <td>
-        <p><span message key="ts-bas.label.neurologi.neurologisksjukdom"></span></p>
+        <p><span dynamic-label key="FRG_20.RBK"></span></p>
       </td>
     </tr>
   </table>

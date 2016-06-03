@@ -20,9 +20,9 @@
 angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope',
         'common.IntygService', 'common.IntygProxy', 'common.messageService','common.UserModel','common.IntygCopyRequestModel',
-        'ts-diabetes.IntygController.ViewStateService',
+        'ts-diabetes.IntygController.ViewStateService', 'common.dynamicLabelService',
         function($location, $log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
-            messageService, UserModel, IntygCopyRequestModel, ViewState) {
+            messageService, UserModel, IntygCopyRequestModel, ViewState, DynamicLabelService) {
             'use strict';
 
             /*********************************************************************
@@ -65,6 +65,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
+
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel);
 
                         ViewState.intygAvser = createKorkortstypListString(ViewState.intygModel.intygAvser.korkortstyp);
                         ViewState.bedomning = createKorkortstypListString(ViewState.intygModel.bedomning.korkortstyp);

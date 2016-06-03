@@ -1,5 +1,10 @@
-<a id="anchor.diabetes" name="anchor.diabetes"></a>
-<div wc-field field-label="ts-diabetes.label.diabetes" class="print-pagebreak-after" field-has-errors="viewState.common.validationMessagesGrouped.diabetes" id="allmantForm">
+<a id="anchor.diabetes" name="anchor.diabetes" xmlns="http://www.w3.org/1999/html"></a>
+<div wc-field
+     field-dynamic-label="KAT_1.RBK"
+     field-dynamic-help-text="KAT_1.HLP"
+     class="print-pagebreak-after"
+     field-has-errors="viewState.common.validationMessagesGrouped.diabetes"
+     id="allmantForm">
   <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
     <ul>
       <li ng-repeat="message in viewState.common.validationMessagesGrouped.diabetes"><span message
@@ -8,36 +13,36 @@
     </ul>
   </div>
   <div class="form-group">
-    <label for="diabetesyear"> Vilket år ställdes diagnosen diabetes?</label>
+    <label for="diabetesyear"><span dynamic-label key="FRG_35.RBK"></span></label>
     <div class="controls">
       <input id="diabetesyear" class="form-control input-year" type="text" maxlength="4"
              ng-model="viewState.intygModel.diabetes.observationsperiod" />
     </div>
   </div>
   <div class="form-group">
-    Patienten har diabetes {{viewState.intygModel.diabetes.diabetesTyp}}
+    <span dynamic-label key="FRG_18.RBK"></span> {{viewState.intygModel.diabetes.diabetesTyp}}
     <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_1"
                                 ng-model="viewState.intygModel.diabetes.diabetestyp">Typ 1</label>
     <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_2"
                                 ng-model="viewState.intygModel.diabetes.diabetestyp">Typ 2</label>
   </div>
   <div class="form-group">
-    Behandling
+    <span dynamic-label key="FRG_19.RBK"></span>
     <label class="checkbox"><input id="diabetestreat1" name="diabetestreat1" type="checkbox"
                                    ng-model="viewState.intygModel.diabetes.endastKost">
-      <span message key="ts-diabetes.label.diabetes.behandling.endast-kost"></span>
+      <span dynamic-label key="DFR_19.1.RBK"></span>
     </label>
     <label class="checkbox"><input id="diabetestreat2" name="diabetestreat2" type="checkbox"
                                    ng-model="viewState.intygModel.diabetes.tabletter">
-      <span message key="ts-diabetes.label.diabetes.behandling.tabletter"></span>
+      <span dynamic-label key="DFR_19.2.RBK"></span>
     </label>
     <label class="checkbox"><input id="diabetestreat3" name="diabetestreat3" type="checkbox"
                                    ng-model="viewState.intygModel.diabetes.insulin">
-      <span message key="ts-diabetes.label.diabetes.behandling.insulin"></span>
+      <span dynamic-label key="DFR_19.3.RBK"></span>
     </label>
     <div class="form-group indent" ng-show="viewState.intygModel.diabetes.insulin">
-      <label for="insulinBehandlingsperiod"><span message
-                                                  key="ts-diabetes.label.diabetes.behandling.insulin-period"></span></label>
+      <label for="insulinBehandlingsperiod"><span dynamic-label
+                                                  key="DFR_19.4.RBK"></span></label>
       <div class="controls">
         <input id="insulinBehandlingsperiod" class="form-control input-year"
                name="insulinBehandlingsperiod" type="text"
@@ -46,8 +51,8 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="annanBehandlingBeskrivning"><span message
-                                                  key="ts-diabetes.label.diabetes.behandling.annan-beskrivning"></span></label>
+    <label for="annanBehandlingBeskrivning"><span dynamic-label
+                                                  key="DFR_19.5.RBK"></span></label>
     <div class="controls">
       <input id="annanBehandlingBeskrivning" class="form-control input-full"
              name="annanBehandlingBeskrivning" type="text"

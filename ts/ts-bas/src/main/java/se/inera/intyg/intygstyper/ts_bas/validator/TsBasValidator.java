@@ -18,15 +18,13 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.validator;
 
-import java.util.List;
-
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.validator.internal.InternalValidatorInstance;
-import se.inera.intyg.intygstyper.ts_bas.validator.transport.TransportValidatorInstance;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intyg.intygstyper.ts_parent.validator.InternalDraftValidator;
 
-public class TsBasValidator {
+public class TsBasValidator implements InternalDraftValidator<Utlatande> {
+
     /**
      * Validates an internal Utlatande.
      *
@@ -34,19 +32,10 @@ public class TsBasValidator {
      *            se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande
      * @return List of validation errors, or an empty string if validated correctly.
      */
-    public ValidateDraftResponse validateInternal(Utlatande utlatande) {
+    @Override
+    public ValidateDraftResponse validateDraft(Utlatande utlatande) {
         InternalValidatorInstance instance = new InternalValidatorInstance();
         return instance.validate(utlatande);
     }
 
-    /**
-     * Performs programmatic validation a TSBasIntyg on the transport format.
-     *
-     * @param TSBasIntyg
-     * @return List of validation errors, or an empty string if validated correctly.
-     */
-    public List<String> validateTransport(TSBasIntyg intyg) {
-        TransportValidatorInstance instance = new TransportValidatorInstance();
-        return instance.validate(intyg);
-    }
 }

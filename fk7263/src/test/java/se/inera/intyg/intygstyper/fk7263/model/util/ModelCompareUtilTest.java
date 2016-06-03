@@ -21,33 +21,33 @@ package se.inera.intyg.intygstyper.fk7263.model.util;
 
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Spy;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@ContextConfiguration(locations = ("/fk7263-test-config.xml"))
-@RunWith(SpringJUnit4ClassRunner.class)
+import junit.framework.TestCase;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.modules.service.WebcertModuleService;
+import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+
+@RunWith(MockitoJUnitRunner.class)
 public class ModelCompareUtilTest extends TestCase {
 
     public static final String CORRECT_DIAGNOSKOD_FROM_FILE = "S47";
     public static final String CORRECT_DIAGNOSKOD2 = "B88";
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Spy
+    private ObjectMapper objectMapper = new CustomObjectMapper();
 
+    @Autowired
     private ModelCompareUtil modelCompareUtil;
 
     @Before
@@ -63,7 +63,7 @@ public class ModelCompareUtilTest extends TestCase {
             public boolean validateDiagnosisCode(String codeFragment, Diagnoskodverk codeSystem) {
                 return compareCodes(codeFragment);
             }
-            
+
             private boolean compareCodes(String codeFragment) {
                 return CORRECT_DIAGNOSKOD_FROM_FILE.equals(codeFragment) || CORRECT_DIAGNOSKOD2.equals(codeFragment);
             }

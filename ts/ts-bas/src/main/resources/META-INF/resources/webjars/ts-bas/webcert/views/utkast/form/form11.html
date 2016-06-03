@@ -1,12 +1,15 @@
 <a id="anchor.narkotikalakemedel" name="anchor.narkotikalakemedel"></a>
-<div wc-field field-label="ts-bas.label.narkotikalakemedel" field-has-errors="viewState.common.validationMessagesGrouped.narkotikalakemedel" id="narkotikaLakemedelForm">
+<div wc-field
+     field-dynamic-label="KAT_11.RBK"
+     field-has-errors="viewState.common.validationMessagesGrouped.narkotikalakemedel"
+     id="narkotikaLakemedelForm">
   <table class="table table-form">
     <tr ng-if="viewState.common.validationMessagesGrouped.narkotikalakemedel" id="validationMessages_narkotikalakemedel">
       <td colspan="3">
         <div class="alert alert-danger">
           <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.narkotikalakemedel"><span message
-                                                                                                           key="{{message.message}}"></span>
+            <li ng-repeat="message in viewState.common.validationMessagesGrouped.narkotikalakemedel">
+              <span message key="{{message.message}}"></span>
             </li>
           </ul>
         </div>
@@ -22,21 +25,21 @@
                  ng-model="viewState.intygModel.narkotikaLakemedel.teckenMissbruk"></td>
       <td><input name="narkotikalakemedela" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.narkotikaLakemedel.teckenMissbruk"></td>
-      <td><span message key="ts-bas.label.narkotika-lakemedel.tecken-missbruk"></span></td>
+      <td><span dynamic-label key="DFR_25.1.RBK"></span></td>
     </tr>
     <tr>
       <td><input name="narkotikalakemedelb" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats"></td>
       <td><input name="narkotikalakemedelb" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats"></td>
-      <td><span message key="ts-bas.label.narkotika-lakemedel.foremal-for-vardinsats"></span></td>
+      <td><span dynamic-label key="DFR_25.2.RBK"></span></td>
     </tr>
 
     <tr ng-show="viewState.intygModel.narkotikaLakemedel.teckenMissbruk || viewState.intygModel.narkotikaLakemedel.foremalForVardinsats">
       <td colspan="2"></td>
       <td>
         <p>
-        <div style="margin-bottom:12px;" message key="ts-bas.label.narkotika-lakemedel.behov-provtagning"></div>
+        <div style="margin-bottom:12px;" dynamic-label key="DFR_25.3.RBK"></div>
         <label class="radio">
           <input name="narkotikalakemedelb2" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.narkotikaLakemedel.provtagningBehovs">
@@ -47,7 +50,7 @@
           <span message key="common.no"></span></label>
         </p>
         <div class="alert alert-info" ng-show="viewState.intygModel.narkotikaLakemedel.provtagningBehovs">
-          <span message key="ts-bas.helptext.alkohol-narkotika.provtagning" />
+          <span dynamic-label key="DFR_25.3.INF" />
         </div>
       </td>
     </tr>
@@ -58,13 +61,14 @@
       <td><input name="narkotikalakemedelc" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
       <td>
-        <p><span message key="ts-bas.label.narkotika-lakemedel.lakarordinerat-lakemedelsbruk"></span>
+        <p><span dynamic-label key="FRG_26.RBK"></span>
         </p>
 
         <div ng-show="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
-          <p><span message key="ts-bas.label.narkotika-lakemedel.ange-lakemedel-dos"></span></p>
-                            <textarea class="form-control" data-ng-model="viewState.intygModel.narkotikaLakemedel.lakemedelOchDos"
-                                      id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.lakemedelOchDos}}" rows="3"></textarea>
+          <p><span dynamic-label key="DFR_26.1.RBK"></span></p>
+          <textarea class="form-control" data-ng-model="viewState.intygModel.narkotikaLakemedel.lakemedelOchDos"
+                    id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false"
+                    maxlength="{{viewState.inputLimits.lakemedelOchDos}}" rows="3"></textarea>
         </div>
       </td>
     </tr>

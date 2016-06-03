@@ -19,83 +19,41 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.rest;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.io.StringReader;
 
 import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
 import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.transform.stream.StreamSource;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.w3.wsaddressing10.AttributedURIType;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.rivtabp20.v1.RevokeMedicalCertificateResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateRequestType;
-import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateResponseType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
-import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
-import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
-import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
-import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.exception.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGenerator;
-import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
-import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
-import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserEnum;
 import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
+import se.inera.intyg.intygstyper.ts_parent.rest.TsParentModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 /**
  * The contract between the certificate module and the generic components (Intygstjänsten and Mina-Intyg).
  *
  * @author Gustav Norbäcker, R2M
  */
-public class TsDiabetesModuleApi implements ModuleApi {
+public class TsDiabetesModuleApi extends TsParentModuleApi<Utlatande> {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsDiabetesModuleApi.class);
-
-    private static final String INTYG_AVSER_SVAR_ID_1 = "1";
-    private static final String INTYG_AVSER_DELSVAR_ID_1 = "1.1";
-
-    @Autowired
-    private Validator validator;
-
-    @Autowired
-    private PdfGenerator pdfGenerator;
-
-    @Autowired
-    private WebcertModelFactory webcertModelFactory;
-
-    @Autowired
-    @Qualifier("ts-diabetes-jaxbContext")
-    private JAXBContext jaxbContext;
-
-    @Autowired
-    @Qualifier("ts-diabetes-objectMapper")
-    private ObjectMapper objectMapper;
 
     @Autowired(required = false)
     @Qualifier("sendTsDiabetesClient")
@@ -113,97 +71,13 @@ public class TsDiabetesModuleApi implements ModuleApi {
     @Qualifier("tsDiabetesXslTransformer")
     private XslTransformer xslTransformer;
 
-    private ModuleContainerApi moduleContainer;
-
-    @Autowired(required = false)
-    private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
-
-    public TsDiabetesModuleApi() throws Exception {
-    }
-
-    @Override
-    public ValidateDraftResponse validateDraft(String internalModel) throws ModuleException {
-        return validator.validateInternal(getInternal(internalModel));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String createNewInternal(CreateNewDraftHolder draftCertificateHolder) throws ModuleException {
-        try {
-            return toInteralModelResponse(webcertModelFactory.createNewWebcertDraft(draftCertificateHolder, null));
-
-        } catch (ConverterException e) {
-            LOG.error("Could not create a new internal Webcert model", e);
-            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String createNewInternalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
-            throws ModuleException {
-        try {
-            Utlatande internal = getInternal(template);
-            return toInteralModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
-        } catch (ConverterException e) {
-            LOG.error("Could not create a new internal Webcert model", e);
-            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
-        }
-    }
-
-    @Override
-    public String updateBeforeSave(String internalModel, HoSPersonal hosPerson) throws ModuleException {
-        return updateInternal(internalModel, hosPerson, null);
-    }
-
-    @Override
-    public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
-            throws ModuleException {
-        return updateInternal(internalModel, hosPerson, signingDate);
-    }
-
-    @Override
-    public void setModuleContainer(ModuleContainerApi moduleContainer) {
-        this.moduleContainer = moduleContainer;
-
-    }
-
-    @Override
-    public ModuleContainerApi getModuleContainer() {
-        return moduleContainer;
-    }
-
-    @Override
-    public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
-        try {
-            return new PdfResponse(pdfGenerator.generatePDF(getInternal(internalModel), applicationOrigin),
-                    pdfGenerator.generatePdfFilename(getInternal(internalModel)));
-        } catch (PdfGeneratorException e) {
-            LOG.error("Failed to generate PDF for certificate!", e);
-            throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
-        }
-    }
-
-    @Override
-    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
-            throws ModuleException {
-        throw new ModuleException("Feature not supported");
+    public TsDiabetesModuleApi() {
+        super(Utlatande.class);
     }
 
     @Override
     public void registerCertificate(String internalModel, String logicalAddress) throws ModuleException {
-        RegisterTSDiabetesType request = new RegisterTSDiabetesType();
-        try {
-            Utlatande internal = objectMapper.readValue(internalModel, Utlatande.class);
-            request = InternalToTransportConverter.convert(internal);
-        } catch (IOException e) {
-            LOG.error("Failed to convert to transport format during registerTSBas", e);
-            throw new ExternalServiceCallException("Failed to convert to transport format during registerTSBas", e);
-        }
+        RegisterTSDiabetesType request = InternalToTransportConverter.convert(getInternal(internalModel));
 
         RegisterTSDiabetesResponseType response = diabetesRegisterClient.registerTSDiabetes(logicalAddress, request);
 
@@ -234,7 +108,6 @@ public class TsDiabetesModuleApi implements ModuleApi {
 
     @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
-
         GetTSDiabetesType type = new GetTSDiabetesType();
         type.setIntygsId(certificateId);
 
@@ -260,11 +133,6 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public Utlatande getUtlatandeFromJson(String utlatandeJson) throws IOException {
-        return objectMapper.readValue(utlatandeJson, Utlatande.class);
-    }
-
-    @Override
     public Utlatande getUtlatandeFromXml(String xml) throws ModuleException {
         RegisterTSDiabetesType jaxbObject = JAXB.unmarshal(new StringReader(xml),
                 RegisterTSDiabetesType.class);
@@ -279,7 +147,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     private CertificateResponse convert(GetTSDiabetesResponseType diabetesResponseType, boolean revoked) throws ModuleException {
         try {
             Utlatande utlatande = TransportToInternalConverter.convert(diabetesResponseType.getIntyg());
-            String internalModel = objectMapper.writeValueAsString(utlatande);
+            String internalModel = toInternalModelResponse(utlatande);
             CertificateMetaData metaData = TSDiabetesCertificateMetaTypeConverter.toCertificateMetaData(diabetesResponseType.getMeta(),
                     diabetesResponseType.getIntyg());
             return new CertificateResponse(internalModel, utlatande, metaData, revoked);
@@ -289,130 +157,7 @@ public class TsDiabetesModuleApi implements ModuleApi {
     }
 
     @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return !persistedState.equals(currentState);
-    }
-
-    // - - - - - Private scope - - - - - //
-    private String updateInternal(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
-            throws ModuleException {
-        Utlatande utlatande = getInternal(internalModel);
-        webcertModelFactory.updateSkapadAv(utlatande, hosPerson, signingDate);
-        return toInteralModelResponse(utlatande);
-    }
-
-    private Utlatande getInternal(String internalModel)
-            throws ModuleException {
-        try {
-            return objectMapper.readValue(internalModel, Utlatande.class);
-        } catch (IOException e) {
-            throw new ModuleSystemException("Failed to deserialize internal model", e);
-        }
-    }
-
-    private String toInteralModelResponse(Utlatande internalModel) throws ModuleException {
-        try {
-            StringWriter writer = new StringWriter();
-            objectMapper.writeValue(writer, internalModel);
-            return writer.toString();
-        } catch (IOException e) {
-            throw new ModuleSystemException("Failed to serialize internal model", e);
-        }
-    }
-
-    @Override
-    public String transformToStatisticsService(String inputXml) throws ModuleException {
-        return inputXml;
-    }
-
-    @Override
-    public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Map<String, List<String>> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String createRenewalFromTemplate(CreateDraftCopyHolder draftCertificateHolder, String template)
-            throws ModuleException {
-        try {
-            Utlatande internal = getInternal(template);
-            return toInteralModelResponse(webcertModelFactory.createCopy(draftCertificateHolder, internal));
-        } catch (ConverterException e) {
-            LOG.error("Could not create a new internal Webcert model", e);
-            throw new ModuleConverterException("Could not create a new internal Webcert model", e);
-        }
-    }
-
-    @Override
-    public Intyg getIntygFromUtlatande(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) throws ModuleException {
-        try {
-            return UtlatandeToIntyg.convert((Utlatande) utlatande);
-        } catch (Exception e) {
-            LOG.error("Could not get intyg from utlatande: {}", e.getMessage());
-            throw new ModuleException("Could not get intyg from utlatande", e);
-        }
-    }
-
-    @Override
-    public String getAdditionalInfo(Intyg intyg) throws ModuleException {
-        List<CVType> types = new ArrayList<>();
-        try {
-            for (Svar svar : intyg.getSvar()) {
-                if (INTYG_AVSER_SVAR_ID_1.equals(svar.getId())) {
-                    for (Delsvar delsvar : svar.getDelsvar()) {
-                        if (INTYG_AVSER_DELSVAR_ID_1.equals(delsvar.getId())) {
-                            CVType cv = TransportConverterUtil.getCVSvarContent(delsvar);
-                            if (cv != null) {
-                                types.add(cv);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (ConverterException e) {
-            LOG.error("Failed retrieving additionalInfo for certificate {}: {}", intyg.getIntygsId().getExtension(), e.getMessage());
-            return null;
-        }
-
-        if (types.isEmpty()) {
-            LOG.error("Failed retrieving additionalInfo for certificate {}: Found no types.", intyg.getIntygsId().getExtension());
-            return null;
-        }
-
-        return types.stream()
-                .map(cv -> IntygAvserEnum.fromCode(cv.getCode()))
-                .map(IntygAvserEnum::name)
-                .collect(Collectors.joining(", "));
-    }
-
-    @Override
-    public void revokeCertificate(String xmlBody, String logicalAddress) throws ModuleException {
-        AttributedURIType uri = new AttributedURIType();
-        uri.setValue(logicalAddress);
-
-        StringBuffer sb = new StringBuffer(xmlBody);
-        RevokeMedicalCertificateRequestType request = JAXB.unmarshal(new StreamSource(new StringReader(sb.toString())),
-                RevokeMedicalCertificateRequestType.class);
-        RevokeMedicalCertificateResponseType response = revokeCertificateClient.revokeMedicalCertificate(uri, request);
-        if (!response.getResult().getResultCode().equals(ResultCodeEnum.OK)) {
-            String message = "Could not send revoke to " + logicalAddress;
-            LOG.error(message);
-            throw new ExternalServiceCallException(message);
-        }
-    }
-
-    @Override
-    public String createRevokeRequest(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande,
-            se.inera.intyg.common.support.model.common.internal.HoSPersonal skapatAv, String meddelande) throws ModuleException {
-        RevokeMedicalCertificateRequestType request = new RevokeMedicalCertificateRequestType();
-        request.setRevoke(ModelConverter.buildRevokeTypeFromUtlatande(utlatande, meddelande));
-
-        StringWriter writer = new StringWriter();
-        JAXB.marshal(request, writer);
-        return writer.toString();
+    protected Intyg utlatandeToIntyg(Utlatande utlatande) throws ConverterException {
+        return UtlatandeToIntyg.convert(utlatande);
     }
 }

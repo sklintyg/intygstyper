@@ -19,7 +19,6 @@
 
 package se.inera.intyg.intygstyper.fk7263.rest;
 
-import static se.inera.intyg.common.support.common.enumerations.Recipients.FK;
 import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
 
 import java.io.*;
@@ -51,13 +50,13 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
+import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
@@ -102,7 +101,6 @@ public class Fk7263ModuleApi implements ModuleApi {
     private XslTransformer xslTransformer;
 
     @Autowired
-    @Qualifier("fk7263-objectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired(required = false)
@@ -114,8 +112,6 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired(required = false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
-
-    private ModuleContainerApi moduleContainer;
 
     @Autowired(required = false)
     private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
@@ -188,16 +184,6 @@ public class Fk7263ModuleApi implements ModuleApi {
             LOG.error("Could not create a new internal Webcert model", e);
             throw new ModuleConverterException("Could not create a new internal Webcert model", e);
         }
-    }
-
-    @Override
-    public ModuleContainerApi getModuleContainer() {
-        return moduleContainer;
-    }
-
-    @Override
-    public void setModuleContainer(ModuleContainerApi moduleContainer) {
-        this.moduleContainer = moduleContainer;
     }
 
     /**
@@ -413,7 +399,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId)
             throws ModuleException {
         // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
-        if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(FK.toString())) {
+        if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(PartKod.FKASSA.getValue())) {
             request = whenFkIsRecipientThenSetCodeSystemToICD10(request);
         }
 

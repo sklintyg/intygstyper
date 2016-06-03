@@ -36,11 +36,9 @@ import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.integration.module.exception.MissingConsentException;
 import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
-import se.inera.intyg.common.support.modules.support.api.CertificateStateHolder;
+import se.inera.intyg.common.support.modules.support.api.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
-import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -49,8 +47,8 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(GetTSBasResponderImpl.class);
 
-    @Autowired
-    private TsBasModuleApi moduleApi;
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
 
     @Override
     public GetTSBasResponseType getTSBas(String logicalAddress, GetTSBasType request) {
@@ -68,7 +66,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
         CertificateHolder certificate = null;
 
         try {
-            certificate = moduleApi.getModuleContainer().getCertificate(certificateId, personNummer, false);
+            certificate = moduleContainer.getCertificate(certificateId, personNummer, false);
             if (personNummer != null && !certificate.getCivicRegistrationNumber().equals(personNummer)) {
                 response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;

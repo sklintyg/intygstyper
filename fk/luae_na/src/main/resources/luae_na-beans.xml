@@ -2,14 +2,12 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean class="se.inera.certificate.modules.luae_na.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactoryImpl" />
 
-  <bean class="se.inera.certificate.modules.luae_na.rest.AktivitetsersattningNAModuleApi" />
+  <bean class="se.inera.intyg.intygstyper.luae_na.rest.LuaenaModuleApi" />
 
-  <bean class="se.inera.certificate.modules.luae_na.validator.InternalDraftValidator" />
+  <bean class="se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl" />
 
-  <bean id="aktivitetsersattningNAEntryPoint" class="se.inera.certificate.modules.luae_na.support.AktivitetsersattningNAEntryPoint" />
-
-  <bean id="luae_na-objectMapper" class="se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper"/>
+  <bean id="luaenaEntryPoint" class="se.inera.intyg.intygstyper.luae_na.support.LuaenaEntryPoint" />
 
 </beans>

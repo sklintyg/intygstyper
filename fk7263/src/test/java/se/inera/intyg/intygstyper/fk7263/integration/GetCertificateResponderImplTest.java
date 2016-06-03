@@ -87,7 +87,6 @@ public class GetCertificateResponderImplTest {
 
     @Before
     public void setUpMocks() throws Exception {
-        when(moduleRestApi.getModuleContainer()).thenReturn(moduleContainer);
         when(jaxbContext.createMarshaller()).thenReturn(marshaller);
     }
 

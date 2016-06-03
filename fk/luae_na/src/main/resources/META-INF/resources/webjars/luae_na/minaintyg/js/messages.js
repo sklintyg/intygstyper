@@ -26,7 +26,7 @@ var luae_naMessages = {
         'luae_na.label.latestevent.noevents': 'Inga händelser',
         'luae_na.history.label.pagetitle': 'Intygets alla händelser',
         'luae_na.status.sent': 'Mottaget av',
-        'luae_na.target.fkassa': 'Försäkringskassan',
+        'luae_na.target.fk': 'Försäkringskassan',
         'luae_na.target.afa': 'AFA Försäkring',
         'luae_na.target.skandia': 'Skandia',
 

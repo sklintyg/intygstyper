@@ -39,18 +39,14 @@ import se.inera.intyg.common.support.integration.module.exception.CertificateAlr
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
+import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intyg.common.util.logging.LogMarkers;
 import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
 import se.inera.intyg.intygstyper.fk7263.model.converter.util.ConverterUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 import se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidator;
 
-
-/**
- *
- */
 public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalCertificateResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
@@ -60,8 +56,8 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 
-    @Autowired
-    private Fk7263ModuleApi moduleApi;
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
 
     @PostConstruct
     public void initializeJaxbContext() throws JAXBException {
@@ -91,7 +87,7 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             certificateHolder.setOriginalCertificate(xml);
             certificateHolder.setWireTapped(wireTapped);
 
-            moduleApi.getModuleContainer().certificateReceived(certificateHolder);
+            moduleContainer.certificateReceived(certificateHolder);
 
             response.setResult(ResultOfCallUtil.okResult());
 

@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 
@@ -47,7 +48,7 @@ public class WebcertModelFactoryTest {
     private IntygTextsService intygTexts;
 
     @InjectMocks
-    private WebcertModelFactory factory;
+    private WebcertModelFactoryImpl factory;
 
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
@@ -63,7 +64,7 @@ public class WebcertModelFactoryTest {
         se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande utlatande = null;
 
         try {
-            utlatande = factory.createNewWebcertDraft(draftCertHolder, null);
+            utlatande = factory.createNewWebcertDraft(draftCertHolder);
         } catch (ConverterException e) {
             e.printStackTrace();
         }
@@ -95,7 +96,7 @@ public class WebcertModelFactoryTest {
         utlatande.getGrundData().setSkapadAv(new se.inera.intyg.common.support.model.common.internal.HoSPersonal());
         HoSPersonal hosPerson = new HoSPersonal(personId, fullstandigtName, forskrivarKod, befattning, specialiseringar, new Vardenhet("hsaId",
                 "name", "postadress", "postnummer", "postort", "telefonnummer", "epost", "arbetsplatskod", new Vardgivare("hsaId", "namn")));
-        factory.updateSkapadAv(utlatande, hosPerson, signingDate);
+        WebcertModelFactoryUtil.updateSkapadAv(utlatande, hosPerson, signingDate);
 
         assertEquals(personId, utlatande.getGrundData().getSkapadAv().getPersonId());
         assertEquals(fullstandigtName, utlatande.getGrundData().getSkapadAv().getFullstandigtNamn());
@@ -105,7 +106,7 @@ public class WebcertModelFactoryTest {
         assertEquals(specialiseringar, utlatande.getGrundData().getSkapadAv().getSpecialiteter());
 
         // assert befattningar and specialiteter are cleared before they are updated
-        factory.updateSkapadAv(utlatande, hosPerson, signingDate);
+        WebcertModelFactoryUtil.updateSkapadAv(utlatande, hosPerson, signingDate);
         assertEquals(Arrays.asList(befattning), utlatande.getGrundData().getSkapadAv().getBefattningar());
         assertEquals(specialiseringar, utlatande.getGrundData().getSkapadAv().getSpecialiteter());
     }

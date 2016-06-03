@@ -33,10 +33,10 @@ import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
 
 public class PdfGeneratorTest {
 
-    private PdfGenerator pdfGen;
+    private PdfGeneratorImpl pdfGen;
 
     public PdfGeneratorTest() {
-        pdfGen = new PdfGenerator(true);
+        pdfGen = new PdfGeneratorImpl(true);
     }
 
     @Test

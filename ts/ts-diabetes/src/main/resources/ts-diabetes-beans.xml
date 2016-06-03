@@ -24,11 +24,11 @@
 
   <bean class="se.inera.intyg.intygstyper.ts_diabetes.validator.Validator" />
 
-  <bean class="se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGenerator">
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorImpl">
     <constructor-arg value="true" />
   </bean>
 
-  <bean class="se.inera.intyg.intygstyper.ts_diabetes.model.converter.WebcertModelFactory" />
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.model.converter.WebcertModelFactoryImpl" />
 
   <bean id="tsDiabetesEntryPoint"
     class="se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint" />

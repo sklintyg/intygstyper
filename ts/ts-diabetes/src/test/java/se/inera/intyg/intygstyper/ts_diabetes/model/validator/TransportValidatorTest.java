@@ -19,33 +19,26 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.model.validator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.junit.Before;
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
-import se.inera.intyg.intygstyper.ts_diabetes.validator.Validator;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
+import se.inera.intyg.intygstyper.ts_diabetes.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
 public class TransportValidatorTest {
-    private Validator validator;
 
-    @Before
-    public void setUp() throws Exception {
-        validator = new Validator();
-    }
+    private TransportValidatorInstance validator = new TransportValidatorInstance();
 
     @Test
     public void testValidate() throws ScenarioNotFoundException {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
             TSDiabetesIntyg utlatande = scenario.asTransportModel().getIntyg();
-            List<String> validationResponse = validator.validateTransport(utlatande);
+            List<String> validationResponse = validator.validate(utlatande);
 
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
@@ -58,7 +51,7 @@ public class TransportValidatorTest {
         for (Scenario scenario : ScenarioFinder.getTransportScenarios("programmatic-invalid-*")) {
 
             TSDiabetesIntyg utlatande = scenario.asTransportModel().getIntyg();
-            List<String> validationResponse = validator.validateTransport(utlatande);
+            List<String> validationResponse = validator.validate(utlatande);
 
             assertTrue("Expected validation error in test " + scenario.getName(), !validationResponse.isEmpty());
         }
