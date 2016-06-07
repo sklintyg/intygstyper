@@ -32,8 +32,11 @@
                 ng-model="typ.selected"> <span dynamic-label
                                                key="KORKORT_{{typ.type}}.RBK"></span></label>
           </div>
-          <label class="radio"><input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
-                                      ng-model="viewState.intygModel.bedomning.kanInteTaStallning"> Kan inte ta ställning</label>
+          <label class="radio">
+            <input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
+                   ng-model="viewState.intygModel.bedomning.kanInteTaStallning">
+            <span dynamic-label key="DFR_33.2.RBK"></span>
+          </label>
         </div>
       </td>
     </tr>

@@ -52,32 +52,6 @@ var tsBasMessages = {
         'ts-bas.label.status.signed': 'Intyget är signerat och är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Om patienten inte har möjlighet att skicka intyget elektroniskt till Transportstyrelsen kan du skicka intyget direkt till Transportstyrelsen åt patienten. Observera att patientens samtycke då krävs.',
         'ts-bas.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
 
-        // Identitet styrkt genom
-        'ts-bas.label.identitet.id_kort': 'ID-kort',
-        'ts-bas.label.identitet.foretag_eller_tjanstekort': 'Företagskort eller tjänstekort.',
-        'ts-bas.label.identitet.korkort': 'Svenskt körkort',
-        'ts-bas.label.identitet.pers_kannedom': 'Personlig kännedom',
-        'ts-bas.label.identitet.forsakran_kap18': 'Försäkran enligt 18 kap 4 §',
-        'ts-bas.label.identitet.pass': 'Pass',
-        'ts-bas.helptext.identitet-styrkt-genom.id-kort': '* SIS-märkt ID-kort, svenskt nationellt ID-kort eller ID-kort utfärdat av Skatteverket.',
-        'ts-bas.helptext.identitet-styrkt-genom.foretags-tjanstekort': '** SIS-märkt företagskort eller tjänstekort.',
-        'ts-bas.helptext.identitet-styrkt-genom.forsakran-enl18kap4': '*** Försäkran enligt 18 kap 4 § i Transportstyrelsens föreskrifter (TSFS 2010:125, senast ändrade genom TSFS 2013:2): Identiteten får fastställas genom att en förälder, annan vårdnadshavare, make, maka eller sambo, registrerad partner eller myndigt barn skriftligen försäkrar att lämnade uppgifter om sökandens identitet är riktiga. Den som lämnar en sådan försäkran ska vara närvarande vid identitetskontrollen och kunna styrka sin egen identitet.',
-        'ts-bas.helptext.identitet-styrkt-genom.pass': '**** Svenskt EU-pass, annat EU-pass utfärdade från och med den 1 september 2006, pass utfärdat av Island, Liechtenstein, Norge eller Schweiz från och med den 1 september 2006.',
-
-        // Körkortsbehörigheter
-        'ts-bas.label.korkort.c1': 'C1',
-        'ts-bas.label.korkort.c1e': 'C1E',
-        'ts-bas.label.korkort.c': 'C',
-        'ts-bas.label.korkort.ce': 'CE',
-        'ts-bas.label.korkort.d1': 'D1',
-        'ts-bas.label.korkort.d1e': 'D1E',
-        'ts-bas.label.korkort.d': 'D',
-        'ts-bas.label.korkort.de': 'DE',
-        'ts-bas.label.korkort.taxi': 'Taxi',
-        'ts-bas.label.korkort.annat': 'Annat',
-
-        'ts-bas.helptext.lakaren-ska-uppmarksamma': 'Läkaren ska uppmärksamma Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2). Intyget ska vara utfärdat tidigast 2 månader före att ansökan kom in till Transportstyrelsen och i enlighet med vad som sägs i 17 kapitlet.<br/>Se: <a href="http://www.transportstyrelsen.se" target="_blank">http://www.transportstyrelsen.se</a>.',
-
         'ts-bas.helptext.intyg-avser': '<span style="text-align:left">C1 = medeltung lastbil och enbart ett lätt släpfordon<br/>C1E = medeltung lastbil och ett eller flera släpfordon oavsett vikt<br/>C = tung lastbil och enbart ett lätt släpfordon<br/>CE = tung lastbil och ett eller flera släpfordon oavsett vikt<br/>D1 = mellanstor buss och enbart ett lätt släpfordon<br/>D1E = mellanstor buss och ett eller flera släpfordon oavsett vikt<br/>D = buss och enbart ett lätt släpfordon<br/>DE = buss och ett eller flera släpfordon oavsett vikt<br/>Taxi = taxiförarlegitimation<br/>Annat = (AM,A1,A2,A,B,BE eller Traktor)</span>',
 
         'ts-bas.helptext.identitet': 'Identitet styrkt genom någon av nedanstående',
