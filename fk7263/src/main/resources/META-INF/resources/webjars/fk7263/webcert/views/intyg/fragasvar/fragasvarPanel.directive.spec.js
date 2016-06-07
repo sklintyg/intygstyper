@@ -27,11 +27,14 @@ describe('qaPanel', function() {
     var fragaSvarCommonService;
     var fragaSvarService;
     var IntygService;
+    var pingService;
     var deferred;
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
         $provide.value('common.dialogService', {});
+        pingService = jasmine.createSpyObj('common.pingService', [ 'registerUserAction']);
+        $provide.value('common.pingService', pingService);
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
         $provide.value('common.IntygService', { isSentToTarget: function() {} });
@@ -56,13 +59,27 @@ describe('qaPanel', function() {
 
             $httpBackend = _$httpBackend_;
             IntygService = _IntygService_;
-            $scope.qa = { status: 'CLOSED'};
+            $scope.qa = { svarsText: 'lite initial text', status: 'CLOSED'};
             element = angular.element('<div qa-panel' +
                 ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>');
             element = $compile(element)($scope);
             $scope.$digest();
             $scope = element.isolateScope();
         }]));
+
+
+    describe('#edit svarsText', function() {
+        it('should call pingService when text changes', function() {
+
+
+            $scope.qa.svarsText = 'Nu skriver jag';
+            $scope.$digest();
+            $scope.qa.svarsText = 'Nu skriver Lite till';
+            $scope.$digest();
+            expect(pingService.registerUserAction.calls.count()).toBe(3);
+        });
+
+    });
 
     describe('#send answer', function() {
         it('should sendAnswer when "svara" is clicked', function() {
