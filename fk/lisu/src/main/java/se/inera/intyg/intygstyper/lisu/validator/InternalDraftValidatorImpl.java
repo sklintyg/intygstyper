@@ -24,7 +24,6 @@ import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 
 import se.inera.intyg.common.support.modules.support.api.dto.*;
@@ -42,14 +41,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
 
     @Autowired
     private InternalValidatorUtil validatorUtil;
-
-    public InternalDraftValidatorImpl() {
-    }
-
-    @VisibleForTesting
-    public InternalDraftValidatorImpl(InternalValidatorUtil validatorUtil) {
-        this.validatorUtil = validatorUtil;
-    }
 
     @Override
     public ValidateDraftResponse validateDraft(LisuUtlatande utlatande) {

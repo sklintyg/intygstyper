@@ -36,7 +36,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.annotations.VisibleForTesting;
 
 import iso.v21090.dt.v1.CD;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
@@ -115,11 +114,6 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired(required = false)
     private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
-
-    @VisibleForTesting
-    public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
-        this.registerMedicalCertificateClient = registerMedicalCertificateClient;
-    }
 
     /**
      * {@inheritDoc}

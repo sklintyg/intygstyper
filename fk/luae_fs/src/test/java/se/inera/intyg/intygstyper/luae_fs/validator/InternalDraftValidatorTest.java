@@ -5,17 +5,18 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Field;
+import java.util.*;
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -23,13 +24,11 @@ import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
+import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 
 /**
  * @author Magnus Ekstrand on 2016-04-20.
@@ -46,7 +45,10 @@ public class InternalDraftValidatorTest {
     private static final String ENHET_NAMN = "enhetNamn";
     private static final String INTYG_ID = "intyg-1";
 
+    @InjectMocks
     InternalDraftValidatorImpl validator;
+
+    @InjectMocks
     InternalValidatorUtil validatorUtil;
 
     List<ValidationMessage> validationMessages;
@@ -58,9 +60,6 @@ public class InternalDraftValidatorTest {
 
     @Before
     public void setUp() throws Exception {
-        validatorUtil = new InternalValidatorUtil();
-        validatorUtil.setModuleService(moduleService);
-        validator = new InternalDraftValidatorImpl(validatorUtil);
         validationMessages = new ArrayList<>();
 
         builderTemplate = LuaefsUtlatande.builder()
@@ -69,6 +68,11 @@ public class InternalDraftValidatorTest {
                 .setTextVersion("");
 
         when(moduleService.validateDiagnosisCode(anyString(), anyString())).thenReturn(true);
+
+        // use reflection to set InternalValidatorUtil in InternalDraftValidator
+        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtil");
+        field.setAccessible(true);
+        field.set(validator, validatorUtil);
     }
 
     // Kategori 1 – Grund för medicinskt underlag

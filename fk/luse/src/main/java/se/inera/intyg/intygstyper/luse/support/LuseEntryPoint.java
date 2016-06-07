@@ -31,8 +31,6 @@ import se.inera.intyg.intygstyper.luse.rest.LuseModuleApi;
 
 public class LuseEntryPoint extends FkAbstractModuleEntryPoint {
 
-    public static final String DEFAULT_RECIPIENT_ID = "FK";
-
     public static final String MODULE_ID = "luse";
     public static final String MODULE_NAME = "Läkarutlåtande för sjukersättning";
     public static final String MODULE_DESCRIPTION = "Läkarintyg enligt 3 kap, 8 § lagen (1962:381) om allmän försäkring";
@@ -40,11 +38,6 @@ public class LuseEntryPoint extends FkAbstractModuleEntryPoint {
 
     @Autowired
     private LuseModuleApi moduleApi;
-
-    @Override
-    public String getDefaultRecipient() {
-        return DEFAULT_RECIPIENT_ID;
-    }
 
     @Override
     public String getModuleId() {

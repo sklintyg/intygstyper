@@ -36,7 +36,6 @@ import javax.xml.bind.JAXB;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -81,12 +80,6 @@ public class Fk7263ModuleApiTest {
 
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
-
-    @Before
-    public void setUpMocks() {
-        registerMedicalCertificateClient = Mockito.mock(RegisterMedicalCertificateResponderInterface.class);
-        fk7263ModuleApi.setRegisterMedicalCertificateClient(registerMedicalCertificateClient);
-    }
 
     @Test
     public void testPdfFileName() {

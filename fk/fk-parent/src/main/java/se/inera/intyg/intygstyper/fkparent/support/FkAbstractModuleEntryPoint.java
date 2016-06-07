@@ -32,7 +32,9 @@ import se.inera.intyg.common.support.modules.support.ModuleEntryPoint;
  * Created by marced on 09/05/16.
  */
 public abstract class FkAbstractModuleEntryPoint implements ModuleEntryPoint {
+
     public static final String DETAILED_DESCRIPTION_TEXT_KEY = "FRM_1.RBK";
+    public static final String DEFAULT_RECIPIENT_ID = "FK";
 
     // Depending on context, an IntygTextRepository may not be available (e.g Intygstjansten)
     @Autowired(required = false)
@@ -48,5 +50,10 @@ public abstract class FkAbstractModuleEntryPoint implements ModuleEntryPoint {
             }
         }
         return null;
+    }
+
+    @Override
+    public String getDefaultRecipient() {
+        return DEFAULT_RECIPIENT_ID;
     }
 }

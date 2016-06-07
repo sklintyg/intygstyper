@@ -12,6 +12,8 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
@@ -33,6 +35,12 @@ import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConverterTest {
+
+    @Spy
+    private InternalValidatorUtil validatorUtil = new InternalValidatorUtil();
+
+    @InjectMocks
+    private InternalDraftValidatorImpl internalValidator;
 
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
@@ -67,7 +75,6 @@ public class ConverterTest {
         assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
 
         // Why not validate internal model as well?
-        InternalDraftValidatorImpl internalValidator = new InternalDraftValidatorImpl(new InternalValidatorUtil());
         internalValidator.validateDraft(utlatandeFromJson);
     }
 

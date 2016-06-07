@@ -29,8 +29,6 @@ import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
-import com.google.common.annotations.VisibleForTesting;
-
 /**
  * Util for checking a models consistency in different states.
  *
@@ -41,11 +39,6 @@ public class ModelCompareUtil {
 
     @Autowired(required = false)
     private WebcertModuleService moduleService;
-
-    @VisibleForTesting
-    void setModuleService(WebcertModuleService moduleService) {
-        this.moduleService = moduleService;
-    }
 
     /**
      * Check if two models differ.
