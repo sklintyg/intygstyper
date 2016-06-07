@@ -19,11 +19,11 @@
 
 package se.inera.intyg.intygstyper.luae_fs.model.converter;
 
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
-import se.riv.clinicalprocess.healthcond.certificate.v2.MeddelandeReferens;
 
 public final class InternalToTransport {
 
@@ -37,21 +37,8 @@ public final class InternalToTransport {
 
         RegisterCertificateType luaefsType = new RegisterCertificateType();
         luaefsType.setIntyg(UtlatandeToIntyg.convert(source));
-        decorateWithSvarPa(luaefsType, source);
+        luaefsType.setSvarPa(InternalConverterUtil.getMeddelandeReferensOfType(source, RelationKod.KOMPLT));
         return luaefsType;
-    }
-
-    private static void decorateWithSvarPa(RegisterCertificateType destination, LuaefsUtlatande source) {
-        if (source.getGrundData().getRelation() == null || !RelationKod.KOMPLT.equals(source.getGrundData().getRelation().getRelationKod())) {
-            return;
-        }
-
-        MeddelandeReferens mr = new MeddelandeReferens();
-        mr.setMeddelandeId(source.getGrundData().getRelation().getMeddelandeId());
-        if (source.getGrundData().getRelation().getReferensId() != null) {
-            mr.getReferensId().add(source.getGrundData().getRelation().getReferensId());
-        }
-        destination.setSvarPa(mr);
     }
 
 }
