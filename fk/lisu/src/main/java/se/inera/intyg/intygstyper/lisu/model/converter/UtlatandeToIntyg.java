@@ -144,7 +144,7 @@ public final class UtlatandeToIntyg {
 
         addIfNotBlank(svars, FORMAGATROTSBEGRANSNING_SVAR_ID_23, FORMAGATROTSBEGRANSNING_DELSVAR_ID_23, source.getFormagaTrotsBegransning());
 
-        if (source.getPrognos() != null) {
+        if (source.getPrognos() != null && source.getPrognos().getTyp() != null) {
             if (source.getPrognos().getDagarTillArbete() != null) {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
                         aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getTransportId(),

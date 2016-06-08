@@ -190,7 +190,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
         }
 
         // Prognos
-        if (utlatande.getPrognos() == null) {
+        if (utlatande.getPrognos() == null || utlatande.getPrognos().getTyp() == null) {
             validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                     "lisu.validation.bedomning.prognos.missing");
         } else {
