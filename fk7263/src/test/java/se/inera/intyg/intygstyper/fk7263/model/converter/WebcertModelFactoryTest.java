@@ -32,7 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
@@ -119,13 +121,31 @@ public class WebcertModelFactoryTest {
     }
 
     private CreateDraftCopyHolder createDraftCopyHolder(String intygsCopyId, boolean addPatient, boolean addNewPersonId) {
-        Vardgivare vardgivare = new Vardgivare("VG1", "Vardgivaren");
-        Vardenhet vardenhet = new Vardenhet("VE1", "Sjukhuset", "Plåstergatan", null, null, null, null, null, vardgivare);
-        HoSPersonal skapadAv = new HoSPersonal("TST12345678", "Dr Dengroth", "1234", "Proktolog", null, vardenhet);
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid("VG1");
+        vardgivare.setVardgivarnamn("Vardgivaren");
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("VE1");
+        vardenhet.setEnhetsnamn("Sjukhuset");
+        vardenhet.setPostadress("Plåstergatan");
+        vardenhet.setVardgivare(vardgivare);
+        HoSPersonal skapadAv = new HoSPersonal();
+        skapadAv.setPersonId("TST12345678");
+        skapadAv.setFullstandigtNamn("Dr Dengroth");
+        skapadAv.setForskrivarKod("1234");
+        skapadAv.getSpecialiteter().add("Proktolog");
+        skapadAv.setVardenhet(vardenhet);
         CreateDraftCopyHolder copyData = new CreateDraftCopyHolder(intygsCopyId, skapadAv);
 
         if (addPatient) {
-            Patient patient = new Patient("Test", "Prov", "Testorsson", new Personnummer("19121212-1212"), "Gågatan", "12345", "Staden");
+            Patient patient = new Patient();
+            patient.setFornamn("Test");
+            patient.setMellannamn("Prov");
+            patient.setEfternamn("Testorsson");
+            patient.setPersonId(new Personnummer("19121212-1212"));
+            patient.setPostadress("Gågatan");
+            patient.setPostnummer("12345");
+            patient.setPostort("Staden");
             copyData.setPatient(patient);
         }
 

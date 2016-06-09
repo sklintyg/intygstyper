@@ -41,6 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
@@ -277,18 +278,34 @@ public class TsBasModuleApiTest {
     }
 
     private CreateNewDraftHolder createNewDraftHolder() {
-        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
-        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
-        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
-        Patient patient = new Patient("Kalle", null, "Kula", new Personnummer("19121212-1212"), null, null, null);
+        HoSPersonal hosPersonal = createHosPersonal();
+        Patient patient = new Patient();
+        patient.setFornamn("Kalle");
+        patient.setEfternamn("Kula");
+        patient.setPersonId(new Personnummer("19121212-1212"));
         return new CreateNewDraftHolder("Id1", hosPersonal, patient);
     }
 
     private CreateDraftCopyHolder createNewDraftCopyHolder() {
-        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
-        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
-        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
-        return new CreateDraftCopyHolder("Id1", hosPersonal);
+        return new CreateDraftCopyHolder("Id1", createHosPersonal());
+    }
+
+    private HoSPersonal createHosPersonal() {
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId("hsaId1");
+        hosPerson.setFullstandigtNamn("Doktor A");
+        hosPerson.setVardenhet(createVardenhet());
+        return hosPerson;
+    }
+
+    private Vardenhet createVardenhet() {
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("hsaId");
+        vardenhet.setEnhetsnamn("ve1");
+        vardenhet.setVardgivare(new Vardgivare());
+        vardenhet.getVardgivare().setVardgivarid("vg1");
+        vardenhet.getVardgivare().setVardgivarnamn("vg1");
+        return vardenhet;
     }
 
 }

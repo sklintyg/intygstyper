@@ -47,14 +47,12 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactoryImpl;
@@ -308,8 +306,7 @@ public class LisuModuleApiTest {
         GrundData gd = new GrundData();
         gd.setPatient(new se.inera.intyg.common.support.model.common.internal.Patient());
         gd.getPatient().setPersonId(new Personnummer("191212121212"));
-        se.inera.intyg.common.support.model.common.internal.HoSPersonal skapadAv = WebcertModelFactoryUtil
-                .convertHosPersonalToEdit(createHosPersonal());
+        HoSPersonal skapadAv = createHosPersonal();
         gd.setSkapadAv(skapadAv);
 
         Utlatande utlatande = LisuUtlatande.builder().setId(intygId).setGrundData(gd).setTextVersion("").build();
@@ -331,14 +328,20 @@ public class LisuModuleApiTest {
     }
 
     private CreateNewDraftHolder createDraftHolder() {
-        return new CreateNewDraftHolder(
-                "certificateId", createHosPersonal(),
-                new Patient("fornamn", "mellannamn", "efternamn", new Personnummer("personnummer"), "postadress", "postnummer", "postort"));
+        Patient patient = new Patient();
+        patient.setFornamn("fornamn");
+        patient.setEfternamn("efternamn");
+        patient.setPersonId(new Personnummer("personnummer"));
+        return new CreateNewDraftHolder("certificateId", createHosPersonal(), patient);
     }
 
     private HoSPersonal createHosPersonal() {
-        return new HoSPersonal("hsaId", "namn", "forskrivarkod", "befattning", null, new Vardenhet("hsaId", "namn",
-                "postadress", "postnummer", "postort", "telefonnummer", "epost", "arbetsplatskod", new Vardgivare("hsaId", "namn")));
+        HoSPersonal hosPersonal = new HoSPersonal();
+        hosPersonal.setPersonId("hsaId");
+        hosPersonal.setFullstandigtNamn("namn");
+        hosPersonal.setVardenhet(new Vardenhet());
+        hosPersonal.getVardenhet().setVardgivare(new Vardgivare());
+        return hosPersonal;
     }
 
     private RegisterCertificateResponseType createReturnVal(ResultCodeType res) {

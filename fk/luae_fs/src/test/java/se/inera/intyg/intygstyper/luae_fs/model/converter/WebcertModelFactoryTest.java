@@ -12,9 +12,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 
@@ -67,17 +69,28 @@ public class WebcertModelFactoryTest {
     }
 
     private Patient buildPatient() {
-        Patient patient = new Patient("Test", "Prov", "Testorsson", new Personnummer("19121212-1212"), "Gågatan", "12345", "Staden");
-
+        Patient patient = new Patient();
+        patient.setFornamn("fornamn");
+        patient.setEfternamn("efternamn");
+        patient.setPersonId(new Personnummer("19121212-1212"));
         return patient;
     }
 
     private HoSPersonal buildHosPersonal() {
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId("TST12345678");
+        hosPerson.setFullstandigtNamn("Doktor A");
+        hosPerson.setVardenhet(createVardenhet());
+        return hosPerson;
+    }
 
-        Vardgivare vardgivare = new Vardgivare("VG1", "Vardgivaren");
-        Vardenhet vardenhet = new Vardenhet("VE1", "Sjukhuset", "Plåstergatan", null, null, null, null, null, vardgivare);
-        HoSPersonal skapadAv = new HoSPersonal("TST12345678", "Dr Dengroth", "1234", "Proktolog", null, vardenhet);
-
-        return skapadAv;
+    private Vardenhet createVardenhet() {
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("VE1");
+        vardenhet.setEnhetsnamn("ve1");
+        vardenhet.setVardgivare(new Vardgivare());
+        vardenhet.getVardgivare().setVardgivarid("VG1");
+        vardenhet.getVardgivare().setVardgivarnamn("vg1");
+        return vardenhet;
     }
 }
