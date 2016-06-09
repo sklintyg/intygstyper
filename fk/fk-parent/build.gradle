@@ -1,5 +1,9 @@
 description = 'Parent for fk-intyg'
 
+task showFiles << {
+    configurations.compile.each { println it.name }
+}
+
 dependencies {
     compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
     compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
