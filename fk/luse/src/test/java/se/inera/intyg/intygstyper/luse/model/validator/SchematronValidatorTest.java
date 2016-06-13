@@ -18,8 +18,6 @@ import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse
 public class SchematronValidatorTest {
 
     private static final RegisterCertificateValidator LUSE_VALIDATOR = new RegisterCertificateValidator("luse.sch");
-    private static final RegisterCertificateValidator LUAE_NA_VALIDATOR = new RegisterCertificateValidator("luae_na.sch");
-    private static final RegisterCertificateValidator LUAE_FS_VALIDATOR = new RegisterCertificateValidator("luae_fs.sch");
 
     @Test
     public void brokenXmlFails() throws Exception {
@@ -41,16 +39,6 @@ public class SchematronValidatorTest {
     public void validXmlPasses() throws Exception {
         String inputXml = Resources.toString(getResource("luse2.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(LUSE_VALIDATOR, inputXml);
-        assertTrue(response.getValidationErrors().isEmpty());
-    }
-
-    @Test
-    public void validLuseXmlPasses() throws Exception {
-        String inputXml = Resources.toString(getResource("luse3.xml"), Charsets.UTF_8);
-        RegisterCertificateTestValidator xsdValidator = new RegisterCertificateTestValidator();
-        assertTrue(xsdValidator.validateGeneral(inputXml));
-        ValidateXmlResponse response = XmlValidator.validate(LUSE_VALIDATOR, inputXml);
-        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertTrue(response.getValidationErrors().isEmpty());
     }
 
