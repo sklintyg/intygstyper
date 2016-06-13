@@ -26,7 +26,7 @@ angular.module('luae_na').config(function($stateProvider) {
     $stateProvider.
         state('luae_na-edit', {
             data: { defaultActive : 'index', intygType: 'luae_na' },
-            url : '/luae_na/edit/:certificateId?:patientId&:hospName',
+            url : '/luae_na/edit/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort',
             views : {
                 'content@' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
@@ -56,7 +56,7 @@ angular.module('luae_na').config(function($stateProvider) {
         }).
         state('webcert.intyg.fk.luae_na', {
             data: { defaultActive : 'index', intygType: 'luae_na' },
-            url:'/intyg/luae_na/:certificateId?:patientId&:hospName&:signed',
+            url:'/intyg/luae_na/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:signed',
             views: {
                 'intyg@webcert.intyg.fk' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',

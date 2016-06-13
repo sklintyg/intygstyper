@@ -26,7 +26,7 @@ angular.module('luse').config(function($stateProvider) {
     $stateProvider.
         state('luse-edit', {
             data: { defaultActive : 'index', intygType: 'luse' },
-            url : '/luse/edit/:certificateId?:patientId&:hospName',
+            url : '/luse/edit/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort',
             views : {
                 'content@' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
@@ -56,7 +56,7 @@ angular.module('luse').config(function($stateProvider) {
         }).
         state('webcert.intyg.fk.luse', {
             data: { defaultActive : 'index', intygType: 'luse' },
-            url:'/intyg/luse/:certificateId?:patientId&:hospName&:signed',
+            url:'/intyg/luse/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:signed',
             views: {
                 'intyg@webcert.intyg.fk' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',

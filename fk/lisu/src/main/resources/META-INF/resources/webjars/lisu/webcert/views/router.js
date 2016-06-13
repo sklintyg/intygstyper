@@ -26,7 +26,7 @@ angular.module('lisu').config(function($stateProvider) {
     $stateProvider.
         state('lisu-edit', {
             data: { defaultActive : 'index', intygType: 'lisu' },
-            url : '/lisu/edit/:certificateId?:patientId&:hospName',
+            url : '/lisu/edit/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort',
             views : {
                 'content@' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
@@ -56,7 +56,7 @@ angular.module('lisu').config(function($stateProvider) {
         }).
         state('webcert.intyg.fk.lisu', {
             data: { defaultActive : 'index', intygType: 'lisu' },
-            url:'/intyg/lisu/:certificateId?:patientId&:hospName&:signed',
+            url:'/intyg/lisu/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:signed',
             views: {
                 'intyg@webcert.intyg.fk' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
