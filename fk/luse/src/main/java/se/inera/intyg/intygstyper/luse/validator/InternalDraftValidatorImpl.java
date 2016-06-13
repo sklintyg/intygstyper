@@ -116,11 +116,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
                     "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
         }
 
-        if ((utlatande.getJournaluppgifter() != null || utlatande.getAnhorigsBeskrivningAvPatienten() != null
-                || utlatande.getAnnatGrundForMU() != null) && StringUtils.isBlank(utlatande.getOvrigt())) {
-            addValidationError(validationMessages, "ovrigt", ValidationMessageType.EMPTY, "luse.validation.grund-for-mu.missing_ovrigt");
-        }
-
         if (utlatande.getKannedomOmPatient() == null) {
             addValidationError(validationMessages, "grundformu.kannedom", ValidationMessageType.EMPTY,
                     "luse.validation.grund-for-mu.kannedom.missing");

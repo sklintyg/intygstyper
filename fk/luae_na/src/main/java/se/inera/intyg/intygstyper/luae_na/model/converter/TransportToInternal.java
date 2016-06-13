@@ -84,6 +84,9 @@ public final class TransportToInternal {
             case DIAGNOSGRUND_SVAR_ID_7:
                 handleDiagnosgrund(utlatande, svar);
                 break;
+            case NYDIAGNOS_SVAR_ID_45:
+                    handleNyDiagnos(utlatande, svar);
+                    break;
             case FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8:
                 handleFunktionsNedsattningIntellektuell(utlatande, svar);
                 break;
@@ -270,17 +273,26 @@ public final class TransportToInternal {
     private static void handleDiagnosgrund(LuaenaUtlatande.Builder utlatande, Svar svar) {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
-            case DIAGNOSGRUND_DELSVAR_ID_7:
-                utlatande.setDiagnosgrund(getStringContent(delsvar));
-                break;
-            case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7:
-                utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getStringContent(delsvar)));
-                break;
-            case DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7:
-                utlatande.setDiagnosForNyBedomning(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
+                case DIAGNOSGRUND_DELSVAR_ID_7:
+                    utlatande.setDiagnosgrund(getStringContent(delsvar));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    private static void handleNyDiagnos(LuaenaUtlatande.Builder utlatande, Svar svar) {
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+                case DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_45:
+                    utlatande.setNyBedomningDiagnosgrund(Boolean.valueOf(getStringContent(delsvar)));
+                    break;
+                case DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_45:
+                    utlatande.setDiagnosForNyBedomning(getStringContent(delsvar));
+                    break;
+                default:
+                    throw new IllegalArgumentException();
             }
         }
     }

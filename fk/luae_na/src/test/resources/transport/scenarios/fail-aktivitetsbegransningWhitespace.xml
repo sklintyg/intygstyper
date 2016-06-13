@@ -112,8 +112,10 @@
     </svar>
     <svar id="7">
       <delsvar id="7.1">Diagnoserna ställdes vid besök på AVC Södra Älvsborgs sjukhus i Borås 2014-07-09 och på Vårdenheten 2015-03-02.</delsvar>
-      <delsvar id="7.2">true</delsvar>
-      <delsvar id="7.3">Diagnos för ny bedömning</delsvar>
+    </svar>
+    <svar id="45">
+      <delsvar id="45.1">true</delsvar>
+      <delsvar id="45.2">Diagnos för ny bedömning</delsvar>
     </svar>
     <svar id="9">
       <delsvar id="9.1">Nedsatt initiativförmåga, drar sig ofta undan folksamlingar.</delsvar>

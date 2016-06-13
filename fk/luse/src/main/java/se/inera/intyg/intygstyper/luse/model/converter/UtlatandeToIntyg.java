@@ -81,7 +81,8 @@ public final class UtlatandeToIntyg {
         if (source.getAnhorigsBeskrivningAvPatienten() != null) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
-                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.ANHORIGSBESKRIVNING.transportId, ReferensTyp.ANHORIGSBESKRIVNING.label))
+                            aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.ANHORIGSBESKRIVNING.transportId,
+                                    ReferensTyp.ANHORIGSBESKRIVNING.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnhorigsBeskrivningAvPatienten().asLocalDate().toString())
                     .build());
         }
@@ -120,15 +121,18 @@ public final class UtlatandeToIntyg {
             Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
             switch (i) {
             case 0:
-                diagnosSvar.getDelsvar().add(createDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
+                diagnosSvar.getDelsvar().add(createDelsvar(DIAGNOS_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
                 diagnosSvar.getDelsvar().add(createDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
                 break;
             case 1:
-                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_1_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
+                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
                 diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
                 break;
             case 2:
-                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_2_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
+                diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
                 diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
                 break;
             default:
@@ -137,18 +141,22 @@ public final class UtlatandeToIntyg {
         }
         svars.add(diagnosSvar);
 
-        if (source.getNyBedomningDiagnosgrund() != null) {
-            if (source.getNyBedomningDiagnosgrund()) {
-                svars.add(aSvar(DIAGNOSGRUND_SVAR_ID_7).withDelsvar(DIAGNOSGRUND_DELSVAR_ID_7, source.getDiagnosgrund())
-                        .withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7, source.getNyBedomningDiagnosgrund().toString())
-                        .withDelsvar(DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7, source.getDiagnosForNyBedomning().toString())
-                        .build());
-            } else {
-                svars.add(aSvar(DIAGNOSGRUND_SVAR_ID_7).withDelsvar(DIAGNOSGRUND_DELSVAR_ID_7, source.getDiagnosgrund())
-                    .withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7, source.getNyBedomningDiagnosgrund().toString()).build());
-            }
+        if (source.getDiagnosgrund() != null) {
+            svars.add(aSvar(DIAGNOSGRUND_SVAR_ID_7).withDelsvar(DIAGNOSGRUND_DELSVAR_ID_7, source.getDiagnosgrund()).build());
         }
 
+        if (source.getNyBedomningDiagnosgrund() != null) {
+            if (source.getNyBedomningDiagnosgrund()) {
+                svars.add(
+                        aSvar(NYDIAGNOS_SVAR_ID_45)
+                                .withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_45, source.getNyBedomningDiagnosgrund().toString())
+                                .withDelsvar(DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_45, source.getDiagnosForNyBedomning())
+                                .build());
+            } else {
+                svars.add(aSvar(NYDIAGNOS_SVAR_ID_45)
+                        .withDelsvar(DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_45, Boolean.FALSE.toString()).build());
+            }
+        }
 
         addIfNotBlank(svars, FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8, FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8,
                 source.getFunktionsnedsattningIntellektuell());

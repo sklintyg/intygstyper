@@ -123,7 +123,10 @@
     </svar>
     <svar id="7">
       <delsvar id="7.1">Jag har kollat på han.</delsvar>
-      <delsvar id="7.2">false</delsvar>
+    </svar>
+    <svar id="45">
+      <delsvar id="45.1">true</delsvar>
+      <delsvar id="45.2">Handledsskada S666</delsvar>
     </svar>
     <svar id="8">
       <delsvar id="8.1">Helt pantad</delsvar>

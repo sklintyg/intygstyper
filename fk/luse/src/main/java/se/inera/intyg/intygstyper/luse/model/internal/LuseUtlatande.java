@@ -103,11 +103,11 @@ public abstract class LuseUtlatande implements Utlatande, SitUtlatande {
     @Nullable
     public abstract String getDiagnosgrund();
 
-    // Delfråga7.2
+    // Delfråga45.1
     @Nullable
     public abstract Boolean getNyBedomningDiagnosgrund();
 
-    // Delfråga 7.3
+    // Delfråga 45.2
     @Nullable
     public abstract String getDiagnosForNyBedomning();
 
@@ -256,10 +256,10 @@ public abstract class LuseUtlatande implements Utlatande, SitUtlatande {
         @JsonProperty(DIAGNOSGRUND_SVAR_JSON_ID_7)
         public abstract Builder setDiagnosgrund(String diagnosgrund);
 
-        @JsonProperty(DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7)
+        @JsonProperty(DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_45)
         public abstract Builder setNyBedomningDiagnosgrund(Boolean nyBedomningDiagnosgrund);
 
-        @JsonProperty(DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_7)
+        @JsonProperty(DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_45)
         public abstract Builder setDiagnosForNyBedomning(String diagnosForNyBedomning);
 
         @JsonProperty(FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_JSON_ID_8)
