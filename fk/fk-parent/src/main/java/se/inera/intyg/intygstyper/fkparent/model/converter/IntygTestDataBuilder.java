@@ -33,18 +33,22 @@ public final class IntygTestDataBuilder {
         return new Utlatande() {
                 private GrundData grundData = IntygTestDataBuilder.getGrundData();
 
+            @Override
             public String getTyp() {
                 return "testTyp";
             }
 
+            @Override
             public String getTextVersion() {
                 return "1.0";
             }
 
+            @Override
             public String getId() {
                 return "test-id";
             }
 
+            @Override
             public GrundData getGrundData() {
                 return grundData;
             }
@@ -79,7 +83,7 @@ public final class IntygTestDataBuilder {
         personal.setPersonId("19650708-1234");
         personal.getBefattningar().add("Klinikchef");
         personal.getBefattningar().add("Forskningsledare");
-        personal.getSpecialiteter().add("Kirurg");
+        personal.getSpecialiteter().add("1001");
         return personal;
     }
 

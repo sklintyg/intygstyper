@@ -52,6 +52,8 @@
                     <vardgivarnamn>Vårdgivarnamn</vardgivarnamn>
                 </vardgivare>
             </vardenhet>
+            <specialiteter>SPECIALITET</specialiteter>
+            <befattningar>ST_LAKARE</befattningar>
         </skapadAv>
         <patient>
             <personId>

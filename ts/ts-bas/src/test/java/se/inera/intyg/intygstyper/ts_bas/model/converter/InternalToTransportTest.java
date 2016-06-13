@@ -18,12 +18,17 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
+import se.inera.intyg.common.support.common.enumerations.BefattningKod;
+import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.ModelAssert;
-import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
@@ -47,4 +52,51 @@ public class InternalToTransportTest {
         }
     }
 
+    @Test
+    public void testConvertMapsSpecialistkompetensCodeToDescriptionIfPossible() throws ScenarioNotFoundException, ConverterException {
+        SpecialistkompetensKod specialistkompetens = SpecialistkompetensKod.ALLERGI;
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().clear();
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens.getCode());
+        RegisterTSBasType res = InternalToTransport.convert(utlatande);
+        SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getSpecialiteter().size());
+        assertEquals(specialistkompetens.getDescription(), skapadAv.getSpecialiteter().get(0));
+    }
+
+    @Test
+    public void testConvertKeepSpecialistkompetensCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
+        String specialistkompetenskod = "kod";
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().clear();
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetenskod);
+        RegisterTSBasType res = InternalToTransport.convert(utlatande);
+        SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getSpecialiteter().size());
+        assertEquals(specialistkompetenskod, skapadAv.getSpecialiteter().get(0));
+    }
+
+    @Test
+    public void testConvertMapsBefattningCodeToDescriptionIfPossible() throws ScenarioNotFoundException, ConverterException {
+        BefattningKod befattning = BefattningKod.LAKARE_LEG_ST;
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.getGrundData().getSkapadAv().getBefattningar().clear();
+        utlatande.getGrundData().getSkapadAv().getBefattningar().add(befattning.getCode());
+        RegisterTSBasType res = InternalToTransport.convert(utlatande);
+        SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getBefattningar().size());
+        assertEquals(befattning.getDescription(), skapadAv.getBefattningar().get(0));
+    }
+
+    @Test
+    public void testConvertKeepBefattningCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
+        String befattningskod = "kod";
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.getGrundData().getSkapadAv().getBefattningar().clear();
+        utlatande.getGrundData().getSkapadAv().getBefattningar().add(befattningskod);
+        RegisterTSBasType res = InternalToTransport.convert(utlatande);
+        SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getBefattningar().size());
+        assertEquals(befattningskod, skapadAv.getBefattningar().get(0));
+    }
 }

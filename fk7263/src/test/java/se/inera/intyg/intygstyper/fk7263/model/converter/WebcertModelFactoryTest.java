@@ -133,7 +133,7 @@ public class WebcertModelFactoryTest {
         skapadAv.setPersonId("TST12345678");
         skapadAv.setFullstandigtNamn("Dr Dengroth");
         skapadAv.setForskrivarKod("1234");
-        skapadAv.getSpecialiteter().add("Proktolog");
+        skapadAv.getSpecialiteter().add("1001");
         skapadAv.setVardenhet(vardenhet);
         CreateDraftCopyHolder copyData = new CreateDraftCopyHolder(intygsCopyId, skapadAv);
 

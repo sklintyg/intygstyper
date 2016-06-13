@@ -21,42 +21,15 @@ package se.inera.intyg.intygstyper.ts_bas.transformation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.AKTIVITET_BESKRIVNING_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.AKTIVITET_FOREKOMST_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.ENHET_ID_XPATH;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.ENHET_POSTADRESS_XPATH;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.ENHET_POSTNUMMER_XPATH;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.ENHET_VARDINRATTNINGENS_NAMN_XPATH;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.ID_KONTROLL_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.INTYG_AVSER_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.OBSERVATION_BESKRIVNING_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.OBSERVATION_FOREKOMST_CODE_LATERALITET;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.OBSERVATION_FOREKOMST_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.OBSERVATION_VARDE_CODE_LATERALITET;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.REKOMMENDATION_BESKRIVNING_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.REKOMMENDATION_VARDE_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.VARDGIVARE_ID_XPATH;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.VARDGIVARE_NAMN_XPATH;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.booleanXPath;
-import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.stringXPath;
+import static se.inera.intyg.intygstyper.ts_bas.transformation.XPathExpressions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
-import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
+import javax.xml.bind.*;
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.*;
 import javax.xml.transform.TransformerException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.*;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
@@ -68,25 +41,9 @@ import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
-import se.inera.intyg.intygstyper.ts_parent.transformation.test.BooleanXPathExpression;
-import se.inera.intyg.intygstyper.ts_parent.transformation.test.KorkortsKodToIntygAvserMapping;
-import se.inera.intyg.intygstyper.ts_parent.transformation.test.XPathEvaluator;
+import se.inera.intyg.intygstyper.ts_parent.transformation.test.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
-import se.inera.intygstjanster.ts.services.v1.AlkoholNarkotikaLakemedel;
-import se.inera.intygstjanster.ts.services.v1.DiabetesTypBas;
-import se.inera.intygstjanster.ts.services.v1.HjartKarlSjukdomar;
-import se.inera.intygstjanster.ts.services.v1.HorselBalanssinne;
-import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsBas;
-import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
-import se.inera.intygstjanster.ts.services.v1.OvrigMedicinering;
-import se.inera.intygstjanster.ts.services.v1.Patient;
-import se.inera.intygstjanster.ts.services.v1.RorelseorganenFunktioner;
-import se.inera.intygstjanster.ts.services.v1.SkapadAv;
-import se.inera.intygstjanster.ts.services.v1.SynskarpaMedKorrektion;
-import se.inera.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
-import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
-import se.inera.intygstjanster.ts.services.v1.Vardenhet;
+import se.inera.intygstjanster.ts.services.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.Utlatande;
 
@@ -150,18 +107,16 @@ public class TsBasTransformerXpathTest {
         // Skapad Av
         SkapadAv skapadAv = utlatande.getGrundData().getSkapadAv();
 
-        // TODO befattningar
-        // assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
-        // xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
+        xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
 
         assertEquals("Skapad av - fullständigt namn", skapadAv.getFullstandigtNamn(),
                 xPath.evaluate(XPathExpressions.SKAPAD_AV_NAMNFORTYDLIGANDE_XPATH));
 
         assertEquals("Skapad av - hsa-id", skapadAv.getPersonId().getExtension(), xPath.evaluate(XPathExpressions.SKAPAD_AV_HSAID_XPATH));
 
-        // TODO is this correct?!
-        // assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
-        // xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
+        xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
 
         // Vardenhet
         Vardenhet vardenhet = skapadAv.getVardenhet();

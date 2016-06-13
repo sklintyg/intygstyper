@@ -21,44 +21,15 @@ package se.inera.intyg.intygstyper.ts_diabetes.transformation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.ENHET_ID_XPATH;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.ENHET_POSTADRESS_XPATH;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.ENHET_POSTNUMMER_XPATH;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.ENHET_VARDINRATTNINGENS_NAMN_XPATH;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.ID_KONTROLL_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.INTYG_AVSER_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.AKTIVITET_FOREKOMST_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.OBSERVATION_BESKRIVNING_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.OBSERVATION_FOREKOMST_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.OBSERVATION_FOREKOMST_VARDE_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.OBSERVATION_VARDE_CODE_LATERALITET;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.OBSERVATION_TID_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.REKOMMENDATION_BESKRIVNING_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.REKOMMENDATION_VARDE_CODE_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.REKOMMENDATION_VARDE_BOOL_TEMPLATE;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.VARDGIVARE_ID_XPATH;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.VARDGIVARE_NAMN_XPATH;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.booleanXPath;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.stringXPath;
-import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.dateXPath;
+import static se.inera.intyg.intygstyper.ts_diabetes.transformation.XPathExpressions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
-import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
+import javax.xml.bind.*;
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.*;
 import javax.xml.transform.TransformerException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.*;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
@@ -70,21 +41,9 @@ import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
-import se.inera.intyg.intygstyper.ts_parent.transformation.test.BooleanXPathExpression;
-import se.inera.intyg.intygstyper.ts_parent.transformation.test.KorkortsKodToIntygAvserMapping;
-import se.inera.intyg.intygstyper.ts_parent.transformation.test.StringXPathExpression;
-import se.inera.intyg.intygstyper.ts_parent.transformation.test.XPathEvaluator;
+import se.inera.intyg.intygstyper.ts_parent.transformation.test.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
-import se.inera.intygstjanster.ts.services.v1.Diabetes;
-import se.inera.intygstjanster.ts.services.v1.Hypoglykemier;
-import se.inera.intygstjanster.ts.services.v1.KorkortsbehorighetTsDiabetes;
-import se.inera.intygstjanster.ts.services.v1.Patient;
-import se.inera.intygstjanster.ts.services.v1.SkapadAv;
-import se.inera.intygstjanster.ts.services.v1.SynfunktionDiabetes;
-import se.inera.intygstjanster.ts.services.v1.SynskarpaMedKorrektion;
-import se.inera.intygstjanster.ts.services.v1.SynskarpaUtanKorrektion;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
-import se.inera.intygstjanster.ts.services.v1.Vardenhet;
+import se.inera.intygstjanster.ts.services.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.Utlatande;
 
@@ -121,7 +80,7 @@ public class TsDiabetesTransformerXpathTest {
         assertEquals("UtlatandeTyp", UtlatandeKod.getCurrentVersion().getTypForTransportConvertion(),
                 xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
 
-        // assertEquals("Utlatande-utgåva", utlatande.getUtgava(), xPath.evaluate(XPathExpressions.TS_UTGAVA_XPATH));
+        assertEquals("Utlatande-utgåva", utlatande.getUtgava(), xPath.evaluate(XPathExpressions.TS_UTGAVA_XPATH));
 
         assertEquals("Utlatande-version", utlatande.getVersion(), xPath.evaluate(XPathExpressions.TS_VERSION_XPATH));
 
@@ -146,17 +105,16 @@ public class TsDiabetesTransformerXpathTest {
         // Skapad Av
         SkapadAv skapadAv = utlatande.getGrundData().getSkapadAv();
 
-        // assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
-        // xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
+        xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
 
         assertEquals("Skapad av - fullständigt namn", skapadAv.getFullstandigtNamn(),
                 xPath.evaluate(XPathExpressions.SKAPAD_AV_NAMNFORTYDLIGANDE_XPATH));
 
         assertEquals("Skapad av - hsa-id", skapadAv.getPersonId().getExtension(), xPath.evaluate(XPathExpressions.SKAPAD_AV_HSAID_XPATH));
 
-        // TODO is this correct?!
-        // assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
-        // xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
+        xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
 
         // Vardenhet
         Vardenhet vardenhet = skapadAv.getVardenhet();
@@ -205,7 +163,7 @@ public class TsDiabetesTransformerXpathTest {
         // Hypoglykemier
         Hypoglykemier hypoglykemier = utlatande.getHypoglykemier();
 
-        assertTrue("Kunskap om åtgärder", 
+        assertTrue("Kunskap om åtgärder",
                 xPath.evaluate(booleanXPath(OBSERVATION_FOREKOMST_TEMPLATE, "OBS19", hypoglykemier.isHarKunskapOmAtgarder())));
 
         assertTrue("Hypoglykemi nedsatt hjärnfunktion",
@@ -301,7 +259,7 @@ public class TsDiabetesTransformerXpathTest {
                         xPath.evaluate(new StringXPathExpression("utlatande/p:observation/p:observationsperiod[(parent::p:observation/p:observationskod/@code='170747006')]")));
             }
         }
-        
+
 
         if (diabetes.isHarBehandlingTabletter() != null) {
             assertTrue(

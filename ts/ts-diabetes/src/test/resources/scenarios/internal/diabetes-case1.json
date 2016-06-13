@@ -76,6 +76,7 @@
         "observationsperiod": "1995"
     },
     "grundData": {
+        "signeringsdatum": "2013-08-12T15:57:00.000",
         "patient": {
             "efternamn": "Tolvansson",
             "fornamn": "Tolvan",

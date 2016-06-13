@@ -21,22 +21,14 @@ package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import java.util.*;
 
-import org.joda.time.LocalDateTime;
-
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.common.internal.Patient;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
-import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.integration.schema.adapter.InternalDateAdapter;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier;
-import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil;
 import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class TransportToInternalConverter {
@@ -62,7 +54,7 @@ public final class TransportToInternalConverter {
 
         result.setId(transport.getIntygsId());
         result.setTyp(UtlatandeKod.getCurrentVersion().getCode());
-        result.setGrundData(readGrundData(transport.getGrundData()));
+        result.setGrundData(TransportToInternalUtil.buildGrundData(transport.getGrundData()));
         readDiabetes(result.getDiabetes(), transport.getDiabetes());
         readHypoglykemier(result.getHypoglykemier(), transport.getHypoglykemier());
         result.getSyn().setSeparatOgonlakarintyg(transport.isSeparatOgonLakarintygKommerSkickas());
@@ -159,56 +151,5 @@ public final class TransportToInternalConverter {
         diabetes.setInsulinBehandlingsperiod(diabetes2.getInsulinBehandlingSedanAr());
         diabetes.setObservationsperiod(diabetes2.getDebutArDiabetes());
         diabetes.setTabletter(diabetes2.isHarBehandlingTabletter());
-    }
-
-    private static GrundData readGrundData(se.inera.intygstjanster.ts.services.v1.GrundData grundData) {
-        GrundData result = new GrundData();
-        result.setPatient(readPatient(grundData.getPatient()));
-        result.setSigneringsdatum(grundData.getSigneringsTidstampel() != null ? LocalDateTime.parse(grundData.getSigneringsTidstampel()) : null);
-        result.setSkapadAv(readSkapadAv(grundData.getSkapadAv()));
-        return result;
-    }
-
-    protected static HoSPersonal readSkapadAv(SkapadAv skapadAv) {
-        HoSPersonal result = new HoSPersonal();
-        //result.setForskrivarKod(skapadAv.get);
-        result.setFullstandigtNamn(skapadAv.getFullstandigtNamn());
-        result.setPersonId(skapadAv.getPersonId().getExtension());
-        result.setVardenhet(readVardenhet(skapadAv.getVardenhet()));
-        result.getSpecialiteter().addAll(skapadAv.getSpecialiteter());
-        return result;
-    }
-
-    private static Vardenhet readVardenhet(se.inera.intygstjanster.ts.services.v1.Vardenhet vardenhet) {
-        Vardenhet result = new Vardenhet();
-        //result.setArbetsplatsKod(vardenhet.get);
-        result.setEnhetsid(vardenhet.getEnhetsId().getExtension());
-        result.setEnhetsnamn(vardenhet.getEnhetsnamn());
-        //result.setEpost(epost);
-        result.setPostadress(vardenhet.getPostadress());
-        result.setPostnummer(vardenhet.getPostnummer());
-        result.setPostort(vardenhet.getPostort());
-        result.setTelefonnummer(vardenhet.getTelefonnummer());
-        result.setVardgivare(readVardgivare(vardenhet.getVardgivare()));
-        return result;
-    }
-
-    private static Vardgivare readVardgivare(se.inera.intygstjanster.ts.services.v1.Vardgivare vardgivare) {
-        Vardgivare result = new Vardgivare();
-        result.setVardgivarid(vardgivare.getVardgivarid().getExtension());
-        result.setVardgivarnamn(vardgivare.getVardgivarnamn());
-        return result;
-    }
-
-    private static Patient readPatient(se.inera.intygstjanster.ts.services.v1.Patient patient) {
-        Patient result = new Patient();
-        result.setEfternamn(patient.getEfternamn());
-        result.setFornamn(patient.getFornamn());
-        result.setFullstandigtNamn(patient.getFullstandigtNamn());
-        result.setPersonId(new Personnummer(patient.getPersonId().getExtension()));
-        result.setPostadress(patient.getPostadress());
-        result.setPostnummer(patient.getPostnummer());
-        result.setPostort(patient.getPostort());
-        return result;
     }
 }

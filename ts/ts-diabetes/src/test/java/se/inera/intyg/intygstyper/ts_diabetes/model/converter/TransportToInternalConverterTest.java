@@ -27,7 +27,14 @@ import java.util.List;
 
 import org.junit.Test;
 
+import se.inera.intyg.common.support.common.enumerations.BefattningKod;
+import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.*;
 
@@ -46,9 +53,11 @@ public class TransportToInternalConverterTest {
     private static final String PERSONID = "personid";
 
     @Test
-    public void testReadSkapadAv() {
-        SkapadAv skapadAv = buildSkapadAv(SPECIALIST_KOMPETENS);
-        HoSPersonal hosPersonal = TransportToInternalConverter.readSkapadAv(skapadAv);
+    public void testConvert() throws Exception {
+        RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().setSkapadAv(buildSkapadAv(SPECIALIST_KOMPETENS));
+        Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
+        HoSPersonal hosPersonal = res.getGrundData().getSkapadAv();
         assertEquals(ENHETSNAMN, hosPersonal.getVardenhet().getEnhetsnamn());
         assertEquals(ENHETSID, hosPersonal.getVardenhet().getEnhetsid());
         assertEquals(VARDGIVARNAMN, hosPersonal.getVardenhet().getVardgivare().getVardgivarnamn());
@@ -63,10 +72,60 @@ public class TransportToInternalConverterTest {
     }
 
     @Test
-    public void testReadSkapadAvNullSpecialistkompetens() {
-        SkapadAv skapadAv = buildSkapadAv(null);
-        HoSPersonal hosPersonal = TransportToInternalConverter.readSkapadAv(skapadAv);
+    public void testConvertNullSpecialistkompetens() throws Exception {
+        RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().setSkapadAv(buildSkapadAv(null));
+        Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
+        HoSPersonal hosPersonal = res.getGrundData().getSkapadAv();
         assertTrue(hosPersonal.getSpecialiteter().isEmpty());
+    }
+
+    @Test
+    public void testConvertMapsSpecialistkompetensDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
+        SpecialistkompetensKod specialistkompetens = SpecialistkompetensKod.ALLERGI;
+        RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens.getDescription());
+        Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getSpecialiteter().size());
+        assertEquals(specialistkompetens.getCode(), skapadAv.getSpecialiteter().get(0));
+    }
+
+    @Test
+    public void testConvertKeepSpecialistkompetensCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
+        String specialistkompetenskod = "kod";
+        RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetenskod);
+        Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getSpecialiteter().size());
+        assertEquals(specialistkompetenskod, skapadAv.getSpecialiteter().get(0));
+    }
+
+    @Test
+    public void testConvertMapsBefattningDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
+        BefattningKod befattning = BefattningKod.LAKARE_EJ_LEG_AT;
+        RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattning.getDescription());
+        Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getBefattningar().size());
+        assertEquals(befattning.getCode(), skapadAv.getBefattningar().get(0));
+    }
+
+    @Test
+    public void testConvertKeepBefattningCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
+        String befattningskod = "kod";
+        RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattningskod);
+        Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getBefattningar().size());
+        assertEquals(befattningskod, skapadAv.getBefattningar().get(0));
     }
 
     private SkapadAv buildSkapadAv(List<String> specialistKompetens) {
