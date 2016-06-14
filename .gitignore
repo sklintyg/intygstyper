@@ -16,3 +16,5 @@ fk7263/activemq-data/localhost/KahaDB/db.redo
 .DS_Store
 ${project.build.directory}
 generated
+build
+.gradle
