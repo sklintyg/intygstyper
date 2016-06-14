@@ -18,12 +18,17 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
+import se.inera.intyg.common.support.common.enumerations.BefattningKod;
+import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.ModelAssert;
-import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
@@ -33,7 +38,6 @@ import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
  * @author erik
  *
  */
-
 public class TransportToInternalTest {
 
     @Test
@@ -47,5 +51,53 @@ public class TransportToInternalTest {
 
             ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
         }
+    }
+
+    @Test
+    public void testConvertMapsSpecialistkompetensDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
+        SpecialistkompetensKod specialistkompetens = SpecialistkompetensKod.ALLERGI;
+        RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens.getDescription());
+        Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getSpecialiteter().size());
+        assertEquals(specialistkompetens.getCode(), skapadAv.getSpecialiteter().get(0));
+    }
+
+    @Test
+    public void testConvertKeepSpecialistkompetensCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
+        String specialistkompetenskod = "kod";
+        RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetenskod);
+        Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getSpecialiteter().size());
+        assertEquals(specialistkompetenskod, skapadAv.getSpecialiteter().get(0));
+    }
+
+    @Test
+    public void testConvertMapsBefattningDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
+        BefattningKod befattning = BefattningKod.LAKARE_EJ_LEG_AT;
+        RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattning.getDescription());
+        Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getBefattningar().size());
+        assertEquals(befattning.getCode(), skapadAv.getBefattningar().get(0));
+    }
+
+    @Test
+    public void testConvertKeepBefattningCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
+        String befattningskod = "kod";
+        RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().clear();
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattningskod);
+        Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
+        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
+        assertEquals(1, skapadAv.getBefattningar().size());
+        assertEquals(befattningskod, skapadAv.getBefattningar().get(0));
     }
 }

@@ -8,17 +8,25 @@ import static se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSche
 import static se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSchematronValidatorTestUtil.getNumberOfTransportValidationErrors;
 import static se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSchematronValidatorTestUtil.getTransportValidationErrorString;
 
-import com.google.common.base.Charsets;
-import com.helger.schematron.svrl.SVRLHelper;
+import java.io.ByteArrayInputStream;
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.xml.transform.stream.StreamSource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
+
+import com.google.common.base.Charsets;
+import com.helger.schematron.svrl.SVRLHelper;
+
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
@@ -26,17 +34,9 @@ import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValida
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSchematronValidatorTestUtil;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-import se.inera.intyg.intygstyper.luae_na.model.utils.Scenario;
-import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.luae_na.model.utils.*;
 import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
-
-import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayInputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Data driven test that uses Scenario and ScenarioFinder along with the JUnit Parameterized test runner,
@@ -64,6 +64,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @InjectMocks
     private InternalValidatorUtil validatorUtil;
 
+    @InjectMocks
     private static InternalDraftValidatorImpl internalValidator;
 
     public InternalValidatorResultMatchesSchematronValidatorTest(String name, Scenario scenario, boolean shouldFail) {
@@ -91,9 +92,12 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        internalValidator = new InternalDraftValidatorImpl(validatorUtil);
+        // use reflection to set InternalValidatorUtil in InternalDraftValidator
+        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtil");
+        field.setAccessible(true);
+        field.set(internalValidator, validatorUtil);
     }
 
     @Test

@@ -36,7 +36,6 @@ import javax.xml.bind.JAXB;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -50,7 +49,9 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
@@ -82,12 +83,6 @@ public class Fk7263ModuleApiTest {
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
-    @Before
-    public void setUpMocks() {
-        registerMedicalCertificateClient = Mockito.mock(RegisterMedicalCertificateResponderInterface.class);
-        fk7263ModuleApi.setRegisterMedicalCertificateClient(registerMedicalCertificateClient);
-    }
-
     @Test
     public void testPdfFileName() {
         Utlatande intyg = new Utlatande();
@@ -102,9 +97,17 @@ public class Fk7263ModuleApiTest {
     public void updateChangesHosPersonalInfo() throws IOException, ModuleException {
         Utlatande utlatande = getUtlatandeFromFile();
 
-        Vardgivare vardgivare = new Vardgivare("vardgivarId", "vardgivarNamn");
-        Vardenhet vardenhet = new Vardenhet("enhetId", "enhetNamn", "", "", "", "", "", "", vardgivare);
-        HoSPersonal hosPerson = new HoSPersonal("nyId", "nyNamn", "nyForskrivarkod", "nyBefattning", null, vardenhet);
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid("vardgivarId");
+        vardgivare.setVardgivarnamn("vardgivarNamn");
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("enhetId");
+        vardenhet.setEnhetsnamn("enhetNamn");
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId("nyId");
+        hosPerson.setFullstandigtNamn("nyNamn");
+        hosPerson.setForskrivarKod("nyForskrivarkod");
+        hosPerson.setVardenhet(vardenhet);
         LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
         String updatedHolder = fk7263ModuleApi.updateBeforeSigning(toJsonString(utlatande), hosPerson, signingDate);
         Utlatande updatedIntyg = objectMapper.readValue(updatedHolder, Utlatande.class);
@@ -113,7 +116,7 @@ public class Fk7263ModuleApiTest {
         assertEquals("nyId", updatedIntyg.getGrundData().getSkapadAv().getPersonId());
         assertEquals("nyNamn", updatedIntyg.getGrundData().getSkapadAv().getFullstandigtNamn());
         assertEquals("nyForskrivarkod", updatedIntyg.getGrundData().getSkapadAv().getForskrivarKod());
-        assertEquals(utlatande.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn(), updatedIntyg.getGrundData().getSkapadAv().getVardenhet()
+        assertEquals(vardenhet.getEnhetsnamn(), updatedIntyg.getGrundData().getSkapadAv().getVardenhet()
                 .getEnhetsnamn());
     }
 
@@ -121,7 +124,10 @@ public class Fk7263ModuleApiTest {
     public void copyContainsOriginalData() throws IOException, ModuleException {
         Utlatande utlatande = getUtlatandeFromFile();
 
-        Patient patient = new Patient("Kalle", null, "Kula", new Personnummer("19121212-1212"), null, null, null);
+        Patient patient = new Patient();
+        patient.setFornamn("Kalle");
+        patient.setEfternamn("Kula");
+        patient.setPersonId(new Personnummer("19121212-1212"));
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
 
         String holder = fk7263ModuleApi.createNewInternalFromTemplate(copyHolder, toJsonString(utlatande));
@@ -154,7 +160,10 @@ public class Fk7263ModuleApiTest {
 
         Utlatande utlatande = getUtlatandeFromFile();
 
-        Patient patient = new Patient("Kalle", null, "Kula", new Personnummer("19121212-1212"), null, null, null);
+        Patient patient = new Patient();
+        patient.setFornamn("Kalle");
+        patient.setEfternamn("Kula");
+        patient.setPersonId(new Personnummer("19121212-1212"));
         CreateDraftCopyHolder copyHolder = createDraftCopyHolder(patient);
         copyHolder.setNewPersonnummer(newSSN);
 
@@ -404,9 +413,19 @@ public class Fk7263ModuleApiTest {
     }
 
     private CreateDraftCopyHolder createDraftCopyHolder(Patient patient) {
-        Vardgivare vardgivare = new Vardgivare("hsaId0", "vardgivare");
-        Vardenhet vardenhet = new Vardenhet("hsaId1", "namn", null, null, null, null, null, null, vardgivare);
-        HoSPersonal hosPersonal = new HoSPersonal("Id1", "Grodan Boll", "forskrivarkod", "befattning", null, vardenhet);
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid("hsaId0");
+        vardgivare.setVardgivarnamn("vardgivare");
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("hsaId1");
+        vardenhet.setEnhetsnamn("namn");
+        vardenhet.setVardgivare(vardgivare);
+        HoSPersonal hosPersonal = new HoSPersonal();
+        hosPersonal.setPersonId("Id1");
+        hosPersonal.setFullstandigtNamn("Grodan Boll");
+        hosPersonal.setForskrivarKod("forskrivarkod");
+        hosPersonal.getBefattningar().add("befattning");
+        hosPersonal.setVardenhet(vardenhet);
 
         CreateDraftCopyHolder holder = new CreateDraftCopyHolder("Id1", hosPersonal);
 

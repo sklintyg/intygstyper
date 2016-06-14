@@ -6,7 +6,7 @@ var luseMessages = {
         'luse.message.certificateloading': 'Hämtar intyg...',
 
         'luse.label.send': 'Skicka intyg till Försäkringskassan',
-        'luse.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukersattning hos Försäkringskassan.',
+        'luse.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukersättning hos Försäkringskassan.',
         'luse.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukersattning
@@ -30,7 +30,7 @@ var luseMessages = {
 
         'luse.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
         'luse.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
-        'luse.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukersattning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
+        'luse.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukersättning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
         'luse.label.datum': 'Datum',
         'luse.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         'luse.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',

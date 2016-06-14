@@ -20,7 +20,7 @@
                     "vardgivarnamn": "Vårdgivarnamn"
                 }
             },
-            "befattningar" : []
+            "befattningar" : ["ST_LAKARE"]
 
         },
         "patient": {

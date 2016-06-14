@@ -29,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
@@ -50,14 +49,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
 
     @Autowired
     InternalValidatorUtil validatorUtil;
-
-    public InternalDraftValidatorImpl() {
-    }
-
-    @VisibleForTesting
-    public InternalDraftValidatorImpl(InternalValidatorUtil validatorUtil) {
-        this.validatorUtil = validatorUtil;
-    }
 
     @Override
     public ValidateDraftResponse validateDraft(LuseUtlatande utlatande) {
@@ -123,11 +114,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
-        }
-
-        if ((utlatande.getJournaluppgifter() != null || utlatande.getAnhorigsBeskrivningAvPatienten() != null
-                || utlatande.getAnnatGrundForMU() != null) && StringUtils.isBlank(utlatande.getOvrigt())) {
-            addValidationError(validationMessages, "ovrigt", ValidationMessageType.EMPTY, "luse.validation.grund-for-mu.missing_ovrigt");
         }
 
         if (utlatande.getKannedomOmPatient() == null) {

@@ -167,7 +167,7 @@
 
               <div mi-category category-label="KAT_1.RBK">
                 <span dynamic-label key="FRG_1.RBK"></span>
-                <div mi-field field-dynamic-label="DFR_1.1.RBK" filled="cert.undersokningAvPatienten!=null ||
+                <div mi-field field-dynamic-label="DFR_1.1" filled="cert.undersokningAvPatienten!=null ||
                                                                         cert.telefonkontaktMedPatienten!=null ||
                                                                         cert.journaluppgifter!=null ||
                                                                         cert.anhorigsBeskrivningAvPatienten!=null">
@@ -197,14 +197,14 @@
                     </div>
                   </ul>
                 </div>
-                <div mi-field field-dynamic-label="DFR_2.1.RBK" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
+                <div mi-field field-dynamic-label="DFR_2.1" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
                   {{cert.kannedomOmPatient | date:'longDate' }}
                 </div>
               </div>
 
               <!-- Andra medicinska utredningar och underlag -->
               <div mi-category category-label="KAT_2.RBK">
-                <div mi-field field-dynamic-label="DFR_3.1.RBK" filled="cert.underlagFinns!=null">
+                <div mi-field field-dynamic-label="DFR_3.1" filled="cert.underlagFinns!=null">
                   <div boolean-view="underlagFinns" field-model="cert"></div>
                 </div>
                 <div mi-field filled="cert.underlag">
@@ -225,7 +225,7 @@
 
               <!-- Sjukdomsförlopp -->
               <div mi-category category-label="KAT_3.RBK">
-                <div mi-field field-dynamic-label="DFR_5.1.RBK" filled="cert.sjukdomsforlopp">
+                <div mi-field field-dynamic-label="DFR_5.1" filled="cert.sjukdomsforlopp">
                   <div id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</div>
                 </div>
               </div>
@@ -254,74 +254,74 @@
                     </div>
                   </div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_7.1.RBK" filled="cert.diagnosgrund">
+                <div mi-field field-dynamic-label="DFR_7.1" filled="cert.diagnosgrund">
                   <div id="diagnosgrund" class="multiline">{{cert.diagnosgrund}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_7.2.RBK" filled="cert.nyBedomningDiagnosgrund!=null">
+                <div mi-field field-dynamic-label="DFR_7.2" filled="cert.nyBedomningDiagnosgrund!=null">
                   <div boolean-view="nyBedomningDiagnosgrund" field-model="cert"></div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_7.3.RBK" filled="cert.diagnosForNyBedomning!=null">
+                <div mi-field field-dynamic-label="DFR_7.3" filled="cert.diagnosForNyBedomning!=null">
                   <div id="diagnosForNyBedomning" class="multiline">{{cert.diagnosForNyBedomning}}</div>
                 </div>
               </div>
 
               <!--  Funktionsnedsättning -->
               <div mi-category category-label="KAT_5.RBK">
-                <div mi-field field-dynamic-label="DFR_8.1.RBK" filled="cert.funktionsnedsattningIntellektuell">
+                <div mi-field field-dynamic-label="DFR_8.1" filled="cert.funktionsnedsattningIntellektuell">
                   <div id="funktionsnedsattningIntellektuell" class="multiline">{{cert.funktionsnedsattningIntellektuell}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_9.1.RBK" filled="cert.funktionsnedsattningKommunikation">
+                <div mi-field field-dynamic-label="DFR_9.1" filled="cert.funktionsnedsattningKommunikation">
                   <div id="funktionsnedsattningKommunikation" class="multiline">{{cert.funktionsnedsattningKommunikation}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_10.1.RBK" filled="cert.funktionsnedsattningKoncentration">
+                <div mi-field field-dynamic-label="DFR_10.1" filled="cert.funktionsnedsattningKoncentration">
                   <div id="funktionsnedsattningKoncentration" class="multiline">{{cert.funktionsnedsattningKoncentration}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_11.1.RBK" filled="cert.funktionsnedsattningPsykisk">
+                <div mi-field field-dynamic-label="DFR_11.1" filled="cert.funktionsnedsattningPsykisk">
                   <div id="funktionsnedsattningPsykisk" class="multiline">{{cert.funktionsnedsattningPsykisk}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_12.1.RBK" filled="cert.funktionsnedsattningSynHorselTal">
+                <div mi-field field-dynamic-label="DFR_12.1" filled="cert.funktionsnedsattningSynHorselTal">
                   <div id="funktionsnedsattningSynHorselTal" class="multiline">{{cert.funktionsnedsattningSynHorselTal}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_13.1.RBK" filled="cert.funktionsnedsattningBalansKoordination">
+                <div mi-field field-dynamic-label="DFR_13.1" filled="cert.funktionsnedsattningBalansKoordination">
                   <div id="funktionsnedsattningBalansKoordination" class="multiline">{{cert.funktionsnedsattningBalansKoordination}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_14.1.RBK" filled="cert.funktionsnedsattningAnnan">
+                <div mi-field field-dynamic-label="DFR_14.1" filled="cert.funktionsnedsattningAnnan">
                   <div id="funktionsnedsattningAnnan" class="multiline">{{cert.funktionsnedsattningAnnan}}</div>
                 </div>
               </div>
 
               <!--  Aktivitetsbegränsning -->
               <div mi-category category-label="KAT_6.RBK">
-                <div mi-field field-dynamic-label="DFR_17.1.RBK" filled="cert.aktivitetsbegransning!=null">
+                <div mi-field field-dynamic-label="DFR_17.1" filled="cert.aktivitetsbegransning!=null">
                   <div id="aktivitetsbegransning" class="multiline">{{cert.aktivitetsbegransning}}</div>
                 </div>
               </div>
 
               <!-- Medicinska behandlingar/åtgärder -->
               <div mi-category category-label="KAT_7.RBK">
-                <div mi-field field-dynamic-label="DFR_18.1.RBK" filled="cert.avslutadBehandling">
+                <div mi-field field-dynamic-label="DFR_18.1" filled="cert.avslutadBehandling">
                   <div id="avslutadBehandling" class="multiline">{{cert.avslutadBehandling}}</div></li>
                 </div>
-                <div mi-field field-dynamic-label="DFR_19.1.RBK" filled="cert.pagaendeBehandling">
+                <div mi-field field-dynamic-label="DFR_19.1" filled="cert.pagaendeBehandling">
                   <div id="pagaendeBehandling" class="multiline">{{cert.pagaendeBehandling}}</div></li>
                 </div>
-                <div mi-field field-dynamic-label="DFR_20.1.RBK" filled="cert.planeradBehandling">
+                <div mi-field field-dynamic-label="DFR_20.1" filled="cert.planeradBehandling">
                   <div id="planeradBehandling" class="multiline">{{cert.planeradBehandling}}</div></li>
                 </div>
-                <div mi-field field-dynamic-label="DFR_21.1.RBK" filled="cert.substansintag">
+                <div mi-field field-dynamic-label="DFR_21.1" filled="cert.substansintag">
                   <div id="substansintag" class="multiline">{{cert.substansintag}}</div></li>
                 </div>
               </div>
 
               <!-- Medicinska förutsättningar för arbete -->
               <div mi-category category-label="KAT_8.RBK">
-                <div mi-field field-dynamic-label="DFR_22.1.RBK" filled="cert.medicinskaForutsattningarForArbete">
+                <div mi-field field-dynamic-label="DFR_22.1" filled="cert.medicinskaForutsattningarForArbete">
                   <div id="medicinskaForutsattningarForArbete" class="multiline">{{cert.medicinskaForutsattningarForArbete}}</div></li>
                 </div>
-                <div mi-field field-dynamic-label="DFR_23.1.RBK" filled="cert.formagaTrotsBegransning">
+                <div mi-field field-dynamic-label="DFR_23.1" filled="cert.formagaTrotsBegransning">
                   <div id="formagaTrotsBegransning" class="multiline">{{cert.formagaTrotsBegransning}}</div></li>
                 </div>
-                <div mi-field field-dynamic-label="DFR_24.1.RBK" filled="cert.forslagTillAtgard">
+                <div mi-field field-dynamic-label="DFR_24.1" filled="cert.forslagTillAtgard">
                   <div id="forslagTillAtgard" class="multiline">{{cert.forslagTillAtgard}}</div></li>
                 </div>
               </div>
@@ -335,7 +335,7 @@
 
               <!-- Kontakt med fk-->
               <div mi-category category-label="KAT_10.RBK">
-                <div mi-field field-dynamic-label="DFR_26.1.RBK" filled="true">
+                <div mi-field field-dynamic-label="DFR_26.1" filled="true">
                   <span ng-show="cert.kontaktMedFk">
                     <span id="kontaktFk-yes" message key="lisu.label.yes"></span>
                   </span>
@@ -343,14 +343,14 @@
                     <span id="kontaktFk-no" message key="lisu.label.no"></span>
                   </span>
                 </div>
-                <div mi-field field-dynamic-label="DFR_26.2.RBK" filled="cert.anledningTillKontakt">
+                <div mi-field field-dynamic-label="DFR_26.2" filled="cert.anledningTillKontakt">
                   <div id="anledningtillkontakt" class="multiline">{{cert.anledningTillKontakt}}</div>
                 </div>
               </div>
 
               <!-- Tilläggsfrågor -->
               <div mi-category category-label="KAT_9999.RBK">
-                <div mi-field field-dynamic-label="DFR_{{tillaggsfraga.id}}.RBK"
+                <div mi-field field-dynamic-label="DFR_{{tillaggsfraga.id}}"
                      ng-repeat="tillaggsfraga in cert.tillaggsfragor" filled="tillaggsfraga.svar">
                   <div id="tillaggsfraga_{{$index}}" class="multiline">{{tillaggsfraga.svar}}</div>
                 </div>

@@ -32,6 +32,7 @@ import com.itextpdf.text.pdf.*;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
+import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -462,12 +463,16 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
         populateAvslutSpecialist(utlatande, fields);
 
         List<String> befattningar = utlatande.getGrundData().getSkapadAv().getBefattningar();
-        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_LEG_ST.getNamn()));
-        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.getNamn()));
+        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_LEG_ST.getCode()));
+        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.getCode()));
     }
 
     private void populateAvslutSpecialist(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
-        List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter();
+        // map codes to descriptions, if possible
+        List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter()
+                .stream()
+                .map(code -> SpecialistkompetensKod.getDescriptionFromCode(code).orElse(code))
+                .collect(Collectors.toList());
         if (specialiteter.size() > 0) {
             SPECIALISTKOMPETENS_CHECK.setField(fields, true);
 

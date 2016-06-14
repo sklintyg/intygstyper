@@ -162,7 +162,7 @@
 
               <!-- Grund för medicinskt underlag -->
               <div mi-category category-label="KAT_1.RBK">
-                <div mi-field field-dynamic-label="FRG_1.RBK"
+                <div mi-field field-dynamic-label="FRG_1"
                      filled="cert.undersokningAvPatienten!=null || cert.journaluppgifter!=null || cert.anhorigsBeskrivningAvPatienten!=null || cert.annatGrundForMU!=null">
                   <ul class="padded-list">
                     <li ng-show="cert.undersokningAvPatienten!=null">
@@ -190,10 +190,10 @@
                     </div>
                   </ul>
                 </div>
-                <div mi-field field-dynamic-label="FRG_2.RBK" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
+                <div mi-field field-dynamic-label="FRG_2" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
                   {{cert.kannedomOmPatient | date:'longDate' }}
                 </div>
-                <div mi-field field-dynamic-label="FRG_3.RBK" filled="true">
+                <div mi-field field-dynamic-label="FRG_3" filled="true">
                   <span ng-show="cert.underlagFinns">
                     <span id="underlagFinns-yes" message key="luae_fs.label.yes"></span>
                   </span>
@@ -201,7 +201,7 @@
                     <span id="underlagFinns-no" message key="luae_fs.label.no"></span>
                   </span>
                 </div>
-                <div mi-field field-dynamic-label="FRG_4.RBK" filled="cert.underlag" ng-if="cert.underlagFinns">
+                <div mi-field field-dynamic-label="FRG_4" filled="cert.underlag" ng-if="cert.underlagFinns">
                   <table class="table luae_fs-underlag" ng-show="cert.underlag">
                     <tr>
                       <th><span dynamic-label key="DFR_4.1.RBK"></span></th>
@@ -219,7 +219,7 @@
 
               <!-- Diagnos -->
               <div mi-category category-label="KAT_3.RBK">
-                <div mi-field field-dynamic-label="FRG_6.RBK" filled="cert.diagnoser.length">
+                <div mi-field field-dynamic-label="FRG_6" filled="cert.diagnoser.length">
                   <div class="row">
                     <div class="col-xs-4">
                       <label class="bold">
@@ -255,24 +255,24 @@
 
               <!--  Funktionsnedsättning -->
               <div mi-category category-label="KAT_4.RBK">
-                <div mi-field field-dynamic-label="FRG_15.RBK" filled="cert.funktionsnedsattningDebut">
+                <div mi-field field-dynamic-label="FRG_15" filled="cert.funktionsnedsattningDebut">
                   <div id="funktionsnedsattningDebut">{{cert.funktionsnedsattningDebut}}</div>
                 </div>
-                <div mi-field field-dynamic-label="FRG_16.RBK" filled="cert.funktionsnedsattningPaverkan">
+                <div mi-field field-dynamic-label="FRG_16" filled="cert.funktionsnedsattningPaverkan">
                   <div id="funktionsnedsattningPaverkan">{{cert.funktionsnedsattningPaverkan}}</div>
                 </div>
               </div>
 
               <!-- Övrigt -->
               <div mi-category category-label="KAT_5.RBK">
-                <div mi-field field-dynamic-label="FRG_25.RBK" filled="cert.ovrigt">
+                <div mi-field field-dynamic-label="FRG_25" filled="cert.ovrigt">
                   <div id="kommentar" class="multiline">{{cert.ovrigt}}</div>
                 </div>
               </div>
 
               <!-- Kontakt med fk-->
               <div mi-category category-label="KAT_6.RBK">
-                <div mi-field field-dynamic-label="DFR_26.1.RBK" filled="true">
+                <div mi-field field-dynamic-label="DFR_26.1" filled="true">
                   <span ng-show="cert.kontaktMedFk">
                     <span id="kontaktFk-yes" message key="luae_fs.label.yes"></span>
                   </span>
@@ -280,14 +280,14 @@
                     <span id="kontaktFk-no" message key="luae_fs.label.no"></span>
                   </span>
                 </div>
-                <div mi-field field-dynamic-label="DFR_26.2.RBK" filled="cert.anledningTillKontakt" ng-if="cert.kontaktMedFk">
+                <div mi-field field-dynamic-label="DFR_26.2" filled="cert.anledningTillKontakt" ng-if="cert.kontaktMedFk">
                   <div id="anledningtillkontakt" class="multiline">{{cert.anledningTillKontakt}}</div>
                 </div>
               </div>
 
               <!-- Tilläggsfrågor -->
               <div mi-category category-label="KAT_9999.RBK">
-                <div mi-field field-dynamic-label="DFR_{{tillaggsfraga.id}}.RBK"
+                <div mi-field field-dynamic-label="DFR_{{tillaggsfraga.id}}"
                      ng-repeat="tillaggsfraga in cert.tillaggsfragor" filled="tillaggsfraga.svar">
                   <div id="tillaggsfraga_{{$index}}" class="multiline">{{tillaggsfraga.svar}}</div>
                 </div>

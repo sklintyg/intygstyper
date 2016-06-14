@@ -45,12 +45,10 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactoryImpl;
@@ -162,8 +160,7 @@ public class LuaenaModuleApiTest {
         GrundData gd = new GrundData();
         gd.setPatient(new se.inera.intyg.common.support.model.common.internal.Patient());
         gd.getPatient().setPersonId(new Personnummer("191212121212"));
-        se.inera.intyg.common.support.model.common.internal.HoSPersonal skapadAv = WebcertModelFactoryUtil
-                .convertHosPersonalToEdit(createHosPersonal());
+        HoSPersonal skapadAv = createHosPersonal();
         gd.setSkapadAv(skapadAv);
 
         Utlatande utlatande = LuaenaUtlatande.builder().setId(intygId).setGrundData(gd).setTextVersion("").build();
@@ -203,10 +200,20 @@ public class LuaenaModuleApiTest {
     }
 
     private HoSPersonal createHosPersonal() {
-        return new HoSPersonal("hsaId", "Doktor A", "12345", "Läkare", null, createVardenhet());
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId("hsaId1");
+        hosPerson.setFullstandigtNamn("Doktor A");
+        hosPerson.setVardenhet(createVardenhet());
+        return hosPerson;
     }
 
     private Vardenhet createVardenhet() {
-        return new Vardenhet("hsaId", "ve1", "gatan", "12345", "orten", "122333", null, null, new Vardgivare("vg1", "vg1"));
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("hsaId");
+        vardenhet.setEnhetsnamn("ve1");
+        vardenhet.setVardgivare(new Vardgivare());
+        vardenhet.getVardgivare().setVardgivarid("vg1");
+        vardenhet.getVardgivare().setVardgivarnamn("vg1");
+        return vardenhet;
     }
 }

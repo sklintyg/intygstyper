@@ -36,9 +36,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -53,11 +55,16 @@ public class WebcertModelFactoryTest {
     @Test
     public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
         // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient("Johnny", "Jobs", "Appleseed", new Personnummer("19121212-1212"), "Testvägen 12", "13337", "Huddinge");
-        Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
-        Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
-                "08-1337", null, "0123456789", vardgivare);
-        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", null, null, null, vardenhet);
+        Patient patient = new Patient();
+        patient.setFornamn("Johnny");
+        patient.setMellannamn("Jobs");
+        patient.setEfternamn("Appleseed");
+        patient.setFullstandigtNamn("Johnny Jobs Appleseed");
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        patient.setPostadress("Testvägen 12");
+        patient.setPostnummer("13337");
+        patient.setPostort("Huddinge");
+        HoSPersonal skapadAv = createHosPersonal();
 
         CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
@@ -94,8 +101,7 @@ public class WebcertModelFactoryTest {
 
         Utlatande utlatande = new Utlatande();
         utlatande.getGrundData().setSkapadAv(new se.inera.intyg.common.support.model.common.internal.HoSPersonal());
-        HoSPersonal hosPerson = new HoSPersonal(personId, fullstandigtName, forskrivarKod, befattning, specialiseringar, new Vardenhet("hsaId",
-                "name", "postadress", "postnummer", "postort", "telefonnummer", "epost", "arbetsplatskod", new Vardgivare("hsaId", "namn")));
+        HoSPersonal hosPerson = createHosPersonal();
         WebcertModelFactoryUtil.updateSkapadAv(utlatande, hosPerson, signingDate);
 
         assertEquals(personId, utlatande.getGrundData().getSkapadAv().getPersonId());
@@ -109,5 +115,27 @@ public class WebcertModelFactoryTest {
         WebcertModelFactoryUtil.updateSkapadAv(utlatande, hosPerson, signingDate);
         assertEquals(Arrays.asList(befattning), utlatande.getGrundData().getSkapadAv().getBefattningar());
         assertEquals(specialiseringar, utlatande.getGrundData().getSkapadAv().getSpecialiteter());
+    }
+
+    private HoSPersonal createHosPersonal() {
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId("personid");
+        hosPerson.setFullstandigtNamn("fullständigt namn");
+        hosPerson.setVardenhet(createVardenhet());
+        hosPerson.setForskrivarKod("förskrivarkod");
+        hosPerson.getBefattningar().add("befattning");
+        hosPerson.getSpecialiteter().add("specialitet1");
+        hosPerson.getSpecialiteter().add("specialitet2");
+        return hosPerson;
+    }
+
+    private Vardenhet createVardenhet() {
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("hsaId");
+        vardenhet.setEnhetsnamn("ve1");
+        vardenhet.setVardgivare(new Vardgivare());
+        vardenhet.getVardgivare().setVardgivarid("vg1");
+        vardenhet.getVardgivare().setVardgivarnamn("vg1");
+        return vardenhet;
     }
 }

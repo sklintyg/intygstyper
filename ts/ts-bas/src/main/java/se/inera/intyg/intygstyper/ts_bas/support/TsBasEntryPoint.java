@@ -30,15 +30,15 @@ import se.inera.intyg.common.support.modules.support.feature.ModuleFeaturesFacto
 import se.inera.intyg.intygstyper.ts_bas.rest.TsBasModuleApi;
 
 public class TsBasEntryPoint implements ModuleEntryPoint {
-    private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
 
+    private static final String DEFAULT_RECIPIENT_ID = "TS";
     public static final String MODULE_ID = "ts-bas";
     public static final String MODULE_NAME = "Transportstyrelsens läkarintyg";
     public static final String MODULE_DESCRIPTION = "Läkarintyg - avseende högre körkortsbehörigheter eller taxiförarlegitimation - på begäran av Transportstyrelsen";
     private static final String MODULE_DETAILED_DESCRIPTION = "<p>Transportstyrelsens läkarintyg ska användas vid förlängd giltighet av högre behörighet från 45 år, ansökan om körkortstillstånd för grupp II och III och vid ansökan om taxiförarlegitimation. Transportstyrelsens läkarintyg kan även användas när Transportstyrelsen i annat fall begärt ett allmänt läkarintyg avseende lämplighet att inneha körkort.</p>Specialistintyg finns bl.a. för alkohol, läkemedel, synfunktion, Alkolås m.m. Se <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">www.transportstyrelsen.se</a>.";
 
     @Autowired
-    private TsBasModuleApi moduleService;
+    private TsBasModuleApi moduleApi;
 
     @Override
     public String getModuleId() {
@@ -62,7 +62,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public ModuleApi getModuleApi() {
-        return moduleService;
+        return moduleApi;
     }
 
     @Override
@@ -108,6 +108,6 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getDefaultRecipient() {
-        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
+        return DEFAULT_RECIPIENT_ID;
     }
 }

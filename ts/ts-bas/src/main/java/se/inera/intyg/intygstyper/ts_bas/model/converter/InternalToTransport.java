@@ -20,20 +20,15 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import java.util.*;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.intyg.common.schemas.Constants;
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
-import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.*;
 import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
 import se.inera.intygstjanster.ts.services.v1.Sjukhusvard;
@@ -48,7 +43,6 @@ import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
  */
 public final class InternalToTransport {
 
-    private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
     private static final String DELIMITER_REGEXP = "\\.";
 
@@ -77,7 +71,7 @@ public final class InternalToTransport {
         TSBasIntyg utlatande = new TSBasIntyg();
 
         utlatande.setIntygsId(source.getId());
-        utlatande.setGrundData(buildGrundData(source.getGrundData()));
+        utlatande.setGrundData(InternalToTransportUtil.buildGrundData(source.getGrundData()));
 
         UtlatandeKod utlatandeKod = UtlatandeKod.getCurrentVersion();
 
@@ -284,65 +278,5 @@ public final class InternalToTransport {
         utvecklingsstorning.setHarAndrayndrom(source.getHarSyndrom());
         utvecklingsstorning.setHarPsykiskUtvecklingsstorning(source.getPsykiskUtvecklingsstorning());
         return utvecklingsstorning;
-    }
-
-    // Convert GrundData //
-    private static GrundData buildGrundData(se.inera.intyg.common.support.model.common.internal.GrundData source) {
-        GrundData grundData = new GrundData();
-        grundData.setPatient(buildPatient(source.getPatient()));
-        grundData.setSigneringsTidstampel(source.getSigneringsdatum().toString(SIGNERINGS_TIDSTAMPEL_FORMAT));
-        grundData.setSkapadAv(buildSkapadAv(source.getSkapadAv()));
-        return grundData;
-    }
-
-    private static Patient buildPatient(se.inera.intyg.common.support.model.common.internal.Patient source) {
-        Patient patient = new Patient();
-        patient.setEfternamn(source.getEfternamn());
-        patient.setFornamn(source.getFornamn());
-        patient.setFullstandigtNamn(StringUtils.join(ArrayUtils.toArray(source.getFornamn(), source.getEfternamn()), " "));
-        patient.setPersonId(buildII(Constants.PERSON_ID_OID, source.getPersonId().getPersonnummer()));
-        patient.setPostadress(source.getPostadress());
-        patient.setPostnummer(source.getPostnummer());
-        patient.setPostort(source.getPostort());
-        return patient;
-    }
-
-    private static SkapadAv buildSkapadAv(HoSPersonal source) {
-        SkapadAv skapadAv = new SkapadAv();
-        skapadAv.setAtLakare(source.getBefattningar().contains(BefattningKod.LAKARE_EJ_LEG_AT.getNamn()));
-        if (!source.getBefattningar().isEmpty()) {
-            skapadAv.getBefattningar().addAll(source.getBefattningar());
-        }
-        skapadAv.setFullstandigtNamn(source.getFullstandigtNamn());
-        skapadAv.setPersonId(buildII(Constants.HSA_ID_OID, source.getPersonId()));
-        skapadAv.setVardenhet(buildVardenhet(source.getVardenhet()));
-        skapadAv.getSpecialiteter().addAll(source.getSpecialiteter());
-        return skapadAv;
-    }
-
-    private static Vardenhet buildVardenhet(se.inera.intyg.common.support.model.common.internal.Vardenhet source) {
-        Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setEnhetsId(buildII(Constants.HSA_ID_OID, source.getEnhetsid()));
-        vardenhet.setEnhetsnamn(source.getEnhetsnamn());
-        vardenhet.setPostadress(source.getPostadress());
-        vardenhet.setPostnummer(source.getPostnummer());
-        vardenhet.setPostort(source.getPostort());
-        vardenhet.setTelefonnummer(source.getTelefonnummer());
-        vardenhet.setVardgivare(buildVardgivare(source.getVardgivare()));
-        return vardenhet;
-    }
-
-    private static Vardgivare buildVardgivare(se.inera.intyg.common.support.model.common.internal.Vardgivare source) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivarid(buildII(Constants.HSA_ID_OID, source.getVardgivarid()));
-        vardgivare.setVardgivarnamn(source.getVardgivarnamn());
-        return vardgivare;
-    }
-
-    private static II buildII(String root, String extension) {
-        II ii = new II();
-        ii.setExtension(extension);
-        ii.setRoot(root);
-        return ii;
     }
 }

@@ -36,7 +36,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.w3.wsaddressing10.AttributedURIType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.annotations.VisibleForTesting;
 
 import iso.v21090.dt.v1.CD;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
@@ -52,8 +51,8 @@ import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.conv
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.model.converter.util.XslTransformer;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.converter.util.*;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -115,11 +114,6 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Autowired(required = false)
     private RevokeMedicalCertificateResponderInterface revokeCertificateClient;
-
-    @VisibleForTesting
-    public void setRegisterMedicalCertificateClient(RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient) {
-        this.registerMedicalCertificateClient = registerMedicalCertificateClient;
-    }
 
     /**
      * {@inheritDoc}
@@ -448,7 +442,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
-            webcertModelFactory.updateSkapadAv(intyg, hosPerson, signingDate);
+            WebcertModelFactoryUtil.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInteralModelResponse(intyg);
         } catch (ModuleException e) {
             throw new ModuleException("Error while updating internal model", e);

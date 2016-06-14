@@ -29,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
@@ -48,14 +47,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
 
     @Autowired
     InternalValidatorUtil validatorUtil;
-
-    public InternalDraftValidatorImpl() {
-    }
-
-    @VisibleForTesting
-    public InternalDraftValidatorImpl(InternalValidatorUtil validatorUtil) {
-        this.validatorUtil = validatorUtil;
-    }
 
     @Override
     public ValidateDraftResponse validateDraft(LuaenaUtlatande utlatande) {

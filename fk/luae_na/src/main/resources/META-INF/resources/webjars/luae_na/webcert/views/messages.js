@@ -6,7 +6,7 @@ var luae_naMessages = {
         'luae_na.message.certificateloading': 'Hämtar intyg...',
 
         'luae_na.label.send': 'Skicka intyg till Försäkringskassan',
-        'luae_na.label.send.body': 'Upplys patienten om att även göra en ansökan om luae_na hos Försäkringskassan.',
+        'luae_na.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukersättning hos Försäkringskassan.',
         'luae_na.button.send': 'Skicka till Försäkringskassan',
 
         // luae_na
@@ -30,7 +30,7 @@ var luae_naMessages = {
 
         'luae_na.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
         'luae_na.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
-        'luae_na.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om luae_na. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
+        'luae_na.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukersättning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
         'luae_na.label.datum': 'Datum',
         'luae_na.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         'luae_na.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',

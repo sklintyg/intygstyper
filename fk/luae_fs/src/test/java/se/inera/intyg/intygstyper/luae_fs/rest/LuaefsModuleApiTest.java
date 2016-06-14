@@ -52,13 +52,11 @@ import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.util
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.StatusKod;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
@@ -301,8 +299,7 @@ public class LuaefsModuleApiTest {
         GrundData gd = new GrundData();
         gd.setPatient(new se.inera.intyg.common.support.model.common.internal.Patient());
         gd.getPatient().setPersonId(new Personnummer("191212121212"));
-        se.inera.intyg.common.support.model.common.internal.HoSPersonal skapadAv = WebcertModelFactoryUtil
-                .convertHosPersonalToEdit(createHosPersonal());
+        HoSPersonal skapadAv = createHosPersonal();
         gd.setSkapadAv(skapadAv);
 
         Utlatande utlatande = LuaefsUtlatande.builder().setId(intygId).setGrundData(gd).setTextVersion("").build();
@@ -339,15 +336,29 @@ public class LuaefsModuleApiTest {
     }
 
     private Patient createPatient() {
-        return new Patient("fornamn", "mellannamn", "efternamn", new Personnummer(TEST_PATIENT_PERSONNR), "postadress", "12345", "postort");
+        Patient patient = new Patient();
+        patient.setFornamn("fornamn");
+        patient.setEfternamn("efternamn");
+        patient.setPersonId(new Personnummer(TEST_PATIENT_PERSONNR));
+        return patient;
     }
 
     private HoSPersonal createHosPersonal() {
-        return new HoSPersonal(TEST_HSA_ID, "Doktor A", "12345", "Läkare", null, createVardenhet());
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId(TEST_HSA_ID);
+        hosPerson.setFullstandigtNamn("Doktor A");
+        hosPerson.setVardenhet(createVardenhet());
+        return hosPerson;
     }
 
     private Vardenhet createVardenhet() {
-        return new Vardenhet("hsaId", "ve1", "gatan", "12345", "orten", "122333", null, null, new Vardgivare("vg1", "vg1"));
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("hsaId");
+        vardenhet.setEnhetsnamn("ve1");
+        vardenhet.setVardgivare(new Vardgivare());
+        vardenhet.getVardgivare().setVardgivarid("vg1");
+        vardenhet.getVardgivare().setVardgivarnamn("vg1");
+        return vardenhet;
     }
 
     private RegisterCertificateResponseType createReturnVal(ResultCodeType res) {

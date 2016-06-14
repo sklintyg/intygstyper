@@ -31,8 +31,6 @@ import se.inera.intyg.intygstyper.lisu.rest.LisuModuleApi;
 
 public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
 
-    public static final String DEFAULT_RECIPIENT_ID = "FK";
-
     public static final String MODULE_ID = "lisu";
     public static final String MODULE_NAME = "Läkarintyg för sjukpenning utökat";
     public static final String MODULE_DESCRIPTION = "Läkarintyg för sjukpenning utökat";
@@ -40,11 +38,6 @@ public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
 
     @Autowired
     private LisuModuleApi moduleApi;
-
-    @Override
-    public String getDefaultRecipient() {
-        return DEFAULT_RECIPIENT_ID;
-    }
 
     @Override
     public String getModuleId() {

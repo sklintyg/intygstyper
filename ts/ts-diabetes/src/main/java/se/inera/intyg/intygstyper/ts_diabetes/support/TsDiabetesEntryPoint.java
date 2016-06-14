@@ -31,18 +31,18 @@ import se.inera.intyg.intygstyper.ts_diabetes.rest.TsDiabetesModuleApi;
 
 public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
-    private static final String TRANSPORTSTYRELSEN_LOGICAL_ADRESS = "TS";
+    private static final String DEFAULT_RECIPIENT_ID = "TS";
     public static final String MODULE_ID = "ts-diabetes";
     public static final String MODULE_NAME = "Transportstyrelsens läkarintyg, diabetes";
+    public static final String MODULE_DESCRIPTION = "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.";
     private static final String MODULE_DETAILED_DESCRIPTION = "<p>Transportstyrelsens läkarintyg, diabetes ska användas vid diabetessjukdom. Föreskrivna krav på läkarens specialistkompetens vid diabetessjukdom framgår av 17 kap. i Transportstyrelsens föreskrifter (TSFS 2010:125) och allmänna råd om medicinska krav för innehav av körkort m.m.</p>Information om Transportstyrelsens föreskrifter finns på <a href=\"http://www.transportstyrelsen.se\" target=\"_blank\">www.transportstyrelsen.se</a>.";
 
-
     @Autowired
-    private TsDiabetesModuleApi tsDiabetesModuleService;
+    private TsDiabetesModuleApi moduleApi;
 
     @Override
     public String getModuleId() {
-        return "ts-diabetes";
+        return MODULE_ID;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getModuleDescription() {
-        return "Läkarintyg diabetes avseende lämpligheten att inneha körkort m.m.";
+        return MODULE_DESCRIPTION;
     }
 
     @Override
@@ -60,14 +60,9 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
         return MODULE_DETAILED_DESCRIPTION;
     }
 
-    /*@Override
-    public String getDefaultRecieverLogicalAddress() {
-        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
-    }*/
-
     @Override
     public ModuleApi getModuleApi() {
-        return tsDiabetesModuleService;
+        return moduleApi;
     }
 
     @Override
@@ -113,6 +108,6 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     @Override
     public String getDefaultRecipient() {
-        return TRANSPORTSTYRELSEN_LOGICAL_ADRESS;
+        return DEFAULT_RECIPIENT_ID;
     }
 }

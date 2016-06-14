@@ -22,20 +22,13 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.common.internal.Patient;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
-import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
-import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil;
 import se.inera.intygstjanster.ts.services.v1.*;
 import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
 import se.inera.intygstjanster.ts.services.v1.Sjukhusvard;
@@ -71,7 +64,7 @@ public final class TransportToInternal {
         }
 
         Utlatande internal = new Utlatande();
-        internal.setGrundData(convertGrundData(source.getGrundData()));
+        internal.setGrundData(TransportToInternalUtil.buildGrundData(source.getGrundData()));
         internal.setId(source.getIntygsId());
         internal.setTextVersion(source.getVersion() + DELIMITER + source.getUtgava());
         internal.setKommentar(source.getOvrigKommentar());
@@ -256,60 +249,6 @@ public final class TransportToInternal {
     private static void buildUvecklingsstorning(Utlatande internal, Utvecklingsstorning source) {
         internal.getUtvecklingsstorning().setHarSyndrom(source.isHarAndrayndrom());
         internal.getUtvecklingsstorning().setPsykiskUtvecklingsstorning(source.isHarPsykiskUtvecklingsstorning());
-    }
-
-    // Grunddata
-    private static GrundData convertGrundData(se.inera.intygstjanster.ts.services.v1.GrundData source) {
-        GrundData grundData = new GrundData();
-        grundData.setPatient(convertPatient(source.getPatient()));
-        grundData.setSigneringsdatum(LocalDateTime.parse(source.getSigneringsTidstampel()));
-        grundData.setSkapadAv(convertHoSPersonal(source.getSkapadAv()));
-        return grundData;
-    }
-
-    private static HoSPersonal convertHoSPersonal(SkapadAv source) {
-        HoSPersonal hosPersonal = new HoSPersonal();
-        hosPersonal.setFullstandigtNamn(source.getFullstandigtNamn());
-        hosPersonal.setPersonId(source.getPersonId().getExtension());
-        if (source.getBefattningar() != null) {
-            hosPersonal.getBefattningar().addAll(source.getBefattningar());
-        }
-        if (source.getSpecialiteter() != null) {
-            hosPersonal.getSpecialiteter().addAll(source.getSpecialiteter());
-        }
-        hosPersonal.setVardenhet(convertVardenhet(source.getVardenhet()));
-        return hosPersonal;
-    }
-
-    private static Vardenhet convertVardenhet(se.inera.intygstjanster.ts.services.v1.Vardenhet source) {
-        Vardenhet vardenhet = new Vardenhet();
-        vardenhet.setEnhetsid(source.getEnhetsId().getExtension());
-        vardenhet.setEnhetsnamn(source.getEnhetsnamn());
-        vardenhet.setPostadress(source.getPostadress());
-        vardenhet.setPostnummer(source.getPostnummer());
-        vardenhet.setPostort(source.getPostort());
-        vardenhet.setTelefonnummer(source.getTelefonnummer());
-        vardenhet.setVardgivare(convertVardgivare(source.getVardgivare()));
-        return vardenhet;
-    }
-
-    private static Vardgivare convertVardgivare(se.inera.intygstjanster.ts.services.v1.Vardgivare source) {
-        Vardgivare vardgivare = new Vardgivare();
-        vardgivare.setVardgivarid(source.getVardgivarid().getExtension());
-        vardgivare.setVardgivarnamn(source.getVardgivarnamn());
-        return vardgivare;
-    }
-
-    private static Patient convertPatient(se.inera.intygstjanster.ts.services.v1.Patient source) {
-        Patient patient = new Patient();
-        patient.setEfternamn(source.getEfternamn());
-        patient.setFornamn(source.getFornamn());
-        patient.setFullstandigtNamn(source.getFullstandigtNamn());
-        patient.setPersonId(new Personnummer(source.getPersonId().getExtension()));
-        patient.setPostadress(source.getPostadress());
-        patient.setPostnummer(source.getPostnummer());
-        patient.setPostort(source.getPostort());
-        return patient;
     }
 
     private static String mapToKorkortsbehorighetTsBas(String name) {

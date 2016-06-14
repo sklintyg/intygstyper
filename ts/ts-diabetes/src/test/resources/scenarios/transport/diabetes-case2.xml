@@ -27,6 +27,7 @@
   <version>02</version>
   <utgava>06</utgava>
   <grundData>
+    <signeringsTidstampel>2015-10-01T12:37:23</signeringsTidstampel>
     <skapadAv>
       <personId>
         <ns2:root>1.2.752.129.2.1.4.1</ns2:root>

@@ -29,7 +29,6 @@ import se.inera.intyg.intygstyper.fkparent.support.FkAbstractModuleEntryPoint;
 import se.inera.intyg.intygstyper.luae_na.rest.LuaenaModuleApi;
 
 public class LuaenaEntryPoint extends FkAbstractModuleEntryPoint {
-    public static final String DEFAULT_RECIPIENT_ID = "FK";
 
     public static final String MODULE_ID = "luae_na";
     public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning vid nedsatt arbetsförmåga";
@@ -52,11 +51,6 @@ public class LuaenaEntryPoint extends FkAbstractModuleEntryPoint {
     @Override
     public String getModuleDescription() {
         return MODULE_DESCRIPTION;
-    }
-
-    @Override
-    public String getDefaultRecipient() {
-        return DEFAULT_RECIPIENT_ID;
     }
 
     @Override

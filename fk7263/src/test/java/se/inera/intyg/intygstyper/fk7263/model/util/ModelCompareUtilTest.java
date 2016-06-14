@@ -19,20 +19,23 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.util;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doAnswer;
+
 import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Spy;
+import org.mockito.*;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.stubbing.Answer;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import junit.framework.TestCase;
-import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
@@ -47,33 +50,22 @@ public class ModelCompareUtilTest extends TestCase {
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
-    @Autowired
+    @Mock
+    private WebcertModuleService moduleService;
+
+    @InjectMocks
     private ModelCompareUtil modelCompareUtil;
 
     @Before
     public void setup() {
-        modelCompareUtil = new ModelCompareUtil();
-        WebcertModuleService mockModuleService = new WebcertModuleService() {
+        Answer<Boolean> mockAnswer = new Answer<Boolean>() {
             @Override
-            public boolean validateDiagnosisCode(String codeFragment, String codeSystem) {
-                return compareCodes(codeFragment);
-            }
-
-            @Override
-            public boolean validateDiagnosisCode(String codeFragment, Diagnoskodverk codeSystem) {
-                return compareCodes(codeFragment);
-            }
-
-            private boolean compareCodes(String codeFragment) {
-                return CORRECT_DIAGNOSKOD_FROM_FILE.equals(codeFragment) || CORRECT_DIAGNOSKOD2.equals(codeFragment);
-            }
-
-            @Override
-            public String getDescriptionFromDiagnosKod(String code, String codeSystemStr) {
-                return "";
+            public Boolean answer(InvocationOnMock invocation) {
+               String codeFragment = (String) invocation.getArguments()[0];
+               return CORRECT_DIAGNOSKOD_FROM_FILE.equals(codeFragment) || CORRECT_DIAGNOSKOD2.equals(codeFragment);
             }
         };
-        modelCompareUtil.setModuleService(mockModuleService);
+        doAnswer(mockAnswer).when(moduleService).validateDiagnosisCode(anyString(), anyString());
     }
 
     @Test

@@ -63,7 +63,7 @@ angular.module('luae_fs').config(function($stateProvider) {
                     controller: 'luae_fs.ViewCertCtrl'
                 },
                 'fragasvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
+                    templateUrl: commonPath + 'fk/arenden/arenden.html',
                     controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.intyg.fk.luae_fs' : {
@@ -81,7 +81,7 @@ angular.module('luae_fs').config(function($stateProvider) {
                     controller: 'luae_fs.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
-                    templateUrl: commonPath + 'intyg/fk/arenden/arenden.html',
+                    templateUrl: commonPath + 'fk/arenden/arenden.html',
                     controller: 'common.ArendeCtrl'
                 },
                 'header@webcert.fragasvar.luae_fs' : {

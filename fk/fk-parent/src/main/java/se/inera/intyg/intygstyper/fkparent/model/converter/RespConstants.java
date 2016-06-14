@@ -79,11 +79,12 @@ public final class RespConstants {
 
     public static final String DIAGNOSGRUND_SVAR_ID_7 = "7";
     public static final String DIAGNOSGRUND_DELSVAR_ID_7 = "7.1";
-    public static final String DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_7 = "7.2";
-    public static final String DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_7 = "7.3";
+    public static final String NYDIAGNOS_SVAR_ID_45 = "45";
+    public static final String DIAGNOSGRUND_NYBEDOMNING_DELSVAR_ID_45 = "45.1";
+    public static final String DIAGNOS_FOR_NY_BEDOMNING_DELSVAR_ID_45 = "45.2";
     public static final String DIAGNOSGRUND_SVAR_JSON_ID_7 = "diagnosgrund";
-    public static final String DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_7 = "nyBedomningDiagnosgrund";
-    public static final String DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_7 = "diagnosForNyBedomning";
+    public static final String DIAGNOSGRUND_NY_BEDOMNING_SVAR_JSON_ID_45 = "nyBedomningDiagnosgrund";
+    public static final String DIAGNOS_FOR_NY_BEDOMNING_SVAR_JSON_ID_45 = "diagnosForNyBedomning";
 
     public static final String FUNKTIONSNEDSATTNING_INTELLEKTUELL_SVAR_ID_8 = "8";
     public static final String FUNKTIONSNEDSATTNING_INTELLEKTUELL_DELSVAR_ID_8 = "8.1";
@@ -247,6 +248,10 @@ public final class RespConstants {
             return FUNKTIONSNEDSATTNING_BALANSKOORDINATION_SVAR_JSON_ID_13;
         case FUNKTIONSNEDSATTNING_ANNAN_SVAR_ID_14:
             return FUNKTIONSNEDSATTNING_ANNAN_SVAR_JSON_ID_14;
+        case FUNKTIONSNEDSATTNING_DEBUT_SVAR_ID_15:
+            return FUNKTIONSNEDSATTNING_DEBUT_SVAR_JSON_ID_15;
+        case FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_ID_16:
+            return FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_JSON_ID_16;
         case AKTIVITETSBEGRANSNING_SVAR_ID_17:
             return AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17;
         case PAGAENDEBEHANDLING_SVAR_ID_19:

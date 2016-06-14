@@ -18,19 +18,13 @@
  */
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Relation;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal;
-import se.inera.intyg.common.support.modules.support.api.dto.Patient;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 /**
@@ -54,6 +48,7 @@ public class WebcertModelFactory {
         Utlatande template = new Utlatande();
 
         populateWithId(template, newDraftData.getCertificateId());
+        WebcertModelFactoryUtil.populateGrunddataFromCreateNewDraftHolder(template.getGrundData(), newDraftData);
 
         template.setNuvarandeArbete(true);
         template.setArbetsloshet(false);
@@ -66,9 +61,6 @@ public class WebcertModelFactory {
         template.setRessattTillArbeteAktuellt(false);
         template.setRessattTillArbeteEjAktuellt(false);
 
-        populateWithSkapadAv(template, newDraftData.getSkapadAv());
-        populateWithPatientInfo(template, newDraftData.getPatient());
-
         return template;
     }
 
@@ -77,24 +69,11 @@ public class WebcertModelFactory {
         LOG.trace("Creating copy with id {} from {}", copyData.getCertificateId(), template.getId());
 
         populateWithId(template, copyData.getCertificateId());
-        populateWithSkapadAv(template, copyData.getSkapadAv());
-        populateWithRelation(template.getGrundData(), copyData.getRelation());
-
-        if (copyData.hasPatient()) {
-            populateWithPatientInfo(template, copyData.getPatient());
-        }
-
-        if (copyData.hasNewPersonnummer()) {
-            populateWithNewPersonnummer(template, copyData.getNewPersonnummer());
-        }
+        WebcertModelFactoryUtil.populateGrunddataFromCreateDraftCopyHolder(template.getGrundData(), copyData);
 
         resetDataInCopy(template);
 
         return template;
-    }
-
-    private void populateWithNewPersonnummer(Utlatande template, Personnummer newPersonnummer) {
-        template.getGrundData().getPatient().setPersonId(newPersonnummer);
     }
 
     private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
@@ -106,39 +85,7 @@ public class WebcertModelFactory {
         utlatande.setId(utlatandeId);
     }
 
-    private void populateWithPatientInfo(Utlatande utlatande, Patient patient) throws ConverterException {
-        if (patient == null) {
-            throw new ConverterException("Got null while trying to populateWithPatientInfo");
-        }
-
-        utlatande.getGrundData().setPatient(WebcertModelFactoryUtil.convertPatientToEdit(patient));
-    }
-
-    private void populateWithSkapadAv(Utlatande utlatande, se.inera.intyg.common.support.modules.support.api.dto.HoSPersonal hoSPersonal)
-            throws ConverterException {
-        if (hoSPersonal == null) {
-            throw new ConverterException("Got null while trying to populateWithSkapadAv");
-        }
-
-        utlatande.getGrundData().setSkapadAv(WebcertModelFactoryUtil.convertHosPersonalToEdit(hoSPersonal));
-    }
-
-    private void populateWithRelation(GrundData grundData, Relation relation) {
-        if (relation != null) {
-            grundData.setRelation(relation);
-        } else {
-            grundData.setRelation(null);
-        }
-    }
-
     private void resetDataInCopy(Utlatande utlatande) {
         utlatande.getGrundData().setSigneringsdatum(null);
-    }
-
-    public void updateSkapadAv(Utlatande utlatande, HoSPersonal hosPerson, LocalDateTime signeringsdatum) {
-        utlatande.getGrundData().getSkapadAv().setPersonId(hosPerson.getHsaId());
-        utlatande.getGrundData().getSkapadAv().setFullstandigtNamn(hosPerson.getNamn());
-        utlatande.getGrundData().getSkapadAv().setForskrivarKod(hosPerson.getForskrivarkod());
-        utlatande.getGrundData().setSigneringsdatum(signeringsdatum);
     }
 }

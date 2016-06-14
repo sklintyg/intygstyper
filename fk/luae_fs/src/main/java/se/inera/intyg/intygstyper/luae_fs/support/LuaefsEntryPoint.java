@@ -31,8 +31,6 @@ import se.inera.intyg.intygstyper.luae_fs.rest.LuaefsModuleApi;
 
 public class LuaefsEntryPoint extends FkAbstractModuleEntryPoint {
 
-    public static final String DEFAULT_RECIPIENT_ID = "FK";
-
     public static final String MODULE_ID = "luae_fs";
     public static final String MODULE_NAME = "Läkarutlåtande för aktivitetsersättning vid förlängd skolgång";
     public static final String MODULE_DESCRIPTION = "Läkarutlåtande för aktivitetsersättning vid förlängd skolgång";
@@ -40,11 +38,6 @@ public class LuaefsEntryPoint extends FkAbstractModuleEntryPoint {
 
     @Autowired
     private LuaefsModuleApi moduleApi;
-
-    @Override
-    public String getDefaultRecipient() {
-        return DEFAULT_RECIPIENT_ID;
-    }
 
     @Override
     public String getModuleId() {

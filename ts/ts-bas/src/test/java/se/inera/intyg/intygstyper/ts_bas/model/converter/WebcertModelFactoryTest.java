@@ -30,7 +30,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,11 +48,16 @@ public class WebcertModelFactoryTest {
     public void testCreateEditableModel() throws Exception {
         when(intygTexts.getLatestVersion(eq(TsBasEntryPoint.MODULE_ID))).thenReturn("version");
         // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient("Johnny", "Jobs", "Appleseed", new Personnummer("19121212-1212"), "Testvägen 12", "13337", "Huddinge");
-        Vardgivare vardgivare = new Vardgivare("SE0000000000-HAHAHHSAA", "Vårdgivarnamn");
-        Vardenhet vardenhet = new Vardenhet("SE0000000000-1337", "Vårdenhet Väst", "Enhetsvägen 12", "54321", "Tumba",
-                "08-1337", null, "0123456789", vardgivare);
-        HoSPersonal skapadAv = new HoSPersonal("19101010-1010", "Doktor Alban", "forskrivarKod", "befattning", null, vardenhet);
+        Patient patient = new Patient();
+        patient.setFornamn("Johnny");
+        patient.setMellannamn("Jobs");
+        patient.setEfternamn("Appleseed");
+        patient.setFullstandigtNamn("Johnny Jobs Appleseed");
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        patient.setPostadress("Testvägen 12");
+        patient.setPostnummer("13337");
+        patient.setPostort("Huddinge");
+        HoSPersonal skapadAv = createHosPersonal();
         CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
         se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande utlatande = null;
@@ -71,5 +78,23 @@ public class WebcertModelFactoryTest {
         assertEquals("Huddinge", utlatande.getGrundData().getPatient().getPostort());
 
         assertEquals("version", utlatande.getTextVersion());
+    }
+
+    private HoSPersonal createHosPersonal() {
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId("hsaId1");
+        hosPerson.setFullstandigtNamn("Doktor A");
+        hosPerson.setVardenhet(createVardenhet());
+        return hosPerson;
+    }
+
+    private Vardenhet createVardenhet() {
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("hsaId");
+        vardenhet.setEnhetsnamn("ve1");
+        vardenhet.setVardgivare(new Vardgivare());
+        vardenhet.getVardgivare().setVardgivarid("vg1");
+        vardenhet.getVardgivare().setVardgivarnamn("vg1");
+        return vardenhet;
     }
 }
