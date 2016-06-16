@@ -28,7 +28,6 @@ public final class RespConstants {
     public static final String CERTIFICATE_CODE_SYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
     public static final String RELATION_CODE_SYSTEM = "c2362fcd-eda0-4f9a-bd13-b3bbaf7f2146";
     public static final String HSA_CODE_SYSTEM = "1.2.752.129.2.1.4.1";
-    public static final String PERSON_ID_CODE_SYSTEM = "1.2.752.129.2.1.3.3";
     public static final String BEFATTNING_CODE_SYSTEM = "1.2.752.129.2.2.1.4";
     public static final String ARBETSPLATSKOD_CODE_SYSTEM = "1.2.752.29.4.71";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM = "KV_FKMU_0001";
