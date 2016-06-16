@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import se.inera.intyg.common.schemas.Constants;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -47,8 +48,6 @@ public class Fk7263InternalToNotification {
     private static final String INTYGSID_ROOT = "1.2.752.129.2.1.2.1";
 
     private static final String HSAID_ROOT = "1.2.752.129.2.1.4.1";
-
-    private static final String PERSONNUMMER_ROOT = "1.2.752.129.2.1.3.1";
 
     private static final String TYPAVUTLATANDE_FK7263_CODE = "FK7263";
 
@@ -130,8 +129,9 @@ public class Fk7263InternalToNotification {
     private void decorateWithPatient(UtlatandeType utlatandeType, Utlatande utlatandeSource) {
         PersonId personId = new PersonId();
         personId.setExtension(utlatandeSource.getGrundData().getPatient().getPersonId().getPersonnummer());
-        personId.setRoot(PERSONNUMMER_ROOT);
-
+        personId.setRoot(utlatandeSource.getGrundData().getPatient().getPersonId().isSamordningsNummer()
+                ? Constants.SAMORDNING_ID_OID
+                : Constants.PERSON_ID_OID);
         Patient patientType = new Patient();
         patientType.setPersonId(personId);
 
