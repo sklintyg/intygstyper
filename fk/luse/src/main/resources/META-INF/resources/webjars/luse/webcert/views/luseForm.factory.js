@@ -83,6 +83,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
             wrapper: 'wc-field',
             templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
+                {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
                 {
                     key: 'diagnoser',
                     type: 'diagnos',

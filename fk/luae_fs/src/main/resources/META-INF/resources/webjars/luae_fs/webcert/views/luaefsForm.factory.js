@@ -78,6 +78,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 3, categoryName: categoryNames[3]},
                     fieldGroup: [
+                        {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
                         {
                             key: 'diagnoser',
                             type: 'diagnos',

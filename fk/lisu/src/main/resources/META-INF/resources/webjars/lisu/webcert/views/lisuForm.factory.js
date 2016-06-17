@@ -75,6 +75,7 @@ angular.module('lisu').factory('lisu.FormFactory',
                         return _missingInfoForFmbKey(scope, 'DIAGNOS');
                     }
                 },
+                {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
                 {
                     key: 'diagnoser',
                     type: 'diagnos',
