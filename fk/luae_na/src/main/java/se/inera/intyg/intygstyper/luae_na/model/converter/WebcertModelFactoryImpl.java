@@ -19,6 +19,7 @@
 
 package se.inera.intyg.intygstyper.luae_na.model.converter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class WebcertModelFactoryImpl implements WebcertModelFactory<LuaenaUtlata
     }
 
     private void populateWithId(LuaenaUtlatande.Builder utlatande, String utlatandeId) throws ConverterException {
-        if (utlatandeId == null) {
+        if (StringUtils.isBlank(utlatandeId)) {
             throw new ConverterException("No certificateID found");
         }
         utlatande.setId(utlatandeId);

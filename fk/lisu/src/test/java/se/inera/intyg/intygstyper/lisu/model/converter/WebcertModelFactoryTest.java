@@ -1,4 +1,4 @@
-package se.inera.intyg.intygstyper.luae_fs.model.converter;
+package se.inera.intyg.intygstyper.lisu.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -19,26 +19,24 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
+import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
+import se.inera.intyg.intygstyper.lisu.support.LisuEntryPoint;
 
-/**
- * Created by eriklupander on 2016-04-20.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class WebcertModelFactoryTest {
 
     private static final String INTYG_ID = "intyg-123";
+
     @Mock
     private IntygTextsService intygTextsService;
 
     @InjectMocks
-    WebcertModelFactoryImpl testee;
+    WebcertModelFactoryImpl modelFactory;
 
     @Test
     public void testHappyPath() throws ConverterException {
-        when(intygTextsService.getLatestVersion(LuaefsEntryPoint.MODULE_ID)).thenReturn("1.0");
-        LuaefsUtlatande draft = testee.createNewWebcertDraft(buildNewDraftData(INTYG_ID));
+        when(intygTextsService.getLatestVersion(LisuEntryPoint.MODULE_ID)).thenReturn("1.0");
+        LisuUtlatande draft = modelFactory.createNewWebcertDraft(buildNewDraftData(INTYG_ID));
         assertNotNull(draft);
         assertEquals("VG1", draft.getGrundData().getSkapadAv().getVardenhet().getVardgivare().getVardgivarid());
         assertEquals("VE1", draft.getGrundData().getSkapadAv().getVardenhet().getEnhetsid());
@@ -48,28 +46,28 @@ public class WebcertModelFactoryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullUtlatandeIdThrowsIllegalArgumentException() throws ConverterException {
-        when(intygTextsService.getLatestVersion(LuaefsEntryPoint.MODULE_ID)).thenReturn("1.0");
-        testee.createNewWebcertDraft(buildNewDraftData(null));
+        when(intygTextsService.getLatestVersion(LisuEntryPoint.MODULE_ID)).thenReturn("1.0");
+        modelFactory.createNewWebcertDraft(buildNewDraftData(null));
     }
 
     @Test(expected = ConverterException.class)
     public void testBlankUtlatandeIdThrowsIllegalArgumentException() throws ConverterException {
-        when(intygTextsService.getLatestVersion(LuaefsEntryPoint.MODULE_ID)).thenReturn("1.0");
-        testee.createNewWebcertDraft(buildNewDraftData(" "));
+        when(intygTextsService.getLatestVersion(LisuEntryPoint.MODULE_ID)).thenReturn("1.0");
+        modelFactory.createNewWebcertDraft(buildNewDraftData(" "));
     }
 
     @Test
     public void testUpdateSkapadAv() throws ConverterException {
-        when(intygTextsService.getLatestVersion(LuaefsEntryPoint.MODULE_ID)).thenReturn("1.0");
-        LuaefsUtlatande draft = testee.createNewWebcertDraft(buildNewDraftData(INTYG_ID));
+        when(intygTextsService.getLatestVersion(LisuEntryPoint.MODULE_ID)).thenReturn("1.0");
+        LisuUtlatande draft = modelFactory.createNewWebcertDraft(buildNewDraftData(INTYG_ID));
         WebcertModelFactoryUtil.updateSkapadAv(draft, buildHosPersonal(), LocalDateTime.now());
     }
 
     @Test
     public void testCreateNewWebcertDraftDoesNotGenerateIncompleteSvarInTransportFormat() throws ConverterException {
         // this to follow schema during CertificateStatusUpdateForCareV2
-        when(intygTextsService.getLatestVersion(LuaefsEntryPoint.MODULE_ID)).thenReturn("1.0");
-        LuaefsUtlatande draft = testee.createNewWebcertDraft(buildNewDraftData(INTYG_ID));
+        when(intygTextsService.getLatestVersion(LisuEntryPoint.MODULE_ID)).thenReturn("1.0");
+        LisuUtlatande draft = modelFactory.createNewWebcertDraft(buildNewDraftData(INTYG_ID));
         assertTrue(CollectionUtils.isEmpty(InternalToTransport.convert(draft).getIntyg().getSvar()));
     }
 

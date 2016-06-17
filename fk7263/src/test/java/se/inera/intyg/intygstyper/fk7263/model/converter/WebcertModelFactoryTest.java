@@ -22,9 +22,11 @@ package se.inera.intyg.intygstyper.fk7263.model.converter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,8 +35,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.common.support.model.common.internal.*;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
@@ -120,6 +122,13 @@ public class WebcertModelFactoryTest {
         assertEquals("Testorsson", copy.getGrundData().getPatient().getEfternamn());
     }
 
+    @Test
+    public void testCreateNewWebcertDraftDoesNotGenerateIncompleteSvarInRivtaV2Format() throws ConverterException {
+        // this to follow schema during CertificateStatusUpdateForCareV2
+        Utlatande draft = factory.createNewWebcertDraft(buildNewDraftData("INTYG_ID"));
+        assertTrue(CollectionUtils.isEmpty(UtlatandeToIntyg.convert(draft).getSvar()));
+    }
+
     private CreateDraftCopyHolder createDraftCopyHolder(String intygsCopyId, boolean addPatient, boolean addNewPersonId) {
         Vardgivare vardgivare = new Vardgivare();
         vardgivare.setVardgivarid("VG1");
@@ -172,4 +181,34 @@ public class WebcertModelFactoryTest {
         }
     }
 
+    private CreateNewDraftHolder buildNewDraftData(String intygId) {
+        CreateNewDraftHolder draftHolder = new CreateNewDraftHolder(intygId, buildHosPersonal(), buildPatient());
+        return draftHolder;
+    }
+
+    private Patient buildPatient() {
+        Patient patient = new Patient();
+        patient.setFornamn("fornamn");
+        patient.setEfternamn("efternamn");
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        return patient;
+    }
+
+    private HoSPersonal buildHosPersonal() {
+        HoSPersonal hosPerson = new HoSPersonal();
+        hosPerson.setPersonId("TST12345678");
+        hosPerson.setFullstandigtNamn("Doktor A");
+        hosPerson.setVardenhet(createVardenhet());
+        return hosPerson;
+    }
+
+    private Vardenhet createVardenhet() {
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setEnhetsid("VE1");
+        vardenhet.setEnhetsnamn("ve1");
+        vardenhet.setVardgivare(new Vardgivare());
+        vardenhet.getVardgivare().setVardgivarid("VG1");
+        vardenhet.getVardgivare().setVardgivarnamn("vg1");
+        return vardenhet;
+    }
 }
