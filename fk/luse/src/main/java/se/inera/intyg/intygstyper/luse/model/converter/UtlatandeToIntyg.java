@@ -33,13 +33,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.intyg.intygstyper.fkparent.model.internal.*;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
-import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public final class UtlatandeToIntyg {
 
@@ -116,32 +116,31 @@ public final class UtlatandeToIntyg {
 
         if (CollectionUtils.isNotEmpty(source.getDiagnoser())) {
             // Handle diagnoser
-            Svar diagnosSvar = new Svar();
-            diagnosSvar.setId(DIAGNOS_SVAR_ID_6);
+            SvarBuilder diagnosSvar = aSvar(DIAGNOS_SVAR_ID_6);
             for (int i = 0; i < source.getDiagnoser().size(); i++) {
                 Diagnos diagnos = source.getDiagnoser().get(i);
                 Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
                 switch (i) {
                 case 0:
-                    diagnosSvar.getDelsvar().add(createDelsvar(DIAGNOS_DELSVAR_ID_6,
-                            aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
-                    diagnosSvar.getDelsvar().add(createDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
+                    diagnosSvar.withDelsvar(DIAGNOS_DELSVAR_ID_6,
+                            aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                            .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
                     break;
                 case 1:
-                    diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
-                            aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
-                    diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
+                    diagnosSvar.withDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
+                            aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                            .withDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
                     break;
                 case 2:
-                    diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
-                            aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName())));
-                    diagnosSvar.getDelsvar().add(createDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()));
+                    diagnosSvar.withDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
+                            aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                            .withDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
                     break;
                 default:
                     throw new IllegalArgumentException();
                 }
             }
-            svars.add(diagnosSvar);
+            svars.add(diagnosSvar.build());
         }
 
         if (source.getDiagnosgrund() != null) {
@@ -199,12 +198,4 @@ public final class UtlatandeToIntyg {
 
         return svars;
     }
-
-    private static Delsvar createDelsvar(String id, Object content) {
-        Delsvar delsvar = new Delsvar();
-        delsvar.setId(id);
-        delsvar.getContent().add(content);
-        return delsvar;
-    }
-
 }
