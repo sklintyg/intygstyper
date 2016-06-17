@@ -20,11 +20,19 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 
+import java.lang.reflect.Field;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Spy;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import com.google.common.collect.ImmutableMap;
 
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
-import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.utils.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
@@ -37,7 +45,19 @@ import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
  * @author erik
  *
  */
+@RunWith(MockitoJUnitRunner.class)
 public class InternalToTransportTest {
+
+    @Spy
+    private SpecialistkompetensService specialistkompetensService;
+
+    @Before
+    public void setup() throws Exception {
+        specialistkompetensService.init();
+        Field field = SpecialistkompetensService.class.getDeclaredField("codeToDescription");
+        field.setAccessible(true);
+        field.set(specialistkompetensService, ImmutableMap.of("7199", "Hörselrubbningar"));
+    }
 
     @Test
     public void testConvertUtlatandeFromInternalToExternal() throws Exception {
@@ -54,14 +74,15 @@ public class InternalToTransportTest {
 
     @Test
     public void testConvertMapsSpecialistkompetensCodeToDescriptionIfPossible() throws ScenarioNotFoundException, ConverterException {
-        SpecialistkompetensKod specialistkompetens = SpecialistkompetensKod.ALLERGI;
+        final String specialistkompetens = "7199";
+        final String description = "Hörselrubbningar";
         Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
         utlatande.getGrundData().getSkapadAv().getSpecialiteter().clear();
-        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens.getCode());
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens);
         RegisterTSBasType res = InternalToTransport.convert(utlatande);
         SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getSpecialiteter().size());
-        assertEquals(specialistkompetens.getDescription(), skapadAv.getSpecialiteter().get(0));
+        assertEquals(description, skapadAv.getSpecialiteter().get(0));
     }
 
     @Test

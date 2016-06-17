@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 import org.joda.time.LocalDateTime;
 
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
-import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
@@ -48,13 +47,11 @@ public final class TransportToInternalUtil {
         hosPersonal.setPersonId(source.getPersonId().getExtension());
         hosPersonal.setVardenhet(convertVardenhet(source.getVardenhet()));
 
-        // try to convert befattning and specialistkompetens from description, otherwise use it as a code
+        // try to convert befattning from description, otherwise use it as a code
         hosPersonal.getBefattningar().addAll(source.getBefattningar().stream()
                 .map(description -> BefattningKod.getCodeFromDescription(description).orElse(description))
                 .collect(Collectors.toList()));
-        hosPersonal.getSpecialiteter().addAll(source.getSpecialiteter().stream()
-                .map(description -> SpecialistkompetensKod.getCodeFromDescription(description).orElse(description))
-                .collect(Collectors.toList()));
+        hosPersonal.getSpecialiteter().addAll(source.getSpecialiteter());
         return hosPersonal;
     }
 

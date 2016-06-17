@@ -28,7 +28,6 @@ import java.util.List;
 import org.junit.Test;
 
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
-import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
@@ -81,27 +80,15 @@ public class TransportToInternalConverterTest {
     }
 
     @Test
-    public void testConvertMapsSpecialistkompetensDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
-        SpecialistkompetensKod specialistkompetens = SpecialistkompetensKod.ALLERGI;
+    public void testConvertMapsSpecialistkompetens() throws ScenarioNotFoundException, ConverterException {
+        final String specialistkompetens = "Hörselrubbningar";
         RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
         transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens.getDescription());
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens);
         Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
         HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getSpecialiteter().size());
-        assertEquals(specialistkompetens.getCode(), skapadAv.getSpecialiteter().get(0));
-    }
-
-    @Test
-    public void testConvertKeepSpecialistkompetensCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
-        String specialistkompetenskod = "kod";
-        RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetenskod);
-        Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
-        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
-        assertEquals(1, skapadAv.getSpecialiteter().size());
-        assertEquals(specialistkompetenskod, skapadAv.getSpecialiteter().get(0));
+        assertEquals(specialistkompetens, skapadAv.getSpecialiteter().get(0));
     }
 
     @Test

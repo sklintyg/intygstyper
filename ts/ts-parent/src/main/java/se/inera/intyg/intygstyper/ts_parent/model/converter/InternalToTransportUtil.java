@@ -26,8 +26,8 @@ import org.springframework.util.CollectionUtils;
 
 import se.inera.intyg.common.schemas.Constants;
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
-import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.*;
 
@@ -74,7 +74,7 @@ public final class InternalToTransportUtil {
         }
         if (!CollectionUtils.isEmpty(source.getSpecialiteter())) {
             skapadAv.getSpecialiteter().addAll(source.getSpecialiteter().stream()
-                    .map(code -> SpecialistkompetensKod.getDescriptionFromCode(code).orElse(code))
+                    .map(code -> SpecialistkompetensService.getDescriptionFromCode(code).orElse(code))
                     .collect(Collectors.toList()));
         }
 
