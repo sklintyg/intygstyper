@@ -158,7 +158,7 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
         try {
             return convert(getCertificateResponderInterface.getCertificate(logicalAddress, request));
         } catch (SOAPFaultException e) {
-            String error = String.format("Could not get certificate with id %s and type LISU from Intygstjansten. SOAPFault: %s",
+            String error = String.format("Could not get certificate with id %s from Intygstjansten. SOAPFault: %s",
                     certificateId, e.getMessage());
             LOG.error(error);
             throw new ModuleException(error);
