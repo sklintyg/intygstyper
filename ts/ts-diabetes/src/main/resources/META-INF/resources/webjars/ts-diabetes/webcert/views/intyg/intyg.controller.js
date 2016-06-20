@@ -61,7 +61,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
 
             function loadIntyg() {
                 $log.debug('Loading intyg ' + $stateParams.certificateId);
-                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, function(result) {
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, false, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;

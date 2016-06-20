@@ -26,7 +26,7 @@ angular.module('luae_fs').config(function($stateProvider) {
     $stateProvider.
         state('luae_fs-edit', {
             data: { defaultActive : 'index', intygType: 'luae_fs' },
-            url : '/luae_fs/edit/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort',
+            url : '/luae_fs/edit/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:sjf',
             views : {
                 'content@' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
@@ -56,7 +56,7 @@ angular.module('luae_fs').config(function($stateProvider) {
         }).
         state('webcert.intyg.fk.luae_fs', {
             data: { defaultActive : 'index', intygType: 'luae_fs' },
-            url:'/intyg/luae_fs/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:signed',
+            url:'/intyg/luae_fs/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:signed&:sjf',
             views: {
                 'intyg@webcert.intyg.fk' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
