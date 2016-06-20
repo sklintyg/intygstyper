@@ -39,6 +39,7 @@ public class SchematronValidatorTest {
     public void validXmlPasses() throws Exception {
         String inputXml = Resources.toString(getResource("luse2.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(LUSE_VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertTrue(response.getValidationErrors().isEmpty());
     }
 
