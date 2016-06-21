@@ -200,10 +200,6 @@
                 <div mi-field field-dynamic-label="DFR_2.1" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
                   {{cert.kannedomOmPatient | date:'longDate' }}
                 </div>
-              </div>
-
-              <!-- Andra medicinska utredningar och underlag -->
-              <div mi-category category-label="KAT_2.RBK">
                 <div mi-field field-dynamic-label="DFR_3.1" filled="cert.underlagFinns!=null">
                   <div boolean-view="underlagFinns" field-model="cert"></div>
                 </div>

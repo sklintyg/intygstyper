@@ -41,13 +41,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                         },
                         //Fråga 2 -----
 
-                        {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
-                    ]
-                },
-                {
-                    wrapper: 'wc-field',
-                    templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
-                    fieldGroup: [
+                        {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}},
                         {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                         {
                             key: 'underlag', type: 'underlag',

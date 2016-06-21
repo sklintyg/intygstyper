@@ -34,13 +34,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     hideExpression: '!model.annatGrundForMU',
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
-                {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
-            ]
-        },
-        {
-            wrapper: 'wc-field',
-            templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
-            fieldGroup: [
+                {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}},
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
                     key: 'underlag', type: 'underlag',

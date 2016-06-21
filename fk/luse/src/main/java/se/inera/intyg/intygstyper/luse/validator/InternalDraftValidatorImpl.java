@@ -139,24 +139,24 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
 
     private void validateUnderlag(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getUnderlagFinns() == null) {
-            addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                     "luse.validation.underlagfinns.missing");
         } else if (utlatande.getUnderlagFinns() && utlatande.getUnderlag().isEmpty()) {
-            addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                     "luse.validation.underlagfinns.missing");
         } else if (!utlatande.getUnderlagFinns() && !utlatande.getUnderlag().isEmpty()) {
             // R6
-            addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+            addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.INVALID_FORMAT,
                     "luse.validation.underlagfinns.incorrect_combination");
         }
 
         if (utlatande.getUnderlag().size() > MAX_UNDERLAG) {
-            addValidationError(validationMessages, "underlag", ValidationMessageType.OTHER, "luse.validation.underlag.too_many");
+            addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.OTHER, "luse.validation.underlag.too_many");
         }
         for (Underlag underlag : utlatande.getUnderlag()) {
             // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
             if (underlag.getTyp() == null) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.missing");
             } else if (underlag.getTyp().getId() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId()
@@ -168,18 +168,18 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId()
                     && underlag.getTyp().getId() != Underlag.UnderlagsTyp.OVRIGT.getId()) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.INVALID_FORMAT,
                         "luse.validation.underlag.incorrect_format");
             }
             if (underlag.getDatum() == null) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.date.missing");
             } else if (!underlag.getDatum().isValidDate()) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.INVALID_FORMAT,
                         "luse.validation.underlag.date.incorrect_format");
             }
             if (underlag.getHamtasFran() == null) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.hamtas-fran.missing");
             }
         }
