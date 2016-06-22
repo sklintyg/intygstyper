@@ -20,9 +20,11 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,8 +33,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -47,26 +51,11 @@ public class WebcertModelFactoryTest {
     @Test
     public void testCreateEditableModel() throws Exception {
         when(intygTexts.getLatestVersion(eq(TsBasEntryPoint.MODULE_ID))).thenReturn("version");
-        // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient();
-        patient.setFornamn("Johnny");
-        patient.setMellannamn("Jobs");
-        patient.setEfternamn("Appleseed");
-        patient.setFullstandigtNamn("Johnny Jobs Appleseed");
-        patient.setPersonId(new Personnummer("19121212-1212"));
-        patient.setPostadress("Testvägen 12");
-        patient.setPostnummer("13337");
-        patient.setPostort("Huddinge");
-        HoSPersonal skapadAv = createHosPersonal();
-        CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
 
-        se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande utlatande = null;
-
-        utlatande = factory.createNewWebcertDraft(draftCertHolder);
+        Utlatande utlatande = factory.createNewWebcertDraft(buildNewDraftData("testID"));
 
         assertNotNull(utlatande);
-        assertNotNull(utlatande.getId());
-        assertNotNull(utlatande.getTyp());
+        assertEquals(TsBasEntryPoint.MODULE_ID, utlatande.getTyp());
         assertNotNull(utlatande.getGrundData().getSkapadAv());
         assertNotNull(utlatande.getGrundData().getPatient());
 
@@ -76,8 +65,27 @@ public class WebcertModelFactoryTest {
         assertEquals("Testvägen 12", utlatande.getGrundData().getPatient().getPostadress());
         assertEquals("13337", utlatande.getGrundData().getPatient().getPostnummer());
         assertEquals("Huddinge", utlatande.getGrundData().getPatient().getPostort());
-
         assertEquals("version", utlatande.getTextVersion());
+    }
+
+    @Test
+    public void testCreateNewWebcertDraftDoesNotGenerateIncompleteSvarInRivtaV2Format() throws ConverterException {
+        // this to follow schema during CertificateStatusUpdateForCareV2
+        Utlatande draft = factory.createNewWebcertDraft(buildNewDraftData("INTYG_ID"));
+        assertTrue(CollectionUtils.isEmpty(UtlatandeToIntyg.convert(draft).getSvar()));
+    }
+
+    private CreateNewDraftHolder buildNewDraftData(String intygId) {
+        Patient patient = new Patient();
+        patient.setFornamn("Johnny");
+        patient.setMellannamn("Jobs");
+        patient.setEfternamn("Appleseed");
+        patient.setFullstandigtNamn("Johnny Jobs Appleseed");
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        patient.setPostadress("Testvägen 12");
+        patient.setPostnummer("13337");
+        patient.setPostort("Huddinge");
+        return new CreateNewDraftHolder(intygId, createHosPersonal(), patient);
     }
 
     private HoSPersonal createHosPersonal() {
