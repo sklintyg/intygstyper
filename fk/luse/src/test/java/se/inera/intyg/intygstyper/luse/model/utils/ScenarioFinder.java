@@ -86,7 +86,6 @@ public final class ScenarioFinder {
                 throw new ScenarioNotFoundException(scenarioPath + scenarioWithWildcards, model);
             }
             for (Resource r : resources) {
-                System.err.println(r.getFile());
                 result.add(new FileBasedScenario(r.getFile()));
             }
             return result;

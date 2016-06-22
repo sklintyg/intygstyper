@@ -11,7 +11,7 @@
       "efternamn": "Olsson",
       "fornamn": "Olivia",
       "fullstandigtNamn": "Olivia Olsson",
-      "personId": "19800191-0002"
+      "personId": "198001910002"
     },
     "skapadAv": {
       "vardenhet": {
@@ -49,7 +49,7 @@
     }
   ],
   "prognos": {
-    "typ": 4
+    "typ": 1
   },
   "formagaTrotsBegransning": "är bra på att dansa!",
   "arbetsresor": true,

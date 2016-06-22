@@ -10,10 +10,9 @@ import org.junit.Test;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
-import se.inera.intyg.intygstyper.fkparent.model.converter.RegisterCertificateTestValidator;
-import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
+import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
+import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
 
 public class SchematronValidatorTest {
 

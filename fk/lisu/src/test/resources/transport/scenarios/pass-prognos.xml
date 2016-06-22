@@ -71,6 +71,7 @@
         <ns3:cv>
           <ns3:code>TELEFONKONTAKT</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min telefonkontakt med patienten</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="1.2">2015-12-08</delsvar>
@@ -80,6 +81,7 @@
         <ns3:cv>
           <ns3:code>NUVARANDE_ARBETE</ns3:code>
           <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
+          <ns3:displayName>Nuvarande arbete</ns3:displayName>
         </ns3:cv>
       </delsvar>
     </svar>
@@ -106,6 +108,7 @@
         <ns3:cv>
           <ns3:code>TRE_FJARDEDEL</ns3:code>
           <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>75%</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="32.2">
@@ -116,7 +119,7 @@
       </delsvar>
     </svar>
     <svar id="37">
-      <delsvar id="37.1">Överskrider inte FMB</delsvar>
+      <delsvar id="37.1">överskrider inte FMB</delsvar>
     </svar>
     <svar id="33">
       <delsvar id="33.1">true</delsvar>
@@ -126,19 +129,21 @@
       <delsvar id="34.1">true</delsvar>
     </svar>
     <svar id="23">
-      <delsvar id="23.1">Är bra på att dansa!</delsvar>
+      <delsvar id="23.1">är bra på att dansa!</delsvar>
     </svar>
     <svar id="39">
       <delsvar id="39.1">
         <ns3:cv>
           <ns3:code>ATER_X_ANTAL_DGR</ns3:code>
           <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
+          <ns3:displayName>Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="39.3">
         <ns3:cv>
           <ns3:code>30_DAGAR</ns3:code>
           <ns3:codeSystem>KV_FKMU_0007</ns3:codeSystem>
+          <ns3:displayName>30 dagar</ns3:displayName>
         </ns3:cv>
       </delsvar>
     </svar>
@@ -147,6 +152,7 @@
         <ns3:cv>
           <ns3:code>OVRIGA_ATGARDER</ns3:code>
           <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Övrigt</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="40.2">Jobbar bra om man inte stör honom</delsvar>
