@@ -100,7 +100,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.pagetitle.step2': 'Skicka intyg - steg 2 av 2',
         'ts-diabetes.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
 
-        'ts-diabetes.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'ts-diabetes.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'ts-diabetes.label.date': 'Datum',
         'ts-diabetes.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
         'ts-diabetes.label.ej-angivet': 'Ej angivet',

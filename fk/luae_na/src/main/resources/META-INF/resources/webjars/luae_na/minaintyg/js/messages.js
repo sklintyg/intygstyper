@@ -66,7 +66,7 @@ var luae_naMessages = {
         'luae_na.label.yes': 'Ja',
         'luae_na.label.no': 'Nej',
 
-        'luae_na.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'luae_na.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'luae_na.label.date': 'Datum',
         'luae_na.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 

@@ -94,7 +94,7 @@ var tsBasMessages = {
         'ts-bas.sent.label.result': 'Mottagare av intyget: ',
         'ts-bas.sent.button.backtocertificate': 'Tillbaka till intyget',
 
-        'ts-bas.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'ts-bas.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'ts-bas.label.date': 'Datum',
         'ts-bas.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 

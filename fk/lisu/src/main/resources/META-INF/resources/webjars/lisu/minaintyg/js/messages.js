@@ -66,7 +66,7 @@ var lisuMessages = {
         'lisu.label.yes': 'Ja',
         'lisu.label.no': 'Nej',
 
-        'lisu.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'lisu.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'lisu.label.date': 'Datum',
         'lisu.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 

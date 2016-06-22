@@ -66,7 +66,7 @@ var luseMessages = {
         'luse.label.yes': 'Ja',
         'luse.label.no': 'Nej',
 
-        'luse.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'luse.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'luse.label.date': 'Datum',
         'luse.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 

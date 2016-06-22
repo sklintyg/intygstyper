@@ -119,9 +119,9 @@ var fk7263Messages = {
         'fk7263.label.reference.to.field13': 'Se under Övriga upplysningar och förtydliganden (fält 13)',
         'fk7263.label.otherinformation': 'Övriga upplysningar och förtydliganden (fält 13)',
 
-        'fk7263.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
-        'fk7263.label.date': 'Datum (fält 14)',
-        'fk7263.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon (fält 15)',
+        'fk7263.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
+        'fk7263.label.date': 'Datum',
+        'fk7263.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 
         'fk7263.message.certificateloading': 'Hämtar intyg...',
         'fk7263.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',

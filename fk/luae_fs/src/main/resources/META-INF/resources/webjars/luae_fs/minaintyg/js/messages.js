@@ -79,7 +79,7 @@ var luae_fsMessages = {
         'luae_fs.label.yes': 'Ja',
         'luae_fs.label.no': 'Nej',
         'luae_fs.label.otherinformation': 'Övriga upplysningar och förtydliganden',
-        'luae_fs.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'luae_fs.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'luae_fs.label.date': 'Datum',
         'luae_fs.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 
