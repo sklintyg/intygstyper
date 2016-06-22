@@ -135,7 +135,7 @@ public class Fk7263InternalToNotificationTest {
         assertNotNull(res.getUtlatande().getSkapadAv().getEnhet().getEnhetsnamn());
 
         assertEquals("S47", res.getUtlatande().getDiagnos().getCode());
-        assertEquals(Diagnoskodverk.ICD_10_SE.getCodeSystem(), res.getUtlatande().getDiagnos().getCodeSystem());
+        assertEquals(Diagnoskodverk.ICD_10_SE.getCodeSystem(true), res.getUtlatande().getDiagnos().getCodeSystem());
         assertEquals(Diagnoskodverk.ICD_10_SE.getCodeSystemName(), res.getUtlatande().getDiagnos().getCodeSystemName());
         assertNotNull(res.getUtlatande().getDiagnos().getDisplayName());
         assertTrue(res.getUtlatande().getDiagnos().getDisplayName().contains("Klämskada"));
@@ -157,7 +157,7 @@ public class Fk7263InternalToNotificationTest {
         assertNotNull(res.getUtlatande());
 
         assertEquals("M51-", res.getUtlatande().getDiagnos().getCode());
-        assertEquals(Diagnoskodverk.KSH_97_P.getCodeSystem(), res.getUtlatande().getDiagnos().getCodeSystem());
+        assertEquals(Diagnoskodverk.KSH_97_P.getCodeSystem(true), res.getUtlatande().getDiagnos().getCodeSystem());
         assertEquals(Diagnoskodverk.KSH_97_P.getCodeSystemName(), res.getUtlatande().getDiagnos().getCodeSystemName());
         assertNotNull(res.getUtlatande().getDiagnos().getDisplayName());
         assertTrue(res.getUtlatande().getDiagnos().getDisplayName().contains("Diskbråck"));

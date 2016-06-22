@@ -26,24 +26,23 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
-import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants;
+import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.lisu.model.internal.ArbetslivsinriktadeAtgarder;
-import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
-import se.inera.intyg.intygstyper.lisu.model.internal.Sjukskrivning;
+import se.inera.intyg.intygstyper.lisu.model.internal.*;
 import se.inera.intyg.intygstyper.lisu.support.LisuEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class UtlatandeToIntyg {
 
@@ -109,7 +108,7 @@ public final class UtlatandeToIntyg {
         for (Diagnos diagnos : source.getDiagnoser()) {
             Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
             svars.add(aSvar(DIAGNOS_SVAR_ID_6)
-                    .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                    .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
                     .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
         }
 

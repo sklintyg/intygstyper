@@ -202,7 +202,7 @@ public class Fk7263InternalToNotification {
 
         Diagnos diagnos = new Diagnos();
         diagnos.setCode(diagnosKod);
-        diagnos.setCodeSystem(diagnosKodverk.getCodeSystem());
+        diagnos.setCodeSystem(diagnosKodverk.getCodeSystem(true));
         diagnos.setCodeSystemName(diagnosKodverk.getCodeSystemName());
         diagnos.setDisplayName(diagnosBeskrivning);
 
