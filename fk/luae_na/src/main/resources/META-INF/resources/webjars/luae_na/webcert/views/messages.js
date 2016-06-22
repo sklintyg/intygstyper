@@ -37,15 +37,15 @@ var luae_naMessages = {
         'luae_na.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
 
         //Validation messages
-        'luae_na.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
-        'luae_na.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' (Fält 4) får endast fyllas i om \'Annan referens valts\' i Fält 1.',
-        'luae_na.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient (Fält 1)',
-        'luae_na.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter (Fält 1)',
-        'luae_na.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning (Fält 1)',
-        'luae_na.validation.grund-for-mu.annat.incorrect_format': 'Fel datumformat för annan referens (Fält 1)',
-        'luae_na.validation.grund-for-mu.annat.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
+        'luae_na.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på.',
+        'luae_na.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' får endast fyllas i om \'Annan referens\' valts.',
+        'luae_na.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient',
+        'luae_na.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter',
+        'luae_na.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning',
+        'luae_na.validation.grund-for-mu.annat.incorrect_format': 'Fel datumformat för annan referens',
+        'luae_na.validation.grund-for-mu.annat.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i.',
 
-        'luae_na.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i. (Fält 1)',
+        'luae_na.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i.',
         'luae_na.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för \'Kännedom om patienten\'',
         'luae_na.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
         'luae_na.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
@@ -60,7 +60,7 @@ var luae_naMessages = {
 
         'luae_na.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
-        'luae_na.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
+        'luae_na.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i',
         'luae_na.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'luae_na.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'luae_na.validation.diagnos0.length-3': 'Diagnoskod på huvuddiagnosen ska anges med så många positioner som möjligt, men minst tre positioner.',
@@ -76,13 +76,13 @@ var luae_naMessages = {
         'luae_na.validation.diagnos2.length-3': 'Diagnoskod på diagnosrad 3 ska anges med så många positioner som möjligt, men minst tre positioner.',
         'luae_na.validation.diagnos2.psykisk.length-4': 'Diagnoskod på diagnosrad 3 ska anges med minst fyra positioner då en psykisk diagnos anges.',
         'luae_na.validation.diagnos2.description.missing': 'Diagnostext saknas på diagnosrad 3',
-        'luae_na.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
-        'luae_na.validation.diagnosfornybedomning.missing' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Ja\' måste \'Diagnos för ny bedömning\' fyllas i',
-        'luae_na.validation.diagnosfornybedomning.incorrect_combination' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Nej\' får inte \'Diagnos för ny bedömning\' fyllas i',
+        'luae_na.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i',
+        'luae_na.validation.diagnosfornybedomning.missing' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' besvarats med \'Ja\' måste \'Diagnos för ny bedömning\' fyllas i',
+        'luae_na.validation.diagnosfornybedomning.incorrect_combination' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' besvarats med \'Nej\' får inte \'Diagnos för ny bedömning\' fyllas i',
 
         'luae_na.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
         
-        'luae_na.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
+        'luae_na.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i.',
 
         'luae_na.validation.medicinskaforutsattningarforarbete.missing': 'Patientens medicinska förutsättningar för arbete måste anges.',
 

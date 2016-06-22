@@ -89,16 +89,6 @@ var luae_fsMessages = {
         'luae_fs.fishbone.label.granska-skicka': 'Granska och skicka',
         'luae_fs.fishbone.label.bekraftelse': 'Bekräftelse',
 
-        'luae_fs.vardkontakt.5880005': 'Min undersökning av patienten den %0',
-        'luae_fs.vardkontakt.undersokning': 'Min undersökning av patienten den ',
-        'luae_fs.vardkontakt.185317003': 'Min telefonkontakt med patienten den %0',
-        'luae_fs.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',
-        'luae_fs.referens.419891008': 'Journaluppgifter, den %0',
-        'luae_fs.referens.journal': 'Journaluppgifter, den ',
-        'luae_fs.referens.kannedomompatient': 'Kännedom om patient, den ',
-        'luae_fs.referens.74964007': 'Annat, den %0',
-        'luae_fs.referens.annat': 'Annat, den ',
-
         'luae_fs.common.cancel': 'Avbryt',
 
         'luae_fs.error.generic': 'Intyget kunde inte visas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href="/web/start">Gå till Inkorgen och försök igen</a>',
