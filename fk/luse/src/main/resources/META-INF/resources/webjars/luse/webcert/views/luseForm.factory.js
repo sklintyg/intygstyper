@@ -68,13 +68,6 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 3, categoryName: categoryNames[3]},
-            fieldGroup: [
-                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
-            ]
-        },
-        {
-            wrapper: 'wc-field',
             templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
@@ -92,6 +85,13 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
                     templateOptions: {label: 'DFR_7.3'},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
+            ]
+        },
+        {
+            wrapper: 'wc-field',
+            templateOptions: {category: 3, categoryName: categoryNames[3]},
+            fieldGroup: [
+                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
             ]
         },
         {
