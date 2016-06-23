@@ -34,8 +34,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     hideExpression: '!model.annatGrundForMU',
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
-                {type: 'headline', templateOptions: {label: 'FRG_2', level:4}},
-                {key: 'kannedomOmPatient', type: 'singleDate'},
+                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
                     key: 'underlag', type: 'underlag',

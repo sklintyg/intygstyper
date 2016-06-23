@@ -39,13 +39,10 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                             hideExpression: '!model.annatGrundForMU',
                             templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                         },
+
                         //Fråga 2 -----
+                        {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
 
-                       // {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
-
-                        // Fråga 2 igen:
-                        {type: 'headline', templateOptions: {label: 'FRG_2', level:4}},
-                        {key: 'kannedomOmPatient', className:'no-space-left', type: 'singleDate'},
 
                         // Underlag
                         {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},

@@ -39,8 +39,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
                     className: 'fold-animation',
                     hideExpression: '!(model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
                     templateOptions: {label: 'luse.validation.grund-for-mu.missing_ovrigt'}},
-                {type: 'headline', templateOptions: {label: 'FRG_2', level:4}},
-                {key: 'kannedomOmPatient', type: 'singleDate'},         // , templateOptions: {label: 'DFR_2.1'}
+                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
                     key: 'underlag', type: 'underlag',
