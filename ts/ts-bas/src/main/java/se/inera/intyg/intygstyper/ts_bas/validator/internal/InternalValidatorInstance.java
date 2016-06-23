@@ -30,8 +30,8 @@ import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.StringValidator;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
 
 /**
  * Class for validating drafts of the internal model.

@@ -28,12 +28,6 @@ public enum UtlatandeKod {
     TS_BAS_U07_V06("07", "06",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
     TS_BAS_U06_V06("06", "06",
-            "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen"),
-
-    // NOTE: USED FOR TESTING ONLY
-    // Yes it's ugly but we really wants to test that the utgava and version handling is working as expected and its
-    // extremely hard to mock an enum for a test.
-    TS_BAS_OLD_KOD("old-utgava", "old-version",
             "Läkarintyg- avseende högre körkortsbehörigheter eller taxiförarlegitimation- på begäran från Transportstyrelsen");
 
     private static final String CODE_SYSTEM_NAME = "kv_utlåtandetyp_intyg";

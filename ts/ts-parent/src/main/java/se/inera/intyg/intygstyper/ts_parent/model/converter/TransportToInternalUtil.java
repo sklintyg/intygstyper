@@ -26,6 +26,8 @@ import org.joda.time.LocalDateTime;
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 
 public final class TransportToInternalUtil {
@@ -39,6 +41,17 @@ public final class TransportToInternalUtil {
         grundData.setSigneringsdatum(LocalDateTime.parse(source.getSigneringsTidstampel()));
         grundData.setSkapadAv(convertHoSPersonal(source.getSkapadAv()));
         return grundData;
+    }
+
+    public static DiabetesKod convertDiabetesTyp(DiabetesTypVarden kod) {
+        switch (kod) {
+        case TYP_1:
+            return DiabetesKod.DIABETES_TYP_1;
+        case TYP_2:
+            return DiabetesKod.DIABETES_TYP_2;
+        default:
+            throw new IllegalArgumentException(kod.name());
+        }
     }
 
     private static HoSPersonal convertHoSPersonal(SkapadAv source) {

@@ -28,6 +28,7 @@ import se.inera.intyg.common.schemas.Constants;
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.services.SpecialistkompetensService;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.*;
 
@@ -44,6 +45,17 @@ public final class InternalToTransportUtil {
         grundData.setSigneringsTidstampel(source.getSigneringsdatum().toString(SIGNERINGS_TIDSTAMPEL_FORMAT));
         grundData.setSkapadAv(buildSkapadAv(source.getSkapadAv()));
         return grundData;
+    }
+
+    public static DiabetesTypVarden convertDiabetesTyp(DiabetesKod kod) {
+        switch (kod) {
+        case DIABETES_TYP_1:
+            return DiabetesTypVarden.TYP_1;
+        case DIABETES_TYP_2:
+            return DiabetesTypVarden.TYP_2;
+        default:
+            throw new IllegalArgumentException(kod.name());
+        }
     }
 
     private static Patient buildPatient(se.inera.intyg.common.support.model.common.internal.Patient source) {

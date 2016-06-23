@@ -49,7 +49,7 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
-import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserEnum;
+import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.WebcertModelFactory;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGeneratorException;
@@ -211,8 +211,8 @@ public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleAp
         }
 
         return types.stream()
-                .map(cv -> IntygAvserEnum.fromCode(cv.getCode()))
-                .map(IntygAvserEnum::name)
+                .map(cv -> IntygAvserKod.fromCode(cv.getCode()))
+                .map(IntygAvserKod::name)
                 .collect(Collectors.joining(", "));
     }
 

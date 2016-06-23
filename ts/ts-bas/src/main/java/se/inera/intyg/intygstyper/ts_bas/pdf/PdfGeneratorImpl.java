@@ -37,10 +37,10 @@ import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.services.SpecialistkompetensService;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
+import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGeneratorException;
 

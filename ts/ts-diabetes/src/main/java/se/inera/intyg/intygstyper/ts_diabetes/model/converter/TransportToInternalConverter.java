@@ -19,32 +19,20 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
-import java.util.*;
+import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.VARDKONTAKT_TYP;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.util.integration.schema.adapter.InternalDateAdapter;
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier;
+import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil;
 import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class TransportToInternalConverter {
     private static final String DELIMITER = ".";
-
-    private static final String VARDKONTAKT_TYP = "5880005";
-
-    public static final Map<DiabetesTypVarden, String> TYP_VARDEN_MAP;
-
-    static {
-        Map<DiabetesTypVarden, String> tempMap = new HashMap<>();
-        tempMap.put(DiabetesTypVarden.TYP_2, "DIABETES_TYP_2");
-        tempMap.put(DiabetesTypVarden.TYP_1, "DIABETES_TYP_1");
-
-        TYP_VARDEN_MAP = Collections.unmodifiableMap(tempMap);
-    }
 
     private TransportToInternalConverter() {
     }
@@ -145,7 +133,9 @@ public final class TransportToInternalConverter {
 
     private static void readDiabetes(Diabetes diabetes, se.inera.intygstjanster.ts.services.v1.Diabetes diabetes2) {
         diabetes.setAnnanBehandlingBeskrivning(diabetes2.getAnnanBehandlingBeskrivning());
-        diabetes.setDiabetestyp(TYP_VARDEN_MAP.get(diabetes2.getDiabetesTyp().get(0)));
+        if (diabetes2.getDiabetesTyp().get(0) != null) {
+            diabetes.setDiabetestyp(TransportToInternalUtil.convertDiabetesTyp(diabetes2.getDiabetesTyp().get(0)).name());
+        }
         diabetes.setEndastKost(diabetes2.isHarBehandlingKost());
         diabetes.setInsulin(diabetes2.isHarBehandlingInsulin());
         diabetes.setInsulinBehandlingsperiod(diabetes2.getInsulinBehandlingSedanAr());

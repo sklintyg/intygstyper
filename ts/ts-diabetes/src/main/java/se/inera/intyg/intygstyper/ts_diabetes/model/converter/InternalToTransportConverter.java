@@ -19,11 +19,10 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
-import java.util.*;
-
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
+import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -33,17 +32,8 @@ import se.inera.intygstjanster.ts.services.v1.Hypoglykemier;
 public final class InternalToTransportConverter {
 
     private static final String DELIMITER_REGEXP = "\\.";
-    public static final Map<String, DiabetesTypVarden> TYP_VARDEN_MAP;
 
     private InternalToTransportConverter() {
-    }
-
-    static {
-        Map<String, DiabetesTypVarden> tempMap = new HashMap<>();
-        tempMap.put("DIABETES_TYP_2", DiabetesTypVarden.TYP_2);
-        tempMap.put("DIABETES_TYP_1", DiabetesTypVarden.TYP_1);
-
-        TYP_VARDEN_MAP = Collections.unmodifiableMap(tempMap);
     }
 
     public static RegisterTSDiabetesType convert(Utlatande utlatande) {
@@ -161,7 +151,9 @@ public final class InternalToTransportConverter {
         result.setHarBehandlingTabletter(diabetes.getTabletter());
         result.setInsulinBehandlingSedanAr(diabetes.getInsulinBehandlingsperiod());
 
-        result.getDiabetesTyp().add(TYP_VARDEN_MAP.get(diabetes.getDiabetestyp()));
+        if (diabetes.getDiabetestyp() != null) {
+            result.getDiabetesTyp().add(InternalToTransportUtil.convertDiabetesTyp(DiabetesKod.valueOf(diabetes.getDiabetestyp())));
+        }
         return result;
     }
 

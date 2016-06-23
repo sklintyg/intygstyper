@@ -34,7 +34,7 @@ import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserEnum;
+import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
@@ -136,16 +136,16 @@ public class UtlatandeToIntygTest {
         assertEquals(1, intyg.getSvar().get(0).getDelsvar().size());
         assertEquals("1.1", intyg.getSvar().get(0).getDelsvar().get(0).getId());
         JAXBElement<CVType> o = (JAXBElement<CVType>) intyg.getSvar().get(0).getDelsvar().get(0).getContent().get(0);
-        assertEquals(IntygAvserEnum.C1.getCode(), o.getValue().getCode());
+        assertEquals(IntygAvserKod.C1.getCode(), o.getValue().getCode());
         assertNotNull(o.getValue().getCodeSystem());
-        assertEquals(IntygAvserEnum.C1.getDescription(), o.getValue().getDisplayName());
+        assertEquals(IntygAvserKod.C1.getDescription(), o.getValue().getDisplayName());
         assertEquals("1", intyg.getSvar().get(1).getId());
         assertEquals(1, intyg.getSvar().get(1).getDelsvar().size());
         assertEquals("1.1", intyg.getSvar().get(1).getDelsvar().get(0).getId());
         o = (JAXBElement<CVType>) intyg.getSvar().get(1).getDelsvar().get(0).getContent().get(0);
-        assertEquals(IntygAvserEnum.TAXI.getCode(), o.getValue().getCode());
+        assertEquals(IntygAvserKod.TAXI.getCode(), o.getValue().getCode());
         assertNotNull(o.getValue().getCodeSystem());
-        assertEquals(IntygAvserEnum.TAXI.getDescription(), o.getValue().getDisplayName());
+        assertEquals(IntygAvserKod.TAXI.getDescription(), o.getValue().getDisplayName());
     }
 
     @Test

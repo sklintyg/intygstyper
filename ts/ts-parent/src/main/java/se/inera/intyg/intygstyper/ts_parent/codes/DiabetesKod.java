@@ -16,47 +16,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package se.inera.intyg.intygstyper.ts_parent.codes;
 
-package se.inera.intyg.intygstyper.ts_bas.model.codes;
+public enum DiabetesKod {
 
-public enum VardkontakttypKod {
+    DIABETES_TYP_1("E10", "Diabetes mellitus typ 1"),
+    DIABETES_TYP_2("E11", "Diabetes mellitus typ 2");
 
-    /** "5880005", "Min undersökning med patienten". */
-    MIN_UNDERSOKNING("5880005", "Min undersökning med patienten");
+    final String code;
+    final String description;
 
-    private static String codeSystemName = "SNOMED-CT";
-
-    private static String codeSystem = "1.2.752.116.2.1.1.1";
-
-    private static String codeSystemVersion = null;
-
-    private String code;
-
-    private String description;
-
-    VardkontakttypKod(String code, String desc) {
+    DiabetesKod(String code, String description) {
         this.code = code;
-        this.description = desc;
+        this.description = description;
     }
 
     public String getCode() {
-        return this.code;
+        return code;
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
-
-    public String getCodeSystem() {
-        return codeSystem;
-    }
-
-    public String getCodeSystemName() {
-        return codeSystemName;
-    }
-
-    public String getCodeSystemVersion() {
-        return codeSystemVersion;
-    }
-
 }

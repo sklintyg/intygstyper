@@ -24,9 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.*;
+import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_parent.codes.*;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -132,7 +133,7 @@ public final class InternalToTransport {
     private static Collection<? extends KorkortsbehorighetTsBas> convertToKorkortsbehorighetTsBas(Set<BedomningKorkortstyp> source) {
         List<KorkortsbehorighetTsBas> behorigheter = new ArrayList<KorkortsbehorighetTsBas>();
         for (BedomningKorkortstyp typ : source) {
-            behorigheter.add(KorkortsbehorighetTsBas.valueOf(KorkortsKod.valueOf(typ.name()).getCode()));
+            behorigheter.add(KorkortsbehorighetTsBas.fromValue(Korkortsbehorighet.fromValue(KorkortsbehorighetKod.valueOf(typ.name()).name())));
         }
         return behorigheter;
     }
@@ -146,10 +147,8 @@ public final class InternalToTransport {
         diabetes.setHarBehandlingInsulin(source.getInsulin());
         diabetes.setHarBehandlingKost(source.getKost());
         diabetes.setHarBehandlingTabletter(source.getTabletter());
-        if (source.getDiabetesTyp().equals("DIABETES_TYP_1")) {
-            diabetes.setDiabetesTyp(DiabetesTypVarden.fromValue("TYP1"));
-        } else if (source.getDiabetesTyp().equals("DIABETES_TYP_2")) {
-            diabetes.setDiabetesTyp(DiabetesTypVarden.fromValue("TYP2"));
+        if (source.getDiabetesTyp() != null) {
+            diabetes.setDiabetesTyp(InternalToTransportUtil.convertDiabetesTyp(DiabetesKod.valueOf(source.getDiabetesTyp())));
         }
         return diabetes;
     }
@@ -176,7 +175,7 @@ public final class InternalToTransport {
             throw new ConverterException("Idkontroll was null");
         }
         IdentitetStyrkt identitetStyrkt = new IdentitetStyrkt();
-        identitetStyrkt.setIdkontroll(IdentifieringsVarden.valueOf(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
+        identitetStyrkt.setIdkontroll(IdentifieringsVarden.fromValue(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
         return identitetStyrkt;
     }
 
@@ -184,7 +183,7 @@ public final class InternalToTransport {
 
         IntygsAvserTypBas intygAvser = new IntygsAvserTypBas();
         for (IntygAvserKategori kat : source.getKorkortstyp()) {
-            intygAvser.getKorkortstyp().add(KorkortsbehorighetTsBas.valueOf(KorkortsKod.valueOf(kat.name()).getCode()));
+            intygAvser.getKorkortstyp().add(KorkortsbehorighetTsBas.fromValue(Korkortsbehorighet.fromValue(KorkortsbehorighetKod.valueOf(kat.name()).name())));
         }
         return intygAvser;
     }
