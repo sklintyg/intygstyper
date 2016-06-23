@@ -59,7 +59,7 @@ public class RoundTripTest {
         XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected.toString(), actual.toString());
         diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
-//        assertTrue(diff.toString(), diff.similar());
+        assertTrue(diff.toString(), diff.similar());
 
         JsonNode tree = objectMapper.valueToTree(TransportToInternal.convert(transport.getIntyg()));
         JsonNode expectedTree = objectMapper.valueToTree(scenario.asInternalModel());
