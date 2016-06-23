@@ -54,5 +54,6 @@
       "diagnosKodSystem": "ICD_10_SE",
       "diagnosKod": "S47"
     }
-  ]
+  ],
+  "kontaktMedFk": false
 }

@@ -54,5 +54,6 @@
       "diagnosKodSystem": "KSH_97_P",
       "diagnosKod": "A00-"
     }
-  ]
+  ],
+  "kontaktMedFk": false
 }
