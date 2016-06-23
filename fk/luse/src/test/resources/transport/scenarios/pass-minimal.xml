@@ -20,6 +20,9 @@
       </person-id>
       <fornamn>Olivia</fornamn>
       <efternamn>Olsson</efternamn>
+      <postadress></postadress>
+      <postnummer></postnummer>
+      <postort></postort>
     </patient>
     <skapadAv>
       <personal-id>
@@ -31,12 +34,11 @@
       <befattning>
         <ns3:code>201010</ns3:code>
         <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
-		<ns3:displayName>Överläkare</ns3:displayName>
+        <ns3:displayName>Överläkare</ns3:displayName>
       </befattning>
       <befattning>
         <ns3:code>204510</ns3:code>
         <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
-		<ns3:displayName>Psykolog</ns3:displayName>
       </befattning>
       <enhet>
         <enhets-id>
@@ -67,6 +69,7 @@
         <ns3:cv>
           <ns3:code>UNDERSOKNING</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min undersökning av patienten</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="1.2">2015-09-09</delsvar>
@@ -83,6 +86,7 @@
         <ns3:cv>
           <ns3:code>PSYKOLOG</ns3:code>
           <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag från psykolog</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="4.2">2015-09-03</delsvar>
@@ -93,6 +97,7 @@
         <ns3:cv>
           <ns3:code>FYSIOTERAPEUT</ns3:code>
           <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag från fysioterapeut</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="4.2">2015-06-30</delsvar>
@@ -128,6 +133,9 @@
     </svar>
     <svar id="25">
       <delsvar id="25.1">Patientens tillstånd bedöms behöva en ny bedömning om 12 månader för att avgöra grad av arbetsförmåga, men till åtminstone viss del kommer patientens arbetsförmåga att vara fortsatt nedsatt.</delsvar>
+    </svar>
+    <svar id="23">
+      <delsvar id="23.1">Med höger kan patienten lyfta lättare saker om det inte sker för frekvent eller kräver hög precision. Patienten kan göra saker med övriga delar av kroppen i kortare stunder och även längre stunder om det inte kräver hög precision eller på annat sätt för stor koncentration.</delsvar>
     </svar>
 	<svar id="9001">
       <delsvar id="9001.1">Skostorleken är 37.</delsvar>

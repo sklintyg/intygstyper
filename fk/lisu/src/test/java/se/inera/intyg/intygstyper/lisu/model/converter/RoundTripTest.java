@@ -58,7 +58,7 @@ public class RoundTripTest {
         XMLUnit.setIgnoreWhitespace(true);
         XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected.toString(), actual.toString());
-        diff.overrideElementQualifier(new ElementNameAndTextQualifier());
+        diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
         assertTrue(diff.toString(), diff.similar());
 
         JsonNode tree = objectMapper.valueToTree(TransportToInternal.convert(transport.getIntyg()));
