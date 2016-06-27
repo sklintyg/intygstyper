@@ -51,8 +51,6 @@
         "separatOgonlakarintyg" : true
     },
     "bedomning" : {
-        "korkortstyp" : [
-            {"type": "A1", "selected": true}
-        ]
+        "kanInteTaStallning" : true
     }
 }

@@ -33,6 +33,7 @@ import org.springframework.core.io.Resource;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -40,6 +41,8 @@ import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.Regist
 public class ScenarioFinder {
 
     private static final String TRANSPORT_MODEL_PATH = "classpath:/scenarios/transport/";
+
+    private static final String RIVTA_V2_TRANSPORT_MODEL_PATH = "classpath:/scenarios/rivtav2/";
 
     private static final String INTERNAL_MODEL_PATH = "classpath:/scenarios/internal/";
 
@@ -83,7 +86,6 @@ public class ScenarioFinder {
                 throw new ScenarioNotFoundException(scenarioPath + scenarioWithWildcards, model);
             }
             for (Resource r : resources) {
-                System.err.println(r.getFile());
                 result.add(new FileBasedScenario(r.getFile()));
             }
             return result;
@@ -168,6 +170,18 @@ public class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
+        public RegisterCertificateType asRivtaV2TransportModel() throws ScenarioNotFoundException {
+            try {
+                return JAXB.unmarshal(getRivtaV2TransportModelFor(scenarioFile), RegisterCertificateType.class);
+            } catch (IOException e) {
+                throw new ScenarioNotFoundException(scenarioFile.getName(), "rivta v2 transport", e);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
         public se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
@@ -187,6 +201,13 @@ public class ScenarioFinder {
         return retFile;
     }
 
+    private static File getRivtaV2TransportModelFor(File otherModel) throws IOException {
+        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+        File retFile = context.getResource(RIVTA_V2_TRANSPORT_MODEL_PATH + filenameWithoutExt + TRANSPORT_MODEL_EXT).getFile();
+        context.close();
+        return retFile;
+    }
 
     private static File getInternalModelFor(File otherModel) throws IOException {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());

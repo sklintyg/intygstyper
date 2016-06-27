@@ -20,6 +20,7 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import java.util.*;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -126,7 +127,9 @@ public final class InternalToTransport {
         BedomningTypBas bedomning = new BedomningTypBas();
         bedomning.setBehovAvLakareSpecialistKompetens(source.getLakareSpecialKompetens());
         bedomning.setKanInteTaStallning(source.getKanInteTaStallning());
-        bedomning.getKorkortstyp().addAll(convertToKorkortsbehorighetTsBas(source.getKorkortstyp()));
+        if (CollectionUtils.isNotEmpty(source.getKorkortstyp())) {
+            bedomning.getKorkortstyp().addAll(convertToKorkortsbehorighetTsBas(source.getKorkortstyp()));
+        }
         return bedomning;
     }
 

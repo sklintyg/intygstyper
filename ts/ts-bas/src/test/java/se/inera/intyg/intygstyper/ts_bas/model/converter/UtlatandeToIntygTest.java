@@ -23,9 +23,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import javax.xml.bind.JAXBElement;
+import java.io.StringWriter;
+
+import javax.xml.bind.*;
 
 import org.apache.commons.lang3.StringUtils;
+import org.custommonkey.xmlunit.*;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
@@ -34,11 +37,39 @@ import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
-import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.ObjectFactory;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.types.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class UtlatandeToIntygTest {
+
+    @Test
+    public void testUtlatandeToIntyg() throws Exception {
+        ObjectFactory objectFactory = new ObjectFactory();
+        Marshaller marshaller = JAXBContext.newInstance(RegisterCertificateType.class, DatePeriodType.class, PartialDateType.class)
+                .createMarshaller();
+        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
+            Utlatande internalModel = scenario.asInternalModel();
+
+            RegisterCertificateType actual = new RegisterCertificateType();
+            actual.setIntyg(UtlatandeToIntyg.convert(internalModel));
+
+            StringWriter expected = new StringWriter();
+            StringWriter actualSw = new StringWriter();
+            marshaller.marshal(objectFactory.createRegisterCertificate(scenario.asRivtaV2TransportModel()), expected);
+            marshaller.marshal(objectFactory.createRegisterCertificate(actual), actualSw);
+
+            XMLUnit.setIgnoreWhitespace(true);
+            XMLUnit.setIgnoreAttributeOrder(true);
+            Diff diff = XMLUnit.compareXML(expected.toString(), actualSw.toString());
+            diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
+            assertTrue(scenario.getName() + " " + diff.toString(), diff.similar());
+        }
+    }
 
     @Test
     public void testConvert() throws Exception {

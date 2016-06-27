@@ -20,6 +20,7 @@
 package se.inera.intyg.intygstyper.ts_bas.utils;
 
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
@@ -48,6 +49,15 @@ public interface Scenario {
      *             if the scenario wasn't found.
      */
     RegisterTSBasType asTransportModel() throws ScenarioNotFoundException;
+
+    /**
+     * Returns the scenario as a rivta v2 transport model.
+     *
+     * @return The scenario as a rivta v2 transport model.
+     * @throws ScenarioNotFoundException
+     *             if the scenario wasn't found.
+     */
+    RegisterCertificateType asRivtaV2TransportModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

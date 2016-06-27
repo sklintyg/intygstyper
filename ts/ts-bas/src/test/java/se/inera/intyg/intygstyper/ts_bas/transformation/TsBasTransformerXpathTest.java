@@ -377,8 +377,8 @@ public class TsBasTransformerXpathTest {
                     xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, k.getRekommendation())));
         }
         if (utlatande.getBedomning().isKanInteTaStallning() !=  null && utlatande.getBedomning().isKanInteTaStallning()) {
-            assertEquals("Rekommendationsvärde Kan inte ta ställning (VAR11)", KorkortsKodToIntygAvserMapping.KANINTETASTALLNING.getRekommendation(),
-                    xPath.evaluate(stringXPath(REKOMMENDATION_VARDE_TEMPLATE, KorkortsKodToIntygAvserMapping.KANINTETASTALLNING.getRekommendation())));
+            assertTrue("Rekommendationsvärde Kan inte ta ställning (VAR11)",
+                    xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, KorkortsKodToIntygAvserMapping.KANINTETASTALLNING.getRekommendation())));
         }
 
         if (utlatande.getBedomning().getBehovAvLakareSpecialistKompetens() != null) {

@@ -24,6 +24,7 @@ import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.VARDKONTA
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,7 +105,9 @@ public final class TransportToInternal {
     private static void buildBedomning(Utlatande internal, BedomningTypBas source) {
         internal.getBedomning().setKanInteTaStallning(source.isKanInteTaStallning());
         internal.getBedomning().setLakareSpecialKompetens(source.getBehovAvLakareSpecialistKompetens());
-        internal.getBedomning().getKorkortstyp().addAll(convertBedomningKorkortstyp(source.getKorkortstyp()));
+        if (CollectionUtils.isNotEmpty(source.getKorkortstyp())) {
+            internal.getBedomning().getKorkortstyp().addAll(convertBedomningKorkortstyp(source.getKorkortstyp()));
+        }
     }
 
     private static List<BedomningKorkortstyp> convertBedomningKorkortstyp(List<KorkortsbehorighetTsBas> source) {

@@ -89,7 +89,7 @@
     </hypoglykemier>
     <separatOgonLakarintygKommerSkickas>true</separatOgonLakarintygKommerSkickas>
     <bedomning>
-        <korkortstyp>A1</korkortstyp>
+        <kanInteTaStallning>true</kanInteTaStallning>
     </bedomning>
 </ns3:intyg>
 </ns3:RegisterTSDiabetes>

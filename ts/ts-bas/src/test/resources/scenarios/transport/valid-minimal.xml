@@ -129,7 +129,7 @@
     <harStadigvarandeMedicinering>false</harStadigvarandeMedicinering>
   </ovrigMedicinering>
   <bedomning>
-    <korkortstyp>C</korkortstyp>
+    <kanInteTaStallning>true</kanInteTaStallning>
   </bedomning>
 </ns3:intyg>
 </ns3:RegisterTSBas>

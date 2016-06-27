@@ -20,8 +20,7 @@
 package se.inera.intyg.intygstyper.ts_diabetes.utils;
 
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
-
-
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
@@ -31,21 +30,21 @@ import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.Regist
  * <li>Internal model used by Mina Intyg
  * <li>Internal model used by WebCert
  * </ul>
- * 
+ *
  * @see ScenarioFinder
  */
 public interface Scenario {
 
     /**
      * Returns the name of the scenario. Useful for assertion messages.
-     * 
+     *
      * @return The scenario name.
      */
     String getName();
 
     /**
      * Returns the scenario as a transport model.
-     * 
+     *
      * @return The scenario as a transport model.
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
@@ -53,8 +52,17 @@ public interface Scenario {
     RegisterTSDiabetesType asTransportModel() throws ScenarioNotFoundException;
 
     /**
+     * Returns the scenario as a rivta v2 transport model.
+     *
+     * @return The scenario as a rivta v2 transport model.
+     * @throws ScenarioNotFoundException
+     *             if the scenario wasn't found.
+     */
+    RegisterCertificateType asRivtaV2TransportModel() throws ScenarioNotFoundException;
+
+    /**
      * Returns the scenario as a internal Mina Intyg model.
-     * 
+     *
      * @return The scenario as a internal Mina Intyg model.
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
