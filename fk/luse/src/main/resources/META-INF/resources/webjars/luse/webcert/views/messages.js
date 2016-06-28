@@ -94,6 +94,7 @@ var luseMessages = {
         'luse.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges',
         'luse.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format',
         'luse.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges',
+        'luse.validation.blanksteg.otillatet': 'Fältet får inte fyllas i med endast blanksteg',
 
 
         // errors

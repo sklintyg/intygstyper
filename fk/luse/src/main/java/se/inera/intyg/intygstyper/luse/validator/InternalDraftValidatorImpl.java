@@ -32,7 +32,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.base.Strings;
 
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
@@ -74,6 +77,8 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         // Kategori 9 – Övrigt
         // Kategori 10 – Kontakt
         validateKontaktMedFk(utlatande, validationMessages);
+
+        validateBlanksForOptionalFields(utlatande, validationMessages);
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
 
@@ -111,7 +116,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
                     "luse.validation.grund-for-mu.annat.missing");
         }
         // R3
-        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isEmpty(utlatande.getAnnatGrundForMUBeskrivning())) {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
         }
@@ -276,6 +281,45 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         if ((utlatande.getKontaktMedFk() == null || !utlatande.getKontaktMedFk()) && !StringUtils.isBlank(utlatande.getAnledningTillKontakt())) {
             addValidationError(validationMessages, "Kontakt", ValidationMessageType.INVALID_FORMAT,
                     "luse.validation.kontakt.incorrect_combination");
+        }
+    }
+
+    private boolean isBlankButNotNull(String stringFromField) {
+        return (!StringUtils.isEmpty(stringFromField)) && StringUtils.isBlank(stringFromField);
+    }
+
+    private void validateBlanksForOptionalFields(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
+            addValidationError(validationMessages, "anledningtillkontakt.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getAnnatGrundForMUBeskrivning())) {
+            addValidationError(validationMessages, "grundformu.annat.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getAvslutadBehandling())) {
+            addValidationError(validationMessages, "avslutadBehandling.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getFormagaTrotsBegransning())) {
+            addValidationError(validationMessages, "formagatrotsbegransning.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getPagaendeBehandling())) {
+            addValidationError(validationMessages, "pagaendebehandling.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getPlaneradBehandling())) {
+            addValidationError(validationMessages, "planeradbehandling.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getSubstansintag())) {
+            addValidationError(validationMessages, "substansintag.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getOvrigt())) {
+            addValidationError(validationMessages, "ovrigt.blanksteg", ValidationMessageType.EMPTY,
+                    "luse.validation.blanksteg.otillatet");
         }
     }
 

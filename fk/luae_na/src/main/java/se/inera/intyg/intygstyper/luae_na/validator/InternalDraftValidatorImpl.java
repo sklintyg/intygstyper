@@ -19,13 +19,18 @@
 
 package se.inera.intyg.intygstyper.luae_na.validator;
 
-import com.google.common.base.Strings;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.base.Strings;
+
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
@@ -36,9 +41,6 @@ import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuaenaUtlatande> {
 
@@ -76,6 +78,8 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         // vårdenhet
         validateVardenhet(utlatande, validationMessages);
 
+        validateBlanksForOptionalFields(utlatande, validationMessages);
+
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
 
@@ -104,13 +108,13 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
                     "luae_na.validation.grund-for-mu.annat.incorrect_format");
         }
 
-        //R2
+        // R2
         if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luae_na.validation.grund-for-mu.annat.missing");
         }
         // R3
-        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isEmpty(utlatande.getAnnatGrundForMUBeskrivning())) {
             addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luae_na.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
         }
@@ -155,16 +159,16 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
                 addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                         "luae_na.validation.underlag.missing");
             } else if (!underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId())
-                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.OVRIGT.getId())) {
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId())
+                    && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.OVRIGT.getId())) {
                 addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.INVALID_FORMAT,
                         "luae_na.validation.underlag.incorrect_format");
             }
@@ -274,6 +278,49 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
             addValidationError(validationMessages, "Kontakt", ValidationMessageType.INVALID_FORMAT,
                     "luae_na.validation.kontakt.incorrect_combination");
         }
+    }
+
+    private void validateBlanksForOptionalFields(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (isBlankButNotNull(utlatande.getForslagTillAtgard())) {
+            addValidationError(validationMessages, "forslagtillatgard.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
+            addValidationError(validationMessages, "anledningtillkontakt.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getAnnatGrundForMUBeskrivning())) {
+            addValidationError(validationMessages, "grundformu.annat.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getAvslutadBehandling())) {
+            addValidationError(validationMessages, "avslutadBehandling.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getFormagaTrotsBegransning())) {
+            addValidationError(validationMessages, "formagatrotsbegransning.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getPagaendeBehandling())) {
+            addValidationError(validationMessages, "pagaendebehandling.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getPlaneradBehandling())) {
+            addValidationError(validationMessages, "planeradbehandling.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getSubstansintag())) {
+            addValidationError(validationMessages, "substansintag.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getOvrigt())) {
+            addValidationError(validationMessages, "ovrigt.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_na.validation.blanksteg.otillatet");
+        }
+    }
+
+    private boolean isBlankButNotNull(String stringFromField) {
+        return (!StringUtils.isEmpty(stringFromField)) && StringUtils.isBlank(stringFromField);
     }
 
     /**

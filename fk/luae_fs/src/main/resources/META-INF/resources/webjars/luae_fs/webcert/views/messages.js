@@ -78,6 +78,7 @@ var luae_fsMessages = {
         'luae_fs.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges.',
         'luae_fs.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format.',
         'luae_fs.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges.',
+        'luae_fs.validation.blanksteg.otillatet': 'Fältet får inte fyllas i med endast blanksteg',
 
         // errors
         'luae_fs.error.could_not_load_cert': '<strong>Intyget gick inte att läsa in.</strong><br>Prova att ladda om sidan. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Nationell kundservice på 0771-251010.',

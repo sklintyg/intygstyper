@@ -21,7 +21,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import com.google.common.base.Charsets;
@@ -34,7 +36,9 @@ import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValida
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSchematronValidatorTestUtil;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-import se.inera.intyg.intygstyper.luae_na.model.utils.*;
+import se.inera.intyg.intygstyper.luae_na.model.utils.Scenario;
+import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioNotFoundException;
 import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
@@ -42,6 +46,7 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
  * Data driven test that uses Scenario and ScenarioFinder along with the JUnit Parameterized test runner,
  * uses test data from internal/scenarios and transport/scenarios, so in order to create new tests, just add
  * corresponding json- and XML-files in these directories.
+ *
  * @author erik
  *
  */
@@ -77,12 +82,15 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
 
     /**
      * Process test data and supply it to the test.
-     * The format for the test data needs to be: {name to display for current test, the scenario to test, expected outcome of the test}.
+     * The format for the test data needs to be: {name to display for current test, the scenario to test, expected
+     * outcome of the test}.
+     *
      * @return Collection<Object[]>
      * @throws ScenarioNotFoundException
      */
     @Parameters(name = "{index}: Scenario: {0}")
     public static Collection<Object[]> data() throws ScenarioNotFoundException {
+        //ScenarioFinder.getInternalScenarios("fail-*").stream().forEach(name -> System.out.println(name.getName()));
         List<Object[]> retList = ScenarioFinder.getInternalScenarios("fail-*").stream()
                 .map(u -> new Object[] { u.getName(), u, true })
                 .collect(Collectors.toList());
@@ -112,11 +120,14 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
 
     /**
      * Perform internal and schematron validation on the supplied Scenario.
+     *
      * @param scenario
-     * @param fail Whether the test should expect validation errors or not.
+     * @param fail
+     *            Whether the test should expect validation errors or not.
      * @throws Exception
      */
     private static void doInternalAndSchematronValidation(Scenario scenario, boolean fail) throws Exception {
+        System.out.println(scenario.getName());
         LuaenaUtlatande utlatandeFromJson = scenario.asInternalModel();
 
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
@@ -149,7 +160,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
                     SVRLHelper.getAllFailedAssertions(result).size() > 0);
 
             System.out.println(String.format("Test: %s", name));
-            System.out.println(String.format("InternalValidation-errors: %s",  internalValidationErrors));
+            System.out.println(String.format("InternalValidation-errors: %s", internalValidationErrors));
             System.out.println(String.format("TransportValidation-errors: %s", transportValidationErrors));
 
         } else {
