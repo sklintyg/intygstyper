@@ -29,8 +29,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -70,7 +70,7 @@ public final class TransportToInternal {
         internal.setId(source.getIntygsId());
         internal.setTextVersion(source.getVersion() + DELIMITER + source.getUtgava());
         internal.setKommentar(source.getOvrigKommentar());
-        internal.setTyp(UtlatandeKod.getCurrentVersion().getCode());
+        internal.setTyp(TsBasEntryPoint.MODULE_ID);
 
         internal.getPsykiskt().setPsykiskSjukdom(source.isHarPsykiskStorning());
         internal.getKognitivt().setSviktandeKognitivFunktion(source.isHarKognitivStorning());

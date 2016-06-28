@@ -40,7 +40,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -79,8 +78,7 @@ public class TsBasTransformerXpathTest {
         XPathEvaluator xPath = createXPathEvaluator(transformed);
 
         // Check utlatande against xpath
-        assertEquals("UtlatandeTyp", UtlatandeKod.getCurrentVersion().getTypForTransportConvertion(),
-                xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
+        assertEquals("UtlatandeTyp", "TSTRK1007 (U07, V06)", xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
 
         assertEquals("Utlatande-utgåva", utlatande.getUtgava(), xPath.evaluate(XPathExpressions.TS_UTGAVA_XPATH));
 

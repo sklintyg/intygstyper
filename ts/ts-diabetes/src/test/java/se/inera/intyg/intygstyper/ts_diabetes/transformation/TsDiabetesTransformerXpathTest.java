@@ -40,7 +40,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -77,8 +76,7 @@ public class TsDiabetesTransformerXpathTest {
         XPathEvaluator xPath = createXPathEvaluator(transformed);
 
         // Check utlatande against xpath
-        assertEquals("UtlatandeTyp", UtlatandeKod.getCurrentVersion().getTypForTransportConvertion(),
-                xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
+        assertEquals("UtlatandeTyp", "TSTRK1031 (U06, V02)", xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
 
         assertEquals("Utlatande-utgåva", utlatande.getUtgava(), xPath.evaluate(XPathExpressions.TS_UTGAVA_XPATH));
 

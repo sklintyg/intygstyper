@@ -25,9 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 import se.inera.intyg.intygstyper.ts_parent.codes.*;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
@@ -47,6 +47,8 @@ public final class InternalToTransport {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
     private static final String DELIMITER_REGEXP = "\\.";
+    private static final String DEFAULT_UTGAVA = "07";
+    private static final String DEFAULT_VERSION = "06";
 
     private InternalToTransport() {
     }
@@ -75,17 +77,15 @@ public final class InternalToTransport {
         utlatande.setIntygsId(source.getId());
         utlatande.setGrundData(InternalToTransportUtil.buildGrundData(source.getGrundData()));
 
-        UtlatandeKod utlatandeKod = UtlatandeKod.getCurrentVersion();
-
-        utlatande.setIntygsTyp(utlatandeKod.getCode());
+        utlatande.setIntygsTyp(TsBasEntryPoint.MODULE_ID);
 
         if (source.getTextVersion() != null) {
             String[] versionInfo = source.getTextVersion().split(DELIMITER_REGEXP);
             utlatande.setUtgava(String.format("%02d", Integer.parseInt(versionInfo[1])));
             utlatande.setVersion(String.format("%02d", Integer.parseInt(versionInfo[0])));
         } else {
-            utlatande.setUtgava(utlatandeKod.getTsUtgava());
-            utlatande.setVersion(utlatandeKod.getTsVersion());
+            utlatande.setUtgava(DEFAULT_UTGAVA);
+            utlatande.setVersion(DEFAULT_VERSION);
         }
 
         utlatande.setAlkoholNarkotikaLakemedel(buildAlkoholNarkotikaLakemedel(source.getNarkotikaLakemedel()));

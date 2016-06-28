@@ -19,8 +19,8 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
+import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
 import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;
@@ -32,6 +32,8 @@ import se.inera.intygstjanster.ts.services.v1.Hypoglykemier;
 public final class InternalToTransportConverter {
 
     private static final String DELIMITER_REGEXP = "\\.";
+    private static final String DEFAULT_UTGAVA = "06";
+    private static final String DEFAULT_VERSION = "02";
 
     private InternalToTransportConverter() {
     }
@@ -47,7 +49,7 @@ public final class InternalToTransportConverter {
         result.setIdentitetStyrkt(readIdentitetStyrkt(utlatande.getVardkontakt()));
         result.setIntygAvser(readIntygAvser(utlatande.getIntygAvser()));
         result.setIntygsId(utlatande.getId());
-        result.setIntygsTyp(UtlatandeKod.getCurrentVersion().getCode());
+        result.setIntygsTyp(TsDiabetesEntryPoint.MODULE_ID);
         result.setSeparatOgonLakarintygKommerSkickas(utlatande.getSyn().getSeparatOgonlakarintyg());
         result.setOvrigKommentar(utlatande.getKommentar());
         if (utlatande.getSyn().getSeparatOgonlakarintyg() != null && !utlatande.getSyn().getSeparatOgonlakarintyg()) {
@@ -59,8 +61,8 @@ public final class InternalToTransportConverter {
             result.setUtgava(String.format("%02d", Integer.parseInt(versionInfo[1])));
             result.setVersion(String.format("%02d", Integer.parseInt(versionInfo[0])));
         } else {
-            result.setUtgava(UtlatandeKod.getCurrentVersion().getTsUtgava());
-            result.setVersion(UtlatandeKod.getCurrentVersion().getTsVersion());
+            result.setUtgava(DEFAULT_UTGAVA);
+            result.setVersion(DEFAULT_VERSION);
         }
         registerTsDiabetes.setIntyg(result);
         return registerTsDiabetes;

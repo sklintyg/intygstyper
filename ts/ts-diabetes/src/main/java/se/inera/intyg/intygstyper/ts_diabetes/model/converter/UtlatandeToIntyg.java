@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.ModelException;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
@@ -84,7 +85,7 @@ public final class UtlatandeToIntyg {
             IdKontrollKod idKontroll = IdKontrollKod.valueOf(source.getVardkontakt().getIdkontroll());
             svars.add(aSvar(IDENTITET_STYRKT_GENOM_SVAR_ID_2)
                     .withDelsvar(IDENTITET_STYRKT_GENOM_ID_2,
-                            aCV(Kodverk.ID_KONTROLL.getCodeSystem(), idKontroll.getCode(), idKontroll.getDescription()))
+                            aCV(ID_KONTROLL_CODE_SYSTEM, idKontroll.getCode(), idKontroll.getDescription()))
                     .build());
         }
 
@@ -119,7 +120,7 @@ public final class UtlatandeToIntyg {
             DiabetesKod diabetesKod = DiabetesKod.valueOf(source.getDiabetestyp());
             svars.add(aSvar(TYP_AV_DIABETES_SVAR_ID_18)
                     .withDelsvar(TYP_AV_DIABETES_DELSVAR_ID_18,
-                            aCV(Kodverk.ICD_10.getCodeSystem(), diabetesKod.getCode(), diabetesKod.getDescription()))
+                            aCV(Diagnoskodverk.ICD_10_SE.getCodeSystem(false), diabetesKod.getCode(), diabetesKod.getDescription()))
                     .build());
         }
         SvarBuilder diabetesBehandling = aSvar(BEHANDLING_DIABETES_SVAR_ID_19);
