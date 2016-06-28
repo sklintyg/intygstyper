@@ -21,6 +21,7 @@ package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.*;
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil.getVersion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
 
+    private static final String DEFAULT_VERSION = "U06, V02";
+
     private UtlatandeToIntyg() {
     }
 
@@ -52,6 +55,7 @@ public final class UtlatandeToIntyg {
         complementArbetsplatskodIfMissing(intyg);
         intyg.setTyp(getTypAvIntyg(source));
         intyg.getSvar().addAll(getSvar(source));
+        intyg.setVersion(getVersion(source).orElse(DEFAULT_VERSION));
         return intyg;
     }
 

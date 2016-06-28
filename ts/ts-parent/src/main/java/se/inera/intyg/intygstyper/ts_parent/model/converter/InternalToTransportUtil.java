@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.intygstyper.ts_parent.model.converter;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -27,6 +28,7 @@ import org.springframework.util.CollectionUtils;
 import se.inera.intyg.common.schemas.Constants;
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
 import se.inera.intygstjanster.ts.services.types.v1.II;
@@ -35,6 +37,7 @@ import se.inera.intygstjanster.ts.services.v1.*;
 public final class InternalToTransportUtil {
 
     private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String DELIMITER_REGEXP = "\\.";
 
     private InternalToTransportUtil() {
     }
@@ -56,6 +59,14 @@ public final class InternalToTransportUtil {
         default:
             throw new IllegalArgumentException(kod.name());
         }
+    }
+
+    public static Optional<String> getVersion(Utlatande source) {
+        if (StringUtils.isBlank(source.getTextVersion())) {
+            return Optional.empty();
+        }
+        String[] versionInfo = source.getTextVersion().split(DELIMITER_REGEXP);
+        return Optional.of("U" + String.format("%02d", Integer.parseInt(versionInfo[1])) + ", V" + String.format("%02d", Integer.parseInt(versionInfo[0])));
     }
 
     private static Patient buildPatient(se.inera.intyg.common.support.model.common.internal.Patient source) {

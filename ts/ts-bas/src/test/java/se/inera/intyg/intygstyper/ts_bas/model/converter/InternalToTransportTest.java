@@ -107,4 +107,31 @@ public class InternalToTransportTest {
         assertEquals(1, skapadAv.getBefattningar().size());
         assertEquals(befattningskod, skapadAv.getBefattningar().get(0));
     }
+
+    @Test
+    public void testConvertSetsVersionAndUtgavaFromTextVersion() throws ScenarioNotFoundException, ConverterException {
+        final String version = "07";
+        final String utgava = "08";
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.setTextVersion(version + "." + utgava);
+        RegisterTSBasType res = InternalToTransport.convert(utlatande);
+        assertEquals(version, res.getIntyg().getVersion());
+        assertEquals(utgava, res.getIntyg().getUtgava());
+    }
+
+    @Test
+    public void testConvertSetsDefaultVersionAndUtgavaIfTextVersionIsNullOrEmpty() throws ScenarioNotFoundException, ConverterException {
+        final String defaultVersion = "06";
+        final String defaultUtgava = "07";
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.setTextVersion(null);
+        RegisterTSBasType res = InternalToTransport.convert(utlatande);
+        assertEquals(defaultVersion, res.getIntyg().getVersion());
+        assertEquals(defaultUtgava, res.getIntyg().getUtgava());
+
+        utlatande.setTextVersion("");
+        res = InternalToTransport.convert(utlatande);
+        assertEquals(defaultVersion, res.getIntyg().getVersion());
+        assertEquals(defaultUtgava, res.getIntyg().getUtgava());
+    }
 }

@@ -18,9 +18,12 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil.DELIMITER_REGEXP;
+
 import java.util.*;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +49,6 @@ import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 public final class InternalToTransport {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
-    private static final String DELIMITER_REGEXP = "\\.";
     private static final String DEFAULT_UTGAVA = "07";
     private static final String DEFAULT_VERSION = "06";
 
@@ -79,7 +81,7 @@ public final class InternalToTransport {
 
         utlatande.setIntygsTyp(TsBasEntryPoint.MODULE_ID);
 
-        if (source.getTextVersion() != null) {
+        if (StringUtils.isNotBlank(source.getTextVersion())) {
             String[] versionInfo = source.getTextVersion().split(DELIMITER_REGEXP);
             utlatande.setUtgava(String.format("%02d", Integer.parseInt(versionInfo[1])));
             utlatande.setVersion(String.format("%02d", Integer.parseInt(versionInfo[0])));

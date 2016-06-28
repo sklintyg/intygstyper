@@ -33,6 +33,8 @@ import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 
 public final class TransportToInternalUtil {
 
+    private static final String DELIMITER = ".";
+
     private TransportToInternalUtil() {
     }
 
@@ -53,6 +55,10 @@ public final class TransportToInternalUtil {
         default:
             throw new IllegalArgumentException(kod.name());
         }
+    }
+
+    public static String getTextVersion(String version, String utgava) {
+        return version + DELIMITER + utgava;
     }
 
     private static HoSPersonal convertHoSPersonal(SkapadAv source) {

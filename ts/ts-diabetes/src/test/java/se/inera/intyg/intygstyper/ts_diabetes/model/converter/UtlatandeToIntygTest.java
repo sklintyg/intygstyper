@@ -175,6 +175,29 @@ public class UtlatandeToIntygTest {
         assertEquals(arbetsplatskod, intyg.getSkapadAv().getEnhet().getArbetsplatskod().getExtension());
     }
 
+    @Test
+    public void testConvertSetsVersionFromTextVersion() {
+        Utlatande utlatande = buildUtlatande();
+        utlatande.setTextVersion("03.07");
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertEquals("U07, V03", intyg.getVersion());
+    }
+
+    @Test
+    public void testConvertSetsDefaultVersionIfTextVersionIsNullOrEmpty() {
+        final String defaultVersion = "U06, V02";
+        Utlatande utlatande = buildUtlatande();
+        utlatande.setTextVersion(null);
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertEquals(defaultVersion, intyg.getVersion());
+
+        utlatande.setTextVersion("");
+        intyg = UtlatandeToIntyg.convert(utlatande);
+        assertEquals(defaultVersion, intyg.getVersion());
+    }
+
     private Utlatande buildUtlatande() {
         return buildUtlatande(null, null);
     }

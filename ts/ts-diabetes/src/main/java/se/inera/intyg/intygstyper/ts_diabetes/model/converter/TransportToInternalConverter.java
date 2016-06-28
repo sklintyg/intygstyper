@@ -20,6 +20,7 @@
 package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.VARDKONTAKT_TYP;
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil.getTextVersion;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.util.integration.schema.adapter.InternalDateAdapter;
@@ -32,7 +33,6 @@ import se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalU
 import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class TransportToInternalConverter {
-    private static final String DELIMITER = ".";
 
     private TransportToInternalConverter() {
     }
@@ -51,7 +51,7 @@ public final class TransportToInternalConverter {
         readIntygAvser(result.getIntygAvser(), transport.getIntygAvser());
         result.setVardkontakt(readVardkontakt(transport.getIdentitetStyrkt()));
         result.setKommentar(transport.getOvrigKommentar());
-        result.setTextVersion(transport.getVersion() + DELIMITER + transport.getUtgava());
+        result.setTextVersion(getTextVersion(transport.getVersion(), transport.getUtgava()));
         return result;
     }
 

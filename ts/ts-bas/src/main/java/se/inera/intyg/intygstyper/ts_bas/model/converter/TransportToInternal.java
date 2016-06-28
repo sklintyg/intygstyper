@@ -20,6 +20,7 @@
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.VARDKONTAKT_TYP;
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil.getTextVersion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,6 @@ import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 public final class TransportToInternal {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
-
-    private static final String DELIMITER = ".";
 
     private TransportToInternal() {
     }
@@ -68,7 +67,7 @@ public final class TransportToInternal {
         Utlatande internal = new Utlatande();
         internal.setGrundData(TransportToInternalUtil.buildGrundData(source.getGrundData()));
         internal.setId(source.getIntygsId());
-        internal.setTextVersion(source.getVersion() + DELIMITER + source.getUtgava());
+        internal.setTextVersion(getTextVersion(source.getVersion(), source.getUtgava()));
         internal.setKommentar(source.getOvrigKommentar());
         internal.setTyp(TsBasEntryPoint.MODULE_ID);
 

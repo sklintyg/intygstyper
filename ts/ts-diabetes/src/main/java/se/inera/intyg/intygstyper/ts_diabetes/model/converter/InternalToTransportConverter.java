@@ -19,6 +19,10 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil.DELIMITER_REGEXP;
+
+import org.apache.commons.lang3.StringUtils;
+
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
@@ -31,7 +35,6 @@ import se.inera.intygstjanster.ts.services.v1.Hypoglykemier;
 
 public final class InternalToTransportConverter {
 
-    private static final String DELIMITER_REGEXP = "\\.";
     private static final String DEFAULT_UTGAVA = "06";
     private static final String DEFAULT_VERSION = "02";
 
@@ -56,7 +59,7 @@ public final class InternalToTransportConverter {
             result.setSynfunktion(readSynfunktionDiabetes(utlatande.getSyn()));
         }
 
-        if (utlatande.getTextVersion() != null) {
+        if (StringUtils.isNotBlank(utlatande.getTextVersion())) {
             String[] versionInfo = utlatande.getTextVersion().split(DELIMITER_REGEXP);
             result.setUtgava(String.format("%02d", Integer.parseInt(versionInfo[1])));
             result.setVersion(String.format("%02d", Integer.parseInt(versionInfo[0])));
