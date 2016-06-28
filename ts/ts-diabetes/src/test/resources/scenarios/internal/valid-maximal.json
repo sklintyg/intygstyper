@@ -17,7 +17,13 @@
                     "vardgivarid": "SE0000000000-HAHAHHSAA",
                     "vardgivarnamn": "Vårdgivarnamn"
                 }
-            }
+            },
+            "specialiteter": [
+                "SPECIALITET"
+            ],
+            "befattningar": [
+                "ST_LAKARE"
+            ]
         },
         "patient": {
             "personId": "19121212-1212",

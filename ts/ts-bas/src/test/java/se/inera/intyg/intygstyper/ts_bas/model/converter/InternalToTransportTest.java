@@ -34,10 +34,10 @@ import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
  * Unit test for InternalToExternalConverter.
@@ -57,19 +57,6 @@ public class InternalToTransportTest {
         Field field = SpecialistkompetensService.class.getDeclaredField("codeToDescription");
         field.setAccessible(true);
         field.set(specialistkompetensService, ImmutableMap.of("7199", "Hörselrubbningar"));
-    }
-
-    @Test
-    public void testConvertUtlatandeFromInternalToExternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getInternalScenarios("valid-*")) {
-            Utlatande intUtlatande = scenario.asInternalModel();
-
-            TSBasIntyg actual = InternalToTransport.convert(intUtlatande).getIntyg();
-
-            TSBasIntyg expected = scenario.asTransportModel().getIntyg();
-
-            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
-        }
     }
 
     @Test

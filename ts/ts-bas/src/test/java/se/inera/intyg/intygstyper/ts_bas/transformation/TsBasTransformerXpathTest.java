@@ -107,16 +107,20 @@ public class TsBasTransformerXpathTest {
         // Skapad Av
         SkapadAv skapadAv = utlatande.getGrundData().getSkapadAv();
 
-        assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
-        xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        if (!skapadAv.getBefattningar().isEmpty()) {
+            assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
+                xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        }
 
         assertEquals("Skapad av - fullständigt namn", skapadAv.getFullstandigtNamn(),
                 xPath.evaluate(XPathExpressions.SKAPAD_AV_NAMNFORTYDLIGANDE_XPATH));
 
         assertEquals("Skapad av - hsa-id", skapadAv.getPersonId().getExtension(), xPath.evaluate(XPathExpressions.SKAPAD_AV_HSAID_XPATH));
 
-        assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
-        xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        if (!skapadAv.getSpecialiteter().isEmpty()) {
+            assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
+                    xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        }
 
         // Vardenhet
         Vardenhet vardenhet = skapadAv.getVardenhet();

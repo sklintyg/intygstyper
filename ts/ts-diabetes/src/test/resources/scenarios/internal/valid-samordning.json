@@ -45,7 +45,8 @@
     },
     "hypoglykemier" : {
         "kunskapOmAtgarder" : false,
-        "teckenNedsattHjarnfunktion" : false
+        "teckenNedsattHjarnfunktion" : false,
+        "allvarligForekomstVakenTid" : false
     },
     "syn" : {
         "separatOgonlakarintyg" : true
