@@ -23,13 +23,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class UtlatandeToIntygTest {
@@ -116,6 +120,19 @@ public class UtlatandeToIntygTest {
         assertNotNull(intyg.getRelation().get(0).getTyp().getCodeSystem());
         assertEquals(relationIntygsId, intyg.getRelation().get(0).getIntygsId().getExtension());
         assertNotNull(intyg.getRelation().get(0).getIntygsId().getRoot());
+    }
+
+    @Test
+    public void testConvertDoesNotAddSvarForDiagnosWithoutCode() {
+        Diagnos diagnos = Diagnos.create(null, Diagnoskodverk.ICD_10_SE.name(), null, null);
+        LuseUtlatande utlatande = buildUtlatande().toBuilder().setDiagnoser(Arrays.asList(diagnos)).build();
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(intyg.getSvar().isEmpty());
+    }
+
+    private LuseUtlatande buildUtlatande() {
+        return buildUtlatande(null, null);
     }
 
     private LuseUtlatande buildUtlatande(RelationKod relationKod, String relationIntygsId) {
