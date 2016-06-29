@@ -334,5 +334,4 @@ public final class UtlatandeToIntyg {
             throw new IllegalArgumentException();
         }
     }
-
 }
