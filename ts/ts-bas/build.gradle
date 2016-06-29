@@ -115,4 +115,5 @@ dependencies {
   testCompile 'org.unitils:unitils-core:3.3'
   testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
   testCompile 'xmlunit:xmlunit:1.4'
+  testCompile 'org.skyscreamer:jsonassert:1.2.0'
 }
