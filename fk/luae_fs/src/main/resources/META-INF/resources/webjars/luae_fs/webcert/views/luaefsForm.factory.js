@@ -39,15 +39,12 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                             hideExpression: '!model.annatGrundForMU',
                             templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                         },
-                        //Fråga 2 -----
 
-                        {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
-                    ]
-                },
-                {
-                    wrapper: 'wc-field',
-                    templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
-                    fieldGroup: [
+                        //Fråga 2 -----
+                        {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
+
+
+                        // Underlag
                         {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                         {
                             key: 'underlag', type: 'underlag',
@@ -74,10 +71,55 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                         }
                     ]
                 },
+
+                //// TEST ERIK
+                //
+                //{
+                //    wrapper: 'wc-field',
+                //    templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
+                //    fieldGroup: [
+                //        {type: 'headline', templateOptions: {label: 'FRG_2', level:4}},
+                //        {key: 'kannedomOmPatient', className:'no-space-left', type: 'singleDate'}
+                //    ]
+                //},
+                //// END TEST ERIK
+                //
+                //
+                //{
+                //    wrapper: 'wc-field',
+                //    templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
+                //    fieldGroup: [
+                //        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
+                //        {
+                //            key: 'underlag', type: 'underlag',
+                //            className: 'slide-animation',
+                //            hideExpression: '!model.underlagFinns',
+                //            templateOptions: {
+                //                underlagsTyper: [
+                //                    'NEUROPSYKIATRISKT',
+                //                    'HABILITERING',
+                //                    'ARBETSTERAPEUT',
+                //                    'FYSIOTERAPEUT',
+                //                    'LOGOPED',
+                //                    'PSYKOLOG',
+                //                    'SKOLHALSOVARD',
+                //                    'SPECIALISTKLINIK',
+                //                    'VARD_UTOMLANDS',
+                //                    'OVRIGT_UTLATANDE'], //KV_FKMU_005
+                //                typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                //            },
+                //            watcher: {
+                //                expression: 'model.underlagFinns',
+                //                listener: FactoryHelper.underlagListener
+                //            }
+                //        }
+                //    ]
+                //},
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 3, categoryName: categoryNames[3]},
                     fieldGroup: [
+                        {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
                         {
                             key: 'diagnoser',
                             type: 'diagnos',

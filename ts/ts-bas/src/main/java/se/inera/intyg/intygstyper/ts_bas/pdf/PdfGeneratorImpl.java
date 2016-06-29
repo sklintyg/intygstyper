@@ -32,15 +32,15 @@ import com.itextpdf.text.pdf.*;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
-import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.DiabetesKod;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.IdKontrollKod;
+import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
+import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGeneratorException;
 
@@ -471,7 +471,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
         // map codes to descriptions, if possible
         List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter()
                 .stream()
-                .map(code -> SpecialistkompetensKod.getDescriptionFromCode(code).orElse(code))
+                .map(code -> SpecialistkompetensService.getDescriptionFromCode(code).orElse(code))
                 .collect(Collectors.toList());
         if (specialiteter.size() > 0) {
             SPECIALISTKOMPETENS_CHECK.setField(fields, true);

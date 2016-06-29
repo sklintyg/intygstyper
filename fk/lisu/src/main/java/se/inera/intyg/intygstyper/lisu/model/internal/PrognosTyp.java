@@ -30,19 +30,19 @@ public enum PrognosTyp {
     /**
      * Med stor sannolikhet (id 1).
      */
-    MED_STOR_SANNOLIKHET(1, "STOR_SANNOLIKHET", "Patienten kommer med stor sannolikhet att kunna återgå helt i nuvarande sysselsättning efter denna sjukskrivning."),
+    MED_STOR_SANNOLIKHET(1, "STOR_SANNOLIKHET", "Patienten kommer med stor sannolikhet att kunna återgå helt i nuvarande sysselsättning efter denna sjukskrivning"),
     /**
      * Sannolikt ej återgå till nuvarande sysselsättning (id 3).
      */
-    SANNOLIKT_EJ_ATERGA_TILL_SYSSELSATTNING(3, "SANNOLIKT_INTE", "Patienten kan sannolikt inte återgå till nuvarande sysselsättning."),
+    SANNOLIKT_EJ_ATERGA_TILL_SYSSELSATTNING(3, "SANNOLIKT_INTE", "Patienten kan sannolikt inte återgå till nuvarande sysselsättning"),
     /**
      * Prognos oklar (id 4).
      */
-    PROGNOS_OKLAR(4, "PROGNOS_OKLAR", "Prognos för återgång i nuvarande sysselsättning är oklar."),
+    PROGNOS_OKLAR(4, "PROGNOS_OKLAR", "Prognos för återgång i nuvarande sysselsättning är oklar"),
     /**
      * Sannolikt återgå i sysselsättning efter x antal dagar (id 5).
      */
-    ATER_X_ANTAL_DGR(5, "ATER_X_ANTAL_DGR", "Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar.");
+    ATER_X_ANTAL_DGR(5, "ATER_X_ANTAL_DGR", "Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar");
 
     private final int id;
     private final String transportId;

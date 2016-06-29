@@ -51,7 +51,7 @@ public abstract class Sjukskrivning {
         /**
          * Nedsatt till 3/4 (id 2).
          */
-        NEDSATT_3_4(2, "TRE_FJARDEDEL", "75 % "),
+        NEDSATT_3_4(2, "TRE_FJARDEDEL", "75%"),
         /**
          * Nedsatt till hälften (id 3).
          */

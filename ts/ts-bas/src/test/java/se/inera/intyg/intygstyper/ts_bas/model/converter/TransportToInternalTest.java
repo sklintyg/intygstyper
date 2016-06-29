@@ -23,13 +23,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
-import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
 /**
  * Test class for TransportToExternal, contains methods for setting up Utlatande using both the transport model and the
@@ -41,40 +40,15 @@ import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 public class TransportToInternalTest {
 
     @Test
-    public void testTransportToInternal() throws Exception {
-        for (Scenario scenario : ScenarioFinder.getTransportScenarios("valid-*")) {
-            TSBasIntyg utlatande = scenario.asTransportModel().getIntyg();
-
-            Utlatande actual = TransportToInternal.convert(utlatande);
-
-            Utlatande expected = scenario.asInternalModel();
-
-            ModelAssert.assertEquals("Error in scenario " + scenario.getName(), expected, actual);
-        }
-    }
-
-    @Test
-    public void testConvertMapsSpecialistkompetensDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
-        SpecialistkompetensKod specialistkompetens = SpecialistkompetensKod.ALLERGI;
+    public void testConvertMapsSpecialistkompetens() throws ScenarioNotFoundException, ConverterException {
+        final String specialistkompetens = "Hörselrubbningar";
         RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
         transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens.getDescription());
+        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens);
         Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
         HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getSpecialiteter().size());
-        assertEquals(specialistkompetens.getCode(), skapadAv.getSpecialiteter().get(0));
-    }
-
-    @Test
-    public void testConvertKeepSpecialistkompetensCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
-        String specialistkompetenskod = "kod";
-        RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().clear();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetenskod);
-        Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
-        HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
-        assertEquals(1, skapadAv.getSpecialiteter().size());
-        assertEquals(specialistkompetenskod, skapadAv.getSpecialiteter().get(0));
+        assertEquals(specialistkompetens, skapadAv.getSpecialiteter().get(0));
     }
 
     @Test

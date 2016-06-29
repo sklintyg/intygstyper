@@ -20,11 +20,15 @@ package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +46,7 @@ import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUti
 import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WebcertModelFactoryTest {
@@ -53,32 +58,13 @@ public class WebcertModelFactoryTest {
     private WebcertModelFactoryImpl factory;
 
     @Test
-    public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException {
-        // Programmatically creating a CreateNewDraftHolder
-        Patient patient = new Patient();
-        patient.setFornamn("Johnny");
-        patient.setMellannamn("Jobs");
-        patient.setEfternamn("Appleseed");
-        patient.setFullstandigtNamn("Johnny Jobs Appleseed");
-        patient.setPersonId(new Personnummer("19121212-1212"));
-        patient.setPostadress("Testvägen 12");
-        patient.setPostnummer("13337");
-        patient.setPostort("Huddinge");
-        HoSPersonal skapadAv = createHosPersonal();
+    public void testCreateEditableModel() throws JsonParseException, JsonMappingException, IOException, ConverterException {
+        when(intygTexts.getLatestVersion(eq(TsDiabetesEntryPoint.MODULE_ID))).thenReturn("version");
 
-        CreateNewDraftHolder draftCertHolder = new CreateNewDraftHolder("testID", skapadAv, patient);
-
-        se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande utlatande = null;
-
-        try {
-            utlatande = factory.createNewWebcertDraft(draftCertHolder);
-        } catch (ConverterException e) {
-            e.printStackTrace();
-        }
+        Utlatande utlatande = factory.createNewWebcertDraft(buildNewDraftData("testID"));
 
         assertNotNull(utlatande);
-        assertNotNull(utlatande.getId());
-        assertNotNull(utlatande.getTyp());
+        assertEquals(TsDiabetesEntryPoint.MODULE_ID, utlatande.getTyp());
         assertNotNull(utlatande.getGrundData().getSkapadAv());
         assertNotNull(utlatande.getGrundData().getPatient());
 
@@ -88,6 +74,7 @@ public class WebcertModelFactoryTest {
         assertEquals("Testvägen 12", utlatande.getGrundData().getPatient().getPostadress());
         assertEquals("13337", utlatande.getGrundData().getPatient().getPostnummer());
         assertEquals("Huddinge", utlatande.getGrundData().getPatient().getPostort());
+        assertEquals("version", utlatande.getTextVersion());
     }
 
     @Test
@@ -115,6 +102,26 @@ public class WebcertModelFactoryTest {
         WebcertModelFactoryUtil.updateSkapadAv(utlatande, hosPerson, signingDate);
         assertEquals(Arrays.asList(befattning), utlatande.getGrundData().getSkapadAv().getBefattningar());
         assertEquals(specialiseringar, utlatande.getGrundData().getSkapadAv().getSpecialiteter());
+    }
+
+    @Test
+    public void testCreateNewWebcertDraftDoesNotGenerateIncompleteSvarInRivtaV2Format() throws ConverterException {
+        // this to follow schema during CertificateStatusUpdateForCareV2
+        Utlatande draft = factory.createNewWebcertDraft(buildNewDraftData("INTYG_ID"));
+        assertTrue(CollectionUtils.isEmpty(UtlatandeToIntyg.convert(draft).getSvar()));
+    }
+
+    private CreateNewDraftHolder buildNewDraftData(String intygId) {
+        Patient patient = new Patient();
+        patient.setFornamn("Johnny");
+        patient.setMellannamn("Jobs");
+        patient.setEfternamn("Appleseed");
+        patient.setFullstandigtNamn("Johnny Jobs Appleseed");
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        patient.setPostadress("Testvägen 12");
+        patient.setPostnummer("13337");
+        patient.setPostort("Huddinge");
+        return new CreateNewDraftHolder(intygId, createHosPersonal(), patient);
     }
 
     private HoSPersonal createHosPersonal() {

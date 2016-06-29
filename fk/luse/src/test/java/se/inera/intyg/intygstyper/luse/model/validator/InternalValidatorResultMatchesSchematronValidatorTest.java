@@ -48,10 +48,12 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 @RunWith(Parameterized.class)
 public class InternalValidatorResultMatchesSchematronValidatorTest {
 
-    private static final String CORRECT_DIAGNOSKODSYSTEM = "ICD_10_SE";
+    private static final String CORRECT_DIAGNOSKODSYSTEM1 = "ICD_10_SE";
+    private static final String CORRECT_DIAGNOSKODSYSTEM2 = "KSH_97_P";
     private static final String CORRECT_DIAGNOSKOD1 = "S666";
     private static final String CORRECT_DIAGNOSKOD2 = "Z731";
     private static final String CORRECT_DIAGNOSKOD3 = "A039";
+    private static final String CORRECT_DIAGNOSKOD4 = "A00-";
 
     private Scenario scenario;
     private boolean shouldFail;
@@ -103,9 +105,10 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
 
     @Test
     public void testScenarios() throws Exception {
-        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD1, CORRECT_DIAGNOSKODSYSTEM)).thenReturn(true);
-        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD2, CORRECT_DIAGNOSKODSYSTEM)).thenReturn(true);
-        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD3, CORRECT_DIAGNOSKODSYSTEM)).thenReturn(true);
+        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD1, CORRECT_DIAGNOSKODSYSTEM1)).thenReturn(true);
+        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD2, CORRECT_DIAGNOSKODSYSTEM1)).thenReturn(true);
+        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD3, CORRECT_DIAGNOSKODSYSTEM1)).thenReturn(true);
+        when(mockModuleService.validateDiagnosisCode(CORRECT_DIAGNOSKOD4, CORRECT_DIAGNOSKODSYSTEM2)).thenReturn(true);
         doInternalAndSchematronValidation(scenario, shouldFail);
     }
 

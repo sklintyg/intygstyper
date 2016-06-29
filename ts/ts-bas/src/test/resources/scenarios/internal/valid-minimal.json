@@ -7,7 +7,6 @@
         "skapadAv": {
             "personId": "SE0000000000-1333",
             "fullstandigtNamn": "Doktor Thompson",
-            "specialiteter": ["SPECIALITET"],
             "vardenhet": {
                 "enhetsid": "SE0000000000-1337",
                 "enhetsnamn": "Vårdenhet Väst",
@@ -19,9 +18,7 @@
                     "vardgivarid": "SE0000000000-HAHAHHSAA",
                     "vardgivarnamn": "Vårdgivarnamn"
                 }
-            },
-            "befattningar" : ["ST_LAKARE"]
-
+            }
         },
         "patient": {
             "personId": "19121212-1212",
@@ -133,18 +130,7 @@
     },
     
     "bedomning" : {
-        "korkortstyp" : [
-            {"type": "C1", "selected": false},
-            {"type": "C1E", "selected": false},
-            {"type": "C", "selected": true},
-            {"type": "CE", "selected": false},
-            {"type": "D1", "selected": false},
-            {"type": "D1E", "selected": false},
-            {"type": "D", "selected": false},
-            {"type": "DE", "selected": false},
-            {"type": "TAXI", "selected": false},
-            {"type": "ANNAT", "selected": false}
-        ]
+        "kanInteTaStallning" : true
     }
     
 }

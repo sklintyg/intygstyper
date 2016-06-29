@@ -19,9 +19,9 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.validator.internal;
 
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.KorkortsKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
 
 public class ValidationContext {
 
@@ -33,8 +33,8 @@ public class ValidationContext {
 
     public boolean isHogreBehorighetContext() {
         for (IntygAvserKategori intygAvser : utlatande.getIntygAvser().getKorkortstyp()) {
-            KorkortsKod intygAvserEnum = Enum.valueOf(KorkortsKod.class, intygAvser.name());
-            if (intygAvserEnum != null && KorkortsKod.HOGRE_KORKORTSBEHORIGHET.contains(intygAvserEnum)) {
+            IntygAvserKod intygAvserEnum = IntygAvserKod.valueOf(intygAvser.name());
+            if (intygAvserEnum != null && IntygAvserKod.HOGRE_KORKORTSBEHORIGHET.contains(intygAvserEnum)) {
                 return true;
             }
         }

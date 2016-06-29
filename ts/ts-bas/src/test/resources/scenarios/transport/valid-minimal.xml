@@ -53,8 +53,6 @@
           <vardgivarnamn>Vårdgivarnamn</vardgivarnamn>
         </vardgivare>
       </vardenhet>
-      <specialiteter>SPECIALITET</specialiteter>
-      <befattningar>ST_LAKARE</befattningar>
     </skapadAv>
     <patient>
       <personId>
@@ -129,7 +127,7 @@
     <harStadigvarandeMedicinering>false</harStadigvarandeMedicinering>
   </ovrigMedicinering>
   <bedomning>
-    <korkortstyp>C</korkortstyp>
+    <kanInteTaStallning>true</kanInteTaStallning>
   </bedomning>
 </ns3:intyg>
 </ns3:RegisterTSBas>

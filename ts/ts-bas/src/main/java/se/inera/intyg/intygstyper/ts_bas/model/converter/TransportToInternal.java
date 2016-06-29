@@ -19,15 +19,20 @@
 
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
+import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.VARDKONTAKT_TYP;
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil.getTextVersion;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil;
 import se.inera.intygstjanster.ts.services.v1.*;
 import se.inera.intygstjanster.ts.services.v1.Medvetandestorning;
@@ -37,10 +42,6 @@ import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 public final class TransportToInternal {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
-
-    private static final String VARDKONTAKT_TYP = "5880005";
-
-    private static final String DELIMITER = ".";
 
     private TransportToInternal() {
     }
@@ -66,9 +67,9 @@ public final class TransportToInternal {
         Utlatande internal = new Utlatande();
         internal.setGrundData(TransportToInternalUtil.buildGrundData(source.getGrundData()));
         internal.setId(source.getIntygsId());
-        internal.setTextVersion(source.getVersion() + DELIMITER + source.getUtgava());
+        internal.setTextVersion(getTextVersion(source.getVersion(), source.getUtgava()));
         internal.setKommentar(source.getOvrigKommentar());
-        internal.setTyp(UtlatandeKod.getCurrentVersion().getCode());
+        internal.setTyp(TsBasEntryPoint.MODULE_ID);
 
         internal.getPsykiskt().setPsykiskSjukdom(source.isHarPsykiskStorning());
         internal.getKognitivt().setSviktandeKognitivFunktion(source.isHarKognitivStorning());
@@ -103,13 +104,15 @@ public final class TransportToInternal {
     private static void buildBedomning(Utlatande internal, BedomningTypBas source) {
         internal.getBedomning().setKanInteTaStallning(source.isKanInteTaStallning());
         internal.getBedomning().setLakareSpecialKompetens(source.getBehovAvLakareSpecialistKompetens());
-        internal.getBedomning().getKorkortstyp().addAll(convertBedomningKorkortstyp(source.getKorkortstyp()));
+        if (CollectionUtils.isNotEmpty(source.getKorkortstyp())) {
+            internal.getBedomning().getKorkortstyp().addAll(convertBedomningKorkortstyp(source.getKorkortstyp()));
+        }
     }
 
     private static List<BedomningKorkortstyp> convertBedomningKorkortstyp(List<KorkortsbehorighetTsBas> source) {
         List<BedomningKorkortstyp> korkortsTyper = new ArrayList<BedomningKorkortstyp>();
         for (KorkortsbehorighetTsBas it : source) {
-            korkortsTyper.add(BedomningKorkortstyp.valueOf(mapToKorkortsbehorighetTsBas(it.name())));
+            korkortsTyper.add(BedomningKorkortstyp.valueOf(it.value().value()));
         }
         return korkortsTyper;
     }
@@ -117,7 +120,9 @@ public final class TransportToInternal {
     private static void buildDiabetes(Utlatande internal, DiabetesTypBas source) {
         internal.getDiabetes().setHarDiabetes(source.isHarDiabetes());
         if (source.isHarDiabetes()) {
-            internal.getDiabetes().setDiabetesTyp(source.getDiabetesTyp().name().equals("TYP_1") ? "DIABETES_TYP_1" : "DIABETES_TYP_2");
+            if (source.getDiabetesTyp() != null) {
+                internal.getDiabetes().setDiabetesTyp(TransportToInternalUtil.convertDiabetesTyp(source.getDiabetesTyp()).name());
+            }
             internal.getDiabetes().setInsulin(source.isHarBehandlingInsulin());
             internal.getDiabetes().setKost(source.isHarBehandlingKost());
             internal.getDiabetes().setTabletter(source.isHarBehandlingTabletter());
@@ -137,28 +142,8 @@ public final class TransportToInternal {
     }
 
     private static void buildIdentitetStyrkt(Utlatande internal, IdentitetStyrkt source) {
-        internal.getVardkontakt().setIdkontroll(mapToInternalIdKontroll(source.getIdkontroll().name()));
-        // TODO What is this used for?
         internal.getVardkontakt().setTyp(VARDKONTAKT_TYP);
-    }
-
-    private static String mapToInternalIdKontroll(String idkontroll) {
-        switch (idkontroll) {
-        case "IDK_1":
-            return "ID_KORT";
-        case "IDK_2":
-            return "FORETAG_ELLER_TJANSTEKORT";
-        case "IDK_3":
-            return "KORKORT";
-        case "IDK_4":
-            return "PERS_KANNEDOM";
-        case "IDK_5":
-            return "FORSAKRAN_KAP18";
-        case "IDK_6":
-            return "PASS";
-        default:
-            return null;
-        }
+        internal.getVardkontakt().setIdkontroll(IdKontrollKod.fromCode(source.getIdkontroll().value()).name());
     }
 
     private static void buildIntygAvser(Utlatande internal, IntygsAvserTypBas source) {
@@ -168,7 +153,7 @@ public final class TransportToInternal {
     private static List<IntygAvserKategori> convertIntygAvsergKorkortstyp(List<KorkortsbehorighetTsBas> source) {
         List<IntygAvserKategori> korkortsTyper = new ArrayList<IntygAvserKategori>();
         for (KorkortsbehorighetTsBas it : source) {
-            korkortsTyper.add(IntygAvserKategori.valueOf(mapToKorkortsbehorighetTsBas(it.name())));
+            korkortsTyper.add(IntygAvserKategori.valueOf(it.value().value()));
         }
         return korkortsTyper;
     }
@@ -249,32 +234,5 @@ public final class TransportToInternal {
     private static void buildUvecklingsstorning(Utlatande internal, Utvecklingsstorning source) {
         internal.getUtvecklingsstorning().setHarSyndrom(source.isHarAndrayndrom());
         internal.getUtvecklingsstorning().setPsykiskUtvecklingsstorning(source.isHarPsykiskUtvecklingsstorning());
-    }
-
-    private static String mapToKorkortsbehorighetTsBas(String name) {
-        switch (name) {
-        case "C":
-            return "C";
-        case "C_1":
-            return "C1";
-        case "C_1_E":
-            return "C1E";
-        case "D_1":
-            return "D1";
-        case "D_1_E":
-            return "D1E";
-        case "D":
-            return "D";
-        case "DE":
-            return "DE";
-        case "CE":
-            return "CE";
-        case "TAXI":
-            return "TAXI";
-        case "ANNAT":
-            return "ANNAT";
-        default:
-            return null;
-        }
     }
 }

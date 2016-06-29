@@ -19,18 +19,14 @@
 
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.joda.time.LocalDateTime;
 
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intygstjanster.ts.services.v1.IntygMeta;
-import se.inera.intygstjanster.ts.services.v1.IntygStatus;
-import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
+import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class TsBasMetaDataConverter {
 
@@ -41,8 +37,6 @@ public final class TsBasMetaDataConverter {
         CertificateMetaData metaData = new CertificateMetaData();
         metaData.setCertificateId(intyg.getIntygsId());
         metaData.setCertificateType(intyg.getIntygsTyp());
-        //metaData.setValidFrom(intygMeta.getValidFrom());
-        //metaData.setValidTo(intygMeta.getValidTo());
         metaData.setIssuerName(intyg.getGrundData().getSkapadAv().getFullstandigtNamn());
         metaData.setFacilityName(intyg.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
         metaData.setSignDate(LocalDateTime.parse(intyg.getGrundData().getSigneringsTidstampel()));

@@ -40,7 +40,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -79,8 +78,7 @@ public class TsBasTransformerXpathTest {
         XPathEvaluator xPath = createXPathEvaluator(transformed);
 
         // Check utlatande against xpath
-        assertEquals("UtlatandeTyp", UtlatandeKod.getCurrentVersion().getTypForTransportConvertion(),
-                xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
+        assertEquals("UtlatandeTyp", "TSTRK1007 (U07, V06)", xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
 
         assertEquals("Utlatande-utgåva", utlatande.getUtgava(), xPath.evaluate(XPathExpressions.TS_UTGAVA_XPATH));
 
@@ -107,16 +105,20 @@ public class TsBasTransformerXpathTest {
         // Skapad Av
         SkapadAv skapadAv = utlatande.getGrundData().getSkapadAv();
 
-        assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
-        xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        if (!skapadAv.getBefattningar().isEmpty()) {
+            assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
+                xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        }
 
         assertEquals("Skapad av - fullständigt namn", skapadAv.getFullstandigtNamn(),
                 xPath.evaluate(XPathExpressions.SKAPAD_AV_NAMNFORTYDLIGANDE_XPATH));
 
         assertEquals("Skapad av - hsa-id", skapadAv.getPersonId().getExtension(), xPath.evaluate(XPathExpressions.SKAPAD_AV_HSAID_XPATH));
 
-        assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
-        xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        if (!skapadAv.getSpecialiteter().isEmpty()) {
+            assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
+                    xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        }
 
         // Vardenhet
         Vardenhet vardenhet = skapadAv.getVardenhet();
@@ -377,8 +379,8 @@ public class TsBasTransformerXpathTest {
                     xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, k.getRekommendation())));
         }
         if (utlatande.getBedomning().isKanInteTaStallning() !=  null && utlatande.getBedomning().isKanInteTaStallning()) {
-            assertEquals("Rekommendationsvärde Kan inte ta ställning (VAR11)", KorkortsKodToIntygAvserMapping.KANINTETASTALLNING.getRekommendation(),
-                    xPath.evaluate(stringXPath(REKOMMENDATION_VARDE_TEMPLATE, KorkortsKodToIntygAvserMapping.KANINTETASTALLNING.getRekommendation())));
+            assertTrue("Rekommendationsvärde Kan inte ta ställning (VAR11)",
+                    xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_TEMPLATE, KorkortsKodToIntygAvserMapping.KANINTETASTALLNING.getRekommendation())));
         }
 
         if (utlatande.getBedomning().getBehovAvLakareSpecialistKompetens() != null) {

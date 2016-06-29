@@ -34,6 +34,7 @@
                 <ns2:extension>SE0000000000-1333</ns2:extension>
             </personId>
             <fullstandigtNamn>Doktor Thompson</fullstandigtNamn>
+            <atLakare>false</atLakare>
             <vardenhet>
                 <enhetsId>
                     <ns2:root>1.2.752.129.2.1.4.1</ns2:root>

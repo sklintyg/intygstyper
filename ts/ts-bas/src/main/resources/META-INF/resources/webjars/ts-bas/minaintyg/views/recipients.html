@@ -35,7 +35,7 @@
 	                    <span message key="ts-bas.inbox.complementaryinfo"></span>
 	                  </h3>
 	                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
-                        <span message key="ts-bas.label.korkort.{{typ.type}}"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
+                      <span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span><span ng-show="!$last">, </span>
                   	  </label>
 	                </div>
 	            </div>

@@ -10,10 +10,9 @@ import org.junit.Test;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
-import se.inera.intyg.intygstyper.fkparent.model.converter.RegisterCertificateTestValidator;
-import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
+import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
+import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
 
 public class SchematronValidatorTest {
 
@@ -39,6 +38,7 @@ public class SchematronValidatorTest {
     public void validXmlPasses() throws Exception {
         String inputXml = Resources.toString(getResource("luse2.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(LUSE_VALIDATOR, inputXml);
+        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertTrue(response.getValidationErrors().isEmpty());
     }
 

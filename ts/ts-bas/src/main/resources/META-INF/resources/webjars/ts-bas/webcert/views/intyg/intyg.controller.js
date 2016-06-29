@@ -66,7 +66,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
             }
 
             function loadIntyg() {
-                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, function(result) {
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, false, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;

@@ -19,33 +19,33 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.*;
 import javax.xml.namespace.QName;
 
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.*;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.inera.intyg.common.schemas.Constants;
+import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.fk7263.utils.ModelAssert;
-import se.inera.intyg.intygstyper.fk7263.utils.Scenario;
-import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import se.inera.intyg.intygstyper.fk7263.utils.*;
 
 /**
  * @author marced, andreaskaltenbach
@@ -88,9 +88,9 @@ public class InternalToTransportConverterTest {
         Diff diff = XMLUnit.compareXML(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
         diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        Assert.assertTrue(diff.toString(), diff.similar());
+        assertTrue(diff.toString(), diff.similar());
     }
-    
+
    @Test
     public void testConversionMaximal() throws JAXBException, IOException, SAXException, ConverterException {
 
@@ -114,9 +114,9 @@ public class InternalToTransportConverterTest {
         Diff diff = XMLUnit.compareXML(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
         diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        Assert.assertTrue(diff.toString(), diff.similar());
+        assertTrue(diff.toString(), diff.similar());
     }
-    
+
     @Test
     public void testConversionWithDiagnosisAsKSH97() throws JAXBException, IOException, SAXException, ConverterException {
 
@@ -140,7 +140,7 @@ public class InternalToTransportConverterTest {
         Diff diff = XMLUnit.compareXML(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
         diff.overrideElementQualifier(new ElementNameAndTextQualifier());
-        Assert.assertTrue(diff.toString(), diff.similar());
+        assertTrue(diff.toString(), diff.similar());
     }
 
     @Test
@@ -164,7 +164,7 @@ public class InternalToTransportConverterTest {
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = new Diff(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
-        Assert.assertTrue(diff.toString(), diff.similar());
+        assertTrue(diff.toString(), diff.similar());
     }
 
     @Test
@@ -176,7 +176,7 @@ public class InternalToTransportConverterTest {
         RegisterMedicalCertificateType registerMedicalCertificateType = InternalToTransport.getJaxbObject(externalFormat);
         String expected = "8b: " + "nedsattMed25Beskrivning. " + "nedsattMed50Beskrivning. " + "nedsattMed75Beskrivning. kommentar";
         String result = registerMedicalCertificateType.getLakarutlatande().getKommentar();
-        Assert.assertEquals(expected, result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -201,7 +201,7 @@ public class InternalToTransportConverterTest {
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = new Diff(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
-        Assert.assertTrue(diff.toString(), diff.similar());
+        assertTrue(diff.toString(), diff.similar());
     }
 
     @Test
@@ -225,7 +225,45 @@ public class InternalToTransportConverterTest {
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = new Diff(expectation, stringWriter.toString());
         diff.overrideDifferenceListener(new NamespacePrefixNameIgnoringListener());
-        Assert.assertTrue(diff.toString(), diff.similar());
+        assertTrue(diff.toString(), diff.similar());
+    }
+
+    @Test
+    public void testPersonnummerRoot() throws Exception {
+        final String personnummer = "19121212-1212";
+        Utlatande utlatande = new Utlatande();
+        GrundData grundData = new GrundData();
+        Patient patient = new Patient();
+        patient.setPersonId(new Personnummer(personnummer));
+        grundData.setPatient(patient);
+        HoSPersonal skapadAv = new HoSPersonal();
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setVardgivare(new Vardgivare());
+        skapadAv.setVardenhet(vardenhet);
+        grundData.setSkapadAv(skapadAv);
+        utlatande.setGrundData(grundData);
+        RegisterMedicalCertificateType res = InternalToTransport.getJaxbObject(utlatande);
+        assertEquals(Constants.PERSON_ID_OID, res.getLakarutlatande().getPatient().getPersonId().getRoot());
+        assertEquals(personnummer, res.getLakarutlatande().getPatient().getPersonId().getExtension());
+    }
+
+    @Test
+    public void testSamordningRoot() throws Exception {
+        final String personnummer = "19800191-0002";
+        Utlatande utlatande = new Utlatande();
+        GrundData grundData = new GrundData();
+        Patient patient = new Patient();
+        patient.setPersonId(new Personnummer(personnummer));
+        grundData.setPatient(patient);
+        HoSPersonal skapadAv = new HoSPersonal();
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setVardgivare(new Vardgivare());
+        skapadAv.setVardenhet(vardenhet);
+        grundData.setSkapadAv(skapadAv);
+        utlatande.setGrundData(grundData);
+        RegisterMedicalCertificateType res = InternalToTransport.getJaxbObject(utlatande);
+        assertEquals(Constants.SAMORDNING_ID_OID, res.getLakarutlatande().getPatient().getPersonId().getRoot());
+        assertEquals(personnummer, res.getLakarutlatande().getPatient().getPersonId().getExtension());
     }
 
     private JAXBElement<?> wrapJaxb(RegisterMedicalCertificateType ws) {

@@ -434,7 +434,7 @@ public final class InternalToTransport {
 
     private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosKodsystem) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
-        String codeSystem = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystem() : null;
+        String codeSystem = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystem(true) : null;
         String codeSystemName = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystemName() : null;
 
         tillstand.setTillstandskod(createCD(diagnoskod, codeSystem, codeSystemName));
@@ -522,7 +522,7 @@ public final class InternalToTransport {
         PatientType patientType = new PatientType();
         patientType.setFullstandigtNamn(source.getFullstandigtNamn());
         II id = new II();
-        id.setRoot(Constants.PERSON_ID_OID);
+        id.setRoot(source.getPersonId().isSamordningsNummer() ? Constants.SAMORDNING_ID_OID : Constants.PERSON_ID_OID);
         id.setExtension(source.getPersonId().getPersonnummer());
         patientType.setPersonId(id);
         return patientType;

@@ -15,7 +15,7 @@
     <skickatTidpunkt>2015-12-07T15:48:05</skickatTidpunkt>
     <patient>
       <person-id>
-        <ns3:root>1.2.752.129.2.1.3.3</ns3:root>
+        <ns3:root>1.2.752.129.2.1.3.1</ns3:root>
         <ns3:extension>192703104321</ns3:extension>
       </person-id>
       <fornamn>Olivia</fornamn>
@@ -125,7 +125,9 @@
     </svar>
     <svar id="7">
       <delsvar id="7.1">Jag har kollat på han.</delsvar>
-      <delsvar id="7.2">false</delsvar>
+    </svar>
+    <svar id="45">
+      <delsvar id="45.1">false</delsvar>
     </svar>
     <svar id="8">
       <delsvar id="8.1">Helt pantad</delsvar>

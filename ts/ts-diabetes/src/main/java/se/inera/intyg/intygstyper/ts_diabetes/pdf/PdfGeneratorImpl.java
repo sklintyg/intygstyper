@@ -31,15 +31,15 @@ import com.itextpdf.text.pdf.*;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.services.texts.model.IntygTexts;
-import se.inera.intyg.common.support.common.enumerations.SpecialistkompetensKod;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.IdKontrollKod;
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.ObservationsKod;
+import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
+import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGeneratorException;
 
@@ -301,9 +301,9 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     private void populateAllmant(Diabetes diabetes, AcroFields fields) throws IOException, DocumentException {
         DIABETES_AR_FOR_DIAGNOS.setField(fields, diabetes.getObservationsperiod());
         if (diabetes.getDiabetestyp() != null) {
-            if (diabetes.getDiabetestyp().equals(ObservationsKod.DIABETES_TYP_1.name())) {
+            if (diabetes.getDiabetestyp().equals(DiabetesKod.DIABETES_TYP_1.name())) {
                 DIABETES_TYP_1.setField(fields, true);
-            } else if (diabetes.getDiabetestyp().equals(ObservationsKod.DIABETES_TYP_2.name())) {
+            } else if (diabetes.getDiabetestyp().equals(DiabetesKod.DIABETES_TYP_2.name())) {
                 DIABETES_TYP_2.setField(fields, true);
             }
         }
@@ -389,7 +389,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
         // map codes to descriptions, if possible
         List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter()
                 .stream()
-                .map(code -> SpecialistkompetensKod.getDescriptionFromCode(code).orElse(code))
+                .map(code -> SpecialistkompetensService.getDescriptionFromCode(code).orElse(code))
                 .collect(Collectors.toList());
         if (specialiteter.size() > 0) {
 

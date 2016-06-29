@@ -209,14 +209,10 @@
                     </div>
                   </ul>
                 </div>
-                <div mi-field field-dynamic-label="DFR_2" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
+                <div mi-field field-dynamic-label="DFR_2.1" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
                   {{cert.kannedomOmPatient | date:'longDate' }}
                 </div>
-              </div>
-
-              <!-- Andra medicinska utredningar och underlag -->
-              <div mi-category category-label="KAT_2.RBK">
-                <div mi-field field-dynamic-label="DFR_3" filled="cert.underlagFinns!=null">
+                <div mi-field field-dynamic-label="DFR_3.1" filled="cert.underlagFinns!=null">
                   <div boolean-view="underlagFinns" field-model="cert"></div>
                 </div>
                 <div mi-field filled="cert.underlag">
@@ -236,16 +232,9 @@
                 </div>
               </div>
 
-              <!-- Sjukdomsförlopp -->
-              <div mi-category category-label="KAT_3.RBK">
-                <div mi-field field-dynamic-label="DFR_5.1" filled="cert.sjukdomsforlopp">
-                  <div id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</div>
-                </div>
-              </div>
-
               <!-- Diagnos -->
               <div mi-category category-label="KAT_4.RBK">
-                <div mi-field field-dynamic-label="KAT_4" filled="cert.diagnoser.length">
+                <div mi-field field-dynamic-label="FRG_6" filled="cert.diagnoser.length">
                   <div class="row">
                     <div class="col-xs-4">
                       <label class="bold">
@@ -275,6 +264,13 @@
                 </div>
                 <div mi-field field-dynamic-label="DFR_7.3" filled="cert.diagnosForNyBedomning!=null">
                   <div id="diagnosForNyBedomning" class="multiline">{{cert.diagnosForNyBedomning}}</div>
+                </div>
+              </div>
+
+              <!-- Sjukdomsförlopp -->
+              <div mi-category category-label="KAT_3.RBK">
+                <div mi-field field-dynamic-label="DFR_5.1" filled="cert.sjukdomsforlopp">
+                  <div id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</div>
                 </div>
               </div>
 

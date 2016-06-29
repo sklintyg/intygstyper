@@ -70,9 +70,9 @@
     </patient>
   </grundData>
   <intygAvser>
-    <korkortstyp>C</korkortstyp>
-    <korkortstyp>C1E</korkortstyp>
     <korkortstyp>C1</korkortstyp>
+    <korkortstyp>C1E</korkortstyp>
+    <korkortstyp>C</korkortstyp>
     <korkortstyp>CE</korkortstyp>
     <korkortstyp>D1</korkortstyp>
     <korkortstyp>D1E</korkortstyp>
@@ -156,9 +156,9 @@
   </ovrigMedicinering>
   <ovrigKommentar>Här kommer en övrig kommentar</ovrigKommentar>
   <bedomning>
-    <korkortstyp>C</korkortstyp>
-    <korkortstyp>C1E</korkortstyp>
     <korkortstyp>C1</korkortstyp>
+    <korkortstyp>C1E</korkortstyp>
+    <korkortstyp>C</korkortstyp>
     <korkortstyp>CE</korkortstyp>
     <korkortstyp>D1</korkortstyp>
     <korkortstyp>D1E</korkortstyp>

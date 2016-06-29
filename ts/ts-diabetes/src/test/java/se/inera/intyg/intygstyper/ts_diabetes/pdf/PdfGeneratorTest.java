@@ -20,24 +20,28 @@ package se.inera.intyg.intygstyper.ts_diabetes.pdf;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PdfGeneratorTest {
 
-    private PdfGeneratorImpl pdfGen;
+    @InjectMocks
+    private PdfGeneratorImpl pdfGen = new PdfGeneratorImpl(true);
 
-    public PdfGeneratorTest() {
-        pdfGen = new PdfGeneratorImpl(true);
-    }
+    @Mock
+    private IntygTextsService intygTexts;
 
     @Test
     public void testGeneratePdf() throws Exception {

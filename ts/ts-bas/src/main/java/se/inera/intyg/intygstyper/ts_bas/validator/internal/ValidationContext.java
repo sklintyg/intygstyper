@@ -19,9 +19,9 @@
 
 package se.inera.intyg.intygstyper.ts_bas.validator.internal;
 
-import se.inera.intyg.intygstyper.ts_bas.model.codes.KorkortsKod;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
 
 public class ValidationContext {
 
@@ -33,8 +33,8 @@ public class ValidationContext {
 
     public boolean isPersontransportContext() {
         for (IntygAvserKategori intygAvser : utlatande.getIntygAvser().getKorkortstyp()) {
-            KorkortsKod intygAvserEnum = Enum.valueOf(KorkortsKod.class, intygAvser.name());
-            if (intygAvserEnum != null && KorkortsKod.PERSONTRANSPORT.contains(intygAvserEnum)) {
+            IntygAvserKod intygAvserEnum = IntygAvserKod.valueOf(intygAvser.name());
+            if (intygAvserEnum != null && IntygAvserKod.PERSONTRANSPORT.contains(intygAvserEnum)) {
                 return true;
             }
         }

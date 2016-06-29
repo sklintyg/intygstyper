@@ -1,9 +1,9 @@
 angular.module('luae_na').controller('luae_na.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
         'common.messageService', 'common.UserModel', 'luae_na.IntygController.ViewStateService',
-        'luae_na.FormFactory', 'common.dynamicLabelService',
+        'luae_na.FormFactory', 'common.dynamicLabelService', 'common.ObjectHelper',
         function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
-            messageService, UserModel, ViewState, formFactory, DynamicLabelService) {
+            messageService, UserModel, ViewState, formFactory, DynamicLabelService, ObjectHelper) {
             'use strict';
 
             ViewState.reset();
@@ -29,7 +29,8 @@ angular.module('luae_na').controller('luae_na.ViewCertCtrl',
              */
             function loadIntyg() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, function(result) {
+                var sjf = ObjectHelper.isDefined($stateParams.sjf) ? $stateParams.sjf : false;
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, sjf, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;

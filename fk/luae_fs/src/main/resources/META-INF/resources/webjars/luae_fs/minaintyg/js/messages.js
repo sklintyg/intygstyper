@@ -79,7 +79,7 @@ var luae_fsMessages = {
         'luae_fs.label.yes': 'Ja',
         'luae_fs.label.no': 'Nej',
         'luae_fs.label.otherinformation': 'Övriga upplysningar och förtydliganden',
-        'luae_fs.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'luae_fs.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'luae_fs.label.date': 'Datum',
         'luae_fs.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 
@@ -88,16 +88,6 @@ var luae_fsMessages = {
         'luae_fs.fishbone.label.valj-mottagare': 'Välj mottagare',
         'luae_fs.fishbone.label.granska-skicka': 'Granska och skicka',
         'luae_fs.fishbone.label.bekraftelse': 'Bekräftelse',
-
-        'luae_fs.vardkontakt.5880005': 'Min undersökning av patienten den %0',
-        'luae_fs.vardkontakt.undersokning': 'Min undersökning av patienten den ',
-        'luae_fs.vardkontakt.185317003': 'Min telefonkontakt med patienten den %0',
-        'luae_fs.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',
-        'luae_fs.referens.419891008': 'Journaluppgifter, den %0',
-        'luae_fs.referens.journal': 'Journaluppgifter, den ',
-        'luae_fs.referens.kannedomompatient': 'Kännedom om patient, den ',
-        'luae_fs.referens.74964007': 'Annat, den %0',
-        'luae_fs.referens.annat': 'Annat, den ',
 
         'luae_fs.common.cancel': 'Avbryt',
 

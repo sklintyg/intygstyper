@@ -300,9 +300,9 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
         }
-        diagnoskodverk = Diagnoskodverk.getEnumByCodeSystem(diagnosKodSystem);
-        bidiagnoskodverk1 = Diagnoskodverk.getEnumByCodeSystem(bidiagnosKodSystem1);
-        bidiagnoskodverk2 = Diagnoskodverk.getEnumByCodeSystem(bidiagnosKodSystem2);
+        diagnoskodverk = Diagnoskodverk.getEnumByCodeSystem(diagnosKodSystem, false);
+        bidiagnoskodverk1 = Diagnoskodverk.getEnumByCodeSystem(bidiagnosKodSystem1, false);
+        bidiagnoskodverk2 = Diagnoskodverk.getEnumByCodeSystem(bidiagnosKodSystem2, false);
 
         diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning, diagnosDisplayName));
 

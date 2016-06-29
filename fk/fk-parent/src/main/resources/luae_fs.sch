@@ -339,12 +339,14 @@
 
   <iso:pattern id="non-empty-string-pattern">
     <iso:rule id="non-empty-string" abstract="true">
+      <iso:assert test="count(*) = 0">Värdet får inte vara inbäddat i något element.</iso:assert>
       <iso:assert test="string-length(normalize-space(text())) > 0">Sträng kan inte vara tom.</iso:assert>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="boolean-pattern">
     <iso:rule id="boolean" abstract="true">
+      <iso:assert test="count(*) = 0">Booleskt värde får inte vara inbäddat i något element.</iso:assert>
       <iso:assert test=". castable as xs:boolean">Kan bara vara 'true/1' eller 'false/0'</iso:assert>
     </iso:rule>
   </iso:pattern>
@@ -353,13 +355,16 @@
     <iso:rule id="cv" abstract="true">
       <iso:assert test="count(tp:cv) = 1">Ett värde av typen CV måste ha ett cv-element</iso:assert>
       <iso:assert test="count(tp:cv/tp:codeSystem) = 1">codeSystem är obligatoriskt</iso:assert>
+      <iso:assert test="tp:cv/tp:codeSystem/count(*) = 0">'codeSystem' får inte vara inbäddat i något element.</iso:assert>
       <iso:assert test="count(tp:cv/tp:code) = 1">code är obligatoriskt</iso:assert>
+      <iso:assert test="tp:cv/tp:code/count(*) = 0">'code' får inte vara inbäddat i något element.</iso:assert>
       <iso:assert test="count(tp:cv/tp:displayName) le 1">högst ett displayName kan anges</iso:assert>
     </iso:rule>
   </iso:pattern>
 
   <iso:pattern id="date-pattern">
     <iso:rule id="date" abstract="true">
+      <iso:assert test="count(*) = 0">Datum får inte vara inbäddat i något element.</iso:assert>
       <iso:assert test=". castable as xs:date">Värdet måste vara ett giltigt datum.</iso:assert>
       <iso:assert test="matches(., '^\d{4}-\d\d-\d\d')">Datumet måste uttryckas som YYYY-MM-DD.</iso:assert>
     </iso:rule>

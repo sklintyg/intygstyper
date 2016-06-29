@@ -23,18 +23,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.common.internal.Patient;
-import se.inera.intyg.common.support.model.common.internal.Relation;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
-import se.inera.intyg.common.support.model.common.internal.Vardgivare;
+import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class UtlatandeToIntygTest {
@@ -121,6 +120,19 @@ public class UtlatandeToIntygTest {
         assertNotNull(intyg.getRelation().get(0).getTyp().getCodeSystem());
         assertEquals(relationIntygsId, intyg.getRelation().get(0).getIntygsId().getExtension());
         assertNotNull(intyg.getRelation().get(0).getIntygsId().getRoot());
+    }
+
+    @Test
+    public void testConvertDoesNotAddSvarForDiagnosWithoutCode() {
+        Diagnos diagnos = Diagnos.create(null, Diagnoskodverk.ICD_10_SE.name(), null, null);
+        LuaenaUtlatande utlatande = buildUtlatande().toBuilder().setDiagnoser(Arrays.asList(diagnos)).build();
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(intyg.getSvar().isEmpty());
+    }
+
+    private LuaenaUtlatande buildUtlatande() {
+        return buildUtlatande(null, null);
     }
 
     private LuaenaUtlatande buildUtlatande(RelationKod relationKod, String relationIntygsId) {

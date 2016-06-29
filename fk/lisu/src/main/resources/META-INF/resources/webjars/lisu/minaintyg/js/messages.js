@@ -57,7 +57,6 @@ var lisuMessages = {
         'lisu.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
 
         'lisu.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
-        'lisu.label.nedsattning': 'Jag bedömer att arbetsförmåga är (fält 8b)',
         'lisu.label.patientname': 'Patientens namn',
         'lisu.label.issued': 'Inkom till Mina intyg',
         'lisu.label.civicnumber': 'Personnummer',
@@ -67,7 +66,7 @@ var lisuMessages = {
         'lisu.label.yes': 'Ja',
         'lisu.label.no': 'Nej',
 
-        'lisu.label.confirmedby': 'Ovanstående uppgifter och bedömningar har bekräftas',
+        'lisu.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'lisu.label.date': 'Datum',
         'lisu.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
 

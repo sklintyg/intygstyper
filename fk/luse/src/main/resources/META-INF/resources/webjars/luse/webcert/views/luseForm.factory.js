@@ -39,13 +39,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
                     className: 'fold-animation',
                     hideExpression: '!(model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
                     templateOptions: {label: 'luse.validation.grund-for-mu.missing_ovrigt'}},
-                {key: 'kannedomOmPatient', type: 'date', templateOptions: {label: 'DFR_2.1'}}
-            ]
-        },
-        {
-            wrapper: 'wc-field',
-            templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
-            fieldGroup: [
+                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
                 {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
                 {
                     key: 'underlag', type: 'underlag',
@@ -74,15 +68,9 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 3, categoryName: categoryNames[3]},
-            fieldGroup: [
-                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
-            ]
-        },
-        {
-            wrapper: 'wc-field',
             templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
+                {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
                 {
                     key: 'diagnoser',
                     type: 'diagnos',
@@ -97,6 +85,13 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
                     templateOptions: {label: 'DFR_7.3'},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
+            ]
+        },
+        {
+            wrapper: 'wc-field',
+            templateOptions: {category: 3, categoryName: categoryNames[3]},
+            fieldGroup: [
+                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
             ]
         },
         {

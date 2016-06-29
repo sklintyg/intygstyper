@@ -19,9 +19,9 @@
 
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$state',
-        'common.IntygService','common.IntygProxy', 'common.messageService', 'common.UserModel', 'fk7263.IntygController.ViewStateService',
+        'common.IntygService','common.IntygProxy', 'common.messageService', 'common.UserModel', 'common.ObjectHelper', 'fk7263.IntygController.ViewStateService',
         function($log, $rootScope, $stateParams, $scope, $state,
-            IntygService, IntygProxy, messageService, UserModel, ViewState) {
+            IntygService, IntygProxy, messageService, UserModel, ObjectHelper, ViewState) {
             'use strict';
 
             ViewState.reset();
@@ -50,7 +50,10 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
             function loadIntyg() {
                 $log.debug('Loading certificate ' + $stateParams.certificateId);
-                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, function(result) {
+
+                var sjf = ObjectHelper.isDefined($stateParams.sjf) ? $stateParams.sjf : false;
+
+                IntygProxy.getIntyg($stateParams.certificateId, ViewState.common.intygProperties.type, sjf, function(result) {
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;

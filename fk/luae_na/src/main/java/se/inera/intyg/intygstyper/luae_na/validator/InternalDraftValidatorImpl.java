@@ -19,25 +19,26 @@
 
 package se.inera.intyg.intygstyper.luae_na.validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.base.Strings;
-
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuaenaUtlatande> {
 
@@ -137,45 +138,45 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
 
     private void validateUnderlag(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getUnderlagFinns() == null) {
-            addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                     "luae_na.validation.underlagfinns.missing");
         } else if (utlatande.getUnderlagFinns() && utlatande.getUnderlag().isEmpty()) {
-            addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                     "luae_na.validation.underlagfinns.missing");
         } else if (!utlatande.getUnderlagFinns() && !utlatande.getUnderlag().isEmpty()) {
             // R6
-            addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+            addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.INVALID_FORMAT,
                     "luae_na.validation.underlagfinns.incorrect_combination");
         }
 
         for (Underlag underlag : utlatande.getUnderlag()) {
             // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
             if (underlag.getTyp() == null) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                         "luae_na.validation.underlag.missing");
-            } else if (underlag.getTyp().getId() != Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId()
-                && underlag.getTyp().getId() != Underlag.UnderlagsTyp.OVRIGT.getId()) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+            } else if (!underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_ARBETSTERAPEUT.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_FYSIOTERAPEUT.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_LOGOPED.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANPSYKOLOG.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANFORETAGSHALSOVARD.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRANSKOLHALSOVARD.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId())
+                && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.OVRIGT.getId())) {
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.INVALID_FORMAT,
                         "luae_na.validation.underlag.incorrect_format");
             }
             if (underlag.getDatum() == null) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                         "luae_na.validation.underlag.date.missing");
             } else if (!underlag.getDatum().isValidDate()) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.INVALID_FORMAT,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.INVALID_FORMAT,
                         "luae_na.validation.underlag.date.incorrect_format");
             }
             if (underlag.getHamtasFran() == null) {
-                addValidationError(validationMessages, "underlag", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                         "luae_na.validation.underlag.hamtas-fran.missing");
             }
         }

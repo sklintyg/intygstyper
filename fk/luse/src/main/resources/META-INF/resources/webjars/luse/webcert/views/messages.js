@@ -37,15 +37,15 @@ var luseMessages = {
         'luse.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
 
         //Validation messages
-        'luse.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på. (Fält 1)',
-        'luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' (Fält 4) får endast fyllas i om \'Annan referens valts\' i Fält 1.',
-        'luse.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient (Fält 1)',
-        'luse.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter (Fält 1)',
-        'luse.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning (Fält 1)',
-        'luse.validation.grund-for-mu.annat.incorrect_format': 'Fel datumformat för annan referens (Fält 1)',
-        'luse.validation.grund-for-mu.annat.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i. (Fält 4)',
+        'luse.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på.',
+        'luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' får endast fyllas i om \'Annan referens valts\'.',
+        'luse.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient',
+        'luse.validation.grund-for-mu.journaluppgifter.incorrect_format': 'Fel datumformat för journaluppgifter',
+        'luse.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning',
+        'luse.validation.grund-for-mu.annat.incorrect_format': 'Fel datumformat för annan referens',
+        'luse.validation.grund-for-mu.annat.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i.',
 
-        'luse.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i. (Fält 1)',
+        'luse.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i.',
         'luse.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för \'Kännedom om patienten\'',
         'luse.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
         'luse.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
@@ -61,7 +61,7 @@ var luseMessages = {
 
         'luse.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
-        'luse.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i(Fält 3)',
+        'luse.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i',
         'luse.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'luse.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'luse.validation.diagnos0.length-3': 'Diagnoskod på huvuddiagnosen ska anges med så många positioner som möjligt, men minst tre positioner.',
@@ -77,13 +77,13 @@ var luseMessages = {
         'luse.validation.diagnos2.length-3': 'Diagnoskod på diagnosrad 3 ska anges med så många positioner som möjligt, men minst tre positioner.',
         'luse.validation.diagnos2.psykisk.length-4': 'Diagnoskod på diagnosrad 3 ska anges med minst fyra positioner då en psykisk diagnos anges.',
         'luse.validation.diagnos2.description.missing': 'Diagnostext saknas på diagnosrad 3',
-        'luse.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i(Fält 3)',
-        'luse.validation.diagnosfornybedomning.missing' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Ja\' måste \'Diagnos för ny bedömning\' fyllas i',
-        'luse.validation.diagnosfornybedomning.incorrect_combination' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' i Fält 3 besvarats med \'Nej\' får inte \'Diagnos för ny bedömning\' fyllas i',
+        'luse.validation.nybedomningdiagnosgrund.missing': 'Fältet \'Finns det skäl att göra en ny bedömning av diagnosen?\' måste fyllas i',
+        'luse.validation.diagnosfornybedomning.missing' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' besvarats med \'Ja\' måste \'Diagnos för ny bedömning\' fyllas i',
+        'luse.validation.diagnosfornybedomning.incorrect_combination' : 'Om \'Finns det skäl att göra en ny bedömning av diagnosen?\' besvarats med \'Nej\' får inte \'Diagnos för ny bedömning\' fyllas i',
 
         'luse.validation.funktionsnedsattning.missing': 'Minst en funktionsnedsättning måste anges.',
 
-        'luse.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i. (Fält 5)',
+        'luse.validation.aktivitetsbegransning.missing': 'Fältet med aktivitetsbegränsning måste fyllas i.',
 
         'luse.validation.medicinskaforutsattningarforarbete.missing': 'Patientens medicinska förutsättningar för arbete måste anges.',
 

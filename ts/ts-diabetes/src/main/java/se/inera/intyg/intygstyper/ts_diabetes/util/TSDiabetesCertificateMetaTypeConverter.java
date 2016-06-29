@@ -19,18 +19,14 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.joda.time.LocalDateTime;
 
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
-import se.inera.intygstjanster.ts.services.v1.IntygMeta;
-import se.inera.intygstjanster.ts.services.v1.IntygStatus;
-import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
+import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class TSDiabetesCertificateMetaTypeConverter {
 
@@ -41,8 +37,6 @@ public final class TSDiabetesCertificateMetaTypeConverter {
         CertificateMetaData metaData = new CertificateMetaData();
         metaData.setCertificateId(tsDiabetesIntyg.getIntygsId());
         metaData.setCertificateType(tsDiabetesIntyg.getIntygsTyp());
-        //metaData.setValidFrom(intygMeta.getValidFrom());
-        //metaData.setValidTo(intygMeta.getValidTo());
         metaData.setIssuerName(tsDiabetesIntyg.getGrundData().getSkapadAv().getFullstandigtNamn());
         metaData.setFacilityName(tsDiabetesIntyg.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
         metaData.setSignDate(LocalDateTime.parse(tsDiabetesIntyg.getGrundData().getSigneringsTidstampel()));

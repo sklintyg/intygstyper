@@ -15,7 +15,7 @@
     <skickatTidpunkt>2015-12-07T15:48:05</skickatTidpunkt>
     <patient>
       <person-id>
-        <ns3:root>1.2.752.129.2.1.3.3</ns3:root>
+        <ns3:root>1.2.752.129.2.1.3.1</ns3:root>
         <ns3:extension>192703104321</ns3:extension>
       </person-id>
       <fornamn>Olivia</fornamn>
