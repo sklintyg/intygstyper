@@ -95,9 +95,9 @@ public final class UtlatandeToIntyg {
     public static final String UNDERLAG_CODE_SYSTEM = "KV_FKMU_0005";
     public static final String PROGNOS_CODE_SYSTEM = "KV_FKMU_0006";
     public static final String PROGNOS_DAGAR_TILL_ARBETE_CODE_SYSTEM = "KV_FKMU_0007";
-    public static final String GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1 = "1.1";
+    public static final String GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1 = "1.2";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1 = "1";
-    public static final String GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1 = "1.2";
+    public static final String GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1 = "1.1";
 
     private UtlatandeToIntyg() {
     }

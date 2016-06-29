@@ -20,13 +20,11 @@
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -131,7 +129,7 @@ public class WebcertModelFactoryTest {
     public void testCreateNewWebcertDraftDoesNotGenerateIncompleteSvarInRivtaV2Format() throws ConverterException {
         // this to follow schema during CertificateStatusUpdateForCareV2
         Utlatande draft = factory.createNewWebcertDraft(buildNewDraftData("INTYG_ID"));
-        assertFalse(CollectionUtils.isEmpty(UtlatandeToIntyg.convert(draft).getSvar()));
+        assertEquals(5, UtlatandeToIntyg.convert(draft).getSvar().size());
     }
 
     private CreateDraftCopyHolder createDraftCopyHolder(String intygsCopyId, boolean addPatient, boolean addNewPersonId) {

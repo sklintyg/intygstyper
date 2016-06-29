@@ -157,11 +157,6 @@ public class UtlatandeToIntygTest {
     }
 
     @Test
-    public void testDiagnos() {
-
-    }
-
-    @Test
     public void testSvar() {
 
         Utlatande utlatande = buildFullUtlatande();
