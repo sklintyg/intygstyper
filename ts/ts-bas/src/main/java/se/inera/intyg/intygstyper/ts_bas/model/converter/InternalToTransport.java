@@ -18,15 +18,20 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil.DELIMITER_REGEXP;
+
 import java.util.*;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.intygstyper.ts_bas.model.codes.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Diabetes;
+import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
+import se.inera.intyg.intygstyper.ts_parent.codes.*;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -44,7 +49,8 @@ import se.inera.intygstjanster.ts.services.v1.Utvecklingsstorning;
 public final class InternalToTransport {
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalToTransport.class);
-    private static final String DELIMITER_REGEXP = "\\.";
+    private static final String DEFAULT_UTGAVA = "07";
+    private static final String DEFAULT_VERSION = "06";
 
     private InternalToTransport() {
     }
@@ -73,17 +79,15 @@ public final class InternalToTransport {
         utlatande.setIntygsId(source.getId());
         utlatande.setGrundData(InternalToTransportUtil.buildGrundData(source.getGrundData()));
 
-        UtlatandeKod utlatandeKod = UtlatandeKod.getCurrentVersion();
+        utlatande.setIntygsTyp(TsBasEntryPoint.MODULE_ID);
 
-        utlatande.setIntygsTyp(utlatandeKod.getCode());
-
-        if (source.getTextVersion() != null) {
+        if (StringUtils.isNotBlank(source.getTextVersion())) {
             String[] versionInfo = source.getTextVersion().split(DELIMITER_REGEXP);
             utlatande.setUtgava(String.format("%02d", Integer.parseInt(versionInfo[1])));
             utlatande.setVersion(String.format("%02d", Integer.parseInt(versionInfo[0])));
         } else {
-            utlatande.setUtgava(utlatandeKod.getTsUtgava());
-            utlatande.setVersion(utlatandeKod.getTsVersion());
+            utlatande.setUtgava(DEFAULT_UTGAVA);
+            utlatande.setVersion(DEFAULT_VERSION);
         }
 
         utlatande.setAlkoholNarkotikaLakemedel(buildAlkoholNarkotikaLakemedel(source.getNarkotikaLakemedel()));
@@ -125,14 +129,16 @@ public final class InternalToTransport {
         BedomningTypBas bedomning = new BedomningTypBas();
         bedomning.setBehovAvLakareSpecialistKompetens(source.getLakareSpecialKompetens());
         bedomning.setKanInteTaStallning(source.getKanInteTaStallning());
-        bedomning.getKorkortstyp().addAll(convertToKorkortsbehorighetTsBas(source.getKorkortstyp()));
+        if (CollectionUtils.isNotEmpty(source.getKorkortstyp())) {
+            bedomning.getKorkortstyp().addAll(convertToKorkortsbehorighetTsBas(source.getKorkortstyp()));
+        }
         return bedomning;
     }
 
     private static Collection<? extends KorkortsbehorighetTsBas> convertToKorkortsbehorighetTsBas(Set<BedomningKorkortstyp> source) {
         List<KorkortsbehorighetTsBas> behorigheter = new ArrayList<KorkortsbehorighetTsBas>();
         for (BedomningKorkortstyp typ : source) {
-            behorigheter.add(KorkortsbehorighetTsBas.valueOf(KorkortsKod.valueOf(typ.name()).getCode()));
+            behorigheter.add(KorkortsbehorighetTsBas.fromValue(Korkortsbehorighet.fromValue(KorkortsbehorighetKod.valueOf(typ.name()).name())));
         }
         return behorigheter;
     }
@@ -146,10 +152,8 @@ public final class InternalToTransport {
         diabetes.setHarBehandlingInsulin(source.getInsulin());
         diabetes.setHarBehandlingKost(source.getKost());
         diabetes.setHarBehandlingTabletter(source.getTabletter());
-        if (source.getDiabetesTyp().equals("DIABETES_TYP_1")) {
-            diabetes.setDiabetesTyp(DiabetesTypVarden.fromValue("TYP1"));
-        } else if (source.getDiabetesTyp().equals("DIABETES_TYP_2")) {
-            diabetes.setDiabetesTyp(DiabetesTypVarden.fromValue("TYP2"));
+        if (source.getDiabetesTyp() != null) {
+            diabetes.setDiabetesTyp(InternalToTransportUtil.convertDiabetesTyp(DiabetesKod.valueOf(source.getDiabetesTyp())));
         }
         return diabetes;
     }
@@ -176,7 +180,7 @@ public final class InternalToTransport {
             throw new ConverterException("Idkontroll was null");
         }
         IdentitetStyrkt identitetStyrkt = new IdentitetStyrkt();
-        identitetStyrkt.setIdkontroll(IdentifieringsVarden.valueOf(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
+        identitetStyrkt.setIdkontroll(IdentifieringsVarden.fromValue(IdKontrollKod.valueOf(source.getIdkontroll()).getCode()));
         return identitetStyrkt;
     }
 
@@ -184,7 +188,7 @@ public final class InternalToTransport {
 
         IntygsAvserTypBas intygAvser = new IntygsAvserTypBas();
         for (IntygAvserKategori kat : source.getKorkortstyp()) {
-            intygAvser.getKorkortstyp().add(KorkortsbehorighetTsBas.valueOf(KorkortsKod.valueOf(kat.name()).getCode()));
+            intygAvser.getKorkortstyp().add(KorkortsbehorighetTsBas.fromValue(Korkortsbehorighet.fromValue(KorkortsbehorighetKod.valueOf(kat.name()).name())));
         }
         return intygAvser;
     }

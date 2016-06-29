@@ -19,32 +19,39 @@
 
 package se.inera.intyg.intygstyper.ts_parent.codes;
 
+import java.util.EnumSet;
 import java.util.stream.Stream;
 
-public enum IntygAvserEnum {
+public enum IntygAvserKod {
 
-    C1("IAV1", "Medeltung lastbil och enbart ett lätt släpfordon"),
-    C1E("IAV2", "Medeltung lastbil och ett eller flera släpfordon oavsett vikt"),
-    C("IAV3", "Tung lastbil och enbart ett lätt släpfordon"),
-    CE("IAV4", "Tung lastbil och ett eller flera släpfordon oavsett vikt"),
-    D1("IAV5", "Mellanstor buss"),
-    D1E("IAV6", "Mellanstor buss och ett eller flera släpfordon oavsett vikt"),
-    D("IAV7", "Buss"),
-    DE("IAV8", "Buss och enbart ett lätt släpfordon"),
-    TAXI("IAV9", "Taxiförarlegitimation"),
-    ANNAT("IAV10", "Intyget kan också användas när Transportstyrelsen i andra fall begärt ett läkarintyg"),
-    AM("IAV11", "Moped klass I"),
-    A1("IAV12", "Lätt motorcykel"),
-    A2("IAV13", "Mellanstor motorcykel"),
-    A("IAV14", "Motorcykel"),
-    B("IAV15", "Personbil och lätt lastbil"),
-    BE("IAV16", "Personbil, lätt lastbil och ett eller flera släpfordon"),
+    C1("IAV1", "C1"),
+    C1E("IAV2", "C1E"),
+    C("IAV3", "C"),
+    CE("IAV4", "CE"),
+    D1("IAV5", "D1"),
+    D1E("IAV6", "D1E"),
+    D("IAV7", "D"),
+    DE("IAV8", "DE"),
+    TAXI("IAV9", "Taxi"),
+    ANNAT("IAV10", "Annat"),
+    AM("IAV11", "AM"),
+    A1("IAV12", "A1"),
+    A2("IAV13", "A2"),
+    A("IAV14", "A"),
+    B("IAV15", "B"),
+    BE("IAV16", "BE"),
     TRAKTOR("IAV17", "Traktor");
+
+    /** Körkortsbehörigheter som innefattar persontransport. */
+    public static final EnumSet<IntygAvserKod> PERSONTRANSPORT = EnumSet.of(D1, D1E, D, DE, TAXI);
+
+    /** Körkortsbehörigheter av högre typ. */
+    public static final EnumSet<IntygAvserKod> HOGRE_KORKORTSBEHORIGHET = EnumSet.of(C1, C1E, C, CE, D1, D1E, D, DE, TAXI);
 
     final String code;
     final String description;
 
-    IntygAvserEnum(String code, String description) {
+    IntygAvserKod(String code, String description) {
         this.code = code;
         this.description = description;
     }
@@ -57,8 +64,8 @@ public enum IntygAvserEnum {
         return description;
     }
 
-    public static IntygAvserEnum fromCode(String code) {
-        return Stream.of(IntygAvserEnum.values()).filter(s -> code.equals(s.getCode())).findFirst()
+    public static IntygAvserKod fromCode(String code) {
+        return Stream.of(IntygAvserKod.values()).filter(s -> code.equals(s.getCode())).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(code));
     }
 }

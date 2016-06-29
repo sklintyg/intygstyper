@@ -22,13 +22,18 @@ package se.inera.intyg.intygstyper.ts_parent.model.converter;
 import java.util.stream.Collectors;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.util.CollectionUtils;
 
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 
 public final class TransportToInternalUtil {
+
+    private static final String DELIMITER = ".";
 
     private TransportToInternalUtil() {
     }
@@ -41,6 +46,21 @@ public final class TransportToInternalUtil {
         return grundData;
     }
 
+    public static DiabetesKod convertDiabetesTyp(DiabetesTypVarden kod) {
+        switch (kod) {
+        case TYP_1:
+            return DiabetesKod.DIABETES_TYP_1;
+        case TYP_2:
+            return DiabetesKod.DIABETES_TYP_2;
+        default:
+            throw new IllegalArgumentException(kod.name());
+        }
+    }
+
+    public static String getTextVersion(String version, String utgava) {
+        return version + DELIMITER + utgava;
+    }
+
     private static HoSPersonal convertHoSPersonal(SkapadAv source) {
         HoSPersonal hosPersonal = new HoSPersonal();
         hosPersonal.setFullstandigtNamn(source.getFullstandigtNamn());
@@ -48,10 +68,14 @@ public final class TransportToInternalUtil {
         hosPersonal.setVardenhet(convertVardenhet(source.getVardenhet()));
 
         // try to convert befattning from description, otherwise use it as a code
-        hosPersonal.getBefattningar().addAll(source.getBefattningar().stream()
-                .map(description -> BefattningKod.getCodeFromDescription(description).orElse(description))
-                .collect(Collectors.toList()));
-        hosPersonal.getSpecialiteter().addAll(source.getSpecialiteter());
+        if (!CollectionUtils.isEmpty(source.getBefattningar())) {
+            hosPersonal.getBefattningar().addAll(source.getBefattningar().stream()
+                    .map(description -> BefattningKod.getCodeFromDescription(description).orElse(description))
+                    .collect(Collectors.toList()));
+        }
+        if (!CollectionUtils.isEmpty(source.getSpecialiteter())) {
+            hosPersonal.getSpecialiteter().addAll(source.getSpecialiteter());
+        }
         return hosPersonal;
     }
 

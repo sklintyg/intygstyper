@@ -34,7 +34,7 @@ import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserEnum;
+import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
@@ -136,16 +136,16 @@ public class UtlatandeToIntygTest {
         assertEquals(1, intyg.getSvar().get(0).getDelsvar().size());
         assertEquals("1.1", intyg.getSvar().get(0).getDelsvar().get(0).getId());
         JAXBElement<CVType> o = (JAXBElement<CVType>) intyg.getSvar().get(0).getDelsvar().get(0).getContent().get(0);
-        assertEquals(IntygAvserEnum.A1.getCode(), o.getValue().getCode());
+        assertEquals(IntygAvserKod.A1.getCode(), o.getValue().getCode());
         assertNotNull(o.getValue().getCodeSystem());
-        assertEquals(IntygAvserEnum.A1.getDescription(), o.getValue().getDisplayName());
+        assertEquals(IntygAvserKod.A1.getDescription(), o.getValue().getDisplayName());
         assertEquals("1", intyg.getSvar().get(1).getId());
         assertEquals(1, intyg.getSvar().get(1).getDelsvar().size());
         assertEquals("1.1", intyg.getSvar().get(1).getDelsvar().get(0).getId());
         o = (JAXBElement<CVType>) intyg.getSvar().get(1).getDelsvar().get(0).getContent().get(0);
-        assertEquals(IntygAvserEnum.TRAKTOR.getCode(), o.getValue().getCode());
+        assertEquals(IntygAvserKod.TRAKTOR.getCode(), o.getValue().getCode());
         assertNotNull(o.getValue().getCodeSystem());
-        assertEquals(IntygAvserEnum.TRAKTOR.getDescription(), o.getValue().getDisplayName());
+        assertEquals(IntygAvserKod.TRAKTOR.getDescription(), o.getValue().getDisplayName());
     }
 
     @Test
@@ -173,6 +173,29 @@ public class UtlatandeToIntygTest {
 
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
         assertEquals(arbetsplatskod, intyg.getSkapadAv().getEnhet().getArbetsplatskod().getExtension());
+    }
+
+    @Test
+    public void testConvertSetsVersionFromTextVersion() {
+        Utlatande utlatande = buildUtlatande();
+        utlatande.setTextVersion("03.07");
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertEquals("U07, V03", intyg.getVersion());
+    }
+
+    @Test
+    public void testConvertSetsDefaultVersionIfTextVersionIsNullOrEmpty() {
+        final String defaultVersion = "U06, V02";
+        Utlatande utlatande = buildUtlatande();
+        utlatande.setTextVersion(null);
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertEquals(defaultVersion, intyg.getVersion());
+
+        utlatande.setTextVersion("");
+        intyg = UtlatandeToIntyg.convert(utlatande);
+        assertEquals(defaultVersion, intyg.getVersion());
     }
 
     private Utlatande buildUtlatande() {
