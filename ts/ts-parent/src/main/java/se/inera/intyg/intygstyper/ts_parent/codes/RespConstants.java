@@ -26,6 +26,8 @@ public final class RespConstants {
     public static final String KORKORTSBEHORIGHET_CODE_SYSTEM = "e889fa20-1dee-4f79-8b37-03853e75a9f8";
     public static final String NOT_AVAILABLE = "N/A";
     public static final String VARDKONTAKT_TYP = "5880005";
+    public static final String BEFATTNINGSKOD_LAKARE_LEG_ST = "203010"; // Legitimerad läkare under specialiseringstjänstgöring (STläkare)
+    public static final String BEFATTNINGSKOD_LAKARE_EJ_LEG_AT = "204010"; // Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)
 
     public static final String INTYG_AVSER_SVAR_ID_1 = "1";
     public static final String INTYG_AVSER_DELSVAR_ID_1 = "1.1";

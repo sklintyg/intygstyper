@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 import org.joda.time.LocalDateTime;
 import org.springframework.util.CollectionUtils;
 
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.services.BefattningService;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
 import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
@@ -70,7 +70,7 @@ public final class TransportToInternalUtil {
         // try to convert befattning from description, otherwise use it as a code
         if (!CollectionUtils.isEmpty(source.getBefattningar())) {
             hosPersonal.getBefattningar().addAll(source.getBefattningar().stream()
-                    .map(description -> BefattningKod.getCodeFromDescription(description).orElse(description))
+                    .map(description -> BefattningService.getCodeFromDescription(description).orElse(description))
                     .collect(Collectors.toList()));
         }
         if (!CollectionUtils.isEmpty(source.getSpecialiteter())) {

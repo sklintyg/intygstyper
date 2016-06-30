@@ -39,6 +39,7 @@
       <befattning>
         <ns3:code>204510</ns3:code>
         <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
+        <ns3:displayName>Psykolog</ns3:displayName>
       </befattning>
       <enhet>
         <enhets-id>

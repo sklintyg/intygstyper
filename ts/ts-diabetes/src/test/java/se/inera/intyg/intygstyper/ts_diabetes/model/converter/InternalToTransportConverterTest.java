@@ -26,17 +26,14 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Spy;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.common.collect.ImmutableMap;
 
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.services.BefattningService;
 import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
@@ -44,7 +41,6 @@ import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 
-@RunWith(MockitoJUnitRunner.class)
 public class InternalToTransportConverterTest {
 
     private static final String ENHETSNAMN = "enhetsnamn";
@@ -59,15 +55,15 @@ public class InternalToTransportConverterTest {
     private static final String FULLSTANDIGT_NAMN = "test testorsson";
     private static final String PERSONID = "personid";
 
-    @Spy
-    private SpecialistkompetensService specialistkompetensService;
-
-    @Before
-    public void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
+        SpecialistkompetensService specialistkompetensService = new SpecialistkompetensService();
         specialistkompetensService.init();
         Field field = SpecialistkompetensService.class.getDeclaredField("codeToDescription");
         field.setAccessible(true);
         field.set(specialistkompetensService, ImmutableMap.of("7199", "Hörselrubbningar"));
+
+        new BefattningService().init();
     }
 
     @Test
@@ -127,14 +123,15 @@ public class InternalToTransportConverterTest {
 
     @Test
     public void testConvertMapsBefattningCodeToDescriptionIfPossible() throws ScenarioNotFoundException {
-        BefattningKod befattning = BefattningKod.LAKARE_LEG_ST;
+        final String befattning = "203010";
+        final String description = "Läkare legitimerad, specialiseringstjänstgöring";
         Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
         utlatande.getGrundData().getSkapadAv().getBefattningar().clear();
-        utlatande.getGrundData().getSkapadAv().getBefattningar().add(befattning.getCode());
+        utlatande.getGrundData().getSkapadAv().getBefattningar().add(befattning);
         RegisterTSDiabetesType res = InternalToTransportConverter.convert(utlatande);
         SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getBefattningar().size());
-        assertEquals(befattning.getDescription(), skapadAv.getBefattningar().get(0));
+        assertEquals(description, skapadAv.getBefattningar().get(0));
     }
 
     @Test

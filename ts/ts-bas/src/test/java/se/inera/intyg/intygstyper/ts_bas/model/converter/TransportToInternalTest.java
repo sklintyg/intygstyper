@@ -20,11 +20,12 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.services.BefattningService;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
@@ -38,6 +39,11 @@ import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSB
  *
  */
 public class TransportToInternalTest {
+
+    @BeforeClass
+    public static void setup() throws Exception {
+        new BefattningService().init();
+    }
 
     @Test
     public void testConvertMapsSpecialistkompetens() throws ScenarioNotFoundException, ConverterException {
@@ -53,14 +59,15 @@ public class TransportToInternalTest {
 
     @Test
     public void testConvertMapsBefattningDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
-        BefattningKod befattning = BefattningKod.LAKARE_EJ_LEG_AT;
+        final String befattning = "Läkare legitimerad, specialiseringstjänstgöring";
+        final String code = "203010";
         RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
         transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().clear();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattning.getDescription());
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattning);
         Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
         HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getBefattningar().size());
-        assertEquals(befattning.getCode(), skapadAv.getBefattningar().get(0));
+        assertEquals(code, skapadAv.getBefattningar().get(0));
     }
 
     @Test

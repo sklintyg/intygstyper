@@ -10,6 +10,7 @@ import javax.xml.bind.*;
 import javax.xml.namespace.QName;
 
 import org.custommonkey.xmlunit.*;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -18,6 +19,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import se.inera.intyg.common.support.services.BefattningService;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.luae_na.model.utils.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -34,6 +36,11 @@ public class RoundTripTest {
     public RoundTripTest(String name, Scenario scenario) {
         this.scenario = scenario;
         this.name = name;
+    }
+
+    @BeforeClass
+    public static void setup() throws Exception {
+        new BefattningService().init();
     }
 
     @Parameters(name = "{index}: Scenario: {0}")

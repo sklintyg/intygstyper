@@ -31,15 +31,6 @@
       </personal-id>
       <fullstandigtNamn>Karl Karlsson</fullstandigtNamn>
       <forskrivarkod>09874321</forskrivarkod>
-      <befattning>
-        <ns3:code>201010</ns3:code>
-        <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
-        <ns3:displayName>Överläkare</ns3:displayName>
-      </befattning>
-      <befattning>
-        <ns3:code>204510</ns3:code>
-        <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
-      </befattning>
       <enhet>
         <enhets-id>
           <ns3:root>1.2.752.129.2.1.4.1</ns3:root>

@@ -18,6 +18,8 @@
  */
 package se.inera.intyg.intygstyper.ts_parent.model.converter;
 
+import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.BEFATTNINGSKOD_LAKARE_EJ_LEG_AT;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,9 +28,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import se.inera.intyg.common.schemas.Constants;
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.services.BefattningService;
 import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
 import se.inera.intygstjanster.ts.services.types.v1.II;
@@ -84,7 +86,7 @@ public final class InternalToTransportUtil {
 
     private static SkapadAv buildSkapadAv(HoSPersonal source) {
         SkapadAv skapadAv = new SkapadAv();
-        skapadAv.setAtLakare(source.getBefattningar().contains(BefattningKod.LAKARE_EJ_LEG_AT.getCode()));
+        skapadAv.setAtLakare(source.getBefattningar().contains(BEFATTNINGSKOD_LAKARE_EJ_LEG_AT));
         skapadAv.setFullstandigtNamn(source.getFullstandigtNamn());
         skapadAv.setPersonId(buildII(Constants.HSA_ID_OID, source.getPersonId()));
         skapadAv.setVardenhet(buildVardenhet(source.getVardenhet()));
@@ -92,7 +94,7 @@ public final class InternalToTransportUtil {
         // try to convert befattning and specialistkompetens to klartext
         if (!CollectionUtils.isEmpty(source.getBefattningar())) {
             skapadAv.getBefattningar().addAll(source.getBefattningar().stream()
-                    .map(code -> BefattningKod.getDescriptionFromCode(code).orElse(code))
+                    .map(code -> BefattningService.getDescriptionFromCode(code).orElse(code))
                     .collect(Collectors.toList()));
         }
         if (!CollectionUtils.isEmpty(source.getSpecialiteter())) {

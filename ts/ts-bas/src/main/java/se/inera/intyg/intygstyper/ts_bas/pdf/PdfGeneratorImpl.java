@@ -18,6 +18,9 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.pdf;
 
+import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.BEFATTNINGSKOD_LAKARE_EJ_LEG_AT;
+import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.BEFATTNINGSKOD_LAKARE_LEG_ST;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,7 +34,6 @@ import com.itextpdf.text.pdf.*;
 
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.services.texts.model.IntygTexts;
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
@@ -463,8 +465,8 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
         populateAvslutSpecialist(utlatande, fields);
 
         List<String> befattningar = utlatande.getGrundData().getSkapadAv().getBefattningar();
-        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_LEG_ST.getCode()));
-        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BefattningKod.LAKARE_EJ_LEG_AT.getCode()));
+        ST_LAKARE_CHECK.setField(fields, befattningar.contains(BEFATTNINGSKOD_LAKARE_LEG_ST));
+        AT_LAKARE_CHECK.setField(fields, befattningar.contains(BEFATTNINGSKOD_LAKARE_EJ_LEG_AT));
     }
 
     private void populateAvslutSpecialist(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
