@@ -28,7 +28,7 @@
             <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
             <ns3:displayName>Transportstyrelsens läkarintyg, diabetes</ns3:displayName>
         </typ>
-        <version/>
+        <version>U06, V02</version>
         <signeringstidpunkt>2013-08-12T15:57:00</signeringstidpunkt>
         <skickatTidpunkt>2013-08-12T15:57:00</skickatTidpunkt>
         <patient>
@@ -114,6 +114,10 @@
         </svar>
         <svar id="37">
             <delsvar id="37.1">false</delsvar>
+        </svar>
+        <svar id="42">
+            <delsvar id="42.1">true</delsvar>
+            <delsvar id="42.2">2012-12-12</delsvar>
         </svar>
         <svar id="43">
             <delsvar id="43.1">true</delsvar>

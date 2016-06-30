@@ -36,6 +36,7 @@ import com.google.common.collect.ImmutableMap;
 
 import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
@@ -146,6 +147,33 @@ public class InternalToTransportConverterTest {
         SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getBefattningar().size());
         assertEquals(befattningskod, skapadAv.getBefattningar().get(0));
+    }
+
+    @Test
+    public void testConvertSetsVersionAndUtgavaFromTextVersion() throws ScenarioNotFoundException, ConverterException {
+        final String version = "03";
+        final String utgava = "07";
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.setTextVersion(version + "." + utgava);
+        RegisterTSDiabetesType res = InternalToTransportConverter.convert(utlatande);
+        assertEquals(version, res.getIntyg().getVersion());
+        assertEquals(utgava, res.getIntyg().getUtgava());
+    }
+
+    @Test
+    public void testConvertSetsDefaultVersionAndUtgavaIfTextVersionIsNullOrEmpty() throws ScenarioNotFoundException, ConverterException {
+        final String defaultVersion = "02";
+        final String defaultUtgava = "06";
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.setTextVersion(null);
+        RegisterTSDiabetesType res = InternalToTransportConverter.convert(utlatande);
+        assertEquals(defaultVersion, res.getIntyg().getVersion());
+        assertEquals(defaultUtgava, res.getIntyg().getUtgava());
+
+        utlatande.setTextVersion("");
+        res = InternalToTransportConverter.convert(utlatande);
+        assertEquals(defaultVersion, res.getIntyg().getVersion());
+        assertEquals(defaultUtgava, res.getIntyg().getUtgava());
     }
 
     private HoSPersonal buildHosPersonal(List<String> specialistKompetens) {

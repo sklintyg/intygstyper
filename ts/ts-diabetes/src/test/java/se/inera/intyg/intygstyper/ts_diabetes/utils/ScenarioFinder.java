@@ -44,6 +44,8 @@ public class ScenarioFinder {
 
     private static final String RIVTA_V2_TRANSPORT_MODEL_PATH = "classpath:/scenarios/rivtav2/";
 
+    private static final String TRANSFORMED_TRANSPORT_MODEL_PATH = "classpath:/scenarios/transformed/";
+
     private static final String INTERNAL_MODEL_PATH = "classpath:/scenarios/internal/";
 
     private static final String TRANSPORT_MODEL_EXT = ".xml";
@@ -160,7 +162,7 @@ public class ScenarioFinder {
         @Override
         public RegisterTSDiabetesType asTransportModel() throws ScenarioNotFoundException {
             try {
-                return JAXB.unmarshal(getTransportModelFor(scenarioFile), RegisterTSDiabetesType.class);
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile, TRANSPORT_MODEL_PATH), RegisterTSDiabetesType.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "transport", e);
             }
@@ -172,9 +174,23 @@ public class ScenarioFinder {
         @Override
         public RegisterCertificateType asRivtaV2TransportModel() throws ScenarioNotFoundException {
             try {
-                return JAXB.unmarshal(getRivtaV2TransportModelFor(scenarioFile), RegisterCertificateType.class);
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile, RIVTA_V2_TRANSPORT_MODEL_PATH), RegisterCertificateType.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "rivta v2 transport", e);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType asTransformedTransportModel()
+                throws ScenarioNotFoundException {
+            try {
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile, TRANSFORMED_TRANSPORT_MODEL_PATH),
+                        se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType.class);
+            } catch (IOException e) {
+                throw new ScenarioNotFoundException(scenarioFile.getName(), "transformed transport", e);
             }
         }
 
@@ -193,18 +209,10 @@ public class ScenarioFinder {
 
     }
 
-    private static File getTransportModelFor(File otherModel) throws IOException {
+    private static File getTransportModelFor(File otherModel, String path) throws IOException {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
-        File retFile = context.getResource(TRANSPORT_MODEL_PATH + filenameWithoutExt + TRANSPORT_MODEL_EXT).getFile();
-        context.close();
-        return retFile;
-    }
-
-    private static File getRivtaV2TransportModelFor(File otherModel) throws IOException {
-        String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
-        File retFile = context.getResource(RIVTA_V2_TRANSPORT_MODEL_PATH + filenameWithoutExt + TRANSPORT_MODEL_EXT).getFile();
+        File retFile = context.getResource(path + filenameWithoutExt + TRANSPORT_MODEL_EXT).getFile();
         context.close();
         return retFile;
     }

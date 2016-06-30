@@ -61,6 +61,16 @@ public interface Scenario {
     RegisterCertificateType asRivtaV2TransportModel() throws ScenarioNotFoundException;
 
     /**
+     * Returns the scenario as a transformed transport model.
+     *
+     * @return The scenario as a transformed transport model.
+     * @throws ScenarioNotFoundException
+     *             if the scenario wasn't found.
+     */
+    se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType asTransformedTransportModel()
+            throws ScenarioNotFoundException;
+
+    /**
      * Returns the scenario as a internal Mina Intyg model.
      *
      * @return The scenario as a internal Mina Intyg model.

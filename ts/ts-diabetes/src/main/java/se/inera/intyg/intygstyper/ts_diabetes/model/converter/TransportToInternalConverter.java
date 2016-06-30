@@ -20,19 +20,19 @@
 package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.VARDKONTAKT_TYP;
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil.getTextVersion;
 
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.util.integration.schema.adapter.InternalDateAdapter;
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Diabetes;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Hypoglykemier;
+import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 import se.inera.intyg.intygstyper.ts_parent.codes.IdKontrollKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.TransportToInternalUtil;
 import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class TransportToInternalConverter {
-    private static final String DELIMITER = ".";
 
     private TransportToInternalConverter() {
     }
@@ -41,7 +41,7 @@ public final class TransportToInternalConverter {
         Utlatande result = new Utlatande();
 
         result.setId(transport.getIntygsId());
-        result.setTyp(UtlatandeKod.getCurrentVersion().getCode());
+        result.setTyp(TsDiabetesEntryPoint.MODULE_ID);
         result.setGrundData(TransportToInternalUtil.buildGrundData(transport.getGrundData()));
         readDiabetes(result.getDiabetes(), transport.getDiabetes());
         readHypoglykemier(result.getHypoglykemier(), transport.getHypoglykemier());
@@ -51,7 +51,7 @@ public final class TransportToInternalConverter {
         readIntygAvser(result.getIntygAvser(), transport.getIntygAvser());
         result.setVardkontakt(readVardkontakt(transport.getIdentitetStyrkt()));
         result.setKommentar(transport.getOvrigKommentar());
-        result.setTextVersion(transport.getVersion() + DELIMITER + transport.getUtgava());
+        result.setTextVersion(getTextVersion(transport.getVersion(), transport.getUtgava()));
         return result;
     }
 

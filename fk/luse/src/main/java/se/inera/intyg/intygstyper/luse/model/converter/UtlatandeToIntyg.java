@@ -114,32 +114,35 @@ public final class UtlatandeToIntyg {
 
         addIfNotBlank(svars, SJUKDOMSFORLOPP_SVAR_ID_5, SJUKDOMSFORLOPP_DELSVAR_ID_5, source.getSjukdomsforlopp());
 
-        if (CollectionUtils.isNotEmpty(source.getDiagnoser())) {
-            // Handle diagnoser
-            SvarBuilder diagnosSvar = aSvar(DIAGNOS_SVAR_ID_6);
-            for (int i = 0; i < source.getDiagnoser().size(); i++) {
-                Diagnos diagnos = source.getDiagnoser().get(i);
-                Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-                switch (i) {
-                case 0:
-                    diagnosSvar.withDelsvar(DIAGNOS_DELSVAR_ID_6,
-                            aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                            .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
-                    break;
-                case 1:
-                    diagnosSvar.withDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
-                            aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                            .withDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
-                    break;
-                case 2:
-                    diagnosSvar.withDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
-                            aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                            .withDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
-                    break;
-                default:
-                    throw new IllegalArgumentException();
-                }
+        // Handle diagnoser
+        SvarBuilder diagnosSvar = aSvar(DIAGNOS_SVAR_ID_6);
+        for (int i = 0; i < source.getDiagnoser().size(); i++) {
+            Diagnos diagnos = source.getDiagnoser().get(i);
+            if (diagnos.getDiagnosKod() == null) {
+                continue;
             }
+            Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
+            switch (i) {
+            case 0:
+                diagnosSvar.withDelsvar(DIAGNOS_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
+                break;
+            case 1:
+                diagnosSvar.withDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
+                break;
+            case 2:
+                diagnosSvar.withDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
+        }
+        if (CollectionUtils.isNotEmpty(diagnosSvar.delSvars)) {
             svars.add(diagnosSvar.build());
         }
 

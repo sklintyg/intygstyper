@@ -21,6 +21,7 @@ package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.*;
+import static se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil.getVersion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Partial;
 
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.ModelException;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
@@ -43,6 +45,8 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
 
+    private static final String DEFAULT_VERSION = "U06, V02";
+
     private UtlatandeToIntyg() {
     }
 
@@ -51,6 +55,7 @@ public final class UtlatandeToIntyg {
         complementArbetsplatskodIfMissing(intyg);
         intyg.setTyp(getTypAvIntyg(source));
         intyg.getSvar().addAll(getSvar(source));
+        intyg.setVersion(getVersion(source).orElse(DEFAULT_VERSION));
         return intyg;
     }
 
@@ -84,7 +89,7 @@ public final class UtlatandeToIntyg {
             IdKontrollKod idKontroll = IdKontrollKod.valueOf(source.getVardkontakt().getIdkontroll());
             svars.add(aSvar(IDENTITET_STYRKT_GENOM_SVAR_ID_2)
                     .withDelsvar(IDENTITET_STYRKT_GENOM_ID_2,
-                            aCV(Kodverk.ID_KONTROLL.getCodeSystem(), idKontroll.getCode(), idKontroll.getDescription()))
+                            aCV(ID_KONTROLL_CODE_SYSTEM, idKontroll.getCode(), idKontroll.getDescription()))
                     .build());
         }
 
@@ -119,7 +124,7 @@ public final class UtlatandeToIntyg {
             DiabetesKod diabetesKod = DiabetesKod.valueOf(source.getDiabetestyp());
             svars.add(aSvar(TYP_AV_DIABETES_SVAR_ID_18)
                     .withDelsvar(TYP_AV_DIABETES_DELSVAR_ID_18,
-                            aCV(Kodverk.ICD_10.getCodeSystem(), diabetesKod.getCode(), diabetesKod.getDescription()))
+                            aCV(Diagnoskodverk.ICD_10_SE.getCodeSystem(false), diabetesKod.getCode(), diabetesKod.getDescription()))
                     .build());
         }
         SvarBuilder diabetesBehandling = aSvar(BEHANDLING_DIABETES_SVAR_ID_19);

@@ -40,7 +40,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
-import se.inera.intyg.intygstyper.ts_diabetes.model.codes.UtlatandeKod;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -77,8 +76,7 @@ public class TsDiabetesTransformerXpathTest {
         XPathEvaluator xPath = createXPathEvaluator(transformed);
 
         // Check utlatande against xpath
-        assertEquals("UtlatandeTyp", UtlatandeKod.getCurrentVersion().getTypForTransportConvertion(),
-                xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
+        assertEquals("UtlatandeTyp", "TSTRK1031 (U06, V02)", xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
 
         assertEquals("Utlatande-utgåva", utlatande.getUtgava(), xPath.evaluate(XPathExpressions.TS_UTGAVA_XPATH));
 
@@ -105,16 +103,20 @@ public class TsDiabetesTransformerXpathTest {
         // Skapad Av
         SkapadAv skapadAv = utlatande.getGrundData().getSkapadAv();
 
-        assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
-        xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        if (!skapadAv.getBefattningar().isEmpty()) {
+            assertEquals("Skapad av - befattningar", skapadAv.getBefattningar().get(0),
+                    xPath.evaluate(XPathExpressions.SKAPAD_AV_BEFATTNING_XPATH));
+        }
 
         assertEquals("Skapad av - fullständigt namn", skapadAv.getFullstandigtNamn(),
                 xPath.evaluate(XPathExpressions.SKAPAD_AV_NAMNFORTYDLIGANDE_XPATH));
 
         assertEquals("Skapad av - hsa-id", skapadAv.getPersonId().getExtension(), xPath.evaluate(XPathExpressions.SKAPAD_AV_HSAID_XPATH));
 
-        assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
-        xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        if (!skapadAv.getSpecialiteter().isEmpty()) {
+            assertEquals("Skapad av - specialitet", skapadAv.getSpecialiteter().get(0),
+                    xPath.evaluate(XPathExpressions.SKAPAD_AV_SPECIALISTKOMPETENS_BESKRVNING_XPATH));
+        }
 
         // Vardenhet
         Vardenhet vardenhet = skapadAv.getVardenhet();
@@ -147,9 +149,11 @@ public class TsDiabetesTransformerXpathTest {
                 utlatande.getIdentitetStyrkt().getIdkontroll().value())));
 
         // Aktiviteter
-        assertTrue("Egenkontroll av blodsocker",
-                xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "308113006", utlatande.getHypoglykemier()
-                        .isGenomforEgenkontrollBlodsocker())));
+        if (utlatande.getHypoglykemier() != null && utlatande.getHypoglykemier().isGenomforEgenkontrollBlodsocker() != null) {
+            assertTrue("Egenkontroll av blodsocker",
+                    xPath.evaluate(booleanXPath(AKTIVITET_FOREKOMST_TEMPLATE, "308113006", utlatande.getHypoglykemier()
+                            .isGenomforEgenkontrollBlodsocker())));
+        }
 
         SynfunktionDiabetes synfunktion = utlatande.getSynfunktion();
         if (synfunktion != null) {

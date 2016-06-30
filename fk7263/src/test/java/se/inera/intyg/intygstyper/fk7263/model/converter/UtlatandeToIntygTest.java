@@ -22,21 +22,54 @@ package se.inera.intyg.intygstyper.fk7263.model.converter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.AKTIVITETSBEGRANSNING_SVAR_17;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.ARBETSFORMAGA_PROGNOS_SJUKSKRIVNING_LANGRE_AN_REKOMMENDERAD_MOTIVERING_SVAR_37;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.ARBETSFORMAGA_PROGNOS_SVAR_10006;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.ATGARD_INOM_SJUKVARDEN_SVAR_10004;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.AVSTANGNING_SMITTSKYDD_SVAR_27;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.DIAGNOS_FRITEXT_SVAR_10001;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.DIAGNOS_SVAR_6;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.FUNKTIONSNEDSATTNING_SVAR_35;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.KONTAKT_MED_FK_SVAR_26;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.NUVARANDE_ARBETSUPPGIFTER_SVAR_29;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.OVRIGA_UPPLYSNINGAR_SVAR_25;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.REHABILITERING_SVAR_10005;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.REKOMMENDATION_KONTAKT_SVAR_10003;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.RESSATT_TILL_ARBETE_AKTUELLT_SVAR_34;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.SJUKDOMSFORLOPP_SVAR_10002;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.SYSSELSATTNING_SVAR_28;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBElement;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.LocalDateInterval;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Relation;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Rehabilitering;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 
 public class UtlatandeToIntygTest {
 
@@ -123,6 +156,215 @@ public class UtlatandeToIntygTest {
         assertNotNull(intyg.getRelation().get(0).getIntygsId().getRoot());
     }
 
+    @Test
+    public void testSvar() {
+
+        Utlatande utlatande = buildFullUtlatande();
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+
+        Map<String, List<Svar>> testSvar = intyg.getSvar().stream().collect(Collectors.groupingBy(Svar::getId));
+
+        assertAll(intyg, testSvar);
+
+        assertRehabilitering(testSvar);
+
+        assertKontaktFk(testSvar);
+
+        assertRessatTillArbetet(testSvar);
+
+        assertAvstangningSmittskydd(testSvar);
+
+        assertArbetsuppgifter(testSvar);
+
+        assertAktivitetsBegransning(testSvar);
+
+        assertOvrigaUpplysningar(testSvar);
+
+        assertFunktionsnedsattning(testSvar);
+
+        assertArbetsformagaPrognos(testSvar);
+
+        assertSjukdomsForlopp(testSvar);
+
+        assertDiagnosBeskrivning(testSvar);
+
+        assertAtgard(testSvar);
+
+        assertDiagnos(testSvar);
+
+        assertSysselsattning(testSvar);
+
+        assertGrundForMedicinsktUnderlag(testSvar);
+
+        assertRekommendationKontakt(testSvar);
+
+    }
+
+    private Utlatande buildFullUtlatande() {
+        InternalDate annanReferensDate = new InternalDate("2015-01-01");
+        InternalDate from = new InternalDate("2015-01-01");
+        InternalDate to = new InternalDate("2015-01-02");
+        InternalDate journalDate = new InternalDate();
+        Utlatande utlatande = buildUtlatande();
+        utlatande.setAktivitetsbegransning("aktivitetsbegransning");
+        utlatande.setAnnanAtgard("annan atgard");
+        utlatande.setAnnanReferens(annanReferensDate);
+        utlatande.setAnnanReferensBeskrivning("AnnanReferensBeskrivning");
+        utlatande.setArbetsformagaPrognos("ArbetsFormagaPrognos");
+        utlatande.setArbetsloshet(true);
+        utlatande.setAtgardInomSjukvarden("AtgardInomSjukvarden");
+        utlatande.setAvstangningSmittskydd(false);
+        utlatande.setDiagnosBeskrivning("DiagnosBeskrivning");
+        utlatande.setDiagnosBeskrivning1("HuvudDiagnosBeskrivning");
+        utlatande.setDiagnosKod("DiagnosKod");
+        utlatande.setDiagnosKodsystem1("DiagnosKodSystem");
+        utlatande.setForaldrarledighet(true);
+        utlatande.setFunktionsnedsattning("FunktionsNedsattning");
+        utlatande.setGiltighet(new LocalDateInterval(LocalDate.now(), LocalDate.now().plusDays(4)));
+        utlatande.setJournaluppgifter(journalDate);
+        utlatande.setKommentar("Kommentar");
+        utlatande.setKontaktMedFk(true);
+        utlatande.setNuvarandeArbete(true);
+        utlatande.setNuvarandeArbetsuppgifter("Arbetsuppgifter");
+        utlatande.setPrognosBedomning(PrognosBedomning.arbetsformagaPrognosJaDelvis);
+        utlatande.setRehabilitering(Rehabilitering.rehabiliteringEjAktuell);
+        utlatande.setRekommendationKontaktArbetsformedlingen(true);
+        utlatande.setRekommendationKontaktForetagshalsovarden(true);
+        utlatande.setRekommendationOvrigtCheck(true);
+        utlatande.setRekommendationOvrigt("RekommendationOvrigt");
+        utlatande.setRessattTillArbeteAktuellt(true);
+        utlatande.setSamsjuklighet(true);
+        utlatande.setSjukdomsforlopp("sjukdomsforlopp");
+        utlatande.setTelefonkontaktMedPatienten(from);
+        utlatande.setTjanstgoringstid("Tjanstgoringstid");
+        utlatande.setUndersokningAvPatienten(to);
+        return utlatande;
+    }
+
+    private void assertAll(Intyg intyg, Map<String, List<Svar>> testSvar) {
+        String[] svars = { GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1,
+                DIAGNOS_SVAR_6,
+                AKTIVITETSBEGRANSNING_SVAR_17,
+                OVRIGA_UPPLYSNINGAR_SVAR_25,
+                KONTAKT_MED_FK_SVAR_26, AVSTANGNING_SMITTSKYDD_SVAR_27,
+                SYSSELSATTNING_SVAR_28, NUVARANDE_ARBETSUPPGIFTER_SVAR_29,
+                RESSATT_TILL_ARBETE_AKTUELLT_SVAR_34,FUNKTIONSNEDSATTNING_SVAR_35,
+                ARBETSFORMAGA_PROGNOS_SJUKSKRIVNING_LANGRE_AN_REKOMMENDERAD_MOTIVERING_SVAR_37,
+                DIAGNOS_FRITEXT_SVAR_10001, SJUKDOMSFORLOPP_SVAR_10002, REKOMMENDATION_KONTAKT_SVAR_10003,
+                ATGARD_INOM_SJUKVARDEN_SVAR_10004, REHABILITERING_SVAR_10005, ARBETSFORMAGA_PROGNOS_SVAR_10006 };
+        assertEquals(21, intyg.getSvar().size());
+
+        for (String svar : svars) {
+            assertTrue(testSvar.containsKey(svar));
+        }
+    }
+
+    private void assertRehabilitering(Map<String, List<Svar>> testSvar) {
+        assertEquals("false", testSvar.get(REHABILITERING_SVAR_10005).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.REHABILITERING_DELSVAR_10005_1, testSvar.get(REHABILITERING_SVAR_10005).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertKontaktFk(Map<String, List<Svar>> testSvar) {
+        assertEquals("true", testSvar.get(KONTAKT_MED_FK_SVAR_26).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.KONTAKT_MED_FK_DELSVAR_26_1, testSvar.get(KONTAKT_MED_FK_SVAR_26).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertRessatTillArbetet(Map<String, List<Svar>> testSvar) {
+        assertEquals("true", testSvar.get(RESSATT_TILL_ARBETE_AKTUELLT_SVAR_34).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.RESSATT_TILL_ARBETE_AKTUELLT_DELSVAR_34_1, testSvar.get(RESSATT_TILL_ARBETE_AKTUELLT_SVAR_34).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertAvstangningSmittskydd(Map<String, List<Svar>> testSvar) {
+        assertEquals("false", testSvar.get(AVSTANGNING_SMITTSKYDD_SVAR_27).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.AVSTANGNING_SMITTSKYDD_DELSVAR_27_1, testSvar.get(AVSTANGNING_SMITTSKYDD_SVAR_27).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertArbetsuppgifter(Map<String, List<Svar>> testSvar) {
+        assertEquals("Arbetsuppgifter", testSvar.get(NUVARANDE_ARBETSUPPGIFTER_SVAR_29).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.NUVARANDE_ARBETSUPPGIFTER_DELSVAR_29_1, testSvar.get(NUVARANDE_ARBETSUPPGIFTER_SVAR_29).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertAktivitetsBegransning(Map<String, List<Svar>> testSvar) {
+        assertEquals("aktivitetsbegransning", testSvar.get(AKTIVITETSBEGRANSNING_SVAR_17).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.AKTIVITETSBEGRANSNING_DELSVAR_17_1, testSvar.get(AKTIVITETSBEGRANSNING_SVAR_17).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertOvrigaUpplysningar(Map<String, List<Svar>> testSvar) {
+        assertEquals("4b: AnnanReferensBeskrivning. Kommentar", testSvar.get(OVRIGA_UPPLYSNINGAR_SVAR_25).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.OVRIGA_UPPLYSNINGAR_DELSVAR_25_1, testSvar.get(OVRIGA_UPPLYSNINGAR_SVAR_25).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertFunktionsnedsattning(Map<String, List<Svar>> testSvar) {
+        assertEquals("FunktionsNedsattning", testSvar.get(FUNKTIONSNEDSATTNING_SVAR_35).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.FUNKTIONSNEDSATTNING_DELSVAR_35_1, testSvar.get(FUNKTIONSNEDSATTNING_SVAR_35).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertArbetsformagaPrognos(Map<String, List<Svar>> testSvar) {
+        assertEquals("ArbetsFormagaPrognos", testSvar.get(ARBETSFORMAGA_PROGNOS_SJUKSKRIVNING_LANGRE_AN_REKOMMENDERAD_MOTIVERING_SVAR_37).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.ARBETSFORMAGA_PROGNOS_SJUKSKRIVNING_LANGRE_AN_REKOMMENDERAD_MOTIVERING_DELSVAR_37_1, testSvar.get(ARBETSFORMAGA_PROGNOS_SJUKSKRIVNING_LANGRE_AN_REKOMMENDERAD_MOTIVERING_SVAR_37).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertSjukdomsForlopp(Map<String, List<Svar>> testSvar) {
+        assertEquals("sjukdomsforlopp", testSvar.get(SJUKDOMSFORLOPP_SVAR_10002).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.SJUKDOMSFORLOPP_DELSVAR_10002_1, testSvar.get(SJUKDOMSFORLOPP_SVAR_10002).get(0).getDelsvar().get(0).getId());
+    }
+
+    private void assertDiagnosBeskrivning(Map<String, List<Svar>> testSvar) {
+        assertEquals("DiagnosBeskrivning", testSvar.get(DIAGNOS_FRITEXT_SVAR_10001).get(0).getDelsvar().get(0).getContent().get(0));
+        assertEquals(UtlatandeToIntyg.DIAGNOS_FRITEXT_DELSVAR_10001_1, testSvar.get(DIAGNOS_FRITEXT_SVAR_10001).get(0).getDelsvar().get(0).getId());
+    }
+
+    @SuppressWarnings("unchecked")
+    private void assertSysselsattning(Map<String, List<Svar>> testSvar) {
+        assertEquals(3, testSvar.get(SYSSELSATTNING_SVAR_28).size());
+        List<String> sysselsattningar = Arrays.asList("ARBETSSOKANDE", "FORALDRALEDIG", "NUVARANDE_ARBETE");
+        for (Svar svar : testSvar.get(SYSSELSATTNING_SVAR_28)) {
+            JAXBElement<CVType> cv = (JAXBElement<CVType>) svar.getDelsvar().get(0).getContent().get(0);
+            assertEquals(UtlatandeToIntyg.TYP_AV_SYSSELSATTNING_CODE_SYSTEM, cv.getValue().getCodeSystem());
+            sysselsattningar
+                    .forEach(sysselsattning -> assertTrue(sysselsattningar.contains(cv.getValue().getCode())));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void assertGrundForMedicinsktUnderlag(Map<String, List<Svar>> testSvar) {
+        List<String> grunderForMu = Arrays.asList("TELEFONKONTAKT", "UNDERSOKNING", "ANNAT");
+        assertEquals(3, testSvar.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        for (Svar svar : testSvar.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)) {
+            JAXBElement<CVType> cv = (JAXBElement<CVType>) svar.getDelsvar().get(0).getContent().get(0);
+            assertEquals(UtlatandeToIntyg.GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, cv.getValue().getCodeSystem());
+            grunderForMu
+            .forEach(grundForMu -> assertTrue(grunderForMu.contains(cv.getValue().getCode())));
+        }
+    }
+
+    private void assertRekommendationKontakt(Map<String, List<Svar>> testSvar) {
+        assertEquals(1, testSvar.get(REKOMMENDATION_KONTAKT_SVAR_10003).size());
+        Map<String, List<Object>> rekDelsvar = testSvar.get(REKOMMENDATION_KONTAKT_SVAR_10003).get(0).getDelsvar().stream().collect(Collectors.toMap(Delsvar::getId, Delsvar::getContent));
+        assertEquals(rekDelsvar.get(UtlatandeToIntyg.REKOMMENDATION_KONTAKT_DELSVAR_AF_10003_1).get(0), "true");
+        assertEquals(rekDelsvar.get(UtlatandeToIntyg.REKOMMENDATION_KONTAKT_DELSVAR_FHV_10003_2).get(0), "true");
+        assertEquals(rekDelsvar.get(UtlatandeToIntyg.REKOMMENDATION_KONTAKT_DELSVAR_OVRIGT_10003_3).get(0), "RekommendationOvrigt");
+    }
+
+    @SuppressWarnings("unchecked")
+    private void assertDiagnos(Map<String, List<Svar>> testSvar) {
+        assertEquals(1, testSvar.get(DIAGNOS_SVAR_6).size());
+        assertEquals(1, testSvar.get(DIAGNOS_SVAR_6).get(0).getDelsvar().size());
+        assertEquals(UtlatandeToIntyg.DIAGNOS_DELSVAR_6_2, testSvar.get(DIAGNOS_SVAR_6).get(0).getDelsvar().get(0).getId());
+        JAXBElement<CVType> cv = (JAXBElement<CVType>) testSvar.get(DIAGNOS_SVAR_6).get(0).getDelsvar().get(0).getContent().get(0);
+        assertEquals("DiagnosKod", cv.getValue().getCode());
+        assertEquals("DiagnosKodSystem", cv.getValue().getCodeSystem());
+    }
+
+    private void assertAtgard(Map<String, List<Svar>> testSvar) {
+        assertEquals(1, testSvar.get(ATGARD_INOM_SJUKVARDEN_SVAR_10004).size());
+        Map<String, List<Object>> rekDelsvar = testSvar.get(ATGARD_INOM_SJUKVARDEN_SVAR_10004).get(0).getDelsvar().stream().collect(Collectors.toMap(Delsvar::getId, Delsvar::getContent));
+        assertEquals(rekDelsvar.get(UtlatandeToIntyg.ATGARD_INOM_SJUKVARDEN_DELSVAR_10004_1).get(0), "AtgardInomSjukvarden");
+        assertEquals(rekDelsvar.get(UtlatandeToIntyg.ATGARD_INOM_SJUKVARDEN_DELSVAR_10004_2).get(0), "annan atgard");
+    }
+
+
     @SuppressWarnings("unchecked")
     @Test
     public void testAddBehovAvSjukskrivningSvar() {
@@ -142,7 +384,7 @@ public class UtlatandeToIntygTest {
 
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
 
-        assertEquals(4, intyg.getSvar().size());
+        assertEquals(8, intyg.getSvar().size());
         assertEquals("32", intyg.getSvar().get(0).getId());
         assertEquals(2, intyg.getSvar().get(0).getDelsvar().size());
         assertEquals("32.1", intyg.getSvar().get(0).getDelsvar().get(0).getId());

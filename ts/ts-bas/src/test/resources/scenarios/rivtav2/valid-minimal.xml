@@ -28,7 +28,7 @@
             <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
             <ns3:displayName>Transportstyrelsens läkarintyg</ns3:displayName>
         </typ>
-        <version>06.07</version>
+        <version>U07, V06</version>
         <signeringstidpunkt>2013-08-12T15:57:00</signeringstidpunkt>
         <skickatTidpunkt>2013-08-12T15:57:00</skickatTidpunkt>
         <patient>
@@ -48,10 +48,6 @@
                 <ns3:extension>SE0000000000-1333</ns3:extension>
             </personal-id>
             <fullstandigtNamn>Doktor Thompson</fullstandigtNamn>
-            <befattning>
-                <ns3:code>ST_LAKARE</ns3:code>
-                <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
-            </befattning>
             <enhet>
                 <enhets-id>
                     <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
@@ -74,9 +70,6 @@
                     <vardgivarnamn>Vårdgivarnamn</vardgivarnamn>
                 </vardgivare>
             </enhet>
-            <specialistkompetens>
-                <ns3:code>SPECIALITET</ns3:code>
-            </specialistkompetens>
         </skapadAv>
         <svar id="1">
             <delsvar id="1.1">

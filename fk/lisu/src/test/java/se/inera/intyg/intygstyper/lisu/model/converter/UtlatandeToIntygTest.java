@@ -23,13 +23,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
+import se.inera.intyg.intygstyper.lisu.model.internal.Sysselsattning;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class UtlatandeToIntygTest {
@@ -118,6 +123,27 @@ public class UtlatandeToIntygTest {
         assertNotNull(intyg.getRelation().get(0).getIntygsId().getRoot());
     }
 
+    @Test
+    public void testConvertDoesNotAddSvarForDiagnosWithoutCode() {
+        Diagnos diagnos = Diagnos.create(null, Diagnoskodverk.ICD_10_SE.name(), null, null);
+        LisuUtlatande utlatande = buildUtlatande().toBuilder().setDiagnoser(Arrays.asList(diagnos)).build();
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(intyg.getSvar().isEmpty());
+    }
+
+    @Test
+    public void testConvertDoesNotAddSvarForSysselsattningWithoutType() {
+        Sysselsattning sysselsattning = Sysselsattning.create(null);
+        LisuUtlatande utlatande = buildUtlatande().toBuilder().setSysselsattning(sysselsattning ).build();
+
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(intyg.getSvar().isEmpty());
+    }
+
+    private LisuUtlatande buildUtlatande() {
+        return buildUtlatande(null, null);
+    }
     private LisuUtlatande buildUtlatande(RelationKod relationKod, String relationIntygsId) {
         return buildUtlatande("intygsId", "textVersion", "enhetsId", "enhetsnamn", "patientPersonId",
                 "skapadAvFullstandigtNamn", "skapadAvPersonId", LocalDateTime.now(), "arbetsplatsKod", "postadress", "postNummer", "postOrt",

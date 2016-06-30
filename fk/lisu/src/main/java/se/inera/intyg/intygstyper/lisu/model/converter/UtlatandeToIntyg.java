@@ -94,7 +94,7 @@ public final class UtlatandeToIntyg {
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1, source.getAnnatGrundForMUBeskrivning()).build());
         }
 
-        if (source.getSysselsattning() != null) {
+        if (source.getSysselsattning() != null && source.getSysselsattning().getTyp() != null) {
             svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID_28).withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID_28,
                     aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, source.getSysselsattning().getTyp().getTransportId(), source.getSysselsattning().getTyp().getLabel()))
                     .build());
@@ -106,10 +106,12 @@ public final class UtlatandeToIntyg {
                 source.getArbetsmarknadspolitisktProgram());
 
         for (Diagnos diagnos : source.getDiagnoser()) {
-            Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-            svars.add(aSvar(DIAGNOS_SVAR_ID_6)
-                    .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                    .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
+            if (diagnos.getDiagnosKod() != null) {
+                Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
+                svars.add(aSvar(DIAGNOS_SVAR_ID_6)
+                        .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
+            }
         }
 
         addIfNotBlank(svars, FUNKTIONSNEDSATTNING_SVAR_ID_35, FUNKTIONSNEDSATTNING_DELSVAR_ID_35, source.getFunktionsnedsattning());
