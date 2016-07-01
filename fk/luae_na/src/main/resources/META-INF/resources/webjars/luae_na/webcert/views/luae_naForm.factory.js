@@ -193,22 +193,22 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                 {
                     key: 'grundData.skapadAv.vardenhet.postadress',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postadress', size: 'full'}
+                    templateOptions: {staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postnummer', size: '5'}
+                    templateOptions: {staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postort',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postort'}
+                    templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.telefonnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Telefonnummer'}
+                    templateOptions: {staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal'}
                 }
             ]
         }
