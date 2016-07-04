@@ -19,11 +19,7 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.CERTIFICATE_CODE_SYSTEM;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +28,7 @@ import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
-import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
-import se.inera.intyg.intygstyper.fk7263.model.internal.Rehabilitering;
-import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.model.internal.*;
 import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
@@ -112,7 +106,7 @@ public final class UtlatandeToIntyg {
     private static TypAvIntyg getTypAvIntyg(Utlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
-        typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
+        typAvIntyg.setCodeSystem(KV_UTLATANDETYP_INTYG_CODE_SYSTEM);
         typAvIntyg.setDisplayName(CERTIFICATE_DISPLAY_NAME);
         return typAvIntyg;
     }
