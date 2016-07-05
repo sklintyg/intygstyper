@@ -215,7 +215,7 @@
                 <div mi-field field-dynamic-label="DFR_3.1" filled="cert.underlagFinns!=null">
                   <div boolean-view="underlagFinns" field-model="cert"></div>
                 </div>
-                <div mi-field filled="cert.underlag">
+                <div mi-field filled="cert.underlag" ng-if="cert.underlagFinns">
                   <table class="table luse-underlag" ng-show="cert.underlag">
                     <tr>
                       <th><span dynamic-label key="DFR_4.1.RBK"></span></th>
