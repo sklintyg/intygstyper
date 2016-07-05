@@ -259,10 +259,10 @@
                 <div mi-field field-dynamic-label="DFR_7.1" filled="cert.diagnosgrund">
                   <div id="diagnosgrund" class="multiline">{{cert.diagnosgrund}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_7.2" filled="cert.nyBedomningDiagnosgrund!=null">
+                <div mi-field field-dynamic-label="FRG_45" filled="cert.nyBedomningDiagnosgrund!=null">
                   <div boolean-view="nyBedomningDiagnosgrund" field-model="cert"></div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_7.3" filled="cert.diagnosForNyBedomning!=null">
+                <div mi-field field-dynamic-label="DFR_45.2" filled="cert.diagnosForNyBedomning!=null">
                   <div id="diagnosForNyBedomning" class="multiline">{{cert.diagnosForNyBedomning}}</div>
                 </div>
               </div>
@@ -334,19 +334,19 @@
 
               <!-- Medicinska förutsättningar för arbete -->
               <div mi-category category-label="KAT_8.RBK">
-                <div mi-field field-dynamic-label="DFR_22" filled="cert.medicinskaForutsattningarForArbete">
+                <div mi-field field-dynamic-label="FRG_22" filled="cert.medicinskaForutsattningarForArbete">
                   <div id="medicinskaForutsattningarForArbete" class="multiline">
                     {{cert.medicinskaForutsattningarForArbete}}
                   </div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_23" filled="cert.formagaTrotsBegransning">
+                <div mi-field field-dynamic-label="FRG_23" filled="cert.formagaTrotsBegransning">
                   <div id="formagaTrotsBegransning" class="multiline">{{cert.formagaTrotsBegransning}}</div>
                 </div>
               </div>
 
               <!-- Övrigt -->
               <div mi-category category-label="KAT_9.RBK">
-                <div mi-field field-label="luse.label.otherinformation" filled="cert.ovrigt">
+                <div mi-field field-dynamic-label="FRG_25" filled="cert.ovrigt">
                   <div id="kommentar" class="multiline">{{cert.ovrigt}}</div>
                 </div>
               </div>

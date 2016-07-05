@@ -246,10 +246,10 @@
                 <div mi-field field-dynamic-label="DFR_7.1" filled="cert.diagnosgrund">
                   <div id="diagnosgrund" class="multiline">{{cert.diagnosgrund}}</div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_7.2" filled="cert.nyBedomningDiagnosgrund!=null">
+                <div mi-field field-dynamic-label="FRG_45" filled="cert.nyBedomningDiagnosgrund!=null">
                   <div boolean-view="nyBedomningDiagnosgrund" field-model="cert"></div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_7.3" filled="cert.diagnosForNyBedomning!=null">
+                <div mi-field field-dynamic-label="DFR_45.2" filled="cert.diagnosForNyBedomning!=null">
                   <div id="diagnosForNyBedomning" class="multiline">{{cert.diagnosForNyBedomning}}</div>
                 </div>
               </div>
@@ -324,7 +324,7 @@
 
               <!-- Övrigt -->
               <div mi-category category-label="KAT_9.RBK">
-                <div mi-field field-label="luae_na.label.otherinformation" filled="cert.ovrigt">
+                <div mi-field field-dynamic-label="FRG_25" filled="cert.ovrigt">
                   <div id="kommentar" class="multiline">{{cert.ovrigt}}</div>
                 </div>
               </div>

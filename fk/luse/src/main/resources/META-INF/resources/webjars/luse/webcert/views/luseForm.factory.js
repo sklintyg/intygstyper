@@ -77,12 +77,12 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 },
                 {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'DFR_7.1'}},
-                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'DFR_7.2'}},
+                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'FRG_45'}},
                 {
                     key: 'diagnosForNyBedomning',
                     className: 'fold-animation',
                     type: 'multi-text',
-                    templateOptions: {label: 'DFR_7.3'},
+                    templateOptions: {label: 'DFR_45.2'},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
             ]
