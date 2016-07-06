@@ -19,6 +19,8 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.util;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doAnswer;
 
@@ -35,14 +37,13 @@ import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import junit.framework.TestCase;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ModelCompareUtilTest extends TestCase {
+public class ModelCompareUtilTest {
 
     public static final String CORRECT_DIAGNOSKOD_FROM_FILE = "S47";
     public static final String CORRECT_DIAGNOSKOD2 = "B88";
