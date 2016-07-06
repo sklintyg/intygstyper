@@ -19,6 +19,9 @@
 
 package se.inera.intyg.intygstyper.ts_parent.rest;
 
+import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.INTYG_AVSER_DELSVAR_ID_1;
+import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.INTYG_AVSER_SVAR_ID_1;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -62,9 +65,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsParentModuleApi.class);
-
-    private static final String INTYG_AVSER_SVAR_ID_1 = "1";
-    private static final String INTYG_AVSER_DELSVAR_ID_1 = "1.1";
 
     @Autowired
     private InternalDraftValidator<T> validator;
