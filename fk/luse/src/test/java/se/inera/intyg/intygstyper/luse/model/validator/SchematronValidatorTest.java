@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import com.helger.commons.debug.GlobalDebug;
 
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
@@ -18,11 +19,15 @@ public class SchematronValidatorTest {
 
     private static final RegisterCertificateValidator LUSE_VALIDATOR = new RegisterCertificateValidator("luse.sch");
 
+    static {
+        // avoid com.helger debug log
+        GlobalDebug.setDebugModeDirect(false);
+    }
+
     @Test
     public void brokenXmlFails() throws Exception {
         String inputXml = Resources.toString(getResource("luse2_broken.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(LUSE_VALIDATOR, inputXml);
-        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertFalse(response.getValidationErrors().isEmpty());
     }
 
@@ -30,7 +35,6 @@ public class SchematronValidatorTest {
     public void diagnosMedBidiagnos2UtanBidiagnos1Fails() throws Exception {
         String inputXml = Resources.toString(getResource("med-bidiagnos2-utan-bidiagnos1_broken.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(LUSE_VALIDATOR, inputXml);
-        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertFalse(response.getValidationErrors().isEmpty());
     }
 
@@ -38,7 +42,6 @@ public class SchematronValidatorTest {
     public void validXmlPasses() throws Exception {
         String inputXml = Resources.toString(getResource("luse2.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(LUSE_VALIDATOR, inputXml);
-        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertTrue(response.getValidationErrors().isEmpty());
     }
 

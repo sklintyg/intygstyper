@@ -22,28 +22,17 @@ package se.inera.intyg.intygstyper.fk7263.validator;
 import static org.junit.Assert.assertEquals;
 import static se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidator.findAktivitetWithCode;
 import static se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidator.findFunktionsTillstandType;
-import iso.v21090.dt.v1.II;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.xml.bind.JAXB;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
+import iso.v21090.dt.v1.II;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
 
 
 /**
@@ -132,7 +121,6 @@ public class ProgrammaticTransportValidatorTest {
         ii.setExtension("19121212-1212");
         utlatande.getPatient().setPersonId(ii);
 
-        System.out.println(new ProgrammaticTransportValidator(utlatande).validate());
         assertEquals(1, new ProgrammaticTransportValidator(utlatande).validate().size());
     }
 

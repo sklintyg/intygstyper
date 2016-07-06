@@ -25,6 +25,7 @@ import org.mockito.*;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import com.google.common.base.Charsets;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
@@ -60,6 +61,11 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
 
     // Used for labeling tests.
     private static String name;
+
+    static {
+        // avoid com.helger debug log
+        GlobalDebug.setDebugModeDirect(false);
+    }
 
     @Mock
     private static WebcertModuleService mockModuleService;
@@ -149,11 +155,6 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
             assertTrue(String.format("File: %s, Schematronvalidation, expected errors > 0",
                     name),
                     SVRLHelper.getAllFailedAssertions(result).size() > 0);
-
-            System.out.println(String.format("Test: %s", name));
-            System.out.println(String.format("InternalValidation-errors: %s",  internalValidationErrors));
-            System.out.println(String.format("TransportValidation-errors: %s", transportValidationErrors));
-
         } else {
             assertTrue(String.format("File: %s, Internal validation, expected ValidationStatus.VALID \n Validation-errors: %s",
                     name, internalValidationErrors),

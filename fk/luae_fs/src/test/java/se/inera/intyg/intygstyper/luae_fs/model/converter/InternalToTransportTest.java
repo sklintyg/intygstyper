@@ -1,32 +1,34 @@
 package se.inera.intyg.intygstyper.luae_fs.model.converter;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-import com.helger.schematron.svrl.SVRLHelper;
-import com.helger.schematron.svrl.SVRLWriter;
-import org.joda.time.LocalDateTime;
-import org.junit.Test;
-import org.oclc.purl.dsdl.svrl.SchematronOutputType;
-import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
-import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
-import se.inera.intyg.intygstyper.fkparent.model.converter.RegisterCertificateTestValidator;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.common.support.common.enumerations.RelationKod;
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Relation;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
-
-import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayInputStream;
-import java.net.URL;
-
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayInputStream;
+import java.net.URL;
+
+import javax.xml.transform.stream.StreamSource;
+
+import org.joda.time.LocalDateTime;
+import org.junit.Test;
+import org.oclc.purl.dsdl.svrl.SchematronOutputType;
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import com.helger.schematron.svrl.SVRLHelper;
+
+import se.inera.intyg.common.support.common.enumerations.RelationKod;
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Relation;
+import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
+import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
+import se.inera.intyg.intygstyper.fkparent.model.converter.RegisterCertificateTestValidator;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public class InternalToTransportTest {
 
@@ -39,8 +41,6 @@ public class InternalToTransportTest {
 
         RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_fs.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(xmlContents.getBytes(Charsets.UTF_8))));
-
-        System.out.println(SVRLWriter.createXMLString(result));
 
         assertEquals(0, SVRLHelper.getAllFailedAssertions(result).size());
     }

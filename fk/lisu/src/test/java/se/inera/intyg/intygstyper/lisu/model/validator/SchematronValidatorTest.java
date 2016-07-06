@@ -9,20 +9,25 @@ import org.junit.Test;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import com.helger.commons.debug.GlobalDebug;
 
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 
 public class SchematronValidatorTest {
 
     private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("lisu.sch");
 
+    static {
+        // avoid com.helger debug log
+        GlobalDebug.setDebugModeDirect(false);
+    }
+
     @Test
     public void brokenXmlFailsTest() throws Exception {
         String inputXml = Resources.toString(getResource("transport/lisu_broken.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
-        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertFalse(response.getValidationErrors().isEmpty());
     }
 
@@ -30,7 +35,6 @@ public class SchematronValidatorTest {
     public void validXmlPassesTest() throws Exception {
         String inputXml = Resources.toString(getResource("transport/lisu.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
-        response.getValidationErrors().forEach(e -> System.out.println(e));
         assertTrue(response.getValidationErrors().isEmpty());
     }
 

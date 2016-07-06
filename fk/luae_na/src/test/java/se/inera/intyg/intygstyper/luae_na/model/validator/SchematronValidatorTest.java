@@ -9,14 +9,20 @@ import org.junit.Test;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
+import com.helger.commons.debug.GlobalDebug;
 
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
 
 public class SchematronValidatorTest {
 
     private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("luae_na.sch");
+
+    static {
+        // avoid com.helger debug log
+        GlobalDebug.setDebugModeDirect(false);
+    }
 
     @Test
     public void brokenXmlFailsTest() throws Exception {

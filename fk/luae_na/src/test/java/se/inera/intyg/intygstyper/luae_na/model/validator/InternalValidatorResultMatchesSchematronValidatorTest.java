@@ -21,12 +21,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import com.google.common.base.Charsets;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
@@ -36,9 +35,7 @@ import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValida
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSchematronValidatorTestUtil;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-import se.inera.intyg.intygstyper.luae_na.model.utils.Scenario;
-import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.luae_na.model.utils.*;
 import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
@@ -65,6 +62,11 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     // Used for labeling tests.
     private static String name;
 
+    static {
+        // avoid com.helger debug log
+        GlobalDebug.setDebugModeDirect(false);
+    }
+
     @Mock
     private static WebcertModuleService mockModuleService;
 
@@ -90,7 +92,6 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
      */
     @Parameters(name = "{index}: Scenario: {0}")
     public static Collection<Object[]> data() throws ScenarioNotFoundException {
-        //ScenarioFinder.getInternalScenarios("fail-*").stream().forEach(name -> System.out.println(name.getName()));
         List<Object[]> retList = ScenarioFinder.getInternalScenarios("fail-*").stream()
                 .map(u -> new Object[] { u.getName(), u, true })
                 .collect(Collectors.toList());
@@ -127,7 +128,6 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
      * @throws Exception
      */
     private static void doInternalAndSchematronValidation(Scenario scenario, boolean fail) throws Exception {
-        System.out.println(scenario.getName());
         LuaenaUtlatande utlatandeFromJson = scenario.asInternalModel();
 
         ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
@@ -158,11 +158,6 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
             assertTrue(String.format("File: %s, Schematronvalidation, expected errors > 0",
                     name),
                     SVRLHelper.getAllFailedAssertions(result).size() > 0);
-
-            System.out.println(String.format("Test: %s", name));
-            System.out.println(String.format("InternalValidation-errors: %s", internalValidationErrors));
-            System.out.println(String.format("TransportValidation-errors: %s", transportValidationErrors));
-
         } else {
             assertTrue(String.format("File: %s, Internal validation, expected ValidationStatus.VALID \n Validation-errors: %s",
                     name, internalValidationErrors),
