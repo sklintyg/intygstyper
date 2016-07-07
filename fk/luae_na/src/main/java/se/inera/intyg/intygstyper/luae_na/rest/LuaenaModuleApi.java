@@ -57,7 +57,8 @@ public class LuaenaModuleApi extends FkParentModuleApi<LuaenaUtlatande> {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return false;
+        // TODO temporary implementation, should be replaced by context- and field aware check.
+        return !persistedState.equals(currentState);
     }
 
     @Override

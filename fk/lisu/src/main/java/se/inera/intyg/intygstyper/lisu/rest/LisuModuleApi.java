@@ -19,10 +19,6 @@
 
 package se.inera.intyg.intygstyper.lisu.rest;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
@@ -31,11 +27,17 @@ import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.rest.FkParentModuleApi;
-import se.inera.intyg.intygstyper.lisu.model.converter.*;
+import se.inera.intyg.intygstyper.lisu.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.lisu.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.lisu.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
 import se.inera.intyg.intygstyper.lisu.support.LisuEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class LisuModuleApi extends FkParentModuleApi<LisuUtlatande> {
 
@@ -61,7 +63,8 @@ public class LisuModuleApi extends FkParentModuleApi<LisuUtlatande> {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return false;
+        // TODO temporary implementation, should be replaced by context- and field aware check.
+        return !persistedState.equals(currentState);
     }
 
     @Override
