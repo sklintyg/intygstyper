@@ -21,8 +21,6 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_1', level:4}},
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
-                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
@@ -39,8 +37,8 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
                     className: 'fold-animation',
                     hideExpression: '!(model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
                     templateOptions: {label: 'luse.validation.grund-for-mu.missing_ovrigt'}},
-                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
-                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
+                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'FRG_2'}},
+                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
                 {
                     key: 'underlag', type: 'underlag',
                     className: 'slide-animation',
