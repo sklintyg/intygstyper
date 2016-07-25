@@ -166,8 +166,7 @@
             <div class="cert-body">
 
               <div mi-category category-label="KAT_1.RBK">
-                <span dynamic-label key="FRG_1.RBK"></span>
-                <div mi-field field-dynamic-label="DFR_1.1" filled="cert.undersokningAvPatienten!=null ||
+                <div mi-field field-dynamic-label="FRG_1" filled="cert.undersokningAvPatienten!=null ||
                                                                         cert.telefonkontaktMedPatienten!=null ||
                                                                         cert.journaluppgifter!=null ||
                                                                         cert.anhorigsBeskrivningAvPatienten!=null">
@@ -197,13 +196,13 @@
                     </div>
                   </ul>
                 </div>
-                <div mi-field field-dynamic-label="DFR_2.1" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
+                <div mi-field field-dynamic-label="FRG_2" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
                   {{cert.kannedomOmPatient | date:'longDate' }}
                 </div>
-                <div mi-field field-dynamic-label="DFR_3.1" filled="cert.underlagFinns!=null">
+                <div mi-field field-dynamic-label="FRG_3" filled="cert.underlagFinns!=null">
                   <div boolean-view="underlagFinns" field-model="cert"></div>
                 </div>
-                <div mi-field filled="cert.underlag" ng-if="cert.underlagFinns">
+                <div mi-field field-dynamic-label="FRG_4" filled="cert.underlag" ng-if="cert.underlagFinns">
                   <table class="table luae_na-underlag" ng-show="cert.underlag">
                     <tr>
                       <th><span dynamic-label key="DFR_4.1.RBK"></span></th>

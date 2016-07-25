@@ -55,7 +55,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
                             'SPECIALISTKLINIK',
                             'VARD_UTOMLANDS',
                             'OVRIGT_UTLATANDE'],
-                        typLabel: 'FRG_4', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                        label: 'FRG_4', typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
                     },
                     watcher: {
                         expression: 'model.underlagFinns',

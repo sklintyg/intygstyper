@@ -50,7 +50,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                             'SPECIALISTKLINIK',
                             'VARD_UTOMLANDS',
                             'OVRIGT_UTLATANDE'],
-                        typLabel: 'FRG_4', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                        label: 'FRG_4', typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
                     },
                     watcher: {
                         expression: 'model.underlagFinns',
@@ -80,36 +80,6 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                 }
             ]
         },
-        //{
-        //    wrapper: 'wc-field',
-        //    templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
-        //    fieldGroup: [
-        //        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
-        //        {
-        //            key: 'underlag', type: 'underlag',
-        //            className: 'slide-animation',
-        //            hideExpression: '!model.underlagFinns',
-        //            templateOptions: {
-        //                underlagsTyper: ['NEUROPSYKIATRISKT',
-        //                    'HABILITERING',
-        //                    'ARBETSTERAPEUT',
-        //                    'FYSIOTERAPEUT',
-        //                    'LOGOPED',
-        //                    'PSYKOLOG',
-        //                    'FORETAGSHALSOVARD',
-        //                    'SKOLHALSOVARD',
-        //                    'SPECIALISTKLINIK',
-        //                    'VARD_UTOMLANDS',
-        //                    'OVRIGT_UTLATANDE'],
-        //                typLabel: 'FRG_4', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
-        //            },
-        //            watcher: {
-        //                expression: 'model.underlagFinns',
-        //                listener: FactoryHelper.underlagListener
-        //            }
-        //        }
-        //    ]
-        //},
         {
             wrapper: 'wc-field',
             templateOptions: {category: 3, categoryName: categoryNames[3]},
