@@ -191,6 +191,7 @@
                         <span dynamic-label key="KV_FKMU_0001.ANNAT.RBK"></span><span> | {{cert.annatGrundForMU | date:'longDate' }}</span>
                       </div>
                     </li>
+                    <span dynamic-label key="DFR_1.3.RBK" ng-show="cert.annatGrundForMUBeskrivning!=null"></span>
                     <div ng-show="cert.annatGrundForMUBeskrivning!=null">
                       {{cert.annatGrundForMUBeskrivning}}
                     </div>
