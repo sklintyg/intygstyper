@@ -51,8 +51,6 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
 
-    private boolean wireTapped = false;
-
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
 
@@ -63,14 +61,6 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
     public void initializeJaxbContext() throws JAXBException {
         jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         objectFactory = new ObjectFactory();
-    }
-
-    public boolean isWireTapped() {
-        return wireTapped;
-    }
-
-    public void setWireTapped(boolean wireTapped) {
-        this.wireTapped = wireTapped;
     }
 
     @Override
@@ -85,7 +75,6 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             String xml = xmlToString(registerMedicalCertificate);
             CertificateHolder certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
-            certificateHolder.setWireTapped(wireTapped);
 
             moduleContainer.certificateReceived(certificateHolder);
 
