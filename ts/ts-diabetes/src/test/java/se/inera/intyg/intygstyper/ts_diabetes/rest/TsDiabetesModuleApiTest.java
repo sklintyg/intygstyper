@@ -21,6 +21,7 @@ package se.inera.intyg.intygstyper.ts_diabetes.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
@@ -35,13 +36,17 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.ts_diabetes.integration.RegisterTSDiabetesResponderImpl;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
@@ -49,6 +54,7 @@ import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorImpl;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -66,6 +72,9 @@ public class TsDiabetesModuleApiTest {
 
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
+
+    @Mock
+    private RegisterTSDiabetesResponderInterface registerTSDiabetesResponderInterface;
 
     @Spy
     private WebcertModelFactoryImpl webcertModelFactory = new WebcertModelFactoryImpl();
@@ -203,6 +212,46 @@ public class TsDiabetesModuleApiTest {
 
         String result = moduleApi.getAdditionalInfo(intyg);
         assertNull(result);
+    }
+
+    @Test
+    public void testRegisterCertificateAlreadyExists() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = objectMapper
+                .writeValueAsString(ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel());
+
+        RegisterTSDiabetesResponseType registerResponse = new RegisterTSDiabetesResponseType();
+        registerResponse.setResultat(ResultTypeUtil.infoResult(RegisterTSDiabetesResponderImpl.CERTIFICATE_ALREADY_EXISTS));
+        when(registerTSDiabetesResponderInterface.registerTSDiabetes(Mockito.eq(logicalAddress), Mockito.any(RegisterTSDiabetesType.class)))
+                .thenReturn(registerResponse);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.VALIDATION_ERROR, e.getErroIdEnum());
+            assertEquals(RegisterTSDiabetesResponderImpl.CERTIFICATE_ALREADY_EXISTS, e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRegisterCertificateGenericInfoResult() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = objectMapper
+                .writeValueAsString(ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel());
+
+        RegisterTSDiabetesResponseType registerResponse = new RegisterTSDiabetesResponseType();
+        registerResponse.setResultat(ResultTypeUtil.infoResult("INFO"));
+        when(registerTSDiabetesResponderInterface.registerTSDiabetes(Mockito.eq(logicalAddress), Mockito.any(RegisterTSDiabetesType.class)))
+                .thenReturn(registerResponse);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.APPLICATION_ERROR, e.getErroIdEnum());
+            assertEquals("INFO", e.getMessage());
+        }
     }
 
     private CreateNewDraftHolder createNewDraftHolder() {

@@ -49,6 +49,8 @@ import se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidato
 
 public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalCertificateResponderInterface {
 
+    public static final String CERTIFICATE_ALREADY_EXISTS = "Certificate already exists";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
 
     private ObjectFactory objectFactory;
@@ -81,7 +83,7 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             response.setResult(ResultOfCallUtil.okResult());
 
         } catch (CertificateAlreadyExistsException e) {
-            response.setResult(ResultOfCallUtil.infoResult("Certificate already exists"));
+            response.setResult(ResultOfCallUtil.infoResult(CERTIFICATE_ALREADY_EXISTS));
             String certificateId = registerMedicalCertificate.getLakarutlatande().getLakarutlatandeId();
             String issuedBy =  registerMedicalCertificate.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");

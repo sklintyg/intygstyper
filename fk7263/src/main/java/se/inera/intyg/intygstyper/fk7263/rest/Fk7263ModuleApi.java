@@ -22,6 +22,7 @@ package se.inera.intyg.intygstyper.fk7263.rest;
 import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
+import static se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl.CERTIFICATE_ALREADY_EXISTS;
 
 import java.io.*;
 import java.util.*;
@@ -61,6 +62,7 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
@@ -268,7 +270,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     private JAXBElement<?> wrapJaxb(RegisterCertificateType ws) {
-        JAXBElement<?> jaxbElement = new JAXBElement<RegisterCertificateType>(
+        JAXBElement<?> jaxbElement = new JAXBElement<>(
                 new QName("urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2", "RegisterCertificate"),
                 RegisterCertificateType.class, ws);
         return jaxbElement;
@@ -427,13 +429,25 @@ public class Fk7263ModuleApi implements ModuleApi {
 
             // check whether call was successful or not
             if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
-                        ? response.getResult().getInfoText()
-                        : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-                LOG.error("Error occured when sending certificate '{}': {}",
-                        request.getLakarutlatande() != null ? request.getLakarutlatande().getLakarutlatandeId() : null,
-                        message);
-                throw new ExternalServiceCallException(message);
+                boolean info = response.getResult().getResultCode() == ResultCodeEnum.INFO;
+
+                // This monstrosity is required because we want to handle when the certificate already exists in
+                // Intygstjänsten. When this happens Intygstjänsten will return an INFO result with a specified
+                // InfoText. To make sure we do not try to resend this request we need to throw an exception with
+                // ErrorIdEnum of ValidationError.
+                if (recipientId == null && info && CERTIFICATE_ALREADY_EXISTS.equals(response.getResult().getInfoText())) {
+                    LOG.warn("Tried to register certificate ({}) which already exist in Intygstjänsten",
+                            request.getLakarutlatande().getLakarutlatandeId());
+                    throw new ExternalServiceCallException(response.getResult().getInfoText(), ErrorIdEnum.VALIDATION_ERROR);
+                } else {
+                    String message = info
+                            ? response.getResult().getInfoText()
+                            : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+                    LOG.error("Error occured when sending certificate '{}': {}",
+                            request.getLakarutlatande() != null ? request.getLakarutlatande().getLakarutlatandeId() : null,
+                            message);
+                    throw new ExternalServiceCallException(message);
+                }
             }
         } catch (SOAPFaultException e) {
             throw new ExternalServiceCallException(e);

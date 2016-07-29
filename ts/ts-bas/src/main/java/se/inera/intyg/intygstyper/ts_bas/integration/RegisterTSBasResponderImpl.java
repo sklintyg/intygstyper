@@ -48,6 +48,8 @@ import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 
 public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterface {
 
+    public static final String CERTIFICATE_ALREADY_EXISTS = "Certificate already exists";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTSBasResponderImpl.class);
 
     @Autowired(required = false)
@@ -82,7 +84,7 @@ public class RegisterTSBasResponderImpl implements RegisterTSBasResponderInterfa
             LOGGER.debug("Registered intyg with id: {}", registerTsBas.getIntyg().getIntygsId());
 
         } catch (CertificateAlreadyExistsException e) {
-            response.setResultat(ResultTypeUtil.infoResult("Certificate already exists"));
+            response.setResultat(ResultTypeUtil.infoResult(CERTIFICATE_ALREADY_EXISTS));
             String certificateId = registerTsBas.getIntyg().getIntygsId();
             String issuedBy =  registerTsBas.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId().getExtension();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");

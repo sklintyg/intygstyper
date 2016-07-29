@@ -54,6 +54,7 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
@@ -208,7 +209,8 @@ public class LisuModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.okResult());
 
-        when(objectMapper.readValue(internalModel, LisuUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
@@ -218,6 +220,46 @@ public class LisuModuleApiTest {
         assertNotNull(captor.getValue().getIntyg());
     }
 
+    @Test
+    public void testRegisterCertificateAlreadyExists() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = "internal model";
+        RegisterCertificateResponseType response = new RegisterCertificateResponseType();
+        response.setResult(ResultTypeUtil.infoResult("Certificate already exists"));
+
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.VALIDATION_ERROR, e.getErroIdEnum());
+            assertEquals("Certificate already exists", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRegisterCertificateGenericInfoResult() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = "internal model";
+        RegisterCertificateResponseType response = new RegisterCertificateResponseType();
+        response.setResult(ResultTypeUtil.infoResult("INFO"));
+
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.APPLICATION_ERROR, e.getErroIdEnum());
+            assertEquals("INFO", e.getMessage());
+        }
+    }
+
     @Test(expected = ExternalServiceCallException.class)
     public void testRegisterCertificateShouldThrowExceptionOnFailedCallToIT() throws Exception {
         final String logicalAddress = "logicalAddress";
@@ -225,7 +267,8 @@ public class LisuModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "resultText"));
 
-        when(objectMapper.readValue(internalModel, LisuUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
@@ -274,6 +317,7 @@ public class LisuModuleApiTest {
         assertEquals(internalModel, response);
         verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
     }
+
     @Test
     public void testRevokeCertificate() throws Exception {
         final String logicalAddress = "logicalAddress";
@@ -315,6 +359,7 @@ public class LisuModuleApiTest {
         assertNotNull(res);
         assertNotEquals("", res);
     }
+
     private GetCertificateResponseType createGetCertificateResponseType() throws ScenarioNotFoundException {
         GetCertificateResponseType res = new GetCertificateResponseType();
         RegisterCertificateType registerType = ScenarioFinder.getInternalScenario("pass-minimal").asTransportModel();

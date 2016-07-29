@@ -18,10 +18,7 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.rest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
@@ -45,8 +42,11 @@ import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.ts_bas.integration.RegisterTSBasResponderImpl;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.ts_bas.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
@@ -148,6 +148,46 @@ public class TsBasModuleApiTest {
     }
 
     @Test
+    public void testRegisterCertificateAlreadyExists() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = objectMapper
+                .writeValueAsString(ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel());
+
+        RegisterTSBasResponseType registerResponse = new RegisterTSBasResponseType();
+        registerResponse.setResultat(ResultTypeUtil.infoResult(RegisterTSBasResponderImpl.CERTIFICATE_ALREADY_EXISTS));
+        when(registerTSBasResponderInterface.registerTSBas(Mockito.eq(logicalAddress), Mockito.any(RegisterTSBasType.class)))
+                .thenReturn(registerResponse);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.VALIDATION_ERROR, e.getErroIdEnum());
+            assertEquals(RegisterTSBasResponderImpl.CERTIFICATE_ALREADY_EXISTS, e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRegisterCertificateGenericInfoResult() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = objectMapper
+                .writeValueAsString(ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel());
+
+        RegisterTSBasResponseType registerResponse = new RegisterTSBasResponseType();
+        registerResponse.setResultat(ResultTypeUtil.infoResult("INFO"));
+        when(registerTSBasResponderInterface.registerTSBas(Mockito.eq(logicalAddress), Mockito.any(RegisterTSBasType.class)))
+                .thenReturn(registerResponse);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.APPLICATION_ERROR, e.getErroIdEnum());
+            assertEquals("INFO", e.getMessage());
+        }
+    }
+
+    @Test
     public void testRegisterCertificateFailed() throws JsonProcessingException, ScenarioNotFoundException {
         RegisterTSBasResponseType registerResponse = new RegisterTSBasResponseType();
         registerResponse.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "failed"));
@@ -173,7 +213,7 @@ public class TsBasModuleApiTest {
         result.setMeta(createMeta());
         result.setResultat(ResultTypeUtil.okResult());
         Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
-            .thenReturn(result);
+                .thenReturn(result);
 
         CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
         assertNotNull(internal);

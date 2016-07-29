@@ -47,6 +47,8 @@ import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 
 public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesResponderInterface {
 
+    public static final String CERTIFICATE_ALREADY_EXISTS = "Certificate already exists";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterTSDiabetesResponderImpl.class);
 
     @Autowired(required = false)
@@ -71,7 +73,7 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
             response.setResultat(ResultTypeUtil.okResult());
 
         } catch (CertificateAlreadyExistsException ce) {
-            response.setResultat(ResultTypeUtil.infoResult("Certificate already exists"));
+            response.setResultat(ResultTypeUtil.infoResult(CERTIFICATE_ALREADY_EXISTS));
             String certificateId = parameters.getIntyg().getIntygsId();
             String issuedBy = parameters.getIntyg().getGrundData().getSkapadAv().getVardenhet().getEnhetsId().getExtension();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy
@@ -109,7 +111,7 @@ public class RegisterTSDiabetesResponderImpl implements RegisterTSDiabetesRespon
         Marshaller marshaller = ctx.createMarshaller();
 
         QName qName = new QName("urn:local:se:intygstjanster:services:1", "RegisterTSDiabetesType");
-        JAXBElement<RegisterTSDiabetesType> t = new JAXBElement<RegisterTSDiabetesType>(qName, RegisterTSDiabetesType.class, parameters);
+        JAXBElement<RegisterTSDiabetesType> t = new JAXBElement<>(qName, RegisterTSDiabetesType.class, parameters);
 
         StringWriter wr = new StringWriter();
         marshaller.marshal(t, wr);

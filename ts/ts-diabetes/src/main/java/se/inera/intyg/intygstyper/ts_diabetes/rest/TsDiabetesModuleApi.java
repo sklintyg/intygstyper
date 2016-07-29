@@ -36,6 +36,8 @@ import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData
 import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
+import se.inera.intyg.intygstyper.ts_diabetes.integration.RegisterTSDiabetesResponderImpl;
 import se.inera.intyg.intygstyper.ts_diabetes.model.converter.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.util.TSDiabetesCertificateMetaTypeConverter;
@@ -82,11 +84,13 @@ public class TsDiabetesModuleApi extends TsParentModuleApi<Utlatande> {
         RegisterTSDiabetesResponseType response = diabetesRegisterClient.registerTSDiabetes(logicalAddress, request);
 
         // check whether call was successful or not
-        if (response.getResultat().getResultCode() != ResultCodeType.OK) {
-            String message = response.getResultat().getResultCode() == ResultCodeType.INFO
-                    ? response.getResultat().getResultText()
-                    : response.getResultat().getErrorId() + " : " + response.getResultat().getResultText();
-            throw new ExternalServiceCallException(message);
+        if (response.getResultat().getResultCode() == ResultCodeType.INFO) {
+            throw new ExternalServiceCallException(response.getResultat().getResultText(),
+                    RegisterTSDiabetesResponderImpl.CERTIFICATE_ALREADY_EXISTS.equals(response.getResultat().getResultText())
+                            ? ErrorIdEnum.VALIDATION_ERROR
+                            : ErrorIdEnum.APPLICATION_ERROR);
+        } else if (response.getResultat().getResultCode() == ResultCodeType.ERROR) {
+            throw new ExternalServiceCallException(response.getResultat().getErrorId() + " : " + response.getResultat().getResultText());
         }
     }
 
