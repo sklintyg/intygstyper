@@ -211,6 +211,7 @@ public final class RespConstants {
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderEjAktuelltBeskrivning";
 
     public static final String TILLAGGSFRAGOR_SVAR_JSON_ID = "tillaggsfragor";
+    public static final int TILLAGGSFRAGOR_START = 9000;
 
     public static final String GRUNDDATA_SVAR_JSON_ID = "grundData";
     public static final String TEXTVERSION_JSON_ID = "textVersion";
@@ -266,6 +267,8 @@ public final class RespConstants {
             return MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22;
         case FORMAGATROTSBEGRANSNING_SVAR_ID_23:
             return FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23;
+        case FORSLAG_TILL_ATGARD_SVAR_ID_24:
+            return FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24;
         case OVRIGT_SVAR_ID_25:
             return OVRIGT_SVAR_JSON_ID_25;
         case KONTAKT_ONSKAS_SVAR_ID_26:

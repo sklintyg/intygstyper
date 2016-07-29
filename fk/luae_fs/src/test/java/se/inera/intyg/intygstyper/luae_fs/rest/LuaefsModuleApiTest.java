@@ -25,8 +25,10 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.*;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.io.IOException;
+import java.util.*;
 
 import javax.xml.soap.SOAPFactory;
 import javax.xml.ws.soap.SOAPFaultException;
@@ -58,6 +60,7 @@ import se.inera.intyg.common.support.modules.support.api.exception.ExternalServi
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.luae_fs.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.luae_fs.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.intygstyper.luae_fs.model.utils.ScenarioFinder;
@@ -102,6 +105,9 @@ public class LuaefsModuleApiTest {
 
     @Mock
     private RevokeCertificateResponderInterface revokeClient;
+
+    @Spy
+    private SvarIdHelperImpl svarIdHelper;
 
     @InjectMocks
     private LuaefsModuleApi moduleApi;
@@ -349,6 +355,31 @@ public class LuaefsModuleApiTest {
         assertNotNull(res);
         assertNotEquals("", res);
     }
+
+    @Test
+    public void testGetModuleSpecificArendeParameters() throws Exception {
+        LuaefsUtlatande utlatande = ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel();
+
+        Map<String, List<String>> res = moduleApi.getModuleSpecificArendeParameters(utlatande,
+                Arrays.asList(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22, FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11,
+                        GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, AKTIVITETSBEGRANSNING_SVAR_ID_17));
+
+        assertNotNull(res);
+        assertEquals(4, res.keySet().size());
+        assertNotNull(res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
+        assertEquals(1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertNotNull(res.get(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22));
+        assertEquals(1, res.get(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22).size());
+        assertEquals(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_JSON_ID_22, res.get(MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22).get(0));
+        assertNotNull(res.get(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11));
+        assertEquals(1, res.get(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11).size());
+        assertEquals(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_JSON_ID_11, res.get(FUNKTIONSNEDSATTNING_PSYKISK_SVAR_ID_11).get(0));
+        assertNotNull(res.get(AKTIVITETSBEGRANSNING_SVAR_ID_17));
+        assertEquals(1, res.get(AKTIVITETSBEGRANSNING_SVAR_ID_17).size());
+        assertEquals(AKTIVITETSBEGRANSNING_SVAR_JSON_ID_17, res.get(AKTIVITETSBEGRANSNING_SVAR_ID_17).get(0));
+    }
+
     private GetCertificateResponseType createGetCertificateResponseType(final StatusKod statusKod, final PartKod part)
             throws IOException, ModuleException {
         GetCertificateResponseType response = new GetCertificateResponseType();

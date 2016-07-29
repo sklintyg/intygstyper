@@ -30,14 +30,15 @@ import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.io.IOException;
+import java.util.*;
 
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,8 +51,9 @@ import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.intygstyper.luae_na.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
@@ -80,6 +82,9 @@ public class LuaenaModuleApiTest {
 
     @Mock
     private WebcertModelFactoryImpl webcertModelFactory;
+
+    @Spy
+    private SvarIdHelperImpl svarIdHelper;
 
     @InjectMocks
     private LuaenaModuleApi moduleApi;
@@ -232,6 +237,27 @@ public class LuaenaModuleApiTest {
         assertEquals(internalModel, response);
         verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
     }
+
+    @Test
+    public void testGetModuleSpecificArendeParameters() throws Exception {
+        LuaenaUtlatande utlatande = ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel();
+
+        Map<String, List<String>> res = moduleApi.getModuleSpecificArendeParameters(utlatande,
+                Arrays.asList(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, FORSLAG_TILL_ATGARD_SVAR_ID_24, SUBSTANSINTAG_SVAR_ID_21));
+
+        assertNotNull(res);
+        assertEquals(3, res.keySet().size());
+        assertNotNull(res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
+        assertEquals(1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertNotNull(res.get(FORSLAG_TILL_ATGARD_SVAR_ID_24));
+        assertEquals(1, res.get(FORSLAG_TILL_ATGARD_SVAR_ID_24).size());
+        assertEquals(FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24, res.get(FORSLAG_TILL_ATGARD_SVAR_ID_24).get(0));
+        assertNotNull(res.get(SUBSTANSINTAG_SVAR_ID_21));
+        assertEquals(1, res.get(SUBSTANSINTAG_SVAR_ID_21).size());
+        assertEquals(SUBSTANSINTAG_SVAR_JSON_ID_21, res.get(SUBSTANSINTAG_SVAR_ID_21).get(0));
+    }
+
     private RegisterCertificateResponseType createReturnVal(ResultCodeType res) {
         RegisterCertificateResponseType retVal = new RegisterCertificateResponseType();
         ResultType value = new ResultType();

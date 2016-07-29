@@ -4,6 +4,8 @@
 
   <bean class="se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactoryImpl" />
 
+  <bean class="se.inera.intyg.intygstyper.luae_na.model.converter.SvarIdHelperImpl" />
+
   <bean class="se.inera.intyg.intygstyper.luae_na.rest.LuaenaModuleApi" />
 
   <bean class="se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl" />

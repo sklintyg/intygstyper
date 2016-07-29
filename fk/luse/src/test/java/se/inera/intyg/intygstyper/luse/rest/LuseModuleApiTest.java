@@ -30,8 +30,10 @@ import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.io.IOException;
+import java.util.*;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
@@ -54,8 +56,9 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.intygstyper.luse.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.luse.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.model.utils.ScenarioFinder;
@@ -92,6 +95,9 @@ public class LuseModuleApiTest {
 
     @Mock
     private RevokeCertificateResponderInterface revokeClient;
+
+    @Spy
+    private SvarIdHelperImpl svarIdHelper;
 
     @InjectMocks
     private LuseModuleApi moduleApi;
@@ -355,6 +361,29 @@ public class LuseModuleApiTest {
         String res = moduleApi.createRevokeRequest(utlatande, skapadAv, meddelande);
         assertNotNull(res);
         assertNotEquals("", res);
+    }
+
+    @Test
+    public void testGetModuleSpecificArendeParameters() throws Exception {
+        LuseUtlatande utlatande = ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel();
+
+        Map<String, List<String>> res = moduleApi.getModuleSpecificArendeParameters(utlatande,
+                Arrays.asList(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, KANNEDOM_SVAR_ID_2, PLANERADBEHANDLING_SVAR_ID_20, DIAGNOSGRUND_SVAR_ID_7));
+
+        assertNotNull(res);
+        assertEquals(4, res.keySet().size());
+        assertNotNull(res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
+        assertEquals(1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertNotNull(res.get(KANNEDOM_SVAR_ID_2));
+        assertEquals(1, res.get(KANNEDOM_SVAR_ID_2).size());
+        assertEquals(KANNEDOM_SVAR_JSON_ID_2, res.get(KANNEDOM_SVAR_ID_2).get(0));
+        assertNotNull(res.get(DIAGNOSGRUND_SVAR_ID_7));
+        assertEquals(1, res.get(DIAGNOSGRUND_SVAR_ID_7).size());
+        assertEquals(DIAGNOSGRUND_SVAR_JSON_ID_7, res.get(DIAGNOSGRUND_SVAR_ID_7).get(0));
+        assertNotNull(res.get(PLANERADBEHANDLING_SVAR_ID_20));
+        assertEquals(1, res.get(PLANERADBEHANDLING_SVAR_ID_20).size());
+        assertEquals(PLANERADBEHANDLING_SVAR_JSON_ID_20, res.get(PLANERADBEHANDLING_SVAR_ID_20).get(0));
     }
 
     private GetCertificateResponseType createGetCertificateResponseType() throws ScenarioNotFoundException {

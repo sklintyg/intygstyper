@@ -19,25 +19,21 @@
 
 package se.inera.intyg.intygstyper.luae_fs.rest;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.rest.FkParentModuleApi;
-import se.inera.intyg.intygstyper.luae_fs.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.luae_fs.model.converter.TransportToInternal;
-import se.inera.intyg.intygstyper.luae_fs.model.converter.UtlatandeToIntyg;
+import se.inera.intyg.intygstyper.luae_fs.model.converter.*;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class LuaefsModuleApi extends FkParentModuleApi<LuaefsUtlatande> {
 
@@ -63,11 +59,6 @@ public class LuaefsModuleApi extends FkParentModuleApi<LuaefsUtlatande> {
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
         // TODO temporary implementation, should be replaced by context- and field aware check.
         return !persistedState.equals(currentState);
-    }
-
-    @Override
-    public Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
-        return TransportToArendeApi.getModuleSpecificArendeParameters(utlatande);
     }
 
     @Override
