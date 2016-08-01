@@ -67,6 +67,7 @@
       </specialistkompetens>
     </skapadAv>
     <svar id="1">
+      <instans>1</instans>
       <delsvar id="1.1">
         <ns3:cv>
           <ns3:code>TELEFONKONTAKT</ns3:code>
@@ -76,6 +77,7 @@
       <delsvar id="1.2">2015-12-08</delsvar>
     </svar>
     <svar id="1">
+      <instans>2</instans>
       <delsvar id="1.1">
         <ns3:cv>
           <ns3:code>ANNAT</ns3:code>
@@ -97,6 +99,7 @@
       <delsvar id="29.1">Smed</delsvar>
     </svar>
     <svar id="6">
+      <instans>1</instans>
       <delsvar id="6.1">Klämskada skuldra</delsvar>
       <delsvar id="6.2">
         <ns3:cv>
@@ -112,6 +115,7 @@
       <delsvar id="17.1">Kommer inte in i bilen</delsvar>
     </svar>
     <svar id="32">
+      <instans>1</instans>
       <delsvar id="32.1">
         <ns3:cv>
           <ns3:code>TRE_FJARDEDEL</ns3:code>
@@ -126,6 +130,7 @@
       </delsvar>
     </svar>
     <svar id="32">
+      <instans>2</instans>
       <delsvar id="32.1">
         <ns3:cv>
           <ns3:code>HALFTEN</ns3:code>
@@ -140,6 +145,7 @@
       </delsvar>
     </svar>
     <svar id="32">
+      <instans>3</instans>
       <delsvar id="32.1">
         <ns3:cv>
           <ns3:code>EN_FJARDEDEL</ns3:code>

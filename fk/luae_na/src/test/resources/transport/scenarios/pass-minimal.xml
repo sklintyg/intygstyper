@@ -86,7 +86,7 @@
       <delsvar id="4.3">Skickas med posten</delsvar>
     </svar>
 	<svar id="4">
-      <instans>1</instans>
+      <instans>2</instans>
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>FYSIOTERAPEUT</ns3:code>
