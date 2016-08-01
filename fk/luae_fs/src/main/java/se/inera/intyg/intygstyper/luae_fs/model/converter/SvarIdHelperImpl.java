@@ -37,11 +37,11 @@ public class SvarIdHelperImpl implements SvarIdHelper<LuaefsUtlatande> {
         if (utlatande.getUndersokningAvPatienten() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1);
         }
-        if (utlatande.getAnhorigsBeskrivningAvPatienten() != null) {
-            filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1);
-        }
         if (utlatande.getJournaluppgifter() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1);
+        }
+        if (utlatande.getAnhorigsBeskrivningAvPatienten() != null) {
+            filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1);
         }
         if (utlatande.getAnnatGrundForMU() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1);

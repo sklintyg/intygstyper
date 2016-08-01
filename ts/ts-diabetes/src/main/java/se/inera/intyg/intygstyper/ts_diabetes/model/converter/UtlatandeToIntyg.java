@@ -77,9 +77,10 @@ public final class UtlatandeToIntyg {
         List<Svar> svars = new ArrayList<>();
 
         if (source.getIntygAvser() != null) {
+            Integer intygAvserInstans = 1;
             for (IntygAvserKategori korkortstyp : source.getIntygAvser().getKorkortstyp()) {
                 IntygAvserKod intygAvser = IntygAvserKod.valueOf(korkortstyp.name());
-                svars.add(aSvar(INTYG_AVSER_SVAR_ID_1)
+                svars.add(aSvar(INTYG_AVSER_SVAR_ID_1, intygAvserInstans++)
                         .withDelsvar(INTYG_AVSER_DELSVAR_ID_1, aCV(INTYG_AVSER_CODE_SYSTEM, intygAvser.getCode(), intygAvser.getDescription()))
                         .build());
             }
@@ -261,9 +262,10 @@ public final class UtlatandeToIntyg {
             return;
         }
         if (source.getKorkortstyp() != null) {
+            Integer behorighetInstans = 1;
             for (BedomningKorkortstyp korkortstyp : source.getKorkortstyp()) {
                 KorkortsbehorighetKod korkortsbehorighet = KorkortsbehorighetKod.valueOf(korkortstyp.name());
-                svars.add(aSvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_SVAR_ID_33)
+                svars.add(aSvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_SVAR_ID_33, behorighetInstans++)
                         .withDelsvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_DELSVAR_ID_33,
                                 aCV(KORKORTSBEHORIGHET_CODE_SYSTEM, korkortsbehorighet.getCode(), korkortsbehorighet.getDescription()))
                         .build());

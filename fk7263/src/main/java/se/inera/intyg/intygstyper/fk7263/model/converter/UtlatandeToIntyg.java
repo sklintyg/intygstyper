@@ -114,17 +114,18 @@ public final class UtlatandeToIntyg {
     private static List<Svar> getSvar(Utlatande source) {
         List<Svar> svars = new ArrayList<>();
 
+        Integer sjukskrivningInstans = 1;
         if (source.getNedsattMed100() != null && source.getNedsattMed100().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_100_CODE, source.getNedsattMed100()));
+            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_100_CODE, sjukskrivningInstans++, source.getNedsattMed100()));
         }
         if (source.getNedsattMed75() != null && source.getNedsattMed75().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_75_CODE, source.getNedsattMed75()));
+            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_75_CODE, sjukskrivningInstans++, source.getNedsattMed75()));
         }
         if (source.getNedsattMed50() != null && source.getNedsattMed50().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_50_CODE, source.getNedsattMed50()));
+            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_50_CODE, sjukskrivningInstans++, source.getNedsattMed50()));
         }
         if (source.getNedsattMed25() != null && source.getNedsattMed25().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_25_CODE, source.getNedsattMed25()));
+            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_25_CODE, sjukskrivningInstans++, source.getNedsattMed25()));
         }
 
         Svar svar = createAtgard(source);
@@ -148,25 +149,26 @@ public final class UtlatandeToIntyg {
             svars.add(createRehabiliteringSvar(source));
         }
 
+        Integer grundForMUInstans = 1;
         if (source.getTelefonkontaktMedPatienten() != null && source.getTelefonkontaktMedPatienten().isValidDate()) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                     aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.TELEFONKONTAKT.transportId, ReferensTyp.TELEFONKONTAKT.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getTelefonkontaktMedPatienten().asLocalDate().toString())
                     .build());
         }
         if (source.getUndersokningAvPatienten() != null && source.getUndersokningAvPatienten().isValidDate()) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                     aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.UNDERSOKNING.transportId, ReferensTyp.UNDERSOKNING.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getUndersokningAvPatienten().asLocalDate().toString())
                     .build());
         }
         if (source.getJournaluppgifter() != null && source.getJournaluppgifter().isValidDate()) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                     aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.JOURNAL.transportId, ReferensTyp.JOURNAL.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
         if (source.getAnnanReferens() != null && source.getAnnanReferens().isValidDate()) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                     aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.ANNAT.transportId, ReferensTyp.ANNAT.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnnanReferens().asLocalDate().toString()).build());
         }
@@ -292,8 +294,8 @@ public final class UtlatandeToIntyg {
         return svarBuilder.build();
     }
 
-    private static Svar createBehovAvSjukskrivningSvar(String code, InternalLocalDateInterval interval) {
-        return aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32).withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32,
+    private static Svar createBehovAvSjukskrivningSvar(String code, Integer instans, InternalLocalDateInterval interval) {
+        return aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32, instans).withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32,
                 aCV(SJUKSKRIVNING_CODE_SYSTEM, code, SJUKSKRIVNING_CODE_SYSTEM))
                 .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32,
                         aDatePeriod(interval.fromAsLocalDate(), interval.tomAsLocalDate()))
