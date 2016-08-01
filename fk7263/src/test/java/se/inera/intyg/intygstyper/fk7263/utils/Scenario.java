@@ -20,6 +20,7 @@
 package se.inera.intyg.intygstyper.fk7263.utils;
 
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
  * Defines a scenario that can be tested. The following models (as POJOs) can be extracted from a scenario:
@@ -48,6 +49,15 @@ public interface Scenario {
      *             if the scenario wasn't found.
      */
     RegisterMedicalCertificateType asTransportModel() throws ScenarioNotFoundException;
+
+    /**
+     * Returns the scenario as a rivta v2 transport model.
+     *
+     * @return The scenario as a rivta v2 transport model.
+     * @throws ScenarioNotFoundException
+     *             if the scenario wasn't found.
+     */
+    RegisterCertificateType asRivtaV2TransportModel() throws ScenarioNotFoundException;
 
     /**
      * Returns the scenario as a internal Mina Intyg model.

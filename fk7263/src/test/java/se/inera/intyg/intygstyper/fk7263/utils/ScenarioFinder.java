@@ -30,6 +30,7 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
  * Finds and creates scenarios based on scenario files placed in src/test/resources.
@@ -37,6 +38,8 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 public class ScenarioFinder {
 
     private static final File TRANSPORT_MODEL_PATH = new File("src/test/resources/scenarios/transport");
+
+    private static final File RIVTA_V2_TRANSPORT_MODEL_PATH = new File("src/test/resources/scenarios/rivtav2");
 
     private static final File INTERNAL_MODEL_PATH = new File("src/test/resources/scenarios/internal");
 
@@ -147,11 +150,24 @@ public class ScenarioFinder {
         @Override
         public RegisterMedicalCertificateType asTransportModel() throws ScenarioNotFoundException {
             try {
-                return JAXB.unmarshal(getTransportModelFor(scenarioFile), RegisterMedicalCertificateType.class);
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile, TRANSPORT_MODEL_PATH), RegisterMedicalCertificateType.class);
             } catch (Exception e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "transport", e);
             }
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public RegisterCertificateType asRivtaV2TransportModel() throws ScenarioNotFoundException {
+            try {
+                return JAXB.unmarshal(getTransportModelFor(scenarioFile, RIVTA_V2_TRANSPORT_MODEL_PATH), RegisterCertificateType.class);
+            } catch (Exception e) {
+                throw new ScenarioNotFoundException(scenarioFile.getName(), "rivta v2 transport", e);
+            }
+        }
+
         /**
          * {@inheritDoc}
          */
@@ -167,9 +183,9 @@ public class ScenarioFinder {
 
     }
 
-    private static File getTransportModelFor(File otherModel) {
+    private static File getTransportModelFor(File otherModel, File path) {
         String filenameWithoutExt = FilenameUtils.removeExtension(otherModel.getName());
-        return new File(TRANSPORT_MODEL_PATH, filenameWithoutExt + TRANSPORT_MODEL_EXT);
+        return new File(path, filenameWithoutExt + TRANSPORT_MODEL_EXT);
     }
 
     private static File getInternalModelFor(File otherModel) {
