@@ -56,6 +56,7 @@
       </enhet>
     </skapadAv>
     <svar id="1">
+      <instans>1</instans>
       <delsvar id="1.1">
         <ns3:cv>
           <ns3:code>UNDERSOKNING</ns3:code>
@@ -73,6 +74,7 @@
       </delsvar>
     </svar>
     <svar id="4">
+      <instans>1</instans>
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>PSYKOLOG</ns3:code>
@@ -84,6 +86,7 @@
       <delsvar id="4.3">Skickas med posten</delsvar>
     </svar>
 	<svar id="4">
+      <instans>2</instans>
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>FYSIOTERAPEUT</ns3:code>

@@ -74,8 +74,19 @@
     </iso:rule>
   </iso:pattern>
 
+  <iso:pattern id="instans">
+    <iso:rule context="//gn:instans">
+      <iso:assert test="number(.) ge 1">
+        'Instans' måste vara större än 0.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
   <iso:pattern id="q1">
     <iso:rule context="//gn:svar[@id='1']">
+      <iso:assert test="count(gn:instans) = 1">
+        'Grund för medicinskt underlag (MU)' måste ha ett instansnummer.
+      </iso:assert>
       <iso:assert test="count(gn:delsvar[@id='1.1']) = 1">
         'Grund för medicinskt underlag (MU)' måste ha ett 'Typ av grund för MU'.
       </iso:assert>
@@ -214,6 +225,9 @@
 
   <iso:pattern id="q6">
     <iso:rule context="//gn:svar[@id='6']">
+      <iso:assert test="count(gn:instans) = 1">
+        'Typ av diagnos' måste ha ett instansnummer.
+      </iso:assert>
       <iso:assert test="count(gn:delsvar[@id='6.1']) = 1">
         'Typ av diagnos' måste ha en 'Diagnostext'.
       </iso:assert>
@@ -321,6 +335,9 @@
 
   <iso:pattern id="q32">
     <iso:rule context="//gn:svar[@id='32']">
+      <iso:assert test="count(gn:instans) = 1">
+        'Sjukskrivning' måste ha ett instansnummer.
+      </iso:assert>
       <iso:assert test="count(gn:delsvar[@id='32.1']) = 1">'Sjukskrivning' måste ha en 'grad'.</iso:assert>
       <iso:assert test="count(gn:delsvar[@id='32.2']) = 1">'Sjukskrivning' måste ha en 'period'.</iso:assert>
       <iso:let name="cstart" value="normalize-space(gn:delsvar[@id='32.2']/tp:datePeriod/tp:start)"/>
