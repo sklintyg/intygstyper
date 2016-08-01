@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.w3c.dom.Node;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -96,6 +97,7 @@ public class RoundTripTest {
         XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected.toString(), actualSw.toString());
         diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
+        diff.overrideDifferenceListener(new IgnoreNamespacePrexifDifferenceListener());
         assertTrue(name + " " + diff.toString(), diff.similar());
     }
 
@@ -113,5 +115,19 @@ public class RoundTripTest {
         Diff diff = XMLUnit.compareXML(expected.toString(), actual);
         diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
         assertTrue(name + " " + diff.toString(), diff.similar());
+    }
+
+    private class IgnoreNamespacePrexifDifferenceListener implements DifferenceListener {
+        @Override
+        public int differenceFound(Difference difference) {
+            if (difference.getId() == DifferenceConstants.NAMESPACE_PREFIX_ID) {
+                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            }
+            return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+        }
+
+        @Override
+        public void skippedComparison(Node control, Node test) {
+        }
     }
 }
