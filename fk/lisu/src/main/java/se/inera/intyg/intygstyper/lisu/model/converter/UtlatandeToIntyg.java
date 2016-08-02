@@ -63,7 +63,7 @@ public final class UtlatandeToIntyg {
     private static List<Svar> getSvar(LisuUtlatande source) {
         List<Svar> svars = new ArrayList<>();
 
-        Integer grundForMUInstans = 1;
+        int grundForMUInstans = 1;
         if (source.getUndersokningAvPatienten() != null && source.getUndersokningAvPatienten().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                     aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.UNDERSOKNING.transportId, ReferensTyp.UNDERSOKNING.label))
@@ -102,7 +102,7 @@ public final class UtlatandeToIntyg {
         addIfNotBlank(svars, ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID_30, ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID_30,
                 source.getArbetsmarknadspolitisktProgram());
 
-        Integer diagnosInstans = 1;
+        int diagnosInstans = 1;
         for (Diagnos diagnos : source.getDiagnoser()) {
             if (diagnos.getDiagnosKod() != null) {
                 Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
@@ -117,7 +117,7 @@ public final class UtlatandeToIntyg {
         addIfNotBlank(svars, PAGAENDEBEHANDLING_SVAR_ID_19, PAGAENDEBEHANDLING_DELSVAR_ID_19, source.getPagaendeBehandling());
         addIfNotBlank(svars, PLANERADBEHANDLING_SVAR_ID_20, PLANERADBEHANDLING_DELSVAR_ID_20, source.getPlaneradBehandling());
 
-        Integer sjukskrivningInstans = 1;
+        int sjukskrivningInstans = 1;
         for (Sjukskrivning sjukskrivning : source.getSjukskrivningar()) {
             svars.add(aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32, sjukskrivningInstans++).withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32,
                     aCV(SJUKSKRIVNING_CODE_SYSTEM, sjukskrivning.getSjukskrivningsgrad().getTransportId(),

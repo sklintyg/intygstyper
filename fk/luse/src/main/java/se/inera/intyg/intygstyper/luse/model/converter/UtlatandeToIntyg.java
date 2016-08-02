@@ -66,7 +66,7 @@ public final class UtlatandeToIntyg {
     private static List<Svar> getSvar(LuseUtlatande source) {
         List<Svar> svars = new ArrayList<>();
 
-        Integer grundForMUInstans = 1;
+        int grundForMUInstans = 1;
         if (source.getUndersokningAvPatienten() != null) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
@@ -104,7 +104,7 @@ public final class UtlatandeToIntyg {
             svars.add(aSvar(UNDERLAGFINNS_SVAR_ID_3).withDelsvar(UNDERLAGFINNS_DELSVAR_ID_3, source.getUnderlagFinns().toString()).build());
         }
 
-        Integer underlagInstans = 1;
+        int underlagInstans = 1;
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
                     aSvar(UNDERLAG_SVAR_ID_4, underlagInstans++).withDelsvar(UNDERLAG_TYP_DELSVAR_ID_4,

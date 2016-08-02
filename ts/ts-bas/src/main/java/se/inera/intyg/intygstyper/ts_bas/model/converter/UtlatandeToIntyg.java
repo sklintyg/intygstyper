@@ -73,7 +73,7 @@ public final class UtlatandeToIntyg {
         List<Svar> svars = new ArrayList<>();
 
         if (source.getIntygAvser() != null) {
-            Integer intygAvserInstans = 1;
+            int intygAvserInstans = 1;
             for (IntygAvserKategori korkortstyp : source.getIntygAvser().getKorkortstyp()) {
                 IntygAvserKod intygAvser = IntygAvserKod.valueOf(korkortstyp.name());
                 svars.add(aSvar(INTYG_AVSER_SVAR_ID_1, intygAvserInstans++)
@@ -360,7 +360,7 @@ public final class UtlatandeToIntyg {
         if (source == null) {
             return;
         }
-        Integer behorighetInstans = 1;
+        int behorighetInstans = 1;
         if (source.getKorkortstyp() != null) {
             for (BedomningKorkortstyp korkortstyp : source.getKorkortstyp()) {
                 KorkortsbehorighetKod korkortsbehorighet = KorkortsbehorighetKod.valueOf(korkortstyp.name());

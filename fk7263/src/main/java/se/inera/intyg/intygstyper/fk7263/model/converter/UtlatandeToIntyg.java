@@ -114,7 +114,7 @@ public final class UtlatandeToIntyg {
     private static List<Svar> getSvar(Utlatande source) {
         List<Svar> svars = new ArrayList<>();
 
-        Integer sjukskrivningInstans = 1;
+        int sjukskrivningInstans = 1;
         if (source.getNedsattMed100() != null && source.getNedsattMed100().isValid()) {
             svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_100_CODE, sjukskrivningInstans++, source.getNedsattMed100()));
         }
@@ -149,7 +149,7 @@ public final class UtlatandeToIntyg {
             svars.add(createRehabiliteringSvar(source));
         }
 
-        Integer grundForMUInstans = 1;
+        int grundForMUInstans = 1;
         if (source.getTelefonkontaktMedPatienten() != null && source.getTelefonkontaktMedPatienten().isValidDate()) {
             svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++).withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                     aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.TELEFONKONTAKT.transportId, ReferensTyp.TELEFONKONTAKT.label))
@@ -294,7 +294,7 @@ public final class UtlatandeToIntyg {
         return svarBuilder.build();
     }
 
-    private static Svar createBehovAvSjukskrivningSvar(String code, Integer instans, InternalLocalDateInterval interval) {
+    private static Svar createBehovAvSjukskrivningSvar(String code, int instans, InternalLocalDateInterval interval) {
         return aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32, instans).withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32,
                 aCV(SJUKSKRIVNING_CODE_SYSTEM, code, SJUKSKRIVNING_CODE_SYSTEM))
                 .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32,
