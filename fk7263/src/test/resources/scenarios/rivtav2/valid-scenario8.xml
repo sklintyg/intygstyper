@@ -88,7 +88,15 @@
                 </ns6:datePeriod>
             </ns4:delsvar>
         </ns4:svar>
-        <ns4:svar id="6"/>
+        <ns4:svar id="6">
+            <ns4:delsvar id="6.2">
+                <ns6:cv>
+                    <ns6:code>S47</ns6:code>
+                    <ns6:codeSystem>ICD_10_SE</ns6:codeSystem>
+                    <ns6:displayName/>
+                </ns6:cv>
+            </ns4:delsvar>
+        </ns4:svar>
         <ns4:svar id="1">
             <ns4:instans>1</ns4:instans>
             <ns4:delsvar id="1.1">

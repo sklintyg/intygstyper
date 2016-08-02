@@ -88,9 +88,17 @@
                 </ns6:datePeriod>
             </ns4:delsvar>
         </ns4:svar>
-        <ns4:svar id="6"/>
+        <ns4:svar id="6">
+            <ns4:delsvar id="6.2">
+                <ns6:cv>
+                    <ns6:code>S47</ns6:code>
+                    <ns6:codeSystem>ICD_10_SE</ns6:codeSystem>
+                    <ns6:displayName/>
+                </ns6:cv>
+            </ns4:delsvar>
+        </ns4:svar>
         <ns4:svar id="10001">
-            <ns4:delsvar id="10001.1">Klämskada som orsakat kolera och pest</ns4:delsvar>
+            <ns4:delsvar id="10001.1">Klämskada på överarm. Samsjuklighet föreligger. A000 Kolera orsakad av Vibrio cholerae 01, biovar cholerae. Z233 Vaccination avseende pest. Klämskada som orsakat kolera och pest</ns4:delsvar>
         </ns4:svar>
         <ns4:svar id="1">
             <ns4:instans>1</ns4:instans>

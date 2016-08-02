@@ -97,6 +97,9 @@
                 </ns6:cv>
             </ns4:delsvar>
         </ns4:svar>
+        <ns4:svar id="10001">
+            <ns4:delsvar id="10001.1">Klämskada på överarm</ns4:delsvar>
+        </ns4:svar>
         <ns4:svar id="1">
             <ns4:instans>1</ns4:instans>
             <ns4:delsvar id="1.1">
