@@ -68,7 +68,7 @@ var luae_naMessages = {
 
         'luae_na.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'luae_na.label.date': 'Datum',
-        'luae_na.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
+        'luae_na.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
         'luae_na.message.certificateloading': 'Hämtar intyg...',
         'luae_na.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',

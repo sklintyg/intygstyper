@@ -81,7 +81,7 @@ var luae_fsMessages = {
         'luae_fs.label.otherinformation': 'Övriga upplysningar och förtydliganden',
         'luae_fs.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'luae_fs.label.date': 'Datum',
-        'luae_fs.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
+        'luae_fs.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
         'luae_fs.message.certificateloading': 'Hämtar intyg...',
 

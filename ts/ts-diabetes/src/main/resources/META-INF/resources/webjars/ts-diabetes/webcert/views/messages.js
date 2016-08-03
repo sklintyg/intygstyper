@@ -54,7 +54,7 @@ var tsDiabetesMessages = {
 
         'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_1': 'Typ 1',
         'ts-diabetes.label.diabetes.diabetestyp.diabetes_typ_2': 'Typ 2',
-        'ts-diabetes.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
+        'ts-diabetes.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
 
         'ts-diabetes.label.bedomning-info-alt-1': 'Patienten uppfyller kraven enligt Transportstyrelsens föreskrifter och allmänna råd om medicinska krav för innehav av körkort m.m. (TSFS 2010:125, senast ändrade genom TSFS 2013:2) för:',
         'ts-diabetes.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',

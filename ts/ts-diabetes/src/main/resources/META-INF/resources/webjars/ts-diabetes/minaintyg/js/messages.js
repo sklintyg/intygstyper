@@ -102,7 +102,7 @@ var tsDiabetesMessages = {
 
         'ts-diabetes.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'ts-diabetes.label.date': 'Datum',
-        'ts-diabetes.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
+        'ts-diabetes.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
         'ts-diabetes.label.ej-angivet': 'Ej angivet',
 
         'ts-diabetes.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
