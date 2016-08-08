@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateType;
 
 public class InternalToRevokeTest {
@@ -22,7 +21,7 @@ public class InternalToRevokeTest {
         assertNotNull(res.getIntygsId().getRoot());
         assertEquals(utlatande.getId(), res.getIntygsId().getExtension());
         assertEquals(meddelande, res.getMeddelande());
-        assertEquals(InternalConverterUtil.PERSON_ID_ROOT, res.getPatientPersonId().getRoot());
+        assertEquals("1.2.752.129.2.1.3.1", res.getPatientPersonId().getRoot());
         assertEquals(utlatande.getGrundData().getPatient().getPersonId().getPersonnummerWithoutDash(),res.getPatientPersonId().getExtension());
         assertEquals(skapatAv.getPersonId(), res.getSkickatAv().getPersonalId().getExtension());
         assertEquals(skapatAv.getFullstandigtNamn(), res.getSkickatAv().getFullstandigtNamn());

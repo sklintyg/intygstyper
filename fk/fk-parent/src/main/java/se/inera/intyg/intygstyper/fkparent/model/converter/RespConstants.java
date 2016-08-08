@@ -23,12 +23,6 @@ public final class RespConstants {
     private RespConstants() {
     }
 
-    public static final String PART_CODE_SYSTEM = "769bb12b-bd9f-4203-a5cd-fd14f2eb3b80";
-    public static final String STATUS_KOD_CODE_SYSTEM = "9871cd17-8755-4ed9-b894-ff3729e775a4";
-    public static final String RELATION_CODE_SYSTEM = "c2362fcd-eda0-4f9a-bd13-b3bbaf7f2146";
-    public static final String HSA_CODE_SYSTEM = "1.2.752.129.2.1.4.1";
-    public static final String BEFATTNING_CODE_SYSTEM = "1.2.752.129.2.2.1.4";
-    public static final String ARBETSPLATSKOD_CODE_SYSTEM = "1.2.752.29.4.71";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM = "KV_FKMU_0001";
     public static final String TYP_AV_SYSSELSATTNING_CODE_SYSTEM = "KV_FKMU_0002";
     public static final String SJUKSKRIVNING_CODE_SYSTEM = "KV_FKMU_0003";

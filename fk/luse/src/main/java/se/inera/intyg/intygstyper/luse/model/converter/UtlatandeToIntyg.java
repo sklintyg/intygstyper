@@ -19,7 +19,7 @@
 
 package se.inera.intyg.intygstyper.luse.model.converter;
 
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.KV_INTYGSTYP_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
@@ -37,13 +37,12 @@ import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.Sva
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.intyg.intygstyper.fkparent.model.internal.*;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
+import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
-
-    private static final String CERTIFICATE_DISPLAY_NAME = "Läkarutlåtande för sjukersättning";
 
     private UtlatandeToIntyg() {
     }
@@ -59,7 +58,7 @@ public final class UtlatandeToIntyg {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
         typAvIntyg.setCodeSystem(KV_INTYGSTYP_CODE_SYSTEM);
-        typAvIntyg.setDisplayName(CERTIFICATE_DISPLAY_NAME);
+        typAvIntyg.setDisplayName(LuseEntryPoint.MODULE_NAME);
         return typAvIntyg;
     }
 

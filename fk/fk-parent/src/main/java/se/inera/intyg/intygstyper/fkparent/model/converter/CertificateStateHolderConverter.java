@@ -19,9 +19,8 @@
 
 package se.inera.intyg.intygstyper.fkparent.model.converter;
 
-
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.PART_CODE_SYSTEM;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.STATUS_KOD_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_PART_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_STATUS_CODE_SYSTEM;
 
 import java.util.*;
 
@@ -63,7 +62,7 @@ public final class CertificateStateHolderConverter {
     private static Statuskod toStatuskod(CertificateState state) {
         StatusKod statuskodEnum = toStatusKod(state);
         Statuskod statuskod = new Statuskod();
-        statuskod.setCodeSystem(STATUS_KOD_CODE_SYSTEM);
+        statuskod.setCodeSystem(KV_STATUS_CODE_SYSTEM);
         statuskod.setCode(statuskodEnum.name());
         statuskod.setDisplayName(statuskodEnum.getDisplayName());
         return statuskod;
@@ -90,7 +89,7 @@ public final class CertificateStateHolderConverter {
         PartKod partKod = PartKod.fromValue(target);
         Part part = new Part();
         part.setCode(partKod.name());
-        part.setCodeSystem(PART_CODE_SYSTEM);
+        part.setCodeSystem(KV_PART_CODE_SYSTEM);
         part.setDisplayName(partKod.getDisplayName());
         return part;
     }

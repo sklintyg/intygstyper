@@ -19,6 +19,10 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
+import static se.inera.intyg.common.support.Constants.HSA_ID_OID;
+import static se.inera.intyg.common.support.Constants.KV_HANDELSE_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_UTLATANDETYP_INTYG_CODE_SYSTEM;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -29,7 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.intyg.common.schemas.Constants;
+import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -38,6 +42,7 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleExcepti
 import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v1.*;
 
@@ -47,17 +52,7 @@ public class Fk7263InternalToNotification {
 
     private static final String INTYGSID_ROOT = "1.2.752.129.2.1.2.1";
 
-    private static final String HSAID_ROOT = "1.2.752.129.2.1.4.1";
-
-    private static final String TYPAVUTLATANDE_FK7263_CODE = "FK7263";
-
-    private static final String TYPAVUTLATANDE_FK7263_DISPLAYNAME = "Läkarintyg enligt 3 kap. 8 § lagen (1962:381) om allmän försäkring";
-
-    private static final String TYPAVUTLATANDE_CODESYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
-
     private static final String TYPAVUTLATANDE_CODESYSTEM_NAME = "kv_utlåtandetyp_intyg";
-
-    private static final String HANDELSE_CODESYSTEM = "dfd7bbad-dbe5-4a2f-ba25-f7b9b2cc6b14";
 
     private static final String HANDELSE_CODESYSTEM_NAME = "kv_händelse";
 
@@ -106,10 +101,10 @@ public class Fk7263InternalToNotification {
 
     private void decorateWithTypAvUtlatande(UtlatandeType utlatandeType, Utlatande utlatandeSource) {
         TypAvUtlatande typAvUtlatande = new TypAvUtlatande();
-        typAvUtlatande.setCode(TYPAVUTLATANDE_FK7263_CODE);
-        typAvUtlatande.setCodeSystem(TYPAVUTLATANDE_CODESYSTEM);
+        typAvUtlatande.setCode(Fk7263EntryPoint.MODULE_ID.toUpperCase());
+        typAvUtlatande.setCodeSystem(KV_UTLATANDETYP_INTYG_CODE_SYSTEM);
         typAvUtlatande.setCodeSystemName(TYPAVUTLATANDE_CODESYSTEM_NAME);
-        typAvUtlatande.setDisplayName(TYPAVUTLATANDE_FK7263_DISPLAYNAME);
+        typAvUtlatande.setDisplayName(Fk7263EntryPoint.MODULE_DESCRIPTION);
         utlatandeType.setTypAvUtlatande(typAvUtlatande);
     }
 
@@ -163,7 +158,7 @@ public class Fk7263InternalToNotification {
         HandelseType handelseTyp = notificationMessage.getHandelse();
 
         Handelsekod handelseKod = new Handelsekod();
-        handelseKod.setCodeSystem(HANDELSE_CODESYSTEM);
+        handelseKod.setCodeSystem(KV_HANDELSE_CODE_SYSTEM);
         handelseKod.setCodeSystemName(HANDELSE_CODESYSTEM_NAME);
         handelseKod.setDisplayName(handelseTyp.toString());
 
@@ -266,7 +261,7 @@ public class Fk7263InternalToNotification {
 
     private HsaId createHsaId(String id) {
         HsaId hsaId = new HsaId();
-        hsaId.setRoot(HSAID_ROOT);
+        hsaId.setRoot(HSA_ID_OID);
         hsaId.setExtension(id);
         return hsaId;
     }

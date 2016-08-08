@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.validate.PersonnummerValidator;
-import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 

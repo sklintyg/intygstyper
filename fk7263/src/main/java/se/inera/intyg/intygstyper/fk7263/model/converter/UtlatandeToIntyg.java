@@ -19,7 +19,11 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
+import static se.inera.intyg.common.support.Constants.KV_UTLATANDETYP_INTYG_CODE_SYSTEM;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +78,6 @@ public final class UtlatandeToIntyg {
     public static final String ATGARD_INOM_SJUKVARDEN_SVAR_10004 = "10004";
     public static final String ATGARD_INOM_SJUKVARDEN_DELSVAR_10004_1 = "10004.1";
     public static final String ATGARD_INOM_SJUKVARDEN_DELSVAR_10004_2 = "10004.2";
-    public static final String CERTIFICATE_DISPLAY_NAME = Fk7263EntryPoint.MODULE_NAME;
     public static final String NEDSATT_MED_100_CODE = "1";
     public static final String NEDSATT_MED_75_CODE = "2";
     public static final String NEDSATT_MED_50_CODE = "3";
@@ -107,7 +110,7 @@ public final class UtlatandeToIntyg {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
         typAvIntyg.setCodeSystem(KV_UTLATANDETYP_INTYG_CODE_SYSTEM);
-        typAvIntyg.setDisplayName(CERTIFICATE_DISPLAY_NAME);
+        typAvIntyg.setDisplayName(Fk7263EntryPoint.MODULE_NAME);
         return typAvIntyg;
     }
 
