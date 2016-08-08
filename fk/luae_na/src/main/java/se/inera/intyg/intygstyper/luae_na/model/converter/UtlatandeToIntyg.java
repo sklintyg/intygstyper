@@ -35,13 +35,12 @@ import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.intyg.intygstyper.fkparent.model.internal.*;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
+import se.inera.intyg.intygstyper.luae_na.support.LuaenaEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
-
-    private static final String CERTIFICATE_DISPLAY_NAME = "Läkarutlåtande för sjukersättning";
 
     private UtlatandeToIntyg() {
     }
@@ -57,7 +56,7 @@ public final class UtlatandeToIntyg {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
         typAvIntyg.setCodeSystem(KV_INTYGSTYP_CODE_SYSTEM);
-        typAvIntyg.setDisplayName(CERTIFICATE_DISPLAY_NAME);
+        typAvIntyg.setDisplayName(LuaenaEntryPoint.MODULE_NAME);
         return typAvIntyg;
     }
 
