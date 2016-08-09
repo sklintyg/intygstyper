@@ -20,9 +20,9 @@
 package se.inera.intyg.intygstyper.fk7263.rest;
 
 import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
+import static se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl.CERTIFICATE_ALREADY_EXISTS;
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
-import static se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl.CERTIFICATE_ALREADY_EXISTS;
 
 import java.io.*;
 import java.util.*;
@@ -53,6 +53,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -82,14 +83,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 public class Fk7263ModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
-
-    /*
-     * (non-Javadoc)
-     *
-     * Must only be used to set the code system name when certificate
-     * is sent to Försäkringskassan. See JIRA issue WEBCERT-1442
-     */
-    static final String CODESYSTEMNAME_ICD10 = "ICD-10";
 
     private static final Comparator<? super DatePeriodType> PERIOD_START = Comparator.comparing(DatePeriodType::getStart);
 
@@ -346,7 +339,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             }
 
             CD tillstandskod = medicinsktTillstand.getTillstandskod();
-            tillstandskod.setCodeSystemName(CODESYSTEMNAME_ICD10);
+            tillstandskod.setCodeSystemName(Diagnoskodverk.ICD_10_SE.getCodeSystemName());
 
             // Update request
             request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandskod);
@@ -354,7 +347,7 @@ public class Fk7263ModuleApi implements ModuleApi {
         } else {
             try {
                 // tillstandskod is not mandatory when smittskydd is true, just try to set it.
-                request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().setCodeSystemName(CODESYSTEMNAME_ICD10);
+                request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().setCodeSystemName(Diagnoskodverk.ICD_10_SE.getCodeSystemName());
 
             } catch (NullPointerException npe) {
                 LOG.debug("No tillstandskod element found in request data. "

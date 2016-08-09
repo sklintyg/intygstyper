@@ -260,9 +260,7 @@ public class Fk7263ModuleApiTest {
 
         request = fk7263ModuleApi.whenFkIsRecipientThenSetCodeSystemToICD10(request);
 
-        String expected = Fk7263ModuleApi.CODESYSTEMNAME_ICD10;
-        String actual = request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().getCodeSystemName();
-        assertEquals(expected, actual);
+        assertEquals("ICD-10", request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().getCodeSystemName());
     }
 
     @Test(expected = ModuleException.class)

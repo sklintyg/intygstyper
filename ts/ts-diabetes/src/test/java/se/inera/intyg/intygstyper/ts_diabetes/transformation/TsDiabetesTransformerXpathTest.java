@@ -40,6 +40,8 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
+import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
+import se.inera.intyg.intygstyper.ts_parent.codes.KorkortsbehorighetKod;
 import se.inera.intyg.intygstyper.ts_parent.transformation.test.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.RegisterTSDiabetesType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -140,8 +142,7 @@ public class TsDiabetesTransformerXpathTest {
 
         // IntygAvser
         for (KorkortsbehorighetTsDiabetes t : utlatande.getIntygAvser().getKorkortstyp()) {
-            KorkortsKodToIntygAvserMapping k = KorkortsKodToIntygAvserMapping.valueOf(t.name());
-            assertTrue(xPath.evaluate(booleanXPath(INTYG_AVSER_TEMPLATE, k.getIntygAvser())));
+            assertTrue(xPath.evaluate(booleanXPath(INTYG_AVSER_TEMPLATE, IntygAvserKod.valueOf(t.value().value()).getCode())));
         }
 
         // ID-kontroll
@@ -281,14 +282,14 @@ public class TsDiabetesTransformerXpathTest {
                 xPath.evaluate(new BooleanXPathExpression("utlatande/p:rekommendation/p:rekommendationskod/@code = 'REK8'")));
 
         for (KorkortsbehorighetTsDiabetes t : utlatande.getBedomning().getKorkortstyp()) {
-            KorkortsKodToIntygAvserMapping k = KorkortsKodToIntygAvserMapping.valueOf(t.name());
-            assertTrue(String.format("Rekommendationsvärde %s", k.getRekommendation()),
-                    xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_CODE_TEMPLATE, k.getRekommendation())));
+            KorkortsbehorighetKod k = KorkortsbehorighetKod.valueOf(t.value().value());
+            assertTrue(String.format("Rekommendationsvärde %s", k.getCode()),
+                    xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_CODE_TEMPLATE, k.getCode())));
         }
         if (utlatande.getBedomning().isKanInteTaStallning() != null) {
             assertTrue("Rekommendationsvärde Kan inte ta ställning (VAR11)",
                     xPath.evaluate(booleanXPath(REKOMMENDATION_VARDE_CODE_TEMPLATE,
-                            KorkortsKodToIntygAvserMapping.KANINTETASTALLNING.getRekommendation())));
+                            KorkortsbehorighetKod.KANINTETEASTALLNING.getCode())));
         }
 
         if (utlatande.getBedomning().getBehovAvLakareSpecialistKompetens() != null) {
@@ -333,7 +334,7 @@ public class TsDiabetesTransformerXpathTest {
 
         RegisterCertificateType register = JAXB.unmarshal(is, RegisterCertificateType.class);
 
-        JAXBElement<Utlatande> jaxbElement = new JAXBElement<Utlatande>(new QName("ns3:utlatande"), Utlatande.class, register.getUtlatande());
+        JAXBElement<Utlatande> jaxbElement = new JAXBElement<>(new QName("ns3:utlatande"), Utlatande.class, register.getUtlatande());
         JAXBContext context = JAXBContext.newInstance(Utlatande.class);
         context.createMarshaller().marshal(jaxbElement, node);
 

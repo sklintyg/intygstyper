@@ -26,8 +26,8 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
@@ -44,6 +44,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.common.enumerations.HandelsekodEnum;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
@@ -63,6 +64,8 @@ public class Fk7263InternalToNotificationTest {
     private static final String LOGISK_ADRESS = "123456789";
 
     private static final String INTYGS_ID = "intyg-1";
+
+    private static final String JSON = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-1.json");
 
     @Mock
     private WebcertModuleService mockModuleService;
@@ -101,7 +104,7 @@ public class Fk7263InternalToNotificationTest {
     public void testWithFullyPopulatedUtlatande() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-1.json");
 
-        NotificationMessage msg = new NotificationMessage(INTYGS_ID, FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage(INTYGS_ID, FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
                 json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
@@ -118,7 +121,7 @@ public class Fk7263InternalToNotificationTest {
         assertNotNull(res.getUtlatande().getHandelse().getHandelsekod().getCodeSystem());
         assertNotNull(res.getUtlatande().getHandelse().getHandelsekod().getCodeSystemName());
         assertEquals(HandelsekodKodRestriktion.HAN_11.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
-        assertEquals(HandelseType.INTYGSUTKAST_ANDRAT.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        assertEquals("INTYGSUTKAST_ANDRAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
 
         // Not signed yet
         assertNull(res.getUtlatande().getSigneringsdatum());
@@ -149,7 +152,7 @@ public class Fk7263InternalToNotificationTest {
     public void testWithFullyPopulatedUtlatandeButDifferentDiagnosisCode() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-1b.json");
 
-        NotificationMessage msg = new NotificationMessage("intyg-1b", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage("intyg-1b", FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
                 json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
 
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
@@ -171,14 +174,14 @@ public class Fk7263InternalToNotificationTest {
     public void testWithSignedMinimal() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-2.json");
 
-        NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_SIGNERAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.SIGNAT, LOGISK_ADRESS,
                 json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
 
         assertEquals(HandelsekodKodRestriktion.HAN_2.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
-        assertEquals(HandelseType.INTYGSUTKAST_SIGNERAT.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        assertEquals("INTYGSUTKAST_SIGNERAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
 
         // is signed
         assertNotNull(res.getUtlatande().getSigneringsdatum());
@@ -193,14 +196,14 @@ public class Fk7263InternalToNotificationTest {
     public void testWithMissingDiagnosis() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-3.json");
 
-        NotificationMessage msg = new NotificationMessage("intyg-3", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage("intyg-3", FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
                 json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
 
         assertEquals(HandelsekodKodRestriktion.HAN_11.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
-        assertEquals(HandelseType.INTYGSUTKAST_ANDRAT.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        assertEquals("INTYGSUTKAST_ANDRAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
 
         // is not signed
         assertNull(res.getUtlatande().getSigneringsdatum());
@@ -213,14 +216,14 @@ public class Fk7263InternalToNotificationTest {
     public void testWithInvalidDiagnosisCode() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-3b.json");
 
-        NotificationMessage msg = new NotificationMessage("intyg-3b", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage("intyg-3b", FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
                 json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
 
         assertEquals(HandelsekodKodRestriktion.HAN_11.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
-        assertEquals(HandelseType.INTYGSUTKAST_ANDRAT.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        assertEquals("INTYGSUTKAST_ANDRAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
 
         // is not signed
         assertNull(res.getUtlatande().getSigneringsdatum());
@@ -234,14 +237,14 @@ public class Fk7263InternalToNotificationTest {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-2.json");
 
         FragorOchSvar fs = new FragorOchSvar(1, 0, 0, 0);
-        NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelseType.FRAGA_FRAN_FK, LOGISK_ADRESS, json, fs,
+        NotificationMessage msg = new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.NYFRFM, LOGISK_ADRESS, json, fs,
                 SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
 
         assertEquals(HandelsekodKodRestriktion.HAN_6.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
-        assertEquals(HandelseType.FRAGA_FRAN_FK.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        assertEquals("FRAGA_FRAN_FK", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
 
         // is signed
         assertNotNull(res.getUtlatande().getSigneringsdatum());
@@ -263,14 +266,14 @@ public class Fk7263InternalToNotificationTest {
     public void testWithIncompleteNedsattning() throws Exception {
         String json = readRequestFromFile("InternalToNotificationTest/utlatande-intyg-4.json");
 
-        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
                 json, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
 
         assertNotNull(res.getUtlatande());
 
         assertEquals(HandelsekodKodRestriktion.HAN_11.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
-        assertEquals(HandelseType.INTYGSUTKAST_ANDRAT.toString(), res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+        assertEquals("INTYGSUTKAST_ANDRAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
 
         // no diagnosis in this one
         assertNull(res.getUtlatande().getDiagnos());
@@ -294,7 +297,7 @@ public class Fk7263InternalToNotificationTest {
         grundData.setSkapadAv(skapadAv);
         utlatande.setGrundData(grundData);
         doReturn(utlatande).when(objectMapper).readValue(anyString(), eq(Utlatande.class));
-        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
                 "", FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         assertEquals(pnr, res.getUtlatande().getPatient().getPersonId().getExtension());
@@ -316,11 +319,110 @@ public class Fk7263InternalToNotificationTest {
         grundData.setSkapadAv(skapadAv);
         utlatande.setGrundData(grundData);
         doReturn(utlatande).when(objectMapper).readValue(anyString(), eq(Utlatande.class));
-        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelseType.INTYGSUTKAST_ANDRAT, LOGISK_ADRESS,
+        NotificationMessage msg = new NotificationMessage("intyg-4", FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
                 "", FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null);
         CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(msg);
         assertEquals(pnr, res.getUtlatande().getPatient().getPersonId().getExtension());
         assertEquals(Constants.SAMORDNING_ID_OID, res.getUtlatande().getPatient().getPersonId().getRoot());
+    }
+
+    @Test
+    public void testHan1() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.SKAPAT, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_1.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("INTYGSUTKAST_SKAPAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan2() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.SIGNAT, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_2.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("INTYGSUTKAST_SIGNERAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan3() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.SKICKA, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_3.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("INTYG_SKICKAT_FK", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan4() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.RADERA, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_4.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("INTYGSUTKAST_RADERAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan5() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.MAKULE, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_5.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("INTYG_MAKULERAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan6() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.NYFRFM, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_6.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("FRAGA_FRAN_FK", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan7() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.NYSVFM, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_7.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("SVAR_FRAN_FK", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan8() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.NYFRTM, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_8.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("FRAGA_TILL_FK", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan9() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.HANFRA, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_9.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("FRAGA_FRAN_FK_HANTERAD", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan10() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.HANSVA, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_10.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("SVAR_FRAN_FK_HANTERAD", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
+    }
+
+    @Test
+    public void testHan11() throws Exception {
+        CertificateStatusUpdateForCareType res = converter.createCertificateStatusUpdateForCareType(new NotificationMessage("intyg-2", FK7263, LocalDateTime.now(), HandelsekodEnum.ANDRAT, LOGISK_ADRESS,
+                JSON, FragorOchSvar.getEmpty(), SchemaVersion.VERSION_1, null));
+
+        assertEquals(HandelsekodKodRestriktion.HAN_11.value(), res.getUtlatande().getHandelse().getHandelsekod().getCode());
+        assertEquals("INTYGSUTKAST_ANDRAT", res.getUtlatande().getHandelse().getHandelsekod().getDisplayName());
     }
 
     private static String readRequestFromFile(String filePath) {
