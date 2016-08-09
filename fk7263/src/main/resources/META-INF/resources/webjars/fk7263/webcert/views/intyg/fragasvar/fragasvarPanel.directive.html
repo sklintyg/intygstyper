@@ -108,16 +108,12 @@
         </div>
         <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled && qa.status != 'CLOSED'"
                 ng-class="{'btn-success': qa.status != 'CLOSED' && !cannotKomplettera, 'btn-default btn-secondary': qa.status == 'CLOSED' || cannotKomplettera}"
-                ng-click="answerWithIntyg(qa, cert)" ng-disabled="cannotKomplettera" wc-check-vardenhet
+                ng-click="openKompletteringDialog(qa, cert)" ng-disabled="showAnswerField" wc-check-vardenhet
                 vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                 id="answerWithIntygBtn-{{qa.internReferens}}">
-          <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Svara med nytt intyg
+          <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Svara
         </button>
-        <span ng-show="qa.status != 'CLOSED'">
-        <label for="{{panelId}}-cant-komplettera-{{qa.internReferens}}" class="checkbox-inline">
-          <input id="{{panelId}}-cant-komplettera-{{qa.internReferens}}" type="checkbox" ng-model="cannotKomplettera"
-                 ng-change="onCannotKomplettera()" /> Kan ej svara med nytt intyg</label>
-        </span>
+
       </div>
 
       <!-- Svarsdelen -->
@@ -179,14 +175,6 @@
             <label class="control-label"
                    ng-show="!qa.answerDisabled && !certProperties.isRevoked && !cannotKomplettera">Svar</label>
 
-            <!-- ELLER varningsruta komplettering -->
-            <div class="alert alert-warning"
-                 ng-show="!qa.answerDisabled && !certProperties.isRevoked && cannotKomplettera">
-              <strong>Viktigt!</strong> Konsekvensen av att skicka ett meddelande om att komplettering ej kan göras kan
-              innebära att Försäkringskassans handläggare avslår ansökan om sjukpenning.<br>
-              I det här meddelandet ska du inte skriva någon medicinsk information. Om du har behov av en dialog som
-              innehåller medicinsk information ska du svara med nytt intyg.
-            </div>
 
             <!-- ELLER inforuta komplettering EJ IMPLEMENTERAT
             <div class="alert alert-info"

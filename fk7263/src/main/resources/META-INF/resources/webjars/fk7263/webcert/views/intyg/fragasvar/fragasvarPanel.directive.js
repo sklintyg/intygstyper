@@ -88,6 +88,27 @@ angular.module('fk7263').directive('qaPanel',
                         });
                     };
 
+                    $scope.openKompletteringDialog = function(qa, cert){
+
+                        var kompletteringDialog = dialogService.showDialog({
+                            dialogId: 'komplettering-dialog',
+                            titleId: 'fk7263.fragasvar.komplettering.dialogtitle',
+                            templateUrl: '/app/partials/komplettering-dialog.html',
+                            button1click: function() {
+                            },
+                            button1id: 'button1answerintyg-dialog',
+                            button2click: function() {
+                            },
+                            button2id: 'button2answermessage-dialog',
+                            autoClose: true
+                        }).result.then(function() {
+                            kompletteringDialog = null; // Dialog closed
+                        }, function() {
+                            kompletteringDialog = null; // Dialog dismissed
+                        });
+
+                    };
+
                     $scope.answerWithIntyg = function(qa, cert) {
 
                         if(!ObjectHelper.isDefined(cert)) {
