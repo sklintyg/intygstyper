@@ -7,7 +7,7 @@
     </intygs-id>
     <typ>
       <ns3:code>LUSE</ns3:code>
-      <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
+      <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
       <ns3:displayName>Läkarutlåtande för sjukersättning</ns3:displayName>
     </typ>
     <version>1.0</version>
@@ -70,6 +70,7 @@
       </delsvar>
     </svar>
     <svar id="4">
+      <instans>1</instans>
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>PSYKOLOG</ns3:code>
@@ -80,6 +81,7 @@
       <delsvar id="4.3">Skickas med posten</delsvar>
     </svar>
 	<svar id="4">
+      <instans>2</instans>
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>FYSIOTERAPEUT</ns3:code>

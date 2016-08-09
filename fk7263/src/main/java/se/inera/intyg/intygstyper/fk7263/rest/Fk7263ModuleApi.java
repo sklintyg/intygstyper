@@ -20,11 +20,15 @@
 package se.inera.intyg.intygstyper.fk7263.rest;
 
 import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
+import static se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl.CERTIFICATE_ALREADY_EXISTS;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
+import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
 
 import java.io.*;
 import java.util.*;
 
-import javax.xml.bind.JAXB;
+import javax.xml.bind.*;
+import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
@@ -49,6 +53,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -58,12 +63,14 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
@@ -76,16 +83,6 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 public class Fk7263ModuleApi implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(Fk7263ModuleApi.class);
-
-    /*
-     * (non-Javadoc)
-     *
-     * Must only be used to set the code system name when certificate
-     * is sent to Försäkringskassan. See JIRA issue WEBCERT-1442
-     */
-    static final String CODESYSTEMNAME_ICD10 = "ICD-10";
-    private static final String BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32 = "32";
-    private static final String BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32 = "32.2";
 
     private static final Comparator<? super DatePeriodType> PERIOD_START = Comparator.comparing(DatePeriodType::getStart);
 
@@ -249,7 +246,27 @@ public class Fk7263ModuleApi implements ModuleApi {
 
     @Override
     public String transformToStatisticsService(String inputXml) throws ModuleException {
-        return xslTransformer.transform(inputXml);
+        Utlatande utlatande = getUtlatandeFromXml(inputXml);
+        Intyg intyg = getIntygFromUtlatande(utlatande);
+        RegisterCertificateType type = new RegisterCertificateType();
+        type.setIntyg(intyg);
+        StringWriter writer = new StringWriter();
+        JAXBContext jaxbContext;
+        try {
+            jaxbContext = JAXBContext.newInstance(RegisterCertificateType.class, DatePeriodType.class, Boolean.class);
+            jaxbContext.createMarshaller().marshal(wrapJaxb(type), writer);
+        } catch (JAXBException e) {
+            LOG.debug("Could not create JAXB context for conversion from fk7263 ti fk7263-sit.");
+            e.printStackTrace();
+        }
+        return writer.toString();
+    }
+
+    private JAXBElement<?> wrapJaxb(RegisterCertificateType ws) {
+        JAXBElement<?> jaxbElement = new JAXBElement<>(
+                new QName("urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2", "RegisterCertificate"),
+                RegisterCertificateType.class, ws);
+        return jaxbElement;
     }
 
     @Override
@@ -322,7 +339,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             }
 
             CD tillstandskod = medicinsktTillstand.getTillstandskod();
-            tillstandskod.setCodeSystemName(CODESYSTEMNAME_ICD10);
+            tillstandskod.setCodeSystemName(Diagnoskodverk.ICD_10_SE.getCodeSystemName());
 
             // Update request
             request.getLakarutlatande().getMedicinsktTillstand().setTillstandskod(tillstandskod);
@@ -330,7 +347,7 @@ public class Fk7263ModuleApi implements ModuleApi {
         } else {
             try {
                 // tillstandskod is not mandatory when smittskydd is true, just try to set it.
-                request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().setCodeSystemName(CODESYSTEMNAME_ICD10);
+                request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().setCodeSystemName(Diagnoskodverk.ICD_10_SE.getCodeSystemName());
 
             } catch (NullPointerException npe) {
                 LOG.debug("No tillstandskod element found in request data. "
@@ -405,13 +422,25 @@ public class Fk7263ModuleApi implements ModuleApi {
 
             // check whether call was successful or not
             if (response.getResult().getResultCode() != ResultCodeEnum.OK) {
-                String message = response.getResult().getResultCode() == ResultCodeEnum.INFO
-                        ? response.getResult().getInfoText()
-                        : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
-                LOG.error("Error occured when sending certificate '{}': {}",
-                        request.getLakarutlatande() != null ? request.getLakarutlatande().getLakarutlatandeId() : null,
-                        message);
-                throw new ExternalServiceCallException(message);
+                boolean info = response.getResult().getResultCode() == ResultCodeEnum.INFO;
+
+                // This monstrosity is required because we want to handle when the certificate already exists in
+                // Intygstjänsten. When this happens Intygstjänsten will return an INFO result with a specified
+                // InfoText. To make sure we do not try to resend this request we need to throw an exception with
+                // ErrorIdEnum of ValidationError.
+                if (recipientId == null && info && CERTIFICATE_ALREADY_EXISTS.equals(response.getResult().getInfoText())) {
+                    LOG.warn("Tried to register certificate ({}) which already exist in Intygstjänsten",
+                            request.getLakarutlatande().getLakarutlatandeId());
+                    throw new ExternalServiceCallException(response.getResult().getInfoText(), ErrorIdEnum.VALIDATION_ERROR);
+                } else {
+                    String message = info
+                            ? response.getResult().getInfoText()
+                            : response.getResult().getErrorId() + " : " + response.getResult().getErrorText();
+                    LOG.error("Error occured when sending certificate '{}': {}",
+                            request.getLakarutlatande() != null ? request.getLakarutlatande().getLakarutlatandeId() : null,
+                            message);
+                    throw new ExternalServiceCallException(message);
+                }
             }
         } catch (SOAPFaultException e) {
             throw new ExternalServiceCallException(e);
@@ -466,7 +495,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public Map<String, List<String>> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande) {
+    public Map<String, List<String>> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande, List<String> frageIds) {
         throw new UnsupportedOperationException();
     }
 

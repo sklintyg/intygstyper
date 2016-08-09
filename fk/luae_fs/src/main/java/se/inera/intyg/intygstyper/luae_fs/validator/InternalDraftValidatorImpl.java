@@ -19,9 +19,14 @@
 
 package se.inera.intyg.intygstyper.luae_fs.validator;
 
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.collect.ImmutableList;
+
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
@@ -32,9 +37,6 @@ import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuaefsUtlatande> {
 
@@ -65,6 +67,8 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
 
         // Kategori 9 – Kontakt
         validateKontakt(utlatande, validationMessages);
+
+        validateBlanksForOptionalFields(utlatande, validationMessages);
 
         // Vårdenhet
         validateVardenhet(utlatande, validationMessages);
@@ -110,7 +114,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
         }
 
         // R3
-        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
+        if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isEmpty(utlatande.getAnnatGrundForMUBeskrivning())) {
             validatorUtil.addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.EMPTY,
                     "luae_fs.validation.grund-for-mu.annat.beskrivning.invalid_combination");
         }
@@ -139,7 +143,8 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
         if (utlatande.getUnderlagFinns() == null) {
             validatorUtil.addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
                     "luae_fs.validation.underlagfinns.missing");
-            //If the flag is null, we cant determine whether underlag should be a list or not, so we can't do any further validation..
+            // If the flag is null, we cant determine whether underlag should be a list or not, so we can't do any
+            // further validation..
             return;
         } else if (utlatande.getUnderlagFinns() && (utlatande.getUnderlag() == null || utlatande.getUnderlag().isEmpty())) {
             validatorUtil.addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY,
@@ -234,6 +239,25 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
         if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
             validatorUtil.addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY,
                     "luae_fs.validation.vardenhet.telefonnummer.missing");
+        }
+    }
+
+    private boolean isBlankButNotNull(String stringFromField) {
+        return (!StringUtils.isEmpty(stringFromField)) && StringUtils.isBlank(stringFromField);
+    }
+
+    private void validateBlanksForOptionalFields(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
+        if (isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
+            validatorUtil.addValidationError(validationMessages, "anledningtillkontakt.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_fs.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getAnnatGrundForMUBeskrivning())) {
+            validatorUtil.addValidationError(validationMessages, "grundformu.annat.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_fs.validation.blanksteg.otillatet");
+        }
+        if (isBlankButNotNull(utlatande.getOvrigt())) {
+            validatorUtil.addValidationError(validationMessages, "ovrigt.blanksteg", ValidationMessageType.EMPTY,
+                    "luae_fs.validation.blanksteg.otillatet");
         }
     }
 

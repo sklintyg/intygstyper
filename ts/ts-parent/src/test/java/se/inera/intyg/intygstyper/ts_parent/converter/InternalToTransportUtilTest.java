@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
-import se.inera.intyg.common.schemas.Constants;
+import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;

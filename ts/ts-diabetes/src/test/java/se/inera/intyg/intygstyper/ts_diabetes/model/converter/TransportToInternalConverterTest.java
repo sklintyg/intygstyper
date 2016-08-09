@@ -25,11 +25,12 @@ import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import se.inera.intyg.common.support.common.enumerations.BefattningKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.services.BefattningService;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
@@ -50,6 +51,11 @@ public class TransportToInternalConverterTest {
     private static final List<String> SPECIALIST_KOMPETENS = Arrays.asList("a", "b", "c");
     private static final String FULLSTANDIGT_NAMN = "test testorsson";
     private static final String PERSONID = "personid";
+
+    @BeforeClass
+    public static void setup() throws Exception {
+        new BefattningService().init();
+    }
 
     @Test
     public void testConvert() throws Exception {
@@ -93,14 +99,15 @@ public class TransportToInternalConverterTest {
 
     @Test
     public void testConvertMapsBefattningDescriptionToCodeIfPossible() throws ScenarioNotFoundException, ConverterException {
-        BefattningKod befattning = BefattningKod.LAKARE_EJ_LEG_AT;
+        final String befattning = "Läkare legitimerad, specialiseringstjänstgöring";
+        final String code = "203010";
         RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
         transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().clear();
-        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattning.getDescription());
+        transportModel.getIntyg().getGrundData().getSkapadAv().getBefattningar().add(befattning);
         Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
         HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getBefattningar().size());
-        assertEquals(befattning.getCode(), skapadAv.getBefattningar().get(0));
+        assertEquals(code, skapadAv.getBefattningar().get(0));
     }
 
     @Test

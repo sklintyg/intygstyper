@@ -67,6 +67,10 @@
 	</bedomtTillstand>
 
 	<aktivitet>
+		<aktivitetskod>Patienten_behover_fa_kontakt_med_foretagshalsovarden</aktivitetskod>
+	</aktivitet>
+
+	<aktivitet>
 		<aktivitetskod>Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden</aktivitetskod>
 		<beskrivning>Utreder om spektralanalys behövs</beskrivning>
 	</aktivitet>
@@ -76,15 +80,11 @@
 	</aktivitet>
 
 	<aktivitet>
-		<aktivitetskod>Patienten_behover_fa_kontakt_med_foretagshalsovarden</aktivitetskod>
+		<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
 	</aktivitet>
 
 	<aktivitet>
 		<aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</aktivitetskod>
-	</aktivitet>
-
-	<aktivitet>
-		<aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_ej_aktuellt</aktivitetskod>
 	</aktivitet>
 
 	<funktionstillstand>

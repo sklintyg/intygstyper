@@ -68,7 +68,7 @@ var luseMessages = {
 
         'luse.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'luse.label.date': 'Datum',
-        'luse.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
+        'luse.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
         'luse.message.certificateloading': 'Hämtar intyg...',
         'luse.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',

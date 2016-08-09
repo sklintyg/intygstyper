@@ -59,25 +59,8 @@
 
   </jaxws:endpoint>
 
-  <bean id="registerCertificateEndPoint" class="se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl">
-      <property name="wireTapped" value="false" />
-  </bean>
-  
   <jaxws:endpoint address="/register-certificate/v3.0"
-                  implementor="#registerCertificateEndPoint">
-    <jaxws:outFaultInterceptors>
-      <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
-        <constructor-arg value="transform/register-medical-certificate-transform.xslt"/>
-      </bean>
-    </jaxws:outFaultInterceptors>
-  </jaxws:endpoint>
-
-  <bean id="registerCertificateWiretapEndPoint" class="se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl">
-      <property name="wireTapped" value="true" />
-  </bean>
-  
-  <jaxws:endpoint address="/register-certificate-wiretap/v3.0"
-                  implementor="#registerCertificateWiretapEndPoint">
+                  implementor="se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl">
     <jaxws:outFaultInterceptors>
       <bean class="se.inera.intyg.common.util.integration.interceptor.SoapFaultToSoapResponseTransformerInterceptor">
         <constructor-arg value="transform/register-medical-certificate-transform.xslt"/>

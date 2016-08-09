@@ -19,7 +19,7 @@
 
 package se.inera.intyg.intygstyper.luae_na.model.converter;
 
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.CERTIFICATE_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
@@ -35,13 +35,12 @@ import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
 import se.inera.intyg.intygstyper.fkparent.model.internal.*;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
+import se.inera.intyg.intygstyper.luae_na.support.LuaenaEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
-
-    private static final String CERTIFICATE_DISPLAY_NAME = "Läkarutlåtande för sjukersättning";
 
     private UtlatandeToIntyg() {
     }
@@ -56,29 +55,30 @@ public final class UtlatandeToIntyg {
     private static TypAvIntyg getTypAvIntyg(LuaenaUtlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
-        typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
-        typAvIntyg.setDisplayName(CERTIFICATE_DISPLAY_NAME);
+        typAvIntyg.setCodeSystem(KV_INTYGSTYP_CODE_SYSTEM);
+        typAvIntyg.setDisplayName(LuaenaEntryPoint.MODULE_NAME);
         return typAvIntyg;
     }
 
     private static List<Svar> getSvar(LuaenaUtlatande source) {
         List<Svar> svars = new ArrayList<>();
 
+        int grundForMUInstans = 1;
         if (source.getUndersokningAvPatienten() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                             aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.UNDERSOKNING.transportId, ReferensTyp.UNDERSOKNING.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getUndersokningAvPatienten().asLocalDate().toString())
                     .build());
         }
         if (source.getJournaluppgifter() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                             aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.JOURNAL.transportId, ReferensTyp.JOURNAL.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getJournaluppgifter().asLocalDate().toString()).build());
         }
         if (source.getAnhorigsBeskrivningAvPatienten() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                             aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.ANHORIGSBESKRIVNING.transportId,
                                     ReferensTyp.ANHORIGSBESKRIVNING.label))
@@ -86,7 +86,7 @@ public final class UtlatandeToIntyg {
                     .build());
         }
         if (source.getAnnatGrundForMU() != null) {
-            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1)
+            svars.add(aSvar(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, grundForMUInstans++)
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1,
                             aCV(GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM, ReferensTyp.ANNAT.transportId, ReferensTyp.ANNAT.label))
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnnatGrundForMU().asLocalDate().toString())
@@ -101,9 +101,10 @@ public final class UtlatandeToIntyg {
             svars.add(aSvar(UNDERLAGFINNS_SVAR_ID_3).withDelsvar(UNDERLAGFINNS_DELSVAR_ID_3, source.getUnderlagFinns().toString()).build());
         }
 
+        int underlagInstans = 1;
         for (Underlag underlag : source.getUnderlag()) {
             svars.add(
-                    aSvar(UNDERLAG_SVAR_ID_4).withDelsvar(UNDERLAG_TYP_DELSVAR_ID_4,
+                    aSvar(UNDERLAG_SVAR_ID_4, underlagInstans++).withDelsvar(UNDERLAG_TYP_DELSVAR_ID_4,
                             aCV(UNDERLAG_CODE_SYSTEM, underlag.getTyp().getId(), underlag.getTyp().getLabel()))
                             .withDelsvar(UNDERLAG_DATUM_DELSVAR_ID_4,
                                     underlag.getDatum() != null ? underlag.getDatum().asLocalDate().toString() : null)
@@ -112,10 +113,11 @@ public final class UtlatandeToIntyg {
 
         addIfNotBlank(svars, SJUKDOMSFORLOPP_SVAR_ID_5, SJUKDOMSFORLOPP_DELSVAR_ID_5, source.getSjukdomsforlopp());
 
+        int diagnosInstans = 1;
         for (Diagnos diagnos : source.getDiagnoser()) {
             if (diagnos.getDiagnosKod() != null) {
                 Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-                svars.add(aSvar(DIAGNOS_SVAR_ID_6)
+                svars.add(aSvar(DIAGNOS_SVAR_ID_6, diagnosInstans++)
                         .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
                         .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
             }

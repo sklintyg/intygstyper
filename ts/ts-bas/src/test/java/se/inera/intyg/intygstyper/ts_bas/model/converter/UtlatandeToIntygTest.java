@@ -76,7 +76,7 @@ public class UtlatandeToIntygTest {
         assertEquals(intygsId, intyg.getIntygsId().getExtension());
         assertNotNull(intyg.getVersion());
         assertEquals(utlatande.getTyp().toUpperCase(), intyg.getTyp().getCode());
-        assertNotNull(intyg.getTyp().getCodeSystem());
+        assertEquals("f6fb361a-e31d-48b8-8657-99b63912dd9b", intyg.getTyp().getCodeSystem());
         assertNotNull(intyg.getTyp().getDisplayName());
         assertEquals(signeringsdatum, intyg.getSigneringstidpunkt());
         assertNotNull(patientPersonId, intyg.getPatient().getPersonId().getRoot());

@@ -28,9 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.model.LocalDateInterval;
+import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 /**
@@ -45,7 +43,6 @@ public class ArbetsformagaToGiltighetTest {
     private LocalDate toDate2;
     private LocalDate fromDate3;
     private LocalDate toDate3;
-    private Utlatande utlatandeWithInvalidDate;
 
     @Before
     public void setupDates() {

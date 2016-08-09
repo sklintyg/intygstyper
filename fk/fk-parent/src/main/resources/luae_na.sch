@@ -96,8 +96,19 @@
     </iso:rule>
   </iso:pattern>
 
+  <iso:pattern id="instans">
+    <iso:rule context="//gn:instans">
+      <iso:assert test="number(.) ge 1">
+        'Instans' måste vara större än 0.
+      </iso:assert>
+    </iso:rule>
+  </iso:pattern>
+
   <iso:pattern id="q1">
     <iso:rule context="//gn:svar[@id='1']">
+      <iso:assert test="count(gn:instans) = 1">
+        'Grund för medicinskt underlag (MU)' måste ha ett instansnummer.
+      </iso:assert>
       <iso:assert test="count(gn:delsvar[@id='1.1']) = 1">
         'Grund för medicinskt underlag (MU)' måste ha ett 'Typ av grund för MU'.
       </iso:assert>
@@ -209,6 +220,9 @@
 
   <iso:pattern id="q4">
     <iso:rule context="//gn:svar[@id='4']">
+      <iso:assert test="count(gn:instans) = 1">
+        'Andra medicinska utredningar eller underlag' måste ha ett instansnummer.
+      </iso:assert>
       <iso:assert test="count(gn:delsvar[@id='4.1']) = 1">
         'Andra medicinska utredningar eller underlag' måste ha ett 'Utredning eller underlagstyp?'.
       </iso:assert>
@@ -267,6 +281,9 @@
 
   <iso:pattern id="q6">
     <iso:rule context="//gn:svar[@id='6']">
+      <iso:assert test="count(gn:instans) = 1">
+        'Typ av diagnos' måste ha ett instansnummer.
+      </iso:assert>
       <iso:assert test="count(gn:delsvar[@id='6.1']) = 1">
         'Typ av diagnos' måste ha en 'Diagnostext'.
       </iso:assert>

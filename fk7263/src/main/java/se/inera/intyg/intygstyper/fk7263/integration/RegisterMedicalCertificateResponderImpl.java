@@ -49,9 +49,9 @@ import se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportValidato
 
 public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalCertificateResponderInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
+    public static final String CERTIFICATE_ALREADY_EXISTS = "Certificate already exists";
 
-    private boolean wireTapped = false;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderImpl.class);
 
     private ObjectFactory objectFactory;
     private JAXBContext jaxbContext;
@@ -63,14 +63,6 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
     public void initializeJaxbContext() throws JAXBException {
         jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         objectFactory = new ObjectFactory();
-    }
-
-    public boolean isWireTapped() {
-        return wireTapped;
-    }
-
-    public void setWireTapped(boolean wireTapped) {
-        this.wireTapped = wireTapped;
     }
 
     @Override
@@ -85,14 +77,13 @@ public class RegisterMedicalCertificateResponderImpl implements RegisterMedicalC
             String xml = xmlToString(registerMedicalCertificate);
             CertificateHolder certificateHolder = ConverterUtil.toCertificateHolder(utlatande);
             certificateHolder.setOriginalCertificate(xml);
-            certificateHolder.setWireTapped(wireTapped);
 
             moduleContainer.certificateReceived(certificateHolder);
 
             response.setResult(ResultOfCallUtil.okResult());
 
         } catch (CertificateAlreadyExistsException e) {
-            response.setResult(ResultOfCallUtil.infoResult("Certificate already exists"));
+            response.setResult(ResultOfCallUtil.infoResult(CERTIFICATE_ALREADY_EXISTS));
             String certificateId = registerMedicalCertificate.getLakarutlatande().getLakarutlatandeId();
             String issuedBy =  registerMedicalCertificate.getLakarutlatande().getSkapadAvHosPersonal().getEnhet().getEnhetsId().getExtension();
             LOGGER.warn(LogMarkers.VALIDATION, "Validation warning for intyg " + certificateId + " issued by " + issuedBy + ": Certificate already exists - ignored.");

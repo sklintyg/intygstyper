@@ -93,6 +93,7 @@ var luae_naMessages = {
         'luae_na.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges',
         'luae_na.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format',
         'luae_na.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges',
+        'luae_na.validation.blanksteg.otillatet': 'Fältet får inte fyllas i med endast blanksteg',
 
 
         // errors

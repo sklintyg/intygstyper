@@ -18,12 +18,13 @@
  */
 package se.inera.intyg.intygstyper.ts_bas.validator.transport;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import static se.inera.intyg.common.support.Constants.PERSON_ID_OID;
+import static se.inera.intyg.common.support.Constants.SAMORDNING_ID_OID;
 
+import java.util.*;
+
+import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.validate.PersonnummerValidator;
-import se.inera.intyg.common.schemas.Constants;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
@@ -171,7 +172,7 @@ public class TransportValidatorInstance {
      */
     protected void assertValidPersonId(II id, String element) {
         if (assertNotNull(id, element).success()) {
-            if (!id.getRoot().equals("1.2.752.129.2.1.3.1") && !id.getRoot().equals("1.2.752.129.2.1.3.3")) {
+            if (!id.getRoot().equals(PERSON_ID_OID) && !id.getRoot().equals(SAMORDNING_ID_OID)) {
                 validationError(element + " should be a personnummer or samordningsnummer");
             }
             validationErrors.addAll(validator.validateExtension(id.getExtension()));

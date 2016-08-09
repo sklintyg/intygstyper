@@ -21,8 +21,6 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     fieldGroup: [
                         //Fråga 1 -----
                         {type: 'headline', templateOptions: {label: 'FRG_1', level:4}},
-                        {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
-                        {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
                         {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                         {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                         {
@@ -41,11 +39,10 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                         },
 
                         //Fråga 2 -----
-                        {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
-
+                        {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'FRG_2'}},
 
                         // Underlag
-                        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
+                        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
                         {
                             key: 'underlag', type: 'underlag',
                             className: 'slide-animation',
@@ -62,7 +59,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                                     'SPECIALISTKLINIK',
                                     'VARD_UTOMLANDS',
                                     'OVRIGT_UTLATANDE'], //KV_FKMU_005
-                                typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                                label: 'FRG_4', typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
                             },
                             watcher: {
                                 expression: 'model.underlagFinns',
@@ -71,50 +68,6 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                         }
                     ]
                 },
-
-                //// TEST ERIK
-                //
-                //{
-                //    wrapper: 'wc-field',
-                //    templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
-                //    fieldGroup: [
-                //        {type: 'headline', templateOptions: {label: 'FRG_2', level:4}},
-                //        {key: 'kannedomOmPatient', className:'no-space-left', type: 'singleDate'}
-                //    ]
-                //},
-                //// END TEST ERIK
-                //
-                //
-                //{
-                //    wrapper: 'wc-field',
-                //    templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
-                //    fieldGroup: [
-                //        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
-                //        {
-                //            key: 'underlag', type: 'underlag',
-                //            className: 'slide-animation',
-                //            hideExpression: '!model.underlagFinns',
-                //            templateOptions: {
-                //                underlagsTyper: [
-                //                    'NEUROPSYKIATRISKT',
-                //                    'HABILITERING',
-                //                    'ARBETSTERAPEUT',
-                //                    'FYSIOTERAPEUT',
-                //                    'LOGOPED',
-                //                    'PSYKOLOG',
-                //                    'SKOLHALSOVARD',
-                //                    'SPECIALISTKLINIK',
-                //                    'VARD_UTOMLANDS',
-                //                    'OVRIGT_UTLATANDE'], //KV_FKMU_005
-                //                typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
-                //            },
-                //            watcher: {
-                //                expression: 'model.underlagFinns',
-                //                listener: FactoryHelper.underlagListener
-                //            }
-                //        }
-                //    ]
-                //},
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 3, categoryName: categoryNames[3]},
@@ -173,22 +126,22 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                         {
                             key: 'grundData.skapadAv.vardenhet.postadress',
                             type: 'single-text',
-                            templateOptions: {staticLabel: 'Postadress', size: 'full'}
+                            templateOptions: {staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal'}
                         },
                         {
                             key: 'grundData.skapadAv.vardenhet.postnummer',
                             type: 'single-text',
-                            templateOptions: {staticLabel: 'Postnummer', size: '5'}
+                            templateOptions: {staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal'}
                         },
                         {
                             key: 'grundData.skapadAv.vardenhet.postort',
                             type: 'single-text',
-                            templateOptions: {staticLabel: 'Postort'}
+                            templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
                         },
                         {
                             key: 'grundData.skapadAv.vardenhet.telefonnummer',
                             type: 'single-text',
-                            templateOptions: {staticLabel: 'Telefonnummer'}
+                            templateOptions: {staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal'}
                         }
                     ]
                 }

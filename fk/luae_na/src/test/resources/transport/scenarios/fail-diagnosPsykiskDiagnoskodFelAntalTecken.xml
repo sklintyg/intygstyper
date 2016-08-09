@@ -7,8 +7,8 @@
     </intygs-id>
     <typ>
       <ns3:code>luae_na</ns3:code>
-      <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
-      <ns3:displayName>Läkarutlåtande för sjukersättning</ns3:displayName>
+      <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
+      <ns3:displayName>Läkarutlåtande för aktivitetsersättning vid nedsatt arbetsförmåga</ns3:displayName>
     </typ>
     <version>1.0</version>
     <signeringstidpunkt>2015-12-07T15:48:05</signeringstidpunkt>
@@ -63,6 +63,7 @@
       </enhet>
     </skapadAv>
     <svar id="1">
+      <instans>1</instans>
       <delsvar id="1.1">
         <ns3:cv>
           <ns3:code>UNDERSOKNING</ns3:code>
@@ -79,6 +80,7 @@
       </delsvar>
     </svar>
     <svar id="4">
+      <instans>1</instans>
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>PSYKOLOG</ns3:code>
@@ -89,6 +91,7 @@
       <delsvar id="4.3">Skickas med posten</delsvar>
     </svar>
 	<svar id="4">
+      <instans>2</instans>
       <delsvar id="4.1">
         <ns3:cv>
           <ns3:code>FYSIOTERAPEUT</ns3:code>
@@ -102,6 +105,7 @@
       <delsvar id="5.1">Arbetsplatsolycka där patienten fastnade med höger hand i en vals 2014-07-09. Omhändertogs initialt på akutmottagningen AVC Södra Älvsborgs sjukhus i Borås. Vävnadsförluster i 3:e och 4:e fingret. Nedsatt kraft, känsel och funktion i handen, smärtsyndom i hela höger arm. Sedan några månader depression som har varit svår att behandla medikamentellt.</delsvar>
     </svar>
     <svar id="6">
+      <instans>1</instans>
       <delsvar id="6.1">Utbrändhet</delsvar>
       <delsvar id="6.2">
         <ns3:cv>

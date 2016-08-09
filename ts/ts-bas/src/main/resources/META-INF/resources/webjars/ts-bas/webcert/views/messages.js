@@ -85,7 +85,7 @@ var tsBasMessages = {
         'ts-bas.label.diabetes.diabetestyp.diabetes_typ_1': 'Typ 1',
         'ts-bas.label.diabetes.diabetestyp.diabetes_typ_2': 'Typ 2',
 
-        'ts-bas.label.kontakt-info': 'Namnförtydligande, mottagningens adress och telefon',
+        'ts-bas.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
 
         'ts-bas.label.bedomning-info-undersokas-med-specialkompetens': 'Patienten bör före ärendets avgörande undersökas av läkare med specialistkompetens i',
         'ts-bas.label.bedomning-info-ej-angivet': 'Ej angivet',

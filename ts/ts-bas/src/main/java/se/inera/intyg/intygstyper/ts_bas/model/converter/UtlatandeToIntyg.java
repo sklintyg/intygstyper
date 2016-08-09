@@ -19,7 +19,14 @@
 
 package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
+import static se.inera.intyg.common.support.Constants.KV_ID_KONTROLL_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_INTYGET_AVSER_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_KORKORTSBEHORIGHET_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_UTLATANDETYP_INTYG_CODE_SYSTEM;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotNull;
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.*;
 import static se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil.getVersion;
 
@@ -58,7 +65,7 @@ public final class UtlatandeToIntyg {
     private static TypAvIntyg getTypAvIntyg(Utlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
         typAvIntyg.setCode(source.getTyp().toUpperCase());
-        typAvIntyg.setCodeSystem(CERTIFICATE_CODE_SYSTEM);
+        typAvIntyg.setCodeSystem(KV_UTLATANDETYP_INTYG_CODE_SYSTEM);
         typAvIntyg.setDisplayName(TsBasEntryPoint.MODULE_NAME);
         return typAvIntyg;
     }
@@ -73,10 +80,11 @@ public final class UtlatandeToIntyg {
         List<Svar> svars = new ArrayList<>();
 
         if (source.getIntygAvser() != null) {
+            int intygAvserInstans = 1;
             for (IntygAvserKategori korkortstyp : source.getIntygAvser().getKorkortstyp()) {
                 IntygAvserKod intygAvser = IntygAvserKod.valueOf(korkortstyp.name());
-                svars.add(aSvar(INTYG_AVSER_SVAR_ID_1)
-                        .withDelsvar(INTYG_AVSER_DELSVAR_ID_1, aCV(INTYG_AVSER_CODE_SYSTEM, intygAvser.getCode(), intygAvser.getDescription()))
+                svars.add(aSvar(INTYG_AVSER_SVAR_ID_1, intygAvserInstans++)
+                        .withDelsvar(INTYG_AVSER_DELSVAR_ID_1, aCV(KV_INTYGET_AVSER_CODE_SYSTEM, intygAvser.getCode(), intygAvser.getDescription()))
                         .build());
             }
         }
@@ -85,7 +93,7 @@ public final class UtlatandeToIntyg {
             IdKontrollKod idKontroll = IdKontrollKod.valueOf(source.getVardkontakt().getIdkontroll());
             svars.add(aSvar(IDENTITET_STYRKT_GENOM_SVAR_ID_2)
                     .withDelsvar(IDENTITET_STYRKT_GENOM_ID_2,
-                            aCV(ID_KONTROLL_CODE_SYSTEM, idKontroll.getCode(), idKontroll.getDescription()))
+                            aCV(KV_ID_KONTROLL_CODE_SYSTEM, idKontroll.getCode(), idKontroll.getDescription()))
                     .build());
         }
 
@@ -359,19 +367,20 @@ public final class UtlatandeToIntyg {
         if (source == null) {
             return;
         }
+        int behorighetInstans = 1;
         if (source.getKorkortstyp() != null) {
             for (BedomningKorkortstyp korkortstyp : source.getKorkortstyp()) {
                 KorkortsbehorighetKod korkortsbehorighet = KorkortsbehorighetKod.valueOf(korkortstyp.name());
-                svars.add(aSvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_SVAR_ID_33)
+                svars.add(aSvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_SVAR_ID_33, behorighetInstans++)
                         .withDelsvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_DELSVAR_ID_33,
-                                aCV(KORKORTSBEHORIGHET_CODE_SYSTEM, korkortsbehorighet.getCode(), korkortsbehorighet.getDescription()))
+                                aCV(KV_KORKORTSBEHORIGHET_CODE_SYSTEM, korkortsbehorighet.getCode(), korkortsbehorighet.getDescription()))
                         .build());
             }
         }
         if (source.getKanInteTaStallning() != null && source.getKanInteTaStallning()) {
-            svars.add(aSvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_SVAR_ID_33)
+            svars.add(aSvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_SVAR_ID_33, behorighetInstans++)
                     .withDelsvar(UPPFYLLER_KRAV_FOR_BEHORIGHET_DELSVAR_ID_33,
-                            aCV(KORKORTSBEHORIGHET_CODE_SYSTEM, KorkortsbehorighetKod.KANINTETEASTALLNING.getCode(),
+                            aCV(KV_KORKORTSBEHORIGHET_CODE_SYSTEM, KorkortsbehorighetKod.KANINTETEASTALLNING.getCode(),
                                     KorkortsbehorighetKod.KANINTETEASTALLNING.getDescription()))
                     .build());
         }

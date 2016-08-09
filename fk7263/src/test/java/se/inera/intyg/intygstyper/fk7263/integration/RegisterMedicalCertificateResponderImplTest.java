@@ -20,7 +20,6 @@
 package se.inera.intyg.intygstyper.fk7263.integration;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 
@@ -98,18 +97,6 @@ public class RegisterMedicalCertificateResponderImplTest {
         assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
 
         Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(any(CertificateHolder.class));
-    }
-
-    @Test
-    public void testReceiveCertificateWiretapped() throws Exception {
-
-        responder.setWireTapped(true);
-        RegisterMedicalCertificateResponseType response = responder.registerMedicalCertificate(null, request);
-
-        assertEquals(ResultCodeEnum.OK, response.getResult().getResultCode());
-        ArgumentCaptor<CertificateHolder> certificateHolderCaptor = ArgumentCaptor.forClass(CertificateHolder.class);
-        Mockito.verify(moduleContainer, Mockito.only()).certificateReceived(certificateHolderCaptor.capture());
-        assertTrue(certificateHolderCaptor.getValue().isWireTapped());
     }
 
     @Test

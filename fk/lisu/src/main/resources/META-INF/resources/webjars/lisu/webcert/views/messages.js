@@ -112,6 +112,7 @@ var lisuMessages = {
         'lisu.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges',
         'lisu.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format',
         'lisu.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges',
+        'lisu.validation.blanksteg.otillatet': 'Fältet får inte fyllas i med endast blanksteg',
 
         // errors
         'lisu.error.could_not_load_cert': '<strong>Intyget gick inte att läsa in.</strong><br>Prova att ladda om sidan. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Nationell kundservice på 0771-251010.',

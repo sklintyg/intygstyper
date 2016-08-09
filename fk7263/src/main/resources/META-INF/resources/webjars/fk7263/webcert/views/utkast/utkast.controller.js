@@ -121,6 +121,17 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                         isRevoked: false
                     });
                 }
+            }, function(error) {
+
+                if(typeof error === 'object') {
+                    $log.error('Failed to load utkast. Reason: ' + error.errorCode + ': ' + error.message);
+                }
+
+                // Failed to load parent intyg. Tell frågasvar
+                $rootScope.$broadcast('fk7263.ViewCertCtrl.load', null, {
+                    isSent: false,
+                    isRevoked: false
+                });
             });
 
             $scope.gotoRelatedIntyg = function(intyg) {

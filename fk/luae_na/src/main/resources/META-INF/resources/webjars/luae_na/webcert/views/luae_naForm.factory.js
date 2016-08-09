@@ -21,8 +21,6 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
             fieldGroup: [
                 {type: 'headline', templateOptions: {label: 'FRG_1', level: 4}},
-                {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
-                {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
@@ -34,8 +32,8 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     hideExpression: '!model.annatGrundForMU',
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
                 },
-                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'DFR_2.1'}},
-                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
+                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'FRG_2'}},
+                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
                 {
                     key: 'underlag', type: 'underlag',
                     className: 'slide-animation',
@@ -52,7 +50,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                             'SPECIALISTKLINIK',
                             'VARD_UTOMLANDS',
                             'OVRIGT_UTLATANDE'],
-                        typLabel: 'FRG_4', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                        label: 'FRG_4', typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
                     },
                     watcher: {
                         expression: 'model.underlagFinns',
@@ -72,46 +70,16 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 },
                 {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'DFR_7.1'}},
-                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'DFR_7.2'}},
+                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'FRG_45'}},
                 {
                     key: 'diagnosForNyBedomning',
                     className: 'fold-animation',
                     type: 'multi-text',
-                    templateOptions: {label: 'DFR_7.3'},
+                    templateOptions: {label: 'DFR_45.2'},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
             ]
         },
-        //{
-        //    wrapper: 'wc-field',
-        //    templateOptions: {category: 2, categoryName: categoryNames[2], prototypeName: 'default'},
-        //    fieldGroup: [
-        //        {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'DFR_3.1'}},
-        //        {
-        //            key: 'underlag', type: 'underlag',
-        //            className: 'slide-animation',
-        //            hideExpression: '!model.underlagFinns',
-        //            templateOptions: {
-        //                underlagsTyper: ['NEUROPSYKIATRISKT',
-        //                    'HABILITERING',
-        //                    'ARBETSTERAPEUT',
-        //                    'FYSIOTERAPEUT',
-        //                    'LOGOPED',
-        //                    'PSYKOLOG',
-        //                    'FORETAGSHALSOVARD',
-        //                    'SKOLHALSOVARD',
-        //                    'SPECIALISTKLINIK',
-        //                    'VARD_UTOMLANDS',
-        //                    'OVRIGT_UTLATANDE'],
-        //                typLabel: 'FRG_4', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
-        //            },
-        //            watcher: {
-        //                expression: 'model.underlagFinns',
-        //                listener: FactoryHelper.underlagListener
-        //            }
-        //        }
-        //    ]
-        //},
         {
             wrapper: 'wc-field',
             templateOptions: {category: 3, categoryName: categoryNames[3]},
@@ -193,22 +161,22 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
                 {
                     key: 'grundData.skapadAv.vardenhet.postadress',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postadress', size: 'full'}
+                    templateOptions: {staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postnummer', size: '5'}
+                    templateOptions: {staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postort',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postort'}
+                    templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.telefonnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Telefonnummer'}
+                    templateOptions: {staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal'}
                 }
             ]
         }

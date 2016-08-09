@@ -19,6 +19,10 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
+import static se.inera.intyg.common.support.Constants.HSA_ID_OID;
+import static se.inera.intyg.common.support.Constants.KV_HANDELSE_CODE_SYSTEM;
+import static se.inera.intyg.common.support.Constants.KV_UTLATANDETYP_INTYG_CODE_SYSTEM;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -29,15 +33,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.intyg.common.schemas.Constants;
+import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.common.enumerations.HandelsekodEnum;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
-import se.inera.intyg.common.support.modules.support.api.notification.HandelseType;
 import se.inera.intyg.common.support.modules.support.api.notification.NotificationMessage;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.certificatestatusupdateforcareresponder.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.types.v1.*;
 
@@ -47,17 +52,7 @@ public class Fk7263InternalToNotification {
 
     private static final String INTYGSID_ROOT = "1.2.752.129.2.1.2.1";
 
-    private static final String HSAID_ROOT = "1.2.752.129.2.1.4.1";
-
-    private static final String TYPAVUTLATANDE_FK7263_CODE = "FK7263";
-
-    private static final String TYPAVUTLATANDE_FK7263_DISPLAYNAME = "Läkarintyg enligt 3 kap. 8 § lagen (1962:381) om allmän försäkring";
-
-    private static final String TYPAVUTLATANDE_CODESYSTEM = "f6fb361a-e31d-48b8-8657-99b63912dd9b";
-
     private static final String TYPAVUTLATANDE_CODESYSTEM_NAME = "kv_utlåtandetyp_intyg";
-
-    private static final String HANDELSE_CODESYSTEM = "dfd7bbad-dbe5-4a2f-ba25-f7b9b2cc6b14";
 
     private static final String HANDELSE_CODESYSTEM_NAME = "kv_händelse";
 
@@ -106,10 +101,10 @@ public class Fk7263InternalToNotification {
 
     private void decorateWithTypAvUtlatande(UtlatandeType utlatandeType, Utlatande utlatandeSource) {
         TypAvUtlatande typAvUtlatande = new TypAvUtlatande();
-        typAvUtlatande.setCode(TYPAVUTLATANDE_FK7263_CODE);
-        typAvUtlatande.setCodeSystem(TYPAVUTLATANDE_CODESYSTEM);
+        typAvUtlatande.setCode(Fk7263EntryPoint.MODULE_ID.toUpperCase());
+        typAvUtlatande.setCodeSystem(KV_UTLATANDETYP_INTYG_CODE_SYSTEM);
         typAvUtlatande.setCodeSystemName(TYPAVUTLATANDE_CODESYSTEM_NAME);
-        typAvUtlatande.setDisplayName(TYPAVUTLATANDE_FK7263_DISPLAYNAME);
+        typAvUtlatande.setDisplayName(Fk7263EntryPoint.MODULE_DESCRIPTION);
         utlatandeType.setTypAvUtlatande(typAvUtlatande);
     }
 
@@ -160,15 +155,12 @@ public class Fk7263InternalToNotification {
 
     private void decorateWithHandelse(UtlatandeType utlatandeType, NotificationMessage notificationMessage) {
 
-        HandelseType handelseTyp = notificationMessage.getHandelse();
+        HandelsekodEnum handelseTyp = notificationMessage.getHandelse();
 
         Handelsekod handelseKod = new Handelsekod();
-        handelseKod.setCodeSystem(HANDELSE_CODESYSTEM);
+        handelseKod.setCodeSystem(KV_HANDELSE_CODE_SYSTEM);
         handelseKod.setCodeSystemName(HANDELSE_CODESYSTEM_NAME);
-        handelseKod.setDisplayName(handelseTyp.toString());
-
-        HandelsekodKodRestriktion handelseValue = convertToHandelsekod(handelseTyp);
-        handelseKod.setCode(handelseValue.value());
+        populateHandelsekodFromHandelse(handelseTyp, handelseKod);
 
         Handelse handelseType = new Handelse();
         handelseType.setHandelsekod(handelseKod);
@@ -266,38 +258,65 @@ public class Fk7263InternalToNotification {
 
     private HsaId createHsaId(String id) {
         HsaId hsaId = new HsaId();
-        hsaId.setRoot(HSAID_ROOT);
+        hsaId.setRoot(HSA_ID_OID);
         hsaId.setExtension(id);
         return hsaId;
     }
 
-    private HandelsekodKodRestriktion convertToHandelsekod(HandelseType handelse) {
+    private void populateHandelsekodFromHandelse(HandelsekodEnum handelse, Handelsekod handelseKod) {
+        HandelsekodKodRestriktion code = null;
+        String displayName = null;
         switch (handelse) {
-        case FRAGA_FRAN_FK:
-            return HandelsekodKodRestriktion.HAN_6;
-        case FRAGA_TILL_FK:
-            return HandelsekodKodRestriktion.HAN_8;
-        case FRAGA_FRAN_FK_HANTERAD:
-            return HandelsekodKodRestriktion.HAN_9;
-        case INTYG_MAKULERAT:
-            return HandelsekodKodRestriktion.HAN_5;
-        case INTYG_SKICKAT_FK:
-            return HandelsekodKodRestriktion.HAN_3;
-        case INTYGSUTKAST_ANDRAT:
-            return HandelsekodKodRestriktion.HAN_11;
-        case INTYGSUTKAST_RADERAT:
-            return HandelsekodKodRestriktion.HAN_4;
-        case INTYGSUTKAST_SIGNERAT:
-            return HandelsekodKodRestriktion.HAN_2;
-        case INTYGSUTKAST_SKAPAT:
-            return HandelsekodKodRestriktion.HAN_1;
-        case SVAR_FRAN_FK:
-            return HandelsekodKodRestriktion.HAN_7;
-        case SVAR_FRAN_FK_HANTERAD:
-            return HandelsekodKodRestriktion.HAN_10;
+        case NYFRFM:
+            code = HandelsekodKodRestriktion.HAN_6;
+            displayName = "FRAGA_FRAN_FK";
+            break;
+        case NYFRTM:
+            code = HandelsekodKodRestriktion.HAN_8;
+            displayName = "FRAGA_TILL_FK";
+            break;
+        case HANFRA:
+            code = HandelsekodKodRestriktion.HAN_9;
+            displayName = "FRAGA_FRAN_FK_HANTERAD";
+            break;
+        case MAKULE:
+            code = HandelsekodKodRestriktion.HAN_5;
+            displayName = "INTYG_MAKULERAT";
+            break;
+        case SKICKA:
+            code = HandelsekodKodRestriktion.HAN_3;
+            displayName = "INTYG_SKICKAT_FK";
+            break;
+        case ANDRAT:
+            code = HandelsekodKodRestriktion.HAN_11;
+            displayName = "INTYGSUTKAST_ANDRAT";
+            break;
+        case RADERA:
+            code = HandelsekodKodRestriktion.HAN_4;
+            displayName = "INTYGSUTKAST_RADERAT";
+            break;
+        case SIGNAT:
+            code = HandelsekodKodRestriktion.HAN_2;
+            displayName = "INTYGSUTKAST_SIGNERAT";
+            break;
+        case SKAPAT:
+            code = HandelsekodKodRestriktion.HAN_1;
+            displayName = "INTYGSUTKAST_SKAPAT";
+            break;
+        case NYSVFM:
+            code = HandelsekodKodRestriktion.HAN_7;
+            displayName = "SVAR_FRAN_FK";
+            break;
+        case HANSVA:
+            code = HandelsekodKodRestriktion.HAN_10;
+            displayName = "SVAR_FRAN_FK_HANTERAD";
+            break;
         default:
             LOG.error("Could not translate event '{}' to a valid HandelsekodKodRestriktion", handelse);
             throw new IllegalArgumentException("Could not translate event " + handelse + " to a valid HandelsekodKodRestriktion");
         }
+        handelseKod.setCode(code.value());
+        handelseKod.setDisplayName(displayName);
     }
+
 }

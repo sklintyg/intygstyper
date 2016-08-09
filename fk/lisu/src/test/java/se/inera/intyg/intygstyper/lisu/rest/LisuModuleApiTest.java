@@ -30,8 +30,10 @@ import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.io.IOException;
+import java.util.*;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
@@ -54,7 +56,9 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.intygstyper.lisu.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
 import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioFinder;
@@ -91,6 +95,9 @@ public class LisuModuleApiTest {
 
     @Mock
     private RevokeCertificateResponderInterface revokeClient;
+
+    @Spy
+    private SvarIdHelperImpl svarIdHelper;
 
     @InjectMocks
     private LisuModuleApi moduleApi;
@@ -208,7 +215,8 @@ public class LisuModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.okResult());
 
-        when(objectMapper.readValue(internalModel, LisuUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
@@ -218,6 +226,46 @@ public class LisuModuleApiTest {
         assertNotNull(captor.getValue().getIntyg());
     }
 
+    @Test
+    public void testRegisterCertificateAlreadyExists() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = "internal model";
+        RegisterCertificateResponseType response = new RegisterCertificateResponseType();
+        response.setResult(ResultTypeUtil.infoResult("Certificate already exists"));
+
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.VALIDATION_ERROR, e.getErroIdEnum());
+            assertEquals("Certificate already exists", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRegisterCertificateGenericInfoResult() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = "internal model";
+        RegisterCertificateResponseType response = new RegisterCertificateResponseType();
+        response.setResult(ResultTypeUtil.infoResult("INFO"));
+
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
+
+        try {
+            moduleApi.registerCertificate(internalModel, logicalAddress);
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.APPLICATION_ERROR, e.getErroIdEnum());
+            assertEquals("INFO", e.getMessage());
+        }
+    }
+
     @Test(expected = ExternalServiceCallException.class)
     public void testRegisterCertificateShouldThrowExceptionOnFailedCallToIT() throws Exception {
         final String logicalAddress = "logicalAddress";
@@ -225,7 +273,8 @@ public class LisuModuleApiTest {
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
         response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "resultText"));
 
-        when(objectMapper.readValue(internalModel, LisuUtlatande.class)).thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
+        when(objectMapper.readValue(internalModel, LisuUtlatande.class))
+                .thenReturn(ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel());
         when(registerCertificateResponderInterface.registerCertificate(eq(logicalAddress), any())).thenReturn(response);
 
         moduleApi.registerCertificate(internalModel, logicalAddress);
@@ -274,6 +323,7 @@ public class LisuModuleApiTest {
         assertEquals(internalModel, response);
         verify(moduleService, times(1)).getDescriptionFromDiagnosKod(anyString(), anyString());
     }
+
     @Test
     public void testRevokeCertificate() throws Exception {
         final String logicalAddress = "logicalAddress";
@@ -315,6 +365,27 @@ public class LisuModuleApiTest {
         assertNotNull(res);
         assertNotEquals("", res);
     }
+
+    @Test
+    public void testGetModuleSpecificArendeParameters() throws Exception {
+        LisuUtlatande utlatande = ScenarioFinder.getInternalScenario("pass-minimal").asInternalModel();
+
+        Map<String, List<String>> res = moduleApi.getModuleSpecificArendeParameters(utlatande,
+                Arrays.asList(PROGNOS_SVAR_ID_39, GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1, ARBETSTIDSFORLAGGNING_SVAR_ID_33));
+
+        assertNotNull(res);
+        assertEquals(3, res.keySet().size());
+        assertNotNull(res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
+        assertEquals(1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertNotNull(res.get(PROGNOS_SVAR_ID_39));
+        assertEquals(1, res.get(PROGNOS_SVAR_ID_39).size());
+        assertEquals(PROGNOS_SVAR_JSON_ID_39, res.get(PROGNOS_SVAR_ID_39).get(0));
+        assertNotNull(res.get(ARBETSTIDSFORLAGGNING_SVAR_ID_33));
+        assertEquals(1, res.get(ARBETSTIDSFORLAGGNING_SVAR_ID_33).size());
+        assertEquals(ARBETSTIDSFORLAGGNING_SVAR_JSON_ID_33, res.get(ARBETSTIDSFORLAGGNING_SVAR_ID_33).get(0));
+    }
+
     private GetCertificateResponseType createGetCertificateResponseType() throws ScenarioNotFoundException {
         GetCertificateResponseType res = new GetCertificateResponseType();
         RegisterCertificateType registerType = ScenarioFinder.getInternalScenario("pass-minimal").asTransportModel();

@@ -12,15 +12,6 @@ var luseMessages = {
         // Sjukersattning
         'luse.label.certtitle': 'Läkarutlåtande för sjukersättning',
 
-        // TODO: REMOVE THESE AND GENERATE from dynamic labels instead
-        'luse.label.grundformu': 'Utlåtandet är baserat på',
-        'luse.label.underlag': 'Andra medicinska utredningar och underlag',
-        'luse.label.sjukdomsforlopp': 'Sjukdomsförlopp',
-        'luse.label.diagnos': 'Diagnos/diagnoser som orsakar nedsatt arbetsförmåga',
-        'luse.label.funktionsnedsattning': 'Funktionsnedsättning',
-        'luse.label.aktivitetsbegransning': 'Aktivitetsbegränsning',
-        'luse.label.medicinskaforutsattningarforarbete': 'Medicinska förutsättningar för arbete',
-
         //Labels
         'sjukersattning.label.spara-utkast': 'Spara',
         'sjukersattning.label.ta-bort-utkast': 'Ta bort utkast',
@@ -94,6 +85,7 @@ var luseMessages = {
         'luse.validation.vardenhet.postnummer.missing': 'Postnummer för vårdenhet måste anges',
         'luse.validation.vardenhet.postnummer.incorrect-format': 'Postnummer har fel format',
         'luse.validation.vardenhet.postort.missing': 'Postort för vårdenhet måste anges',
+        'luse.validation.blanksteg.otillatet': 'Fältet får inte fyllas i med endast blanksteg',
 
 
         // errors

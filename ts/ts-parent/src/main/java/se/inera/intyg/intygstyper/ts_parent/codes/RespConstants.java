@@ -21,11 +21,10 @@ package se.inera.intyg.intygstyper.ts_parent.codes;
 
 public final class RespConstants {
 
-    public static final String INTYG_AVSER_CODE_SYSTEM = "24c41b8d-258a-46bf-a08a-b90738b28770";
-    public static final String ID_KONTROLL_CODE_SYSTEM = "e7cc8f30-a353-4c42-b17a-a189b6876647";
-    public static final String KORKORTSBEHORIGHET_CODE_SYSTEM = "e889fa20-1dee-4f79-8b37-03853e75a9f8";
     public static final String NOT_AVAILABLE = "N/A";
     public static final String VARDKONTAKT_TYP = "5880005";
+    public static final String BEFATTNINGSKOD_LAKARE_LEG_ST = "203010"; // Legitimerad läkare under specialiseringstjänstgöring (STläkare)
+    public static final String BEFATTNINGSKOD_LAKARE_EJ_LEG_AT = "204010"; // Ej legitimerad läkare under allmäntjänstgöring (AT-läkare)
 
     public static final String INTYG_AVSER_SVAR_ID_1 = "1";
     public static final String INTYG_AVSER_DELSVAR_ID_1 = "1.1";

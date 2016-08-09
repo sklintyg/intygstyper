@@ -19,11 +19,9 @@
 package se.inera.intyg.intygstyper.luae_na.rest;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
@@ -57,12 +55,8 @@ public class LuaenaModuleApi extends FkParentModuleApi<LuaenaUtlatande> {
 
     @Override
     public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return false;
-    }
-
-    @Override
-    public Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande) {
-        return TransportToArendeApi.getModuleSpecificArendeParameters(utlatande);
+        // TODO temporary implementation, should be replaced by context- and field aware check.
+        return !persistedState.equals(currentState);
     }
 
     @Override

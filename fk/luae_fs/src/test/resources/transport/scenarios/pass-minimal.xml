@@ -7,7 +7,7 @@
     </intygs-id>
     <typ>
       <ns3:code>LUAE_FS</ns3:code>
-      <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
+      <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
       <ns3:displayName>Läkarutlåtande för aktivitetsersättning vid förlängd skolgång</ns3:displayName>
     </typ>
     <version>1</version>
@@ -67,6 +67,7 @@
       </specialistkompetens>
     </skapadAv>
     <svar id="1">
+      <instans>1</instans>
       <delsvar id="1.1">
         <ns3:cv>
           <ns3:code>UNDERSOKNING</ns3:code>
@@ -83,6 +84,7 @@
       <delsvar id="3.1">false</delsvar>
     </svar>
     <svar id="6">
+      <instans>1</instans>
       <delsvar id="6.1">Klämskada skuldra</delsvar>
       <delsvar id="6.2">
         <ns3:cv>

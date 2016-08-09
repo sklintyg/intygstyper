@@ -71,7 +71,6 @@ public class ConverterTest {
         RegisterCertificateValidator validator = new RegisterCertificateValidator("luae_na.sch");
         SchematronOutputType result = validator.validateSchematron(new StreamSource(new ByteArrayInputStream(convertedXML.getBytes(Charsets.UTF_8))));
 
-        //System.out.println(SVRLHelper.getAllFailedAssertions(result).get(0).getText());
         assertEquals(getErrorString(result), 0, SVRLHelper.getAllFailedAssertions(result).size());
 
         // Why not validate internal model as well?

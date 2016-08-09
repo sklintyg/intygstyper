@@ -14,11 +14,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.w3c.dom.Node;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
 import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.utils.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.ObjectFactory;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
@@ -83,9 +85,10 @@ public class RoundTripTest {
     }
 
     @Test
-    public void testInternalToRivtaV2() throws Exception {
+    public void testConvertToRivtaV2() throws Exception {
+        Utlatande internal = TransportToInternal.convert(scenario.asTransportModel().getIntyg());
         RegisterCertificateType actual = new RegisterCertificateType();
-        actual.setIntyg(UtlatandeToIntyg.convert(scenario.asInternalModel()));
+        actual.setIntyg(UtlatandeToIntyg.convert(internal));
 
         StringWriter expected = new StringWriter();
         StringWriter actualSw = new StringWriter();
@@ -96,6 +99,7 @@ public class RoundTripTest {
         XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected.toString(), actualSw.toString());
         diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
+        diff.overrideDifferenceListener(new IgnoreNamespacePrexifDifferenceListener());
         assertTrue(name + " " + diff.toString(), diff.similar());
     }
 
@@ -113,5 +117,19 @@ public class RoundTripTest {
         Diff diff = XMLUnit.compareXML(expected.toString(), actual);
         diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
         assertTrue(name + " " + diff.toString(), diff.similar());
+    }
+
+    private class IgnoreNamespacePrexifDifferenceListener implements DifferenceListener {
+        @Override
+        public int differenceFound(Difference difference) {
+            if (difference.getId() == DifferenceConstants.NAMESPACE_PREFIX_ID) {
+                return DifferenceListener.RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+            }
+            return DifferenceListener.RETURN_ACCEPT_DIFFERENCE;
+        }
+
+        @Override
+        public void skippedComparison(Node control, Node test) {
+        }
     }
 }

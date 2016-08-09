@@ -79,6 +79,7 @@
             </specialistkompetens>
         </skapadAv>
         <svar id="1">
+            <instans>1</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV11</ns3:code>
@@ -88,6 +89,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>2</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV12</ns3:code>
@@ -97,6 +99,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>3</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV13</ns3:code>
@@ -106,6 +109,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>4</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV14</ns3:code>
@@ -115,6 +119,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>5</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV15</ns3:code>
@@ -124,6 +129,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>6</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV16</ns3:code>
@@ -133,6 +139,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>7</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV17</ns3:code>
@@ -142,6 +149,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>8</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV1</ns3:code>
@@ -151,6 +159,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>9</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV2</ns3:code>
@@ -160,6 +169,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>10</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV3</ns3:code>
@@ -169,6 +179,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>11</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV4</ns3:code>
@@ -178,6 +189,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>12</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV5</ns3:code>
@@ -187,6 +199,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>13</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV6</ns3:code>
@@ -196,6 +209,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>14</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV7</ns3:code>
@@ -205,6 +219,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>15</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV8</ns3:code>
@@ -214,6 +229,7 @@
             </delsvar>
         </svar>
         <svar id="1">
+            <instans>16</instans>
             <delsvar id="1.1">
                 <ns3:cv>
                     <ns3:code>IAV9</ns3:code>
@@ -302,6 +318,7 @@
             <delsvar id="6.1">true</delsvar>
         </svar>
         <svar id="33">
+            <instans>1</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR12</ns3:code>
@@ -311,6 +328,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>2</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR13</ns3:code>
@@ -320,6 +338,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>3</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR14</ns3:code>
@@ -329,6 +348,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>4</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR15</ns3:code>
@@ -338,6 +358,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>5</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR16</ns3:code>
@@ -347,6 +368,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>6</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR17</ns3:code>
@@ -356,6 +378,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>7</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR18</ns3:code>
@@ -365,6 +388,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>8</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR1</ns3:code>
@@ -374,6 +398,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>9</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR2</ns3:code>
@@ -383,6 +408,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>10</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR3</ns3:code>
@@ -392,6 +418,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>11</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR4</ns3:code>
@@ -401,6 +428,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>12</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR5</ns3:code>
@@ -410,6 +438,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>13</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR6</ns3:code>
@@ -419,6 +448,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>14</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR7</ns3:code>
@@ -428,6 +458,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>15</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR8</ns3:code>
@@ -437,6 +468,7 @@
             </delsvar>
         </svar>
         <svar id="33">
+            <instans>16</instans>
             <delsvar id="33.1">
                 <ns3:cv>
                     <ns3:code>VAR9</ns3:code>

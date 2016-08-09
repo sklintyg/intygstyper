@@ -68,7 +68,7 @@ var lisuMessages = {
 
         'lisu.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'lisu.label.date': 'Datum',
-        'lisu.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
+        'lisu.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
         'lisu.message.certificateloading': 'Hämtar intyg...',
         'lisu.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',

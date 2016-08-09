@@ -22,6 +22,7 @@ package se.inera.intyg.intygstyper.fk7263.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -52,8 +53,11 @@ import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.Resu
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
+import se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
@@ -67,9 +71,9 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 @RunWith(MockitoJUnitRunner.class)
 public class Fk7263ModuleApiTest {
 
-    public static final String TESTFILE_UTLATANDE         = "Fk7263ModuleApiTest/utlatande.json";
+    public static final String TESTFILE_UTLATANDE = "Fk7263ModuleApiTest/utlatande.json";
     public static final String TESTFILE_UTLATANDE_MINIMAL = "Fk7263ModuleApiTest/utlatande-minimal.json";
-    public static final String TESTFILE_UTLATANDE_FAIL    = "Fk7263ModuleApiTest/utlatande-fail.json";
+    public static final String TESTFILE_UTLATANDE_FAIL = "Fk7263ModuleApiTest/utlatande-fail.json";
 
     @Mock
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
@@ -256,9 +260,7 @@ public class Fk7263ModuleApiTest {
 
         request = fk7263ModuleApi.whenFkIsRecipientThenSetCodeSystemToICD10(request);
 
-        String expected = Fk7263ModuleApi.CODESYSTEMNAME_ICD10;
-        String actual = request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().getCodeSystemName();
-        assertEquals(expected, actual);
+        assertEquals("ICD-10", request.getLakarutlatande().getMedicinsktTillstand().getTillstandskod().getCodeSystemName());
     }
 
     @Test(expected = ModuleException.class)
@@ -395,6 +397,50 @@ public class Fk7263ModuleApiTest {
         String result = fk7263ModuleApi.getAdditionalInfo(intyg);
 
         assertNull(result);
+    }
+
+    @Test
+    public void testRegisterCertificateAlreadyExists() throws Exception {
+        String json = FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE_MINIMAL).getFile());
+
+        AttributedURIType address = new AttributedURIType();
+        address.setValue("logicalAddress");
+
+        RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
+        response.setResult(ResultOfCallUtil.infoResult(RegisterMedicalCertificateResponderImpl.CERTIFICATE_ALREADY_EXISTS));
+
+        when(registerMedicalCertificateClient.registerMedicalCertificate(
+                any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
+
+        try {
+            fk7263ModuleApi.registerCertificate(json, "logicalAddress");
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.VALIDATION_ERROR, e.getErroIdEnum());
+            assertEquals(RegisterMedicalCertificateResponderImpl.CERTIFICATE_ALREADY_EXISTS, e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRegisterCertificateGenericInfoResult() throws Exception {
+        String json = FileUtils.readFileToString(new ClassPathResource(TESTFILE_UTLATANDE_MINIMAL).getFile());
+
+        AttributedURIType address = new AttributedURIType();
+        address.setValue("logicalAddress");
+
+        RegisterMedicalCertificateResponseType response = new RegisterMedicalCertificateResponseType();
+        response.setResult(ResultOfCallUtil.infoResult("INFO"));
+
+        when(registerMedicalCertificateClient.registerMedicalCertificate(
+                any(AttributedURIType.class), any(RegisterMedicalCertificateType.class))).thenReturn(response);
+
+        try {
+            fk7263ModuleApi.registerCertificate(json, "logicalAddress");
+            fail();
+        } catch (ExternalServiceCallException e) {
+            assertEquals(ErrorIdEnum.APPLICATION_ERROR, e.getErroIdEnum());
+            assertEquals("INFO", e.getMessage());
+        }
     }
 
     private Utlatande getUtlatandeFromFile() throws IOException {

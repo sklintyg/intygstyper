@@ -121,7 +121,7 @@ var fk7263Messages = {
 
         'fk7263.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'fk7263.label.date': 'Datum',
-        'fk7263.label.contactinfo': 'Namnförtydligande, mottagningens adress och telefon',
+        'fk7263.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
         'fk7263.message.certificateloading': 'Hämtar intyg...',
         'fk7263.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',

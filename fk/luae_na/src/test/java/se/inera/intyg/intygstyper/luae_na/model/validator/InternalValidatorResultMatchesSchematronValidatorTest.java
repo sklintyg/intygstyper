@@ -25,6 +25,7 @@ import org.mockito.*;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import com.google.common.base.Charsets;
+import com.helger.commons.debug.GlobalDebug;
 import com.helger.schematron.svrl.SVRLHelper;
 
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
@@ -42,6 +43,7 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
  * Data driven test that uses Scenario and ScenarioFinder along with the JUnit Parameterized test runner,
  * uses test data from internal/scenarios and transport/scenarios, so in order to create new tests, just add
  * corresponding json- and XML-files in these directories.
+ *
  * @author erik
  *
  */
@@ -60,6 +62,11 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     // Used for labeling tests.
     private static String name;
 
+    static {
+        // avoid com.helger debug log
+        GlobalDebug.setDebugModeDirect(false);
+    }
+
     @Mock
     private static WebcertModuleService mockModuleService;
 
@@ -77,7 +84,9 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
 
     /**
      * Process test data and supply it to the test.
-     * The format for the test data needs to be: {name to display for current test, the scenario to test, expected outcome of the test}.
+     * The format for the test data needs to be: {name to display for current test, the scenario to test, expected
+     * outcome of the test}.
+     *
      * @return Collection<Object[]>
      * @throws ScenarioNotFoundException
      */
@@ -112,8 +121,10 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
 
     /**
      * Perform internal and schematron validation on the supplied Scenario.
+     *
      * @param scenario
-     * @param fail Whether the test should expect validation errors or not.
+     * @param fail
+     *            Whether the test should expect validation errors or not.
      * @throws Exception
      */
     private static void doInternalAndSchematronValidation(Scenario scenario, boolean fail) throws Exception {
@@ -147,11 +158,6 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
             assertTrue(String.format("File: %s, Schematronvalidation, expected errors > 0",
                     name),
                     SVRLHelper.getAllFailedAssertions(result).size() > 0);
-
-            System.out.println(String.format("Test: %s", name));
-            System.out.println(String.format("InternalValidation-errors: %s",  internalValidationErrors));
-            System.out.println(String.format("TransportValidation-errors: %s", transportValidationErrors));
-
         } else {
             assertTrue(String.format("File: %s, Internal validation, expected ValidationStatus.VALID \n Validation-errors: %s",
                     name, internalValidationErrors),

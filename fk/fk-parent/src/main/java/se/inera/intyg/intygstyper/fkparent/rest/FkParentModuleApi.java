@@ -19,11 +19,17 @@
 
 package se.inera.intyg.intygstyper.fkparent.rest;
 
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.TILLAGGSFRAGOR_START;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.TILLAGGSFRAGOR_SVAR_JSON_ID;
+
 import java.io.*;
+import java.util.*;
 
 import javax.xml.bind.JAXB;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +49,9 @@ import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
-import se.inera.intyg.intygstyper.fkparent.model.converter.InternalToRevoke;
-import se.inera.intyg.intygstyper.fkparent.model.converter.WebcertModelFactory;
+import se.inera.intyg.intygstyper.fkparent.model.converter.*;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
@@ -70,6 +76,9 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
 
     @Autowired
     private InternalDraftValidator<T> internalDraftValidator;
+
+    @Autowired
+    private SvarIdHelper<T> svarIdHelper;
 
     @Autowired(required = false)
     @Qualifier("registerCertificateClient")
@@ -178,11 +187,13 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
         RegisterCertificateResponseType response2 = registerCertificateResponderInterface.registerCertificate(logicalAddress, request);
 
         // check whether call was successful or not
-        if (response2.getResult().getResultCode() != ResultCodeType.OK) {
-            String message = response2.getResult().getResultCode() == ResultCodeType.INFO
-                    ? response2.getResult().getResultText()
-                    : response2.getResult().getErrorId() + " : " + response2.getResult().getResultText();
-            throw new ExternalServiceCallException(message);
+        if (response2.getResult().getResultCode() == ResultCodeType.INFO) {
+            throw new ExternalServiceCallException(response2.getResult().getResultText(),
+                    "Certificate already exists".equals(response2.getResult().getResultText())
+                            ? ErrorIdEnum.VALIDATION_ERROR
+                            : ErrorIdEnum.APPLICATION_ERROR);
+        } else if (response2.getResult().getResultCode() == ResultCodeType.ERROR) {
+            throw new ExternalServiceCallException(response2.getResult().getErrorId() + " : " + response2.getResult().getResultText());
         }
     }
 
@@ -221,7 +232,7 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
             LOG.error("Could not get intyg from utlatande: {}", e.getMessage());
             throw new ModuleException("Could not get intyg from utlatande", e);
         }
-     }
+    }
 
     @Override
     public String transformToStatisticsService(String inputXml) throws ModuleException {
@@ -231,6 +242,15 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
     @Override
     public ValidateXmlResponse validateXml(String inputXml) throws ModuleException {
         return XmlValidator.validate(validator, inputXml);
+    }
+
+    @Override
+    public Map<String, List<String>> getModuleSpecificArendeParameters(Utlatande utlatande, List<String> frageIds) {
+        Map<String, List<String>> result = new HashMap<>();
+        for (String frageId : frageIds) {
+            result.put(frageId, getJsonPropertyHandle(frageId, utlatande));
+        }
+        return result;
     }
 
     @Override
@@ -263,9 +283,13 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
     }
 
     protected abstract String getSchematronFileName();
+
     protected abstract RegisterCertificateType internalToTransport(T utlatande) throws ConverterException;
+
     protected abstract T transportToInternal(Intyg intyg) throws ConverterException;
+
     protected abstract Intyg utlatandeToIntyg(T utlatande) throws ConverterException;
+
     protected abstract void decorateDiagnoserWithDescriptions(T utlatande);
 
     protected T getInternal(String internalModel) throws ModuleException {
@@ -316,4 +340,23 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
         }
     }
 
+    private List<String> getJsonPropertyHandle(String frageId, Utlatande utlatande) {
+        if (isTillaggsFraga(frageId)) {
+            return Collections.singletonList(TILLAGGSFRAGOR_SVAR_JSON_ID);
+        }
+        switch (frageId) {
+        case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1:
+            return svarIdHelper.calculateFrageIdHandleForGrundForMU(type.cast(utlatande));
+        default:
+            return Collections.singletonList(RespConstants.getJsonPropertyFromFrageId(frageId));
+        }
+    }
+
+    private boolean isTillaggsFraga(String frageId) {
+        try {
+            return StringUtils.isNumeric(frageId) && Integer.parseInt(frageId) >= TILLAGGSFRAGOR_START;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
