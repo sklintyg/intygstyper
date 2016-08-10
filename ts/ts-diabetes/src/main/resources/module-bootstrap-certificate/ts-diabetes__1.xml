@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<RegisterTSDiabetesType xmlns="urn:local:se:intygstjanster:services:1" xmlns:ns2="urn:local:se:intygstjanster:services:types:1" xmlns:ns3="urn:local:se:intygstjanster:services:RegisterTSDiabetesResponder:1">
+  <ns3:intyg>
+    <intygsId>7592babc-6f6b-4c07-b6fc-642db709301c</intygsId>
+    <intygsTyp>ts-diabetes</intygsTyp>
+    <version>02</version>
+    <utgava>08</utgava>
+    <grundData>
+      <signeringsTidstampel>2016-08-10T16:06:29</signeringsTidstampel>
+      <skapadAv>
+        <personId>
+          <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+          <ns2:extension>TSTNMT2321000156-103F</ns2:extension>
+        </personId>
+        <fullstandigtNamn>Leonie Koehl</fullstandigtNamn>
+        <atLakare>false</atLakare>
+        <vardenhet>
+          <enhetsId>
+            <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+            <ns2:extension>TSTNMT2321000156-1039</ns2:extension>
+          </enhetsId>
+          <enhetsnamn>NMT vg1 ve2</enhetsnamn>
+          <postadress>NMT gata 2</postadress>
+          <postnummer>12345</postnummer>
+          <postort>Testhult</postort>
+          <telefonnummer>0101112131415</telefonnummer>
+          <vardgivare>
+            <vardgivarid>
+              <ns2:root>1.2.752.129.2.1.4.1</ns2:root>
+              <ns2:extension>TSTNMT2321000156-1002</ns2:extension>
+            </vardgivarid>
+            <vardgivarnamn>NMT vg1</vardgivarnamn>
+          </vardgivare>
+        </vardenhet>
+        <befattningar>L&#xE4;kare legitimerad, annan</befattningar>
+      </skapadAv>
+      <patient>
+        <personId>
+          <ns2:root>1.2.752.129.2.1.3.1</ns2:root>
+          <ns2:extension>19121212-1212</ns2:extension>
+        </personId>
+        <fullstandigtNamn>Tolvan Tolvansson</fullstandigtNamn>
+        <fornamn>Tolvan</fornamn>
+        <efternamn>Tolvansson</efternamn>
+        <postadress>Svensson, Storgatan 1, PL 1234</postadress>
+        <postnummer>12345</postnummer>
+        <postort>Sm&#xE5;m&#xE5;la</postort>
+      </patient>
+    </grundData>
+    <intygAvser>
+      <korkortstyp>AM</korkortstyp>
+      <korkortstyp>A1</korkortstyp>
+      <korkortstyp>A2</korkortstyp>
+      <korkortstyp>A</korkortstyp>
+      <korkortstyp>B</korkortstyp>
+      <korkortstyp>BE</korkortstyp>
+      <korkortstyp>TRAKTOR</korkortstyp>
+      <korkortstyp>C1</korkortstyp>
+      <korkortstyp>C1E</korkortstyp>
+      <korkortstyp>C</korkortstyp>
+      <korkortstyp>CE</korkortstyp>
+      <korkortstyp>D1</korkortstyp>
+      <korkortstyp>D1E</korkortstyp>
+      <korkortstyp>D</korkortstyp>
+      <korkortstyp>DE</korkortstyp>
+      <korkortstyp>TAXI</korkortstyp>
+    </intygAvser>
+    <identitetStyrkt>
+      <idkontroll>IDK2</idkontroll>
+    </identitetStyrkt>
+    <diabetes>
+      <debutArDiabetes>1901</debutArDiabetes>
+      <diabetesTyp>TYP2</diabetesTyp>
+      <harBehandlingKost>true</harBehandlingKost>
+      <harBehandlingTabletter>true</harBehandlingTabletter>
+      <harBehandlingInsulin>true</harBehandlingInsulin>
+      <insulinBehandlingSedanAr>1902</insulinBehandlingSedanAr>
+      <annanBehandlingBeskrivning>Naturl&#xE4;kemedel</annanBehandlingBeskrivning>
+    </diabetes>
+    <hypoglykemier>
+      <harKunskapOmAtgarder>true</harKunskapOmAtgarder>
+      <harTeckenNedsattHjarnfunktion>true</harTeckenNedsattHjarnfunktion>
+      <saknarFormagaKannaVarningstecken>true</saknarFormagaKannaVarningstecken>
+      <harAllvarligForekomst>true</harAllvarligForekomst>
+      <allvarligForekomstBeskrivning>2</allvarligForekomstBeskrivning>
+      <harAllvarligForekomstTrafiken>true</harAllvarligForekomstTrafiken>
+      <allvarligForekomstTrafikBeskrivning>4 - ig&#xE5;r</allvarligForekomstTrafikBeskrivning>
+      <genomforEgenkontrollBlodsocker>true</genomforEgenkontrollBlodsocker>
+      <harAllvarligForekomstVakenTid>true</harAllvarligForekomstVakenTid>
+      <allvarligForekomstVakenTidAr>2016-08-01</allvarligForekomstVakenTidAr>
+    </hypoglykemier>
+    <separatOgonLakarintygKommerSkickas>true</separatOgonLakarintygKommerSkickas>
+    <ovrigKommentar>&#xD6;vriga kommentarer och upplysningar</ovrigKommentar>
+    <bedomning>
+      <korkortstyp>AM</korkortstyp>
+      <korkortstyp>A1</korkortstyp>
+      <korkortstyp>A</korkortstyp>
+      <korkortstyp>B</korkortstyp>
+      <korkortstyp>BE</korkortstyp>
+      <korkortstyp>TRAKTOR</korkortstyp>
+      <korkortstyp>C1</korkortstyp>
+      <korkortstyp>C1E</korkortstyp>
+      <korkortstyp>C</korkortstyp>
+      <korkortstyp>CE</korkortstyp>
+      <korkortstyp>D1</korkortstyp>
+      <korkortstyp>D1E</korkortstyp>
+      <korkortstyp>D</korkortstyp>
+      <korkortstyp>DE</korkortstyp>
+      <korkortstyp>TAXI</korkortstyp>
+      <kanInteTaStallning>false</kanInteTaStallning>
+      <lamplighetInnehaBehorighetSpecial>true</lamplighetInnehaBehorighetSpecial>
+      <behovAvLakareSpecialistKompetens>specialistkompetens</behovAvLakareSpecialistKompetens>
+    </bedomning>
+  </ns3:intyg>
+</RegisterTSDiabetesType>

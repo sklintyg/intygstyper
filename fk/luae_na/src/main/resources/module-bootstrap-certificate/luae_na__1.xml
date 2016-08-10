@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<ns2:RegisterCertificate xmlns="urn:riv:clinicalprocess:healthcond:certificate:2" xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2" xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:2">
+  <ns2:intyg>
+    <intygs-id>
+      <ns3:root>TSTNMT2321000156-1039</ns3:root>
+      <ns3:extension>fd59cab6-942c-4b5d-a932-ea5117783af7</ns3:extension>
+    </intygs-id>
+    <typ>
+      <ns3:code>LUAE_NA</ns3:code>
+      <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
+      <ns3:displayName>L&#xE4;karutl&#xE5;tande f&#xF6;r aktivitetsers&#xE4;ttning vid nedsatt arbetsf&#xF6;rm&#xE5;ga</ns3:displayName>
+    </typ>
+    <version>1.0</version>
+    <signeringstidpunkt>2016-08-10T13:40:22</signeringstidpunkt>
+    <skickatTidpunkt>2016-08-10T13:40:22</skickatTidpunkt>
+    <patient>
+      <person-id>
+        <ns3:root>1.2.752.129.2.1.3.1</ns3:root>
+        <ns3:extension>191212121212</ns3:extension>
+      </person-id>
+      <fornamn>Tolvan</fornamn>
+      <efternamn>Tolvansson</efternamn>
+      <postadress>Svensson, Storgatan 1, PL 1234</postadress>
+      <postnummer>12345</postnummer>
+      <postort>Sm&#xE5;m&#xE5;la</postort>
+    </patient>
+    <skapadAv>
+      <personal-id>
+        <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+        <ns3:extension>TSTNMT2321000156-103F</ns3:extension>
+      </personal-id>
+      <fullstandigtNamn>Leonie Koehl</fullstandigtNamn>
+      <forskrivarkod>0000000</forskrivarkod>
+      <befattning>
+        <ns3:code>203090</ns3:code>
+        <ns3:codeSystem>1.2.752.129.2.2.1.4</ns3:codeSystem>
+        <ns3:displayName>L&#xE4;kare legitimerad, annan</ns3:displayName>
+      </befattning>
+      <enhet>
+        <enhets-id>
+          <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+          <ns3:extension>TSTNMT2321000156-1039</ns3:extension>
+        </enhets-id>
+        <arbetsplatskod>
+          <ns3:root>1.2.752.29.4.71</ns3:root>
+          <ns3:extension>1234567890</ns3:extension>
+        </arbetsplatskod>
+        <enhetsnamn>NMT vg1 ve2</enhetsnamn>
+        <postadress>NMT gata 2</postadress>
+        <postnummer>12345</postnummer>
+        <postort>Testhult</postort>
+        <telefonnummer>0101112131415</telefonnummer>
+        <epost>enhet2@webcert.invalid.se</epost>
+        <vardgivare>
+          <vardgivare-id>
+            <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+            <ns3:extension>TSTNMT2321000156-1002</ns3:extension>
+          </vardgivare-id>
+          <vardgivarnamn>NMT vg1</vardgivarnamn>
+        </vardgivare>
+      </enhet>
+    </skapadAv>
+    <svar id="1">
+      <instans>1</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>UNDERSOKNING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min unders&#xF6;kning av patienten</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2016-08-10</delsvar>
+    </svar>
+    <svar id="1">
+      <instans>2</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>JOURNALUPPGIFTER</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Journaluppgifter fr&#xE5;n den</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2016-08-10</delsvar>
+    </svar>
+    <svar id="1">
+      <instans>3</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>ANHORIG</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Anh&#xF6;rigs beskrivning av patienten</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2016-08-10</delsvar>
+    </svar>
+    <svar id="1">
+      <instans>4</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>ANNAT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Annat</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="1.2">2016-08-10</delsvar>
+      <delsvar id="1.3">Annat</delsvar>
+    </svar>
+    <svar id="2">
+      <delsvar id="2.1">2012-05-23</delsvar>
+    </svar>
+    <svar id="3">
+      <delsvar id="3.1">true</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>1</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>NEUROPSYKIATRISKT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Neuropsykiatriskt utl&#xE5;tande</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-01</delsvar>
+      <delsvar id="4.3">VE1</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>2</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>HABILITERING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag fr&#xE5;n habiliteringen</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-02</delsvar>
+      <delsvar id="4.3">VE2</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>3</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>ARBETSTERAPEUT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag fr&#xE5;n arbetsterapeut</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-03</delsvar>
+      <delsvar id="4.3">VE3</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>4</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>FYSIOTERAPEUT</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag fr&#xE5;n fysioterapeut</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-04</delsvar>
+      <delsvar id="4.3">VE4</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>5</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>LOGOPED</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag fr&#xE5;n logoped</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-05</delsvar>
+      <delsvar id="4.3">VE5</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>6</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>PSYKOLOG</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag fr&#xE5;n psykolog</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-06</delsvar>
+      <delsvar id="4.3">VE6</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>7</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>FORETAGSHALSOVARD</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag fr&#xE5;n f&#xF6;retagsh&#xE4;lsov&#xE5;rd</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-07</delsvar>
+      <delsvar id="4.3">VE7</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>8</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>SKOLHALSOVARD</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag fr&#xE5;n skolh&#xE4;lsov&#xE5;rd</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-08</delsvar>
+      <delsvar id="4.3">VE8</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>9</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>SPECIALISTKLINIK</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Utredning av annan specialistklinik</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-09</delsvar>
+      <delsvar id="4.3">VE9</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>10</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>VARD_UTOMLANDS</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Utredning fr&#xE5;n v&#xE5;rdinr&#xE4;ttning utomlands</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2016-08-10</delsvar>
+      <delsvar id="4.3">VE10</delsvar>
+    </svar>
+    <svar id="5">
+      <delsvar id="5.1">Allt kom s&#xE5; pl&#xF6;tsligt</delsvar>
+    </svar>
+    <svar id="6">
+      <instans>1</instans>
+      <delsvar id="6.2">
+        <ns3:cv>
+          <ns3:code>A20</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.1">Pest</delsvar>
+    </svar>
+    <svar id="6">
+      <instans>2</instans>
+      <delsvar id="6.2">
+        <ns3:cv>
+          <ns3:code>B200</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.1">HIV-infektion med mykobakterieinfektion</delsvar>
+    </svar>
+    <svar id="6">
+      <instans>3</instans>
+      <delsvar id="6.2">
+        <ns3:cv>
+          <ns3:code>C20</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.1">Malign tum&#xF6;r i &#xE4;ndtarmen</delsvar>
+    </svar>
+    <svar id="7">
+      <delsvar id="7.1">Ig&#xE5;r hemma hos patienten</delsvar>
+    </svar>
+    <svar id="45">
+      <delsvar id="45.1">true</delsvar>
+      <delsvar id="45.2">Tum&#xF6;ren kan ha spridit sig fr&#xE5;n &#xE4;ndtarmen</delsvar>
+    </svar>
+    <svar id="8">
+      <delsvar id="8.1">Intellektuell funktion</delsvar>
+    </svar>
+    <svar id="9">
+      <delsvar id="9.1">Kommunikation och social interaktion</delsvar>
+    </svar>
+    <svar id="10">
+      <delsvar id="10.1">Uppm&#xE4;rksamhet, koncentration och exekutiv funktion</delsvar>
+    </svar>
+    <svar id="11">
+      <delsvar id="11.1">Annan psykisk funktion</delsvar>
+    </svar>
+    <svar id="12">
+      <delsvar id="12.1">Sinnesfunktioner och sm&#xE4;rta</delsvar>
+    </svar>
+    <svar id="13">
+      <delsvar id="13.1">Balans, koordination och motorik</delsvar>
+    </svar>
+    <svar id="14">
+      <delsvar id="14.1">Annan kroppslig funktion</delsvar>
+    </svar>
+    <svar id="17">
+      <delsvar id="17.1">Aktivitetsbegr&#xE4;nsningar</delsvar>
+    </svar>
+    <svar id="18">
+      <delsvar id="18.1">Avslutade medicinska behandlingar/&#xE5;tg&#xE4;rder</delsvar>
+    </svar>
+    <svar id="19">
+      <delsvar id="19.1">Avslutade medicinska behandlingar/&#xE5;tg&#xE4;rder</delsvar>
+    </svar>
+    <svar id="20">
+      <delsvar id="20.1">Planerade medicinska behandlingar/&#xE5;tg&#xE4;rder</delsvar>
+    </svar>
+    <svar id="21">
+      <delsvar id="21.1">Allt</delsvar>
+    </svar>
+    <svar id="22">
+      <delsvar id="22.1">patientens medicinska f&#xF6;ruts&#xE4;ttningar f&#xF6;r arbete,</delsvar>
+    </svar>
+    <svar id="23">
+      <delsvar id="23.1">vad patienten kan g&#xF6;ra trots sin sjukdom eller sina begr&#xE4;nsningar</delsvar>
+    </svar>
+    <svar id="24">
+      <delsvar id="24.1">vad som kan underl&#xE4;tta f&#xF6;r patienten att komma ut i arbete</delsvar>
+    </svar>
+    <svar id="25">
+      <delsvar id="25.1">&#xD6;vriga upplysningar</delsvar>
+    </svar>
+    <svar id="26">
+      <delsvar id="26.1">true</delsvar>
+      <delsvar id="26.2">varf&#xF6;r du vill ha kontakt</delsvar>
+    </svar>
+  </ns2:intyg>
+</ns2:RegisterCertificate>
