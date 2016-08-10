@@ -20,11 +20,15 @@
 describe('QACtrl', function() {
     'use strict';
 
+    var $httpBackend;
+    var featureService;
     var $scope;
+    var $q;
     var $rootScope;
     var fragaSvarCommonService;
     var fragaSvarService;
     var IntygService;
+    var deferred;
     var ObjectHelper;
     var pingService;
 
@@ -60,6 +64,12 @@ describe('QACtrl', function() {
 
     // Load the webcert module and mock away everything that is not necessary.
     beforeEach(angular.mock.module('fk7263', function($provide) {
+        featureService = {
+            features: {
+                HANTERA_INTYGSUTKAST: 'hanteraIntygsutkast'
+            },
+            isFeatureActive: jasmine.createSpy('isFeatureActive')
+        };
         $provide.value('common.dialogService', {});
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
@@ -76,14 +86,26 @@ describe('QACtrl', function() {
         $provide.value('common.IntygViewStateService', {});
         pingService = jasmine.createSpyObj('common.pingService', [ 'registerUserAction']);
         $provide.value('common.pingService', pingService);
+        deferred = jasmine.createSpyObj('def', ['resolve']);
     }));
 
-    beforeEach(angular.mock.inject(['$controller', '$rootScope', 'common.IntygService',
-        function($controller, _$rootScope_, _IntygService_) {
+    // Get references to the object we want to test from the context.
+    /*beforeEach(angular.mock.inject(['test.fragaSvarService', '$controller', '$rootScope',
+     function(_test_, $controller, _$rootScope) {
+     underTest=_test_;
+     $rootScope = _$rootScope;
+     $scope = $rootScope.$new();
+     $controller('test.TestCtrl', { $scope: $scope });
+     }]));*/
+
+    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend', 'common.IntygService',
+        function($controller, _$rootScope_, _$q_, _$httpBackend_, _IntygService_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $controller('fk7263.QACtrl',
                 { $scope: $scope, fragaSvarCommonService: fragaSvarCommonService, fragaSvarService: fragaSvarService });
+            $q = _$q_;
+            $httpBackend = _$httpBackend_;
             IntygService = _IntygService_;
 
             // arrange

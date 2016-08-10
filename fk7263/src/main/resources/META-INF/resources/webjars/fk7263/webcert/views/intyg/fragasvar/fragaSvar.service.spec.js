@@ -21,6 +21,7 @@ describe('FragaSvarService', function() {
     'use strict';
 
     var $httpBackend;
+    var $scope;
     var $rootScope;
     var fragaSvarService;
 
@@ -57,6 +58,7 @@ describe('FragaSvarService', function() {
 
             $httpBackend = _$httpBackend_;
             $rootScope = _$rootScope_;
+            $scope = $rootScope.$new();
             fragaSvarService = _fragaSvarService_;
         }]));
 
