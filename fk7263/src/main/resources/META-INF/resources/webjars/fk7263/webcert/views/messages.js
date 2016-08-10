@@ -221,7 +221,8 @@ var fk7263Messages = {
         'fk7263.fragasvar.marked.as.hanterad': '<strong>Frågan-svaret är markerad som hanterad.</strong><br> Frågan-svaret visas under rubriken \'hanterade frågor och svar\' nedan.',
         'fk7263.fragasvar.marked.as.ohanterad': '<strong>Frågan-svaret är markerad som ej hanterad.</strong><br> Frågan-svaret visas under rubriken \'Ej hanterade frågor och svar\' ovan.',
 
-        'fk7263.fragasvar.komplettering.dialogtitle': 'Besvara komplettering'
+        'fk7263.fragasvar.komplettering.dialogtitle': 'Besvara komplettering',
+        'fk7263.fragasvar.komplettering.help': 'Med förtydligande avses information som inte tillför ny medicinsk information, utan förtydligar, förklarar eller ytterligare specificerar medicinska begrepp, termer eller mått. Exempelvis vad avses med skrivningen ”synnerligt påverkad” (i just detta fall), vad menas med ”samsjuklighet” (i just detta fall), etc.'
     },
     'en': {
         'fk7263.label.pagetitle': 'Show Certificate'

@@ -48,6 +48,7 @@ angular.module('fk7263').directive('qaPanel',
                 controller: function($scope, $element, $attrs) {
 
                     $scope.showAnswerField = false;
+                    var kompletteringDialog = null;
 
                     $scope.handledFunction = function(newState) {
                         if (arguments.length) {
@@ -132,22 +133,31 @@ angular.module('fk7263').directive('qaPanel',
                             uthopp: UserModel.isUthopp()
                         };
 
-                        var kompletteringDialog = dialogService.showDialog({
+                        kompletteringDialog = dialogService.showDialog({
                             dialogId: 'komplettering-dialog',
                             titleId: 'fk7263.fragasvar.komplettering.dialogtitle',
                             templateUrl: '/app/partials/komplettering-dialog.html',
                             model: kompletteringDialogModel,
-                            button1click: function() {
+                            button1click: function(modalInstance) {
                                 $scope.answerWithIntyg(qa, cert).then(function(result) {
-                                    kompletteringDialog.close(result);
-                                }, function() {
+
+                                    function goToDraft(type, intygId) {
+                                        $state.go(type + '-edit', {
+                                            certificateId: intygId
+                                        });
+                                    }
+
+                                    modalInstance.close();
+                                    goToDraft(cert.typ, result.intygsUtkastId);
+
+                                }, function(result) {
                                     // something went wrong. leave dialog open to show error message
                                 });
                             },
                             button1id: 'button1answerintyg-dialog',
-                            button2click: function(result) {
+                            button2click: function(modalInstance) {
                                 $scope.showAnswerField = true;
-                                kompletteringDialog.close(result);
+                                modalInstance.close();
                             },
                             button2id: 'button2answermessage-dialog',
                             autoClose: false
@@ -181,22 +191,19 @@ angular.module('fk7263').directive('qaPanel',
                                 qa.updateInProgress = false;
                                 qa.activeDialogErrorMessageKey = null;
                                 statService.refreshStat();
-
-                                function goToDraft(type, intygId) {
-                                    $state.go(type + '-edit', {
-                                        certificateId: intygId
-                                    });
-                                    deferred.reject();
-                                }
-
-                                goToDraft(cert.typ, result.intygsUtkastId);
+                                deferred.resolve(result);
 
                             }, function(errorData) {
                                 // show error view
                                 qa.updateInProgress = false;
-                                qa.activeDialogErrorMessageKey = errorData.errorCode;
 
-                                deferred.resolve();
+                                if(errorData.message === null || errorData.errorCode === -1) {
+                                    qa.activeDialogErrorMessageKey = 'common.error.cantconnect';
+                                } else{
+                                    qa.activeDialogErrorMessageKey = 'fk7263.error' + errorData.errorCode;
+                                }
+
+                                deferred.reject(errorData);
                             });
 
                         return deferred.promise;
