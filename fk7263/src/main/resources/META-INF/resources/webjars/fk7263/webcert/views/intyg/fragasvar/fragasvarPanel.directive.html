@@ -82,13 +82,8 @@
             </div>
           </div>
 
-          <div class="qa-block-body" id="{{panelId}}-qa-fragetext-{{qa.internReferens}}">{{qa.frageText}}</div>
-          <div class="qa-block-body komplettera-block" id="{{panelId}}-fkKompletteringar-{{qa.internReferens}}"
-               ng-repeat="komplettering in qa.kompletteringar">
-            <strong><span>{{komplettering.falt}}</span></strong>
-            <div>
-              <span>{{komplettering.text}}</span>
-            </div>
+          <div class="qa-block-body">
+            <div fragasvar-text-panel panel-id="panelId" qa="qa"></div>
           </div>
         </div>
       </div>
@@ -111,12 +106,12 @@
       </div>
 
       <div class="buttonbar" ng-show="isKompletteringAllowed(qa, certProperties)">
-        <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled && qa.status != 'CLOSED'"
+        <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled && qa.status != 'CLOSED' && !showAnswerField"
                 ng-class="{'btn-success': qa.status != 'CLOSED' && !showAnswerField, 'btn-default btn-secondary': qa.status == 'CLOSED' || showAnswerField}"
                 ng-click="openKompletteringDialog(qa, cert)" ng-disabled="showAnswerField" wc-check-vardenhet
                 vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                 id="answerWithIntygBtn-{{qa.internReferens}}">
-          <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Svara
+          Svara
         </button>
       </div>
 
@@ -204,6 +199,11 @@
                         vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                         id="sendAnswerBtn-{{qa.internReferens}}">
                   <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
+                </button>
+                <button type="button" class="btn btn-secondary" ng-click="abortAnswer()"
+                        ng-show="isKompletteringAllowed(qa, certProperties)"
+                        id="abortAnswerBtn-{{qa.internReferens}}">
+                  <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Avbryt
                 </button>
               </div>
             </div>

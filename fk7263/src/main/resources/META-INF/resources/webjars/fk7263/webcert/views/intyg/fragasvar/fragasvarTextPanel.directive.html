@@ -1,0 +1,10 @@
+<div>
+  <div id="{{panelId}}-qa-fragetext-{{qa.internReferens}}">{{qa.frageText}}</div>
+  <div class="komplettera-block" id="{{panelId}}-fkKompletteringar-{{qa.internReferens}}"
+       ng-repeat="komplettering in qa.kompletteringar">
+    <strong><span>{{komplettering.falt}}</span></strong>
+    <div>
+      <span>{{komplettering.text}}</span>
+    </div>
+  </div>
+</div>

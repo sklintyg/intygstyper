@@ -25,11 +25,12 @@
  * qaPanel directive. Common directive for both unhandled and handled questions/answers
  */
 angular.module('fk7263').directive('qaPanel',
-    [ '$window', '$log', '$timeout', '$state', '$stateParams',
-        'common.User', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
+    ['$window', '$log', '$timeout', '$state', '$stateParams', '$q',
+        'common.UserModel', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
         'common.statService', 'common.dialogService', 'common.ObjectHelper', 'common.IntygCopyRequestModel',
-        function($window, $log, $timeout, $state, $stateParams,
-            User, fragaSvarCommonService, fragaSvarProxy, statService, dialogService, ObjectHelper, IntygCopyRequestModel) {
+        function($window, $log, $timeout, $state, $stateParams, $q,
+            UserModel, fragaSvarCommonService, fragaSvarProxy, statService, dialogService, ObjectHelper,
+            IntygCopyRequestModel) {
             'use strict';
 
             return {
@@ -73,7 +74,8 @@ angular.module('fk7263').directive('qaPanel',
                     $scope.isAllowedToAnswerAtAll = function(qa, certProperties) {
                         return certProperties.kompletteringOnly ||
                             (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG') ||
-                            (qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && ($scope.showAnswerField || (qa.svarsText && qa.status == 'CLOSED')));
+                            (qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' &&
+                            ($scope.showAnswerField || (qa.svarsText && qa.status == 'CLOSED')));
                     };
 
                     $scope.isAllowedToAnswer = function(qa, certProperties) {
@@ -89,7 +91,8 @@ angular.module('fk7263').directive('qaPanel',
                     };
 
                     $scope.isKompletteringAllowed = function(qa, certProperties) {
-                        return !certProperties.kompletteringOnly && $scope.isAllowedToAnswerFraga(qa, certProperties) && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG';
+                        return !certProperties.kompletteringOnly && $scope.isAllowedToAnswerFraga(qa, certProperties) &&
+                            qa.amne == 'KOMPLETTERING_AV_LAKARINTYG';
                     };
 
                     $scope.isNotAllowedToKomplettera = function(qa, certProperties) {
@@ -118,19 +121,36 @@ angular.module('fk7263').directive('qaPanel',
                         });
                     };
 
-                    $scope.openKompletteringDialog = function(qa, cert){
+                    $scope.abortAnswer = function() {
+                        $scope.showAnswerField = false;
+                    };
+
+                    $scope.openKompletteringDialog = function(qa, cert) {
+
+                        var kompletteringDialogModel = {
+                            qa: qa,
+                            uthopp: UserModel.isUthopp()
+                        };
 
                         var kompletteringDialog = dialogService.showDialog({
                             dialogId: 'komplettering-dialog',
                             titleId: 'fk7263.fragasvar.komplettering.dialogtitle',
                             templateUrl: '/app/partials/komplettering-dialog.html',
+                            model: kompletteringDialogModel,
                             button1click: function() {
+                                $scope.answerWithIntyg(qa, cert).then(function(result) {
+                                    kompletteringDialog.close(result);
+                                }, function() {
+                                    // something went wrong. leave dialog open to show error message
+                                });
                             },
                             button1id: 'button1answerintyg-dialog',
-                            button2click: function() {
+                            button2click: function(result) {
+                                $scope.showAnswerField = true;
+                                kompletteringDialog.close(result);
                             },
                             button2id: 'button2answermessage-dialog',
-                            autoClose: true
+                            autoClose: false
                         }).result.then(function() {
                             kompletteringDialog = null; // Dialog closed
                         }, function() {
@@ -141,38 +161,45 @@ angular.module('fk7263').directive('qaPanel',
 
                     $scope.answerWithIntyg = function(qa, cert) {
 
-                        if(!ObjectHelper.isDefined(cert)) {
+                        if (!ObjectHelper.isDefined(cert)) {
                             qa.activeErrorMessageKey = 'komplettera-no-intyg';
                             return;
                         }
 
+                        var deferred = $q.defer();
+
                         qa.updateInProgress = true; // trigger local spinner
-                        qa.activeErrorMessageKey = null;
+                        qa.activeDialogErrorMessageKey = null;
                         fragaSvarProxy.answerWithIntyg(qa, cert.typ,
-                          IntygCopyRequestModel.build({
-                            intygId: cert.id,
-                            intygType: cert.typ,
-                            patientPersonnummer: cert.grundData.patient.personId,
-                            nyttPatientPersonnummer: $stateParams.patientId 
-                          }), function(result) {
-                          
-                            qa.updateInProgress = false;
-                            qa.activeErrorMessageKey = null;
-                            statService.refreshStat();
+                            IntygCopyRequestModel.build({
+                                intygId: cert.id,
+                                intygType: cert.typ,
+                                patientPersonnummer: cert.grundData.patient.personId,
+                                nyttPatientPersonnummer: $stateParams.patientId
+                            }), function(result) {
 
-                            function goToDraft(type, intygId) {
-                                $state.go(type + '-edit', {
-                                    certificateId: intygId
-                                });
-                            }
+                                qa.updateInProgress = false;
+                                qa.activeDialogErrorMessageKey = null;
+                                statService.refreshStat();
 
-                            goToDraft(cert.typ, result.intygsUtkastId);
+                                function goToDraft(type, intygId) {
+                                    $state.go(type + '-edit', {
+                                        certificateId: intygId
+                                    });
+                                    deferred.reject();
+                                }
 
-                        }, function(errorData) {
-                            // show error view
-                            qa.updateInProgress = false;
-                            qa.activeErrorMessageKey = errorData.errorCode;
-                        });
+                                goToDraft(cert.typ, result.intygsUtkastId);
+
+                            }, function(errorData) {
+                                // show error view
+                                qa.updateInProgress = false;
+                                qa.activeDialogErrorMessageKey = errorData.errorCode;
+
+                                deferred.resolve();
+                            });
+
+                        return deferred.promise;
                     };
 
                     $scope.onVidareBefordradChange = function(qa) {
@@ -186,19 +213,20 @@ angular.module('fk7263').directive('qaPanel',
                                     qa.vidarebefordrad = result.vidarebefordrad;
                                 } else {
                                     qa.vidarebefordrad = !qa.vidarebefordrad;
-                                    dialogService.showErrorMessageDialog('Kunde inte markera/avmarkera frågan som vidarebefordrad. ' +
+                                    dialogService.showErrorMessageDialog(
+                                        'Kunde inte markera/avmarkera frågan som vidarebefordrad. ' +
                                         'Försök gärna igen för att se om felet är tillfälligt. Annars kan du kontakta supporten');
                                 }
                             });
                     };
 
-                    $scope.updateAnsweredAsHandled = function(deferred, unhandledQas){
-                        if(unhandledQas === undefined || unhandledQas.length === 0 ){
+                    $scope.updateAnsweredAsHandled = function(deferred, unhandledQas) {
+                        if (unhandledQas === undefined || unhandledQas.length === 0) {
                             return;
                         }
                         fragaSvarProxy.closeAllAsHandled(unhandledQas,
-                            function(qas){
-                                if(qas) {
+                            function(qas) {
+                                if (qas) {
                                     angular.forEach(qas, function(qa) { //unused parameter , key
                                         fragaSvarCommonService.decorateSingleItem(qa);
                                         //addListMessage(qas, qa, 'fk7263.fragasvar.marked.as.hanterad'); // TODOOOOOOOO TEST !!!!!!!!!!
@@ -206,27 +234,27 @@ angular.module('fk7263').directive('qaPanel',
                                     statService.refreshStat();
                                 }
                                 $window.doneLoading = true;
-                                if(deferred) {
+                                if (deferred) {
                                     deferred.resolve();
                                 }
-                            },function() { // unused parameter: errorData
+                            }, function() { // unused parameter: errorData
                                 // show error view
                                 $window.doneLoading = true;
-                                if(deferred) {
+                                if (deferred) {
                                     deferred.resolve();
                                 }
                             });
                     };
 
-                    $scope.hasUnhandledQas = function(){
-                        if(!$scope.qaList || $scope.qaList.length === 0){
+                    $scope.hasUnhandledQas = function() {
+                        if (!$scope.qaList || $scope.qaList.length === 0) {
                             return false;
                         }
                         for (var i = 0, len = $scope.qaList.length; i < len; i++) {
                             var qa = $scope.qaList[i];
                             var isUnhandled = fragaSvarCommonService.isUnhandled(qa);
                             var fromFk = fragaSvarCommonService.fromFk(qa);
-                            if(qa.status === 'ANSWERED' || (isUnhandled && fromFk)){
+                            if (qa.status === 'ANSWERED' || (isUnhandled && fromFk)) {
                                 return true;
                             }
                         }
@@ -248,7 +276,7 @@ angular.module('fk7263').directive('qaPanel',
                                 statService.refreshStat();
                             }
                             $window.doneLoading = true;
-                            if(deferred) {
+                            if (deferred) {
                                 deferred.resolve();
                             }
                         }, function(errorData) {
@@ -256,7 +284,7 @@ angular.module('fk7263').directive('qaPanel',
                             qa.updateHandledStateInProgress = false;
                             qa.activeErrorMessageKey = errorData.errorCode;
                             $window.doneLoading = true;
-                            if(deferred) {
+                            if (deferred) {
                                 deferred.resolve();
                             }
                         });
@@ -293,7 +321,7 @@ angular.module('fk7263').directive('qaPanel',
                         }, 1000);
                         // Launch mail client
                         var link = fragaSvarCommonService.buildMailToLink(qa);
-                        if(link !== 'error') {
+                        if (link !== 'error') {
                             $window.location = link;
                         }
                     };
@@ -305,8 +333,7 @@ angular.module('fk7263').directive('qaPanel',
                         }
                         for (var i = 0; i < $scope.qaList.length; i++) {
                             if (qa.proxyMessage !== undefined && $scope.qaList[i].proxyMessage !== undefined &&
-                                qa.internReferens === $scope.qaList[i].internReferens)
-                            {
+                                qa.internReferens === $scope.qaList[i].internReferens) {
                                 $scope.qaList.splice(i, 1);
                                 return;
                             }
@@ -314,9 +341,10 @@ angular.module('fk7263').directive('qaPanel',
                     };
 
                     // listeners - interscope communication
-                    var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
-                        $scope.updateAnsweredAsHandled(deferred, unhandledQas);
-                    });
+                    var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent',
+                        function($event, deferred, unhandledQas) {
+                            $scope.updateAnsweredAsHandled(deferred, unhandledQas);
+                        });
                     $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
 
                 }
