@@ -35,7 +35,8 @@ describe('qaPanel', function() {
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
         $provide.value('common.IntygService', { isSentToTarget: function() {} });
-        $provide.value('common.User', {});
+        $provide.value('common.UserModel', {});
+        $provide.value('common.FocusElementService', {});
         $provide.value('common.statService', {});
         $provide.value('common.ObjectHelper', jasmine.createSpyObj('common.ObjectHelper',
             [ 'isDefined']));

@@ -27,10 +27,10 @@
 angular.module('fk7263').directive('qaPanel',
     ['$window', '$log', '$timeout', '$state', '$stateParams', '$q',
         'common.UserModel', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
-        'common.statService', 'common.dialogService', 'common.ObjectHelper', 'common.IntygCopyRequestModel',
+        'common.statService', 'common.dialogService', 'common.ObjectHelper', 'common.IntygCopyRequestModel', 'common.FocusElementService',
         function($window, $log, $timeout, $state, $stateParams, $q,
             UserModel, fragaSvarCommonService, fragaSvarProxy, statService, dialogService, ObjectHelper,
-            IntygCopyRequestModel) {
+            IntygCopyRequestModel, FocusElement) {
             'use strict';
 
             return {
@@ -158,6 +158,7 @@ angular.module('fk7263').directive('qaPanel',
                             button2click: function(modalInstance) {
                                 $scope.showAnswerField = true;
                                 modalInstance.close();
+                                FocusElement('answerText-' + qa.internReferens);
                             },
                             button2id: 'button2answermessage-dialog',
                             autoClose: false
