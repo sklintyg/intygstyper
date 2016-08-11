@@ -61,8 +61,8 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleExcepti
 import se.inera.intyg.intygstyper.lisu.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
-import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.lisu.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.lisu.utils.ScenarioNotFoundException;
 import se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;

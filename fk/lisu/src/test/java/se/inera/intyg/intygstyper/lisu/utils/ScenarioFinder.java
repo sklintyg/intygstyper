@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.intyg.intygstyper.luae_fs.model.utils;
+package se.inera.intyg.intygstyper.lisu.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
@@ -170,10 +170,10 @@ public final class ScenarioFinder {
          * {@inheritDoc}
          */
         @Override
-        public LuaefsUtlatande asInternalModel()
+        public LisuUtlatande asInternalModel()
                 throws ScenarioNotFoundException {
             try {
-                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), LuaefsUtlatande.class);
+                return new CustomObjectMapper().readValue(getInternalModelFor(scenarioFile), LisuUtlatande.class);
             } catch (IOException e) {
                 throw new ScenarioNotFoundException(scenarioFile.getName(), "internal", e);
             }

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.intyg.intygstyper.luse.model.utils;
+package se.inera.intyg.intygstyper.luse.utils;
 
 import java.io.File;
 import java.io.IOException;

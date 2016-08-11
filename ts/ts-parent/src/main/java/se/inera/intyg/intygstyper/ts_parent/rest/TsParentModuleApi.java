@@ -22,8 +22,12 @@ package se.inera.intyg.intygstyper.ts_parent.rest;
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.INTYG_AVSER_DELSVAR_ID_1;
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.INTYG_AVSER_SVAR_ID_1;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXB;
@@ -47,11 +51,19 @@ import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.util.ModelCompareUtil;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.exception.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.intygstyper.ts_parent.codes.IntygAvserKod;
 import se.inera.intyg.intygstyper.ts_parent.model.converter.WebcertModelFactory;
 import se.inera.intyg.intygstyper.ts_parent.pdf.PdfGenerator;
@@ -65,6 +77,9 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsParentModuleApi.class);
+
+    @Autowired
+    private ModelCompareUtil<T> modelCompareUtil;
 
     @Autowired
     private InternalDraftValidator<T> validator;
@@ -155,8 +170,14 @@ public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleAp
     }
 
     @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return !persistedState.equals(currentState);
+    public boolean shouldNotify(String persistedState, String currentState) throws ModuleException {
+        T newUtlatande;
+        newUtlatande = getInternal(currentState);
+
+        if (modelCompareUtil.isValidForNotification(newUtlatande)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.intyg.intygstyper.lisu.model.utils;
+package se.inera.intyg.intygstyper.luse.utils;
 
-import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
+import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 /**
@@ -57,5 +57,5 @@ public interface Scenario {
      * @throws ScenarioNotFoundException
      *             if the scenario wasn't found.
      */
-    LisuUtlatande asInternalModel() throws ScenarioNotFoundException;
+    LuseUtlatande asInternalModel() throws ScenarioNotFoundException;
 }

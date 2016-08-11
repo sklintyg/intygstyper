@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.intyg.intygstyper.luae_na.model.utils;
+package se.inera.intyg.intygstyper.luae_na.utils;
 
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;

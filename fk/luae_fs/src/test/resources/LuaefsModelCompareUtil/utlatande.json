@@ -1,0 +1,63 @@
+{
+  "typ": "luae_fs",
+  "id": "1234567",
+  "textVersion": "1",
+  "grundData": {
+    "patient": {
+      "samordningsNummer": false,
+      "postort": "Stadby gärde",
+      "postnummer": "100 20",
+      "postadress": "Pgatan 2",
+      "efternamn": "Olsson",
+      "fornamn": "Olivia",
+      "fullstandigtNamn": "Olivia Olsson",
+      "personId": "192703104321"
+    },
+    "skapadAv": {
+      "vardenhet": {
+        "arbetsplatsKod": "45312",
+        "vardgivare": {
+          "vardgivarnamn": "VG1",
+          "vardgivarid": "12345678"
+        },
+        "epost": "ve1@vg1.se",
+        "telefonnummer": "0812341234",
+        "postort": "Stadby",
+        "postnummer": "100 10",
+        "postadress": "Enhetsg. 1",
+        "enhetsnamn": "VE1",
+        "enhetsid": "123456789"
+      },
+      "specialiteter": [
+        "Kirurg"
+      ],
+      "befattningar": [
+        "Klinikchef",
+        "Forskningsledare"
+      ],
+      "forskrivarKod": "09874321",
+      "fullstandigtNamn": "Karl Karlsson",
+      "personId": "19650708-1234"
+    },
+    "signeringsdatum": "2015-12-07T15:48:05.000"
+  },
+  "underlag": [
+    {
+      "hamtasFran": "Skickas med posten",
+      "datum": "2015-09-03",
+      "typ": "PSYKOLOG"
+    }
+  ],
+  "underlagFinns": true,
+  "tillaggsfragor": [],
+  "undersokningAvPatienten": "2015-09-09",
+  "funktionsnedsattningDebut": "Skoldansen",
+  "funktionsnedsattningPaverkan": "Haltar när han dansar",
+  "diagnoser": [
+    {
+      "diagnosBeskrivning": "Klämskada skuldra",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosKod": "S47"
+    }
+  ]
+}

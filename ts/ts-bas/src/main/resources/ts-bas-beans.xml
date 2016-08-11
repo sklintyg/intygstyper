@@ -26,6 +26,8 @@
 
   <bean class="se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator"/>
 
+  <bean class="se.inera.intyg.intygstyper.ts_bas.model.util.TsBasModelCompareUtil"/>
+
   <bean class="se.inera.intyg.intygstyper.ts_bas.model.converter.InternalToTransport"/>
 
   <bean class="se.inera.intyg.intygstyper.ts_bas.pdf.PdfGeneratorImpl">

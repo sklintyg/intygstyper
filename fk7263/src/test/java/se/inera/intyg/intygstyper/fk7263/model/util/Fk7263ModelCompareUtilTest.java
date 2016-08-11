@@ -43,7 +43,7 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ModelCompareUtilTest {
+public class Fk7263ModelCompareUtilTest {
 
     public static final String CORRECT_DIAGNOSKOD_FROM_FILE = "S47";
     public static final String CORRECT_DIAGNOSKOD2 = "B88";
@@ -55,7 +55,7 @@ public class ModelCompareUtilTest {
     private WebcertModuleService moduleService;
 
     @InjectMocks
-    private ModelCompareUtil modelCompareUtil;
+    private Fk7263ModelCompareUtil modelCompareUtil;
 
     @Before
     public void setup() {

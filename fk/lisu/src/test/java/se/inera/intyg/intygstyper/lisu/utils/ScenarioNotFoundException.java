@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.intyg.intygstyper.luse.model.utils;
+package se.inera.intyg.intygstyper.lisu.utils;
 
 /**
  * Thrown when an expected scenario wasn't found.

@@ -24,7 +24,7 @@
 
   <bean class="se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi" />
 
-  <bean class="se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil" />
+  <bean class="se.inera.intyg.intygstyper.fk7263.model.util.Fk7263ModelCompareUtil" />
 
   <bean class="se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator" />
 

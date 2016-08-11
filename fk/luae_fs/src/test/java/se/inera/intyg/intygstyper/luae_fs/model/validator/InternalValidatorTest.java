@@ -11,8 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.intygstyper.luae_fs.model.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.luae_fs.model.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.luae_fs.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.luae_fs.utils.ScenarioNotFoundException;
 import se.inera.intyg.intygstyper.luae_fs.validator.InternalDraftValidatorImpl;
 
 @RunWith(MockitoJUnitRunner.class)

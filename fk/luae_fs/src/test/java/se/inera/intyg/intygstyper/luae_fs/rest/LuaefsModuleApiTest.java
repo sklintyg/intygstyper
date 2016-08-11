@@ -63,8 +63,8 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.intygstyper.luae_fs.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.luae_fs.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.intygstyper.luae_fs.model.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
+import se.inera.intyg.intygstyper.luae_fs.utils.ScenarioFinder;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.GetCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;

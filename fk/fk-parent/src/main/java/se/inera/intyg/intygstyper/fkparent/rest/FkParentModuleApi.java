@@ -44,6 +44,7 @@ import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.util.ModelCompareUtil;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -76,6 +77,9 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
 
     @Autowired
     private InternalDraftValidator<T> internalDraftValidator;
+
+    @Autowired
+    private ModelCompareUtil<T> modelCompareUtil;
 
     @Autowired
     private SvarIdHelper<T> svarIdHelper;
@@ -157,6 +161,17 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
         } catch (SOAPFaultException e) {
             throw new ExternalServiceCallException(e);
         }
+    }
+
+    @Override
+    public boolean shouldNotify(String persistedState, String currentState) throws ModuleException {
+        T newUtlatande;
+        newUtlatande = getInternal(currentState);
+
+        if (modelCompareUtil.isValidForNotification(newUtlatande)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
