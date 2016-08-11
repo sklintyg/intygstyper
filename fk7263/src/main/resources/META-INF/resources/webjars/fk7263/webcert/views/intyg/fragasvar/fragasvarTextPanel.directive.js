@@ -34,7 +34,7 @@ angular.module('fk7263').directive('fragasvarTextPanel',
                 replace: true,
                 templateUrl: '/web/webjars/fk7263/webcert/views/intyg/fragasvar/fragasvarTextPanel.directive.html',
                 scope: {
-                    panelId: '@',
+                    panelId: '=',
                     qa: '='
                 },
                 controller: function($scope, $element, $attrs) {
