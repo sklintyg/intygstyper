@@ -10,85 +10,20 @@
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
         <h1 ng-focus="pagefocus" tabindex="-1">
-          <span message key="fk7263.label.pagetitle"></span>
+          <span message key="fk7263.customize.step.1.pagetitle"></span>
         </h1>
-        <p>
-          <div class="mi-text" message key="fk7263.label.pageingress"></div>
-
-          <div uib-collapse="!isCollapsed1" class="collapse mi-text">
-	          <div message key="fk7263.label.pagedescription.sendcertificate.header"></div>
-			  <div message key="fk7263.label.pagedescription.sendcertificate"></div>
-	          <!--
-	          <div message key="fk7263.label.pagedescription.certificate.to.employer.header"></div>
-	          <div message key="fk7263.label.pagedescription.certificate.to.employer"></div>
-	           -->
-			  <div message key="fk7263.label.pagedescription.save.or.print.certificate.header"></div>
-	          <div message key="fk7263.label.pagedescription.save.or.print.certificate"></div>
-	          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-      		  <div uib-collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message key="fk7263.helptext.readpdfhelp"></span></div>
-	          <div message key="fk7263.label.pagedescription.sickness.benefit.header"></div>
-	          <div message key="fk7263.label.pagedescription.sickness.benefit"></div>
-	          <div message key="fk7263.label.pagedescription.error.in.certificate.header"></div>
-	          <div message key="fk7263.label.pagedescription.error.in.certificate"></div>
-	          <div message key="fk7263.label.pagedescription.archive.header"></div>
-	          <div message key="fk7263.label.pagedescription.archive"></div>
+        <div class="row-fluid">
+          <div class="wizard">
+            <ul class="steps">
+              <li data-target="#step1" class="active"><span message key="fk7263.customize.step.1.fishbone"></span><span class="chevron"></span></li>
+              <li data-target="#step2"><span message key="fk7263.customize.step.2.fishbone"></span><span class="chevron"></span></li>
+            </ul>
           </div>
-          <br>
-          <button type="button" ng-click="isCollapsed1 = !isCollapsed1" class="btn-link btn-link-link margin-top-5px" data-toggle="collapse">
-            <span message key="fk7263.label.status.{{!isCollapsed1}}"></span>
-          </button>
+        </div>
+        <p>
+          <div class="mi-text" message key="fk7263.customize.step.1.pageingress"></div>
         </p>
       </div>
-      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-        <h2>
-          <span message key="fk7263.label.latestevent"></span>
-        </h2>
-
-        <!-- Show if no events to show -->
-        <div ng-show="cert.filteredStatuses.length<1">
-        	<p>
-        		<span message key="fk7263.label.latestevent.noevents"></span>
-        	</p>
-        </div>
-
-		<!-- Show if more than one event exists -->
-   		  <div ng-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
-            <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
-            <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span><span>s system</span>
-            <span class="certificate-event-timestamp pull-right">{{cert.filteredStatuses[0].timestamp | date:'short'}}</span>
-            <div uib-collapse="!isCollapsedCertEvents" class="collapse">
-              <div ng-repeat="status in cert.filteredStatuses" ng-switch on="$index > 0">
-                <div ng-switch-when="true">
-                  <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
-                  <span ng-show="status.type == 'SENT'"><span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>s system</span>
-                  <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'short'}}</span><br>
-                </div>
-              </div>
-            </div>
-            <p>
-              <button type="button" class="btn-link btn-link-link" ng-show="cert.filteredStatuses.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse">
-                <span message key="fk7263.label.showevents.{{!isCollapsedCertEvents}}"></span>
-              </button>
-            </p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    	<form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
-	          <p class="btn-row">
-	            <button type="button" id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success" title="{{messageService.getProperty('fk7263.button.send.certificate.title')}}">
-	              <span message key="fk7263.button.send.certificate"></span>
-	            </button>
-              <button id="customizeCertificateBtn" type="button" ng-click="customizeCertificate()" class="btn btn-primary" title="{{messageService.getProperty('fk7263.button.customize.certificate.title')}}">
-                <span message key="fk7263.button.customize.certificate"></span>
-              </button>
-	            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
-	              <span message key="fk7263.button.downloadprint"></span>
-	            </button>
-	          </p>
-	        </form>
-	    </div>
     </div>
     <div id="certificate" class="certificate">
       <span class="hide" id="certId" title="{{cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>
@@ -108,17 +43,14 @@
                     </span>
                   </h2>
                 </div>
-                <div class="col-xs-6 col-sm-5 col-md-5 col-lg-5 issue">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 issue">
+                  <span>Utfärdat:&nbsp;</span>
                   <span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'shortDate'}}</span>
-                  <span>
-                    <span message key="fk7263.label.issued"></span>
-                  </span>
                 </div>
-				        <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1 archive hidden-xs">
-                  <a role="button" data-toggle="modal" id="archiveBtn" title="{{messageService.getProperty('modules.button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
-                    <span class="glyphicon glyphicon-folder-close white"></span>
-					          <!-- <img alt="Arkivera intyg" src="/img/archive-icon.gif" /> -->
-                  </a>
+				        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mandatory">
+                  <span class="float-r">
+                    <span>Obligatoriskt fält&nbsp;</span><span class="asterix">*</span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -189,7 +121,7 @@
 
             <div class="cert-body">
 
-              <div mi-field field-label="fk7263.label.smittskydd" filled="true">
+              <div mi-field-mandatory field-number="1" field-label="fk7263.label.smittskydd" mandatory="false" filled="true">
                 <span ng-show="cert.avstangningSmittskydd">
                   <span id="smittskydd-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -198,7 +130,7 @@
                 </span>
               </div>
 
-              <div mi-field field-label="fk7263.label.diagnosis" filled="cert.diagnosKod">
+              <div mi-field-mandatory field-number="2" field-label="fk7263.label.diagnosis" mandatory="false" filled="cert.diagnosKod">
                 <div class="form-group">
                   <span class="tag">
                     <span message key="fk7263.label.diagnosisCode"></span>
@@ -214,18 +146,17 @@
                     <div id="diagnosBeskrivning" class="multiline">{{cert.diagnosBeskrivning}}</div>
                   </div>
                 </div>
-
               </div>
 
-              <div mi-field field-label="fk7263.label.progressofdesease" filled="cert.sjukdomsforlopp!=null">
+              <div mi-field-mandatory field-number="3" field-label="fk7263.label.progressofdesease" mandatory="false" filled="cert.sjukdomsforlopp!=null">
                 <div id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</div>
               </div>
 
-              <div mi-field field-label="fk7263.label.disabilities" filled="cert.funktionsnedsattning!=null">
+              <div mi-field-mandatory field-number="4" field-label="fk7263.label.disabilities" mandatory="false" filled="cert.funktionsnedsattning!=null">
                 <div id="funktionsnedsattning" class="multiline">{{cert.funktionsnedsattning}}</div>
               </div>
 
-              <div mi-field field-label="fk7263.label.basedon" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
+              <div mi-field-mandatory field-number="4b" field-label="fk7263.label.basedon" mandatory="false" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
                 <ul class="padded-list">
                   <li ng-show="cert.undersokningAvPatienten!=null">
                     <div id="undersokningAvPatienten">
@@ -250,11 +181,11 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="fk7263.label.limitation" filled="cert.aktivitetsbegransning!=null">
+              <div mi-field-mandatory field-number="5" field-label="fk7263.label.limitation" mandatory="false" filled="cert.aktivitetsbegransning!=null">
                 <div id="aktivitetsbegransning" class="multiline">{{cert.aktivitetsbegransning}}</div>
               </div>
 
-              <div mi-field field-label="fk7263.label.recommendations" filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
+              <div mi-field-mandatory field-number="6a" field-label="fk7263.label.recommendations" mandatory="true" filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
                 <ul class="padded-list">
                   <li ng-show="cert.rekommendationKontaktArbetsformedlingen">
                     <span id="rekommendationKontaktArbetsformedlingen" message key="fk7263.label.recommendations.contact.jobcenter"></span></li>
@@ -267,7 +198,7 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="fk7263.label.plannedtreatment" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
+              <div mi-field-mandatory field-number="6b" field-label="fk7263.label.plannedtreatment" mandatory="false" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
                 <ul class="padded-list">
                   <li ng-show="cert.atgardInomSjukvarden != null">
                     <span message key="fk7263.label.plannedtreatment.healthcare"></span>
@@ -278,7 +209,7 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="fk7263.label.workrehab" filled="cert.rehabilitering">
+              <div mi-field-mandatory field-number="7" field-label="fk7263.label.workrehab" mandatory="false" filled="cert.rehabilitering">
                 <span ng-show="cert.rehabilitering == 'rehabiliteringAktuell'">
                   <span id="rehabilitering-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -290,7 +221,7 @@
                 </span>
               </div>
 
-              <div mi-field field-label="fk7263.label.patientworkcapacity" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
+              <div mi-field-mandatory field-number="8a" field-label="fk7263.label.patientworkcapacity" mandatory="false" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
                 <ul class="padded-list">
                   <li ng-show="cert.nuvarandeArbetsuppgifter">
                     <span message key="fk7263.label.patientworkcapacity.currentwork"></span>
@@ -304,11 +235,11 @@
                 </ul>
               </div>
 
-              <div mi-field field-label="fk7263.label.patientworkcapacityjudgement" filled="cert.arbetsformagaPrognos!=null">
+              <div mi-field-mandatory field-number="9" field-label="fk7263.label.patientworkcapacityjudgement" mandatory="false" filled="cert.arbetsformagaPrognos!=null">
                 <div id="arbetsformagaPrognos" class="multiline">{{cert.arbetsformagaPrognos}}</div>
               </div>
 
-              <div mi-field field-label="fk7263.label.prognosis" filled="cert.prognosBedomning">
+              <div mi-field-mandatory field-number="10" field-label="fk7263.label.prognosis" mandatory="true" filled="cert.prognosBedomning">
                 <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJa'">
                   <span id="arbetsformagaPrognos-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -323,7 +254,7 @@
                 </span>
               </div>
 
-              <div mi-field field-label="fk7263.label.othertransport" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
+              <div mi-field-mandatory field-number="11" field-label="fk7263.label.othertransport" mandatory="false" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
                 <span ng-show="cert.ressattTillArbeteAktuellt">
                   <span id="resaTillArbetet-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -332,7 +263,7 @@
                 </span>
               </div>
 
-              <div mi-field field-label="fk7263.label.fkcontact" filled="true">
+              <div mi-field-mandatory field-number="12" field-label="fk7263.label.fkcontact" mandatory="false" filled="true">
                 <span ng-show="cert.kontaktMedFk">
                   <span id="kontaktFk-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -341,38 +272,25 @@
                 </span>
               </div>
 
-              <div mi-field field-label="fk7263.label.otherinformation" filled="cert.kommentar">
+              <div mi-field-mandatory field-number="13" field-label="fk7263.label.otherinformation" mandatory="false" filled="cert.kommentar">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                 <div id="kommentar" class="tag multiline" ng-show="cert.kommentar.length > 0">{{cert.kommentar}}</div>
               </div>
 
-              <div mi-field field-label="fk7263.label.workcodes" filled="cert.forskrivarkodOchArbetsplatskod">
+              <div mi-field-mandatory field-number="17" field-label="fk7263.label.workcodes" mandatory="false" filled="cert.forskrivarkodOchArbetsplatskod">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                 <div id="forskrivarkodOchArbetsplatskod">{{cert.forskrivarkodOchArbetsplatskod}}</div>
               </div>
 
-              <div class="row padding-bottom-30px">
-                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-                  <div class="infobox">
-                    <h3>
-                      <span message key="fk7263.label.confirmedby"></span>
-                    </h3>
-                    <h4>
-                      <span message key="fk7263.label.date"></span>
-                    </h4>
-                    <p id="signeringsdatum">{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
-                    <h4>
-                      <span message key="fk7263.label.contactinfo"></span>
-                    </h4>
-                    <p>
-                      <span id="vardperson-namn" class="text">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br />
-                      <span id="vardperson-enhet" class="text">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br />
-                      <span id="vardperson-postadress" class="text">{{cert.grundData.skapadAv.vardenhet.postadress}}</span><br />
-                      <span id="vardperson-postnummer-ort" class="text">{{cert.grundData.skapadAv.vardenhet.postnummer}} {{cert.grundData.skapadAv.vardenhet.postort}}</span><br />
-                      <span id="vardperson-telefonnummer" class="text">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span><br />
-                    </p>
-                  </div>
-                </div>
+              <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                <p>
+                  <button type="button" id="confirmCertificateCustomizationBtn" type="button" ng-click="confirmCertificateCustomization()" class="btn btn-success">
+                    <span message key="fk7263.button.next"></span>
+                  </button>
+                  <button type="button" id="cancelCertificateCustomizationBtn" ng-click="backToViewCertificate()" class="btn btn-default">
+                    <span message key="fk7263.button.cancel"></span>
+                  </button>
+                </p>
               </div>
 
             </div>

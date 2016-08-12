@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('fk7263').controller('fk7263.ViewCertCtrl',
+angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
         'common.IntygService', 'common.dialogService', 'common.messageService',
         function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService, dialogService,
@@ -30,60 +30,6 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             $scope.messageService = messageService;
 
             $scope.doneLoading = false;
-
-            $scope.send = function() {
-                $location.path('/fk7263/recipients').search({ module: 'fk7263', defaultRecipient: 'FK'});
-            };
-
-            $scope.visibleStatuses = [ 'SENT' ];
-
-            $scope.dialog = {
-                acceptprogressdone: true,
-                focus: false
-            };
-
-            var archiveDialog = {};
-
-            $scope.archiveSelected = function() {
-                var item = $scope.cert;
-                $log.debug('archive ' + item.id);
-                $scope.dialog.acceptprogressdone = false;
-                IntygListService.archiveCertificate(item, function(fromServer, oldItem) {
-                    $log.debug('statusUpdate callback:' + fromServer);
-                    if (fromServer !== null) {
-                        // Better way to update the object?
-                        oldItem.archived = fromServer.archived;
-                        oldItem.status = fromServer.status;
-                        oldItem.selected = false;
-                        archiveDialog.close();
-                        $scope.dialog.acceptprogressdone = true;
-                        $location.path('#/start');
-                    } else {
-                        // show error view
-                        $location.path('/fk7263/fel/couldnotarchivecert');
-                    }
-                });
-            };
-
-            // Archive dialog
-            $scope.certToArchive = {};
-
-            $scope.openArchiveDialog = function(cert) {
-                $scope.certToArchive = cert;
-                $scope.dialog.focus = true;
-                archiveDialog = dialogService.showDialog($scope, {
-                    dialogId: 'archive-confirmation-dialog',
-                    titleId: 'inbox.archivemodal.header',
-                    bodyTextId: 'inbox.archivemodal.text',
-                    button1click: function() {
-                        $log.debug('archive');
-                        $scope.archiveSelected();
-                    },
-                    button1id: 'archive-button',
-                    button1text: 'button.archive',
-                    autoClose: false
-                });
-            };
 
             $scope.filterStatuses = function(statuses) {
                 var result = [];
@@ -107,20 +53,12 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 return false;
             };
 
-            $scope.showStatusHistory = function() {
-                $location.path('/fk7263/statushistory');
-            };
-
-            $scope.backToViewCertificate = function() {
-                $location.path('/fk7263/view/' + $stateParams.certificateId);
-            };
-
-            $scope.customizeCertificate = function() {
-                $location.path('/fk7263/customize/' + $stateParams.certificateId);
-            };
-
             // expose calculated static link for pdf download
             $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
+
+            $scope.backToCustomizeCertificate = function() {
+                $location.path('/fk7263/customize/' + $stateParams.certificateId);
+            };
 
             IntygService.getCertificate('fk7263', $stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;

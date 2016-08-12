@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('fk7263').controller('fk7263.ViewCertCtrl',
+angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
         'common.IntygService', 'common.dialogService', 'common.messageService',
         function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService, dialogService,
@@ -115,8 +115,8 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 $location.path('/fk7263/view/' + $stateParams.certificateId);
             };
 
-            $scope.customizeCertificate = function() {
-                $location.path('/fk7263/customize/' + $stateParams.certificateId);
+            $scope.confirmCertificateCustomization = function() {
+                $location.path('/fk7263/customize/' + $stateParams.certificateId + '/summary');
             };
 
             // expose calculated static link for pdf download

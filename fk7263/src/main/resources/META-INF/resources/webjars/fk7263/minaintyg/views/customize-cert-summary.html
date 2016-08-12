@@ -10,85 +10,20 @@
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
         <h1 ng-focus="pagefocus" tabindex="-1">
-          <span message key="fk7263.label.pagetitle"></span>
+          <span message key="fk7263.customize.step.2.pagetitle"></span>
         </h1>
-        <p>
-          <div class="mi-text" message key="fk7263.label.pageingress"></div>
-
-          <div uib-collapse="!isCollapsed1" class="collapse mi-text">
-	          <div message key="fk7263.label.pagedescription.sendcertificate.header"></div>
-			  <div message key="fk7263.label.pagedescription.sendcertificate"></div>
-	          <!--
-	          <div message key="fk7263.label.pagedescription.certificate.to.employer.header"></div>
-	          <div message key="fk7263.label.pagedescription.certificate.to.employer"></div>
-	           -->
-			  <div message key="fk7263.label.pagedescription.save.or.print.certificate.header"></div>
-	          <div message key="fk7263.label.pagedescription.save.or.print.certificate"></div>
-	          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-      		  <div uib-collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message key="fk7263.helptext.readpdfhelp"></span></div>
-	          <div message key="fk7263.label.pagedescription.sickness.benefit.header"></div>
-	          <div message key="fk7263.label.pagedescription.sickness.benefit"></div>
-	          <div message key="fk7263.label.pagedescription.error.in.certificate.header"></div>
-	          <div message key="fk7263.label.pagedescription.error.in.certificate"></div>
-	          <div message key="fk7263.label.pagedescription.archive.header"></div>
-	          <div message key="fk7263.label.pagedescription.archive"></div>
+        <div class="row-fluid">
+          <div class="wizard">
+            <ul class="steps">
+              <li data-target="#step1" class="wstep-completed"><span message key="fk7263.customize.step.1.fishbone"></span><span class="chevron"></span></li>
+              <li data-target="#step2" class="active"><span message key="fk7263.customize.step.2.fishbone"></span><span class="chevron"></span></li>
+            </ul>
           </div>
-          <br>
-          <button type="button" ng-click="isCollapsed1 = !isCollapsed1" class="btn-link btn-link-link margin-top-5px" data-toggle="collapse">
-            <span message key="fk7263.label.status.{{!isCollapsed1}}"></span>
-          </button>
+        </div>
+        <p>
+          <div class="mi-text" message key="fk7263.customize.step.2.pageingress"></div>
         </p>
       </div>
-      <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-        <h2>
-          <span message key="fk7263.label.latestevent"></span>
-        </h2>
-
-        <!-- Show if no events to show -->
-        <div ng-show="cert.filteredStatuses.length<1">
-        	<p>
-        		<span message key="fk7263.label.latestevent.noevents"></span>
-        	</p>
-        </div>
-
-		<!-- Show if more than one event exists -->
-   		  <div ng-show="cert.filteredStatuses.length>0" id="latest-certificate-event">
-            <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
-            <span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span><span>s system</span>
-            <span class="certificate-event-timestamp pull-right">{{cert.filteredStatuses[0].timestamp | date:'short'}}</span>
-            <div uib-collapse="!isCollapsedCertEvents" class="collapse">
-              <div ng-repeat="status in cert.filteredStatuses" ng-switch on="$index > 0">
-                <div ng-switch-when="true">
-                  <span message key="fk7263.status.{{cert.filteredStatuses[0].type}}"></span>
-                  <span ng-show="status.type == 'SENT'"><span message key="fk7263.target.{{cert.filteredStatuses[0].target}}"></span>s system</span>
-                  <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'short'}}</span><br>
-                </div>
-              </div>
-            </div>
-            <p>
-              <button type="button" class="btn-link btn-link-link" ng-show="cert.filteredStatuses.length>1" ng-click="isCollapsedCertEvents = !isCollapsedCertEvents" data-toggle="collapse">
-                <span message key="fk7263.label.showevents.{{!isCollapsedCertEvents}}"></span>
-              </button>
-            </p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	    	<form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
-	          <p class="btn-row">
-	            <button type="button" id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success" title="{{messageService.getProperty('fk7263.button.send.certificate.title')}}">
-	              <span message key="fk7263.button.send.certificate"></span>
-	            </button>
-              <button id="customizeCertificateBtn" type="button" ng-click="customizeCertificate()" class="btn btn-primary" title="{{messageService.getProperty('fk7263.button.customize.certificate.title')}}">
-                <span message key="fk7263.button.customize.certificate"></span>
-              </button>
-	            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
-	              <span message key="fk7263.button.downloadprint"></span>
-	            </button>
-	          </p>
-	        </form>
-	    </div>
     </div>
     <div id="certificate" class="certificate">
       <span class="hide" id="certId" title="{{cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>
@@ -351,28 +286,17 @@
                 <div id="forskrivarkodOchArbetsplatskod">{{cert.forskrivarkodOchArbetsplatskod}}</div>
               </div>
 
-              <div class="row padding-bottom-30px">
-                <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-                  <div class="infobox">
-                    <h3>
-                      <span message key="fk7263.label.confirmedby"></span>
-                    </h3>
-                    <h4>
-                      <span message key="fk7263.label.date"></span>
-                    </h4>
-                    <p id="signeringsdatum">{{cert.grundData.signeringsdatum | date:'longDate'}}</p>
-                    <h4>
-                      <span message key="fk7263.label.contactinfo"></span>
-                    </h4>
-                    <p>
-                      <span id="vardperson-namn" class="text">{{cert.grundData.skapadAv.fullstandigtNamn}}</span><br />
-                      <span id="vardperson-enhet" class="text">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span><br />
-                      <span id="vardperson-postadress" class="text">{{cert.grundData.skapadAv.vardenhet.postadress}}</span><br />
-                      <span id="vardperson-postnummer-ort" class="text">{{cert.grundData.skapadAv.vardenhet.postnummer}} {{cert.grundData.skapadAv.vardenhet.postort}}</span><br />
-                      <span id="vardperson-telefonnummer" class="text">{{cert.grundData.skapadAv.vardenhet.telefonnummer}}</span><br />
-                    </p>
-                  </div>
-                </div>
+              <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                <form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
+                  <p class="btn-row">
+                    <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-success">
+                      <span message key="fk7263.button.downloadprint"></span>
+                    </button>
+                    <button type="button" id="changeCertificateCustomizationBtn" ng-click="backToCustomizeCertificate()" class="btn btn-default">
+                      <span message key="fk7263.button.customize.certificate.change"></span>
+                    </button>
+                  </p>
+                </form>
               </div>
 
             </div>

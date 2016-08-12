@@ -17,46 +17,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//These variables should be extracted and imported
-//colors
-$color-alto-approx: #ddd;
+angular.module('fk7263').directive('miFieldMandatory',
+    function() {
+        'use strict';
 
-//urls
-$ss16-url: url('../img/ss16.png');
-
-.soclink {
-  background-image: $ss16-url;
-  background-repeat: no-repeat;
-  padding-left: 25px;
-}
-
-.recipentlist {
-  padding: 10px 0;
-  border-bottom: 1px solid $color-alto-approx;
-  margin-bottom: 10px;
-}
-
-.mandatory {
-  color: #fff;
-  padding: 12px 15px 0 0;
-}
-
-.float-r {
-  float: right;
-}
-
-.asterix {
-  color: #ff0000;
-  font-weight: bold;
-}
-
-.cert-body .body-row .title-customize {
-  color: #fff;
-  font-weight: bolder;
-  display: block;
-  padding: 10px 20px;
-  background-color: #008391;
-  -webkit-border-radius: 8px 8px 0px 0px;
-  -moz-border-radius: 8px 8px 0px 0px;
-  border-radius: 8px 8px 0px 0px;
-}
+        return {
+            restrict: 'A',
+            transclude: true,
+            replace: true,
+            scope: {
+                fieldNumber: '@',
+                fieldLabel: '@',
+                fieldDynamicLabel: '@',
+                mandatory: '=?',
+                filled: '=?'
+            },
+            templateUrl: '/web/webjars/fk7263/minaintyg/js/directives/customize/miFieldMandatory.directive.html'
+        };
+    });

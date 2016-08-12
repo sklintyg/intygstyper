@@ -50,21 +50,27 @@ var fk7263Messages = {
         'fk7263.target.afa': 'AFA Försäkring',
         'fk7263.target.skandia': 'Skandia',
 
+        'fk7263.customize.step.1.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 1 av 2',
+        'fk7263.customize.step.1.pageingress': '<p>Här kan du anpassa vilken information som ska synas i ett intyg som du lämnar till din arbetsgivare. Den information som du måste lämna till arbetsgivaren, obligatorisk information, är låst. Den kan inte väljas bort. I de flesta fall är du inte skyldig att lämna några andra uppgifter än dessa. Övrig information kan du välja att ta bort. Det gör du genom att bocka ur alternativet Inkludera i anpassat intyg i det fält du inte vill ska synas.</p><p>Du kan alltid återvända till Mina intyg om du behöver lämna mer information. Facket och arbetsgivaren kan exempelvis ha kommit överens om detta i kollektivavtal.</p><p>Det finns ofta fördelar med att arbetsgivaren får ta del även av frivillig information, exempelvis hur sjukdomen begränsar din aktivitetsförmåga (fält 5). Det underlättar arbetsgivarens möjlighet att anpassa din arbetsplats eller arbetssituation.</p>',
+        'fk7263.customize.step.1.fishbone': 'Anpassa intyg',
+        'fk7263.customize.step.2.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 2 av 2',
+        'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Ladda ner/Skriva ut.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra mina val.</p>',
+        'fk7263.customize.step.2.fishbone': 'Sammanfattning',
+
         'fk7263.inbox.complementaryinfo': 'Intygsperiod',
 
         'fk7263.button.sendtofk': 'Skicka till Försäkringskassan',
         'fk7263.button.send.certificate': 'Skicka',
         'fk7263.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
+        'fk7263.button.customize.certificate': 'Anpassa intyget till arbetsgivare',
+        'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
+        'fk7263.button.customize.certificate.change': 'Ändra din val',
+
         'fk7263.label.blank': '- ej ifyllt',
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
         'fk7263.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'fk7263.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
         'fk7263.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Försäkringskassan eller en annan mottagare.<br>',
-        'fk7263.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',
-        'fk7263.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa mer',
-        'fk7263.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa färre händelser',
-        'fk7263.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa alla händelser',
-
         'fk7263.label.pagedescription.certificate.to.employer.header': '<h2>Intyg till arbetsgivare</h2>',
         'fk7263.label.pagedescription.certificate.to.employer': 'Du har möjlighet att anpassa läkarintyget om du ska lämna läkarintyget till din arbetsgivare. Du anpassar intyget genom att välja om du vill visa alla uppgifter i intyget eller om du vill dölja vissa delar. Klicka på knappen Anpassa intyget för att välja vilken information du vill dela.',
         'fk7263.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
@@ -75,6 +81,11 @@ var fk7263Messages = {
         'fk7263.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
         'fk7263.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
         'fk7263.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
+
+        'fk7263.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',
+        'fk7263.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa mer',
+        'fk7263.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa färre händelser',
+        'fk7263.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa alla händelser',
 
         'fk7263.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
         'fk7263.label.nedsattning': 'Jag bedömer att arbetsförmåga är (fält 8b)',
