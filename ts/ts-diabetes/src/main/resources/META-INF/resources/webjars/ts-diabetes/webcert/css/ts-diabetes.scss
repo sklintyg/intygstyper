@@ -17,18 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-textarea[wc-maxlength] {
-  margin-bottom: 0;
-}
+/*
+All styles specific to a certificate should must be wrapped in a namespace rule that is assigned a root element in it's edit/view cert templates.
+This is to avoid leaking module specific style rules outside of it's intended context i.e globally.
+*/
 
-input[type=text] {
-  margin-bottom: 0;
-}
+.ts-diabetes-ns {
+  textarea[wc-maxlength] {
+    margin-bottom: 0;
+  }
 
-h5.inline-heading {
-  padding: 20px 0 5px;
-} 
+  input[type=text] {
+    margin-bottom: 0;
+  }
 
-.input-year {
-  width: 4em;
+  h5.inline-heading {
+    padding: 20px 0 5px;
+  }
+
+  .input-year {
+    width: 4em;
+  }
 }

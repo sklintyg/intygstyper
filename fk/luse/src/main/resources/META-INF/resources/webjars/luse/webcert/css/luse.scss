@@ -1,31 +1,38 @@
-.cert-body .alert ul {
-    padding-left: 20px;
-}
+/*
+All styles specific to a certificate should must be wrapped in a namespace rule that is assigned a root element in it's edit/view cert templates.
+This is to avoid leaking module specific style rules outside of it's intended context i.e globally.
+*/
 
-
-.qa-block-body.komplettera-block {
-    white-space: normal;
-}
-.qa-block-body.komplettera-block div span {
-    white-space: pre-line;
-}
-
-.formly-field {
-    h4 {
-        font-weight: bold;
+.luse-ns {
+    .cert-body .alert ul {
+        padding-left: 20px;
     }
 
-    h4.instruction {
-        font-weight: normal;
-        font-style: italic;
+    .qa-block-body.komplettera-block {
+        white-space: normal;
     }
-}
+    .qa-block-body.komplettera-block div span {
+        white-space: pre-line;
+    }
 
-/* When focused and when active is added from checkbox, add highlighted style */
-.form5 .form-control:focus,
-.form6 .form-control:focus  {
-    border-color: #eee;
+    .formly-field {
+        h4 {
+            font-weight: bold;
+        }
 
-   /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
-   /* box-shadow: none;*/ /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+        h4.instruction {
+            font-weight: normal;
+            font-style: italic;
+        }
+    }
+
+    /* When focused and when active is added from checkbox, add highlighted style */
+    .form5 .form-control:focus,
+    .form6 .form-control:focus {
+        border-color: #eee;
+
+        /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+        /* box-shadow: none;*/
+        /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+    }
 }

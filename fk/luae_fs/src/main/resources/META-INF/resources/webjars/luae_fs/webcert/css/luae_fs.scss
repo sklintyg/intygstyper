@@ -1,27 +1,34 @@
-.soclink {
-  background-image: url(../img/ss16.png);
-  background-repeat: no-repeat;
-  padding-left: 25px;
-}
+/*
+All styles specific to a certificate should must be wrapped in a namespace rule that is assigned a root element in it's edit/view cert templates.
+This is to avoid leaking module specific style rules outside of it's intended context i.e globally.
+*/
 
-.cert-body .alert ul {
-  padding-left: 20px;
-}
+.luae_fs-ns {
+  .soclink {
+    background-image: url(../img/ss16.png);
+    background-repeat: no-repeat;
+    padding-left: 25px;
+  }
 
-.qa-block-body.komplettera-block {
-  white-space: normal;
-}
+  .cert-body .alert ul {
+    padding-left: 20px;
+  }
 
-.qa-block-body.komplettera-block div span {
-  white-space: pre-line;
-}
+  .qa-block-body.komplettera-block {
+    white-space: normal;
+  }
 
-/* When focused and when active is added from checkbox, add highlighted style */
-.form5 .form-control:focus,
-.form6 .form-control:focus {
-  border-color: #eee;
+  .qa-block-body.komplettera-block div span {
+    white-space: pre-line;
+  }
 
-  /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
-  /* box-shadow: none;*/
-  /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+  /* When focused and when active is added from checkbox, add highlighted style */
+  .form5 .form-control:focus,
+  .form6 .form-control:focus {
+    border-color: #eee;
+
+    /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+    /* box-shadow: none;*/
+    /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
+  }
 }
