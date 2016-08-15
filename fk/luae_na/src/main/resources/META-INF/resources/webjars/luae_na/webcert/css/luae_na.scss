@@ -1,41 +1,27 @@
 /*
+ * Copyright (C) 2016 Inera AB (http://www.inera.se)
+ *
+ * This file is part of sklintyg (https://github.com/sklintyg).
+ *
+ * sklintyg is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * sklintyg is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
 All styles specific to a certificate should must be wrapped in a namespace rule that is assigned a root element in it's edit/view cert templates.
 This is to avoid leaking module specific style rules outside of it's intended context i.e globally.
 */
 
 .luae_na-ns {
-
-  .cert-body .alert ul {
-    padding-left: 20px;
-  }
-
-  .qa-block-body.komplettera-block {
-    white-space: normal;
-  }
-
-  .qa-block-body.komplettera-block div span {
-    white-space: pre-line;
-  }
-
-  .formly-field {
-    h4 {
-      font-weight: bold;
-    }
-
-    h4.instruction {
-      font-weight: normal;
-      font-style: italic;
-    }
-  }
-
-  /* When focused and when active is added from checkbox, add highlighted style */
-  .form5 .form-control:focus,
-  .form6 .form-control:focus {
-    border-color: #eee;
-
-    /* -webkit-box-shadow: none;  *//*inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
-    /* box-shadow: none;*/
-    /* inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6); */
-  }
-
+  //Currently no type specific styles for this module
 }
