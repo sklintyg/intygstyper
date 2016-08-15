@@ -50,14 +50,12 @@ public class Fk7263ModelCompareUtil {
                 || sjukskrivningsgradDiffers(oldUtlatande, newUtlatande);
     }
 
-    // FK7263 specific
     private boolean sjukskrivningsgradDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         int[] oldSjukskrivningsgrad = makeIntMatrix(oldUtlatande);
         int[] newSjukskrivningsgrad = makeIntMatrix(newUtlatande);
         return !Arrays.equals(oldSjukskrivningsgrad, newSjukskrivningsgrad);
     }
 
-    // FK7263 specific
     private int[] makeIntMatrix(Utlatande source) {
         final int totalNumberOfNedsattMedValues = 4;
         final int indexNedsattMed100 = 0;
@@ -73,7 +71,6 @@ public class Fk7263ModelCompareUtil {
         return matrix;
     }
 
- // FK7263 specific
     private boolean sjukskrivningsperiodDiffers(Utlatande oldUtlatande, Utlatande newUtlatande) {
         return checkPerioderDiffers(oldUtlatande.getNedsattMed100(), newUtlatande.getNedsattMed100())
                 || checkPerioderDiffers(oldUtlatande.getNedsattMed75(), newUtlatande.getNedsattMed75())
@@ -82,7 +79,6 @@ public class Fk7263ModelCompareUtil {
 
     }
 
- // FK7263 specific
     private boolean checkPerioderDiffers(InternalLocalDateInterval oldPeriod, InternalLocalDateInterval newPeriod) {
         if (isValid(oldPeriod) && isValid(newPeriod)) {
             return !oldPeriod.equals(newPeriod);
@@ -91,7 +87,6 @@ public class Fk7263ModelCompareUtil {
         }
     }
 
-    // FK7263 specific
     private boolean isValid(InternalLocalDateInterval period) {
         return period != null && period.isValid();
     }

@@ -168,10 +168,7 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
         T newUtlatande;
         newUtlatande = getInternal(currentState);
 
-        if (modelCompareUtil.isValidForNotification(newUtlatande)) {
-            return true;
-        }
-        return false;
+        return modelCompareUtil.isValidForNotification(newUtlatande);
     }
 
     @Override
