@@ -27,9 +27,9 @@
     <skapadAv>
       <personal-id>
         <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
-        <ns3:extension>TSTNMT2321000156-103F</ns3:extension>
+        <ns3:extension>TSTNMT2321000156-1079</ns3:extension>
       </personal-id>
-      <fullstandigtNamn>Leonie Koehl</fullstandigtNamn>
+      <fullstandigtNamn>Arnold Schwarzenegger</fullstandigtNamn>
       <forskrivarkod>0000000</forskrivarkod>
       <befattning>
         <ns3:code>203090</ns3:code>
@@ -39,13 +39,13 @@
       <enhet>
         <enhets-id>
           <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
-          <ns3:extension>TSTNMT2321000156-1039</ns3:extension>
+          <ns3:extension>TSTNMT2321000156-1077</ns3:extension>
         </enhets-id>
         <arbetsplatskod>
           <ns3:root>1.2.752.29.4.71</ns3:root>
           <ns3:extension>1234567890</ns3:extension>
         </arbetsplatskod>
-        <enhetsnamn>NMT vg1 ve2</enhetsnamn>
+        <enhetsnamn>NMT vg3 ve1</enhetsnamn>
         <postadress>NMT gata 2</postadress>
         <postnummer>12345</postnummer>
         <postort>Testhult</postort>
@@ -54,9 +54,9 @@
         <vardgivare>
           <vardgivare-id>
             <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
-            <ns3:extension>TSTNMT2321000156-1002</ns3:extension>
+            <ns3:extension>TSTNMT2321000156-102Q</ns3:extension>
           </vardgivare-id>
-          <vardgivarnamn>NMT vg1</vardgivarnamn>
+          <vardgivarnamn>NMT vg3</vardgivarnamn>
         </vardgivare>
       </enhet>
     </skapadAv>

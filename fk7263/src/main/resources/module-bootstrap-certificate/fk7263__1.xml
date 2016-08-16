@@ -11,21 +11,21 @@
       <ns2:fullstandigtNamn>Tolvan Tolvansson</ns2:fullstandigtNamn>
     </patient>
     <skapadAvHosPersonal>
-      <ns2:personal-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-103F"/>
-      <ns2:fullstandigtNamn>Leonie Koehl</ns2:fullstandigtNamn>
+      <ns2:personal-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1079"/>
+      <ns2:fullstandigtNamn>Arnold Schwarzenegger</ns2:fullstandigtNamn>
       <ns2:forskrivarkod>0000000</ns2:forskrivarkod>
       <ns2:enhet>
-        <ns2:enhets-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1039"/>
+        <ns2:enhets-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1077"/>
         <ns2:arbetsplatskod root="1.2.752.29.4.71" extension="1234567890"/>
-        <ns2:enhetsnamn>NMT vg1 ve2</ns2:enhetsnamn>
+        <ns2:enhetsnamn>NMT vg3 ve1</ns2:enhetsnamn>
         <ns2:postadress>NMT gata 2</ns2:postadress>
         <ns2:postnummer>12345</ns2:postnummer>
         <ns2:postort>Testhult</ns2:postort>
         <ns2:telefonnummer>0101112131415</ns2:telefonnummer>
         <ns2:epost>enhet2@webcert.invalid.se</ns2:epost>
         <ns2:vardgivare>
-          <ns2:vardgivare-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1002"/>
-          <ns2:vardgivarnamn>NMT vg1</ns2:vardgivarnamn>
+          <ns2:vardgivare-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-102Q"/>
+          <ns2:vardgivarnamn>NMT vg3</ns2:vardgivarnamn>
         </ns2:vardgivare>
       </ns2:enhet>
     </skapadAvHosPersonal>
