@@ -20,9 +20,9 @@
 angular.module('fk7263').controller('fk7263.QACtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$timeout', '$window', '$filter', 'common.dialogService',
         'fk7263.fragaSvarProxy', 'common.fragaSvarCommonService', 'common.statService',
-        'common.UserModel', 'fk7263.QACtrl.Helper', 'common.IntygViewStateService', 'common.ObjectHelper',
+        'common.UserModel', 'fk7263.QACtrl.Helper', 'common.IntygViewStateService', 'common.ObjectHelper', 'common.pingService',
         function($log, $rootScope, $stateParams, $scope, $timeout, $window, $filter, dialogService, fragaSvarProxy,
-            fragaSvarCommonService, statService, UserModel, qaHelper, CommonViewState, ObjectHelper) {
+            fragaSvarCommonService, statService, UserModel, qaHelper, CommonViewState, ObjectHelper, pingService) {
             'use strict';
 
             // init state
@@ -185,6 +185,10 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $scope.newQuestion.chosenTopic = $scope.newQuestion.topics[0]; // 'Välj ämne' is default
             };
             $scope.initQuestionForm();
+
+            $scope.onFrageTextChange = function() {
+                pingService.registerUserAction('fk7263-entering-fragetext');
+            };
 
             // listeners - interscope communication
             var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {

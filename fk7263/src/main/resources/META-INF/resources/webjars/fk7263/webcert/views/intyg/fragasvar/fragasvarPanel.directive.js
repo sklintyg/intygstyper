@@ -27,10 +27,10 @@
 angular.module('fk7263').directive('qaPanel',
     ['$window', '$log', '$timeout', '$state', '$stateParams', '$q',
         'common.UserModel', 'common.fragaSvarCommonService', 'fk7263.fragaSvarProxy',
-        'common.statService', 'common.dialogService', 'common.ObjectHelper', 'common.IntygCopyRequestModel', 'common.FocusElementService',
+        'common.statService', 'common.dialogService', 'common.ObjectHelper', 'common.IntygCopyRequestModel', 'common.FocusElementService', 'common.pingService',
         function($window, $log, $timeout, $state, $stateParams, $q,
             UserModel, fragaSvarCommonService, fragaSvarProxy, statService, dialogService, ObjectHelper,
-            IntygCopyRequestModel, FocusElement) {
+            IntygCopyRequestModel, FocusElement, pingService) {
             'use strict';
 
             return {
@@ -46,6 +46,10 @@ angular.module('fk7263').directive('qaPanel',
                     certProperties: '='
                 },
                 controller: function($scope, $element, $attrs) {
+
+                    $scope.$watch('qa.svarsText', function() {
+                        pingService.registerUserAction('fk7263-entering-svarstext');
+                    });
 
                     $scope.showAnswerField = false;
                     var kompletteringDialog = null;

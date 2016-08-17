@@ -30,6 +30,7 @@ describe('QACtrl', function() {
     var IntygService;
     var deferred;
     var ObjectHelper;
+    var pingService;
 
     var testCert = { 'id': 'intyg-2', 'typ': 'fk7263', 'grundData': {'signeringsdatum': '2012-12-23T21:00:00.000',
         'skapadAv': {'personId': 'hans', 'fullstandigtNamn': 'Hans Njurgren', 'vardenhet': {'enhetsid': 'dialys',
@@ -83,6 +84,8 @@ describe('QACtrl', function() {
             [ 'getQAForCertificate', 'closeAsHandled', 'closeAllAsHandled', 'saveNewQuestion', 'saveAnswer']);
         $provide.value('fk7263.fragaSvarProxy', fragaSvarService);
         $provide.value('common.IntygViewStateService', {});
+        pingService = jasmine.createSpyObj('common.pingService', [ 'registerUserAction']);
+        $provide.value('common.pingService', pingService);
         deferred = jasmine.createSpyObj('def', ['resolve']);
     }));
 
