@@ -42,5 +42,21 @@
     <beans>
         <bean class="se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil"></bean>
     </beans>
+    
+    <beans profile="dev,testability-api">
+        <jaxrs:server address="/fk-register-certificate-stub">
+            <jaxrs:serviceBeans>
+                <ref bean="fkRegisterCertificateStubRestApi" />
+            </jaxrs:serviceBeans>
+            <jaxrs:providers>
+                <ref bean="jacksonJsonProvider" />
+            </jaxrs:providers>
+            <jaxrs:extensionMappings>
+                <entry key="json" value="application/json" />
+            </jaxrs:extensionMappings>
+        </jaxrs:server>
+
+        <bean id="fkRegisterCertificateStubRestApi" class="se.inera.intyg.intygstyper.fkparent.integration.stub.FKRegisterCertificateResponderStubRestApi" />
+    </beans>
 
 </beans>
