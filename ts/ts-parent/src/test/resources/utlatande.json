@@ -1,0 +1,39 @@
+{
+    "grundData" : {
+        "signeringsdatum" : "2016-08-17T13:04:51.576",
+        "skapadAv" : {
+            "personId" : "19650708-1234",
+            "fullstandigtNamn" : "Karl Karlsson",
+            "forskrivarKod" : "09874321",
+            "befattningar" : ["Klinikchef", "Forskningsledare"],
+            "specialiteter" : ["1001"],
+            "vardenhet" : {
+                "enhetsid" : "123456789",
+                "enhetsnamn" : "VE1",
+                "postadress" : "Enhetsg. 1",
+                "postnummer" : "100 10",
+                "postort" : "Stadby",
+                "telefonnummer" : "0812341234",
+                "epost" : "ve1@vg1.se",
+                "vardgivare" : {
+                    "vardgivarid" : "12345678",
+                    "vardgivarnamn" : "VG1"
+                },
+                "arbetsplatsKod" : "45312"
+            }
+        },
+        "patient" : {
+            "personId" : "19270310-4321",
+            "fullstandigtNamn" : "Olivia Olsson",
+            "fornamn" : "Olivia",
+            "efternamn" : "Olsson",
+            "postadress" : "Pgatan 2",
+            "postnummer" : "100 20",
+            "postort" : "Stadby gärde",
+            "samordningsNummer" : false
+        }
+    },
+    "id" : "test-id",
+    "typ" : "testTyp",
+    "textVersion" : "1.0"
+}
