@@ -193,7 +193,7 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
             request = internalToTransport(getInternal(internalModel));
         } catch (ConverterException e) {
             LOG.error("Failed to convert to transport format during registerCertificate", e);
-            throw new ExternalServiceCallException("Failed to convert to transport format during registerCertificate", e);
+            throw new ModuleConverterException("Failed to convert to transport format during registerCertificate", e);
         }
 
         RegisterCertificateResponseType response2 = registerCertificateResponderInterface.registerCertificate(logicalAddress, request);

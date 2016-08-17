@@ -55,9 +55,8 @@ import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
-import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.lisu.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.lisu.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
@@ -282,7 +281,7 @@ public class LisuModuleApiTest {
         fail();
     }
 
-    @Test(expected = ExternalServiceCallException.class)
+    @Test(expected = ModuleConverterException.class)
     public void testRegisterCertificateShouldThrowExceptionOnBadCertificate() throws Exception {
         final String logicalAddress = "logicalAddress";
         final String internalModel = "internal model";

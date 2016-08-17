@@ -293,7 +293,7 @@ public class FkParentModuleApiTest {
         moduleApi.registerCertificate(json, LOGICAL_ADDRESS);
     }
 
-    @Test(expected = ExternalServiceCallException.class)
+    @Test(expected = ModuleConverterException.class)
     public void testRegisterCertificateConverterException() throws Exception {
         doThrow(new ConverterException()).when(moduleApi).internalToTransport(any(Utlatande.class));
 
