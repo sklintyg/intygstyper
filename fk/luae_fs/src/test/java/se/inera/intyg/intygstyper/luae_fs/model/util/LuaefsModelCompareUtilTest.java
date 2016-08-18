@@ -62,6 +62,15 @@ public class LuaefsModelCompareUtilTest {
     }
 
     @Test
+    public void testModelIsValidDiagnoskodIsBlank() throws Exception {
+        LuaefsUtlatande utlatandeOld = getUtlatandeFromFile("utlatande");
+        Builder builder = utlatandeOld.toBuilder();
+        LuaefsUtlatande utlatandeNew = builder.setDiagnoser(Arrays.asList(Diagnos.create("", "KSH_97_P", "", ""))).build();
+        
+        assertTrue(modelCompareUtil.isValidForNotification(utlatandeNew));
+    }
+
+    @Test
     public void testModelIsValidDiagnoskodChanged() throws Exception {
         LuaefsUtlatande utlatandeOld = getUtlatandeFromFile("utlatande");
         Builder builder = utlatandeOld.toBuilder();

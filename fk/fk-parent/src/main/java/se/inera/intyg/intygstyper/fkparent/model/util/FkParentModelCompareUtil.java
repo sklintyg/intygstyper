@@ -19,6 +19,7 @@
 
 package se.inera.intyg.intygstyper.fkparent.model.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.intyg.common.support.model.InternalDate;
@@ -54,6 +55,10 @@ public abstract class FkParentModelCompareUtil {
     }
 
     private boolean diagnoseCodeValid(Diagnos diagnosKod) {
-        return moduleService.validateDiagnosisCode(diagnosKod.getDiagnosKod(), diagnosKod.getDiagnosKodSystem());
+        if (StringUtils.isBlank(diagnosKod.getDiagnosKod())) {
+            return true;
+        } else {
+            return moduleService.validateDiagnosisCode(diagnosKod.getDiagnosKod(), diagnosKod.getDiagnosKodSystem());
+        }
     }
 }
