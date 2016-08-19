@@ -50,6 +50,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
+import se.inera.intyg.common.support.model.LocalDateInterval;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
@@ -87,15 +88,6 @@ public class Fk7263ModuleApiTest {
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
-    @Test
-    public void testPdfFileName() {
-        Utlatande intyg = new Utlatande();
-        se.inera.intyg.common.support.model.common.internal.Patient patient = new se.inera.intyg.common.support.model.common.internal.Patient();
-        patient.setPersonId(new Personnummer("19121212-1212"));
-        intyg.getGrundData().setPatient(patient);
-        // TODO Create a proper test when model has been updated.
-        // assertEquals("lakarutlatande_19121212-1212_20110124-20110331.pdf", fk7263ModuleApi.pdfFileName(intyg));
-    }
 
     @Test
     public void updateChangesHosPersonalInfo() throws IOException, ModuleException {

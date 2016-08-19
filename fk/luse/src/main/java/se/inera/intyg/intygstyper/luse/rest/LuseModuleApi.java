@@ -52,7 +52,7 @@ public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
     }
 
     @Override
-    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, List<String> optionalFields)
             throws ModuleException {
         // TODO
         return null;
