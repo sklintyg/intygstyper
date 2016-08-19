@@ -18,18 +18,67 @@
  */
 
 angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
-        'common.IntygService', 'common.dialogService', 'common.messageService',
-        function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService, dialogService,
-            messageService) {
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
+        function($location, $log, $rootScope, $stateParams, $scope, IntygService, messageService, ViewState) {
             'use strict';
 
-            $scope.cert = {};
-            $rootScope.cert = {};
+            // Setup default checkbox model in case of refresh
 
+            if (ViewState.checkboxModel == undefined) {
+                ViewState.checkboxModel = {
+                    fields : {
+                        'field1'    : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field2'    : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field3'    : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field4'    : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field4b'   : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field5'    : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field6a_1' : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field6a_2' : { 'id': '', 'mandatory':true,  'vald':true },
+                        'field6b'   : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field7'    : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field8a'   : { 'id': '', 'mandatory':true,  'vald':true },
+                        'field8b'   : { 'id': '', 'mandatory':true,  'vald':true },
+                        'field9'    : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field10'   : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field11'   : { 'id': '', 'mandatory':true,  'vald':true },
+                        'field12'   : { 'id': '', 'mandatory':false, 'vald':true },
+                        'field13'   : { 'id': '', 'mandatory':false, 'vald':true }
+                    }
+                };
+
+                ViewState.checkboxModel.allItemsSelected = true;
+            }
+
+            $scope.viewState = ViewState;
             $scope.messageService = messageService;
-
+            $scope.visibleStatuses = [ 'SENT' ];
             $scope.doneLoading = false;
+            $scope.acceptProgressDone = true;
+            $scope.downloadSuccess = false;
+
+
+            $scope.field5Tooltip = messageService.getProperty("fk7263.customize.message.limitation");
+
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
+
+            $scope.submitPdf = function() {
+                $scope.acceptProgressDone = false;
+
+                document.getElementById("view-as-pdf").submit(); // Form submission
+                $scope.downloadSuccess = true;
+            };
+
+            $scope.backToCustomizeCertificate = function() {
+                $location.path('/fk7263/customize/' + $stateParams.certificateId);
+            };
+
+            $scope.backToInbox = function() {
+                $location.path('/web/start/#/');
+            };
+
+
+            // Load certificate
 
             $scope.filterStatuses = function(statuses) {
                 var result = [];
@@ -53,26 +102,24 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                 return false;
             };
 
-            // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
-
-            $scope.backToCustomizeCertificate = function() {
-                $location.path('/fk7263/customize/' + $stateParams.certificateId);
-            };
-
-            IntygService.getCertificate('fk7263', $stateParams.certificateId, function(result) {
+            if (ViewState.cert == undefined) {
+                IntygService.getCertificate(ViewState.common.intygProperties.type, $stateParams.certificateId,
+                    function(result) {
+                        $scope.doneLoading = true;
+                        if (result !== null) {
+                            ViewState.cert = result.utlatande;
+                            ViewState.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
+                            $rootScope.cert = ViewState.cert;
+                        } else {
+                            // show error view
+                            $location.path('/visafel/certnotfound');
+                        }
+                    }, function() {
+                        $log.debug('got error');
+                    });
+            } else {
                 $scope.doneLoading = true;
-                if (result !== null) {
-                    $scope.cert = result.utlatande;
-                    $scope.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
-                    $rootScope.cert = $scope.cert;
-                } else {
-                    // show error view
-                    $location.path('/visafel/certnotfound');
-                }
-            }, function() {
-                $log.debug('got error');
-            });
+            }
 
             $scope.pagefocus = true;
         }]);

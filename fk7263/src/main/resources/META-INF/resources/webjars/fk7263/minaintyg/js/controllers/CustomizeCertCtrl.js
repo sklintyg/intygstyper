@@ -18,72 +18,70 @@
  */
 
 angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
-        'common.IntygService', 'common.dialogService', 'common.messageService',
-        function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService, dialogService,
-            messageService) {
+    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
+        function($location, $log, $rootScope, $stateParams, $scope, IntygService, messageService, ViewState) {
             'use strict';
 
-            $scope.cert = {};
-            $rootScope.cert = {};
+            // Setup checkbox model
 
-            $scope.messageService = messageService;
+            if (ViewState.checkboxModel == undefined) {
+                ViewState.checkboxModel = {
+                    fields : {
+                        'field1'    : { 'id': 'smittskydd', 'mandatory':false, 'vald':true },
+                        'field2'    : { 'id': 'diagnos', 'mandatory':false, 'vald':true },
+                        'field3'    : { 'id': 'sjukdomsforlopp', 'mandatory':false, 'vald':true },
+                        'field4'    : { 'id': 'funktionsnedsattning', 'mandatory':false, 'vald':true },
+                        'field4b'   : { 'id': 'undersokning', 'mandatory':false, 'vald':true },
+                        'field5'    : { 'id': 'aktivitetsbegransning', 'mandatory':false, 'vald':true },
+                        'field6a_1' : { 'id': 'rekommendation', 'mandatory':false, 'vald':true },
+                        'field6a_2' : { 'id': 'rekommendation', 'mandatory':true,  'vald':true },
+                        'field6b'   : { 'id': 'atgard', 'mandatory':false, 'vald':true },
+                        'field7'    : { 'id': 'rehabilitering', 'mandatory':false, 'vald':true },
+                        'field8a'   : { 'id': 'arbetsformaga', 'mandatory':true,  'vald':true },
+                        'field8b'   : { 'id': 'nedsattninggrad', 'mandatory':true,  'vald':true },
+                        'field9'    : { 'id': 'prognos', 'mandatory':false, 'vald':true },
+                        'field10'   : { 'id': 'bedomning', 'mandatory':false, 'vald':true },
+                        'field11'   : { 'id': 'ressatt', 'mandatory':true,  'vald':true },
+                        'field12'   : { 'id': 'kontakt', 'mandatory':false, 'vald':true },
+                        'field13'   : { 'id': 'ovrigt', 'mandatory':false, 'vald':true }
+                    }
+                };
 
+                ViewState.checkboxModel.allItemsSelected = true;
+            }
+
+            $scope.viewState = ViewState;
             $scope.doneLoading = false;
-
-            $scope.send = function() {
-                $location.path('/fk7263/recipients').search({ module: 'fk7263', defaultRecipient: 'FK'});
-            };
-
+            $scope.messageService = messageService;
             $scope.visibleStatuses = [ 'SENT' ];
 
-            $scope.dialog = {
-                acceptprogressdone: true,
-                focus: false
+
+            // Navigation
+
+            $scope.backToViewCertificate = function() {
+                ViewState.checkboxModel = undefined;
+                $location.path('/fk7263/view/' + $stateParams.certificateId);
             };
 
-            var archiveDialog = {};
+            $scope.confirmCertificateCustomization = function() {
+                $location.path('/fk7263/customize/' + $stateParams.certificateId + '/summary');
+            };
 
-            $scope.archiveSelected = function() {
-                var item = $scope.cert;
-                $log.debug('archive ' + item.id);
-                $scope.dialog.acceptprogressdone = false;
-                IntygListService.archiveCertificate(item, function(fromServer, oldItem) {
-                    $log.debug('statusUpdate callback:' + fromServer);
-                    if (fromServer !== null) {
-                        // Better way to update the object?
-                        oldItem.archived = fromServer.archived;
-                        oldItem.status = fromServer.status;
-                        oldItem.selected = false;
-                        archiveDialog.close();
-                        $scope.dialog.acceptprogressdone = true;
-                        $location.path('#/start');
-                    } else {
-                        // show error view
-                        $location.path('/fk7263/fel/couldnotarchivecert');
+
+            // Functionality
+
+            // Fired when the select all checkbox is changed
+            $scope.selectAll = function () {
+                for (var key in ViewState.checkboxModel.fields) {
+                    var field = ViewState.checkboxModel.fields[key];
+                    if (field.mandatory == false) {
+                        field.vald = ViewState.checkboxModel.allItemsSelected;
                     }
-                });
+                }
             };
 
-            // Archive dialog
-            $scope.certToArchive = {};
 
-            $scope.openArchiveDialog = function(cert) {
-                $scope.certToArchive = cert;
-                $scope.dialog.focus = true;
-                archiveDialog = dialogService.showDialog($scope, {
-                    dialogId: 'archive-confirmation-dialog',
-                    titleId: 'inbox.archivemodal.header',
-                    bodyTextId: 'inbox.archivemodal.text',
-                    button1click: function() {
-                        $log.debug('archive');
-                        $scope.archiveSelected();
-                    },
-                    button1id: 'archive-button',
-                    button1text: 'button.archive',
-                    autoClose: false
-                });
-            };
+            // Load certificate
 
             $scope.filterStatuses = function(statuses) {
                 var result = [];
@@ -107,34 +105,24 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
                 return false;
             };
 
-            $scope.showStatusHistory = function() {
-                $location.path('/fk7263/statushistory');
-            };
-
-            $scope.backToViewCertificate = function() {
-                $location.path('/fk7263/view/' + $stateParams.certificateId);
-            };
-
-            $scope.confirmCertificateCustomization = function() {
-                $location.path('/fk7263/customize/' + $stateParams.certificateId + '/summary');
-            };
-
-            // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
-
-            IntygService.getCertificate('fk7263', $stateParams.certificateId, function(result) {
+            if (ViewState.cert == undefined) {
+                IntygService.getCertificate(ViewState.common.intygProperties.type, $stateParams.certificateId,
+                    function(result) {
+                        $scope.doneLoading = true;
+                        if (result !== null) {
+                            ViewState.cert = result.utlatande;
+                            ViewState.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
+                            $rootScope.cert = ViewState.cert;
+                        } else {
+                            // show error view
+                            $location.path('/visafel/certnotfound');
+                        }
+                    }, function() {
+                        $log.debug('got error');
+                    });
+            } else {
                 $scope.doneLoading = true;
-                if (result !== null) {
-                    $scope.cert = result.utlatande;
-                    $scope.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
-                    $rootScope.cert = $scope.cert;
-                } else {
-                    // show error view
-                    $location.path('/visafel/certnotfound');
-                }
-            }, function() {
-                $log.debug('got error');
-            });
+            }
 
             $scope.pagefocus = true;
         }]);

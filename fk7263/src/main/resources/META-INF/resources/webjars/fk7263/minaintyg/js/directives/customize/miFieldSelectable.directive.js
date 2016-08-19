@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('fk7263').directive('miFieldMandatory',
+angular.module('fk7263').directive('miFieldSelectable',
     function() {
         'use strict';
 
@@ -29,9 +29,9 @@ angular.module('fk7263').directive('miFieldMandatory',
                 fieldNumber: '@',
                 fieldLabel: '@',
                 fieldDynamicLabel: '@',
-                mandatory: '=?',
+                fieldModel: '=',
                 filled: '=?'
             },
-            templateUrl: '/web/webjars/fk7263/minaintyg/js/directives/customize/miFieldMandatory.directive.html'
+            templateUrl: '/web/webjars/fk7263/minaintyg/js/directives/customize/miFieldSelectable.directive.html'
         };
     });

@@ -56,6 +56,7 @@ var fk7263Messages = {
         'fk7263.customize.step.2.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 2 av 2',
         'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Ladda ner/Skriva ut.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra mina val.</p>',
         'fk7263.customize.step.2.fishbone': 'Sammanfattning',
+        'fk7263.customize.message.limitation': 'Informationen i fält 5 är frivillig, men informationen kan underlätta arbetsgivarens möjlighet att göra arbetsanpassningar.',
 
         'fk7263.inbox.complementaryinfo': 'Intygsperiod',
 

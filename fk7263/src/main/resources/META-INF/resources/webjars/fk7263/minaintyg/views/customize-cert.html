@@ -1,14 +1,9 @@
 <div class="row-fluid">
-  <div id="backnav" class="row-fluid">
-    <a class="backlink" href="/web/start/#/"> <span message key="fk7263.button.goback"></span>
-    </a>
-  </div>
-
   <div mi-spinner label="fk7263.message.certificateloading" show-spinner="!doneLoading" show-content="doneLoading">
 
     <!-- Content -->
     <div class="row">
-      <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h1 ng-focus="pagefocus" tabindex="-1">
           <span message key="fk7263.customize.step.1.pagetitle"></span>
         </h1>
@@ -25,8 +20,18 @@
         </p>
       </div>
     </div>
+
+    <br/>
+
+    <div class="alert alert-info float-r">
+      <label>
+         <span>Markera/avmarkera alla icke-obligatoriska fält&nbsp;&nbsp;</span>
+         <span><input type="checkbox" ng-model="viewState.checkboxModel.allItemsSelected" ng-change="selectAll()"></span>
+      </label>
+    </div>
+
     <div id="certificate" class="certificate">
-      <span class="hide" id="certId" title="{{cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>
+      <span class="hide" id="certId" title="{{viewState.cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>
 
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -45,7 +50,7 @@
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 issue">
                   <span>Utfärdat:&nbsp;</span>
-                  <span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'shortDate'}}</span>
+                  <span class="cert-titlebar-value">{{viewState.cert.grundData.signeringsdatum | date:'shortDate'}}</span>
                 </div>
 				        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mandatory">
                   <span class="float-r">
@@ -61,35 +66,35 @@
                   <h3 class="tag">
                     <span message key="fk7263.label.patientname"></span>
                   </h3>
-                  <span id="patient-name">{{cert.grundData.patient.fullstandigtNamn}}</span><br />
+                  <span id="patient-name">{{viewState.cert.grundData.patient.fullstandigtNamn}}</span><br />
                   <h3 class="tag">
                     <span message key="fk7263.label.civicnumber"></span>
                   </h3>
-                  <span id="patient-crn">{{cert.grundData.patient.personId}}</span>
+                  <span id="patient-crn">{{viewState.cert.grundData.patient.personId}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   <h3 class="tag">
                     <span message key="fk7263.label.nedsattning"></span>
                   </h3>
 
-                  <div ng-if="cert.nedsattMed25 != null" id="nedsattMed25">
+                  <div ng-if="viewState.cert.nedsattMed25 != null" id="nedsattMed25">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_4"></span><br>
-                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed25.from | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed25.tom | date:'longDate'}} </span>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{viewState.cert.nedsattMed25.from | date:'longDate'}} &ndash; längst till och med {{viewState.cert.nedsattMed25.tom | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-if="cert.nedsattMed50 != null" id="nedsattMed50">
+                  <div ng-if="viewState.cert.nedsattMed50 != null" id="nedsattMed50">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_1_2"></span><br>
-                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed50.from | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed50.tom | date:'longDate'}} </span>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{viewState.cert.nedsattMed50.from | date:'longDate'}} &ndash; längst till och med {{viewState.cert.nedsattMed50.tom | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-if="cert.nedsattMed75 != null" id="nedsattMed75">
+                  <div ng-if="viewState.cert.nedsattMed75 != null" id="nedsattMed75">
                     <span message key="fk7263.nedsattningsgrad.nedsatt_med_3_4"></span><br>
-                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed75.from | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed75.tom | date:'longDate'}} </span>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{viewState.cert.nedsattMed75.from | date:'longDate'}} &ndash; längst till och med {{viewState.cert.nedsattMed75.tom | date:'longDate'}} </span>
                   </div>
 
-                  <div ng-if="cert.nedsattMed100 != null" id="nedsattMed100">
+                  <div ng-if="viewState.cert.nedsattMed100 != null" id="nedsattMed100">
                     <span message key="fk7263.nedsattningsgrad.helt_nedsatt"></span><br>
-                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{cert.nedsattMed100.from | date:'longDate'}} &ndash; längst till och med {{cert.nedsattMed100.tom | date:'longDate'}} </span>
+                    <span style="font-weight: normal; font-size: 13px; color: #333">Från och med {{viewState.cert.nedsattMed100.from | date:'longDate'}} &ndash; längst till och med {{viewState.cert.nedsattMed100.tom | date:'longDate'}} </span>
                   </div>
 
                 </div>
@@ -99,20 +104,13 @@
                   <h3 class="tag">
                     <span message key="fk7263.label.unit"></span>
                   </h3>
-                  <span id="careunit">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span>
+                  <span id="careunit">{{viewState.cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                   <h3 class="tag">
                     <span message key="fk7263.label.issuer"></span>
                   </h3>
-                  <span id="caregiver">{{cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
-                </div>
-              </div>
-              <div class="row ">
-                <div class="col-xs-12 hidden-sm hidden-md hidden-lg header-row">
-           		  <button type="button" class="btn btn-primary pull-right" ata-toggle="modal" title="{{messageService.getProperty('button.alt.archive')}}" ng-click="openArchiveDialog(cert)">
-             		<span class="glyphicon glyphicon-folder-close white"></span>
-             	  </button>
+                  <span id="caregiver">{{viewState.cert.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</span>
                 </div>
               </div>
             </div>
@@ -120,166 +118,186 @@
             <div class="table-bottom"></div>
 
             <div class="cert-body">
-
-              <div mi-field-mandatory field-number="1" field-label="fk7263.label.smittskydd" mandatory="false" filled="true">
-                <span ng-show="cert.avstangningSmittskydd">
+              <div mi-field-selectable field-number="1" field-label="fk7263.label.smittskydd" field-model="viewState.checkboxModel.fields.field1" filled="true">
+                <span ng-show="viewState.cert.avstangningSmittskydd">
                   <span id="smittskydd-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span ng-show="!cert.avstangningSmittskydd">
+                <span ng-show="!viewState.cert.avstangningSmittskydd">
                   <span id="smittskydd-no" message key="fk7263.label.no"></span>
                 </span>
               </div>
 
-              <div mi-field-mandatory field-number="2" field-label="fk7263.label.diagnosis" mandatory="false" filled="cert.diagnosKod">
+              <div mi-field-selectable field-number="2" field-label="fk7263.label.diagnosis" field-model="viewState.checkboxModel.fields.field2" filled="viewState.cert.diagnosKod">
                 <div class="form-group">
                   <span class="tag">
                     <span message key="fk7263.label.diagnosisCode"></span>
                   </span>
-                  <span id="diagnosKod">{{cert.diagnosKod}}</span>
+                  <span id="diagnosKod">{{viewState.cert.diagnosKod}}</span>
                 </div>
 
-                <div class="form-group" ng-show="cert.diagnosBeskrivning">
+                <div class="form-group" ng-show="viewState.cert.diagnosBeskrivning">
                   <label class="control-label bold">
                     <span message key="fk7263.label.diagnosfortydligande"></span>
                   </label>
                   <div class="controls">
-                    <div id="diagnosBeskrivning" class="multiline">{{cert.diagnosBeskrivning}}</div>
+                    <div id="diagnosBeskrivning" class="multiline">{{viewState.cert.diagnosBeskrivning}}</div>
                   </div>
                 </div>
               </div>
 
-              <div mi-field-mandatory field-number="3" field-label="fk7263.label.progressofdesease" mandatory="false" filled="cert.sjukdomsforlopp!=null">
-                <div id="sjukdomsforlopp" class="multiline">{{cert.sjukdomsforlopp}}</div>
+              <div mi-field-selectable field-number="3" field-label="fk7263.label.progressofdesease" field-model="viewState.checkboxModel.fields.field3" filled="viewState.cert.sjukdomsforlopp!=null">
+                <div id="sjukdomsforlopp" class="multiline">{{viewState.cert.sjukdomsforlopp}}</div>
               </div>
 
-              <div mi-field-mandatory field-number="4" field-label="fk7263.label.disabilities" mandatory="false" filled="cert.funktionsnedsattning!=null">
-                <div id="funktionsnedsattning" class="multiline">{{cert.funktionsnedsattning}}</div>
+              <div mi-field-selectable field-number="4" field-label="fk7263.label.disabilities" field-model="viewState.checkboxModel.fields.field4" filled="viewState.cert.funktionsnedsattning!=null">
+                <div id="funktionsnedsattning" class="multiline">{{viewState.cert.funktionsnedsattning}}</div>
               </div>
 
-              <div mi-field-mandatory field-number="4b" field-label="fk7263.label.basedon" mandatory="false" filled="cert.undersokningAvPatienten!=null || telefonkontaktMedPatienten!=null || cert.journaluppgifter!=null || cert.annanReferens!=null">
-                <ul class="padded-list">
-                  <li ng-show="cert.undersokningAvPatienten!=null">
-                    <div id="undersokningAvPatienten">
-                      <span message key="fk7263.vardkontakt.undersokning"></span><span> {{cert.undersokningAvPatienten | date:'longDate' }}</span>
+              <div mi-field-selectable field-number="4b" field-label="fk7263.label.basedon" field-model="viewState.checkboxModel.fields.field4b" filled="viewState.cert.undersokningAvPatienten!=null || viewState.cert.telefonkontaktMedPatienten!=null || viewState.cert.journaluppgifter!=null || viewState.cert.annanReferens!=null">
+                <div class="tbl">
+                  <div id="undersokningAvPatienten" class="tbl-row" ng-show="viewState.cert.undersokningAvPatienten!=null">
+                    <div class="tbl-col-l"><span message key="fk7263.vardkontakt.undersokning"></span></div>
+                    <div class="tbl-col-r"><span>{{viewState.cert.undersokningAvPatienten | date:'longDate' }}</span></div>
+                  </div>
+                  <div id="telefonkontaktMedPatienten" class="tbl-row" ng-show="viewState.cert.telefonkontaktMedPatienten!=null">
+                    <div class="tbl-col-l"><span message key="fk7263.vardkontakt.telefonkontakt"></div>
+                    <div class="tbl-col-r"><span>{{viewState.cert.telefonkontaktMedPatienten | date:'longDate' }}</span></div>
+                  </div>
+                  <div id="journaluppgifter" class="tbl-row" ng-show="viewState.cert.journaluppgifter!=null">
+                    <div class="tbl-col-l"><span message key="fk7263.referens.journal"></span></div>
+                    <div class="tbl-col-r"><span>{{viewState.cert.journaluppgifter | date:'longDate' }}</span></div>
+                  </div>
+                  <div id="annanReferens" class="tbl-row" ng-show="viewState.cert.annanReferens!=null">
+                    <div class="tbl-col-l"><span message key="fk7263.referens.annat"></span></div>
+                    <div class="tbl-col-r"><span>{{viewState.cert.annanReferens | date:'longDate' }}</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div mi-field-selectable field-number="5" field-label="fk7263.label.limitation" field-model="viewState.checkboxModel.fields.field5" filled="viewState.cert.aktivitetsbegransning!=null">
+                <div id="aktivitetsbegransning-warning" class="alert alert-warning" ng-show="viewState.checkboxModel.fields.field5.vald==false">
+                  <span message key="fk7263.customize.message.limitation"></span>
+                </div>
+                <div id="aktivitetsbegransning" class="multiline">{{viewState.cert.aktivitetsbegransning}}</div>
+              </div>
+
+              <div mi-field-selectable field-number="6a" field-label="fk7263.label.recommendations" field-model="viewState.checkboxModel.fields.field6a_1" filled="viewState.cert.rekommendationKontaktArbetsformedlingen || viewState.cert.rekommendationOvrigt != null">
+                <div class="tbl">
+                  <div id="rekommendationKontaktArbetsformedlingen" class="tbl-row">
+                    <div class="tbl-col-l">
+                      <span message key="fk7263.label.recommendations.contact.jobcenter"></span>
                     </div>
-                  </li>
-                  <li ng-show="cert.telefonkontaktMedPatienten!=null">
-                    <div id="telefonkontaktMedPatienten">
-                      <span message key="fk7263.vardkontakt.telefonkontakt"></span><span> {{cert.telefonkontaktMedPatienten | date:'longDate' }}</span>
+                    <div class="tbl-col-r">
+                      <span ng-if="viewState.cert.rekommendationKontaktArbetsformedlingen">JA</span>
+                      <span ng-if="!viewState.cert.rekommendationKontaktArbetsformedlingen">NEJ</span>
                     </div>
-                  </li>
-                  <li ng-show="cert.journaluppgifter!=null">
-                    <div id="journaluppgifter">
-                      <span message key="fk7263.referens.journal"></span><span> {{cert.journaluppgifter | date:'longDate' }}</span>
+                  </div>
+                  <div id="rekommendationOvrigt" class="tbl-row">
+                    <div class="tbl-col-l">
+                      <span message key="fk7263.label.recommendations.contact.other"></span>
                     </div>
-                  </li>
-                  <li ng-show="cert.annanReferens!=null">
-                    <div id="annanReferens">
-                      <span message key="fk7263.referens.annat"></span><span> {{cert.annanReferens | date:'longDate' }}</span>
+                    <div class="tbl-col-r">
+                      <span ng-if="viewState.cert.rekommendationOvrigt.length > 0" class="multiline">{{viewState.cert.rekommendationOvrigt}}</span>
+                      <span ng-if="viewState.cert.rekommendationOvrigt.length == 0">Ej angivet</span>
                     </div>
-                  </li>
-                </ul>
+                  </div>
+                </div>
               </div>
 
-              <div mi-field-mandatory field-number="5" field-label="fk7263.label.limitation" mandatory="false" filled="cert.aktivitetsbegransning!=null">
-                <div id="aktivitetsbegransning" class="multiline">{{cert.aktivitetsbegransning}}</div>
+              <div mi-field-selectable field-number="6a" field-label="fk7263.label.recommendations" field-model="viewState.checkboxModel.fields.field6a_2" filled="viewState.cert.rekommendationKontaktForetagshalsovarden">
+                <div class="tbl">
+                  <div id="rekommendationKontaktForetagshalsovarden" class="tbl-row">
+                    <div class="tbl-col-l">
+                      <span message key="fk7263.label.recommendations.contact.healthdepartment"></span>
+                    </div>
+                    <div class="tbl-col-r">
+                      <span ng-if="viewState.cert.rekommendationKontaktForetagshalsovarden">JA</span>
+                      <span ng-if="!viewState.cert.rekommendationKontaktForetagshalsovarden">NEJ</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div mi-field-mandatory field-number="6a" field-label="fk7263.label.recommendations" mandatory="true" filled="cert.rekommendationKontaktArbetsformedlingen|| cert.rekommendationKontaktForetagshalsovarden || cert.rekommendationOvrigt!=null">
-                <ul class="padded-list">
-                  <li ng-show="cert.rekommendationKontaktArbetsformedlingen">
-                    <span id="rekommendationKontaktArbetsformedlingen" message key="fk7263.label.recommendations.contact.jobcenter"></span></li>
-                  <li ng-show="cert.rekommendationKontaktForetagshalsovarden">
-                    <span id="rekommendationKontaktForetagshalsovarden" message key="fk7263.label.recommendations.contact.healthdepartment"></span></li>
-                  <li ng-show="cert.rekommendationOvrigt.length > 0">
-                    <span message key="fk7263.label.recommendations.contact.other"></span>
-                    <div id="rekommendationOvrigt" class="multiline">{{cert.rekommendationOvrigt}}</div>
-                  </li>
-                </ul>
+              <div mi-field-selectable field-number="6b" field-label="fk7263.label.plannedtreatment" field-model="viewState.checkboxModel.fields.field6b" filled="viewState.cert.atgardInomSjukvarden || viewState.cert.annanAtgard">
+                <div class="tbl">
+                  <div id="atgardSjukvard" class="tbl-row" ng-show="viewState.cert.atgardInomSjukvarden != null">
+                    <div class="tbl-col-l"><span message key="fk7263.label.plannedtreatment.healthcare"></span></div>
+                    <div class="tbl-col-r multiline">{{viewState.cert.atgardInomSjukvarden}}</div>
+                  </div>
+                  <div id="atgardAnnan" class="tbl-row" ng-show="viewState.cert.annanAtgard != null">
+                    <div class="tbl-col-l"><span message key="fk7263.label.plannedtreatment.other"></span></div>
+                    <div class="tbl-col-r multiline">{{viewState.cert.annanAtgard}}</div>
+                  </div>
+                </div>
               </div>
 
-              <div mi-field-mandatory field-number="6b" field-label="fk7263.label.plannedtreatment" mandatory="false" filled="cert.atgardInomSjukvarden||cert.annanAtgard">
-                <ul class="padded-list">
-                  <li ng-show="cert.atgardInomSjukvarden != null">
-                    <span message key="fk7263.label.plannedtreatment.healthcare"></span>
-                    <div id="atgardSjukvard" class="multiline">{{cert.atgardInomSjukvarden}}</div></li>
-                  <li ng-show="cert.annanAtgard != null">
-                    <span message key="fk7263.label.plannedtreatment.other"></span>
-                    <div id="atgardAnnan" class="multiline">{{cert.annanAtgard}}</div></li>
-                </ul>
-              </div>
-
-              <div mi-field-mandatory field-number="7" field-label="fk7263.label.workrehab" mandatory="false" filled="cert.rehabilitering">
-                <span ng-show="cert.rehabilitering == 'rehabiliteringAktuell'">
+              <div mi-field-selectable field-number="7" field-label="fk7263.label.workrehab" field-model="viewState.checkboxModel.fields.field7" filled="viewState.cert.rehabilitering">
+                <span ng-show="viewState.cert.rehabilitering == 'rehabiliteringAktuell'">
                   <span id="rehabilitering-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span ng-show="cert.rehabilitering == 'rehabiliteringEjAktuell'">
+                <span ng-show="viewState.cert.rehabilitering == 'rehabiliteringEjAktuell'">
                   <span id="rehabilitering-no" message key="fk7263.label.no"></span>
                 </span>
-                <span ng-show="cert.rehabilitering == 'rehabiliteringGarInteAttBedoma'">
+                <span ng-show="viewState.cert.rehabilitering == 'rehabiliteringGarInteAttBedoma'">
                   <span id="rehabilitering-unjudgeable" message key="fk7263.label.unjudgeable"></span>
                 </span>
               </div>
 
-              <div mi-field-mandatory field-number="8a" field-label="fk7263.label.patientworkcapacity" mandatory="false" filled="cert.nuvarandeArbetsuppgifter||cert.arbetsloshet||cert.foraldrarledighet">
-                <ul class="padded-list">
-                  <li ng-show="cert.nuvarandeArbetsuppgifter">
-                    <span message key="fk7263.label.patientworkcapacity.currentwork"></span>
-                    <div id="nuvarandeArbetsuppgifter" class="multiline">{{cert.nuvarandeArbetsuppgifter}}</div></li>
-                  <li ng-show="cert.arbetsloshet">
-                    <span id="arbetslos" message key="fk7263.label.patientworkcapacity.unemployed"></span>
-                  </li>
-                  <li ng-show="cert.foraldrarledighet">
-                    <span id="foraldraledig" message key="fk7263.label.patientworkcapacity.parentalleave"></span>
-                  </li>
-                </ul>
+              <div mi-field-selectable field-number="8a" field-label="fk7263.label.patientworkcapacity" field-model="viewState.checkboxModel.fields.field8a" filled="viewState.cert.nuvarandeArbetsuppgifter || viewState.cert.arbetsloshet || viewState.cert.foraldrarledighet">
+                <div class="tbl">
+                  <div id="nuvarandeArbetsuppgifter" class="tbl-row" ng-show="viewState.cert.nuvarandeArbetsuppgifter">
+                    <div class="tbl-col-l"><span message key="fk7263.label.patientworkcapacity.currentwork"></span></div>
+                    <div class="tbl-col-r multiline">{{viewState.cert.nuvarandeArbetsuppgifter}}</div>
+                  </div>
+                  <div id="arbetslos" class="tbl-row" ng-show="viewState.cert.arbetsloshet">
+                    <div class="tbl-col-l"><span message key="fk7263.label.patientworkcapacity.unemployed"></span></div>
+                  </div>
+                  <div id="foraldraledig" class="tbl-row" ng-show="viewState.cert.foraldrarledighet">
+                    <div class="tbl-col-l"><span message key="fk7263.label.patientworkcapacity.parentalleave"></span></div>
+                  </div>
+                </div>
               </div>
 
-              <div mi-field-mandatory field-number="9" field-label="fk7263.label.patientworkcapacityjudgement" mandatory="false" filled="cert.arbetsformagaPrognos!=null">
-                <div id="arbetsformagaPrognos" class="multiline">{{cert.arbetsformagaPrognos}}</div>
+              <div mi-field-selectable field-number="9" field-label="fk7263.label.patientworkcapacityjudgement" field-model="viewState.checkboxModel.fields.field9" filled="viewState.cert.arbetsformagaPrognos != null">
+                <div id="arbetsformagaPrognos" class="multiline">{{viewState.cert.arbetsformagaPrognos}}</div>
               </div>
 
-              <div mi-field-mandatory field-number="10" field-label="fk7263.label.prognosis" mandatory="true" filled="cert.prognosBedomning">
-                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJa'">
+              <div mi-field-selectable field-number="10" field-label="fk7263.label.prognosis" field-model="viewState.checkboxModel.fields.field10" filled="viewState.cert.prognosBedomning">
+                <span ng-show="viewState.cert.prognosBedomning == 'arbetsformagaPrognosJa'">
                   <span id="arbetsformagaPrognos-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosJaDelvis'">
+                <span ng-show="viewState.cert.prognosBedomning == 'arbetsformagaPrognosJaDelvis'">
                   <span id="arbetsformagaPrognos-partialyes" message key="fk7263.label.partialyes"></span>
                 </span>
-                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosNej'">
+                <span ng-show="viewState.cert.prognosBedomning == 'arbetsformagaPrognosNej'">
                   <span id="arbetsformagaPrognos-no" message key="fk7263.label.no"></span>
                 </span>
-                <span ng-show="cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'">
+                <span ng-show="viewState.cert.prognosBedomning == 'arbetsformagaPrognosGarInteAttBedoma'">
                   <span id="arbetsformagaPrognos-unjudgeable" message key="fk7263.label.unjudgeable"></span>
                 </span>
               </div>
 
-              <div mi-field-mandatory field-number="11" field-label="fk7263.label.othertransport" mandatory="false" filled="cert.ressattTillArbeteAktuellt || cert.ressattTillArbeteEjAktuellt">
-                <span ng-show="cert.ressattTillArbeteAktuellt">
+              <div mi-field-selectable field-number="11" field-label="fk7263.label.othertransport" field-model="viewState.checkboxModel.fields.field11" filled="viewState.cert.ressattTillArbeteAktuellt || viewState.cert.ressattTillArbeteEjAktuellt">
+                <span ng-show="viewState.cert.ressattTillArbeteAktuellt">
                   <span id="resaTillArbetet-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span ng-show="cert.ressattTillArbeteEjAktuellt">
+                <span ng-show="viewState.cert.ressattTillArbeteEjAktuellt">
                   <span id="resaTillArbetet-no" message key="fk7263.label.no"></span>
                 </span>
               </div>
 
-              <div mi-field-mandatory field-number="12" field-label="fk7263.label.fkcontact" mandatory="false" filled="true">
-                <span ng-show="cert.kontaktMedFk">
+              <div mi-field-selectable field-number="12" field-label="fk7263.label.fkcontact" field-model="viewState.checkboxModel.fields.field12" filled="true">
+                <span ng-show="viewState.cert.kontaktMedFk">
                   <span id="kontaktFk-yes" message key="fk7263.label.yes"></span>
                 </span>
-                <span ng-show="!cert.kontaktMedFk">
+                <span ng-show="!viewState.cert.kontaktMedFk">
                   <span id="kontaktFk-no" message key="fk7263.label.no"></span>
                 </span>
               </div>
 
-              <div mi-field-mandatory field-number="13" field-label="fk7263.label.otherinformation" mandatory="false" filled="cert.kommentar">
+              <div mi-field-selectable field-number="13" field-label="fk7263.label.otherinformation" field-model="viewState.checkboxModel.fields.field13" filled="viewState.cert.kommentar">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div id="kommentar" class="tag multiline" ng-show="cert.kommentar.length > 0">{{cert.kommentar}}</div>
-              </div>
-
-              <div mi-field-mandatory field-number="17" field-label="fk7263.label.workcodes" mandatory="false" filled="cert.forskrivarkodOchArbetsplatskod">
-                <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
-                <div id="forskrivarkodOchArbetsplatskod">{{cert.forskrivarkodOchArbetsplatskod}}</div>
+                <div id="kommentar" class="tag multiline" ng-show="viewState.cert.kommentar.length > 0">{{viewState.cert.kommentar}}</div>
               </div>
 
               <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -299,6 +317,12 @@
           </div>
         </div>
       </div>
+
+      <hr>
+      <pre>
+        {{viewState.checkboxModel}}
+      </pre>
+
     </div>
   </div>
   <!-- eof spinner -->

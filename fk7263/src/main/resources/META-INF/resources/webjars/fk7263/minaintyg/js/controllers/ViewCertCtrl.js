@@ -19,29 +19,49 @@
 
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
-        'common.IntygService', 'common.dialogService', 'common.messageService',
-        function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService, dialogService,
-            messageService) {
+        'common.IntygService', 'common.dialogService', 'common.messageService', 'fk7263.ViewStateService',
+        function($location, $log, $rootScope, $stateParams, $scope, IntygListService,
+            IntygService, dialogService, messageService, ViewState) {
             'use strict';
 
-            $scope.cert = {};
+            ViewState.reset();
+            ViewState.cert = {};
+
             $rootScope.cert = {};
 
+            $scope.viewState = ViewState;
             $scope.messageService = messageService;
-
             $scope.doneLoading = false;
-
-            $scope.send = function() {
-                $location.path('/fk7263/recipients').search({ module: 'fk7263', defaultRecipient: 'FK'});
-            };
-
             $scope.visibleStatuses = [ 'SENT' ];
-
             $scope.dialog = {
                 acceptprogressdone: true,
                 focus: false
             };
 
+
+            // Navigation
+
+            $scope.send = function() {
+                $location.path('/fk7263/recipients').search({ module: 'fk7263', defaultRecipient: 'FK'});
+            };
+
+            $scope.showStatusHistory = function() {
+                $location.path('/fk7263/statushistory');
+            };
+
+            $scope.backToViewCertificate = function() {
+                $location.path('/fk7263/view/' + $stateParams.certificateId);
+            };
+
+            $scope.customizeCertificate = function() {
+                $location.path('/fk7263/customize/' + $stateParams.certificateId);
+            };
+
+            // expose calculated static link for pdf download
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
+
+
+            // Archive dialog
             var archiveDialog = {};
 
             $scope.archiveSelected = function() {
@@ -65,7 +85,6 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 });
             };
 
-            // Archive dialog
             $scope.certToArchive = {};
 
             $scope.openArchiveDialog = function(cert) {
@@ -85,6 +104,18 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 });
             };
 
+
+            // Load certificate
+
+            $scope.userVisibleStatusFilter = function(status) {
+                for (var i = 0; i < $scope.visibleStatuses.length; i++) {
+                    if (status.type === $scope.visibleStatuses[i]) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+
             $scope.filterStatuses = function(statuses) {
                 var result = [];
                 if (!angular.isObject(statuses)) {
@@ -98,36 +129,12 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                 return result;
             };
 
-            $scope.userVisibleStatusFilter = function(status) {
-                for (var i = 0; i < $scope.visibleStatuses.length; i++) {
-                    if (status.type === $scope.visibleStatuses[i]) {
-                        return true;
-                    }
-                }
-                return false;
-            };
-
-            $scope.showStatusHistory = function() {
-                $location.path('/fk7263/statushistory');
-            };
-
-            $scope.backToViewCertificate = function() {
-                $location.path('/fk7263/view/' + $stateParams.certificateId);
-            };
-
-            $scope.customizeCertificate = function() {
-                $location.path('/fk7263/customize/' + $stateParams.certificateId);
-            };
-
-            // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
-
             IntygService.getCertificate('fk7263', $stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
-                    $scope.cert = result.utlatande;
-                    $scope.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
-                    $rootScope.cert = $scope.cert;
+                    ViewState.cert = result.utlatande;
+                    ViewState.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
+                    $rootScope.cert = ViewState.cert;
                 } else {
                     // show error view
                     $location.path('/visafel/certnotfound');
