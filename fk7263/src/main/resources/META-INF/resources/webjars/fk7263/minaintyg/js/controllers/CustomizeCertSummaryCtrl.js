@@ -27,23 +27,23 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             if (ViewState.checkboxModel == undefined) {
                 ViewState.checkboxModel = {
                     fields : {
-                        'field1'    : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field2'    : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field3'    : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field4'    : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field4b'   : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field5'    : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field6a_1' : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field6a_2' : { 'id': '', 'mandatory':true,  'vald':true },
-                        'field6b'   : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field7'    : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field8a'   : { 'id': '', 'mandatory':true,  'vald':true },
-                        'field8b'   : { 'id': '', 'mandatory':true,  'vald':true },
-                        'field9'    : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field10'   : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field11'   : { 'id': '', 'mandatory':true,  'vald':true },
-                        'field12'   : { 'id': '', 'mandatory':false, 'vald':true },
-                        'field13'   : { 'id': '', 'mandatory':false, 'vald':true }
+                        'field1'    : { 'id': 'smittskydd',                          'mandatory':false, 'vald':true },
+                        'field2'    : { 'id': 'diagnos',                             'mandatory':false, 'vald':true },
+                        'field3'    : { 'id': 'aktuelltSjukdomsforlopp',             'mandatory':false, 'vald':true },
+                        'field4'    : { 'id': 'funktionsnedsattning',                'mandatory':false, 'vald':true },
+                        'field4b'   : { 'id': 'intygetBaserasPa',                    'mandatory':false, 'vald':true },
+                        'field5'    : { 'id': 'aktivitetsbegransning',               'mandatory':false, 'vald':true },
+                        'field6a_1' : { 'id': 'rekommendationerEjForetagsHalsoVard', 'mandatory':false, 'vald':true },
+                        'field6a_2' : { 'id': 'rekommendationerForetagsHalsoVard',   'mandatory':true,  'vald':true },
+                        'field6b'   : { 'id': 'planeradBehandling',                  'mandatory':false, 'vald':true },
+                        'field7'    : { 'id': 'rehabilitering',                      'mandatory':false, 'vald':true },
+                        'field8a'   : { 'id': 'arbetsFormagaRelativt',               'mandatory':true,  'vald':true },
+                        'field8b'   : { 'id': 'bedomdArbetsFormaga',                 'mandatory':true,  'vald':true },
+                        'field9'    : { 'id': 'arbetsFormaga',                       'mandatory':false, 'vald':true },
+                        'field10'   : { 'id': 'prognos',                             'mandatory':false, 'vald':true },
+                        'field11'   : { 'id': 'ressatt',                             'mandatory':true,  'vald':true },
+                        'field12'   : { 'id': 'fkKontakt',                           'mandatory':false, 'vald':true },
+                        'field13'   : { 'id': 'ovrigt',                              'mandatory':false, 'vald':true }
                     }
                 };
 
@@ -60,10 +60,15 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
 
             $scope.field5Tooltip = messageService.getProperty("fk7263.customize.message.limitation");
 
+            // Navigation
+
             $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
 
             $scope.submitPdf = function() {
                 $scope.acceptProgressDone = false;
+
+                var fields = $scope.getSelectedFields($scope.viewState.checkboxModel.fields);
+                console.log(fields);
 
                 document.getElementById("view-as-pdf").submit(); // Form submission
                 $scope.downloadSuccess = true;
@@ -77,6 +82,23 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                 $location.path('/web/start/#/');
             };
 
+
+            // Get user selected fields
+
+            $scope.getSelectedFields = function(fields) {
+                var selectedFields = [];
+                if (!angular.isObject(fields)) {
+                    return selectedFields;
+                }
+                for (var key in fields) {
+                    var field = fields[key];
+                    if (!field.mandatory && field.vald) {
+                        // Only add non-mandatory fields if they are selected
+                        selectedFields.push(field.id);
+                    }
+                }
+                return selectedFields;
+            }
 
             // Load certificate
 

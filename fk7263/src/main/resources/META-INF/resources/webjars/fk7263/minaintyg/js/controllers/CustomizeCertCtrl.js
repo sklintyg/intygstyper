@@ -27,23 +27,23 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
             if (ViewState.checkboxModel == undefined) {
                 ViewState.checkboxModel = {
                     fields : {
-                        'field1'    : { 'id': 'smittskydd', 'mandatory':false, 'vald':true },
-                        'field2'    : { 'id': 'diagnos', 'mandatory':false, 'vald':true },
-                        'field3'    : { 'id': 'sjukdomsforlopp', 'mandatory':false, 'vald':true },
-                        'field4'    : { 'id': 'funktionsnedsattning', 'mandatory':false, 'vald':true },
-                        'field4b'   : { 'id': 'undersokning', 'mandatory':false, 'vald':true },
-                        'field5'    : { 'id': 'aktivitetsbegransning', 'mandatory':false, 'vald':true },
-                        'field6a_1' : { 'id': 'rekommendation', 'mandatory':false, 'vald':true },
-                        'field6a_2' : { 'id': 'rekommendation', 'mandatory':true,  'vald':true },
-                        'field6b'   : { 'id': 'atgard', 'mandatory':false, 'vald':true },
-                        'field7'    : { 'id': 'rehabilitering', 'mandatory':false, 'vald':true },
-                        'field8a'   : { 'id': 'arbetsformaga', 'mandatory':true,  'vald':true },
-                        'field8b'   : { 'id': 'nedsattninggrad', 'mandatory':true,  'vald':true },
-                        'field9'    : { 'id': 'prognos', 'mandatory':false, 'vald':true },
-                        'field10'   : { 'id': 'bedomning', 'mandatory':false, 'vald':true },
-                        'field11'   : { 'id': 'ressatt', 'mandatory':true,  'vald':true },
-                        'field12'   : { 'id': 'kontakt', 'mandatory':false, 'vald':true },
-                        'field13'   : { 'id': 'ovrigt', 'mandatory':false, 'vald':true }
+                        'field1'    : { 'id': 'smittskydd',                          'mandatory':false, 'vald':true },
+                        'field2'    : { 'id': 'diagnos',                             'mandatory':false, 'vald':true },
+                        'field3'    : { 'id': 'aktuelltSjukdomsforlopp',             'mandatory':false, 'vald':true },
+                        'field4'    : { 'id': 'funktionsnedsattning',                'mandatory':false, 'vald':true },
+                        'field4b'   : { 'id': 'intygetBaserasPa',                    'mandatory':false, 'vald':true },
+                        'field5'    : { 'id': 'aktivitetsbegransning',               'mandatory':false, 'vald':true },
+                        'field6a_1' : { 'id': 'rekommendationerEjForetagsHalsoVard', 'mandatory':false, 'vald':true },
+                        'field6a_2' : { 'id': 'rekommendationerForetagsHalsoVard',   'mandatory':true,  'vald':true },
+                        'field6b'   : { 'id': 'planeradBehandling',                  'mandatory':false, 'vald':true },
+                        'field7'    : { 'id': 'rehabilitering',                      'mandatory':false, 'vald':true },
+                        'field8a'   : { 'id': 'arbetsFormagaRelativt',               'mandatory':true,  'vald':true },
+                        'field8b'   : { 'id': 'bedomdArbetsFormaga',                 'mandatory':true,  'vald':true },
+                        'field9'    : { 'id': 'arbetsFormaga',                       'mandatory':false, 'vald':true },
+                        'field10'   : { 'id': 'prognos',                             'mandatory':false, 'vald':true },
+                        'field11'   : { 'id': 'ressatt',                             'mandatory':true,  'vald':true },
+                        'field12'   : { 'id': 'fkKontakt',                           'mandatory':false, 'vald':true },
+                        'field13'   : { 'id': 'ovrigt',                              'mandatory':false, 'vald':true }
                     }
                 };
 
@@ -55,6 +55,17 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
             $scope.messageService = messageService;
             $scope.visibleStatuses = [ 'SENT' ];
 
+            $scope.$watch("viewState.checkboxModel.fields", function() {
+                var isAllItemsSelected = true;
+                for (var key in ViewState.checkboxModel.fields) {
+                    var field = ViewState.checkboxModel.fields[key];
+                    if (field.vald == false) {
+                        isAllItemsSelected = false;
+                        break;
+                    }
+                }
+                ViewState.checkboxModel.allItemsSelected = isAllItemsSelected;
+            }, true);
 
             // Navigation
 
