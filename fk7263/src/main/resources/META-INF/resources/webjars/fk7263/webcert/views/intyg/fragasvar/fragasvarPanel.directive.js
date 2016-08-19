@@ -160,6 +160,7 @@ angular.module('fk7263').directive('qaPanel',
                             },
                             button1id: 'button1answerintyg-dialog',
                             button2click: function(modalInstance) {
+                                qa.activeDialogErrorMessageKey = null;
                                 $scope.showAnswerField = true;
                                 modalInstance.close();
                                 FocusElement('answerText-' + qa.internReferens);
@@ -176,15 +177,15 @@ angular.module('fk7263').directive('qaPanel',
 
                     $scope.answerWithIntyg = function(qa, cert) {
 
+                        qa.activeDialogErrorMessageKey = null;
                         if (!ObjectHelper.isDefined(cert)) {
-                            qa.activeErrorMessageKey = 'komplettera-no-intyg';
+                            qa.activeDialogErrorMessageKey = 'fk7263.error.komplettera-no-intyg';
                             return;
                         }
 
                         var deferred = $q.defer();
 
                         qa.updateInProgress = true; // trigger local spinner
-                        qa.activeDialogErrorMessageKey = null;
                         fragaSvarProxy.answerWithIntyg(qa, cert.typ,
                             IntygCopyRequestModel.build({
                                 intygId: cert.id,
