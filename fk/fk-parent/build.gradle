@@ -1,20 +1,16 @@
 description = 'Parent for fk-intyg'
 
-task showFiles << {
-    configurations.compile.each { println it.name }
-}
-
 dependencies {
     compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
     compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
     compile 'se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.1'
     compile 'se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.1'
 
-    compile "se.inera.intyg.common:common-support:${rootProject.commonVersion}"
-    compile "se.inera.intyg.common:common-services:${rootProject.commonVersion}"
-    compile "se.inera.intyg.common:common-web:${rootProject.commonVersion}"
-    compile "se.inera.intyg.common:integration-util:${rootProject.commonVersion}"
-    compile "se.inera.intyg.common:common-schemas:${rootProject.commonVersion}"
+    compile "se.inera.intyg.common:common-support:${commonVersion}"
+    compile "se.inera.intyg.common:common-services:${commonVersion}"
+    compile "se.inera.intyg.common:integration-util:${commonVersion}"
+    compile "se.inera.intyg.common:common-schemas:${commonVersion}"
+    compile "se.inera.intyg.common:common-web:${commonVersion}"
 
     compile 'ch.qos.logback:logback-classic:1.0.11'
     compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'

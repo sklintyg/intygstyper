@@ -89,13 +89,13 @@ artifacts.archives packageTests
 dependencies {
   compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
   compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
-
   compile 'se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.1'
   compile 'se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.1'
-  compile 'se.inera.intyg.common:common-support:0-SNAPSHOT'
-  compile 'se.inera.intyg.common:common-web:0-SNAPSHOT'
-  compile 'se.inera.intyg.common:integration-util:0-SNAPSHOT'
-  compile 'se.inera.intyg.common:common-schemas:0-SNAPSHOT'
+
+  compile "se.inera.intyg.common:common-support:${commonVersion}"
+  compile "se.inera.intyg.common:common-web:${commonVersion}"
+  compile "se.inera.intyg.common:integration-util:${commonVersion}"
+  compile "se.inera.intyg.common:common-schemas:${commonVersion}"
 
   compile 'ch.qos.logback:logback-classic:1.0.11'
   compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
