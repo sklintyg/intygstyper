@@ -96,14 +96,6 @@
     </iso:rule>
   </iso:pattern>
 
-  <iso:pattern id="instans">
-    <iso:rule context="//gn:instans">
-      <iso:assert test="number(.) ge 1">
-        'Instans' måste vara större än 0.
-      </iso:assert>
-    </iso:rule>
-  </iso:pattern>
-
   <iso:pattern id="q1">
     <iso:rule context="//gn:svar[@id='1']">
       <iso:assert test="count(gn:instans) = 1">
@@ -708,6 +700,14 @@
   <iso:pattern id="q9000.1">
     <iso:rule context="//gn:svar[number(@id) ge 9001]/gn:delsvar">
       <iso:extends rule="non-empty-string"/>
+    </iso:rule>
+  </iso:pattern>
+
+  <iso:pattern id="instans-pattern">
+    <iso:rule context="//gn:instans">
+      <iso:assert test="number(.) ge 1">
+        'Instans' måste vara större än 0.
+      </iso:assert>
     </iso:rule>
   </iso:pattern>
 
