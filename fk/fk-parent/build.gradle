@@ -9,11 +9,13 @@ dependencies {
     compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
     compile 'se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.1'
     compile 'se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.1'
-    compile 'se.inera.intyg.common:common-support:0-SNAPSHOT'
-    compile 'se.inera.intyg.common:common-services:0-SNAPSHOT'
-    compile 'se.inera.intyg.common:common-web:0-SNAPSHOT'
-    compile 'se.inera.intyg.common:integration-util:0-SNAPSHOT'
-    compile 'se.inera.intyg.common:common-schemas:0-SNAPSHOT'
+
+    compile "se.inera.intyg.common:common-support:${rootProject.commonVersion}"
+    compile "se.inera.intyg.common:common-services:${rootProject.commonVersion}"
+    compile "se.inera.intyg.common:common-web:${rootProject.commonVersion}"
+    compile "se.inera.intyg.common:integration-util:${rootProject.commonVersion}"
+    compile "se.inera.intyg.common:common-schemas:${rootProject.commonVersion}"
+
     compile 'ch.qos.logback:logback-classic:1.0.11'
     compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.4'

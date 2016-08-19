@@ -1,8 +1,10 @@
 allprojects  {
   apply plugin: 'maven'
+  def baseVersion = '2.6.'
 
   group = 'se.inera.intyg.intygstyper'
-  version = '0-SNAPSHOT'
+  version = System.getProperty('BUILD_NUMBER') ? baseVersion + System.getProperty('BUILD_NUMBER') : '0-SNAPSHOT'
+  rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
 }
 
 subprojects {
