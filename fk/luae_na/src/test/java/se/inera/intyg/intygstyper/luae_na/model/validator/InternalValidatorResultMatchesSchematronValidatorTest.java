@@ -35,7 +35,7 @@ import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValida
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalToSchematronValidatorTestUtil;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-import se.inera.intyg.intygstyper.luae_na.model.utils.*;
+import se.inera.intyg.intygstyper.luae_na.utils.*;
 import se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 

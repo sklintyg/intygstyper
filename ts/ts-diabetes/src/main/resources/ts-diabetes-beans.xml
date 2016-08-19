@@ -24,6 +24,8 @@
 
   <bean class="se.inera.intyg.intygstyper.ts_diabetes.validator.Validator" />
 
+  <bean class="se.inera.intyg.intygstyper.ts_diabetes.model.util.TsDiabetesModelCompareUtil"/>
+
   <bean class="se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorImpl">
     <constructor-arg value="true" />
   </bean>

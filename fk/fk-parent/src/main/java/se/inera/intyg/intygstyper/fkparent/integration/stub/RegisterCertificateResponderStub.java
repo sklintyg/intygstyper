@@ -33,8 +33,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.intyg.common.support.stub.MedicalCertificatesStore;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
-import se.riv.clinicalprocess.healthcond.certificate.v2.*;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
+import se.riv.clinicalprocess.healthcond.certificate.v2.ResultCodeType;
+import se.riv.clinicalprocess.healthcond.certificate.v2.ResultType;
 
 @SchemaValidation
 @WebServiceProvider(targetNamespace = "urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2")
@@ -45,10 +49,16 @@ public final class RegisterCertificateResponderStub implements RegisterCertifica
     @Autowired(required = false)
     private MedicalCertificatesStore store;
 
+    private boolean throwException = false;
+
     @Override
     public RegisterCertificateResponseType registerCertificate(String logicalAddress, RegisterCertificateType parameters) {
         LOGGER.debug("fk-parent RegisterCertificate responding");
         RegisterCertificateResponseType response = new RegisterCertificateResponseType();
+        if (throwException) {
+            LOGGER.debug("Throwing fake exception");
+            throw new RuntimeException();
+        }
         ResultType resultType = new ResultType();
 
         try {
@@ -66,6 +76,14 @@ public final class RegisterCertificateResponderStub implements RegisterCertifica
         }
         response.setResult(resultType);
         return response;
+    }
+
+    public boolean isThrowException() {
+        return throwException;
+    }
+
+    public void setThrowException(boolean throwException) {
+        this.throwException = throwException;
     }
 
 }

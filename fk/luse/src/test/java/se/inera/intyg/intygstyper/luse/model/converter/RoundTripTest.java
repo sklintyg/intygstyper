@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import se.inera.intyg.common.support.services.BefattningService;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
-import se.inera.intyg.intygstyper.luse.model.utils.*;
+import se.inera.intyg.intygstyper.luse.utils.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
 

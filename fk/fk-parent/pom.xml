@@ -26,6 +26,12 @@
       <groupId>se.riv.insuranceprocess.healthreporting</groupId>
       <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
     </dependency>
+    
+    <!-- XML -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+    </dependency>
 
     <!-- Common -->
     <dependency>

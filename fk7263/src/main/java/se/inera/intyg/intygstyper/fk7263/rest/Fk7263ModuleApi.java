@@ -66,7 +66,7 @@ import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.intygstyper.fk7263.model.converter.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
+import se.inera.intyg.intygstyper.fk7263.model.util.Fk7263ModelCompareUtil;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
@@ -104,7 +104,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
 
     @Autowired
-    private ModelCompareUtil modelCompareUtil;
+    private Fk7263ModelCompareUtil modelCompareUtil;
 
     @Autowired(required = false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
@@ -281,7 +281,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
+    public boolean shouldNotify(String persistedState, String currentState) throws ModuleException {
         Utlatande oldUtlatande;
         Utlatande newUtlatande;
 

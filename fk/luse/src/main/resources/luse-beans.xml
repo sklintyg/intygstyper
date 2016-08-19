@@ -10,6 +10,8 @@
 
   <bean class="se.inera.intyg.intygstyper.luse.validator.InternalDraftValidatorImpl" />
 
+  <bean class="se.inera.intyg.intygstyper.luse.model.util.LuseModelCompareUtil" />
+
   <bean id="luseEntryPoint" class="se.inera.intyg.intygstyper.luse.support.LuseEntryPoint" />
 
 </beans>

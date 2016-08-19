@@ -11,8 +11,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
 import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
-import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioFinder;
-import se.inera.intyg.intygstyper.lisu.model.utils.ScenarioNotFoundException;
+import se.inera.intyg.intygstyper.lisu.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.lisu.utils.ScenarioNotFoundException;
 import se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidatorImpl;
 
 @RunWith(MockitoJUnitRunner.class)

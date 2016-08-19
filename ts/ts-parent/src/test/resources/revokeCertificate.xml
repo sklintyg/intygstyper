@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<revokeMedicalCertificateRequestType xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns:ns4="urn:riv:insuranceprocess:healthreporting:RevokeMedicalCertificateResponder:1" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:medcertqa:1">
+    <ns4:revoke>
+        <ns4:vardReferens-id>REVOKE-test-id-20160817T130855.149</ns4:vardReferens-id>
+        <ns4:meddelande>meddelande</ns4:meddelande>
+        <ns4:avsantTidpunkt>2016-08-17T13:08:55</ns4:avsantTidpunkt>
+        <ns4:adressVard>
+            <ns3:hosPersonal>
+                <ns2:personal-id root="1.2.752.129.2.1.4.1" extension="19650708-1234"/>
+                <ns2:fullstandigtNamn>Karl Karlsson</ns2:fullstandigtNamn>
+                <ns2:enhet>
+                    <ns2:enhets-id root="1.2.752.129.2.1.4.1" extension="123456789"/>
+                    <ns2:arbetsplatskod root="1.2.752.29.4.71" extension="45312"/>
+                    <ns2:enhetsnamn>VE1</ns2:enhetsnamn>
+                    <ns2:vardgivare>
+                        <ns2:vardgivare-id root="1.2.752.129.2.1.4.1" extension="12345678"/>
+                        <ns2:vardgivarnamn>VG1</ns2:vardgivarnamn>
+                    </ns2:vardgivare>
+                </ns2:enhet>
+            </ns3:hosPersonal>
+        </ns4:adressVard>
+        <ns4:lakarutlatande>
+            <ns3:lakarutlatande-id>test-id</ns3:lakarutlatande-id>
+            <ns3:signeringsTidpunkt>2016-08-17T13:04:51</ns3:signeringsTidpunkt>
+            <ns3:patient>
+                <ns2:person-id root="1.2.752.129.2.1.3.1" extension="19270310-4321"/>
+                <ns2:fullstandigtNamn>Olivia Olsson</ns2:fullstandigtNamn>
+            </ns3:patient>
+        </ns4:lakarutlatande>
+    </ns4:revoke>
+</revokeMedicalCertificateRequestType>

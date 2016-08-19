@@ -9,6 +9,8 @@
   <bean class="se.inera.intyg.intygstyper.lisu.rest.LisuModuleApi" />
 
   <bean class="se.inera.intyg.intygstyper.lisu.validator.InternalDraftValidatorImpl" />
+  
+  <bean class="se.inera.intyg.intygstyper.lisu.model.util.LisuModelCompareUtil" />
 
   <bean id="lisuUtokadEntryPoint" class="se.inera.intyg.intygstyper.lisu.support.LisuEntryPoint" />
 

@@ -56,7 +56,7 @@ import se.inera.intyg.common.support.modules.support.api.exception.ModuleExcepti
 import se.inera.intyg.intygstyper.luae_na.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
-import se.inera.intyg.intygstyper.luae_na.model.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.luae_na.utils.ScenarioFinder;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponderInterface;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.RevokeCertificateResponderInterface;

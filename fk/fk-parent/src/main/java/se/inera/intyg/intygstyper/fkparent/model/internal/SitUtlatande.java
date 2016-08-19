@@ -20,9 +20,11 @@ package se.inera.intyg.intygstyper.fkparent.model.internal;
 
 import com.google.common.collect.ImmutableList;
 
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
+
 /**
  * Created by BESA on 2016-02-23.
  */
-public interface SitUtlatande {
+public interface SitUtlatande extends Utlatande {
     ImmutableList<Diagnos> getDiagnoser();
 }
