@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
-        function($location, $log, $rootScope, $stateParams, $scope, IntygService, messageService, ViewState) {
+    ['$window', '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
+        function($window, $location, $log, $rootScope, $stateParams, $scope, IntygService, messageService, ViewState) {
             'use strict';
 
             // Setup default checkbox model in case of refresh
@@ -62,15 +62,30 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
 
             // Navigation
 
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf/arbetsgivarutskrift';
 
+
+            function _addInput(name, item) {
+                return '<input type="hidden" name="' + name + '" value="' + item + '" />';
+            };
+            
             $scope.submitPdf = function() {
+
+                var inputs = '';
+                var fields = $scope.getSelectedFields($scope.viewState.checkboxModel.fields);
+                angular.forEach(fields, function(item) {
+                    inputs += _addInput('selectedOptionalFields', item);
+                });
+
+                //send request
+                $window.jQuery('<form action="' + $scope.downloadAsPdfLink + '" target="_blank" method="post">' + inputs + '</form>')
+                    .appendTo('body').submit().remove();
+
+
                 $scope.acceptProgressDone = false;
 
-                var fields = $scope.getSelectedFields($scope.viewState.checkboxModel.fields);
                 console.log(fields);
 
-                document.getElementById("view-as-pdf").submit(); // Form submission
                 $scope.downloadSuccess = true;
             };
 
