@@ -121,15 +121,19 @@
                 </span>
               </div>
 
-              <div mi-field-summary field-number="8a" field-label="fk7263.label.patientworkcapacity" ng-show="viewState.checkboxModel.fields.field8a.vald">
-                <div id="nuvarandeArbetsuppgifter" ng-show="viewState.cert.nuvarandeArbetsuppgifter">
-                  <span message key="fk7263.label.patientworkcapacity.currentwork"></span>
-                  <div class="multiline">{{viewState.cert.nuvarandeArbetsuppgifter}}</div></div>
+              <div mi-field-summary field-number="8a" field-label="fk7263.label.patientworkcapacity" ng-show="viewState.checkboxModel.fields.field8a_1.vald">
                 <div id="arbetslos" ng-show="viewState.cert.arbetsloshet">
                   <span message key="fk7263.label.patientworkcapacity.unemployed"></span>
                 </div>
                 <div id="foraldraledig" ng-show="viewState.cert.foraldrarledighet">
                   <span message key="fk7263.label.patientworkcapacity.parentalleave"></span>
+                </div>
+              </div>
+
+              <div mi-field-summary field-number="8a" field-label="fk7263.label.patientworkcapacity" ng-show="viewState.checkboxModel.fields.field8a_2.vald">
+                <div id="nuvarandeArbetsuppgifter" ng-show="viewState.cert.nuvarandeArbetsuppgifter">
+                  <span message key="fk7263.label.patientworkcapacity.currentwork"></span>
+                  <div class="multiline">{{viewState.cert.nuvarandeArbetsuppgifter}}</div>
                 </div>
               </div>
 
@@ -294,16 +298,19 @@
                 </span>
               </div>
 
-              <div mi-field-summary field-number="8a" field-label="fk7263.label.patientworkcapacity" ng-show="!viewState.checkboxModel.fields.field8a.vald">
-                <div id="nuvarandeArbetsuppgifter" ng-show="viewState.cert.nuvarandeArbetsuppgifter">
-                  <span message key="fk7263.label.patientworkcapacity.currentwork"></span>
-                  <div class="multiline">{{viewState.cert.nuvarandeArbetsuppgifter}}</div></div>
+              <div mi-field-summary field-number="8a" field-label="fk7263.label.patientworkcapacity" ng-show="!viewState.checkboxModel.fields.field8a_1.vald">
                 <div id="arbetslos" ng-show="viewState.cert.arbetsloshet">
                   <span message key="fk7263.label.patientworkcapacity.unemployed"></span>
                 </div>
                 <div id="foraldraledig" ng-show="viewState.cert.foraldrarledighet">
                   <span message key="fk7263.label.patientworkcapacity.parentalleave"></span>
                 </div>
+              </div>
+
+              <div mi-field-summary field-number="8a" field-label="fk7263.label.patientworkcapacity" ng-show="!viewState.checkboxModel.fields.field8a_2.vald">
+                <div id="nuvarandeArbetsuppgifter" ng-show="viewState.cert.nuvarandeArbetsuppgifter">
+                  <span message key="fk7263.label.patientworkcapacity.currentwork"></span>
+                  <div class="multiline">{{viewState.cert.nuvarandeArbetsuppgifter}}</div></div>
               </div>
 
               <div mi-field-summary field-number="8b" field-label="fk7263.label.nedsattning" ng-show="!viewState.checkboxModel.fields.field8b.vald">
@@ -372,27 +379,25 @@
                 <span message key="fk7263.button.downloadprint" style="font-style: italic"></span>
               </div>
 
+              <!--
               <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="margin-top: 30px">
                 <div class="alert alert-info" ng-show="true">Det anpassade intyget är nu skapat. Stäng inte ner den här sidan förrän du har kontrollerat att intyget har laddats ned till din dator.</div>
                 <div class="alert alert-danger" ng-show="true">Ett problem uppstod. Försök igen. Om felet kvarstår kontakta Ineras nationella kundtjänst</div>
               </div>
+              -->
 
               <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                <form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
                   <p class="btn-row">
-                    <button id="downloadprint" type="submit" class="btn btn-success" ng-click="submitPdf()" ng-disabled="!acceptProgressDone">
-                      <img  class="ng-hide" src="/img/ajax-loader-small-green.gif" ng-src="/img/ajax-loader-small-green.gif" ng-hide="acceptProgressDone">
-                      <span message key="fk7263.button.downloadprint" ng-hide="!acceptProgressDone"></span>
-                      <span ng-hide="acceptProgressDone">Skapar PDF</span>
+                    <button id="downloadprint" type="button" class="btn btn-success" ng-click="submit()" ng-disabled="!acceptProgressDone">
+                      <span message key="fk7263.button.downloadprint"></span>
                     </button>
-                    <button id="backToCustomizeCertificateBtn" type="button" class="btn btn-default" ng-click="backToCustomizeCertificate()" ng-disabled="!acceptProgressDone">
+                    <button id="backToCustomizeCertificateBtn" type="button" class="btn btn-default" ng-click="backToCustomizeCertificate()">
                       <span message key="fk7263.button.customize.certificate.change"></span>
                     </button>
                     <button id="backToInboxBtn" type="button" class="btn btn-default" ng-click="backToInbox()" ng-hide="!downloadSuccess">
                       <span>Tillbaka till Inkorgen</span>
                     </button>
                   </p>
-                </form>
               </div>
 
             </div>

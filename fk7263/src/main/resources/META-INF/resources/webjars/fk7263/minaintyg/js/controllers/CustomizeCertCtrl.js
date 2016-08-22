@@ -33,11 +33,13 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
                         'field4'    : { 'id': 'funktionsnedsattning',                'mandatory':false, 'vald':true },
                         'field4b'   : { 'id': 'intygetBaserasPa',                    'mandatory':false, 'vald':true },
                         'field5'    : { 'id': 'aktivitetsbegransning',               'mandatory':false, 'vald':true },
-                        'field6a_1' : { 'id': 'rekommendationerEjForetagsHalsoVard', 'mandatory':false, 'vald':true },
+                        'field6a_1' : { 'id': 'rekommendationerUtomForetagsHalsoVard', 'mandatory':false, 'vald':true },
                         'field6a_2' : { 'id': 'rekommendationerForetagsHalsoVard',   'mandatory':true,  'vald':true },
                         'field6b'   : { 'id': 'planeradBehandling',                  'mandatory':false, 'vald':true },
                         'field7'    : { 'id': 'rehabilitering',                      'mandatory':false, 'vald':true },
-                        'field8a'   : { 'id': 'arbetsFormagaRelativt',               'mandatory':true,  'vald':true },
+                        'field8a'   : { 'id': 'arbetsFormagaRelatvt',                'mandatory':true,  'vald':true },
+                        'field8a_1'   : { 'id': 'arbetsFormagaRelativtUtomNuvarandeArbete', 'mandatory':false,  'vald':true },
+                        'field8a_2'   : { 'id': 'arbetsFormagaRelativtNuvarandeArbete',     'mandatory':true,  'vald':true },
                         'field8b'   : { 'id': 'bedomdArbetsFormaga',                 'mandatory':true,  'vald':true },
                         'field9'    : { 'id': 'arbetsFormaga',                       'mandatory':false, 'vald':true },
                         'field10'   : { 'id': 'prognos',                             'mandatory':false, 'vald':true },
@@ -55,6 +57,9 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
             $scope.messageService = messageService;
             $scope.visibleStatuses = [ 'SENT' ];
 
+
+            // Watch all option fields and update the selectAll checkbox if necessary
+
             $scope.$watch("viewState.checkboxModel.fields", function() {
                 var isAllItemsSelected = true;
                 for (var key in ViewState.checkboxModel.fields) {
@@ -66,6 +71,18 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
                 }
                 ViewState.checkboxModel.allItemsSelected = isAllItemsSelected;
             }, true);
+
+            // Fired when the selectAll checkbox is changed
+
+            $scope.selectAll = function () {
+                for (var key in ViewState.checkboxModel.fields) {
+                    var field = ViewState.checkboxModel.fields[key];
+                    if (field.mandatory == false) {
+                        field.vald = ViewState.checkboxModel.allItemsSelected;
+                    }
+                }
+            };
+
 
             // Navigation
 
@@ -79,35 +96,9 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
             };
 
 
-            // Functionality
-
-            // Fired when the select all checkbox is changed
-            $scope.selectAll = function () {
-                for (var key in ViewState.checkboxModel.fields) {
-                    var field = ViewState.checkboxModel.fields[key];
-                    if (field.mandatory == false) {
-                        field.vald = ViewState.checkboxModel.allItemsSelected;
-                    }
-                }
-            };
-
-
             // Load certificate
 
-            $scope.filterStatuses = function(statuses) {
-                var result = [];
-                if (!angular.isObject(statuses)) {
-                    return result;
-                }
-                for (var i = 0; i < statuses.length; i++) {
-                    if ($scope.userVisibleStatusFilter(statuses[i])) {
-                        result.push(statuses[i]);
-                    }
-                }
-                return result;
-            };
-
-            $scope.userVisibleStatusFilter = function(status) {
+            function _userVisibleStatusFilter(status) {
                 for (var i = 0; i < $scope.visibleStatuses.length; i++) {
                     if (status.type === $scope.visibleStatuses[i]) {
                         return true;
@@ -116,13 +107,26 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
                 return false;
             };
 
+            function _filterStatuses(statuses) {
+                var result = [];
+                if (!angular.isObject(statuses)) {
+                    return result;
+                }
+                for (var i = 0; i < statuses.length; i++) {
+                    if (_userVisibleStatusFilter(statuses[i])) {
+                        result.push(statuses[i]);
+                    }
+                }
+                return result;
+            };
+
             if (ViewState.cert == undefined) {
                 IntygService.getCertificate(ViewState.common.intygProperties.type, $stateParams.certificateId,
                     function(result) {
                         $scope.doneLoading = true;
                         if (result !== null) {
                             ViewState.cert = result.utlatande;
-                            ViewState.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
+                            ViewState.cert.filteredStatuses = _filterStatuses(result.meta.statuses);
                             $rootScope.cert = ViewState.cert;
                         } else {
                             // show error view

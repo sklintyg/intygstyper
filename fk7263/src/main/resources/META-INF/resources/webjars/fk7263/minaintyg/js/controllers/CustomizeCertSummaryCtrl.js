@@ -57,37 +57,12 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             $scope.acceptProgressDone = true;
             $scope.downloadSuccess = false;
 
-
             $scope.field5Tooltip = messageService.getProperty("fk7263.customize.message.limitation");
-
-            // Navigation
 
             $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf/arbetsgivarutskrift';
 
 
-            function _addInput(name, item) {
-                return '<input type="hidden" name="' + name + '" value="' + item + '" />';
-            };
-            
-            $scope.submitPdf = function() {
-
-                var inputs = '';
-                var fields = $scope.getSelectedFields($scope.viewState.checkboxModel.fields);
-                angular.forEach(fields, function(item) {
-                    inputs += _addInput('selectedOptionalFields', item);
-                });
-
-                //send request
-                $window.jQuery('<form action="' + $scope.downloadAsPdfLink + '" target="_blank" method="post">' + inputs + '</form>')
-                    .appendTo('body').submit().remove();
-
-
-                $scope.acceptProgressDone = false;
-
-                console.log(fields);
-
-                $scope.downloadSuccess = true;
-            };
+            // Navigation
 
             $scope.backToCustomizeCertificate = function() {
                 $location.path('/fk7263/customize/' + $stateParams.certificateId);
@@ -98,9 +73,13 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             };
 
 
-            // Get user selected fields
+            // Submit user selected fields to PDF generator
 
-            $scope.getSelectedFields = function(fields) {
+            function _addInput(name, item) {
+                return '<input type="hidden" name="' + name + '" value="' + item + '" />';
+            };
+
+            function _getSelectedFields(fields) {
                 var selectedFields = [];
                 if (!angular.isObject(fields)) {
                     return selectedFields;
@@ -115,22 +94,25 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                 return selectedFields;
             }
 
-            // Load certificate
+            $scope.submit = function() {
+                var inputs = '';
+                var fields = _getSelectedFields($scope.viewState.checkboxModel.fields);
 
-            $scope.filterStatuses = function(statuses) {
-                var result = [];
-                if (!angular.isObject(statuses)) {
-                    return result;
-                }
-                for (var i = 0; i < statuses.length; i++) {
-                    if ($scope.userVisibleStatusFilter(statuses[i])) {
-                        result.push(statuses[i]);
-                    }
-                }
-                return result;
+                angular.forEach(fields, function(item) {
+                    inputs += _addInput('selectedOptionalFields', item);
+                });
+
+                //send request
+                $window.jQuery('<form action="' + $scope.downloadAsPdfLink + '" target="_blank" method="post">' + inputs + '</form>')
+                    .appendTo('body').submit().remove();
+
+                $scope.downloadSuccess = true;
             };
 
-            $scope.userVisibleStatusFilter = function(status) {
+
+            // Load certificate
+
+            function _userVisibleStatusFilter(status) {
                 for (var i = 0; i < $scope.visibleStatuses.length; i++) {
                     if (status.type === $scope.visibleStatuses[i]) {
                         return true;
@@ -139,13 +121,26 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                 return false;
             };
 
+            function _filterStatuses(statuses) {
+                var result = [];
+                if (!angular.isObject(statuses)) {
+                    return result;
+                }
+                for (var i = 0; i < statuses.length; i++) {
+                    if (_userVisibleStatusFilter(statuses[i])) {
+                        result.push(statuses[i]);
+                    }
+                }
+                return result;
+            };
+
             if (ViewState.cert == undefined) {
                 IntygService.getCertificate(ViewState.common.intygProperties.type, $stateParams.certificateId,
                     function(result) {
                         $scope.doneLoading = true;
                         if (result !== null) {
                             ViewState.cert = result.utlatande;
-                            ViewState.cert.filteredStatuses = $scope.filterStatuses(result.meta.statuses);
+                            ViewState.cert.filteredStatuses = _filterStatuses(result.meta.statuses);
                             $rootScope.cert = ViewState.cert;
                         } else {
                             // show error view
