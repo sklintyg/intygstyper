@@ -381,11 +381,15 @@ public abstract class PdfAbstractGenerator {
                 REDUCED_WORK_CAPACITY_25_TOM);
     }
 
-    protected void fillCapacityRelativeTo() {
+    protected void fillCapacityRelativeToNuvarandeArbete() {
         if (intyg.getNuvarandeArbetsuppgifter() != null) {
             checkField(CURRENT_WORK);
             fillText(CURRENT_WORK_TEXT_1, stripNewlines(intyg.getNuvarandeArbetsuppgifter()));
         }
+
+    }
+    protected void fillCapacityRelativeToOtherThanNuvarandeArbete() {
+
         setField(UNEMPLOYMENT, intyg.isArbetsloshet());
         setField(PARENTAL_LEAVE, intyg.isForaldrarledighet());
     }
@@ -408,7 +412,7 @@ public abstract class PdfAbstractGenerator {
         }
     }
 
-    protected void fillRecommendationsWork() {
+    protected void fillRecommendationsKontaktMedFk() {
         setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommendationKontaktForetagshalsovarden());
     }
 

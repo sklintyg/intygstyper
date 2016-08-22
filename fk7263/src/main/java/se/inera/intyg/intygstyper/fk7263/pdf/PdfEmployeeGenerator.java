@@ -77,6 +77,7 @@ public class PdfEmployeeGenerator extends PdfAbstractGenerator {
                 break;
             case WEBCERT:
                 generateMinimalPdf();
+                fillCapacityRelativeToOtherThanNuvarandeArbete();
                 // perform additional decoration for WC originated pdf
                 maskSendToFkInformation(pdfStamper);
                 markAsEmployerCopy(pdfStamper, WATERMARK_TEXT_WC_EMPLOYER_MINIMAL_COPY);
@@ -99,8 +100,8 @@ public class PdfEmployeeGenerator extends PdfAbstractGenerator {
     private void generateMinimalPdf() {
         // Mandatory fields
         fillPatientDetails();
-        fillRecommendationsWork();
-        fillCapacityRelativeTo();
+        fillRecommendationsKontaktMedFk();
+        fillCapacityRelativeToNuvarandeArbete();
         fillCapacity();
         fillTravel();
         fillSignerCodes();
@@ -131,8 +132,8 @@ public class PdfEmployeeGenerator extends PdfAbstractGenerator {
         if (EmployeeOptionalFields.AKTIVITETSBEGRANSNING.isPresent(optionalFields)) {
             fillActivityLimitation(); // Fält 5
         }
-        if (EmployeeOptionalFields.REKOMMENDATIONER_EJ_FORETAGSHALSOVARD.isPresent(optionalFields)) {
-            fillRecommendationsOther(); // Fält 6a (utom Kontakt med företagshälsovården)
+        if (EmployeeOptionalFields.REKOMMENDATIONER_UTOM_FORETAGSHALSOVARD.isPresent(optionalFields)) {
+            fillRecommendationsOther(); // Fält 6a (utom Kontakt med företagshälsovården som är obligatorisk)
         }
         if (EmployeeOptionalFields.BEHANDLING_ATGARD.isPresent(optionalFields)) {
             fillMeasures(); // Fält 6b
@@ -141,8 +142,8 @@ public class PdfEmployeeGenerator extends PdfAbstractGenerator {
             fillRehabilitation(); // Fält 7
         }
 
-        if (EmployeeOptionalFields.ARBETSFORMAGA_RELATIVT_TILL.isPresent(optionalFields)) {
-            fillCapacityRelativeTo(); // Fält 8a
+        if (EmployeeOptionalFields.ARBETSFORMAGA_RELATIVT_TILL_UTOM_NUVARANDE_ARBETE.isPresent(optionalFields)) {
+            fillCapacityRelativeToOtherThanNuvarandeArbete(); // Fält 8a (arbetslöshet / föräldraledighet)
         }
         if (EmployeeOptionalFields.ARBETSFORMAGA.isPresent(optionalFields)) {
             fillArbetsformaga(); // Fält 9

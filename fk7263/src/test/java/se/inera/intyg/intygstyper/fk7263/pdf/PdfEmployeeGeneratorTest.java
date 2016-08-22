@@ -58,8 +58,9 @@ import se.inera.intyg.intygstyper.fk7263.utils.ScenarioFinder;
 public class PdfEmployeeGeneratorTest {
 
     private static File fk7263Json;
-    private static File expectedPdfContentEmployer;
-    private static File expectedFullPdfContent;
+    private static File expectedPdfContentEmployerWC;
+    private static File expectedPdfContentEmployerMIFull;
+    private static File expectedPdfContentEmployerMIMinimal;
     private static File fk7263Pdf;
 
     private ObjectMapper objectMapper = new CustomObjectMapper();
@@ -67,9 +68,10 @@ public class PdfEmployeeGeneratorTest {
     @BeforeClass
     public static void readFiles() throws IOException {
         fk7263Json = new ClassPathResource("PdfGeneratorTest/utlatande.json").getFile();
-        expectedPdfContentEmployer = new ClassPathResource("PdfGeneratorTest/expectedPdfContentEmployer.json").getFile();
+        expectedPdfContentEmployerWC = new ClassPathResource("PdfGeneratorTest/expectedPdfContentEmployerWC.json").getFile();
+        expectedPdfContentEmployerMIFull = new ClassPathResource("PdfGeneratorTest/expectedPdfContentEmployerMIFull.json").getFile();
+        expectedPdfContentEmployerMIMinimal = new ClassPathResource("PdfGeneratorTest/expectedPdfContentEmployerMIMinimal.json").getFile();
         fk7263Pdf = new ClassPathResource("PdfGeneratorTest/utlatande.pdf").getFile();
-        expectedFullPdfContent = new ClassPathResource("PdfGeneratorTest/expectedPdfContent.json").getFile();
     }
 
     @Test
@@ -121,7 +123,7 @@ public class PdfEmployeeGeneratorTest {
     @Test
     public void testWCFieldsWhenGeneratingEmployerCopy() throws Exception {
         @SuppressWarnings("unchecked")
-        Map<String, String> pdfContent = objectMapper.readValue(expectedPdfContentEmployer, Map.class);
+        Map<String, String> pdfContent = objectMapper.readValue(expectedPdfContentEmployerWC, Map.class);
 
         Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
@@ -191,7 +193,7 @@ public class PdfEmployeeGeneratorTest {
     @Test
     public void testMIEmployerCopyWithNoOptionalFieldsSelected() throws Exception {
         @SuppressWarnings("unchecked")
-        Map<String, String> pdfContent = objectMapper.readValue(expectedPdfContentEmployer, Map.class);
+        Map<String, String> pdfContent = objectMapper.readValue(expectedPdfContentEmployerMIMinimal, Map.class);
 
         Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
@@ -217,7 +219,7 @@ public class PdfEmployeeGeneratorTest {
     @Test
     public void testMIEmployerCopyWithAllOptionalFieldsSelected() throws Exception {
         @SuppressWarnings("unchecked")
-        Map<String, String> pdfContent = objectMapper.readValue(expectedFullPdfContent, Map.class);
+        Map<String, String> pdfContent = objectMapper.readValue(expectedPdfContentEmployerMIFull, Map.class);
 
         Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
