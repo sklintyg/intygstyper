@@ -75,7 +75,8 @@ public enum EmployeeOptionalFields {
      * @return
      */
     public static boolean containsAllValues(List<String> values) {
-        return values != null && !values.isEmpty() && values.stream().allMatch(s -> EmployeeOptionalFields.exists(s));
+        return values != null && !values.isEmpty()
+                && Stream.of(EmployeeOptionalFields.values()).map(EmployeeOptionalFields::value).allMatch(s -> values.contains(s));
 
     }
 

@@ -61,9 +61,11 @@ public class EmployeeOptionalFieldsTest {
 
     @Test
     public void testContainsAll() throws Exception {
-        assertFalse(EmployeeOptionalFields.containsAllValues(Arrays.asList("1", "2")));
+
         assertFalse(EmployeeOptionalFields.containsAllValues(new ArrayList<String>()));
         assertFalse(EmployeeOptionalFields.containsAllValues(null));
+        assertFalse(EmployeeOptionalFields.containsAllValues(Arrays.asList("1", "2")));
+        assertFalse(EmployeeOptionalFields.containsAllValues(Arrays.asList(EmployeeOptionalFields.AKTIVITETSBEGRANSNING.value())));
 
         final List<String> allValues = Stream.of(EmployeeOptionalFields.values()).map(EmployeeOptionalFields::value).collect(Collectors.toList());
         assertTrue(EmployeeOptionalFields.containsAllValues(allValues));
