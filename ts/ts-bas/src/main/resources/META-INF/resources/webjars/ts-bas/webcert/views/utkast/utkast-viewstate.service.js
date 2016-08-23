@@ -78,6 +78,7 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                 }
             };
 
+            /* jshint ignore:start */
             // This is not so pretty, but necessary? Can it be improved?
             // this could be moved into the model as a linked property, although thats alot of properties ...
             // maybe introduce an after update so the update of the linked property happens at
@@ -124,6 +125,7 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
                     this.kravYtterligareUnderlag = true;
                 }
             };
+            /* jshint ignore:end */
 
             this.reset();
         }]);

@@ -1,4 +1,4 @@
-/* Global luseMessages */
+/* global luseMessages */
 angular.module('luse', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('luse').config(function($stateProvider) {

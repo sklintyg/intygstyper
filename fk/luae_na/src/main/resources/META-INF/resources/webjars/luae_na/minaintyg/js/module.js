@@ -1,4 +1,4 @@
-/* Glovbal */
+/* global luaeNaMessages */
 angular.module('luae_na', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('luae_na').config(function($stateProvider) {
@@ -55,5 +55,5 @@ angular.module('luae_na').run(['common.messageService',
     function(messageService) {
         'use strict';
 
-        messageService.addResources(luae_naMessages);
+        messageService.addResources(luaeNaMessages);
     }]);
