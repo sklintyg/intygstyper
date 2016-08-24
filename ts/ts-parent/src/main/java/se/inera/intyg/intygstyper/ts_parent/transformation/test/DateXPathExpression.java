@@ -19,13 +19,12 @@
 
 package se.inera.intyg.intygstyper.ts_parent.transformation.test;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import javax.xml.xpath.*;
+
 import org.w3c.dom.Node;
 
 /**
@@ -45,13 +44,16 @@ public class DateXPathExpression extends AbstractXPathExpression<String> {
      */
     public DateXPathExpression(String xPathString, String dateFormat) {
         super(xPathString, XPathConstants.STRING);
-        this.dateFormat = DateTimeFormat.forPattern(dateFormat);
+        this.dateFormat = DateTimeFormatter.ofPattern(dateFormat);
     }
 
     @Override
     public String evaluate(XPath xPath, Node document) throws XPathExpressionException {
         String xmlDate = super.evaluate(xPath, document);
-        LocalDateTime dateTime = LocalDateTime.parse(xmlDate);
-        return dateTime.toString(dateFormat);
+        if (xmlDate.contains("T")) {
+            return LocalDateTime.parse(xmlDate).format(dateFormat);
+        } else {
+            return LocalDate.parse(xmlDate).format(dateFormat);
+        }
     }
 }

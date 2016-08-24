@@ -3,18 +3,17 @@ package se.inera.intyg.intygstyper.luae_fs.model.converter;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
-import org.joda.time.LocalDate;
-import org.junit.Test;
-import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
-import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
-import se.inera.intyg.common.support.model.InternalDate;
-import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
-
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+
+import org.junit.Test;
+
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
+import se.inera.intyg.intygstyper.fkparent.model.internal.*;
+import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public class TransportToInternalTest {
 
@@ -31,7 +30,7 @@ public class TransportToInternalTest {
         utlatande.setId("1234567");
         utlatande.setGrundData(IntygTestDataBuilder.getGrundData());
         utlatande.setTextVersion("1.0");
-        utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
+        utlatande.setUndersokningAvPatienten(new InternalDate(LocalDate.now()));
         utlatande.setAnhorigsBeskrivningAvPatienten(new InternalDate("2015-10-11"));
         utlatande.setJournaluppgifter(new InternalDate("2015-10-10"));
         utlatande.setAnnatGrundForMU(new InternalDate("2015-10-12"));

@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.base.Strings;
 
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.validator.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
@@ -371,23 +366,9 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
-                if (oneInterval == null) {
-                    addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                            "luse.validation.nedsattning.incorrect-date-interval");
-                    return false;
-                }
                 for (int j = i + 1; j < intervals.length; j++) {
                     if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
-                        if (anotherInterval == null) {
-                            addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "luse.validation.nedsattning.incorrect-date-interval");
-                            return false;
-                        }
-                        // Overlap OR abuts(one intervals tom day== another's
-                        // from day) is considered invalid
-                        if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
+                        if (intervals[i].overlaps(intervals[j])) {
                             addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
                                     "luse.validation.nedsattning.overlapping-date-interval");
                             return false;
@@ -412,20 +393,4 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         }
         return true;
     }
-
-    /**
-     * @param start
-     *            start
-     * @param end
-     *            end
-     * @return Interval
-     */
-    private Interval createInterval(LocalDate start, LocalDate end) {
-        if ((start == null || end == null || start.isAfter(end))) {
-            return null;
-        } else {
-            return new Interval(start.toDate().getTime(), end.toDate().getTime());
-        }
-    }
-
 }

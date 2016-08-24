@@ -31,12 +31,12 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.xml.bind.JAXB;
 
 import org.apache.commons.io.FileUtils;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -50,7 +50,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.utils.ResultOfCallUtil;
-import se.inera.intyg.common.support.model.LocalDateInterval;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
@@ -104,7 +103,7 @@ public class Fk7263ModuleApiTest {
         hosPerson.setFullstandigtNamn("nyNamn");
         hosPerson.setForskrivarKod("nyForskrivarkod");
         hosPerson.setVardenhet(vardenhet);
-        LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
+        LocalDateTime signingDate = LocalDate.parse("2014-08-01").atStartOfDay();
         String updatedHolder = fk7263ModuleApi.updateBeforeSigning(toJsonString(utlatande), hosPerson, signingDate);
         Utlatande updatedIntyg = objectMapper.readValue(updatedHolder, Utlatande.class);
 

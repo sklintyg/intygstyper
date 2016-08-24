@@ -20,6 +20,7 @@ package se.inera.intyg.intygstyper.ts_parent.model.converter;
 
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.BEFATTNINGSKOD_LAKARE_EJ_LEG_AT;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,7 @@ import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class InternalToTransportUtil {
 
-    private static final String SIGNERINGS_TIDSTAMPEL_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final DateTimeFormatter SIGNERINGS_TIDSTAMPEL_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     public static final String DELIMITER_REGEXP = "\\.";
 
     private InternalToTransportUtil() {
@@ -47,7 +48,7 @@ public final class InternalToTransportUtil {
     public static GrundData buildGrundData(se.inera.intyg.common.support.model.common.internal.GrundData source) {
         GrundData grundData = new GrundData();
         grundData.setPatient(buildPatient(source.getPatient()));
-        grundData.setSigneringsTidstampel(source.getSigneringsdatum().toString(SIGNERINGS_TIDSTAMPEL_FORMAT));
+        grundData.setSigneringsTidstampel(source.getSigneringsdatum().format(SIGNERINGS_TIDSTAMPEL_FORMAT));
         grundData.setSkapadAv(buildSkapadAv(source.getSkapadAv()));
         return grundData;
     }

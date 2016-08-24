@@ -21,6 +21,7 @@ package se.inera.intyg.intygstyper.fk7263.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -214,7 +215,7 @@ public abstract class PdfAbstractGenerator {
         Personnummer personId = intyg.getGrundData().getPatient().getPersonId();
         final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
         return String.format((isCustomized ? "anpassat_" : "") + "lakarutlatande_%s_%s-%s.pdf", personnummerString, intyg.getGiltighet()
-                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
+                .getFrom().format(DateTimeFormatter.ofPattern(DATE_FORMAT)), intyg.getGiltighet().getTom().format(DateTimeFormatter.ofPattern(DATE_FORMAT)));
     }
 
     public byte[] getBytes() {
@@ -325,7 +326,7 @@ public abstract class PdfAbstractGenerator {
 
     protected void fillSignerNameAndAddress() {
         fillText(SIGN_NAME, intyg.getNamnfortydligandeOchAdress());
-        fillText(SIGN_DATE, intyg.getGrundData().getSigneringsdatum().toString(DATE_PATTERN));
+        fillText(SIGN_DATE, intyg.getGrundData().getSigneringsdatum().format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
     }
 
     protected void fillTravel() {
@@ -518,7 +519,7 @@ public abstract class PdfAbstractGenerator {
             parts.add("4b: " + intyg.getAnnanReferensBeskrivning());
         }
 
-        List<String> nedsattningDescription = new ArrayList<String>();
+        List<String> nedsattningDescription = new ArrayList<>();
         nedsattningDescription.add(intyg.getNedsattMed25Beskrivning());
         nedsattningDescription.add(intyg.getNedsattMed50Beskrivning());
         nedsattningDescription.add(intyg.getNedsattMed75Beskrivning());

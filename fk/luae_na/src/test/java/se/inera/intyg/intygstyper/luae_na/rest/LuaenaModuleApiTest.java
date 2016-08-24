@@ -33,9 +33,9 @@ import static org.mockito.Mockito.when;
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;

@@ -20,6 +20,7 @@
 package se.inera.intyg.intygstyper.ts_bas.integration;
 
 import java.io.StringReader;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.xml.bind.JAXB;
@@ -116,7 +117,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
     private IntygStatus convert(CertificateStateHolder source) {
         IntygStatus status = new IntygStatus();
         status.setTarget(source.getTarget());
-        status.setTimestamp(source.getTimestamp().toString());
+        status.setTimestamp(source.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         status.setType(mapToStatus(source.getState()));
         return status;
     }

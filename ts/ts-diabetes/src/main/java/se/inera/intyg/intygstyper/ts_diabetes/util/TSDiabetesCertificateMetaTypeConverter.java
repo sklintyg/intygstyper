@@ -19,9 +19,9 @@
 
 package se.inera.intyg.intygstyper.ts_diabetes.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import org.joda.time.LocalDateTime;
 
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.model.Status;
@@ -39,7 +39,7 @@ public final class TSDiabetesCertificateMetaTypeConverter {
         metaData.setCertificateType(tsDiabetesIntyg.getIntygsTyp());
         metaData.setIssuerName(tsDiabetesIntyg.getGrundData().getSkapadAv().getFullstandigtNamn());
         metaData.setFacilityName(tsDiabetesIntyg.getGrundData().getSkapadAv().getVardenhet().getEnhetsnamn());
-        metaData.setSignDate(LocalDateTime.parse(tsDiabetesIntyg.getGrundData().getSigneringsTidstampel()));
+        metaData.setSignDate(LocalDateTime.parse(tsDiabetesIntyg.getGrundData().getSigneringsTidstampel(), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         metaData.setAdditionalInfo(intygMeta.getAdditionalInfo());
         metaData.setAvailable(intygMeta.getAvailable().toLowerCase().equals("true"));
         List<Status> statuses = toStatusList(intygMeta.getStatus());
@@ -48,7 +48,7 @@ public final class TSDiabetesCertificateMetaTypeConverter {
     }
 
     public static List<Status> toStatusList(List<IntygStatus> certificateStatuses) {
-        List<Status> statuses = certificateStatuses != null ? new ArrayList<Status>(certificateStatuses.size()) : Collections.<Status>emptyList();
+        List<Status> statuses = certificateStatuses != null ? new ArrayList<>(certificateStatuses.size()) : Collections.<Status>emptyList();
         if (certificateStatuses != null) {
             for (IntygStatus certificateStatus : certificateStatuses) {
                 if (certificateStatus != null) {
@@ -62,6 +62,6 @@ public final class TSDiabetesCertificateMetaTypeConverter {
     public static Status toStatus(IntygStatus certificateStatus) {
         return new Status(CertificateState.valueOf(certificateStatus.getType().value()),
                 certificateStatus.getTarget(),
-                LocalDateTime.parse(certificateStatus.getTimestamp()));
+                LocalDateTime.parse(certificateStatus.getTimestamp(), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
 }

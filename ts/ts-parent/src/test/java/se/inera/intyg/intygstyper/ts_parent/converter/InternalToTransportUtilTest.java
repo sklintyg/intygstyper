@@ -2,7 +2,7 @@ package se.inera.intyg.intygstyper.ts_parent.converter;
 
 import static org.junit.Assert.assertEquals;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.junit.Test;
 
 import se.inera.intyg.common.support.Constants;

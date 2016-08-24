@@ -24,13 +24,13 @@ import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.TILLAGGSFRAGOR_SVAR_JSON_ID;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.xml.bind.JAXB;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
