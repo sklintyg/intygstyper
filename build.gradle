@@ -49,7 +49,7 @@ configure(subprojects.findAll { ['fk7263', 'luse', 'lisu', 'luae_na', 'luae_fs',
   uploadArchives {
     repositories.mavenDeployer {
       pom.whenConfigured {pom ->
-        pom.dependencies.find {dep -> dep.groupId == 'se.inera.intyg.common' }.version = rootProject.resolvedCommonVersion
+        pom.dependencies.findAll {dep -> dep.groupId == 'se.inera.intyg.common' }.each { it.version = rootProject.resolvedCommonVersion }
       }
       repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
         authentication(userName: nexusUsername, password: nexusPassword)
