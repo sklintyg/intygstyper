@@ -45,7 +45,7 @@ subprojects {
   jar.dependsOn(createVersionPropertyFile)
 }
 
-configure(subprojects.findAll { ['fk7263', 'luse', 'lisu', 'luae_na', 'luae_fs', 'ts-bas', 'ts-diabetes'].contains(it.name) }) {
+subprojects {
   uploadArchives {
     repositories.mavenDeployer {
       pom.whenConfigured {pom ->
