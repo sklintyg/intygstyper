@@ -14,17 +14,6 @@ allprojects  {
   group = 'se.inera.intyg.intygstyper'
   version = System.env.BUILD_NUMBER != null ? baseVersion + System.env.BUILD_NUMBER : '0-SNAPSHOT'
   rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
-
-  uploadArchives {
-    repositories.mavenDeployer {
-      pom.whenConfigured {pom ->
-        pom.dependencies.find {dep -> dep.groupId == 'se.inera.intyg.common' }.version = rootProject.resolvedCommonVersion
-      }
-      repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
-        authentication(userName: nexusUsername, password: nexusPassword)
-      }
-    }
-  }
 }
 
 subprojects {
@@ -32,14 +21,6 @@ subprojects {
 
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
-
-  install {
-    repositories.mavenInstaller {
-      pom.whenConfigured {pom ->
-        pom.dependencies.findAll {dep -> dep.groupId == 'se.inera.intyg.common' }.each { it.version = rootProject.resolvedCommonVersion }
-      }
-    }
-  }
 
   repositories {
     mavenLocal()
@@ -62,7 +43,27 @@ subprojects {
   }
 
   jar.dependsOn(createVersionPropertyFile)
+}
 
+configure(subprojects.findAll { ['fk7263', 'luse', 'lisu', 'luae_na', 'luae_fs', 'ts-bas', 'ts-diabetes'].contains(it.name) }) {
+  uploadArchives {
+    repositories.mavenDeployer {
+      pom.whenConfigured {pom ->
+        pom.dependencies.find {dep -> dep.groupId == 'se.inera.intyg.common' }.version = rootProject.resolvedCommonVersion
+      }
+      repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
+        authentication(userName: nexusUsername, password: nexusPassword)
+      }
+    }
+  }
+
+  install {
+    repositories.mavenInstaller {
+      pom.whenConfigured {pom ->
+        pom.dependencies.findAll {dep -> dep.groupId == 'se.inera.intyg.common' }.each { it.version = rootProject.resolvedCommonVersion }
+      }
+    }
+  }
 }
 
 project(':fk-parent') {
