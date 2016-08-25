@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var luae_fsMessages = {
+var luaeFsMessages = {
     'sv': {
         'luae_fs.error.generic': 'Kunde inte visa intyget',
         'luae_fs.info.loadingcertificate': 'Hämtar intyget..',

@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var luae_naMessages = {
+var luaeNaMessages = {
     'sv': {
         'luae_na.error.generic': 'Kunde inte visa intyget',
         'luae_na.info.loadingcertificate': 'Hämtar intyget..',

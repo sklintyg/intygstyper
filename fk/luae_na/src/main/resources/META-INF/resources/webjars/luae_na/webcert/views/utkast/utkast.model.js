@@ -32,10 +32,10 @@ angular.module('luae_na').factory('luae_na.Domain.IntygModel',
                 return diagnosArray;
             };
 
-            var luae_naModel = BaseAtticModel._extend({
+            var LuaeNaModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'luae_naModel', {
+                    init._super.call(this, 'LuaeNaModel', {
 
                         'id': undefined,
                         'textVersion': undefined,
@@ -105,13 +105,13 @@ angular.module('luae_na').factory('luae_na.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new luae_naModel());
+                    return new DraftModel(new LuaeNaModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return luae_naModel;
+            return LuaeNaModel;
 
         }]);

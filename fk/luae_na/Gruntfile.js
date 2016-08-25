@@ -1,5 +1,6 @@
 /* global module */
 function config(name) {
+    'use strict';
     return require('./tasks/' + name);
 }
 
@@ -60,8 +61,8 @@ module.exports = function(grunt) {
 
         jshint: {
             options: {
-                jshintrc: '../target/build-tools/jshint/.jshintrc',
-                force: true
+                jshintrc: 'target/build-tools/jshint/.jshintrc',
+                force: false
             },
             minaintyg: {
                 src: [ 'Gruntfile.js', SRC_DIR + 'webjars/luae_na/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
@@ -143,7 +144,7 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'sass' ]);
+    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'sass', 'jshint' ]);
     grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg' ]);
     grunt.registerTask('lint-webcert', [ 'jshint:webcert' ]);
     grunt.registerTask('lint', [ 'jshint', 'sasslint' ]);

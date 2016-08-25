@@ -33,9 +33,9 @@ angular.module('fk7263').service('fk7263.IntygController.ViewStateService',
 
             // Fix for Angular 1.4 / WEBCERT-2236
             this.has8a = function() {
-                if(ObjectHelper.isFalsy(this.intygModel.nuvarandeArbetsuppgifter)
-                        &&ObjectHelper.isFalsy(this.intygModel.arbetsloshet)
-                        &&ObjectHelper.isFalsy(this.intygModel.foraldrarledighet)) {
+                if (ObjectHelper.isFalsy(this.intygModel.nuvarandeArbetsuppgifter) &&
+                    ObjectHelper.isFalsy(this.intygModel.arbetsloshet) &&
+                    ObjectHelper.isFalsy(this.intygModel.foraldrarledighet)) {
                     return 'false';
                 } else {
                     return 'true';

@@ -1,4 +1,4 @@
-/* Glovbal */
+/* global luaeFsMessages */
 angular.module('luae_fs', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('luae_fs').config(function($stateProvider) {
@@ -55,5 +55,5 @@ angular.module('luae_fs').run(['common.messageService',
     function(messageService) {
         'use strict';
 
-        messageService.addResources(luae_fsMessages);
+        messageService.addResources(luaeFsMessages);
     }]);

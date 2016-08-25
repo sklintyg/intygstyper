@@ -34,10 +34,10 @@ angular.module('luae_fs').factory('luae_fs.Domain.IntygModel',
 
 
 
-            var luae_fsModel = BaseAtticModel._extend({
+            var LuaeFsModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'luae_fsModel', {
+                    init._super.call(this, 'LuaeFsModel', {
 
                         'id': undefined,
                         'textVersion': undefined,
@@ -87,13 +87,13 @@ angular.module('luae_fs').factory('luae_fs.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new luae_fsModel());
+                    return new DraftModel(new LuaeFsModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return luae_fsModel;
+            return LuaeFsModel;
 
         }]);

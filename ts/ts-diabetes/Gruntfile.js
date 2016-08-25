@@ -166,7 +166,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'sass' ]);
+    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'sass', 'jshint' ]);
     grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg' ] );
     grunt.registerTask('lint-webcert', [ 'jshint:webcert' ]);
     grunt.registerTask('lint', [ 'jshint', 'sasslint' ]);
