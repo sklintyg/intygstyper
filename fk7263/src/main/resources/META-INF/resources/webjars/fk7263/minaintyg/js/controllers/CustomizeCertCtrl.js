@@ -24,76 +24,33 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
 
             // Setup checkbox model
 
-            if (ViewState.checkboxModel == undefined) {
-                ViewState.checkboxModel = {
-                    fields : {
-                        'field1'    : { 'id': 'smittskydd',                          'mandatory':false, 'vald':true },
-                        'field2'    : { 'id': 'diagnos',                             'mandatory':false, 'vald':true },
-                        'field3'    : { 'id': 'aktuelltSjukdomsforlopp',             'mandatory':false, 'vald':true },
-                        'field4'    : { 'id': 'funktionsnedsattning',                'mandatory':false, 'vald':true },
-                        'field4b'   : { 'id': 'intygetBaserasPa',                    'mandatory':false, 'vald':true },
-                        'field5'    : { 'id': 'aktivitetsbegransning',               'mandatory':false, 'vald':true },
-                        'field6a_1' : { 'id': 'rekommendationerUtomForetagsHalsoVard', 'mandatory':false, 'vald':true },
-                        'field6a_2' : { 'id': 'rekommendationerForetagsHalsoVard',   'mandatory':true,  'vald':true },
-                        'field6b'   : { 'id': 'planeradBehandling',                  'mandatory':false, 'vald':true },
-                        'field7'    : { 'id': 'rehabilitering',                      'mandatory':false, 'vald':true },
-                        'field8a'   : { 'id': 'arbetsFormagaRelatvt',                'mandatory':true,  'vald':true },
-                        'field8a_1'   : { 'id': 'arbetsFormagaRelativtUtomNuvarandeArbete', 'mandatory':false,  'vald':true },
-                        'field8a_2'   : { 'id': 'arbetsFormagaRelativtNuvarandeArbete',     'mandatory':true,  'vald':true },
-                        'field8b'   : { 'id': 'bedomdArbetsFormaga',                 'mandatory':true,  'vald':true },
-                        'field9'    : { 'id': 'arbetsFormaga',                       'mandatory':false, 'vald':true },
-                        'field10'   : { 'id': 'prognos',                             'mandatory':false, 'vald':true },
-                        'field11'   : { 'id': 'ressatt',                             'mandatory':true,  'vald':true },
-                        'field12'   : { 'id': 'fkKontakt',                           'mandatory':false, 'vald':true },
-                        'field13'   : { 'id': 'ovrigt',                              'mandatory':false, 'vald':true }
-                    }
-                };
+            ViewState.checkboxModel = {
+                fields : {
+                    'field1'    : { 'id': 'smittskydd',                          'mandatory':false, 'vald':true },
+                    'field2'    : { 'id': 'diagnos',                             'mandatory':false, 'vald':true },
+                    'field3'    : { 'id': 'aktuelltSjukdomsforlopp',             'mandatory':false, 'vald':true },
+                    'field4'    : { 'id': 'funktionsnedsattning',                'mandatory':false, 'vald':true },
+                    'field4b'   : { 'id': 'intygetBaserasPa',                    'mandatory':false, 'vald':true },
+                    'field5'    : { 'id': 'aktivitetsbegransning',               'mandatory':false, 'vald':true },
+                    'field6a_1' : { 'id': 'rekommendationerUtomForetagsHalsoVard', 'mandatory':false, 'vald':true },
+                    'field6a_2' : { 'id': 'rekommendationerForetagsHalsoVard',   'mandatory':true,  'vald':true },
+                    'field6b'   : { 'id': 'planeradBehandling',                  'mandatory':false, 'vald':true },
+                    'field7'    : { 'id': 'rehabilitering',                      'mandatory':false, 'vald':true },
+                    'field8a_1'   : { 'id': 'arbetsFormagaRelativtUtomNuvarandeArbete', 'mandatory':false,  'vald':true },
+                    'field8a_2'   : { 'id': 'arbetsFormagaRelativtNuvarandeArbete',     'mandatory':true,  'vald':true },
+                    'field8b'   : { 'id': 'bedomdArbetsFormaga',                 'mandatory':true,  'vald':true },
+                    'field9'    : { 'id': 'arbetsFormaga',                       'mandatory':false, 'vald':true },
+                    'field10'   : { 'id': 'prognos',                             'mandatory':false, 'vald':true },
+                    'field11'   : { 'id': 'ressatt',                             'mandatory':true,  'vald':true },
+                    'field12'   : { 'id': 'fkKontakt',                           'mandatory':false, 'vald':true },
+                    'field13'   : { 'id': 'ovrigt',                              'mandatory':false, 'vald':true }
+                }
+            };
 
-                ViewState.checkboxModel.allItemsSelected = true;
-            }
-
-            $scope.viewState = ViewState;
             $scope.doneLoading = false;
             $scope.messageService = messageService;
+            $scope.viewState = ViewState;
             $scope.visibleStatuses = [ 'SENT' ];
-
-
-            // Watch all option fields and update the selectAll checkbox if necessary
-
-            $scope.$watch("viewState.checkboxModel.fields", function() {
-                var isAllItemsSelected = true;
-                for (var key in ViewState.checkboxModel.fields) {
-                    var field = ViewState.checkboxModel.fields[key];
-                    if (field.vald == false) {
-                        isAllItemsSelected = false;
-                        break;
-                    }
-                }
-                ViewState.checkboxModel.allItemsSelected = isAllItemsSelected;
-            }, true);
-
-            // Fired when the selectAll checkbox is changed
-
-            $scope.selectAll = function () {
-                for (var key in ViewState.checkboxModel.fields) {
-                    var field = ViewState.checkboxModel.fields[key];
-                    if (field.mandatory == false) {
-                        field.vald = ViewState.checkboxModel.allItemsSelected;
-                    }
-                }
-            };
-
-
-            // Navigation
-
-            $scope.backToViewCertificate = function() {
-                ViewState.checkboxModel = undefined;
-                $location.path('/fk7263/view/' + $stateParams.certificateId);
-            };
-
-            $scope.confirmCertificateCustomization = function() {
-                $location.path('/fk7263/customize/' + $stateParams.certificateId + '/summary');
-            };
 
 
             // Load certificate
@@ -123,11 +80,10 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
             if (ViewState.cert == undefined) {
                 IntygService.getCertificate(ViewState.common.intygProperties.type, $stateParams.certificateId,
                     function(result) {
-                        $scope.doneLoading = true;
                         if (result !== null) {
                             ViewState.cert = result.utlatande;
                             ViewState.cert.filteredStatuses = _filterStatuses(result.meta.statuses);
-                            $rootScope.cert = ViewState.cert;
+                            $scope.doneLoading = true;
                         } else {
                             // show error view
                             $location.path('/visafel/certnotfound');
@@ -135,9 +91,46 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
                     }, function() {
                         $log.debug('got error');
                     });
+
             } else {
                 $scope.doneLoading = true;
             }
+
+
+            // Show/hide fields
+
+            function _isNull(object) { return object == null; }
+            function _isEmpty(object) { return object == null || object.length < 1; }
+
+            $scope.showField1 = function _showField1()     { return !_isNull(ViewState.cert.avstangningSmittskydd); };
+            $scope.showField2 = function _showField2()     { return !(_isEmpty(ViewState.cert.diagnosKod) && _isEmpty(ViewState.cert.diagnosBeskrivning)); };
+            $scope.showField3 = function _showField3()     { return !_isEmpty(ViewState.cert.sjukdomsforlopp); };
+            $scope.showField4 = function _showField4()     { return !_isEmpty(ViewState.cert.funktionsnedsattning); };
+            $scope.showField4b = function _showField4b()   { return !(_isNull(ViewState.cert.undersokningAvPatienten) && _isNull(ViewState.cert.telefonkontaktMedPatienten) && _isNull(ViewState.cert.journaluppgifter) && _isNull(ViewState.cert.annanReferens)); };
+            $scope.showField5 = function _showField5()     { return !_isEmpty(ViewState.cert.aktivitetsbegransning != null); };
+            $scope.showField6a1 = function _showField6a1() { return !(_isNull(ViewState.cert.rekommendationKontaktArbetsformedlingen) && _isEmpty(viewState.cert.rekommendationOvrigt)); };
+            $scope.showField6a2 = function _showField6a2() { return !_isNull(ViewState.cert.rekommendationKontaktForetagshalsovarden); };
+            $scope.showField6b = function _showField6b()   { return !(_isEmpty(ViewState.cert.atgardInomSjukvarden) && _isEmpty(ViewState.cert.annanAtgard)); };
+            $scope.showField7 = function _showField7()     { return !_isNull(ViewState.cert.rehabilitering); };
+            $scope.showField8a1 = function _showField8a1() { return !(_isNull(ViewState.cert.arbetsloshet) && _isNull(ViewState.cert.foraldrarledighet)); };
+            $scope.showField8a2 = function _showField8a2() { return !_isEmpty(ViewState.cert.nuvarandeArbetsuppgifter); };
+            $scope.showField8b = function _showField8b()   { return !(_isEmpty(ViewState.cert.nedsattMed25) && _isEmpty(ViewState.cert.nedsattMed50) && _isEmpty(ViewState.cert.nedsattMed75) && _isEmpty(ViewState.cert.nedsattMed100)); };
+            $scope.showField9 = function _showField9()     { return !_isEmpty(ViewState.cert.arbetsformagaPrognos); };
+            $scope.showField10 = function _showField10()   { return !_isNull(ViewState.cert.prognosBedomning); };
+            $scope.showField11 = function _showField11()   { return !(_isNull(ViewState.cert.ressattTillArbeteAktuellt) && _isNull(ViewState.cert.ressattTillArbeteEjAktuellt)); };
+            $scope.showField12 = function _showField12()   { return !_isNull(ViewState.cert.kontaktMedFk); };
+            $scope.showField13 = function _showField13()   { return !_isEmpty(ViewState.cert.kommentar.length); };
+
+            // Navigation
+
+            $scope.backToViewCertificate = function() {
+                ViewState.checkboxModel = undefined;
+                $location.path('/fk7263/view/' + $stateParams.certificateId);
+            };
+
+            $scope.confirmCertificateCustomization = function() {
+                $location.path('/fk7263/customize/' + $stateParams.certificateId + '/summary');
+            };
 
             $scope.pagefocus = true;
         }]);

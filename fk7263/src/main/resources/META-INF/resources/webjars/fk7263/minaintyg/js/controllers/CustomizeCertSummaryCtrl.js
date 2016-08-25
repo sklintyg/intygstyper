@@ -33,11 +33,12 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                         'field4'    : { 'id': 'funktionsnedsattning',                'mandatory':false, 'vald':true },
                         'field4b'   : { 'id': 'intygetBaserasPa',                    'mandatory':false, 'vald':true },
                         'field5'    : { 'id': 'aktivitetsbegransning',               'mandatory':false, 'vald':true },
-                        'field6a_1' : { 'id': 'rekommendationerEjForetagsHalsoVard', 'mandatory':false, 'vald':true },
+                        'field6a_1' : { 'id': 'rekommendationerUtomForetagsHalsoVard', 'mandatory':false, 'vald':true },
                         'field6a_2' : { 'id': 'rekommendationerForetagsHalsoVard',   'mandatory':true,  'vald':true },
                         'field6b'   : { 'id': 'planeradBehandling',                  'mandatory':false, 'vald':true },
                         'field7'    : { 'id': 'rehabilitering',                      'mandatory':false, 'vald':true },
-                        'field8a'   : { 'id': 'arbetsFormagaRelativt',               'mandatory':true,  'vald':true },
+                        'field8a_1'   : { 'id': 'arbetsFormagaRelativtUtomNuvarandeArbete', 'mandatory':false,  'vald':true },
+                        'field8a_2'   : { 'id': 'arbetsFormagaRelativtNuvarandeArbete',     'mandatory':true,  'vald':true },
                         'field8b'   : { 'id': 'bedomdArbetsFormaga',                 'mandatory':true,  'vald':true },
                         'field9'    : { 'id': 'arbetsFormaga',                       'mandatory':false, 'vald':true },
                         'field10'   : { 'id': 'prognos',                             'mandatory':false, 'vald':true },
@@ -46,20 +47,163 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                         'field13'   : { 'id': 'ovrigt',                              'mandatory':false, 'vald':true }
                     }
                 };
-
-                ViewState.checkboxModel.allItemsSelected = true;
             }
 
-            $scope.viewState = ViewState;
-            $scope.messageService = messageService;
-            $scope.visibleStatuses = [ 'SENT' ];
             $scope.doneLoading = false;
-            $scope.acceptProgressDone = true;
             $scope.downloadSuccess = false;
+            $scope.messageService = messageService;
+            $scope.viewState = ViewState;
+            $scope.visibleStatuses = [ 'SENT' ];
 
             $scope.field5Tooltip = messageService.getProperty("fk7263.customize.message.limitation");
 
             $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'fk7263' + '/' + $stateParams.certificateId + '/pdf/arbetsgivarutskrift';
+
+
+            // Show/hide fields
+
+            var _fields = ViewState.checkboxModel.fields;
+
+            function _isNull(object) { return object == null; }
+            function _isEmpty(object) { return object == null || object.length < 1; }
+
+            function _showField(field, isIncludedField) {
+                if (isIncludedField && field.vald) {
+                    return true;
+                }
+                if (!(isIncludedField || field.vald)) {
+                    return true;
+                }
+                return false;
+            }
+
+            $scope.showField1 = function _showField1(isIncludedField) {
+                if (_isNull(ViewState.cert.avstangningSmittskydd)) {
+                    return false;
+                }
+                return _showField(_fields.field1, isIncludedField);
+            };
+
+            $scope.showField2 = function _showField2(isIncludedField) {
+                if (_isEmpty(ViewState.cert.diagnosKod) && _isEmpty(ViewState.cert.diagnosBeskrivning)) {
+                    return false;
+                }
+                return _showField(_fields.field2, isIncludedField);
+            };
+
+            $scope.showField3 = function _showField3(isIncludedField) {
+                if (_isEmpty(ViewState.cert.sjukdomsforlopp)) {
+                    return false;
+                }
+                return _showField(_fields.field3, isIncludedField);
+            };
+
+            $scope.showField4 = function _showField4(isIncludedField) {
+                if (_isEmpty(ViewState.cert.funktionsnedsattning)) {
+                    return false;
+                }
+                return _showField(_fields.field4, isIncludedField);
+            };
+
+            $scope.showField4b = function _showField4b(isIncludedField)  {
+                if (_isNull(ViewState.cert.undersokningAvPatienten) || _isNull(ViewState.cert.telefonkontaktMedPatienten) ||
+                    _isNull(ViewState.cert.journaluppgifter) || _isNull(ViewState.cert.annanReferens)) {
+                    return false;
+                }
+                return _showField(_fields.field4b, isIncludedField);
+            };
+
+            $scope.showField5 = function _showField5(isIncludedField) {
+                if (_isEmpty(ViewState.cert.aktivitetsbegransning)) {
+                    return false;
+                }
+                return _showField(_fields.field5, isIncludedField);
+            };
+
+            $scope.showField6a1 = function _showField6a1(isIncludedField) {
+                if (_isNull(ViewState.cert.rekommendationKontaktArbetsformedlingen) || _isEmpty(ViewState.cert.rekommendationOvrigt)) {
+                    return false;
+                }
+                return _showField(_fields.field6a_1, isIncludedField);
+            };
+
+            $scope.showField6a2 = function _showField6a2(isIncludedField) {
+                if (_isNull(ViewState.cert.rekommendationKontaktForetagshalsovarden)) {
+                    return false;
+                }
+                return _showField(_fields.field6a_2, isIncludedField);
+            };
+
+            $scope.showField6b = function _showField6b(isIncludedField)  {
+                if (_isEmpty(ViewState.cert.atgardInomSjukvarden) || _isEmpty(ViewState.cert.annanAtgard)) {
+                    return false;
+                };
+                return _showField(_fields.field6b, isIncludedField);
+            };
+
+            $scope.showField7 = function _showField7(isIncludedField)   {
+                if (_isNull(ViewState.cert.rehabilitering)) {
+                    return false;
+                }
+                return _showField(_fields.field7, isIncludedField);
+            };
+
+            $scope.showField8a1 = function _showField8a1(isIncludedField) {
+                if (_isNull(ViewState.cert.arbetsloshet)  || _isNull(ViewState.cert.foraldrarledighets)) {
+                    return false;
+                }
+                return _showField(_fields.field8a_1, isIncludedField);
+            };
+
+            $scope.showField8a2 = function _showField8a2(isIncludedField) {
+                if (_isEmpty(ViewState.cert.nuvarandeArbetsuppgifter)) {
+                    return false;
+                }
+                return _showField(_fields.field8a_2, isIncludedField);
+            };
+
+            $scope.showField8b = function _showField8b(isIncludedField)  {
+                if (_isNull(ViewState.cert.nedsattMed25) || _isNull(ViewState.cert.nedsattMed50) ||
+                    _isNull(ViewState.cert.nedsattMed75) || _isNull(ViewState.cert.nedsattMed100)) {
+                    return false;
+                }
+                return _showField(_fields.field8b, isIncludedField);
+            };
+
+            $scope.showField9 = function _showField9(isIncludedField)   {
+                if (_isEmpty(ViewState.cert.arbetsformagaPrognos)) {
+                    return false;
+                }
+                return _showField(_fields.field9, isIncludedField);
+            };
+
+            $scope.showField10 = function _showField10(isIncludedField)   {
+                if (_isNull(ViewState.cert.prognosBedomning)) {
+                    return false;
+                }
+                return _showField(_fields.field10, isIncludedField);
+            };
+
+            $scope.showField11 = function _showField11(isIncludedField)  {
+                if (_isNull(ViewState.cert.ressattTillArbeteAktuellt) || _isNull(ViewState.cert.ressattTillArbeteEjAktuellt)) {
+                    return false;
+                }
+                return _showField(_fields.field11, isIncludedField);
+            };
+
+            $scope.showField12 = function _showField12(isIncludedField)  {
+                if (_isNull(ViewState.cert.kontaktMedFk)) {
+                    return false;
+                }
+                return _showField(_fields.field12, isIncludedField);
+            };
+
+            $scope.showField13 = function _showField13(isIncludedField)  {
+                if (_isEmpty(ViewState.cert.kommentar)) {
+                    return false;
+                }
+                return _showField(_fields.field13, isIncludedField);
+            };
 
 
             // Navigation
