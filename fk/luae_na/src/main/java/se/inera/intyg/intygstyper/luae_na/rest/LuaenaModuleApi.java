@@ -43,15 +43,13 @@ public class LuaenaModuleApi extends FkParentModuleApi<LuaenaUtlatande> {
 
     @Override
     public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, List<String> optionalFields)
             throws ModuleException {
-        // TODO Auto-generated method stub
-        return null;
+        throw new RuntimeException("Not implemented");
     }
 
     @Override

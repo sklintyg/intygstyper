@@ -47,15 +47,13 @@ public class LisuModuleApi extends FkParentModuleApi<LisuUtlatande> {
      */
     @Override
     public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
-        // TODO
-        return null;
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, List<String> optionalFields)
             throws ModuleException {
-        // TODO
-        return null;
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
