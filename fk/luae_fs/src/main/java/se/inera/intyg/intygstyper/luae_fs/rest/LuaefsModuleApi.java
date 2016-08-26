@@ -51,7 +51,7 @@ public class LuaefsModuleApi extends FkParentModuleApi<LuaefsUtlatande> {
     }
 
     @Override
-    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, List<String> optionalFields)
             throws ModuleException {
         throw new RuntimeException("Not implemented");
     }

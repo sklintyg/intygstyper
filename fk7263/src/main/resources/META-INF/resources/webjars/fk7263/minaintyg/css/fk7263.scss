@@ -30,8 +30,86 @@ $ss16-url: url('../img/ss16.png');
   padding-left: 25px;
 }
 
+.float-l {
+  float: left;
+}
+
+.float-r {
+  float: right;
+}
+
 .recipentlist {
   padding: 10px 0;
   border-bottom: 1px solid $color-alto-approx;
   margin-bottom: 10px;
+}
+
+.mandatory {
+  color: #fff;
+  padding: 12px 15px 0 0;
+}
+
+.asterix {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+.cert-body .body-row .title-customize {
+  color: #fff;
+  font-weight: bolder;
+  display: block;
+  padding: 10px 20px;
+  background-color: #008391;
+  -webkit-border-radius: 8px 8px 0px 0px;
+  -moz-border-radius: 8px 8px 0px 0px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+label.checkbox-label input[type=checkbox]{
+  position: relative;
+  vertical-align: middle;
+  bottom: 1px;
+}
+
+.cert-body .summary-row {
+  margin: 0 0 5px 0;
+  background-color: #ededed;
+  border: 1px solid #d8d8d8;
+}
+
+.cert-body .summary-row .title-summary {
+  color: #000;
+  display: block;
+  padding: 5px 20px;
+}
+
+.cert-body .summary-row .title-summary {
+  vertical-align: middle;
+}
+
+.summary-text {
+  font-weight: normal;
+  font-size: 13px;
+  color: #333;
+}
+
+.tbl {
+  display: table;
+  width: 100%;
+}
+
+.tbl-row {
+  display: table-row;
+}
+
+.tbl-col-l {
+  display: table-cell;
+  padding-right: 20px;
+  width: 30%;
+}
+
+.tbl-col-r {
+  display: table-cell;
+  padding-right: 20px;
+  width: 70%;
 }

@@ -26,27 +26,33 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.AcroFields;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfStamper;
 
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.common.util.StringUtil;
-import se.inera.intyg.common.support.model.*;
-import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
 /**
  * @author andreaskaltenbach
  */
-public class PdfGenerator {
+public abstract class PdfAbstractGenerator {
 
     // General stuff
     private static final float LINE_WIDTH = 0.6f;
 
-    private static final int SIGNATURE_NOT_REQUIRED_PADDING_BOTTOM = 10;
-    private static final int SIGNATURE_NOT_REQUIRED_PADDING_LEFT = 5;
-    private static final int SIGNATURE_NOT_REQUIRED_FONT_SIZE = 8;
     // Coordinates for masking "Skicka till försäkringskassan.."
     private static final int MASK_HEIGTH = 70;
     private static final int MASK_WIDTH = 250;
@@ -58,19 +64,15 @@ public class PdfGenerator {
     private static final int MARK_AS_COPY_WIDTH = 226;
     private static final int MARK_AS_COPY_START_X = 50;
     private static final int MARK_AS_COPY_START_Y = 690;
-    private static final int MARK_AS_EMPLOYER_HEIGTH = 55;
-    private static final int MARK_AS_EMPLOYER_WIDTH = 495;
-    private static final int MARK_AS_EMPLOYER_START_X = 50;
-    private static final int MARK_AS_EMPLOYER_START_Y = 670;
+
     private static final int WATERMARK_TEXT_PADDING = 10;
     private static final int WATERMARK_FONTSIZE = 11;
 
-    private static final String WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
-    private static final String WATERMARK_TEXT_EMPLOYER = "Detta är en utskrift av ett elektroniskt intyg med minimalt innehåll. Det uppfyller sjuklönelagens krav, om inget annat regleras i kollektivavtal. Det minimala intyget kan ge arbetsgivaren sämre möjligheter att bedöma behovet av rehabilitering än ett fullständigt intyg";
+    protected static final String ELECTRONIC_COPY_WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
 
     // Right margin texts
-    private static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
-    private static final String WEBCERT_MARGIN_TEXT = "Intyget är elektroniskt undertecknat. Intyget är utskrivet från Webcert.";
+    protected static final String MINA_INTYG_MARGIN_TEXT = "Intyget är utskrivet från Mina Intyg.";
+    protected static final String WEBCERT_MARGIN_TEXT = "Intyget är elektroniskt undertecknat. Intyget är utskrivet från Webcert.";
 
     // Constants for printing ID and origin in right margin
     private static final int MARGIN_TEXT_START_X = 565;
@@ -78,6 +80,9 @@ public class PdfGenerator {
     private static final int MARGIN_TEXT_FONTSIZE = 7;
 
     // Constants for printing "Fysisk underskrift krävs ej av intygsmottagare"
+    private static final int SIGNATURE_NOT_REQUIRED_PADDING_BOTTOM = 10;
+    private static final int SIGNATURE_NOT_REQUIRED_PADDING_LEFT = 5;
+    private static final int SIGNATURE_NOT_REQUIRED_FONT_SIZE = 8;
     private static final int SIGNATURE_NOT_REQUIRED_START_X = 263;
     private static final int SIGNATURE_NOT_REQUIRED_START_Y = 105;
     private static final float SIGNATURE_NOT_REQUIRED_WIDTH = 289.6f;
@@ -201,59 +206,22 @@ public class PdfGenerator {
 
     private static final String DATE_FORMAT = "yyyyMMdd";
 
-    private Utlatande intyg;
-    private ByteArrayOutputStream outputStream;
-    private AcroFields fields;
+    protected Utlatande intyg;
+    protected ByteArrayOutputStream outputStream;
+    protected AcroFields fields;
 
-    public PdfGenerator(Utlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin, boolean isEmployerCopy)
-            throws PdfGeneratorException {
-        this(intyg, statuses, true, applicationOrigin, isEmployerCopy);
+    public String generatePdfFilename(boolean isCustomized) {
+        Personnummer personId = intyg.getGrundData().getPatient().getPersonId();
+        final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
+        return String.format((isCustomized ? "anpassat_" : "") + "lakarutlatande_%s_%s-%s.pdf", personnummerString, intyg.getGiltighet()
+                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
     }
 
-    public PdfGenerator(Utlatande intyg, List<Status> statuses, boolean flatten, ApplicationOrigin applicationOrigin, boolean isEmployerCopy)
-            throws PdfGeneratorException {
-        try {
-            this.intyg = intyg;
-
-            outputStream = new ByteArrayOutputStream();
-
-            PdfReader pdfReader = new PdfReader(PDF_TEMPLATE);
-            PdfStamper pdfStamper = new PdfStamper(pdfReader, this.outputStream);
-            fields = pdfStamper.getAcroFields();
-
-            generatePdf(isEmployerCopy);
-
-            // Decorate PDF depending on the origin of the pdf-call
-            switch (applicationOrigin) {
-            case MINA_INTYG:
-                maskSendToFkInformation(pdfStamper);
-                markAsElectronicCopy(pdfStamper, WATERMARK_TEXT);
-                createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), MINA_INTYG_MARGIN_TEXT);
-                break;
-            case WEBCERT:
-                if (isEmployerCopy) {
-                    maskSendToFkInformation(pdfStamper);
-                    markAsEmployerCopy(pdfStamper, WATERMARK_TEXT_EMPLOYER);
-                } else if (isCertificateSentToFK(statuses)) {
-                    maskSendToFkInformation(pdfStamper);
-                    markAsElectronicCopy(pdfStamper, WATERMARK_TEXT);
-                }
-                createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), WEBCERT_MARGIN_TEXT);
-                createSignatureNotRequiredField(pdfStamper, pdfReader.getNumberOfPages());
-                break;
-            default:
-                break;
-            }
-
-            pdfStamper.setFormFlattening(flatten);
-            pdfStamper.close();
-
-        } catch (Exception e) {
-            throw new PdfGeneratorException(e);
-        }
+    public byte[] getBytes() {
+        return outputStream.toByteArray();
     }
 
-    private boolean isCertificateSentToFK(List<Status> statuses) {
+    protected boolean isCertificateSentToFK(List<Status> statuses) {
         if (statuses != null) {
             for (Status status : statuses) {
                 if (isTargetEqualTo(status, PartKod.FKASSA.getValue()) && isTypeEqualTo(status, CertificateState.SENT)) {
@@ -264,25 +232,7 @@ public class PdfGenerator {
         return false;
     }
 
-    private boolean isTargetEqualTo(Status status, String recipient) {
-        if (!isNull(status) && !isNull(status.getTarget()) && status.getTarget().equals(recipient)) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isTypeEqualTo(Status status, CertificateState state) {
-        if (!isNull(status) && !isNull(status.getType()) && status.getType() == state) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isNull(Object object) {
-        return object == null;
-    }
-
-    private void createSignatureNotRequiredField(PdfStamper pdfStamper, int lastPage) throws DocumentException, IOException {
+    protected void createSignatureNotRequiredField(PdfStamper pdfStamper, int lastPage) throws DocumentException, IOException {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(lastPage);
         addOverlay.saveState();
@@ -307,7 +257,7 @@ public class PdfGenerator {
     }
 
     // Mask the information regarding where to send a physical copy of this document
-    private void maskSendToFkInformation(PdfStamper pdfStamper) {
+    protected void maskSendToFkInformation(PdfStamper pdfStamper) {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(1);
         addOverlay.saveState();
@@ -319,21 +269,11 @@ public class PdfGenerator {
     }
 
     // Mark this document as a copy of an electronically signed document
-    private void markAsElectronicCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
+    protected void markAsElectronicCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
         mark(pdfStamper, watermarkText, MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, MARK_AS_COPY_HEIGTH, MARK_AS_COPY_WIDTH);
     }
 
-    /**
-     * Marking this document as a print meant for the employer of the patient.
-     *
-     * @throws DocumentException
-     * @throws IOException
-     */
-    private void markAsEmployerCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
-        mark(pdfStamper, watermarkText, MARK_AS_EMPLOYER_START_X, MARK_AS_EMPLOYER_START_Y, MARK_AS_EMPLOYER_HEIGTH, MARK_AS_EMPLOYER_WIDTH);
-    }
-
-    private void mark(PdfStamper pdfStamper, String watermarkText, int startX, int startY, int height, int width) throws DocumentException, IOException {
+    protected void mark(PdfStamper pdfStamper, String watermarkText, int startX, int startY, int height, int width) throws DocumentException, IOException {
         PdfContentByte addOverlay;
         addOverlay = pdfStamper.getOverContent(1);
         addOverlay.saveState();
@@ -357,7 +297,7 @@ public class PdfGenerator {
         ct.go();
     }
 
-    private void createRightMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {
+    protected void createRightMarginText(PdfStamper pdfStamper, int numberOfPages, String id, String text) throws DocumentException, IOException {
         PdfContentByte addOverlay;
         BaseFont bf = BaseFont.createFont();
         // Do text
@@ -373,61 +313,22 @@ public class PdfGenerator {
         }
     }
 
-    public String generatePdfFilename() {
-        Personnummer personId = intyg.getGrundData().getPatient().getPersonId();
-        final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
-        return String.format("lakarutlatande_%s_%s-%s.pdf", personnummerString, intyg.getGiltighet()
-                .getFrom().toString(DATE_FORMAT), intyg.getGiltighet().getTom().toString(DATE_FORMAT));
-    }
-
-    public byte[] getBytes() {
-        return outputStream.toByteArray();
-    }
-
-    private void generatePdf(boolean isEmployerCopy) {
-        // Mandatory fields
-        fillPatientDetails();
-        fillRecommendationsWork();
-        fillCapacityRelativeTo();
-        fillCapacity();
-        fillTravel();
-        fillSignerCodes();
-        fillSignerNameAndAddress();
-
-        // Fields not suitable for employer
-        if (!isEmployerCopy) {
-            fillRecommendationsOther();
-            fillArbetsformaga();
-            fillDiagnose();
-            fillDiseaseCause();
-            fillPrognose();
-            fillIsSuspenseDueToInfection();
-            fillBasedOn();
-            fillDisability();
-            fillOther();
-            fillActivityLimitation();
-            fillMeasures();
-            fillRehabilitation();
-            fillFkContact();
-        }
-    }
-
-    private void fillFkContact() {
+    protected void fillFkContact() {
         setField(CONTACT_WITH_FK, intyg.isKontaktMedFk());
     }
 
-    private void fillPatientDetails() {
+    protected void fillPatientDetails() {
         fillText(PATIENT_NAME, intyg.getGrundData().getPatient().getFullstandigtNamn());
         fillText(PATIENT_SSN, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
         fillText(PATIENT_SSN_2, intyg.getGrundData().getPatient().getPersonId().getPersonnummer());
     }
 
-    private void fillSignerNameAndAddress() {
+    protected void fillSignerNameAndAddress() {
         fillText(SIGN_NAME, intyg.getNamnfortydligandeOchAdress());
         fillText(SIGN_DATE, intyg.getGrundData().getSigneringsdatum().toString(DATE_PATTERN));
     }
 
-    private void fillTravel() {
+    protected void fillTravel() {
         if (intyg.isRessattTillArbeteAktuellt()) {
             checkField(RECOMMENDATION_TRAVEL_YES);
         }
@@ -436,11 +337,7 @@ public class PdfGenerator {
         }
     }
 
-    private String stripNewlines(String text) {
-        return (text != null) ? text.replace("\n", " ") : null;
-    }
-
-    private void fillPrognose() {
+    protected void fillPrognose() {
         if (intyg.getPrognosBedomning() != null) {
             switch (intyg.getPrognosBedomning()) {
             case arbetsformagaPrognosJa:
@@ -460,11 +357,11 @@ public class PdfGenerator {
         }
     }
 
-    private void fillArbetsformaga() {
+    protected void fillArbetsformaga() {
         fillText(WORK_CAPACITY_TEXT, stripNewlines(intyg.getArbetsformagaPrognos()));
     }
 
-    private void fillNedsattning(InternalLocalDateInterval interval, String checkboxFieldName, String fromDateFieldName,
+    protected void fillNedsattning(InternalLocalDateInterval interval, String checkboxFieldName, String fromDateFieldName,
             String toDateFieldName) {
         if (interval != null) {
             checkField(checkboxFieldName);
@@ -473,7 +370,7 @@ public class PdfGenerator {
         }
     }
 
-    private void fillCapacity() {
+    protected void fillCapacity() {
         fillNedsattning(intyg.getNedsattMed100(), REDUCED_WORK_CAPACITY_FULL, REDUCED_WORK_CAPACITY_FULL_FROM,
                 REDUCED_WORK_CAPACITY_FULL_TOM);
         fillNedsattning(intyg.getNedsattMed75(), REDUCED_WORK_CAPACITY_75, REDUCED_WORK_CAPACITY_75_FROM,
@@ -484,16 +381,20 @@ public class PdfGenerator {
                 REDUCED_WORK_CAPACITY_25_TOM);
     }
 
-    private void fillCapacityRelativeTo() {
+    protected void fillCapacityRelativeToNuvarandeArbete() {
         if (intyg.getNuvarandeArbetsuppgifter() != null) {
             checkField(CURRENT_WORK);
             fillText(CURRENT_WORK_TEXT_1, stripNewlines(intyg.getNuvarandeArbetsuppgifter()));
         }
+
+    }
+    protected void fillCapacityRelativeToOtherThanNuvarandeArbete() {
+
         setField(UNEMPLOYMENT, intyg.isArbetsloshet());
         setField(PARENTAL_LEAVE, intyg.isForaldrarledighet());
     }
 
-    private void fillRehabilitation() {
+    protected void fillRehabilitation() {
         if (intyg.getRehabilitering() != null) {
             switch (intyg.getRehabilitering()) {
             case rehabiliteringAktuell:
@@ -511,11 +412,11 @@ public class PdfGenerator {
         }
     }
 
-    private void fillRecommendationsWork() {
+    protected void fillRecommendationsKontaktMedFk() {
         setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommendationKontaktForetagshalsovarden());
     }
 
-    private void fillRecommendationsOther() {
+    protected void fillRecommendationsOther() {
         setField(RECOMMENDATIONS_CONTACT_AF, intyg.isRekommendationKontaktArbetsformedlingen());
         if (intyg.getRekommendationOvrigt() != null) {
             checkField(RECOMMENDATIONS_OTHER);
@@ -523,16 +424,91 @@ public class PdfGenerator {
         }
     }
 
-    private void fillActivityLimitation() {
+    protected void fillActivityLimitation() {
         fillText(ACTIVITY_LIMITATION, stripNewlines(intyg.getAktivitetsbegransning()));
     }
 
-    private void fillDisability() {
+    protected void fillDisability() {
         fillText(DISABILITIES, stripNewlines(intyg.getFunktionsnedsattning()));
     }
 
-    private void fillOther() {
+    protected void fillOther() {
         fillText(OTHER_INFORMATION, stripNewlines(buildOtherText()));
+    }
+
+    protected void fillBasedOn() {
+
+        if (intyg.getUndersokningAvPatienten() != null) {
+            checkField(BASED_ON_EXAMINATION);
+            fillText(BASED_ON_EXAMINATION_TIME, intyg.getUndersokningAvPatienten().getDate());
+        }
+
+        if (intyg.getTelefonkontaktMedPatienten() != null) {
+            checkField(BASED_ON_PHONE_CONTACT);
+            fillText(BASED_ON_PHONE_CONTACT_TIME, intyg.getTelefonkontaktMedPatienten().getDate());
+        }
+
+        if (intyg.getJournaluppgifter() != null) {
+            checkField(BASED_ON_JOURNAL);
+            fillText(BASED_ON_JOURNAL_TIME, intyg.getJournaluppgifter().getDate());
+        }
+
+        if (intyg.getAnnanReferens() != null) {
+            checkField(BASED_ON_OTHER);
+            fillText(BASED_ON_OTHER_DATE, intyg.getAnnanReferens().getDate());
+        }
+    }
+
+    protected void fillMeasures() {
+        if (intyg.getAtgardInomSjukvarden() != null) {
+            checkField(MEASURES_CURRENT);
+            fillText(MEASURES_CURRENT_TEXT, stripNewlines(intyg.getAtgardInomSjukvarden()));
+        }
+
+        if (intyg.getAnnanAtgard() != null) {
+            checkField(MEASURES_OTHER);
+            fillText(MEASURES_OTHER_TEXT, stripNewlines(intyg.getAnnanAtgard()));
+        }
+    }
+
+    protected void fillDiseaseCause() {
+        fillText(DISEASE_CAUSE, stripNewlines(intyg.getSjukdomsforlopp()));
+    }
+
+    protected void fillIsSuspenseDueToInfection() {
+        setField(SUSPENSION_DUE_TO_INFECTION, intyg.isAvstangningSmittskydd());
+    }
+
+    protected void fillSignerCodes() {
+        fillText(DOCTORCODE_AND_WORKPLACE, intyg.getForskrivarkodOchArbetsplatskod());
+    }
+
+    protected void fillDiagnose() {
+        fillText(DIAGNOS_CODE, intyg.getDiagnosKod());
+        // fillText(DIAGNOS, intyg.getDiagnosBeskrivning());
+        fillText(DIAGNOS, buildOtherDiagnoses());
+    }
+
+    private boolean isTargetEqualTo(Status status, String recipient) {
+        if (!isNull(status) && !isNull(status.getTarget()) && status.getTarget().equals(recipient)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTypeEqualTo(Status status, CertificateState state) {
+        if (!isNull(status) && !isNull(status.getType()) && status.getType() == state) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isNull(Object object) {
+        return object == null;
+    }
+
+    private String stripNewlines(String text) {
+        return (text != null) ? text.replace("\n", " ") : null;
     }
 
     private String buildOtherText() {
@@ -585,59 +561,6 @@ public class PdfGenerator {
 
     private boolean isValidString(String string) {
         return string != null && !string.isEmpty();
-    }
-
-    private void fillBasedOn() {
-
-        if (intyg.getUndersokningAvPatienten() != null) {
-            checkField(BASED_ON_EXAMINATION);
-            fillText(BASED_ON_EXAMINATION_TIME, intyg.getUndersokningAvPatienten().getDate());
-        }
-
-        if (intyg.getTelefonkontaktMedPatienten() != null) {
-            checkField(BASED_ON_PHONE_CONTACT);
-            fillText(BASED_ON_PHONE_CONTACT_TIME, intyg.getTelefonkontaktMedPatienten().getDate());
-        }
-
-        if (intyg.getJournaluppgifter() != null) {
-            checkField(BASED_ON_JOURNAL);
-            fillText(BASED_ON_JOURNAL_TIME, intyg.getJournaluppgifter().getDate());
-        }
-
-        if (intyg.getAnnanReferens() != null) {
-            checkField(BASED_ON_OTHER);
-            fillText(BASED_ON_OTHER_DATE, intyg.getAnnanReferens().getDate());
-        }
-    }
-
-    private void fillMeasures() {
-        if (intyg.getAtgardInomSjukvarden() != null) {
-            checkField(MEASURES_CURRENT);
-            fillText(MEASURES_CURRENT_TEXT, stripNewlines(intyg.getAtgardInomSjukvarden()));
-        }
-
-        if (intyg.getAnnanAtgard() != null) {
-            checkField(MEASURES_OTHER);
-            fillText(MEASURES_OTHER_TEXT, stripNewlines(intyg.getAnnanAtgard()));
-        }
-    }
-
-    private void fillDiseaseCause() {
-        fillText(DISEASE_CAUSE, stripNewlines(intyg.getSjukdomsforlopp()));
-    }
-
-    private void fillIsSuspenseDueToInfection() {
-        setField(SUSPENSION_DUE_TO_INFECTION, intyg.isAvstangningSmittskydd());
-    }
-
-    private void fillSignerCodes() {
-        fillText(DOCTORCODE_AND_WORKPLACE, intyg.getForskrivarkodOchArbetsplatskod());
-    }
-
-    private void fillDiagnose() {
-        fillText(DIAGNOS_CODE, intyg.getDiagnosKod());
-        // fillText(DIAGNOS, intyg.getDiagnosBeskrivning());
-        fillText(DIAGNOS, buildOtherDiagnoses());
     }
 
     private void fillText(String fieldId, String text) {

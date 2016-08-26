@@ -169,7 +169,7 @@ public class TsParentModuleApiTest {
 
     @Test(expected = ModuleException.class)
     public void testPdfEmployer() throws Exception {
-        moduleApi.pdfEmployer("internalModel", new ArrayList<>(), ApplicationOrigin.INTYGSTJANST);
+        moduleApi.pdfEmployer("internalModel", new ArrayList<>(), ApplicationOrigin.INTYGSTJANST, null);
     }
 
     @Test
