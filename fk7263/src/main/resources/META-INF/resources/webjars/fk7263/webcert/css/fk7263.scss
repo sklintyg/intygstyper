@@ -59,6 +59,11 @@ This is to avoid leaking module specific style rules outside of it's intended co
       }
     }
   }
+
+  .diagnos-row {
+    position: relative;
+  }
+
 }
 
 
