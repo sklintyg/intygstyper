@@ -36,6 +36,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftRespon
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.modules.validator.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
@@ -50,12 +51,17 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
+    private static final PatientValidator patientValidator = new PatientValidator();
+
     @Autowired
     InternalValidatorUtil validatorUtil;
 
     @Override
     public ValidateDraftResponse validateDraft(LuseUtlatande utlatande) {
         List<ValidationMessage> validationMessages = new ArrayList<>();
+
+        // Patientens adressuppgifter
+        patientValidator.validate(utlatande.getGrundData().getPatient(), validationMessages);
 
         // Kategori 1 – Grund för medicinskt underlag
         validateGrundForMU(utlatande, validationMessages);

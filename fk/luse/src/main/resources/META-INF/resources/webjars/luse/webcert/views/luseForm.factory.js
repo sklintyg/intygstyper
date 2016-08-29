@@ -1,4 +1,4 @@
-angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', function(FactoryHelper) {
+angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'common.UserModel', function(FactoryHelper, UserModel) {
     'use strict';
 
     var categoryNames = [
@@ -16,6 +16,27 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', fu
     ];
 
     var formFields = [
+        {
+            wrapper: 'wc-field-static',
+            templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'adress'},
+            fieldGroup: [
+                {
+                    key: 'grundData.patient.postadress',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postadress', disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
+                },
+                {
+                    key: 'grundData.patient.postnummer',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postnummer', disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
+                },
+                {
+                    key: 'grundData.patient.postort',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                }
+            ]
+        },
         {
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
