@@ -108,8 +108,9 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
 
             var _fields = ViewState.checkboxModel.fields;
 
-            function _isNull(object) { return object === null; }
-            function _isEmpty(object) { return object === null || object.length < 1; }
+            function _isInvalid(value) {
+                return !value;
+            }
 
             function _showField(field, isIncludedField) {
                 if (isIncludedField && field.vald) {
@@ -122,128 +123,128 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             }
 
             $scope.showField1 = function _showField1(isIncludedField) {
-                if (_isNull(ViewState.cert.avstangningSmittskydd)) {
+                if (_isInvalid(ViewState.cert.avstangningSmittskydd)) {
                     return false;
                 }
                 return _showField(_fields.field1, isIncludedField);
             };
 
             $scope.showField2 = function _showField2(isIncludedField) {
-                if (_isEmpty(ViewState.cert.diagnosKod) && _isEmpty(ViewState.cert.diagnosBeskrivning)) {
+                if (_isInvalid(ViewState.cert.diagnosKod) && _isInvalid(ViewState.cert.diagnosBeskrivning)) {
                     return false;
                 }
                 return _showField(_fields.field2, isIncludedField);
             };
 
             $scope.showField3 = function _showField3(isIncludedField) {
-                if (_isEmpty(ViewState.cert.sjukdomsforlopp)) {
+                if (_isInvalid(ViewState.cert.sjukdomsforlopp)) {
                     return false;
                 }
                 return _showField(_fields.field3, isIncludedField);
             };
 
             $scope.showField4 = function _showField4(isIncludedField) {
-                if (_isEmpty(ViewState.cert.funktionsnedsattning)) {
+                if (_isInvalid(ViewState.cert.funktionsnedsattning)) {
                     return false;
                 }
                 return _showField(_fields.field4, isIncludedField);
             };
 
             $scope.showField4b = function _showField4b(isIncludedField)  {
-                if (_isNull(ViewState.cert.undersokningAvPatienten) || _isNull(ViewState.cert.telefonkontaktMedPatienten) ||
-                    _isNull(ViewState.cert.journaluppgifter) || _isNull(ViewState.cert.annanReferens)) {
+                if (_isInvalid(ViewState.cert.undersokningAvPatienten) && !_isInvalid(ViewState.cert.telefonkontaktMedPatienten) &&
+                    _isInvalid(ViewState.cert.journaluppgifter) && _isInvalid(ViewState.cert.annanReferens)) {
                     return false;
                 }
                 return _showField(_fields.field4b, isIncludedField);
             };
 
             $scope.showField5 = function _showField5(isIncludedField) {
-                if (_isEmpty(ViewState.cert.aktivitetsbegransning)) {
+                if (_isInvalid(ViewState.cert.aktivitetsbegransning)) {
                     return false;
                 }
                 return _showField(_fields.field5, isIncludedField);
             };
 
             $scope.showField6a1 = function _showField6a1(isIncludedField) {
-                if (_isNull(ViewState.cert.rekommendationKontaktArbetsformedlingen) || _isEmpty(ViewState.cert.rekommendationOvrigt)) {
+                if (_isInvalid(ViewState.cert.rekommendationKontaktArbetsformedlingen) && _isInvalid(ViewState.cert.rekommendationOvrigt)) {
                     return false;
                 }
                 return _showField(_fields.field6a1, isIncludedField);
             };
 
             $scope.showField6a2 = function _showField6a2(isIncludedField) {
-                if (_isNull(ViewState.cert.rekommendationKontaktForetagshalsovarden)) {
+                if (_isInvalid(ViewState.cert.rekommendationKontaktForetagshalsovarden)) {
                     return false;
                 }
                 return _showField(_fields.field6a2, isIncludedField);
             };
 
             $scope.showField6b = function _showField6b(isIncludedField)  {
-                if (_isEmpty(ViewState.cert.atgardInomSjukvarden) || _isEmpty(ViewState.cert.annanAtgard)) {
+                if (_isInvalid(ViewState.cert.atgardInomSjukvarden) && _isInvalid(ViewState.cert.annanAtgard)) {
                     return false;
                 }
                 return _showField(_fields.field6b, isIncludedField);
             };
 
             $scope.showField7 = function _showField7(isIncludedField)   {
-                if (_isNull(ViewState.cert.rehabilitering)) {
+                if (_isInvalid(ViewState.cert.rehabilitering)) {
                     return false;
                 }
                 return _showField(_fields.field7, isIncludedField);
             };
 
             $scope.showField8a1 = function _showField8a1(isIncludedField) {
-                if (_isNull(ViewState.cert.arbetsloshet)  || _isNull(ViewState.cert.foraldrarledighets)) {
+                if (_isInvalid(ViewState.cert.arbetsloshet) && _isInvalid(ViewState.cert.foraldrarledighet)) {
                     return false;
                 }
                 return _showField(_fields.field8a1, isIncludedField);
             };
 
             $scope.showField8a2 = function _showField8a2(isIncludedField) {
-                if (_isEmpty(ViewState.cert.nuvarandeArbetsuppgifter)) {
+                if (_isInvalid(ViewState.cert.nuvarandeArbetsuppgifter)) {
                     return false;
                 }
                 return _showField(_fields.field8a2, isIncludedField);
             };
 
             $scope.showField8b = function _showField8b(isIncludedField)  {
-                if (_isNull(ViewState.cert.nedsattMed25) || _isNull(ViewState.cert.nedsattMed50) ||
-                    _isNull(ViewState.cert.nedsattMed75) || _isNull(ViewState.cert.nedsattMed100)) {
+                if (_isInvalid(ViewState.cert.nedsattMed25) && _isInvalid(ViewState.cert.nedsattMed50) &&
+                    _isInvalid(ViewState.cert.nedsattMed75) && _isInvalid(ViewState.cert.nedsattMed100)) {
                     return false;
                 }
                 return _showField(_fields.field8b, isIncludedField);
             };
 
             $scope.showField9 = function _showField9(isIncludedField)   {
-                if (_isEmpty(ViewState.cert.arbetsformagaPrognos)) {
+                if (_isInvalid(ViewState.cert.arbetsformagaPrognos)) {
                     return false;
                 }
                 return _showField(_fields.field9, isIncludedField);
             };
 
             $scope.showField10 = function _showField10(isIncludedField)   {
-                if (_isNull(ViewState.cert.prognosBedomning)) {
+                if (_isInvalid(ViewState.cert.prognosBedomning)) {
                     return false;
                 }
                 return _showField(_fields.field10, isIncludedField);
             };
 
             $scope.showField11 = function _showField11(isIncludedField)  {
-                if (_isNull(ViewState.cert.ressattTillArbeteAktuellt) || _isNull(ViewState.cert.ressattTillArbeteEjAktuellt)) {
+                if (_isInvalid(ViewState.cert.ressattTillArbeteAktuellt) && _isInvalid(ViewState.cert.ressattTillArbeteEjAktuellt)) {
                     return false;
                 }
                 return _showField(_fields.field11, isIncludedField);
             };
 
             $scope.showField12 = function _showField12(isIncludedField)  {
-                if (_isNull(ViewState.cert.kontaktMedFk)) {
+                if (_isInvalid(ViewState.cert.kontaktMedFk)) {
                     return false;
                 }
                 return _showField(_fields.field12, isIncludedField);
             };
 
             $scope.showField13 = function _showField13(isIncludedField)  {
-                if (_isEmpty(ViewState.cert.kommentar)) {
+                if (_isInvalid(ViewState.cert.kommentar)) {
                     return false;
                 }
                 return _showField(_fields.field13, isIncludedField);
@@ -269,17 +270,13 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
 
             function _getSelectedFields(fields) {
                 var selectedFields = [];
-                if (angular.isObject(fields)) {
-                    for (var key in fields) {
-                        if (angular.isObject(key)) {
-                            var field = fields[key];
-                            if (!field.mandatory && field.vald) {
-                                // Only add non-mandatory fields if they are selected
-                                selectedFields.push(field.id);
-                            }
-                        }
+                angular.forEach(fields, function(field, key) {
+                    if (!field.mandatory && field.vald) {
+                        // Only add non-mandatory fields if they are selected
+                        selectedFields.push(field.id);
                     }
-                }
+                });
+
                 return selectedFields;
             }
 

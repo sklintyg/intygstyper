@@ -101,65 +101,67 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
 
             // Show/hide fields
 
-            function _isNull(object) { return object === null; }
-            function _isEmpty(object) { return object === null || object.length < 1; }
+            function _isInvalid(value) {
+                return !value;
+            }
 
             $scope.showField1 = function _showField1()     {
-                return !_isNull(ViewState.cert.avstangningSmittskydd);
+                return !_isInvalid(ViewState.cert.avstangningSmittskydd);
             };
             $scope.showField2 = function _showField2()     {
-                return !(_isEmpty(ViewState.cert.diagnosKod) && _isEmpty(ViewState.cert.diagnosBeskrivning));
+                return !(_isInvalid(ViewState.cert.diagnosKod) && _isInvalid(ViewState.cert.diagnosBeskrivning));
             };
             $scope.showField3 = function _showField3()     {
-                return !_isEmpty(ViewState.cert.sjukdomsforlopp);
+                return !_isInvalid(ViewState.cert.sjukdomsforlopp);
             };
             $scope.showField4 = function _showField4()     {
-                return !_isEmpty(ViewState.cert.funktionsnedsattning);
+                return !_isInvalid(ViewState.cert.funktionsnedsattning);
             };
             $scope.showField4b = function _showField4b()   {
-                return !(_isNull(ViewState.cert.undersokningAvPatienten) && _isNull(ViewState.cert.telefonkontaktMedPatienten) &&
-                         _isNull(ViewState.cert.journaluppgifter) && _isNull(ViewState.cert.annanReferens));
+                return !(_isInvalid(ViewState.cert.undersokningAvPatienten) && _isInvalid(ViewState.cert.telefonkontaktMedPatienten) &&
+                         _isInvalid(ViewState.cert.journaluppgifter) && _isInvalid(ViewState.cert.annanReferens));
             };
             $scope.showField5 = function _showField5()     {
-                return !_isEmpty(ViewState.cert.aktivitetsbegransning);
+                return !_isInvalid(ViewState.cert.aktivitetsbegransning);
             };
             $scope.showField6a1 = function _showField6a1() {
-                return !(_isNull(ViewState.cert.rekommendationKontaktArbetsformedlingen) && _isEmpty(ViewState.cert.rekommendationOvrigt));
+                return !(_isInvalid(ViewState.cert.rekommendationKontaktArbetsformedlingen) && _isInvalid(ViewState.cert.rekommendationOvrigt));
             };
             $scope.showField6a2 = function _showField6a2() {
-                return !_isNull(ViewState.cert.rekommendationKontaktForetagshalsovarden);
+                return !_isInvalid(ViewState.cert.rekommendationKontaktForetagshalsovarden);
             };
             $scope.showField6b = function _showField6b()   {
-                return !(_isEmpty(ViewState.cert.atgardInomSjukvarden) && _isEmpty(ViewState.cert.annanAtgard));
+                return !(_isInvalid(ViewState.cert.atgardInomSjukvarden) && _isInvalid(ViewState.cert.annanAtgard));
             };
             $scope.showField7 = function _showField7()     {
-                return !_isNull(ViewState.cert.rehabilitering);
+                return !_isInvalid(ViewState.cert.rehabilitering);
             };
             $scope.showField8a1 = function _showField8a1() {
-                return !(_isNull(ViewState.cert.arbetsloshet) && _isNull(ViewState.cert.foraldrarledighet));
+                return !(_isInvalid(ViewState.cert.arbetsloshet) && _isInvalid(ViewState.cert.foraldrarledighet));
             };
             $scope.showField8a2 = function _showField8a2() {
-                return !_isEmpty(ViewState.cert.nuvarandeArbetsuppgifter);
+                return !_isInvalid(ViewState.cert.nuvarandeArbetsuppgifter);
             };
             $scope.showField8b = function _showField8b()   {
-                return !(_isEmpty(ViewState.cert.nedsattMed25) && _isEmpty(ViewState.cert.nedsattMed50) && _isEmpty(ViewState.cert.nedsattMed75) &&
-                         _isEmpty(ViewState.cert.nedsattMed100));
+                return !(_isInvalid(ViewState.cert.nedsattMed25) && _isInvalid(ViewState.cert.nedsattMed50) &&
+                         _isInvalid(ViewState.cert.nedsattMed75) && _isInvalid(ViewState.cert.nedsattMed100));
             };
             $scope.showField9 = function _showField9()     {
-                return !_isEmpty(ViewState.cert.arbetsformagaPrognos);
+                return !_isInvalid(ViewState.cert.arbetsformagaPrognos);
             };
             $scope.showField10 = function _showField10()   {
-                return !_isNull(ViewState.cert.prognosBedomning);
+                return !_isInvalid(ViewState.cert.prognosBedomning);
             };
             $scope.showField11 = function _showField11()   {
-                return !(_isNull(ViewState.cert.ressattTillArbeteAktuellt) && _isNull(ViewState.cert.ressattTillArbeteEjAktuellt));
+                return !(_isInvalid(ViewState.cert.ressattTillArbeteAktuellt) && _isInvalid(ViewState.cert.ressattTillArbeteEjAktuellt));
             };
             $scope.showField12 = function _showField12()   {
-                return !_isNull(ViewState.cert.kontaktMedFk);
+                return !_isInvalid(ViewState.cert.kontaktMedFk);
             };
             $scope.showField13 = function _showField13()   {
-                return !_isEmpty(ViewState.cert.kommentar.length);
+                return !_isInvalid(ViewState.cert.kommentar);
             };
+
 
             // Navigation
 

@@ -112,7 +112,7 @@
 
             <div class="cert-body">
 
-              <div mi-field-selectable field-number="1" field-label="fk7263.label.smittskydd" field-model="viewState.checkboxModel.fields.field1" filled="true" ng-show="showField1()">
+              <div mi-field-selectable field-number="1" field-label="fk7263.label.smittskydd.anpassatintyg" field-model="viewState.checkboxModel.fields.field1" filled="true" ng-show="showField1()">
                 <span ng-show="viewState.cert.avstangningSmittskydd">
                   <span id="smittskydd-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -121,7 +121,7 @@
                 </span>
               </div>
 
-              <div mi-field-selectable field-number="2" field-label="fk7263.label.diagnosis" field-model="viewState.checkboxModel.fields.field2" filled="viewState.cert.diagnosKod" ng-show="showField2()">
+              <div mi-field-selectable field-number="2" field-label="fk7263.label.diagnosis.anpassatintyg" field-model="viewState.checkboxModel.fields.field2" filled="viewState.cert.diagnosKod" ng-show="showField2()">
                 <div class="form-group">
                   <span class="tag">
                     <span message key="fk7263.label.diagnosisCode"></span>
@@ -139,15 +139,15 @@
                 </div>
               </div>
 
-              <div mi-field-selectable field-number="3" field-label="fk7263.label.progressofdesease" field-model="viewState.checkboxModel.fields.field3" filled="viewState.cert.sjukdomsforlopp!=null" ng-show="showField3()">
+              <div mi-field-selectable field-number="3" field-label="fk7263.label.progressofdesease.anpassatintyg" field-model="viewState.checkboxModel.fields.field3" filled="viewState.cert.sjukdomsforlopp!=null" ng-show="showField3()">
                 <div id="sjukdomsforlopp" class="multiline">{{viewState.cert.sjukdomsforlopp}}</div>
               </div>
 
-              <div mi-field-selectable field-number="4" field-label="fk7263.label.disabilities" field-model="viewState.checkboxModel.fields.field4" filled="viewState.cert.funktionsnedsattning!=null" ng-show="showField4()">
+              <div mi-field-selectable field-number="4" field-label="fk7263.label.disabilities.anpassatintyg" field-model="viewState.checkboxModel.fields.field4" filled="viewState.cert.funktionsnedsattning!=null" ng-show="showField4()">
                 <div id="funktionsnedsattning" class="multiline">{{viewState.cert.funktionsnedsattning}}</div>
               </div>
 
-              <div mi-field-selectable field-number="4b" field-label="fk7263.label.basedon" field-model="viewState.checkboxModel.fields.field4b"
+              <div mi-field-selectable field-number="4b" field-label="fk7263.label.basedon.anpassatintyg" field-model="viewState.checkboxModel.fields.field4b"
                    filled="viewState.cert.undersokningAvPatienten!=null || viewState.cert.telefonkontaktMedPatienten!=null || viewState.cert.journaluppgifter!=null || viewState.cert.annanReferens!=null"
                    ng-show="showField4b()">
                 <div class="tbl">
@@ -170,14 +170,14 @@
                 </div>
               </div>
 
-              <div mi-field-selectable field-number="5" field-label="fk7263.label.limitation" field-model="viewState.checkboxModel.fields.field5" filled="viewState.cert.aktivitetsbegransning!=null" ng-show="showField5()">
+              <div mi-field-selectable field-number="5" field-label="fk7263.label.limitation.anpassatintyg" field-model="viewState.checkboxModel.fields.field5" filled="viewState.cert.aktivitetsbegransning!=null" ng-show="showField5()">
                 <div id="aktivitetsbegransning-warning" class="alert alert-warning" ng-show="viewState.checkboxModel.fields.field5.vald==false">
                   <span message key="fk7263.customize.message.limitation"></span>
                 </div>
                 <div id="aktivitetsbegransning" class="multiline">{{viewState.cert.aktivitetsbegransning}}</div>
               </div>
 
-              <div mi-field-selectable field-number="6a" field-label="fk7263.label.recommendations" field-model="viewState.checkboxModel.fields.field6a1"
+              <div mi-field-selectable field-number="6a" field-label="fk7263.label.recommendations.anpassatintyg.1" field-model="viewState.checkboxModel.fields.field6a1"
                    filled="viewState.cert.rekommendationKontaktArbetsformedlingen || viewState.cert.rekommendationOvrigt != null"
                    ng-show="showField6a1()">
 
@@ -202,7 +202,7 @@
                 </div>
               </div>
 
-              <div mi-field-selectable field-number="6a" field-label="fk7263.label.recommendations" field-model="viewState.checkboxModel.fields.field6a2"
+              <div mi-field-selectable field-number="6a" field-label="fk7263.label.recommendations.anpassatintyg.2" field-model="viewState.checkboxModel.fields.field6a2"
                    filled="viewState.cert.rekommendationKontaktForetagshalsovarden" ng-show="showField6a2()">
 
                 <div class="tbl">
@@ -218,7 +218,7 @@
                 </div>
               </div>
 
-              <div mi-field-selectable field-number="6b" field-label="fk7263.label.plannedtreatment" field-model="viewState.checkboxModel.fields.field6b"
+              <div mi-field-selectable field-number="6b" field-label="fk7263.label.plannedtreatment.anpassatintyg" field-model="viewState.checkboxModel.fields.field6b"
                    filled="viewState.cert.atgardInomSjukvarden || viewState.cert.annanAtgard"
                    ng-show="showField6b()">
 
@@ -234,7 +234,7 @@
                 </div>
               </div>
 
-              <div mi-field-selectable field-number="7" field-label="fk7263.label.workrehab" field-model="viewState.checkboxModel.fields.field7" filled="viewState.cert.rehabilitering" ng-show="showField7()">
+              <div mi-field-selectable field-number="7" field-label="fk7263.label.workrehab.anpassatintyg" field-model="viewState.checkboxModel.fields.field7" filled="viewState.cert.rehabilitering" ng-show="showField7()">
                 <span ng-show="viewState.cert.rehabilitering == 'rehabiliteringAktuell'">
                   <span id="rehabilitering-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -246,7 +246,7 @@
                 </span>
               </div>
 
-              <div mi-field-selectable field-number="8a" field-label="fk7263.label.patientworkcapacity" field-model="viewState.checkboxModel.fields.field8a1"
+              <div mi-field-selectable field-number="8a" field-label="fk7263.label.patientworkcapacity.anpassatintyg.1" field-model="viewState.checkboxModel.fields.field8a1"
                    filled="viewState.cert.arbetsloshet || viewState.cert.foraldrarledighet" ng-show="showField8a1()">
 
                 <div class="tbl">
@@ -259,7 +259,7 @@
                 </div>
               </div>
 
-              <div mi-field-selectable field-number="8a" field-label="fk7263.label.patientworkcapacity" field-model="viewState.checkboxModel.fields.field8a2"
+              <div mi-field-selectable field-number="8a" field-label="fk7263.label.patientworkcapacity.anpassatintyg.2" field-model="viewState.checkboxModel.fields.field8a2"
                    filled="viewState.cert.nuvarandeArbetsuppgifter" ng-show="showField8a2()">
 
                 <div class="tbl">
@@ -270,13 +270,13 @@
                 </div>
               </div>
 
-              <div mi-field-selectable field-number="9" field-label="fk7263.label.patientworkcapacityjudgement" field-model="viewState.checkboxModel.fields.field9"
+              <div mi-field-selectable field-number="9" field-label="fk7263.label.patientworkcapacityjudgement.anpassatintyg" field-model="viewState.checkboxModel.fields.field9"
                    filled="viewState.cert.arbetsformagaPrognos != null" ng-show="showField9()">
 
                 <div id="arbetsformagaPrognos" class="multiline">{{viewState.cert.arbetsformagaPrognos}}</div>
               </div>
 
-              <div mi-field-selectable field-number="10" field-label="fk7263.label.prognosis" field-model="viewState.checkboxModel.fields.field10"
+              <div mi-field-selectable field-number="10" field-label="fk7263.label.prognosis.anpassatintyg" field-model="viewState.checkboxModel.fields.field10"
                    filled="viewState.cert.prognosBedomning" ng-show="showField10()">
 
                 <span ng-show="viewState.cert.prognosBedomning == 'arbetsformagaPrognosJa'">
@@ -293,7 +293,7 @@
                 </span>
               </div>
 
-              <div mi-field-selectable field-number="11" field-label="fk7263.label.othertransport" field-model="viewState.checkboxModel.fields.field11"
+              <div mi-field-selectable field-number="11" field-label="fk7263.label.othertransport.anpassatintyg" field-model="viewState.checkboxModel.fields.field11"
                    filled="viewState.cert.ressattTillArbeteAktuellt || viewState.cert.ressattTillArbeteEjAktuellt"
                    ng-show="showField11()">
 
@@ -305,7 +305,7 @@
                 </span>
               </div>
 
-              <div mi-field-selectable field-number="12" field-label="fk7263.label.fkcontact" field-model="viewState.checkboxModel.fields.field12" filled="true" ng-show="showField12()">
+              <div mi-field-selectable field-number="12" field-label="fk7263.label.fkcontact.anpassatintyg" field-model="viewState.checkboxModel.fields.field12" filled="true" ng-show="showField12()">
                 <span ng-show="viewState.cert.kontaktMedFk">
                   <span id="kontaktFk-yes" message key="fk7263.label.yes"></span>
                 </span>
@@ -314,7 +314,7 @@
                 </span>
               </div>
 
-              <div mi-field-selectable field-number="13" field-label="fk7263.label.otherinformation" field-model="viewState.checkboxModel.fields.field13" filled="viewState.cert.kommentar" ng-show="showField13()">
+              <div mi-field-selectable field-number="13" field-label="fk7263.label.otherinformation.anpassatintyg" field-model="viewState.checkboxModel.fields.field13" filled="viewState.cert.kommentar" ng-show="showField13()">
                 <!--  leave  as div tag for IE8 magic bug. using span crashes angular.. -->
                 <div id="kommentar" class="tag multiline" ng-show="viewState.cert.kommentar.length > 0">{{viewState.cert.kommentar}}</div>
               </div>
