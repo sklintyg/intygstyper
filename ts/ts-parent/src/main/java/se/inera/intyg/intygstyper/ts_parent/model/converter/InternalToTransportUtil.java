@@ -39,7 +39,7 @@ import se.inera.intygstjanster.ts.services.v1.*;
 
 public final class InternalToTransportUtil {
 
-    private static final DateTimeFormatter SIGNERINGS_TIDSTAMPEL_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+    private static final DateTimeFormatter SIGNERINGS_TIDSTAMPEL_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
     public static final String DELIMITER_REGEXP = "\\.";
 
     private InternalToTransportUtil() {

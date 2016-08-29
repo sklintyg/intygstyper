@@ -20,6 +20,10 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,6 +34,8 @@ import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
+import se.inera.intygstjanster.ts.services.types.v1.II;
+import se.inera.intygstjanster.ts.services.v1.*;
 
 /**
  * Test class for TransportToExternal, contains methods for setting up Utlatande using both the transport model and the
@@ -40,9 +46,41 @@ import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSB
  */
 public class TransportToInternalTest {
 
+    private static final String ENHETSNAMN = "enhetsnamn";
+    private static final String ENHETSID = "enhetsid";
+    private static final String VARDGIVARNAMN = "vardgivarnamn";
+    private static final String POSTADRESS = "postadress";
+    private static final String POSTNUMMER = "postnummer";
+    private static final String POSTORT = "postort";
+    private static final String TELEFONNUMMER = "telefonnummer";
+    private static final String VARDGIVARID = "vardgivarid";
+    private static final List<String> SPECIALIST_KOMPETENS = Arrays.asList("a", "b", "c");
+    private static final String FULLSTANDIGT_NAMN = "test testorsson";
+    private static final String PERSONID = "personid";
+
     @BeforeClass
     public static void setup() throws Exception {
         new BefattningService().init();
+    }
+
+    @Test
+    public void testConvert() throws Exception {
+        RegisterTSBasType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
+        transportModel.getIntyg().getGrundData().setSkapadAv(buildSkapadAv());
+        Utlatande res = TransportToInternal.convert(transportModel.getIntyg());
+        assertEquals(LocalDateTime.of(2013, 8, 12, 15, 57, 0), res.getGrundData().getSigneringsdatum());
+        HoSPersonal hosPersonal = res.getGrundData().getSkapadAv();
+        assertEquals(ENHETSNAMN, hosPersonal.getVardenhet().getEnhetsnamn());
+        assertEquals(ENHETSID, hosPersonal.getVardenhet().getEnhetsid());
+        assertEquals(VARDGIVARNAMN, hosPersonal.getVardenhet().getVardgivare().getVardgivarnamn());
+        assertEquals(POSTADRESS, hosPersonal.getVardenhet().getPostadress());
+        assertEquals(POSTNUMMER, hosPersonal.getVardenhet().getPostnummer());
+        assertEquals(POSTORT, hosPersonal.getVardenhet().getPostort());
+        assertEquals(TELEFONNUMMER, hosPersonal.getVardenhet().getTelefonnummer());
+        assertEquals(VARDGIVARID, hosPersonal.getVardenhet().getVardgivare().getVardgivarid());
+        assertEquals(FULLSTANDIGT_NAMN, hosPersonal.getFullstandigtNamn());
+        assertEquals(PERSONID, hosPersonal.getPersonId());
+        assertEquals(SPECIALIST_KOMPETENS, hosPersonal.getSpecialiteter());
     }
 
     @Test
@@ -80,5 +118,35 @@ public class TransportToInternalTest {
         HoSPersonal skapadAv = res.getGrundData().getSkapadAv();
         assertEquals(1, skapadAv.getBefattningar().size());
         assertEquals(befattningskod, skapadAv.getBefattningar().get(0));
+    }
+
+    private SkapadAv buildSkapadAv() {
+        SkapadAv skapadAv = new SkapadAv();
+        skapadAv.setPersonId(buildII(PERSONID));
+        skapadAv.setFullstandigtNamn(FULLSTANDIGT_NAMN);
+        skapadAv.getSpecialiteter().addAll(SPECIALIST_KOMPETENS);
+
+        Vardenhet vardenhet = new Vardenhet();
+
+        Vardgivare vardgivare = new Vardgivare();
+        vardgivare.setVardgivarid(buildII(VARDGIVARID));
+        vardgivare.setVardgivarnamn(VARDGIVARNAMN);
+        vardenhet.setVardgivare(vardgivare);
+
+        vardenhet.setEnhetsId(buildII(ENHETSID));
+        vardenhet.setEnhetsnamn(ENHETSNAMN);
+        vardenhet.setPostadress(POSTADRESS);
+        vardenhet.setPostnummer(POSTNUMMER);
+        vardenhet.setPostort(POSTORT);
+        vardenhet.setTelefonnummer(TELEFONNUMMER);
+        skapadAv.setVardenhet(vardenhet);
+
+        return skapadAv;
+    }
+
+    private II buildII(String extension) {
+        II ii = new II();
+        ii.setExtension(extension);
+        return ii;
     }
 }
