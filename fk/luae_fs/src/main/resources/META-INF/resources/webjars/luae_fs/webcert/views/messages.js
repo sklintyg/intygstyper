@@ -17,8 +17,6 @@ var luaeFsMessages = {
         'luae_fs.label.ta-bort-utkast': 'Ta bort utkast',
         'luae_fs.label.skriv-ut-utkast': 'Skriv ut',
 
-        'luae_fs.label.vardenhet': 'Vårdenhetens adress',
-
         'luae_fs.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'luae_fs.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
         'luae_fs.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',

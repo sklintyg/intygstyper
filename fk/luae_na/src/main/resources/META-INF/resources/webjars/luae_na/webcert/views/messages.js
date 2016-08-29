@@ -26,8 +26,6 @@ var luaeNaMessages = {
         'luae_na.label.ta-bort-utkast': 'Ta bort utkast',
         'luae_na.label.skriv-ut-utkast': 'Skriv ut',
 
-        'luae_na.label.vardenhet': 'Vårdenhetens adress',
-
         'luae_na.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
         'luae_na.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
         'luae_na.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukersättning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',

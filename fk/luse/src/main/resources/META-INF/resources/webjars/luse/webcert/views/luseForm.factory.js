@@ -18,7 +18,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
     var formFields = [
         {
             wrapper: 'wc-field-static',
-            templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'adress'},
+            templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'patient'},
             fieldGroup: [
                 {
                     key: 'grundData.patient.postadress',
@@ -180,7 +180,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
         },
         {
             wrapper: 'wc-field-static',
-            templateOptions: {staticLabel: 'luse.label.vardenhet', categoryName: 'vardenhet'},
+            templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {type: 'label-vardenhet'},
                 {

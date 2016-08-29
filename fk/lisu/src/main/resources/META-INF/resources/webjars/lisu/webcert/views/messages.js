@@ -27,8 +27,6 @@ var lisuMessages = {
         'lisu.label.ta-bort-utkast': 'Ta bort utkast',
         'lisu.label.skriv-ut-utkast': 'Skriv ut',
 
-        'lisu.label.vardenhet': 'Vårdenhetens adress',
-
         'lisu.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'lisu.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
         'lisu.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',

@@ -295,7 +295,7 @@ angular.module('lisu').factory('lisu.FormFactory',
         },
         {
             wrapper: 'wc-field-static',
-            templateOptions: {staticLabel: 'lisu.label.vardenhet', categoryName: 'vardenhet'},
+            templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {type: 'label-vardenhet'},
                 {
