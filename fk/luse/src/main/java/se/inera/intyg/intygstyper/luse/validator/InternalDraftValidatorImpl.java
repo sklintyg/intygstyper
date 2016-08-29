@@ -51,7 +51,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
-    private static final PatientValidator patientValidator = new PatientValidator();
+    private static final PatientValidator PATIENT_VALIDATOR = new PatientValidator();
 
     @Autowired
     InternalValidatorUtil validatorUtil;
@@ -61,7 +61,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // Patientens adressuppgifter
-        patientValidator.validate(utlatande.getGrundData().getPatient(), validationMessages);
+        PATIENT_VALIDATOR.validate(utlatande.getGrundData().getPatient(), validationMessages);
 
         // Kategori 1 – Grund för medicinskt underlag
         validateGrundForMU(utlatande, validationMessages);
