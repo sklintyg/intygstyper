@@ -166,7 +166,8 @@ angular.module('fk7263').directive('qaPanel',
                                 focusElement('answerText-' + qa.internReferens);
                             },
                             button2id: 'button2answermessage-dialog',
-                            autoClose: false
+                            autoClose: false,
+                            size: 'lg'
                         }).result.then(function() {
                             kompletteringDialog = null; // Dialog closed
                         }, function() {
