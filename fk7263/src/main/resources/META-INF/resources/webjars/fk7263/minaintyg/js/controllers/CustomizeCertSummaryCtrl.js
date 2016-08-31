@@ -151,7 +151,7 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             };
 
             $scope.showField4b = function _showField4b(isIncludedField)  {
-                if (_isInvalid(ViewState.cert.undersokningAvPatienten) && !_isInvalid(ViewState.cert.telefonkontaktMedPatienten) &&
+                if (_isInvalid(ViewState.cert.undersokningAvPatienten) && _isInvalid(ViewState.cert.telefonkontaktMedPatienten) &&
                     _isInvalid(ViewState.cert.journaluppgifter) && _isInvalid(ViewState.cert.annanReferens)) {
                     return false;
                 }
