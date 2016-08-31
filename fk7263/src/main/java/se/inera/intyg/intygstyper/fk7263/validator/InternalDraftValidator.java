@@ -352,14 +352,14 @@ public class InternalDraftValidator {
         }
 
         for (int i = 0; i < intervals.length; i++) {
-            if (intervals[i] == null) {
-                continue;
-            }
-            for (int j = i + 1; j < intervals.length; j++) {
-                if (intervals[j] != null && intervals[i].overlaps(intervals[j])) {
-                    addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                            "fk7263.validation.nedsattning.overlapping-date-interval");
-                    return false;
+            if (intervals[i] != null) {
+                for (int j = i + 1; j < intervals.length; j++) {
+                    // Overlap OR abuts(one intervals tom day == another's from day) is considered invalid
+                    if (intervals[j] != null && intervals[i].overlaps(intervals[j])) {
+                        addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
+                                "fk7263.validation.nedsattning.overlapping-date-interval");
+                        return false;
+                    }
                 }
             }
         }
