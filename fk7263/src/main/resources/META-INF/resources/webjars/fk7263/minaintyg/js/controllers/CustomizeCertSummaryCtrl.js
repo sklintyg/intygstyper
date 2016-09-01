@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
-    ['$window', '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
-        function($window, $location, $log, $rootScope, $stateParams, $scope, IntygService, messageService, ViewState) {
+    ['$window', '$location', '$log', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
+        function($window, $location, $log, $stateParams, $scope, IntygService, messageService, ViewState) {
             'use strict';
 
             // Setup default checkbox model in case of refresh
@@ -91,7 +91,6 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                         if (result !== null) {
                             ViewState.cert = result.utlatande;
                             ViewState.cert.filteredStatuses = _filterStatuses(result.meta.statuses);
-                            $rootScope.cert = ViewState.cert;
                         } else {
                             // show error view
                             $location.path('/visafel/certnotfound');

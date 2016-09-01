@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
-    [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
-        function($location, $log, $rootScope, $stateParams, $scope, IntygService, messageService, ViewState) {
+    [ '$location', '$log', '$stateParams', '$scope', 'common.IntygService', 'fk7263.ViewStateService',
+        function($location, $log, $stateParams, $scope, IntygService, ViewState) {
             'use strict';
 
             // Setup checkbox model
@@ -50,7 +50,6 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
             }
 
             $scope.doneLoading = false;
-            $scope.messageService = messageService;
             $scope.viewState = ViewState;
             $scope.visibleStatuses = [ 'SENT' ];
 
