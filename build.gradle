@@ -43,6 +43,10 @@ subprojects {
   }
 
   jar.dependsOn(createVersionPropertyFile)
+
+  dependencies {
+    testCompile "junit:junit:4.+"
+  }
 }
 
 subprojects {

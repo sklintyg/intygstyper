@@ -110,7 +110,6 @@ dependencies {
   compile 'net.sf.saxon:Saxon-HE:9.6.0-4'
 
   testCompile 'commons-io:commons-io:2.4'
-  testCompile 'junit:junit:4.12'
   testCompile 'org.mockito:mockito-core:1.9.0'
   testCompile 'org.unitils:unitils-core:3.3'
   testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
