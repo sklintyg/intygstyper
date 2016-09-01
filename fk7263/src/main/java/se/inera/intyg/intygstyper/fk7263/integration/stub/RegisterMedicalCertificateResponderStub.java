@@ -43,7 +43,7 @@ import se.inera.intyg.common.support.stub.MedicalCertificatesStore;
 import se.inera.intyg.common.support.validate.CertificateValidationException;
 import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-//import se.skl.skltpservices.adapter.fk.regmedcert.Vard2FkValidator;
+import se.skl.skltpservices.adapter.fk.regmedcert.Vard2FkValidator;
 
 /**
  * @author par.wenaker
@@ -58,7 +58,7 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterMedicalCertificateResponderStub.class);
 
-//    private Vard2FkValidator validator = new Vard2FkValidator();
+    private Vard2FkValidator validator = new Vard2FkValidator();
 
     @Autowired(required = false)
     private MedicalCertificatesStore medicalCertificatesStore;
@@ -95,8 +95,7 @@ public class RegisterMedicalCertificateResponderStub implements RegisterMedicalC
 
     protected void validateTransport(RegisterMedicalCertificateType registerMedicalCertificate) throws CertificateValidationException {
         try {
-            LOGGER.warn("FK Validation temporarily disabled");
-//            validator.validateRequest(registerMedicalCertificate);
+            validator.validateRequest(registerMedicalCertificate);
         } catch (Exception e) {
             throw new CertificateValidationException(e.getMessage());
         }

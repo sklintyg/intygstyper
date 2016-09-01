@@ -142,14 +142,6 @@
         <version>${intyg-transportstyrelsen.version}</version>
       </dependency>
 
-      <!-- Netcare dependencies
-      <dependency>
-        <groupId>org.callistasoftware.netcare.commons</groupId>
-        <artifactId>mvk-integration</artifactId>
-        <version>${mvkintegration.version}</version>
-      </dependency>
-      -->
-
       <!-- XML -->
       <dependency>
         <groupId>net.sf.saxon</groupId>
@@ -439,26 +431,6 @@
     <repository>
       <id>thirdparty</id>
       <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/thirdparty/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>callista-release</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/release/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>callista-thirdparty</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
       <releases>
         <enabled>true</enabled>
       </releases>
