@@ -1,4 +1,6 @@
-angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHelper', function(FactoryHelper) {
+angular.module('luae_na').factory('luae_na.FormFactory',
+    ['luae_na.FormFactoryHelper', 'common.UserModel',
+        function(FactoryHelper, UserModel) {
     'use strict';
 
     var categoryNames = [
@@ -16,6 +18,27 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
     ];
 
     var formFields = [
+        {
+            wrapper: 'wc-field-static',
+            templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'patient'},
+            fieldGroup: [
+                {
+                    key: 'grundData.patient.postadress',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postadress', disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
+                },
+                {
+                    key: 'grundData.patient.postnummer',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postnummer', disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
+                },
+                {
+                    key: 'grundData.patient.postort',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                }
+            ]
+        },
         {
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
@@ -155,7 +178,7 @@ angular.module('luae_na').factory('luae_na.FormFactory', ['luae_na.FormFactoryHe
         },
         {
             wrapper: 'wc-field-static',
-            templateOptions: {staticLabel: 'luae_na.label.vardenhet', categoryName: 'vardenhet'},
+            templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {type: 'label-vardenhet'},
                 {

@@ -24,15 +24,24 @@ import static se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCerti
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
-import javax.xml.bind.*;
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +51,10 @@ import org.w3.wsaddressing10.AttributedURIType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import iso.v21090.dt.v1.CD;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
@@ -50,24 +62,42 @@ import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificate.ri
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateRequestType;
 import se.inera.ifv.insuranceprocess.healthreporting.revokemedicalcertificateresponder.v1.RevokeMedicalCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
 import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ClinicalProcessCertificateMetaTypeConverter;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
-import se.inera.intyg.common.support.model.converter.util.*;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
+import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.support.api.exception.*;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateMetaData;
+import se.inera.intyg.common.support.modules.support.api.dto.CertificateResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateDraftCopyHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
+import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateXmlResponse;
+import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleConverterException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
-import se.inera.intyg.intygstyper.fk7263.model.converter.*;
+import se.inera.intyg.intygstyper.fk7263.model.converter.ArbetsformagaToGiltighet;
+import se.inera.intyg.intygstyper.fk7263.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.fk7263.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg;
+import se.inera.intyg.intygstyper.fk7263.model.converter.WebcertModelFactory;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.fk7263.model.util.ModelCompareUtil;
-import se.inera.intyg.intygstyper.fk7263.pdf.PdfGenerator;
+import se.inera.intyg.intygstyper.fk7263.model.util.Fk7263ModelCompareUtil;
+import se.inera.intyg.intygstyper.fk7263.pdf.PdfDefaultGenerator;
+import se.inera.intyg.intygstyper.fk7263.pdf.PdfEmployeeGenerator;
 import se.inera.intyg.intygstyper.fk7263.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fk7263.validator.InternalDraftValidator;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -104,7 +134,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     private RegisterMedicalCertificateResponderInterface registerMedicalCertificateClient;
 
     @Autowired
-    private ModelCompareUtil modelCompareUtil;
+    private Fk7263ModelCompareUtil modelCompareUtil;
 
     @Autowired(required = false)
     private GetMedicalCertificateForCareResponderInterface getMedicalCertificateForCareResponderInterface;
@@ -127,11 +157,11 @@ public class Fk7263ModuleApi implements ModuleApi {
     public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
-            PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin, false);
-            return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename());
+            PdfDefaultGenerator pdfGenerator = new PdfDefaultGenerator(intyg, statuses, applicationOrigin);
+            return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename(false));
         } catch (PdfGeneratorException e) {
             LOG.error("Failed to generate PDF for certificate!", e);
-            throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
+            throw new ModuleSystemException("Failed to generate (standard copy) PDF for certificate!", e);
         }
     }
 
@@ -139,15 +169,15 @@ public class Fk7263ModuleApi implements ModuleApi {
      * {@inheritDoc}
      */
     @Override
-    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, List<String> optionalFields)
             throws ModuleException {
         try {
             Utlatande intyg = getInternal(internalModel);
-            PdfGenerator pdfGenerator = new PdfGenerator(intyg, statuses, applicationOrigin, true);
-            return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename());
+            PdfEmployeeGenerator pdfGenerator = new PdfEmployeeGenerator(intyg, statuses, applicationOrigin, optionalFields);
+            return new PdfResponse(pdfGenerator.getBytes(), pdfGenerator.generatePdfFilename(true));
         } catch (PdfGeneratorException e) {
             LOG.error("Failed to generate PDF for certificate!", e);
-            throw new ModuleSystemException("Failed to generate PDF for certificate!", e);
+            throw new ModuleSystemException("Failed to generate (employer copy) PDF for certificate!", e);
         }
     }
 
@@ -281,7 +311,7 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
+    public boolean shouldNotify(String persistedState, String currentState) throws ModuleException {
         Utlatande oldUtlatande;
         Utlatande newUtlatande;
 
@@ -495,7 +525,8 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
-    public Map<String, List<String>> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande, List<String> frageIds) {
+    public Map<String, List<String>> getModuleSpecificArendeParameters(se.inera.intyg.common.support.model.common.internal.Utlatande utlatande,
+            List<String> frageIds) {
         throw new UnsupportedOperationException();
     }
 

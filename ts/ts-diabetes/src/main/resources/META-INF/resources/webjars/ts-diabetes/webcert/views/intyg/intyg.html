@@ -1,4 +1,4 @@
-<div class="weak-hidden" ng-class="{show: viewState.common.showTemplate}">
+<div class="ts-diabetes-ns weak-hidden" ng-class="{show: viewState.common.showTemplate}">
   <div wc-spinner label="info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
        show-content="viewState.common.doneLoading">
 
@@ -11,7 +11,7 @@
             <div class="cert-body">
 
               <!-- Patientens uppgifter -->
-              <div wc-field field-label="ts-diabetes.label.patient" filled="true">
+              <div wc-field field-label="common.intyg.patientadress" filled="true">
                 <span class="cert-answer"><span id="patientpostadress">{{viewState.intygModel.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{viewState.intygModel.grundData.patient.postnummer}}</span> <span id="patientpostort">{{viewState.intygModel.grundData.patient.postort}}</span></span>
               </div>
 

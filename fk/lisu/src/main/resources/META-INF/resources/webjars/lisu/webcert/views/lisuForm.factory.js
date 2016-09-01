@@ -1,6 +1,6 @@
 angular.module('lisu').factory('lisu.FormFactory',
-    ['common.DateUtilsService', 'common.ObjectHelper', 'common.fmb.ViewStateService',
-        function(DateUtils, ObjectHelper, fmbViewState) {
+    ['common.DateUtilsService', 'common.ObjectHelper', 'common.fmb.ViewStateService', 'common.UserModel',
+        function(DateUtils, ObjectHelper, fmbViewState, UserModel) {
 
             'use strict';
 
@@ -23,6 +23,27 @@ angular.module('lisu').factory('lisu.FormFactory',
     };
 
     var formFields = [
+        {
+            wrapper: 'wc-field-static',
+            templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'patient'},
+            fieldGroup: [
+                {
+                    key: 'grundData.patient.postadress',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postadress', disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
+                },
+                {
+                    key: 'grundData.patient.postnummer',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postnummer', disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
+                },
+                {
+                    key: 'grundData.patient.postort',
+                    type: 'single-text',
+                    templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                }
+            ]
+        },
         {
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1]},
@@ -295,7 +316,7 @@ angular.module('lisu').factory('lisu.FormFactory',
         },
         {
             wrapper: 'wc-field-static',
-            templateOptions: {staticLabel: 'lisu.label.vardenhet', categoryName: 'vardenhet'},
+            templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {type: 'label-vardenhet'},
                 {

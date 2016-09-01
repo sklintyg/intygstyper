@@ -6,16 +6,17 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
+
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Relation;
+import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public class InternalToTransportTest {
@@ -75,7 +76,7 @@ public class InternalToTransportTest {
         utlatande.setTextVersion("1.0");
         GrundData grundData = IntygTestDataBuilder.getGrundData();
 
-        grundData.setSigneringsdatum(new LocalDateTime("2015-12-07T15:48:05"));
+        grundData.setSigneringsdatum(LocalDateTime.parse("2015-12-07T15:48:05"));
 
         if (relationKod != null) {
             Relation relation = new Relation();

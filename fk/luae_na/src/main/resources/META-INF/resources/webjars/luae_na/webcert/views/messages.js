@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var luae_naMessages = {
+var luaeNaMessages = {
     'sv': {
         'luae_na.error.generic': 'Kunde inte visa intyget',
         'luae_na.info.loadingcertificate': 'Hämtar intyget..',
@@ -25,8 +25,6 @@ var luae_naMessages = {
         'luae_na.label.spara-utkast': 'Spara',
         'luae_na.label.ta-bort-utkast': 'Ta bort utkast',
         'luae_na.label.skriv-ut-utkast': 'Skriv ut',
-
-        'luae_na.label.vardenhet': 'Vårdenhetens adress',
 
         'luae_na.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
         'luae_na.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',

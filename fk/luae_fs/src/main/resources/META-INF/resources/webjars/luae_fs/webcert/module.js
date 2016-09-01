@@ -1,4 +1,4 @@
-/* global luae_fs messages */
+/* global luaeFsMessages */
 angular.module('luae_fs', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
@@ -6,5 +6,5 @@ angular.module('luae_fs').run(['common.messageService', 'common.dynamicLabelServ
     function(messageService, dynamicLabelService) {
         'use strict';
 
-        messageService.addResources(luae_fsMessages);
+        messageService.addResources(luaeFsMessages);
     }]);

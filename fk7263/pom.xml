@@ -80,21 +80,7 @@
     <dependency>
       <groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
       <artifactId>FkEintygAdapterIC-validator</artifactId>
-      <version>2.0.8-RC1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
-          <artifactId>insuranceprocess-healthreporting-schemas</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>se.skltp.adapterservices.insuranceprocess.healthreporting</groupId>
-          <artifactId>fk-vardgivare-sjukvard-schemas</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>se.skltp.itintegration.monitoring</groupId>
-          <artifactId>ServiceContracts_itintegration_monitoring</artifactId>
-        </exclusion>
-      </exclusions>
+      <version>2.2-RC2-INTYG</version>
     </dependency>
 
     <dependency>

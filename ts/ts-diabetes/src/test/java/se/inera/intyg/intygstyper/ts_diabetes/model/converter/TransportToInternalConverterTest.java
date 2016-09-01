@@ -22,6 +22,7 @@ package se.inera.intyg.intygstyper.ts_diabetes.model.converter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class TransportToInternalConverterTest {
         RegisterTSDiabetesType transportModel = ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel();
         transportModel.getIntyg().getGrundData().setSkapadAv(buildSkapadAv(SPECIALIST_KOMPETENS));
         Utlatande res = TransportToInternalConverter.convert(transportModel.getIntyg());
+        assertEquals(LocalDateTime.of(2013, 8, 12, 15, 57, 0), res.getGrundData().getSigneringsdatum());
         HoSPersonal hosPersonal = res.getGrundData().getSkapadAv();
         assertEquals(ENHETSNAMN, hosPersonal.getVardenhet().getEnhetsnamn());
         assertEquals(ENHETSID, hosPersonal.getVardenhet().getEnhetsid());

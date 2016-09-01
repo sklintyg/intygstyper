@@ -29,14 +29,15 @@ import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.rest.FkParentModuleApi;
-import se.inera.intyg.intygstyper.luse.model.converter.*;
+import se.inera.intyg.intygstyper.luse.model.converter.InternalToTransport;
+import se.inera.intyg.intygstyper.luse.model.converter.TransportToInternal;
+import se.inera.intyg.intygstyper.luse.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
-
     public LuseModuleApi() {
         super(LuseUtlatande.class);
     }
@@ -46,21 +47,13 @@ public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
      */
     @Override
     public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
-        // TODO
-        return null;
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
-    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, List<String> optionalFields)
             throws ModuleException {
-        // TODO
-        return null;
-    }
-
-    @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        // TODO temporary implementation, should be replaced by context- and field aware check.
-        return !persistedState.equals(currentState);
+        throw new RuntimeException("Not implemented");
     }
 
     @Override

@@ -24,13 +24,13 @@ import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.TILLAGGSFRAGOR_SVAR_JSON_ID;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.xml.bind.JAXB;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +44,7 @@ import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.util.ModelCompareUtil;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -76,6 +77,9 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
 
     @Autowired
     private InternalDraftValidator<T> internalDraftValidator;
+
+    @Autowired
+    private ModelCompareUtil<T> modelCompareUtil;
 
     @Autowired
     private SvarIdHelper<T> svarIdHelper;
@@ -160,6 +164,14 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
     }
 
     @Override
+    public boolean shouldNotify(String persistedState, String currentState) throws ModuleException {
+        T newUtlatande;
+        newUtlatande = getInternal(currentState);
+
+        return modelCompareUtil.isValidForNotification(newUtlatande);
+    }
+
+    @Override
     public CertificateResponse getCertificate(String certificateId, String logicalAddress) throws ModuleException {
         GetCertificateType request = new GetCertificateType();
         request.setIntygsId(getIntygsId(certificateId));
@@ -181,7 +193,7 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
             request = internalToTransport(getInternal(internalModel));
         } catch (ConverterException e) {
             LOG.error("Failed to convert to transport format during registerCertificate", e);
-            throw new ExternalServiceCallException("Failed to convert to transport format during registerCertificate", e);
+            throw new ModuleConverterException("Failed to convert to transport format during registerCertificate", e);
         }
 
         RegisterCertificateResponseType response2 = registerCertificateResponderInterface.registerCertificate(logicalAddress, request);

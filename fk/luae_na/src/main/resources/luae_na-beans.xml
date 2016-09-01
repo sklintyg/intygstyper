@@ -10,6 +10,8 @@
 
   <bean class="se.inera.intyg.intygstyper.luae_na.validator.InternalDraftValidatorImpl" />
 
+  <bean class="se.inera.intyg.intygstyper.luae_na.model.util.LuaenaModelCompareUtil" />
+
   <bean id="luaenaEntryPoint" class="se.inera.intyg.intygstyper.luae_na.support.LuaenaEntryPoint" />
 
 </beans>

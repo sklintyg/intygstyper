@@ -23,13 +23,13 @@ import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.INTYG_AVS
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.INTYG_AVSER_SVAR_ID_1;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
 
-import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +47,7 @@ import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
+import se.inera.intyg.common.support.model.util.ModelCompareUtil;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
@@ -65,6 +66,9 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar.Delsvar;
 public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(TsParentModuleApi.class);
+
+    @Autowired
+    private ModelCompareUtil<T> modelCompareUtil;
 
     @Autowired
     private InternalDraftValidator<T> validator;
@@ -144,7 +148,7 @@ public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleAp
     }
 
     @Override
-    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin)
+    public PdfResponse pdfEmployer(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin, List<String> optionalFields)
             throws ModuleException {
         throw new ModuleException("Feature not supported");
     }
@@ -155,8 +159,11 @@ public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleAp
     }
 
     @Override
-    public boolean isModelChanged(String persistedState, String currentState) throws ModuleException {
-        return !persistedState.equals(currentState);
+    public boolean shouldNotify(String persistedState, String currentState) throws ModuleException {
+        T newUtlatande;
+        newUtlatande = getInternal(currentState);
+
+        return modelCompareUtil.isValidForNotification(newUtlatande);
     }
 
     @Override

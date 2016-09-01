@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:GetCertificateResponse xmlns="urn:riv:clinicalprocess:healthcond:certificate:2" xmlns:ns2="urn:riv:clinicalprocess:healthcond:certificate:GetCertificateResponder:1" xmlns:ns3="urn:riv:clinicalprocess:healthcond:certificate:types:2">
+  <ns2:intyg>
+    <intygs-id>
+      <ns3:root>Root</ns3:root>
+      <ns3:extension>test-id</ns3:extension>
+    </intygs-id>
+    <typ>
+      <ns3:code>testTyp</ns3:code>
+      <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
+      <ns3:displayName>Test</ns3:displayName>
+    </typ>
+    <version>1.0</version>
+    <signeringstidpunkt>2015-12-07T15:48:05</signeringstidpunkt>
+    <skickatTidpunkt>2015-12-07T15:48:05</skickatTidpunkt>
+    <patient>
+      <person-id>
+        <ns3:root>1.2.752.129.2.1.3.1</ns3:root>
+        <ns3:extension>192703104321</ns3:extension>
+      </person-id>
+      <fornamn>Olivia</fornamn>
+      <efternamn>Olsson</efternamn>
+      <postadress></postadress>
+      <postnummer></postnummer>
+      <postort></postort>
+    </patient>
+    <skapadAv>
+      <personal-id>
+        <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+        <ns3:extension>SE2321000016-6G5R</ns3:extension>
+      </personal-id>
+      <fullstandigtNamn>Karl Karlsson</fullstandigtNamn>
+      <forskrivarkod>09874321</forskrivarkod>
+      <enhet>
+        <enhets-id>
+          <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+          <ns3:extension>SE2321000016-H489</ns3:extension>
+        </enhets-id>
+        <arbetsplatskod>
+          <ns3:root>1.2.752.29.4.71</ns3:root>
+          <ns3:extension>45312</ns3:extension>
+        </arbetsplatskod>
+        <enhetsnamn>Vårdenheten</enhetsnamn>
+        <postadress>Enhetsg. 1</postadress>
+        <postnummer>100 10</postnummer>
+        <postort>Stadby</postort>
+        <telefonnummer>0812341234</telefonnummer>
+        <epost>ve1@vg1.se</epost>
+        <vardgivare>
+          <vardgivare-id>
+            <ns3:root>1.2.752.129.2.1.4.1</ns3:root>
+            <ns3:extension>SE2321000016-39KJ</ns3:extension>
+          </vardgivare-id>
+          <vardgivarnamn>Vårdgivaren</vardgivarnamn>
+        </vardgivare>
+      </enhet>
+    </skapadAv>
+    <svar id="1">
+      <instans>1</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>IAV1</ns3:code>
+          <ns3:codeSystem>24c41b8d-258a-46bf-a08a-b90738b28770</ns3:codeSystem>
+          <ns3:displayName>C1</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="1">
+      <instans>2</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>IAV2</ns3:code>
+          <ns3:codeSystem>24c41b8d-258a-46bf-a08a-b90738b28770</ns3:codeSystem>
+          <ns3:displayName>C1E</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+    <svar id="1">
+      <instans>3</instans>
+      <delsvar id="1.1">
+        <ns3:cv>
+          <ns3:code>IAV3</ns3:code>
+          <ns3:codeSystem>24c41b8d-258a-46bf-a08a-b90738b28770</ns3:codeSystem>
+          <ns3:displayName>C</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+    </svar>
+  </ns2:intyg>
+</ns2:GetCertificateResponse>

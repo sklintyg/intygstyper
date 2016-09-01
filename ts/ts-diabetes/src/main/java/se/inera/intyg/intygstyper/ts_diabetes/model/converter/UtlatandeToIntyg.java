@@ -27,13 +27,12 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.*;
 import static se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil.getVersion;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.Partial;
 
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.ModelException;
@@ -113,9 +112,9 @@ public final class UtlatandeToIntyg {
         }
         if (source.getObservationsperiod() != null) {
             try {
-                Partial partial = new Partial(DateTimeFieldType.year(), Integer.parseInt(source.getObservationsperiod()));
                 svars.add(aSvar(AR_FOR_DIABETESDIAGNOS_SVAR_ID_35)
-                        .withDelsvar(AR_FOR_DIABETESDIAGNOS_DELSVAR_ID_35, aPartialDate(PartialDateTypeFormatEnum.YYYY, partial)).build());
+                        .withDelsvar(AR_FOR_DIABETESDIAGNOS_DELSVAR_ID_35,
+                                aPartialDate(PartialDateTypeFormatEnum.YYYY, Year.of(Integer.parseInt(source.getObservationsperiod())))).build());
             } catch (IllegalArgumentException e) {
                 /*
                  * During conversion for CertificateStatusUpdateForCare v2
@@ -144,8 +143,8 @@ public final class UtlatandeToIntyg {
         }
         if (source.getInsulinBehandlingsperiod() != null) {
             try {
-                Partial partial = new Partial(DateTimeFieldType.year(), Integer.parseInt(source.getInsulinBehandlingsperiod()));
-                diabetesBehandling.withDelsvar(INSULINBEHANDLING_SEDAN_AR_DELSVAR_ID_19, aPartialDate(PartialDateTypeFormatEnum.YYYY, partial));
+                diabetesBehandling.withDelsvar(INSULINBEHANDLING_SEDAN_AR_DELSVAR_ID_19,
+                        aPartialDate(PartialDateTypeFormatEnum.YYYY, Year.of(Integer.parseInt(source.getInsulinBehandlingsperiod()))));
             } catch (IllegalArgumentException e) {
                 /*
                  * During conversion for CertificateStatusUpdateForCare v2

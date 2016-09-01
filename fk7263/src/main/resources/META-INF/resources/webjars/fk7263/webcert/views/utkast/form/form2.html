@@ -1,7 +1,6 @@
 <div class="row field-fade" ng-hide="viewState.avstangningSmittskydd()" ng-form="form2">
 
     <a id="anchor.diagnos" name="anchor.diagnos"></a>
-
     <div wc-field field-label="fk7263.label.diagnos" field-number="2"
          field-help-text="fk7263.helptext.diagnos"
          class="print-pagebreak-after"
@@ -41,13 +40,27 @@
         <div class="row bottom-padding-small">
             <div class='col-xs-3'>
                 <label class="control-label unbreakable">ICD-10</label>
-                <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" ng-blur="updateFmbText()"  value=""
-                       class='diagnose-code col-xs-11 form-control' ng-model="model.diagnosKod"
-                       uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
-                       typeahead-min-length="3" typeahead-on-select="onDiagnoseCode1Select($item)"
-                       typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                       wc-to-uppercase
-                        >
+                <div class="diagnos-row">
+                    <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" ng-blur="updateFmbText()"  value=""
+                           class='diagnose-code col-xs-11 form-control' ng-model="model.diagnosKod"
+                           uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
+                           typeahead-min-length="3" typeahead-editable="false" typeahead-on-select="onDiagnoseCode1Select($item)"
+                           typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+                           wc-to-uppercase
+                           typeahead-loading="diagnosKodLoading[0]"
+                           typeahead-no-results="diagnosKodNoResults[0]">
+                    <img src="/img/ajax-loader-kit-16x16.gif" class="diagnos-loading" ng-if="diagnosKodLoading[0]" />
+                    <span ng-if="diagnosKodNoResults[0] && form2['diagnose.code'].$viewValue.length > 2" uib-dropdown auto-close="disabled" is-open="true">
+                          <ul uib-dropdown-menu>
+                                <li><a href>Inga matchande diagnoser funna</a></li>
+                          </ul>
+                    </span>
+                    <span ng-if="form2['diagnose.code'].$viewValue.length > 0 && form2['diagnose.code'].$viewValue.length < 3" uib-dropdown auto-close="disabled" is-open="true">
+                          <ul uib-dropdown-menu>
+                                <li><a href>Ange 3 tecken för att söka diagnoskod</a></li>
+                          </ul>
+                    </span>
+                </div>
             </div>
             <div class='col-xs-9'>
                 <label class="control-label">Diagnos</label>
@@ -65,14 +78,27 @@
             <div class='col-xs-3'>
                 <label class="control-label unbreakable">ICD-10</label>
 
-                <div class="controls">
+                <div class="diagnos-row">
                     <div class="bottom-padding-small clearfix">
                         <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
-                               ng-model="model.diagnosKod2" class="col-xs-11 form-control"
+                               ng-model="model.diagnosKod2" class="form-control"
                                uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
-                               typeahead-min-length="3" typeahead-on-select="onDiagnoseCode2Select($item)"
+                               typeahead-min-length="3" typeahead-editable="false" typeahead-on-select="onDiagnoseCode2Select($item)"
                                typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                               ng-change="limitDiagnosBeskrivningField('diagnosKod2')" wc-to-uppercase>
+                               ng-change="limitDiagnosBeskrivningField('diagnosKod2')" wc-to-uppercase
+                               typeahead-loading="diagnosKodLoading[1]"
+                               typeahead-no-results="diagnosKodNoResults[1]">
+                        <img src="/img/ajax-loader-kit-16x16.gif" class="diagnos-loading" ng-if="diagnosKodLoading[1]" />
+                        <span ng-if="diagnosKodNoResults[1] && form2['diagnose.codeOpt1'].$viewValue.length > 2" uib-dropdown auto-close="disabled" is-open="true">
+                              <ul uib-dropdown-menu>
+                                    <li><a href>Inga matchande diagnoser funna</a></li>
+                              </ul>
+                        </span>
+                        <span ng-if="form2['diagnose.codeOpt1'].$viewValue.length > 0 && form2['diagnose.codeOpt1'].$viewValue.length < 3" uib-dropdown auto-close="disabled" is-open="true">
+                              <ul uib-dropdown-menu>
+                                    <li><a href>Ange 3 tecken för att söka diagnoskod</a></li>
+                              </ul>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -95,12 +121,27 @@
         </div>
         <div class="row bottom-padding-small">
             <div class='col-xs-3'>
-                <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
-                       ng-model="model.diagnosKod3" class="col-xs-11 form-control"
-                       uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
-                       typeahead-min-length="3" typeahead-on-select="onDiagnoseCode3Select($item)"
-                       typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                       ng-change="limitDiagnosBeskrivningField('diagnosKod3')" wc-to-uppercase>
+                <div class="diagnos-row">
+                    <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
+                           ng-model="model.diagnosKod3" class="form-control"
+                           uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
+                           typeahead-min-length="3" typeahead-editable="false" typeahead-on-select="onDiagnoseCode3Select($item)"
+                           typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
+                           ng-change="limitDiagnosBeskrivningField('diagnosKod3')" wc-to-uppercase
+                           typeahead-loading="diagnosKodLoading[2]"
+                           typeahead-no-results="diagnosKodNoResults[2]">
+                    <img src="/img/ajax-loader-kit-16x16.gif" class="diagnos-loading" ng-if="diagnosKodLoading[2]" />
+                    <span ng-if="diagnosKodNoResults[2] && form2['diagnose.codeOpt2'].$viewValue.length > 2" uib-dropdown auto-close="disabled" is-open="true">
+                          <ul uib-dropdown-menu>
+                                <li><a href>Inga matchande diagnoser funna</a></li>
+                          </ul>
+                    </span>
+                    <span ng-if="form2['diagnose.codeOpt2'].$viewValue.length > 0 && form2['diagnose.codeOpt2'].$viewValue.length < 3" uib-dropdown auto-close="disabled" is-open="true">
+                          <ul uib-dropdown-menu>
+                                <li><a href>Ange 3 tecken för att söka diagnoskod</a></li>
+                          </ul>
+                    </span>
+                </div>
             </div>
             <div class='col-xs-9'>
                 <div class="controls">

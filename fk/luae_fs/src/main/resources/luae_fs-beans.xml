@@ -10,6 +10,8 @@
 
   <bean class="se.inera.intyg.intygstyper.luae_fs.validator.InternalDraftValidatorImpl" />
 
+  <bean class="se.inera.intyg.intygstyper.luae_fs.model.util.LuaefsModelCompareUtil" />
+
   <bean id="luaefsEntryPoint" class="se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint" />
 
 </beans>

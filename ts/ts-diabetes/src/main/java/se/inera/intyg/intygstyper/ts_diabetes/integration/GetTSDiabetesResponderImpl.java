@@ -73,13 +73,13 @@ public class GetTSDiabetesResponderImpl implements GetTSDiabetesResponderInterfa
                 response.setIntyg(tsDiabetesIntyg);
                 response.setMeta(createMetaData(certificate));
                 if (certificate.isRevoked()) {
-                    response.setResultat(ResultTypeUtil.infoResult(String.format("Certificate '%s' has been revoked", parameters.getIntygsId())));
+                    response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, String.format("Certificate '%s' has been revoked", parameters.getIntygsId())));
                 } else {
                     response.setResultat(ResultTypeUtil.okResult());
                 }
             }
         } catch (InvalidCertificateException e) {
-            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.TECHNICAL_ERROR, e.getMessage()));
+            response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, e.getMessage()));
         }
         return response;
     }

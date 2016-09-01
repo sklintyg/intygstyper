@@ -1,6 +1,6 @@
 angular.module('luae_fs').factory('luae_fs.FormFactory',
-    ['luae_fs.FormFactoryHelper',
-        function(FactoryHelper) {
+    ['luae_fs.FormFactoryHelper', 'common.UserModel',
+        function(FactoryHelper, UserModel) {
             'use strict';
 
 
@@ -15,6 +15,27 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
             ];
 
             var formFields = [
+                {
+                    wrapper: 'wc-field-static',
+                    templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'patient'},
+                    fieldGroup: [
+                        {
+                            key: 'grundData.patient.postadress',
+                            type: 'single-text',
+                            templateOptions: {staticLabel: 'Postadress', disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
+                        },
+                        {
+                            key: 'grundData.patient.postnummer',
+                            type: 'single-text',
+                            templateOptions: {staticLabel: 'Postnummer', disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
+                        },
+                        {
+                            key: 'grundData.patient.postort',
+                            type: 'single-text',
+                            templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                        }
+                    ]
+                },
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
@@ -120,7 +141,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                 },
                 {
                     wrapper: 'wc-field-static',
-                    templateOptions: {staticLabel: 'luae_fs.label.vardenhet', categoryName: 'vardenhet'},
+                    templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
                     fieldGroup: [
                         {type: 'label-vardenhet'},
                         {

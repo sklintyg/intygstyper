@@ -31,12 +31,12 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.xml.bind.JAXB;
 
 import org.apache.commons.io.FileUtils;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.*;
@@ -87,15 +87,6 @@ public class Fk7263ModuleApiTest {
     @Spy
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
-    @Test
-    public void testPdfFileName() {
-        Utlatande intyg = new Utlatande();
-        se.inera.intyg.common.support.model.common.internal.Patient patient = new se.inera.intyg.common.support.model.common.internal.Patient();
-        patient.setPersonId(new Personnummer("19121212-1212"));
-        intyg.getGrundData().setPatient(patient);
-        // TODO Create a proper test when model has been updated.
-        // assertEquals("lakarutlatande_19121212-1212_20110124-20110331.pdf", fk7263ModuleApi.pdfFileName(intyg));
-    }
 
     @Test
     public void updateChangesHosPersonalInfo() throws IOException, ModuleException {
@@ -112,7 +103,7 @@ public class Fk7263ModuleApiTest {
         hosPerson.setFullstandigtNamn("nyNamn");
         hosPerson.setForskrivarKod("nyForskrivarkod");
         hosPerson.setVardenhet(vardenhet);
-        LocalDateTime signingDate = LocalDateTime.parse("2014-08-01");
+        LocalDateTime signingDate = LocalDate.parse("2014-08-01").atStartOfDay();
         String updatedHolder = fk7263ModuleApi.updateBeforeSigning(toJsonString(utlatande), hosPerson, signingDate);
         Utlatande updatedIntyg = objectMapper.readValue(updatedHolder, Utlatande.class);
 

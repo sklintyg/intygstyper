@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -85,6 +86,15 @@ public class InternalToTransportConverterTest {
         assertEquals(PERSONID, skapadAv.getPersonId().getExtension());
 
         assertEquals(SPECIALIST_KOMPETENS, skapadAv.getSpecialiteter());
+    }
+
+    @Test
+    public void testConvertWithMillisInTimestamp() throws ScenarioNotFoundException {
+        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
+        utlatande.getGrundData().setSigneringsdatum(LocalDateTime.of(2012, 8, 2, 10, 9, 0, 123));
+
+        RegisterTSDiabetesType res = InternalToTransportConverter.convert(utlatande);
+        assertEquals("2012-08-02T10:09:00", res.getIntyg().getGrundData().getSigneringsTidstampel()); // millis is not valid in transport
     }
 
     @Test

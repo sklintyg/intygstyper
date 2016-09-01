@@ -20,6 +20,7 @@ package se.inera.intyg.intygstyper.ts_diabetes.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,7 +67,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     private static final String SPECIALIST_I_ALLMANMEDICIN_TITLE = "Specialist i allmänmedicin";
 
     static {
-        INTYG_AVSER = new CheckGroupField<IntygAvserKategori>();
+        INTYG_AVSER = new CheckGroupField<>();
         INTYG_AVSER.addField(IntygAvserKategori.AM, "Falt_4");
         INTYG_AVSER.addField(IntygAvserKategori.A1, "Falt_5");
         INTYG_AVSER.addField(IntygAvserKategori.A2, "Falt_6");
@@ -129,7 +130,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     private static final CheckGroupField<BedomningKorkortstyp> BEDOMNING;
 
     static {
-        BEDOMNING = new CheckGroupField<BedomningKorkortstyp>();
+        BEDOMNING = new CheckGroupField<>();
         BEDOMNING.addField(BedomningKorkortstyp.AM, "Falt_108");
         BEDOMNING.addField(BedomningKorkortstyp.A1, "Falt_81");
         BEDOMNING.addField(BedomningKorkortstyp.A2, "Falt_107");
@@ -176,7 +177,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     @Override
     public String generatePdfFilename(Utlatande utlatande) {
         Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
-        String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+        String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().format(DateTimeFormatter.ofPattern(DATEFORMAT_FOR_FILENAMES));
 
         final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
         return String.format("lakarutlatande_%s_-%s.pdf", personnummerString, certificateSignatureDate);
@@ -369,7 +370,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     }
 
     private void populateAvslut(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
-        INTYGSDATUM.setField(fields, utlatande.getGrundData().getSigneringsdatum().toString("yyMMdd"));
+        INTYGSDATUM.setField(fields, utlatande.getGrundData().getSigneringsdatum().format(DateTimeFormatter.ofPattern("yyMMdd")));
         Vardenhet vardenhet = utlatande.getGrundData().getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
         String adressOrt = String.format("%s, %s, %s", vardenhet.getPostort(), vardenhet.getPostadress(), vardenhet.getPostnummer());

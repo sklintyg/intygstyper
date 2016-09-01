@@ -16,44 +16,54 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+/*
+All styles specific to a certificate should must be wrapped in a namespace rule that is assigned a root element in it's edit/view cert templates.
+This is to avoid leaking module specific style rules outside of it's intended context i.e globally.
+*/
+.fk7263-ns {
+  //urls
+  $socialstyrelsen-background-image: url('../img/ss16.png');
 
-//urls
-$socialstyrelsen-background-image: url('../img/ss16.png');
-
-.soclink {
-  background-image: $socialstyrelsen-background-image;
-  background-repeat: no-repeat;
-  padding-left: 25px;
-}
-
-.cert-body {
-  .alert {
-    ul {
-      padding-left: 20px;
-    }
+  .soclink {
+    background-image: $socialstyrelsen-background-image;
+    background-repeat: no-repeat;
+    padding-left: 25px;
   }
-}
 
-.qa-block-body {
-  white-space: normal;
-
-  &.komplettera-block {
-    div {
-      span {
-        white-space: pre-line;
+  .cert-body {
+    .alert {
+      ul {
+        padding-left: 20px;
       }
     }
   }
-}
 
-.form8b-percentage-group {
-  > label {
-    &.control-label {
-      &.checkbox {
-        height: 24px;
+  .qa-block-body {
+    white-space: normal;
+
+    &.komplettera-block {
+      div {
+        span {
+          white-space: pre-line;
+        }
       }
     }
   }
+
+  .form8b-percentage-group {
+    > label {
+      &.control-label {
+        &.checkbox {
+          height: 24px;
+        }
+      }
+    }
+  }
+
+  .diagnos-row {
+    position: relative;
+  }
+
 }
 
 

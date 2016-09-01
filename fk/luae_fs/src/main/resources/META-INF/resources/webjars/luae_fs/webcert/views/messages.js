@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var luae_fsMessages = {
+var luaeFsMessages = {
     'sv': {
         'luae_fs.error.generic': 'Kunde inte visa intyget',
         'luae_fs.info.loadingcertificate': 'Hämtar intyget..',
@@ -16,8 +16,6 @@ var luae_fsMessages = {
         'luae_fs.label.spara-utkast': 'Spara',
         'luae_fs.label.ta-bort-utkast': 'Ta bort utkast',
         'luae_fs.label.skriv-ut-utkast': 'Skriv ut',
-
-        'luae_fs.label.vardenhet': 'Vårdenhetens adress',
 
         'luae_fs.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'luae_fs.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',

@@ -47,7 +47,10 @@
       "efternamn": "Olsson",
       "fornamn": "Olivia",
       "fullstandigtNamn": "Olivia Olsson",
-      "personId": "192703104321"
+      "personId": "192703104321",
+      "postadress": "Adressen",
+      "postnummer": "11111",
+      "postort": "Testorten"
     },
     "skapadAv": {
       "vardenhet": {

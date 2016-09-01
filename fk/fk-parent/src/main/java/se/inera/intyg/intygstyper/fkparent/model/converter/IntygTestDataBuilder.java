@@ -19,7 +19,7 @@
 
 package se.inera.intyg.intygstyper.fkparent.model.converter;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
@@ -57,7 +57,7 @@ public final class IntygTestDataBuilder {
 
     public static GrundData getGrundData() {
         GrundData grundData = new GrundData();
-        grundData.setSigneringsdatum(new LocalDateTime());
+        grundData.setSigneringsdatum(LocalDateTime.now());
         grundData.setSkapadAv(getHosPersonal());
         grundData.setPatient(getPatient());
         return grundData;

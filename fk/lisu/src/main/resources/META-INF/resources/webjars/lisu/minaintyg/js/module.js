@@ -1,4 +1,4 @@
-/* Glovbal */
+/* global lisuMessages */
 angular.module('lisu', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('lisu').config(function($stateProvider) {

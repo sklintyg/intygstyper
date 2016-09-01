@@ -33,6 +33,9 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 diagnosKodverk : ''
             };
 
+            $scope.diagnosKodLoading = [];
+            $scope.diagnosKodNoResults = [];
+
             var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {

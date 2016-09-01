@@ -1,0 +1,25 @@
+<div class="body-row">
+  <span ng-if="fieldDynamicLabel" mi-intyg-label="fieldDynamicLabel"></span>
+  <span class="title-customize" ng-if="fieldLabel" ng-class="{ 'unfilled' : !filled }">
+    <div class="row">
+      <span class="col-xs-2 col-sm-2 col-md-1 col-lg-1">Fält {{fieldNumber}}</span>
+      <span class="col-xs-6 col-sm-6 col-md-7 col-lg-7" message key="{{fieldLabel}}"></span>
+      <span class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div class="float-r" ng-if="fieldModel.mandatory">
+          <span>Obligatoriskt fält&nbsp;</span>
+          <span class="asterix">*</span>
+        </div>
+        <div class="float-r" ng-if="!fieldModel.mandatory">
+          <span>Inkludera i anpassat intyg&nbsp;&nbsp;</span>
+          <span><input id="options.{{fieldNumber}}" type="checkbox" ng-model="fieldModel.vald" ng-checked="fieldModel.vald"></span>
+        </div>
+      </span>
+    </div>
+  </span>
+  <span class="text" ng-hide="filled">
+    <span message key="view.label.blank"></span>
+  </span>
+  <span class="text" ng-show="filled">
+    <span ng-transclude></span>
+  </span>
+</div>

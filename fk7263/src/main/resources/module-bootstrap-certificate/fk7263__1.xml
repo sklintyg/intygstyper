@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<ns3:RegisterMedicalCertificate xmlns="urn:riv:insuranceprocess:healthreporting:mu7263:3" xmlns:ns2="urn:riv:insuranceprocess:healthreporting:2" xmlns:ns3="urn:riv:insuranceprocess:healthreporting:RegisterMedicalCertificateResponder:3">
+  <ns3:lakarutlatande>
+    <lakarutlatande-id>9dbd792c-f102-4692-827e-db3a5213de1a</lakarutlatande-id>
+    <typAvUtlatande>L&#xE4;karintyg enligt 3 kap, 8 &#xA7; lagen (1962:381) om allm&#xE4;n f&#xF6;rs&#xE4;kring</typAvUtlatande>
+    <kommentar>4b: Filmkv&#xE4;ll f&#xF6;rra l&#xF6;rdagen. 8b: Arbetstidsf&#xF6;rl&#xE4;ggning 25. Arbetstidsf&#xF6;rl&#xE4;ggning 50. Arbetstidsf&#xF6;rl&#xE4;ggning 75. 10: Prognos. &#xD6;vriga upplysningar och f&#xF6;rtydliganden</kommentar>
+    <signeringsdatum>2016-08-10T15:57:56</signeringsdatum>
+    <skickatDatum>2016-08-10T15:57:56</skickatDatum>
+    <patient>
+      <ns2:person-id root="1.2.752.129.2.1.3.1" extension="19121212-1212"/>
+      <ns2:fullstandigtNamn>Tolvan Tolvansson</ns2:fullstandigtNamn>
+    </patient>
+    <skapadAvHosPersonal>
+      <ns2:personal-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1079"/>
+      <ns2:fullstandigtNamn>Arnold Schwarzenegger</ns2:fullstandigtNamn>
+      <ns2:forskrivarkod>0000000</ns2:forskrivarkod>
+      <ns2:enhet>
+        <ns2:enhets-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1077"/>
+        <ns2:arbetsplatskod root="1.2.752.29.4.71" extension="1234567890"/>
+        <ns2:enhetsnamn>NMT vg3 ve1</ns2:enhetsnamn>
+        <ns2:postadress>NMT gata 2</ns2:postadress>
+        <ns2:postnummer>12345</ns2:postnummer>
+        <ns2:postort>Testhult</ns2:postort>
+        <ns2:telefonnummer>0101112131415</ns2:telefonnummer>
+        <ns2:epost>enhet2@webcert.invalid.se</ns2:epost>
+        <ns2:vardgivare>
+          <ns2:vardgivare-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-102Q"/>
+          <ns2:vardgivarnamn>NMT vg3</ns2:vardgivarnamn>
+        </ns2:vardgivare>
+      </ns2:enhet>
+    </skapadAvHosPersonal>
+    <vardkontakt>
+      <vardkontakttyp>Min_undersokning_av_patienten</vardkontakttyp>
+      <vardkontaktstid>2016-08-10</vardkontaktstid>
+    </vardkontakt>
+    <vardkontakt>
+      <vardkontakttyp>Min_telefonkontakt_med_patienten</vardkontakttyp>
+      <vardkontaktstid>2016-08-10</vardkontaktstid>
+    </vardkontakt>
+    <referens>
+      <referenstyp>Journaluppgifter</referenstyp>
+      <datum>2016-08-10</datum>
+    </referens>
+    <referens>
+      <referenstyp>Annat</referenstyp>
+      <datum>2016-08-10</datum>
+    </referens>
+    <aktivitet>
+      <aktivitetskod>Patienten_behover_fa_kontakt_med_Arbetsformedlingen</aktivitetskod>
+    </aktivitet>
+    <aktivitet>
+      <aktivitetskod>Patienten_behover_fa_kontakt_med_foretagshalsovarden</aktivitetskod>
+    </aktivitet>
+    <aktivitet>
+      <aktivitetskod>Ovrigt</aktivitetskod>
+      <beskrivning>Rekommendationer</beskrivning>
+    </aktivitet>
+    <aktivitet>
+      <aktivitetskod>Planerad_eller_pagaende_behandling_eller_atgard_inom_sjukvarden</aktivitetskod>
+      <beskrivning>Planerad eller p&#xE5;g&#xE5;ende behandling eller &#xE5;tg&#xE4;rd inom sjukv&#xE5;rden</beskrivning>
+    </aktivitet>
+    <aktivitet>
+      <aktivitetskod>Planerad_eller_pagaende_annan_atgard</aktivitetskod>
+      <beskrivning>Annan &#xE5;tg&#xE4;rd</beskrivning>
+    </aktivitet>
+    <aktivitet>
+      <aktivitetskod>Arbetslivsinriktad_rehabilitering_ar_aktuell</aktivitetskod>
+    </aktivitet>
+    <aktivitet>
+      <aktivitetskod>Forandrat_ressatt_till_arbetsplatsen_ar_aktuellt</aktivitetskod>
+    </aktivitet>
+    <aktivitet>
+      <aktivitetskod>Kontakt_med_Forsakringskassan_ar_aktuell</aktivitetskod>
+    </aktivitet>
+    <bedomtTillstand>
+      <beskrivning>Aktuellt sjukdomsf&#xF6;rlopp 
+      </beskrivning>
+    </bedomtTillstand>
+    <medicinsktTillstand>
+      <beskrivning>Foster och nyf&#xF6;dd som p&#xE5;verkats av graviditetskomplikationer hos modern. Samsjuklighet f&#xF6;religger. O01 Druvb&#xF6;rd. L01 Impetigo (svinkoppor). F&#xF6;rtydligande av diagnos/diagnoser 
+      </beskrivning>
+      <tillstandskod code="P01" codeSystem="1.2.752.116.1.1.1.1.3" codeSystemName="ICD-10"/>
+    </medicinsktTillstand>
+    <funktionstillstand>
+      <beskrivning>Funktionsneds&#xE4;ttning</beskrivning>
+      <typAvFunktionstillstand>Kroppsfunktion</typAvFunktionstillstand>
+    </funktionstillstand>
+    <funktionstillstand>
+      <beskrivning>Aktivitetsbegr&#xE4;nsning</beskrivning>
+      <typAvFunktionstillstand>Aktivitet</typAvFunktionstillstand>
+      <arbetsformaga>
+        <motivering>arbetsf&#xF6;rm&#xE5;ga</motivering>
+        <prognosangivelse>Det_gar_inte_att_bedomma</prognosangivelse>
+        <arbetsuppgift>
+          <typAvArbetsuppgift> aktuella arbetsuppgifter</typAvArbetsuppgift>
+        </arbetsuppgift>
+        <arbetsformagaNedsattning>
+          <varaktighetFrom>2016-08-10</varaktighetFrom>
+          <varaktighetTom>2016-08-16</varaktighetTom>
+          <nedsattningsgrad>Nedsatt_med_1/4</nedsattningsgrad>
+        </arbetsformagaNedsattning>
+        <arbetsformagaNedsattning>
+          <varaktighetFrom>2016-08-17</varaktighetFrom>
+          <varaktighetTom>2016-08-23</varaktighetTom>
+          <nedsattningsgrad>Nedsatt_med_1/2</nedsattningsgrad>
+        </arbetsformagaNedsattning>
+        <arbetsformagaNedsattning>
+          <varaktighetFrom>2016-08-24</varaktighetFrom>
+          <varaktighetTom>2016-08-30</varaktighetTom>
+          <nedsattningsgrad>Nedsatt_med_3/4</nedsattningsgrad>
+        </arbetsformagaNedsattning>
+        <arbetsformagaNedsattning>
+          <varaktighetFrom>2016-08-31</varaktighetFrom>
+          <varaktighetTom>2016-09-06</varaktighetTom>
+          <nedsattningsgrad>Helt_nedsatt</nedsattningsgrad>
+        </arbetsformagaNedsattning>
+        <sysselsattning>
+          <typAvSysselsattning>Nuvarande_arbete</typAvSysselsattning>
+        </sysselsattning>
+        <sysselsattning>
+          <typAvSysselsattning>Arbetsloshet</typAvSysselsattning>
+        </sysselsattning>
+        <sysselsattning>
+          <typAvSysselsattning>Foraldraledighet</typAvSysselsattning>
+        </sysselsattning>
+      </arbetsformaga>
+    </funktionstillstand>
+  </ns3:lakarutlatande>
+</ns3:RegisterMedicalCertificate>

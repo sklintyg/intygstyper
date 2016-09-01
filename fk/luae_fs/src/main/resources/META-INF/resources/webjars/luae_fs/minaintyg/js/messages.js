@@ -1,5 +1,5 @@
 /* jshint maxlen: false, unused: false */
-var luae_fsMessages = {
+var luaeFsMessages = {
     'sv': {
         'luae_fs.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
         'luae_fs.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',

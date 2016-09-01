@@ -20,9 +20,9 @@
       </person-id>
       <fornamn>Olivia</fornamn>
       <efternamn>Olsson</efternamn>
-      <postadress>Pgatan 2</postadress>
-      <postnummer>100 20</postnummer>
-      <postort>Stadby gärde</postort>
+      <postadress>Adressen</postadress>
+      <postnummer>11111</postnummer>
+      <postort>Testorten</postort>
     </patient>
     <skapadAv>
       <personal-id>
