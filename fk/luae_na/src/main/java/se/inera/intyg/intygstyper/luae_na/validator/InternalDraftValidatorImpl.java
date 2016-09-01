@@ -32,7 +32,7 @@ import com.google.common.base.Strings;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.modules.validator.PatientValidator;
+import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
@@ -45,8 +45,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
-    private static final PatientValidator PATIENT_VALIDATOR = new PatientValidator();
-
     @Autowired
     InternalValidatorUtil validatorUtil;
 
@@ -55,7 +53,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // Patientens adressuppgifter
-        PATIENT_VALIDATOR.validate(utlatande.getGrundData().getPatient(), validationMessages);
+        PatientValidator.validate(utlatande.getGrundData().getPatient(), validationMessages);
 
         // Kategori 1 – Grund för medicinskt underlag
         validateGrundForMU(utlatande, validationMessages);
