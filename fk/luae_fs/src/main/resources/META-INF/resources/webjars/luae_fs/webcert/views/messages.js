@@ -27,6 +27,7 @@ var luaeFsMessages = {
         'luae_fs.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
 
         //Validation messages
+        'luae_fs.validation.general.date_out_of_range': 'Datum får inte ligga för långt fram eller tillbaka i tiden.',
         'luae_fs.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på.',
         'luae_fs.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient',
         'luae_fs.validation.grund-for-mu.anhorigsbeskrivning.incorrect_format': 'Fel datumformat för anhörigs beskrivning',

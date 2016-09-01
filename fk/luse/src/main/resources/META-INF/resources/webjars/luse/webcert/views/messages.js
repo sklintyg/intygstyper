@@ -26,6 +26,7 @@ var luseMessages = {
         'luse.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
 
         //Validation messages
+        'luse.validation.general.date_out_of_range': 'Datum får inte ligga för långt fram eller tillbaka i tiden.',
         'luse.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på.',
         'luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning' : 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' får endast fyllas i om \'Annan referens valts\'.',
         'luse.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient',
