@@ -22,7 +22,9 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.*;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -59,7 +61,7 @@ public class PdfGeneratorTest {
         }
 
         File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(),
-                LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"))));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

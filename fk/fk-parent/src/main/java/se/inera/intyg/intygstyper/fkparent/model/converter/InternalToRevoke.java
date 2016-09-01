@@ -19,7 +19,7 @@
 
 package se.inera.intyg.intygstyper.fkparent.model.converter;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;

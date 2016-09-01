@@ -21,8 +21,9 @@ package se.inera.intyg.intygstyper.ts_bas.pdf;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -65,7 +66,7 @@ public class PdfGeneratorTest {
             return;
         }
 
-        File file = new File(String.format("%s/%s_%s.pdf", dir, "webcert", LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+        File file = new File(String.format("%s/%s_%s.pdf", dir, "webcert", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"))));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();
@@ -81,7 +82,7 @@ public class PdfGeneratorTest {
             return;
         }
 
-        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+        File file = new File(String.format("%s/%s_%s.pdf", dir, scenario.getName(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"))));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

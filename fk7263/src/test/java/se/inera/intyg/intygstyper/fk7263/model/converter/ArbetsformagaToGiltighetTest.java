@@ -22,7 +22,7 @@ package se.inera.intyg.intygstyper.fk7263.model.converter;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

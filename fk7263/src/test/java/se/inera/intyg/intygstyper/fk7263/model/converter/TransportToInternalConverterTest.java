@@ -61,8 +61,7 @@ public class TransportToInternalConverterTest {
 
     @Before
     public void setUp() throws JAXBException, IOException {
-        jaxbContext = JAXBContext
-                .newInstance(LakarutlatandeType.class);
+        jaxbContext = JAXBContext.newInstance(LakarutlatandeType.class);
         unmarshaller = jaxbContext.createUnmarshaller();
         objectMapper = new CustomObjectMapper();
     }
@@ -142,7 +141,7 @@ public class TransportToInternalConverterTest {
 
         JSONAssert.assertEquals(expectedTree.toString(), tree.toString(), false);
     }
-    
+
     @Test
     public void testConversionWithKSH97PAsCodeSystem() throws JAXBException,
             IOException, JSONException, ConverterException {
@@ -174,7 +173,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario1() throws JAXBException, IOException, JSONException, ConverterException {
@@ -197,7 +196,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario2() throws JAXBException, IOException, JSONException, ConverterException {
@@ -220,7 +219,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario3() throws JAXBException, IOException, JSONException, ConverterException {
@@ -243,7 +242,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario4() throws JAXBException, IOException, JSONException, ConverterException {
@@ -266,7 +265,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario5() throws JAXBException, IOException, JSONException, ConverterException {
@@ -289,7 +288,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario6() throws JAXBException, IOException, JSONException, ConverterException {
@@ -312,7 +311,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario7() throws JAXBException, IOException, JSONException, ConverterException {
@@ -335,7 +334,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario8() throws JAXBException, IOException, JSONException, ConverterException {
@@ -359,7 +358,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario9() throws JAXBException, IOException, JSONException, ConverterException {
@@ -382,7 +381,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario10() throws JAXBException, IOException, JSONException, ConverterException {
@@ -406,7 +405,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario11() throws JAXBException, IOException, JSONException, ConverterException {
@@ -430,7 +429,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario12() throws JAXBException, IOException, JSONException, ConverterException {
@@ -454,7 +453,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario13() throws JAXBException, IOException, JSONException, ConverterException {
@@ -477,7 +476,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario14() throws JAXBException, IOException, JSONException, ConverterException {
@@ -500,7 +499,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario15() throws JAXBException, IOException, JSONException, ConverterException {
@@ -524,7 +523,7 @@ public class TransportToInternalConverterTest {
      * @throws JAXBException
      * @throws IOException
      * @throws JSONException
-     * @throws ConverterException 
+     * @throws ConverterException
      */
     @Test
     public void testScenario16() throws JAXBException, IOException, JSONException, ConverterException {

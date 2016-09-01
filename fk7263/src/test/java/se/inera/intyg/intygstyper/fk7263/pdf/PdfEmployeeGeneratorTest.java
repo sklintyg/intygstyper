@@ -22,17 +22,14 @@ package se.inera.intyg.intygstyper.fk7263.pdf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -42,9 +39,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.LocalDateInterval;
-import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
@@ -81,7 +76,7 @@ public class PdfEmployeeGeneratorTest {
         se.inera.intyg.common.support.model.common.internal.Patient patient = new se.inera.intyg.common.support.model.common.internal.Patient();
         patient.setPersonId(new Personnummer("19121212-1212"));
         intyg.getGrundData().setPatient(patient);
-        intyg.setGiltighet(new LocalDateInterval(new LocalDate("2016-08-15"), new LocalDate("2016-10-30")));
+        intyg.setGiltighet(new LocalDateInterval(LocalDate.parse("2016-08-15"), LocalDate.parse("2016-10-30")));
 
         // generate PDF
         final PdfEmployeeGenerator pdfEmployeeGenerator = new PdfEmployeeGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.MINA_INTYG, null);
@@ -162,7 +157,7 @@ public class PdfEmployeeGeneratorTest {
         // Given
         Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
-        List<Status> statuses = new ArrayList<Status>();
+        List<Status> statuses = new ArrayList<>();
         statuses.add(new Status(CertificateState.RECEIVED, null, LocalDateTime.now()));
 
         // generate PDF
@@ -182,7 +177,7 @@ public class PdfEmployeeGeneratorTest {
         // Given
         Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
-        List<Status> statuses = new ArrayList<Status>();
+        List<Status> statuses = new ArrayList<>();
         statuses.add(new Status(CertificateState.SENT, "FK", LocalDateTime.now()));
 
         // generate PDF
@@ -250,7 +245,8 @@ public class PdfEmployeeGeneratorTest {
         }
 
         File file = new File(
-                String.format("%s/%s-%s-employee-generator.pdf", dir, origin.name() + "-" + scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+                String.format("%s/%s-%s-employee-generator.pdf", dir, origin.name() + "-" + scenario.getName(),
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"))));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

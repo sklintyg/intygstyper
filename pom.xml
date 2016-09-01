@@ -26,7 +26,7 @@
   <parent>
     <groupId>se.inera.intyg.common</groupId>
     <artifactId>common-pom</artifactId>
-    <version>1.0.25</version>
+    <version>1.0.26</version>
   </parent>
 
   <groupId>se.inera.intyg.intygstyper</groupId>
@@ -43,13 +43,13 @@
     <common.version.range>(,3.1.0]</common.version.range>
 
     <!-- RIVTA Schemas -->
-    <rivta-clinicalprocess.version>2.0.RC5.1</rivta-clinicalprocess.version>
-    <rivta-insuranceprocess.version>3.1.0.1</rivta-insuranceprocess.version>
+    <rivta-clinicalprocess.version>2.0.RC5.2</rivta-clinicalprocess.version>
+    <rivta-insuranceprocess.version>3.1.0.2</rivta-insuranceprocess.version>
 
     <!-- Intyg Schemas -->
-    <intyg-clinicalprocess.version>1.0.1</intyg-clinicalprocess.version>
-    <intyg-insuranceprocess.version>1.0.1</intyg-insuranceprocess.version>
-    <intyg-transportstyrelsen.version>1.0.1</intyg-transportstyrelsen.version>
+    <intyg-clinicalprocess.version>1.0.2</intyg-clinicalprocess.version>
+    <intyg-insuranceprocess.version>1.0.2</intyg-insuranceprocess.version>
+    <intyg-transportstyrelsen.version>1.0.2</intyg-transportstyrelsen.version>
 
     <!-- Override JUnit version -->
     <junit.version>4.12</junit.version>
@@ -141,14 +141,6 @@
         <artifactId>intyg-transportstyrelsen-schemas</artifactId>
         <version>${intyg-transportstyrelsen.version}</version>
       </dependency>
-
-      <!-- Netcare dependencies
-      <dependency>
-        <groupId>org.callistasoftware.netcare.commons</groupId>
-        <artifactId>mvk-integration</artifactId>
-        <version>${mvkintegration.version}</version>
-      </dependency>
-      -->
 
       <!-- XML -->
       <dependency>
@@ -439,26 +431,6 @@
     <repository>
       <id>thirdparty</id>
       <url>https://build-inera.nordicmedtest.se/nexus/content/repositories/thirdparty/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>callista-release</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/release/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>callista-thirdparty</id>
-      <url>http://repository-callistasoftware.forge.cloudbees.com/3rdparty</url>
       <releases>
         <enabled>true</enabled>
       </releases>

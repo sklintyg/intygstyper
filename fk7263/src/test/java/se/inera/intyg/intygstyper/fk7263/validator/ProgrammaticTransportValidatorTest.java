@@ -25,15 +25,14 @@ import static se.inera.intyg.intygstyper.fk7263.validator.ProgrammaticTransportV
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.xml.bind.JAXB;
 
-import org.joda.time.LocalDate;
 import org.junit.Test;
 
 import iso.v21090.dt.v1.II;
 import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
-
 
 /**
  * @author andreaskaltenbach, marced

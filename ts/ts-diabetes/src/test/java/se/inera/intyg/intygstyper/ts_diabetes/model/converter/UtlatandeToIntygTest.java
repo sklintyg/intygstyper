@@ -23,10 +23,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
+
 import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 
 import se.inera.intyg.common.support.common.enumerations.RelationKod;

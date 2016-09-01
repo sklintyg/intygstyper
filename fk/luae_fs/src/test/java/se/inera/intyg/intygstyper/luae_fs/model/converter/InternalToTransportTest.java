@@ -8,10 +8,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.time.LocalDateTime;
 
 import javax.xml.transform.stream.StreamSource;
 
-import org.joda.time.LocalDateTime;
 import org.junit.Test;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
@@ -104,7 +104,7 @@ public class InternalToTransportTest {
         utlatande.setTextVersion("1.0");
         GrundData grundData = IntygTestDataBuilder.getGrundData();
 
-        grundData.setSigneringsdatum(new LocalDateTime("2015-12-07T15:48:05"));
+        grundData.setSigneringsdatum(LocalDateTime.parse("2015-12-07T15:48:05"));
 
         if (relationKod != null) {
             Relation relation = new Relation();

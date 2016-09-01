@@ -23,6 +23,7 @@ import static se.inera.intyg.intygstyper.ts_parent.codes.RespConstants.BEFATTNIN
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -157,7 +158,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
 
     private static final CheckGroupField<BedomningKorkortstyp> BEDOMNING;
     static {
-        BEDOMNING = new CheckGroupField<BedomningKorkortstyp>();
+        BEDOMNING = new CheckGroupField<>();
         BEDOMNING.addField(BedomningKorkortstyp.C1, "Falt_65");
         BEDOMNING.addField(BedomningKorkortstyp.C1E, "Falt_72");
         BEDOMNING.addField(BedomningKorkortstyp.C, "Falt_73");
@@ -196,7 +197,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     public String generatePdfFilename(Utlatande utlatande) {
         Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
         final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
-        String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().toString(DATEFORMAT_FOR_FILENAMES);
+        String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().format(DateTimeFormatter.ofPattern(DATEFORMAT_FOR_FILENAMES));
 
         return String.format("lakarutlatande_%s_-%s.pdf", personnummerString, certificateSignatureDate);
     }
@@ -449,7 +450,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     }
 
     private void populateAvslut(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
-        INTYGSDATUM.setField(fields, utlatande.getGrundData().getSigneringsdatum().toString("yyMMdd"));
+        INTYGSDATUM.setField(fields, utlatande.getGrundData().getSigneringsdatum().format(DateTimeFormatter.ofPattern("yyMMdd")));
         Vardenhet vardenhet = utlatande.getGrundData().getSkapadAv().getVardenhet();
         VARDINRATTNINGENS_NAMN.setField(fields, vardenhet.getEnhetsnamn());
         String adressOrt = String.format("%s, %s, %s", vardenhet.getPostort(), vardenhet.getPostadress(), vardenhet.getPostnummer());

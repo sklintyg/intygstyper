@@ -29,7 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -206,7 +208,7 @@ public class PdfDefaultGeneratorTest {
         // Given
         Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
-        List<Status> statuses = new ArrayList<Status>();
+        List<Status> statuses = new ArrayList<>();
         statuses.add(new Status(CertificateState.RECEIVED, null, LocalDateTime.now()));
 
         // generate PDF
@@ -226,7 +228,7 @@ public class PdfDefaultGeneratorTest {
         // Given
         Utlatande intyg = objectMapper.readValue(fk7263Json, Utlatande.class);
 
-        List<Status> statuses = new ArrayList<Status>();
+        List<Status> statuses = new ArrayList<>();
         statuses.add(new Status(CertificateState.SENT, "FK", LocalDateTime.now()));
 
         // generate PDF
@@ -240,7 +242,7 @@ public class PdfDefaultGeneratorTest {
             return;
         }
 
-        File file = new File(String.format("%s/%s-%s-default-generator.pdf", dir, origin.name() + "-"  + scenario.getName(), LocalDateTime.now().toString("yyyyMMdd_HHmm")));
+        File file = new File(String.format("%s/%s-%s-default-generator.pdf", dir, origin.name() + "-"  + scenario.getName(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"))));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

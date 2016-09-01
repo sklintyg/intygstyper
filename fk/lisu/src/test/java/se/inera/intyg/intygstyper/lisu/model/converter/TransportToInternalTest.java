@@ -3,21 +3,17 @@ package se.inera.intyg.intygstyper.lisu.model.converter;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
+
 import org.junit.Test;
 
+import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.lisu.model.internal.ArbetslivsinriktadeAtgarder;
+import se.inera.intyg.intygstyper.lisu.model.internal.*;
 import se.inera.intyg.intygstyper.lisu.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
-import se.inera.intyg.intygstyper.lisu.model.internal.PrognosDagarTillArbeteTyp;
-import se.inera.intyg.intygstyper.lisu.model.internal.PrognosTyp;
-import se.inera.intyg.intygstyper.lisu.model.internal.Sysselsattning;
 import se.inera.intyg.intygstyper.lisu.model.internal.Sysselsattning.SysselsattningsTyp;
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.intygstyper.lisu.model.internal.Prognos;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 
 public class TransportToInternalTest {
@@ -35,7 +31,7 @@ public class TransportToInternalTest {
         utlatande.setId("1234567");
         utlatande.setGrundData(IntygTestDataBuilder.getGrundData());
         utlatande.setTextVersion("1.0");
-        utlatande.setUndersokningAvPatienten(new InternalDate(new LocalDate()));
+        utlatande.setUndersokningAvPatienten(new InternalDate(LocalDate.now()));
         utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra")), Diagnos.create("S48", "ICD_10_SE", "Klämskada arm", "Klämskada arm")));
         utlatande.setAktivitetsbegransning("Väldigt sjuk");
         utlatande.setPagaendeBehandling("Medicin");

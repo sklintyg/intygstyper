@@ -19,9 +19,10 @@
 
 package se.inera.intyg.intygstyper.ts_parent.model.converter;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.util.CollectionUtils;
 
 import se.inera.intyg.common.support.model.common.internal.*;
@@ -34,6 +35,7 @@ import se.inera.intygstjanster.ts.services.v1.SkapadAv;
 public final class TransportToInternalUtil {
 
     private static final String DELIMITER = ".";
+    private static final DateTimeFormatter SIGNERINGS_TIDSTAMPEL_FORMAT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     private TransportToInternalUtil() {
     }
@@ -41,7 +43,8 @@ public final class TransportToInternalUtil {
     public static GrundData buildGrundData(se.inera.intygstjanster.ts.services.v1.GrundData source) {
         GrundData grundData = new GrundData();
         grundData.setPatient(convertPatient(source.getPatient()));
-        grundData.setSigneringsdatum(LocalDateTime.parse(source.getSigneringsTidstampel()));
+        grundData
+                .setSigneringsdatum(LocalDateTime.parse(source.getSigneringsTidstampel(), SIGNERINGS_TIDSTAMPEL_FORMAT));
         grundData.setSkapadAv(convertHoSPersonal(source.getSkapadAv()));
         return grundData;
     }

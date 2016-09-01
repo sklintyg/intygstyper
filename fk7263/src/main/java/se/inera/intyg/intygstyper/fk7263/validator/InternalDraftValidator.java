@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.joda.time.Interval;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
@@ -147,7 +142,7 @@ public class InternalDraftValidator {
         // If field 4 annat satt or field 10 går ej att bedömma is set then
         // field 13 should contain data.
         if (utlatande.getPrognosBedomning() == PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma
-            && StringUtils.isBlank(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+                && StringUtils.isBlank(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
             addValidationError(validationMessages, "prognos", ValidationMessageType.EMPTY,
                     "fk7263.validation.prognos.gar-ej-att-bedomma.beskrivning.missing");
         }
@@ -259,7 +254,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod())) {
             String kodsystem = utlatande.getDiagnosKodsystem1();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod(), kodsystem, "diagnos", "fk7263.validation.diagnos.invalid", validationMessages);
@@ -272,7 +267,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod2())) {
             String kodsystem = utlatande.getDiagnosKodsystem2();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod2(), kodsystem, "diagnos", "fk7263.validation.diagnos2.invalid", validationMessages);
@@ -282,7 +277,7 @@ public class InternalDraftValidator {
         if (!StringUtils.isBlank(utlatande.getDiagnosKod3())) {
             String kodsystem = utlatande.getDiagnosKodsystem3();
             if (StringUtils.isBlank(kodsystem)) {
-                //Default to ICD-10
+                // Default to ICD-10
                 kodsystem = Diagnoskodverk.ICD_10_SE.name();
             }
             validateDiagnosKod(utlatande.getDiagnosKod3(), kodsystem, "diagnos", "fk7263.validation.diagnos3.invalid", validationMessages);
@@ -315,7 +310,8 @@ public class InternalDraftValidator {
      *
      * @param validationMessages
      *            list of validation messages
-     * @return {@link se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus#VALID} if there are no errors, and
+     * @return {@link se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus#VALID} if there are no
+     *         errors, and
      *         {@link se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus#INVALID} otherwise
      */
     private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
@@ -357,27 +353,12 @@ public class InternalDraftValidator {
 
         for (int i = 0; i < intervals.length; i++) {
             if (intervals[i] != null) {
-                Interval oneInterval = createInterval(intervals[i].fromAsLocalDate(), intervals[i].tomAsLocalDate());
-                if (oneInterval == null) {
-                    addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                            "fk7263.validation.nedsattning.incorrect-date-interval");
-                    return false;
-                }
                 for (int j = i + 1; j < intervals.length; j++) {
-                    if (intervals[j] != null) {
-                        Interval anotherInterval = createInterval(intervals[j].fromAsLocalDate(), intervals[j].tomAsLocalDate());
-                        if (anotherInterval == null) {
-                            addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "fk7263.validation.nedsattning.incorrect-date-interval");
-                            return false;
-                        }
-                        // Overlap OR abuts(one intervals tom day== another's
-                        // from day) is considered invalid
-                        if (oneInterval.overlaps(anotherInterval) || oneInterval.abuts(anotherInterval)) {
-                            addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                    "fk7263.validation.nedsattning.overlapping-date-interval");
-                            return false;
-                        }
+                    // Overlap OR abuts(one intervals tom day == another's from day) is considered invalid
+                    if (intervals[j] != null && intervals[i].overlaps(intervals[j])) {
+                        addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
+                                "fk7263.validation.nedsattning.overlapping-date-interval");
+                        return false;
                     }
                 }
             }
@@ -397,21 +378,6 @@ public class InternalDraftValidator {
             }
         }
         return true;
-    }
-
-    /**
-     * @param start
-     *            start
-     * @param end
-     *            end
-     * @return Interval
-     */
-    private Interval createInterval(LocalDate start, LocalDate end) {
-        if ((start == null || end == null || start.isAfter(end))) {
-            return null;
-        } else {
-            return new Interval(start.toDate().getTime(), end.toDate().getTime());
-        }
     }
 
 }
