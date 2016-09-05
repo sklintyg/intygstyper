@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
         <h1 ng-focus="pagefocus" tabindex="-1">
-          <span message key="fk7263.label.pagetitle"></span>
+          <span id="viewCertificateHeader" message key="fk7263.label.pagetitle"></span>
         </h1>
         <p>
           <div class="mi-text" message key="fk7263.label.pageingress"></div>
@@ -73,6 +73,7 @@
         </div>
       </div>
     </div>
+
     <div class="row">
     	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	    	<form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
@@ -90,6 +91,7 @@
 	        </form>
 	    </div>
     </div>
+
     <div id="certificate" class="certificate">
       <span class="hide" id="certId" title="{{cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>
 
