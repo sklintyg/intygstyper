@@ -97,11 +97,4 @@ artifacts.archives packageTests
 
 dependencies {
   compile project(':ts-parent')
-
-  testCompile 'commons-io:commons-io:2.4'
-  testCompile 'org.mockito:mockito-core:1.9.0'
-  testCompile 'org.unitils:unitils-core:3.3'
-  testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
-  testCompile 'xmlunit:xmlunit:1.4'
-  testCompile 'org.skyscreamer:jsonassert:1.2.0'
 }

@@ -54,6 +54,12 @@ subprojects {
 
   dependencies {
     testCompile "junit:junit:4.+"
+    testCompile 'commons-io:commons-io:2.4'
+    testCompile 'org.mockito:mockito-core:1.9.0'
+    testCompile 'org.skyscreamer:jsonassert:1.2.0'
+    testCompile "org.springframework:spring-test:${springVersion}"
+    testCompile 'org.unitils:unitils-core:3.3'
+    testCompile 'xmlunit:xmlunit:1.4'
   }
 }
 

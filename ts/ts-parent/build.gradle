@@ -25,8 +25,4 @@ dependencies {
     compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
     compile "com.itextpdf:itextpdf:${itextVersion}"
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
-
-    testCompile "commons-io:commons-io:2.4"
-    testCompile "org.springframework:spring-test:4.2.2.RELEASE"
-    testCompile "org.mockito:mockito-core:1.9.0"
 }
