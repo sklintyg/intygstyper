@@ -105,14 +105,6 @@ artifacts.archives packageTests
 dependencies {
   compile project(':ts-parent')
 
-  compile 'ch.qos.logback:logback-classic:1.0.11'
-  compile 'commons-collections:commons-collections:3.2.1'
-  compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
-  compile 'com.fasterxml.jackson.core:jackson-databind:2.4.4'
-  compile 'com.itextpdf:itextpdf:5.3.2'
-  compile 'org.apache.commons:commons-lang3:3.1'
-  compile 'org.springframework:spring-context:4.2.2.RELEASE'
-
   testCompile 'commons-io:commons-io:2.4'
   testCompile 'org.mockito:mockito-core:1.9.0'
   testCompile 'org.unitils:unitils-core:3.3'

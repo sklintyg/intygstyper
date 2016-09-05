@@ -1,36 +1,26 @@
 description = 'Parent for fk-intyg'
 
 dependencies {
-    compile 'se.riv.clinicalprocess.healthcond.certificate:clinicalprocess-healthcond-certificate-schemas:2.0.RC5.1'
-    compile 'se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:3.1.0.1'
-    compile 'se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.1'
-    compile 'se.inera.intyg.insuranceprocess.healthreporting:intyg-insuranceprocess-healthreporting-schemas:1.0.1'
-
     compile "se.inera.intyg.common:common-support:${commonVersion}"
     compile "se.inera.intyg.common:common-services:${commonVersion}"
     compile "se.inera.intyg.common:integration-util:${commonVersion}"
     compile "se.inera.intyg.common:common-schemas:${commonVersion}"
     compile "se.inera.intyg.common:common-web:${commonVersion}"
 
-    compile 'ch.qos.logback:logback-classic:1.0.11'
-    compile 'com.fasterxml.jackson.core:jackson-core:2.4.4'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.4'
-    compile 'com.google.auto.value:auto-value:1.1'
-    compile 'com.itextpdf:itextpdf:5.3.2'
-    compile 'commons-collections:commons-collections:3.2.1'
-    compile 'org.apache.commons:commons-lang3:3.1'
-    compile 'org.springframework:spring-context:4.2.2.RELEASE'
-    compile 'org.springframework:spring-tx:4.2.2.RELEASE'
-    compile 'com.helger:ph-schematron:3.0.1'
+    compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
+    compile "com.itextpdf:itextpdf:${itextVersion}"
+    compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
+    compile "com.google.auto.value:auto-value:1.1"
+    compile "com.helger:ph-schematron:${phSchematronVersion}"
 
-    compileOnly 'javax.servlet:servlet-api:2.5'
+    compileOnly "javax.servlet:servlet-api:2.5"
 
-    testCompile 'commons-io:commons-io:2.4'
-    testCompile 'org.mockito:mockito-core:1.9.0'
-    testCompile 'org.skyscreamer:jsonassert:1.2.0'
-    testCompile 'org.springframework:spring-test:4.2.2.RELEASE'
-    testCompile 'org.unitils:unitils-core:3.3'
-    testCompile 'xmlunit:xmlunit:1.4'
+    testCompile "commons-io:commons-io:2.4"
+    testCompile "org.mockito:mockito-core:1.9.0"
+    testCompile "org.skyscreamer:jsonassert:1.2.0"
+    testCompile "org.springframework:spring-test:4.2.2.RELEASE"
+    testCompile "org.unitils:unitils-core:3.3"
+    testCompile "xmlunit:xmlunit:1.4"
 }
 
 task packageTests(type: Jar) {
