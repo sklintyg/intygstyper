@@ -28,11 +28,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.collect.ImmutableList;
 
+import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
-import se.inera.intyg.common.support.modules.validator.PatientValidator;
+import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
@@ -48,8 +49,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
-    private static final PatientValidator PATIENT_VALIDATOR = new PatientValidator();
-
     @Autowired
     private InternalValidatorUtil validatorUtil;
 
@@ -58,7 +57,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
         List<ValidationMessage> validationMessages = new ArrayList<>();
 
         // Patientens adressuppgifter
-        PATIENT_VALIDATOR.validate(utlatande.getGrundData().getPatient(), validationMessages);
+        PatientValidator.validate(utlatande.getGrundData().getPatient(), validationMessages);
 
         // Kategori 1 – Grund för medicinskt underlag
         validateGrundForMU(utlatande, validationMessages);
@@ -106,22 +105,17 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
                     "lisu.validation.grund-for-mu.missing");
         }
 
-        // Validate dates
-        if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.undersokning", ValidationMessageType.INVALID_FORMAT,
-                    "lisu.validation.grund-for-mu.undersokning.incorrect_format");
+        if (utlatande.getUndersokningAvPatienten() != null) {
+            validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, GrundForMu.UNDERSOKNING);
         }
-        if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.telefonkontakt", ValidationMessageType.INVALID_FORMAT,
-                    "lisu.validation.grund-for-mu.telefonkontakt.incorrect_format");
+        if (utlatande.getJournaluppgifter() != null) {
+            validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, GrundForMu.JOURNALUPPGIFTER);
         }
-        if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.journaluppgifter", ValidationMessageType.INVALID_FORMAT,
-                    "lisu.validation.grund-for-mu.journaluppgifter.incorrect_format");
+        if (utlatande.getTelefonkontaktMedPatienten() != null) {
+            validateGrundForMuDate(utlatande.getTelefonkontaktMedPatienten(), validationMessages, GrundForMu.TELEFONKONTAKT);
         }
-        if (utlatande.getAnnatGrundForMU() != null && !utlatande.getAnnatGrundForMU().isValidDate()) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INVALID_FORMAT,
-                    "lisu.validation.grund-for-mu.annat.incorrect_format");
+        if (utlatande.getAnnatGrundForMU() != null) {
+            validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, GrundForMu.ANNAT);
         }
 
         // R2
@@ -298,9 +292,14 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
                 validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
                         "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".missing");
             } else {
+                String errorMessage = "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId()
+                        + ".invalid_format";
+                validateDate(sjukskrivning.getPeriod().getFrom(), validationMessages, "bedomning", errorMessage);
+                validateDate(sjukskrivning.getPeriod().getTom(), validationMessages, "bedomning", errorMessage);
+
                 if (!sjukskrivning.getPeriod().isValid()) {
                     validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                            "lisu.validation.bedomning.sjukskrivningar.period" + sjukskrivning.getSjukskrivningsgrad().getId() + ".invalid_format");
+                            errorMessage);
                 }
             }
         }
@@ -425,6 +424,53 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
             validatorUtil.addValidationError(validationMessages, "ovrigt.blanksteg", ValidationMessageType.EMPTY,
                     "lisu.validation.blanksteg.otillatet");
         }
+    }
+
+    private boolean validateDate(InternalDate date, List<ValidationMessage> validationMessages, String validationType, String validationMessage) {
+        boolean valid = true;
+        if (!date.isValidDate()) {
+            validatorUtil.addValidationError(validationMessages, validationType, ValidationMessageType.INVALID_FORMAT,
+                    validationMessage);
+            return false;
+        }
+
+        if (!date.isReasonable()) {
+            validatorUtil.addValidationError(validationMessages, validationType, ValidationMessageType.INVALID_FORMAT,
+                    "lisu.validation.general.date_out_of_range");
+            valid = false;
+        }
+        return valid;
+    }
+
+    private void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+        String validationType = "grundformu." + type.getMessage();
+        String validationMessage = "lisu.validation.grund-for-mu." + type.getMessage() + ".incorrect_format";
+        validateDate(date, validationMessages, validationType, validationMessage);
+
+    }
+
+    private enum GrundForMu {
+        UNDERSOKNING,
+        JOURNALUPPGIFTER,
+        ANNAT,
+        TELEFONKONTAKT;
+
+        public String getMessage() {
+            switch (this) {
+            case UNDERSOKNING:
+                return "undersokning";
+            case TELEFONKONTAKT:
+                return "telefonkontakt";
+            case JOURNALUPPGIFTER:
+                return "journaluppgifter";
+            case ANNAT:
+                return "annat";
+            default:
+                return "annat";
+            }
+
+        }
+
     }
 
     private boolean isBlankButNotNull(String stringFromField) {

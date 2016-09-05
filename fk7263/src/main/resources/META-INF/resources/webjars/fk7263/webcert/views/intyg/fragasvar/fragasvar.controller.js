@@ -186,9 +186,10 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             };
             $scope.initQuestionForm();
 
-            $scope.onFrageTextChange = function() {
-                pingService.registerUserAction('fk7263-entering-fragetext');
-            };
+            // prolong session when user modifies svars-text
+            $scope.$watch('newQuestion.frageText', function() {
+                pingService.registerUserAction('fk7263-entering-newquestiontext');
+            });
 
             // listeners - interscope communication
             var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {

@@ -38,7 +38,8 @@ describe('qaPanel', function() {
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
         $provide.value('common.IntygService', { isSentToTarget: function() {} });
-        $provide.value('common.User', {});
+        $provide.value('common.UserModel', {});
+        $provide.value('common.FocusElementService', {});
         $provide.value('common.statService', {});
         $provide.value('common.ObjectHelper', jasmine.createSpyObj('common.ObjectHelper',
             [ 'isDefined']));
@@ -60,6 +61,8 @@ describe('qaPanel', function() {
             $httpBackend = _$httpBackend_;
             IntygService = _IntygService_;
             $scope.qa = { svarsText: 'lite initial text', status: 'CLOSED'};
+            $scope.certProperties = {};
+
             element = angular.element('<div qa-panel' +
                 ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>');
             element = $compile(element)($scope);

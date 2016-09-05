@@ -73,7 +73,11 @@ angular.module('fk7263').factory('fk7263.fragaSvarProxy',
             }).error(function(data, status) {
                 $log.error('error ' + status);
                 // Let calling code handle the error of no data response
-                onError(data);
+                if(data === null || status === -1){
+                    onError({message:data, errorCode: -1});
+                } else {
+                    onError(data);
+                }
             });
         }
 

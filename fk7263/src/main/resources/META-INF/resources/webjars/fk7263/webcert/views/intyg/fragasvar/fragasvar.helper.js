@@ -124,10 +124,12 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
 
                     scope.widgetState.showAllKompletteringarHandled = false;
 
-                    decorateWithGUIParameters(result);
-                    if(ObjectHelper.isDefined(certProperties) && certProperties.kompletteringOnly){
+                    decorateWithGUIParameters(result, ObjectHelper.isDefined(certProperties) ? certProperties.kompletteringOnly : false);
+                    if(ObjectHelper.isDefined(certProperties)){
                         // If kompletteringsmode, only show kompletteringsissues
-                        result = filterKompletteringar(result, scope.widgetState, certProperties);
+                        if (certProperties.kompletteringOnly) {
+                            result = filterKompletteringar(result, scope.widgetState, certProperties);
+                        }
                     }
 
                     scope.qaList = result;

@@ -21,6 +21,8 @@ angular.module('luae_fs').controller('luae_fs.ViewCertCtrl',
             ViewState.intygModel.filledAlways = true;
 
             $scope.intygFields = formFactory.getFormFields();
+            // Remove patient adress stuff.
+            $scope.intygFields.shift();
             // Remove vardenhet group, uses custom layout
             $scope.intygFields.pop();
 

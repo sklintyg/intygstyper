@@ -82,13 +82,8 @@
             </div>
           </div>
 
-          <div class="qa-block-body" id="{{panelId}}-qa-fragetext-{{qa.internReferens}}">{{qa.frageText}}</div>
-          <div class="qa-block-body komplettera-block" id="{{panelId}}-fkKompletteringar-{{qa.internReferens}}"
-               ng-repeat="komplettering in qa.kompletteringar">
-            <strong><span>{{komplettering.falt}}</span></strong>
-            <div>
-              <span>{{komplettering.text}}</span>
-            </div>
+          <div class="qa-block-body">
+            <div fragasvar-text-panel panel-id="panelId" qa="qa"></div>
           </div>
         </div>
       </div>
@@ -100,29 +95,29 @@
       </div>
 
       <!-- Svara med nytt intyg button - only on komplettering -->
-      <div class="buttonbar"
-           ng-show="!certProperties.kompletteringOnly && !qa.answerDisabled && !certProperties.isRevoked && qa.amne == 'KOMPLETTERING_AV_LAKARINTYG'">
-
-        <div class="alert alert-warning" ng-if="qa.svaraMedNyttIntygDisabled == true">
+      <div ng-if="qa.svaraMedNyttIntygDisabled == true && qa.svaraMedNyttIntygDisabledReason && !hasStatus(qa, 'CLOSED')">
+        <div class="alert alert-warning">
           {{qa.svaraMedNyttIntygDisabledReason}}
         </div>
-        <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled && qa.status != 'CLOSED'"
-                ng-class="{'btn-success': qa.status != 'CLOSED' && !cannotKomplettera, 'btn-default btn-secondary': qa.status == 'CLOSED' || cannotKomplettera}"
-                ng-click="answerWithIntyg(qa, cert)" ng-disabled="cannotKomplettera" wc-check-vardenhet
+      </div>
+
+      <div id="answerDisabledReasonPanel" class="alert alert-info" ng-show="isNotAllowedToAnswer(qa)">
+        {{qa.answerDisabledReason}}
+      </div>
+
+      <div class="buttonbar" ng-show="isKompletteringAllowed(qa, certProperties)">
+        <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled && qa.status != 'CLOSED' && !showAnswerField"
+                ng-class="{'btn-success': qa.status != 'CLOSED' && !showAnswerField, 'btn-default btn-secondary': qa.status == 'CLOSED' || showAnswerField}"
+                ng-click="openKompletteringDialog(qa, cert)" ng-disabled="showAnswerField" wc-check-vardenhet
                 vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                 id="answerWithIntygBtn-{{qa.internReferens}}">
-          <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Svara med nytt intyg
+          Svara
         </button>
-        <span ng-show="qa.status != 'CLOSED'">
-        <label for="{{panelId}}-cant-komplettera-{{qa.internReferens}}" class="checkbox-inline">
-          <input id="{{panelId}}-cant-komplettera-{{qa.internReferens}}" type="checkbox" ng-model="cannotKomplettera"
-                 ng-change="onCannotKomplettera()" /> Kan ej svara med nytt intyg</label>
-        </span>
       </div>
 
       <!-- Svarsdelen -->
       <div
-          ng-if="certProperties.kompletteringOnly || (qa.amne == 'KOMPLETTERING_AV_LAKARINTYG' && (cannotKomplettera || (qa.svarsText && qa.status == 'CLOSED'))) || (qa.amne != 'KOMPLETTERING_AV_LAKARINTYG')"
+          ng-if="isAllowedToAnswerAtAll(qa, certProperties)"
           class="fold-animation">
         <div class="panel-container" ng-show="qa.amne != 'PAMINNELSE'">
           <div class="qa-block"
@@ -171,22 +166,13 @@
 
         <!-- KNAPPAR EJ HANTERADE FRÅGOR -->
         <!-- TA BORT certProperties.kompletteringOnly NÄR "SVAR SOM FÖLJER MED" ÄR IMPLEMENTERAT -->
-        <div ng-if="!certProperties.kompletteringOnly && qa.status != 'CLOSED' && qa.amne != 'PAMINNELSE'">
-          <div class="form-group" ng-if="qa.status == 'PENDING_INTERNAL_ACTION'">
+
+        <div ng-if="showNotHandledButtons(qa, certProperties)">
+          <div class="form-group" ng-if="hasStatus(qa, 'PENDING_INTERNAL_ACTION')">
             <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
 
             <!-- Rubrik: Svar -->
-            <label class="control-label"
-                   ng-show="!qa.answerDisabled && !certProperties.isRevoked && !cannotKomplettera">Svar</label>
-
-            <!-- ELLER varningsruta komplettering -->
-            <div class="alert alert-warning"
-                 ng-show="!qa.answerDisabled && !certProperties.isRevoked && cannotKomplettera">
-              <strong>Viktigt!</strong> Konsekvensen av att skicka ett meddelande om att komplettering ej kan göras kan
-              innebära att Försäkringskassans handläggare avslår ansökan om sjukpenning.<br>
-              I det här meddelandet ska du inte skriva någon medicinsk information. Om du har behov av en dialog som
-              innehåller medicinsk information ska du svara med nytt intyg.
-            </div>
+            <label class="control-label" ng-show="isAllowedToAnswer(qa, certProperties)">Svar</label>
 
             <!-- ELLER inforuta komplettering EJ IMPLEMENTERAT
             <div class="alert alert-info"
@@ -195,11 +181,7 @@
             </div> -->
 
             <div class="controls">
-              <div id="answerDisabledReasonPanel" class="alert alert-info"
-                   ng-show="qa.answerDisabled && qa.answerDisabledReason">
-                {{qa.answerDisabledReason}}
-              </div>
-              <div class="form-group" ng-show="!qa.answerDisabled && !certProperties.isRevoked">
+              <div class="form-group" ng-show="isAllowedToAnswer(qa, certProperties)">
                 <textarea wc-maxlength ng-trim="false" rows="13" maxlength="5000"
                           class="form-control col-md-9 qa-block-wc" ng-model="qa.svarsText"
                           id="answerText-{{qa.internReferens}}"></textarea>
@@ -217,6 +199,11 @@
                         vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                         id="sendAnswerBtn-{{qa.internReferens}}">
                   <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
+                </button>
+                <button type="button" class="btn btn-secondary" ng-click="abortAnswer()"
+                        ng-show="isKompletteringAllowed(qa, certProperties)"
+                        id="abortAnswerBtn-{{qa.internReferens}}">
+                  <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Avbryt
                 </button>
               </div>
             </div>

@@ -37,6 +37,7 @@ var lisuMessages = {
         'lisu.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
 
         //Validation messages
+        'lisu.validation.general.date_out_of_range': 'Datum får inte ligga för långt fram eller tillbaka i tiden.',
         'lisu.validation.grund-for-mu.missing': 'Välj minst ett alternativ som uppgifterna i intyget baseras på.',
         'lisu.validation.grund-for-mu.undersokning.incorrect_format': 'Fel datumformat för undersökning av patient',
         'lisu.validation.grund-for-mu.telefonkontakt.incorrect_format': 'Fel datumformat för telefonkontakt',
