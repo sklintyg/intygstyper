@@ -54,6 +54,13 @@ angular.module('fk7263').directive('qaPanel',
                     $scope.showAnswerField = false;
                     var kompletteringDialog = null;
 
+                    $scope.showHandledButtons = function() {
+                        return !$scope.certProperties.isRevoked &&
+                            !$scope.certProperties.kompletteringOnly &&
+                            // Enforce business rule FS-011, from FK + answer should remain closed
+                            ($scope.qa.frageStallare === 'WC' || !$scope.qa.svarsText);
+                    };
+
                     $scope.handledFunction = function(newState) {
                         if (arguments.length) {
                             if (newState) {
