@@ -50,6 +50,7 @@ describe('qaPanel', function() {
         $provide.value('fk7263.fragaSvarProxy', fragaSvarService);
     }));
 
+    //noinspection JSAnnotator
     beforeEach(angular.mock.module('htmlTemplates'));
 
     beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope', '$q', '$httpBackend', 'common.IntygService',
@@ -61,7 +62,7 @@ describe('qaPanel', function() {
             IntygService = _IntygService_;
             $scope.qa = { svarsText: 'lite initial text', status: 'CLOSED'};
             element = angular.element('<div qa-panel' +
-                ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" cert="cert" cert-properties="certProperties"></div>');
+                ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" intyg="intyg" intyg-properties="certProperties"></div>');
             element = $compile(element)($scope);
             $scope.$digest();
             $scope = element.isolateScope();

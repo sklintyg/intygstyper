@@ -132,7 +132,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
 
                     scope.qaList = result;
 
-                    // Tell viewcertctrl about the intyg in case cert load fails
+                    // Tell viewcertctrl about the intyg in case intyg load fails
                     if (result.length > 0) {
                         $rootScope.$emit('fk7263.QACtrl.load', result[0].intygsReferens);
                     }

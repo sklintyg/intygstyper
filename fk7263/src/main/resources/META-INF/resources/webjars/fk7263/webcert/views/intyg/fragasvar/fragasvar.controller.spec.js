@@ -116,7 +116,7 @@ describe('QACtrl', function() {
             $rootScope.$apply();
 
             // ------ assert
-            expect($scope.cert).toEqual(testCert);
+            expect($scope.intyg).toEqual(testCert);
             expect($scope.certProperties.isLoaded).toBe(true);
             expect($scope.certProperties.isSent).toBe(true);
             expect($scope.certProperties.isRevoked).toBe(false);
@@ -154,7 +154,7 @@ describe('QACtrl', function() {
             $rootScope.$apply();
 
             // ------ assert
-            expect($scope.cert).toEqual(null);
+            expect($scope.intyg).toEqual(null);
             expect($scope.certProperties.isLoaded).toBe(false);
             expect($scope.certProperties.isSent).toBe(false);
             expect($scope.certProperties.isRevoked).toBe(false);

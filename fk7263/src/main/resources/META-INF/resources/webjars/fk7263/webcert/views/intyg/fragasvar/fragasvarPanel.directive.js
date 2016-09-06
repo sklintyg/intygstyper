@@ -41,8 +41,8 @@ angular.module('fk7263').directive('qaPanel',
                     panelId: '@',
                     qa: '=',
                     qaList: '=',
-                    cert: '=',
-                    certProperties: '='
+                    intyg: '=',
+                    intygProperties: '='
                 },
                 controller: function($scope, $element, $attrs) {
 
@@ -88,20 +88,20 @@ angular.module('fk7263').directive('qaPanel',
                         });
                     };
 
-                    $scope.answerWithIntyg = function(qa, cert) {
+                    $scope.answerWithIntyg = function(qa, intyg) {
 
-                        if(!ObjectHelper.isDefined(cert)) {
+                        if(!ObjectHelper.isDefined(intyg)) {
                             qa.activeErrorMessageKey = 'komplettera-no-intyg';
                             return;
                         }
 
                         qa.updateInProgress = true; // trigger local spinner
                         qa.activeErrorMessageKey = null;
-                        fragaSvarProxy.answerWithIntyg(qa, cert.typ,
+                        fragaSvarProxy.answerWithIntyg(qa, intyg.typ,
                           IntygCopyRequestModel.build({
-                            intygId: cert.id,
-                            intygType: cert.typ,
-                            patientPersonnummer: cert.grundData.patient.personId,
+                            intygId: intyg.id,
+                            intygType: intyg.typ,
+                            patientPersonnummer: intyg.grundData.patient.personId,
                             nyttPatientPersonnummer: $stateParams.patientId 
                           }), function(result) {
                           
@@ -115,7 +115,7 @@ angular.module('fk7263').directive('qaPanel',
                                 });
                             }
 
-                            goToDraft(cert.typ, result.intygsUtkastId);
+                            goToDraft(intyg.typ, result.intygsUtkastId);
 
                         }, function(errorData) {
                             // show error view

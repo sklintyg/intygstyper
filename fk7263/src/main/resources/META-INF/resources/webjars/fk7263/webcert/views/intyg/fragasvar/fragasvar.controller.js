@@ -36,7 +36,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 showTemplate: true
             };
 
-            // Injecting the CommonViewState service so client-side only changes on the cert page (such as a send/revoke)
+            // Injecting the CommonViewState service so client-side only changes on the intyg page (such as a send/revoke)
             // can trigger GUI updates in the Q&A view.
             $scope.viewState = CommonViewState;
 
@@ -44,33 +44,33 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 $scope.widgetState.sentMessage = false;
             };
 
-            $scope.cert = {};
-            $scope.certProperties = {
+            $scope.intyg = {};
+            $scope.intygProperties = {
                 isLoaded: false,
                 isSent: false,
                 isRevoked: false
             };
 
-            var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, cert, certProperties) {
+            var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, intyg, intygProperties) {
 
-                // IMPORTANT!! DON'T LET getQaForCertificate DEPEND ON THE INTYG LOAD EVENT (cert) in this case!
+                // IMPORTANT!! DON'T LET getQaForCertificate DEPEND ON THE INTYG LOAD EVENT (intyg) in this case!
                 // Messages needs to be loaded separately from the intyg as user should be able to see messages even if intyg didn't load.
                 // Used when coming from Intyg page.
-                $scope.cert = cert;
-                $scope.certProperties.isLoaded = false;
-                $scope.certProperties.isSent = false;
-                $scope.certProperties.isRevoked = false;
+                $scope.intyg = intyg;
+                $scope.intygProperties.isLoaded = false;
+                $scope.intygProperties.isSent = false;
+                $scope.intygProperties.isRevoked = false;
 
-                if(ObjectHelper.isDefined(cert) && ObjectHelper.isDefined(certProperties)) {
+                if(ObjectHelper.isDefined(intyg) && ObjectHelper.isDefined(intygProperties)) {
 
-                    $scope.certProperties = certProperties;
-                    $scope.certProperties.isLoaded = true;
+                    $scope.intygProperties = intygProperties;
+                    $scope.intygProperties.isLoaded = true;
                     var intygId = $stateParams.certificateId;
-                    if(certProperties.forceUseProvidedIntyg) {
-                        // Used for utkast page. In this case we must use the id from cert because $stateParams.certificateId is the id of the utkast, not the parentIntyg
-                        intygId = cert.id;
+                    if(intygProperties.forceUseProvidedIntyg) {
+                        // Used for utkast page. In this case we must use the id from intyg because $stateParams.certificateId is the id of the utkast, not the parentIntyg
+                        intygId = intyg.id;
                     }
-                    qaHelper.fetchFragaSvar($scope, intygId, $scope.certProperties);
+                    qaHelper.fetchFragaSvar($scope, intygId, $scope.intygProperties);
 
                 } else if(ObjectHelper.isDefined($stateParams.certificateId)) {
                     qaHelper.fetchFragaSvar($scope, $stateParams.certificateId, null);
