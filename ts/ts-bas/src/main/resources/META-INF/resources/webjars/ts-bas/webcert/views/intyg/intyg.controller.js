@@ -92,7 +92,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                         $rootScope.$emit('ts-bas.ViewCertCtrl.load', result);
                    
                     } else {
-                        $log.debug('Got error while loading cert - invalid data');
+                        $log.debug('Got error while loading intyg - invalid data');
                         ViewState.common.activeErrorMessageKey = 'common.error.data_not_found';
                     }
                 }, function(error) {

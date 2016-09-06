@@ -55,8 +55,8 @@ angular.module('fk7263').directive('qaPanel',
                     panelId: '@',
                     qa: '=',
                     qaList: '=',
-                    cert: '=',
-                    certProperties: '='
+                    intyg: '=',
+                    intygProperties: '='
                 },
                 controller: function($scope, $element, $attrs) {
 
@@ -68,8 +68,8 @@ angular.module('fk7263').directive('qaPanel',
                     var kompletteringDialog = null;
 
                     $scope.showHandledButtons = function() {
-                        return !$scope.certProperties.isRevoked &&
-                            !$scope.certProperties.kompletteringOnly &&
+                        return !$scope.intygProperties.isRevoked &&
+                            !$scope.intygProperties.kompletteringOnly &&
                             // Enforce business rule FS-011, from FK + answer should remain closed
                             ($scope.qa.frageStallare === 'WC' || !$scope.qa.svarsText);
                     };
@@ -88,40 +88,40 @@ angular.module('fk7263').directive('qaPanel',
                         }
                     };
 
-                    $scope.showNotHandledButtons = function(qa, certProperties) {
-                        return !certProperties.kompletteringOnly && qa.status !== 'CLOSED' && qa.amne !== 'PAMINNELSE';
+                    $scope.showNotHandledButtons = function(qa, intygProperties) {
+                        return !intygProperties.kompletteringOnly && qa.status !== 'CLOSED' && qa.amne !== 'PAMINNELSE';
                     };
 
                     $scope.hasStatus = function(qa, status) {
                         return qa.status === status;
                     };
 
-                    $scope.isAllowedToAnswerAtAll = function(qa, certProperties) {
-                        return certProperties.kompletteringOnly ||
+                    $scope.isAllowedToAnswerAtAll = function(qa, intygProperties) {
+                        return intygProperties.kompletteringOnly ||
                             (qa.amne !== 'KOMPLETTERING_AV_LAKARINTYG') ||
                             (qa.amne === 'KOMPLETTERING_AV_LAKARINTYG' &&
                             ($scope.showAnswerField || (qa.svarsText && qa.status === 'CLOSED')));
                     };
 
-                    $scope.isAllowedToAnswer = function(qa, certProperties) {
-                        return $scope.isAllowedToAnswerFraga(qa, certProperties) || $scope.showAnswerField;
+                    $scope.isAllowedToAnswer = function(qa, intygProperties) {
+                        return $scope.isAllowedToAnswerFraga(qa, intygProperties) || $scope.showAnswerField;
                     };
 
-                    $scope.isAllowedToAnswerFraga = function(qa, certProperties) {
-                        return !qa.answerDisabled && !certProperties.isRevoked;
+                    $scope.isAllowedToAnswerFraga = function(qa, intygProperties) {
+                        return !qa.answerDisabled && !intygProperties.isRevoked;
                     };
 
                     $scope.isNotAllowedToAnswer = function(qa) {
                         return qa.answerDisabled && qa.answerDisabledReason && !$scope.hasStatus(qa, 'CLOSED');
                     };
 
-                    $scope.isKompletteringAllowed = function(qa, certProperties) {
-                        return !certProperties.kompletteringOnly && $scope.isAllowedToAnswerFraga(qa, certProperties) &&
+                    $scope.isKompletteringAllowed = function(qa, intygProperties) {
+                        return !intygProperties.kompletteringOnly && $scope.isAllowedToAnswerFraga(qa, intygProperties) &&
                             qa.amne === 'KOMPLETTERING_AV_LAKARINTYG';
                     };
 
-                    $scope.isNotAllowedToKomplettera = function(qa, certProperties) {
-                        return $scope.isAllowedToAnswerFraga(qa, certProperties) && $scope.showAnswerField;
+                    $scope.isNotAllowedToKomplettera = function(qa, intygProperties) {
+                        return $scope.isAllowedToAnswerFraga(qa, intygProperties) && $scope.showAnswerField;
                     };
 
                     $scope.sendAnswer = function sendAnswer(qa) {
@@ -152,8 +152,8 @@ angular.module('fk7263').directive('qaPanel',
 
                     $scope.openKompletteringsUtkast = function(intygsTyp) {
                         var latestKomplRelation;
-                        for (var a = 0; a < $scope.certProperties.relations.length; a++) {
-                            var relation =  $scope.certProperties.relations[a];
+                        for (var a = 0; a < $scope.intygProperties.relations.length; a++) {
+                            var relation =  $scope.intygProperties.relations[a];
                             if (relation.kod === 'KOMPLT') {
                                 if (typeof latestKomplRelation === 'undefined') {
                                     latestKomplRelation = relation;
@@ -169,7 +169,7 @@ angular.module('fk7263').directive('qaPanel',
                         }
                     };
 
-                    $scope.svaraMedFortsattPaIntygsutkast = _hasKompletteringUtkastRelation($scope.certProperties.relations);
+                    $scope.svaraMedFortsattPaIntygsutkast = _hasKompletteringUtkastRelation($scope.intygProperties.relations);
 
                     $scope.openKompletteringDialog = function(qa, cert) {
 
@@ -223,10 +223,10 @@ angular.module('fk7263').directive('qaPanel',
 
                     };
 
-                    $scope.answerWithIntyg = function(qa, cert) {
+                    $scope.answerWithIntyg = function(qa, intyg) {
 
                         qa.activeDialogErrorMessageKey = null;
-                        if (!ObjectHelper.isDefined(cert)) {
+                        if (!ObjectHelper.isDefined(intyg)) {
                             qa.activeDialogErrorMessageKey = 'fk7263.error.komplettera-no-intyg';
                             return;
                         }
@@ -234,14 +234,14 @@ angular.module('fk7263').directive('qaPanel',
                         var deferred = $q.defer();
 
                         qa.updateInProgress = true; // trigger local spinner
-                        fragaSvarProxy.answerWithIntyg(qa, cert.typ,
-                            IntygCopyRequestModel.build({
-                                intygId: cert.id,
-                                intygType: cert.typ,
-                                patientPersonnummer: cert.grundData.patient.personId,
-                                nyttPatientPersonnummer: $stateParams.patientId
-                            }), function(result) {
-
+                        fragaSvarProxy.answerWithIntyg(qa, intyg.typ,
+                          IntygCopyRequestModel.build({
+                            intygId: intyg.id,
+                            intygType: intyg.typ,
+                            patientPersonnummer: intyg.grundData.patient.personId,
+                            nyttPatientPersonnummer: $stateParams.patientId 
+                          }), function(result) {
+                          
                                 qa.updateInProgress = false;
                                 qa.activeDialogErrorMessageKey = null;
                                 statService.refreshStat();

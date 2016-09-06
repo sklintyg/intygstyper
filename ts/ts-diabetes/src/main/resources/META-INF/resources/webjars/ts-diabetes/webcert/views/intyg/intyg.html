@@ -8,58 +8,58 @@
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : viewState.common.intygProperties.isRevoked}">
         <div class="row">
           <div class="col-md-12">
-            <div class="cert-body">
+            <div class="intyg-body">
 
               <!-- Patientens uppgifter -->
               <div wc-field field-label="common.intyg.patientadress" filled="true">
-                <span class="cert-answer"><span id="patientpostadress">{{viewState.intygModel.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{viewState.intygModel.grundData.patient.postnummer}}</span> <span id="patientpostort">{{viewState.intygModel.grundData.patient.postort}}</span></span>
+                <span class="intyg-answer"><span id="patientpostadress">{{viewState.intygModel.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{viewState.intygModel.grundData.patient.postnummer}}</span> <span id="patientpostort">{{viewState.intygModel.grundData.patient.postort}}</span></span>
               </div>
 
               <!-- Intyget avser -->
               <div wc-field field-dynamic-label="KAT_99.RBK" filled="true">
-                <span class="cert-answer" id="intygAvser">{{viewState.intygAvser}}</span>
+                <span class="intyg-answer" id="intygAvser">{{viewState.intygAvser}}</span>
               </div>
 
               <!-- Identiteten är styrkt genom -->
               <div wc-field field-dynamic-label="KAT_100.RBK" filled="true">
-                <span id="identitet"><span class="cert-answer" dynamic-label key="IDENTITET_{{viewState.intygModel.vardkontakt.idkontroll}}.RBK"></span></span>
+                <span id="identitet"><span class="intyg-answer" dynamic-label key="IDENTITET_{{viewState.intygModel.vardkontakt.idkontroll}}.RBK"></span></span>
               </div>
 
               <!-- 1. Allmänt diabetes -->
               <div wc-field field-dynamic-label="KAT_1.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_35.RBK"></span><br>
-                  <span id="observationsperiod"><span class="cert-answer">{{viewState.intygModel.diabetes.observationsperiod}}</span></span>
+                  <span id="observationsperiod"><span class="intyg-answer">{{viewState.intygModel.diabetes.observationsperiod}}</span></span>
                 </p>
                 <p>
                   <span dynamic-label key="FRG_18.RBK"></span><br>
-                  <span id="diabetestyp"><span class="cert-answer" message
+                  <span id="diabetestyp"><span class="intyg-answer" message
                         key="ts-diabetes.label.diabetes.diabetestyp.{{viewState.intygModel.diabetes.diabetestyp}}"></span></span>
                 </p>
 
                 <h3 dynamic-label key="FRG_19.RBK"></h3>
                 <p>
                   <span dynamic-label key="DFR_19.1.RBK"></span>
-                  <span id="endastKost"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.endastKost | BoolToTextFilter}}"></span></span><br>
+                  <span id="endastKost"><span class="intyg-answer" message key="{{viewState.intygModel.diabetes.endastKost | BoolToTextFilter}}"></span></span><br>
 
                   <span dynamic-label key="DFR_19.2.RBK"></span>
-                  <span id="tabletter"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.tabletter | BoolToTextFilter}}"></span></span><br>
+                  <span id="tabletter"><span class="intyg-answer" message key="{{viewState.intygModel.diabetes.tabletter | BoolToTextFilter}}"></span></span><br>
 
                   <span dynamic-label key="DFR_19.3.RBK"></span>
-                  <span id="insulin"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.insulin | BoolToTextFilter}}"></span></span><br>
+                  <span id="insulin"><span class="intyg-answer" message key="{{viewState.intygModel.diabetes.insulin | BoolToTextFilter}}"></span></span><br>
                   <br>
                   <span ng-show="viewState.intygModel.diabetes.insulinBehandlingsperiod.length > 0">
                     <span dynamic-label key="DFR_19.4.RBK"></span><br>
-                    <span class="cert-answer" id="insulinBehandlingsperiod">{{viewState.intygModel.diabetes.insulinBehandlingsperiod}}</span>
+                    <span class="intyg-answer" id="insulinBehandlingsperiod">{{viewState.intygModel.diabetes.insulinBehandlingsperiod}}</span>
                   </span>
                 </p>
                 <p>
                   <span dynamic-label key="DFR_19.5.RBK"></span><br>
                   <span id="annanBehandlingBeskrivning">
                     <span ng-show="viewState.intygModel.diabetes.annanBehandlingBeskrivning && viewState.intygModel.diabetes.annanBehandlingBeskrivning.length > 0">
-                      <span class="cert-answer">{{viewState.intygModel.diabetes.annanBehandlingBeskrivning}}</span>
+                      <span class="intyg-answer">{{viewState.intygModel.diabetes.annanBehandlingBeskrivning}}</span>
                     </span>
-                    <span class="cert-answer" ng-show="!viewState.intygModel.diabetes.annanBehandlingBeskrivning">
+                    <span class="intyg-answer" ng-show="!viewState.intygModel.diabetes.annanBehandlingBeskrivning">
                       <span message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                     </span>
                   </span>
@@ -72,62 +72,62 @@
                 <!-- a -->
                 <p>
                   <span dynamic-label key="FRG_36.RBK"></span>
-                  <span id="kunskapOmAtgarder"><span class="cert-answer" message
+                  <span id="kunskapOmAtgarder"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hypoglykemier.kunskapOmAtgarder | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- b -->
                 <p>
                   <span dynamic-label key="FRG_37.RBK"></span>
-                  <span id="teckenNedsattHjarnfunktion"><span class="cert-answer" message
+                  <span id="teckenNedsattHjarnfunktion"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- c -->
                 <p>
                   <span dynamic-label key="FRG_38.RBK"></span>
-                  <span id="saknarFormagaKannaVarningstecken"><span class="cert-answer" message
+                  <span id="saknarFormagaKannaVarningstecken"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- d -->
                 <div class="form-group">
                   <span dynamic-label key="FRG_39.RBK"></span>
-                  <span id="allvarligForekomst"><span class="cert-answer" message
+                  <span id="allvarligForekomst"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hypoglykemier.allvarligForekomst | BoolToTextFilter}}"></span></span>
                 </div>
                 <div class="form-group indent" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning">
                   <span dynamic-label key="DFR_39.2.RBK"></span>
-                  <span id="allvarligForekomstBeskrivning"><span class="cert-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning}}</span></span><br>
+                  <span id="allvarligForekomstBeskrivning"><span class="intyg-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstBeskrivning}}</span></span><br>
                 </div>
 
                 <!-- e -->
                 <div class="form-group">
                   <span dynamic-label key="FRG_40.RBK"></span>
-                  <span id="allvarligForekomstTrafiken"><span class="cert-answer" message
+                  <span id="allvarligForekomstTrafiken"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken | BoolToTextFilter}}"></span></span>
                 </div>
                 <div class="form-group indent"
                      ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning.length > 0">
                   <span dynamic-label key="DFR_40.2.RBK"></span>
-                  <span id="allvarligForekomstTrafikBeskrivning"><span class="cert-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span></span>
+                  <span id="allvarligForekomstTrafikBeskrivning"><span class="intyg-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstTrafikBeskrivning}}</span></span>
                 </div>
 
                 <!-- f -->
                 <div class="form-group">
                   <span dynamic-label key="FRG_41.RBK"></span>
-                  <span id="egenkontrollBlodsocker"><span class="cert-answer" message
+                  <span id="egenkontrollBlodsocker"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hypoglykemier.egenkontrollBlodsocker | BoolToTextFilter}}"></span></span>
                 </div>
 
                 <!-- g -->
                 <div class="form-group">
                   <span dynamic-label key="FRG_42.RBK"></span>
-                  <span id="allvarligForekomstVakenTid"><span class="cert-answer" message
+                  <span id="allvarligForekomstVakenTid"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid | BoolToTextFilter}}"></span></span><br>
                   <p ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid.length > 0">
                     <span dynamic-label key="DFR_42.2.RBK"></span>
-                    <span id="allvarligForekomstVakenTidObservationstid"><span class="cert-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span></span>
+                    <span id="allvarligForekomstVakenTidObservationstid"><span class="intyg-answer">{{viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid}}</span></span>
                   </p>
                 </div>
               </div>
@@ -136,14 +136,14 @@
               <div wc-field field-dynamic-label="KAT_3.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_43.RBK"></span>
-                  <span id="separatOgonlakarintyg"><span class="cert-answer" message
+                  <span id="separatOgonlakarintyg"><span class="intyg-answer" message
                         key="{{viewState.intygModel.syn.separatOgonlakarintyg | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <div ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
                   <p>
                     <span dynamic-label key="FRG_44.RBK"></span>
-                    <span id="synfaltsprovningUtanAnmarkning"><span class="cert-answer" message
+                    <span id="synfaltsprovningUtanAnmarkning"><span class="intyg-answer" message
                           key="{{viewState.intygModel.syn.synfaltsprovningUtanAnmarkning | BoolToTextFilter}}"></span></span>
                   </p>
                   <p>
@@ -175,7 +175,7 @@
                   </div>
                   <p>
                     <span dynamic-label key="FRG_6.RBK"></span>
-                    <span id="diplopi"><span class="cert-answer" message key="{{viewState.intygModel.syn.diplopi | BoolToTextFilter}}"></span></span>
+                    <span id="diplopi"><span class="intyg-answer" message key="{{viewState.intygModel.syn.diplopi | BoolToTextFilter}}"></span></span>
                   </p>
                 </div>
               </div>
@@ -186,17 +186,17 @@
                 <div ng-show="!viewState.intygModel.bedomning.kanInteTaStallning">
                   <span dynamic-label key="DFR_33.2.RBK"></span>
                   <p>
-                    <span id="bedomning"><span class="cert-answer">{{viewState.bedomning}}</span></span>
+                    <span id="bedomning"><span class="intyg-answer">{{viewState.bedomning}}</span></span>
                   </p>
                 </div>
                 <div ng-show="viewState.intygModel.bedomning.kanInteTaStallning">
-                  <span id="bedomningKanInteTaStallning"><span class="cert-answer" dynamic-label
+                  <span id="bedomningKanInteTaStallning"><span class="intyg-answer" dynamic-label
                         key="DFR_33.2.RBK"></span></span><br><br>
                 </div>
 
                 <div class="form-group">
                   <span dynamic-label key="FRG_45.RBK"></span><br>
-                  <span id="lamplighetInnehaBehorighet"><span class="cert-answer" message
+                  <span id="lamplighetInnehaBehorighet"><span class="intyg-answer" message
                         key="{{viewState.intygModel.bedomning.lamplighetInnehaBehorighet | BoolToTextFilter}}"></span></span>
                 </div>
 
@@ -205,10 +205,10 @@
               <div wc-field field-dynamic-label="FRG_32.RBK" filled="true">
                 <div id="kommentar">
                   <span ng-show="viewState.intygModel.kommentar.length > 0">
-                    <span class="cert-answer">{{viewState.intygModel.kommentar}}</span>
+                    <span class="intyg-answer">{{viewState.intygModel.kommentar}}</span>
                   </span>
                   <span ng-show="!viewState.intygModel.kommentar">
-                    <span class="cert-answer" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
+                    <span class="intyg-answer" message key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                   </span>
                 </div>
               </div>
@@ -217,9 +217,9 @@
                    filled="true">
                 <div id="lakareSpecialKompetens">
                   <span ng-show="viewState.intygModel.bedomning.lakareSpecialKompetens.length > 0">
-                    <span class="cert-answer">{{viewState.intygModel.bedomning.lakareSpecialKompetens}}</span><br>
+                    <span class="intyg-answer">{{viewState.intygModel.bedomning.lakareSpecialKompetens}}</span><br>
                   </span>
-                  <span class="cert-answer" ng-show="!viewState.intygModel.bedomning.lakareSpecialKompetens" message
+                  <span class="intyg-answer" ng-show="!viewState.intygModel.bedomning.lakareSpecialKompetens" message
                           key="ts-diabetes.label.bedomning-info-ej-angivet"></span>
                 </div>
               </div>
@@ -243,12 +243,12 @@
               </div>
 
             </div>
-            <!-- cert body -->
+            <!-- intyg body -->
           </div>
         </div>
       </div>
     </div>
-    <!-- entire cert -->
+    <!-- entire intyg -->
   </div>
   <!--  spinner end -->
 </div>

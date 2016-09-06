@@ -98,17 +98,17 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupsService',
             }, self);
         };
 
-        DateRangeGroupsService.prototype.validateDatesWithCert = function validateDatesWithCert(cert) {
-            this.setCert(cert);
+        DateRangeGroupsService.prototype.validateDatesWithCert = function validateDatesWithCert(intyg) {
+            this.setCert(intyg);
             this.setUseCert(true);
             this.validateDates();
             this.onArbetsformagaDatesUpdated();
             this.setUseCert(false);
         };
 
-        DateRangeGroupsService.prototype.setCert = function setCert(cert) {
+        DateRangeGroupsService.prototype.setCert = function setCert(intyg) {
             angular.forEach(this.dateRangeGroups, function(dateRangeGroup){
-                dateRangeGroup.setCert(cert);
+                dateRangeGroup.setCert(intyg);
             });
         };
 

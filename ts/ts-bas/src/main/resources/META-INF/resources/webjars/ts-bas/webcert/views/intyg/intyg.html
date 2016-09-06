@@ -8,21 +8,21 @@
       <div id="certificate" ng-class="{'certificate': true, 'revoked-certificate' : viewState.common.intygProperties.isRevoked}">
         <div class="row">
           <div class="col-md-12">
-            <div class="cert-body">
+            <div class="intyg-body">
 
               <!-- Patientens adressuppgifter -->
               <div wc-field field-label="ts-bas.label.patientadress" filled="true">
-                <span class="cert-answer"><span id="patientpostadress">{{viewState.intygModel.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{viewState.intygModel.grundData.patient.postnummer}}</span> <span id="patientpostort">{{viewState.intygModel.grundData.patient.postort}}</span></span>
+                <span class="intyg-answer"><span id="patientpostadress">{{viewState.intygModel.grundData.patient.postadress}}</span><br><span id="patientpostnummer">{{viewState.intygModel.grundData.patient.postnummer}}</span> <span id="patientpostort">{{viewState.intygModel.grundData.patient.postort}}</span></span>
               </div>
 
               <!-- Intyget avser -->
               <div wc-field field-dynamic-label="KAT_99.RBK" filled="true">
-                <span class="cert-answer" id="intygAvser">{{viewState.intygAvser}}</span>
+                <span class="intyg-answer" id="intygAvser">{{viewState.intygAvser}}</span>
               </div>
 
               <!-- Identitet -->
               <div wc-field field-dynamic-label="KAT_100.RBK" filled="true">
-                <span id="identitet"><span class="cert-answer" dynamic-label key="IDENTITET_{{viewState.intygModel.vardkontakt.idkontroll}}.RBK"></span></span>
+                <span id="identitet"><span class="intyg-answer" dynamic-label key="IDENTITET_{{viewState.intygModel.vardkontakt.idkontroll}}.RBK"></span></span>
               </div>
 
               <!-- 1 syn -->
@@ -30,19 +30,19 @@
                 <!-- a -->
                 <p>
                   <span dynamic-label key="FRG_3.RBK"></span>
-                  <span id="synfaltsdefekter"><span class="cert-answer" message key="{{viewState.intygModel.syn.synfaltsdefekter | BoolToTextFilter}}"></span></span>
+                  <span id="synfaltsdefekter"><span class="intyg-answer" message key="{{viewState.intygModel.syn.synfaltsdefekter | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- b -->
                 <p>
                   <span dynamic-label key="FRG_4.RBK"></span>
-                  <span id="nattblindhet"><span class="cert-answer" message key="{{viewState.intygModel.syn.nattblindhet | BoolToTextFilter}}"></span></span>
+                  <span id="nattblindhet"><span class="intyg-answer" message key="{{viewState.intygModel.syn.nattblindhet | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- c -->
                 <p>
                   <span dynamic-label key="FRG_5.RBK"></span>
-                  <span id="progressivOgonsjukdom"><span class="cert-answer" message key="{{viewState.intygModel.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span></span>
+                  <span id="progressivOgonsjukdom"><span class="intyg-answer" message key="{{viewState.intygModel.syn.progressivOgonsjukdom | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- a-c message -->
@@ -53,13 +53,13 @@
                 <!-- d -->
                 <p>
                   <span dynamic-label key="FRG_6.RBK"></span>
-                  <span id="diplopi"><span class="cert-answer" message key="{{viewState.intygModel.syn.diplopi | BoolToTextFilter}}"></span></span>
+                  <span id="diplopi"><span class="intyg-answer" message key="{{viewState.intygModel.syn.diplopi | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- e -->
                 <p>
                   <span dynamic-label key="FRG_7.RBK"></span>
-                  <span id="nystagmus"><span class="cert-answer" message key="{{viewState.intygModel.syn.nystagmus | BoolToTextFilter}}"></span></span>
+                  <span id="nystagmus"><span class="intyg-answer" message key="{{viewState.intygModel.syn.nystagmus | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <!-- f -->
@@ -98,7 +98,7 @@
 
                 <h3>Korrektionsglasens styrka</h3>
                 <span dynamic-label key="FRG_9.RBK"></span>
-                <span id="korrektionsglasensStyrka"><span class="cert-answer" message
+                <span id="korrektionsglasensStyrka"><span class="intyg-answer" message
                       key="{{viewState.intygModel.syn.korrektionsglasensStyrka | BoolToTextFilter}}"></span></span>
                 <div class="alert alert-info" ng-show="viewState.intygModel.syn.korrektionsglasensStyrka == true">
                   <span dynamic-label key="FRG_9.INF"></span>
@@ -109,12 +109,12 @@
               <div wc-field field-dynamic-label="KAT_2.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_10.RBK"></span>
-                  <span id="horselBalansbalansrubbningar"><span class="cert-answer" message
+                  <span id="horselBalansbalansrubbningar"><span class="intyg-answer" message
                         key="{{viewState.intygModel.horselBalans.balansrubbningar | BoolToTextFilter}}"></span></span>
                 </p>
                 <p ng-show="viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter != null">
                   <span dynamic-label key="FRG_11.RBK"></span>
-                  <span id="horselBalanssvartUppfattaSamtal4Meter"><span class="cert-answer" message
+                  <span id="horselBalanssvartUppfattaSamtal4Meter"><span class="intyg-answer" message
                         key="{{viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter | BoolToTextFilter}}"></span></span>
                 </p>
               </div>
@@ -125,18 +125,18 @@
                 <!-- a -->
                 <p>
                   <span dynamic-label key="FRG_12.RBK"></span>
-            			<span id="funktionsnedsattning"><span class="cert-answer" message
+            			<span id="funktionsnedsattning"><span class="intyg-answer" message
                         key="{{viewState.intygModel.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="viewState.intygModel.funktionsnedsattning.funktionsnedsattning">
                   <span dynamic-label key="DFR_12.2.RBK"></span><br />
-                  <span id="funktionsnedsattningbeskrivning"><span class="cert-answer">{{viewState.intygModel.funktionsnedsattning.beskrivning}}</span></span>
+                  <span id="funktionsnedsattningbeskrivning"><span class="intyg-answer">{{viewState.intygModel.funktionsnedsattning.beskrivning}}</span></span>
                 </p>
 
                 <!-- b -->
                 <p ng-show="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga != null">
                   <span dynamic-label key="FRG_13.RBK"></span>
-            			<span id="funktionsnedsattningotillrackligRorelseformaga"><span class="cert-answer" message
+            			<span id="funktionsnedsattningotillrackligRorelseformaga"><span class="intyg-answer" message
                         key="{{viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span></span>
                 </p>
 
@@ -146,22 +146,22 @@
               <div wc-field field-dynamic-label="KAT_4.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_14.RBK"></span><br>
-            			<span id="hjartKarlSjukdom"><span class="cert-answer" message
+            			<span id="hjartKarlSjukdom"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hjartKarl.hjartKarlSjukdom | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span dynamic-label key="FRG_15.RBK"></span><br>
-            			<span id="hjarnskadaEfterTrauma"><span class="cert-answer" message
+            			<span id="hjarnskadaEfterTrauma"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hjartKarl.hjarnskadaEfterTrauma | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span dynamic-label key="FRG_16.RBK"></span><br>
-            			<span id="riskfaktorerStroke"><span class="cert-answer" message
+            			<span id="riskfaktorerStroke"><span class="intyg-answer" message
                         key="{{viewState.intygModel.hjartKarl.riskfaktorerStroke | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="viewState.intygModel.hjartKarl.riskfaktorerStroke">
                   <span dynamic-label key="DFR_16.2.RBK"></span><br />
-                  <span id="beskrivningRiskfaktorer"><span class="cert-answer">{{viewState.intygModel.hjartKarl.beskrivningRiskfaktorer}}</span></span>
+                  <span id="beskrivningRiskfaktorer"><span class="intyg-answer">{{viewState.intygModel.hjartKarl.beskrivningRiskfaktorer}}</span></span>
                 </p>
 
               </div>
@@ -170,21 +170,21 @@
               <div wc-field field-dynamic-label="KAT_5.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_17.RBK"></span>
-                  <span id="harDiabetes"><span class="cert-answer" message key="{{viewState.intygModel.diabetes.harDiabetes | BoolToTextFilter}}"></span></span>
+                  <span id="harDiabetes"><span class="intyg-answer" message key="{{viewState.intygModel.diabetes.harDiabetes | BoolToTextFilter}}"></span></span>
                 </p>
                 <div ng-show="viewState.intygModel.diabetes.harDiabetes">
                   <p>
                     <span dynamic-label key="FRG_18.RBK"></span>
-            			  <span id="diabetesTyp"><span class="cert-answer" message
+            			  <span id="diabetesTyp"><span class="intyg-answer" message
                             key="ts-bas.label.diabetes.diabetestyp.{{viewState.intygModel.diabetes.diabetesTyp}}"></span></span>
                   </p>
                   <p ng-show="viewState.intygModel.diabetes.kost || viewState.intygModel.diabetes.tabletter || viewState.intygModel.diabetes.insulin">
                     <span dynamic-label key="FRG_19.RBK"></span><br>
-                    <span id="kost"><span class="cert-answer" ng-show="viewState.intygModel.diabetes.kost" dynamic-label
+                    <span id="kost"><span class="intyg-answer" ng-show="viewState.intygModel.diabetes.kost" dynamic-label
                           key="DFR_19.1.RBK"></span></span>
-                    <span id="tabletter"><span class="cert-answer" ng-show="viewState.intygModel.diabetes.tabletter" dynamic-label
+                    <span id="tabletter"><span class="intyg-answer" ng-show="viewState.intygModel.diabetes.tabletter" dynamic-label
                           key="DFR_19.2.RBK"></span></span>
-                    <span id="insulin"><span class="cert-answer" ng-show="viewState.intygModel.diabetes.insulin" dynamic-label
+                    <span id="insulin"><span class="intyg-answer" ng-show="viewState.intygModel.diabetes.insulin" dynamic-label
                           key="DFR_19.3.RBK"></span></span>
                   </p>
                   <div class="alert alert-info" ng-show="viewState.intygModel.diabetes.insulin || viewState.intygModel.diabetes.tabletter">
@@ -198,7 +198,7 @@
               <div wc-field field-dynamic-label="KAT_6.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_20.RBK"></span>
-            			<span id="neurologiskSjukdom"><span class="cert-answer" message
+            			<span id="neurologiskSjukdom"><span class="intyg-answer" message
                         key="{{viewState.intygModel.neurologi.neurologiskSjukdom | BoolToTextFilter}}"></span></span>
                 </p>
 
@@ -208,20 +208,20 @@
               <div wc-field field-dynamic-label="KAT_7.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_21.RBK"></span>
-            			<span id="medvetandestorning"><span class="cert-answer" message
+            			<span id="medvetandestorning"><span class="intyg-answer" message
                         key="{{viewState.intygModel.medvetandestorning.medvetandestorning | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <p class="indent" ng-show="viewState.intygModel.medvetandestorning.medvetandestorning">
                   <span dynamic-label key="DFR_21.2.RBK"></span><br />
-                  <span id="medvetandestorningbeskrivning"><span class="cert-answer">{{viewState.intygModel.medvetandestorning.beskrivning}}</span></span>
+                  <span id="medvetandestorningbeskrivning"><span class="intyg-answer">{{viewState.intygModel.medvetandestorning.beskrivning}}</span></span>
                 </p>
               </div>
 
               <!-- 8 -->
               <div wc-field field-dynamic-label="KAT_8.RBK" filled="true">
                 <span dynamic-label key="FRG_22.RBK"></span>
-                <span id="nedsattNjurfunktion"><span class="cert-answer" message
+                <span id="nedsattNjurfunktion"><span class="intyg-answer" message
                       key="{{viewState.intygModel.njurar.nedsattNjurfunktion | BoolToTextFilter}}"></span></span>
 
               </div>
@@ -229,7 +229,7 @@
               <!-- 9 -->
               <div wc-field field-dynamic-label="KAT_9.RBK" filled="true">
                 <span dynamic-label key="FRG_23.RBK"></span>
-                <span id="sviktandeKognitivFunktion"><span class="cert-answer" message
+                <span id="sviktandeKognitivFunktion"><span class="intyg-answer" message
                       key="{{viewState.intygModel.kognitivt.sviktandeKognitivFunktion | BoolToTextFilter}}"></span></span>
 
               </div>
@@ -237,7 +237,7 @@
               <!-- 10 -->
               <div wc-field field-dynamic-label="KAT_10.RBK" filled="true">
                 <span dynamic-label key="FRG_24.RBK"></span>
-                <span id="teckenSomnstorningar"><span class="cert-answer" message
+                <span id="teckenSomnstorningar"><span class="intyg-answer" message
                       key="{{viewState.intygModel.somnVakenhet.teckenSomnstorningar | BoolToTextFilter}}"></span></span>
 
               </div>
@@ -246,20 +246,20 @@
               <div wc-field field-dynamic-label="KAT_11.RBK" filled="true">
                 <p>
                   <span dynamic-label key="DFR_25.1.RBK"></span>
-            			<span id="teckenMissbruk"><span class="cert-answer" message
+            			<span id="teckenMissbruk"><span class="intyg-answer" message
                         key="{{viewState.intygModel.narkotikaLakemedel.teckenMissbruk | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <p>
                   <span dynamic-label key="DFR_25.2.RBK"></span>
-            			<span id="foremalForVardinsats"><span class="cert-answer" message
+            			<span id="foremalForVardinsats"><span class="intyg-answer" message
                         key="{{viewState.intygModel.narkotikaLakemedel.foremalForVardinsats | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <div ng-show="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats || viewState.intygModel.narkotikaLakemedel.teckenMissbruk">
                   <p>
                     <span dynamic-label key="DFR_25.3.RBK"></span>
-	            			<span id="provtagningBehovs"><span class="cert-answer" message
+	            			<span id="provtagningBehovs"><span class="intyg-answer" message
                           key="{{viewState.intygModel.narkotikaLakemedel.provtagningBehovs | BoolToTextFilter}}"></span></span>
                   </p>
                   <p>
@@ -271,13 +271,13 @@
 
                 <p>
                   <span dynamic-label key="FRG_26.RBK"></span>
-            			<span id="lakarordineratLakemedelsbruk"><span class="cert-answer" message
+            			<span id="lakarordineratLakemedelsbruk"><span class="intyg-answer" message
                         key="{{viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk | BoolToTextFilter}}"></span></span>
                 </p>
 
                 <p class="indent" ng-show="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk">
                   <span dynamic-label key="DFR_26.1.RBK"></span><br />
-                  <span id="lakemedelOchDos"><span class="cert-answer">{{viewState.intygModel.narkotikaLakemedel.lakemedelOchDos}}</span></span>
+                  <span id="lakemedelOchDos"><span class="intyg-answer">{{viewState.intygModel.narkotikaLakemedel.lakemedelOchDos}}</span></span>
                 </p>
 
               </div>
@@ -285,19 +285,19 @@
               <!-- 12 -->
               <div wc-field field-dynamic-label="KAT_12.RBK" filled="true">
                 <span dynamic-label key="FRG_27.RBK"></span>
-                <span id="psykiskSjukdom"><span class="cert-answer" message key="{{viewState.intygModel.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span></span>
+                <span id="psykiskSjukdom"><span class="intyg-answer" message key="{{viewState.intygModel.psykiskt.psykiskSjukdom | BoolToTextFilter}}"></span></span>
               </div>
 
               <!-- 13 -->
               <div wc-field field-dynamic-label="KAT_13.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_28.RBK"></span>
-            			<span id="psykiskUtvecklingsstorning"><span class="cert-answer" message
+            			<span id="psykiskUtvecklingsstorning"><span class="intyg-answer" message
                         key="{{viewState.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning | BoolToTextFilter}}"></span></span>
                 </p>
                 <p>
                   <span dynamic-label key="FRG_29.RBK"></span>
-            			<span id="harSyndrom"><span class="cert-answer" message
+            			<span id="harSyndrom"><span class="intyg-answer" message
                         key="{{viewState.intygModel.utvecklingsstorning.harSyndrom | BoolToTextFilter}}"></span></span>
                 </p>
               </div>
@@ -306,18 +306,18 @@
               <div wc-field field-dynamic-label="KAT_14.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_30.RBK"></span>
-            		  <span id="sjukhusEllerLakarkontakt"><span class="cert-answer" message
+            		  <span id="sjukhusEllerLakarkontakt"><span class="intyg-answer" message
                           key="{{viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt">
                   <span dynamic-label key="DFR_30.2.RBK"></span>
-                  <span class="cert-answer" id="tidpunkt">{{viewState.intygModel.sjukhusvard.tidpunkt}}</span><br />
+                  <span class="intyg-answer" id="tidpunkt">{{viewState.intygModel.sjukhusvard.tidpunkt}}</span><br />
 
                   <span dynamic-label key="DFR_30.3.RBK"></span>
-                  <span class="cert-answer" id="vardinrattning">{{viewState.intygModel.sjukhusvard.vardinrattning}}</span><br />
+                  <span class="intyg-answer" id="vardinrattning">{{viewState.intygModel.sjukhusvard.vardinrattning}}</span><br />
 
                   <span dynamic-label key="DFR_30.4.RBK"></span>
-                  <span class="cert-answer" id="sjukhusvardanledning">{{viewState.intygModel.sjukhusvard.anledning}}</span><br />
+                  <span class="intyg-answer" id="sjukhusvardanledning">{{viewState.intygModel.sjukhusvard.anledning}}</span><br />
                 </p>
               </div>
 
@@ -325,22 +325,22 @@
               <div wc-field field-dynamic-label="KAT_15.RBK" filled="true">
                 <p>
                   <span dynamic-label key="FRG_31.RBK"></span>
-            		  <span id="stadigvarandeMedicinering"><span class="cert-answer" message
+            		  <span id="stadigvarandeMedicinering"><span class="intyg-answer" message
                           key="{{viewState.intygModel.medicinering.stadigvarandeMedicinering | BoolToTextFilter}}"></span></span>
                 </p>
                 <p class="indent" ng-show="viewState.intygModel.medicinering.stadigvarandeMedicinering">
                   <span dynamic-label key="DFR_31.2.RBK"></span><br />
-                  <span id="medicineringbeskrivning"><span class="cert-answer">{{viewState.intygModel.medicinering.beskrivning}}</span></span>
+                  <span id="medicineringbeskrivning"><span class="intyg-answer">{{viewState.intygModel.medicinering.beskrivning}}</span></span>
                 </p>
               </div>
 
               <!-- 16 ovrigt -->
               <div wc-field field-dynamic-label="KAT_16.RBK" filled="true">
                 <p ng-show="viewState.intygModel.kommentar.length > 0">
-                  <span id="kommentar"><span class="cert-answer">{{viewState.intygModel.kommentar}}</span></span>
+                  <span id="kommentar"><span class="intyg-answer">{{viewState.intygModel.kommentar}}</span></span>
                 </p>
 
-                <p class="cert-answer" ng-show="!viewState.intygModel.kommentar" id="kommentarEjAngivet">
+                <p class="intyg-answer" ng-show="!viewState.intygModel.kommentar" id="kommentarEjAngivet">
                   <span message key="ts-bas.label.bedomning-info-ej-angivet"></span>
                 </p>
               </div>
@@ -352,18 +352,18 @@
                   <span dynamic-label key="DFR_33.1.RBK"></span>
 
                   <p>
-                    <span class="cert-answer" id="bedomning">{{viewState.bedomning}}</span>
+                    <span class="intyg-answer" id="bedomning">{{viewState.bedomning}}</span>
                   </p>
                 </div>
 
                 <div ng-show="viewState.intygModel.bedomning.kanInteTaStallning">
-                  <span id="bedomningKanInteTaStallning"><span class="cert-answer" dynamic-label key="DFR_33.2.RBK"></span></span><br><br>
+                  <span id="bedomningKanInteTaStallning"><span class="intyg-answer" dynamic-label key="DFR_33.2.RBK"></span></span><br><br>
                 </div>
 
                 <div>
                   <span dynamic-label key="FRG_34.RBK"></span><br>
-                  <span class="cert-answer" ng-show="viewState.intygModel.bedomning.lakareSpecialKompetens.length > 0" id="lakareSpecialKompetens">{{viewState.intygModel.bedomning.lakareSpecialKompetens}}</span>
-                  <span id="lakareSpecialKompetensEjAngivet"><span class="cert-answer" ng-show="!viewState.intygModel.bedomning.lakareSpecialKompetens" message
+                  <span class="intyg-answer" ng-show="viewState.intygModel.bedomning.lakareSpecialKompetens.length > 0" id="lakareSpecialKompetens">{{viewState.intygModel.bedomning.lakareSpecialKompetens}}</span>
+                  <span id="lakareSpecialKompetensEjAngivet"><span class="intyg-answer" ng-show="!viewState.intygModel.bedomning.lakareSpecialKompetens" message
                         key="ts-bas.label.bedomning-info-ej-angivet"></span></span>
                 </div>
               </div>
@@ -388,12 +388,12 @@
               </div>
 
             </div>
-            <!-- cert body -->
+            <!-- intyg body -->
           </div>
         </div>
       </div>
     </div>
-    <!-- entire cert -->
+    <!-- entire intyg -->
   </div>
   <!--  spinner end -->
 </div>

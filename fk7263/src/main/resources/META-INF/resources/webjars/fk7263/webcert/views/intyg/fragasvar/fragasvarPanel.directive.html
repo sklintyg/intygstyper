@@ -5,7 +5,7 @@
     </div>
   </div>
 
-  <div ng-class="{'panel-container': true, 'revoked-certificate' : certProperties.isRevoked}">
+  <div ng-class="{'panel-container': true, 'revoked-certificate' : intygProperties.isRevoked}">
 
     <div class="qa-panel" id="qa{{panelId}}-{{qa.internReferens}}" ng-show="!qa.proxyMessage">
 
@@ -36,14 +36,14 @@
             </h3>
             <h3 ng-show="qa.sistaDatumForSvar">
               Svara senast: <strong>{{qa.sistaDatumForSvar}}</strong></h3>
-            <label class="checkbox" ng-if="!certProperties.kompletteringOnly">
+            <label class="checkbox" ng-if="!intygProperties.kompletteringOnly">
               <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
               Hanterad
             </label>
           </div>
         </div>
       </div>
-      <div class="row" ng-if="!certProperties.kompletteringOnly">
+      <div class="row" ng-if="!intygProperties.kompletteringOnly">
         <div class="col-xs-9"></div>
         <div wc-authority="VIDAREBEFORDRA_FRAGASVAR" class="col-xs-3 form-inline qa-panel__vidarebefordra-placement"
              ng-show="showHandledButtons()">
@@ -51,7 +51,7 @@
           <button type="button" id="{{panelId}}-vidarebefordraEjHanterad" class="btn pull-right"
                   ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"
                   title="Skicka mejl med en länk till intyget för att informera den som ska hantera frågan-svaret."
-                  ng-click="openMailDialog(qa)" ng-show="!certProperties.isRevoked">
+                  ng-click="openMailDialog(qa)" ng-show="!intygProperties.isRevoked">
             <img ng-if="!qa.vidarebefordrad" src="/img/mail.png"> <img ng-if="qa.vidarebefordrad"
                                                                        src="/img/mail_dark.png">
           </button>
@@ -106,10 +106,10 @@
         {{qa.answerDisabledReason}}
       </div>
 
-      <div class="buttonbar" ng-show="isKompletteringAllowed(qa, certProperties)">
+      <div class="buttonbar" ng-show="isKompletteringAllowed(qa, intygProperties)">
         <button type="button" class="btn" ng-if="!qa.svaraMedNyttIntygDisabled && qa.status != 'CLOSED' && !showAnswerField"
                 ng-class="{'btn-success': qa.status != 'CLOSED' && !showAnswerField, 'btn-default btn-secondary': qa.status == 'CLOSED' || showAnswerField}"
-                ng-click="openKompletteringDialog(qa, cert)" ng-disabled="showAnswerField" wc-check-vardenhet
+                ng-click="openKompletteringDialog(qa, intyg)" ng-disabled="showAnswerField" wc-check-vardenhet
                 vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                 id="answerWithIntygBtn-{{qa.internReferens}}">
           Svara
@@ -124,7 +124,7 @@
 
       <!-- Svarsdelen -->
       <div
-          ng-if="isAllowedToAnswerAtAll(qa, certProperties)"
+          ng-if="isAllowedToAnswerAtAll(qa, intygProperties)"
           class="fold-animation">
         <div class="panel-container" ng-show="qa.amne != 'PAMINNELSE'">
           <div class="qa-block"
@@ -174,16 +174,16 @@
         <!-- KNAPPAR EJ HANTERADE FRÅGOR -->
         <!-- TA BORT certProperties.kompletteringOnly NÄR "SVAR SOM FÖLJER MED" ÄR IMPLEMENTERAT -->
 
-        <div ng-if="showNotHandledButtons(qa, certProperties)">
+        <div ng-if="showNotHandledButtons(qa, intygProperties)">
           <div class="form-group" ng-if="hasStatus(qa, 'PENDING_INTERNAL_ACTION')">
             <!--  VÄNTAR på svar från Vårdenheten, men skall kunna klarmarkeras ändå?-->
 
             <!-- Rubrik: Svar -->
-            <label class="control-label" ng-show="isAllowedToAnswer(qa, certProperties)">Svar</label>
+            <label class="control-label" ng-show="isAllowedToAnswer(qa, intygProperties)">Svar</label>
 
             <!-- ELLER inforuta komplettering EJ IMPLEMENTERAT
             <div class="alert alert-info"
-                 ng-show="certProperties.kompletteringOnly">
+                 ng-show="intygProperties.kompletteringOnly">
               Här kan du föra en dialog med Försäkringskassan om ett intyg. Medicinsk information ska endast skickas via signerade intyg. När du signerat och skickar intyget till Försäkringskassan följer ditt meddelande som du skrivit med.
             </div> -->
 
@@ -202,7 +202,7 @@
 
                 <button type="button" class="btn btn-success" ng-click="sendAnswer(qa)"
                         ng-disabled="!qa.svarsText || qa.updateInProgress"
-                        ng-show="!qa.answerDisabled && !certProperties.isRevoked" wc-check-vardenhet
+                        ng-show="!qa.answerDisabled && !intygProperties.isRevoked" wc-check-vardenhet
                         vardenhet="{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}"
                         id="sendAnswerBtn-{{qa.internReferens}}">
                   <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar

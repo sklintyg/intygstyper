@@ -45,7 +45,7 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
 
             this.addNedsattParser();
 
-            // on creation the cert model is used and then there after the certForm ( the form model ) is used.
+            // on creation the intyg model is used and then there after the certForm ( the form model ) is used.
             // this is a bit weird but it's to do with validation etc and the crazy angular stuff thats put on the ng-model attributes.
             // it's much easier in other more complete frameworks ...
             this.useCert = false;
@@ -95,8 +95,8 @@ angular.module('fk7263').factory('fk7263.EditCertCtrl.DateRangeGroupModel',
         };
 
 
-        DateRangeGroupModel.prototype.setCert = function(cert) {
-            this.certModel = cert;
+        DateRangeGroupModel.prototype.setCert = function(intyg) {
+            this.certModel = intyg;
         };
 
         DateRangeGroupModel.prototype.setUseCert = function(val) {
