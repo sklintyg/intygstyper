@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="$dismiss()">×</button>
+  <h3>Lämna anpassat intyg?</h3>
+</div>
+<div class="modal-body">
+  Observera att det anpassade intyget inte sparas i Mina intyg.
+  Se därför till att det har laddats ned till din dator innan du lämnar sidan.
+</div>
+<div class="modal-footer">
+  <button type="button" id="buttonYes" class="btn btn-success" ng-click="onLeaveSummaryPage()">
+    Ja, lämna anpassat intyg
+  </button>
+
+  <button type="button" id="buttonNoDontAsk" class="btn btn-info" ng-click="$dismiss()">
+    Nej, stanna kvar
+  </button>
+</div>
