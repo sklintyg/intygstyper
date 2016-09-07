@@ -37,7 +37,8 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
                         'field6a2': {'id': 'rekommendationerForetagsHalsoVard', 'mandatory': true, 'vald': true},
                         'field6b': {'id': 'planeradBehandling', 'mandatory': false, 'vald': true},
                         'field7': {'id': 'rehabilitering', 'mandatory': false, 'vald': true},
-                        'field8a': {'id': 'arbetsFormagaRelativtNuvarandeArbete', 'mandatory': true, 'vald': true},
+                        'field8a1': {'id': 'arbetsFormagaRelativtUtomNuvarandeArbete', 'mandatory': false, 'vald': true},
+                        'field8a2': {'id': 'arbetsFormagaRelativtNuvarandeArbete', 'mandatory': true, 'vald': true},
                         'field8b': {'id': 'bedomdArbetsFormaga', 'mandatory': true, 'vald': true},
                         'field9': {'id': 'arbetsFormaga', 'mandatory': false, 'vald': true},
                         'field10': {'id': 'prognos', 'mandatory': false, 'vald': true},
@@ -134,7 +135,10 @@ angular.module('fk7263').controller('fk7263.CustomizeCertCtrl',
             $scope.showField7 = function _showField7()     {
                 return !_isInvalid(ViewState.cert.rehabilitering);
             };
-            $scope.showField8a = function _showField8a() {
+            $scope.showField8a1 = function _showField8a1() {
+                return !(_isInvalid(ViewState.cert.arbetsloshet) && _isInvalid(ViewState.cert.foraldrarledighet));
+            };
+            $scope.showField8a2 = function _showField8a2() {
                 return !_isInvalid(ViewState.cert.nuvarandeArbetsuppgifter);
             };
             $scope.showField8b = function _showField8b()   {
