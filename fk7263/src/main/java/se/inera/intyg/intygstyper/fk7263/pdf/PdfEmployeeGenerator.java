@@ -18,17 +18,16 @@
  */
 package se.inera.intyg.intygstyper.fk7263.pdf;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.List;
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
-
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by marced on 18/08/16.
@@ -77,7 +76,7 @@ public class PdfEmployeeGenerator extends PdfAbstractGenerator {
                 break;
             case WEBCERT:
                 generateMinimalPdf();
-                fillCapacityRelativeToOtherThanNuvarandeArbete();
+
                 // perform additional decoration for WC originated pdf
                 maskSendToFkInformation(pdfStamper);
                 markAsEmployerCopy(pdfStamper, WATERMARK_TEXT_WC_EMPLOYER_MINIMAL_COPY);
