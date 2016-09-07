@@ -1,4 +1,4 @@
-/* global luseMessages */
+
 angular.module('luse', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('luse').config(function($stateProvider) {
@@ -51,8 +51,8 @@ angular.module('luse').config(function($stateProvider) {
 });
 
 // Inject language resources
-angular.module('luse').run(['common.messageService',
-    function(messageService) {
+angular.module('luse').run(['common.messageService', 'luse.messages',
+    function(messageService, luseMessages) {
         'use strict';
 
         messageService.addResources(luseMessages);

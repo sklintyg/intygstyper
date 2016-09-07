@@ -17,12 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* global fk7263Messages */
 angular.module('fk7263', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
-angular.module('fk7263').run(['common.messageService',
-    function(messageService) {
+angular.module('fk7263').run(['common.messageService', 'fk7263.messages',
+    function(messageService, fk7263Messages) {
         'use strict';
 
         messageService.addResources(fk7263Messages);

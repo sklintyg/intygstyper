@@ -1,4 +1,3 @@
-/* global lisuMessages */
 angular.module('lisu', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('lisu').config(function($stateProvider) {
@@ -51,8 +50,8 @@ angular.module('lisu').config(function($stateProvider) {
 });
 
 // Inject language resources
-angular.module('lisu').run(['common.messageService',
-    function(messageService) {
+angular.module('lisu').run(['common.messageService', 'lisu.messages',
+    function(messageService, lisuMessages) {
         'use strict';
 
         messageService.addResources(lisuMessages);

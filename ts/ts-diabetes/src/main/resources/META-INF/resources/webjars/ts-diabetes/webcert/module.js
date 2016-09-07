@@ -17,12 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* global tsDiabetesMessages */
 angular.module('ts-diabetes', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
-angular.module('ts-diabetes').run([ 'common.messageService',
-    function(messageService) {
+angular.module('ts-diabetes').run([ 'common.messageService', 'ts-diabetes.messages',
+    function(messageService, tsDiabetesMessages) {
         'use strict';
 
         messageService.addResources(tsDiabetesMessages);

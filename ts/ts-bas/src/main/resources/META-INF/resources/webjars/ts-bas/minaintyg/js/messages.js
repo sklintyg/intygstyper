@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var tsBasMessages = {
+/* jshint maxlen: false */
+angular.module('ts-bas').constant('ts-bas.messages', {
     'sv': {
         'ts-bas.label.intygavser': 'Avser behörighet för körkort',
         'ts-bas.label.identitet': 'Identiteten är styrkt genom',
@@ -108,4 +108,4 @@ var tsBasMessages = {
     'en': {
         'ts-bas.label.pagetitle': 'Show Certificate'
     }
-};
+});

@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var tsDiabetesMessages = {
+/* jshint maxlen: false */
+angular.module('ts-diabetes').constant('ts-diabetes.messages', {
     'sv': {
         'ts-diabetes.button.send': 'Skicka till Transportstyrelsen',
         'ts-diabetes.label.empty': '',
@@ -135,4 +135,4 @@ var tsDiabetesMessages = {
     'en': {
         'view.label.pagetitle': 'Show Certificate'
     }
-};
+});

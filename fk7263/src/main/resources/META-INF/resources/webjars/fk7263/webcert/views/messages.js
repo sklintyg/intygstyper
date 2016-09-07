@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var fk7263Messages = {
+/* jshint maxlen: false */
+angular.module('fk7263').constant('fk7263.messages', {
     'sv': {
         'fk7263.error.generic': 'Kunde inte visa intyget',
         'fk7263.info.loadingcertificate': 'Hämtar intyget..',
@@ -227,4 +227,4 @@ var fk7263Messages = {
     'en': {
         'fk7263.label.pagetitle': 'Show Certificate'
     }
-};
+});

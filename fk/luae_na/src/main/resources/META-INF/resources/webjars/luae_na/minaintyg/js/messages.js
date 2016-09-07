@@ -1,5 +1,5 @@
-/* jshint maxlen: false, unused: false */
-var luaeNaMessages = {
+/* jshint maxlen: false */
+angular.module('luae_na').constant('luae_na.messages', {
     'sv': {
         'luae_na.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
         'luae_na.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
@@ -91,4 +91,4 @@ var luaeNaMessages = {
     'en': {
         'luae_na.label.pagetitle': 'Show Certificate'
     }
-};
+});

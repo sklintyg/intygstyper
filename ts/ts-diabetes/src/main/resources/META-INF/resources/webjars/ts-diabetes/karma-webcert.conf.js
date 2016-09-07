@@ -54,8 +54,8 @@ module.exports = function(config) {
 
 
             // Load these first
-                SRC_DIR + 'messages.js',
                 TEST_DIR + 'module.test.js',
+                SRC_DIR + 'messages.js',
 
             { pattern: SRC_DIR + '**/*' },
             { pattern: TEST_DIR + '**/**/*.spec.js' }

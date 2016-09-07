@@ -1,5 +1,5 @@
-/* jshint maxlen: false, unused: false */
-var luseMessages = {
+/* jshint maxlen: false */
+angular.module('luse').constant('luse.messages', {
     'sv': {
         'luse.error.generic': 'Kunde inte visa intyget',
         'luse.info.loadingcertificate': 'Hämtar intyget..',
@@ -103,4 +103,4 @@ var luseMessages = {
     'en': {
         'sjukersattning.label.pagetitle': 'Show Certificate'
     }
-};
+});
