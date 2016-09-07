@@ -36,7 +36,6 @@ import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
@@ -387,11 +386,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     }
 
     private void populateAvslutSpecialist(Utlatande utlatande, AcroFields fields) throws IOException, DocumentException {
-        // map codes to descriptions, if possible
-        List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter()
-                .stream()
-                .map(code -> SpecialistkompetensService.getDescriptionFromCode(code).orElse(code))
-                .collect(Collectors.toList());
+        List<String> specialiteter = utlatande.getGrundData().getSkapadAv().getSpecialiteter();
         if (specialiteter.size() > 0) {
 
             int index = specialiteter.indexOf(SPECIALIST_I_ALLMANMEDICIN_TITLE);

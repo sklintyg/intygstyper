@@ -32,7 +32,6 @@ import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.services.BefattningService;
-import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
 import se.inera.intygstjanster.ts.services.types.v1.II;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -92,16 +91,14 @@ public final class InternalToTransportUtil {
         skapadAv.setPersonId(buildII(Constants.HSA_ID_OID, source.getPersonId()));
         skapadAv.setVardenhet(buildVardenhet(source.getVardenhet()));
 
-        // try to convert befattning and specialistkompetens to klartext
+        // try to convert befattning to klartext
         if (!CollectionUtils.isEmpty(source.getBefattningar())) {
             skapadAv.getBefattningar().addAll(source.getBefattningar().stream()
                     .map(code -> BefattningService.getDescriptionFromCode(code).orElse(code))
                     .collect(Collectors.toList()));
         }
         if (!CollectionUtils.isEmpty(source.getSpecialiteter())) {
-            skapadAv.getSpecialiteter().addAll(source.getSpecialiteter().stream()
-                    .map(code -> SpecialistkompetensService.getDescriptionFromCode(code).orElse(code))
-                    .collect(Collectors.toList()));
+            skapadAv.getSpecialiteter().addAll(source.getSpecialiteter());
         }
 
         return skapadAv;

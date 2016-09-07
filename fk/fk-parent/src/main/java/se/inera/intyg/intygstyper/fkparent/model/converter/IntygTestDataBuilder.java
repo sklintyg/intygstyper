@@ -83,7 +83,7 @@ public final class IntygTestDataBuilder {
         personal.setPersonId("19650708-1234");
         personal.getBefattningar().add("Klinikchef");
         personal.getBefattningar().add("Forskningsledare");
-        personal.getSpecialiteter().add("1001");
+        personal.getSpecialiteter().add("Kirurg");
         return personal;
     }
 
