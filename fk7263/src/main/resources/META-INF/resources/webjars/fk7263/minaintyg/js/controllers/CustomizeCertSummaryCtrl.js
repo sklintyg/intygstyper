@@ -27,24 +27,23 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             if (ViewState.checkboxModel === undefined) {
                 ViewState.checkboxModel = {
                     fields : {
-                        'field1'    : { 'id': 'smittskydd',                          'mandatory':false, 'vald':true },
-                        'field2'    : { 'id': 'diagnos',                             'mandatory':false, 'vald':true },
-                        'field3'    : { 'id': 'aktuelltSjukdomsforlopp',             'mandatory':false, 'vald':true },
-                        'field4'    : { 'id': 'funktionsnedsattning',                'mandatory':false, 'vald':true },
-                        'field4b'   : { 'id': 'intygetBaserasPa',                    'mandatory':false, 'vald':true },
-                        'field5'    : { 'id': 'aktivitetsbegransning',               'mandatory':false, 'vald':true },
-                        'field6a1'  : { 'id': 'rekommendationerUtomForetagsHalsoVard', 'mandatory':false, 'vald':true },
-                        'field6a2'  : { 'id': 'rekommendationerForetagsHalsoVard',   'mandatory':true,  'vald':true },
-                        'field6b'   : { 'id': 'planeradBehandling',                  'mandatory':false, 'vald':true },
-                        'field7'    : { 'id': 'rehabilitering',                      'mandatory':false, 'vald':true },
-                        'field8a1'  : { 'id': 'arbetsFormagaRelativtUtomNuvarandeArbete', 'mandatory':false,  'vald':true },
-                        'field8a2'  : { 'id': 'arbetsFormagaRelativtNuvarandeArbete',     'mandatory':true,  'vald':true },
-                        'field8b'   : { 'id': 'bedomdArbetsFormaga',                 'mandatory':true,  'vald':true },
-                        'field9'    : { 'id': 'arbetsFormaga',                       'mandatory':false, 'vald':true },
-                        'field10'   : { 'id': 'prognos',                             'mandatory':false, 'vald':true },
-                        'field11'   : { 'id': 'ressatt',                             'mandatory':true,  'vald':true },
-                        'field12'   : { 'id': 'fkKontakt',                           'mandatory':false, 'vald':true },
-                        'field13'   : { 'id': 'ovrigt',                              'mandatory':false, 'vald':true }
+                        'field1'    : { 'id': 'smittskydd',                           'mandatory':false, 'vald':true },
+                        'field2'    : { 'id': 'diagnos',                              'mandatory':false, 'vald':true },
+                        'field3'    : { 'id': 'aktuelltSjukdomsforlopp',              'mandatory':false, 'vald':true },
+                        'field4'    : { 'id': 'funktionsnedsattning',                 'mandatory':false, 'vald':true },
+                        'field4b'   : { 'id': 'intygetBaserasPa',                     'mandatory':false, 'vald':true },
+                        'field5'    : { 'id': 'aktivitetsbegransning',                'mandatory':false, 'vald':true },
+                        'field6a1'  : { 'id': 'rekommendationerUtomForetagsHalsoVard','mandatory':false, 'vald':true },
+                        'field6a2'  : { 'id': 'rekommendationerForetagsHalsoVard',    'mandatory':true,  'vald':true },
+                        'field6b'   : { 'id': 'planeradBehandling',                   'mandatory':false, 'vald':true },
+                        'field7'    : { 'id': 'rehabilitering',                       'mandatory':false, 'vald':true },
+                        'field8a'   : { 'id': 'arbetsFormagaRelativtNuvarandeArbete', 'mandatory':true,  'vald':true },
+                        'field8b'   : { 'id': 'bedomdArbetsFormaga',                  'mandatory':true,  'vald':true },
+                        'field9'    : { 'id': 'arbetsFormaga',                        'mandatory':false, 'vald':true },
+                        'field10'   : { 'id': 'prognos',                              'mandatory':false, 'vald':true },
+                        'field11'   : { 'id': 'ressatt',                              'mandatory':true,  'vald':true },
+                        'field12'   : { 'id': 'fkKontakt',                            'mandatory':false, 'vald':true },
+                        'field13'   : { 'id': 'ovrigt',                               'mandatory':false, 'vald':true }
                     }
                 };
             }
@@ -192,18 +191,11 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                 return _showField(_fields.field7, isIncludedField);
             };
 
-            $scope.showField8a1 = function _showField8a1(isIncludedField) {
-                if (_isInvalid(ViewState.cert.arbetsloshet) && _isInvalid(ViewState.cert.foraldrarledighet)) {
-                    return false;
-                }
-                return _showField(_fields.field8a1, isIncludedField);
-            };
-
-            $scope.showField8a2 = function _showField8a2(isIncludedField) {
+            $scope.showField8a = function _showField8a(isIncludedField) {
                 if (_isInvalid(ViewState.cert.nuvarandeArbetsuppgifter)) {
                     return false;
                 }
-                return _showField(_fields.field8a2, isIncludedField);
+                return _showField(_fields.field8a, isIncludedField);
             };
 
             $scope.showField8b = function _showField8b(isIncludedField)  {
