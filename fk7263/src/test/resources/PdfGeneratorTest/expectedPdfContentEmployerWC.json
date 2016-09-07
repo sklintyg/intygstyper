@@ -49,7 +49,7 @@
 	"form1[0].#subform[1].flt_Datum_flt14[0]" : "2011-01-26",
 	"form1[0].#subform[0].logikVersion[0]" : "003",
 	"form1[0].#subform[0].blankettNummer[0]" : "7263",
-	"form1[0].#subform[1].ksr_ForaldraledigMedForaldrapenning_flt8a[0]" : "1",
+	"form1[0].#subform[1].ksr_ForaldraledigMedForaldrapenning_flt8a[0]" : "0",
 	"form1[0].#subform[0].flt_Diagnoskod_flt2[0]" : "",
 	"form1[0].#subform[1].flt_NedsattMedHalftenTom_flt8b[0]" : "2011-03-31",
 	"form1[0].#subform[0].layoutVersion[0]" : "009",
@@ -61,5 +61,5 @@
 	"form1[0].#subform[1].flt_PatArbetsformaga_flt9[0]" : "",
 	"form1[0].#subform[0].flt_InomSjukvardenAngeVilken_flt6b[0]" : "",
 	"form1[0].#subform[0].flt_DatumMinTelefonKontaktMedPat_flt4[0]" : "",
-	"form1[0].#subform[1].ksr_Arbetsloshet_flt8a[0]" : "1"
+	"form1[0].#subform[1].ksr_Arbetsloshet_flt8a[0]" : "0"
 }
