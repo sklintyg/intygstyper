@@ -413,7 +413,7 @@ public abstract class PdfAbstractGenerator {
         }
     }
 
-    protected void fillRecommendationsKontaktMedFk() {
+    protected void fillRecommendationsKontaktMedForetagshalsovarden() {
         setField(RECOMMENDATIONS_CONTACT_COMPANY_CARE, intyg.isRekommendationKontaktForetagshalsovarden());
     }
 

@@ -81,7 +81,7 @@ public class PdfDefaultGenerator extends PdfAbstractGenerator {
     private void generatePdf() {
         // Mandatory fields
         fillPatientDetails();
-        fillRecommendationsKontaktMedFk();
+        fillRecommendationsKontaktMedForetagshalsovarden();
         fillCapacityRelativeToNuvarandeArbete();
         fillCapacityRelativeToOtherThanNuvarandeArbete();
         fillCapacity();

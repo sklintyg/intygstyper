@@ -99,7 +99,7 @@ public class PdfEmployeeGenerator extends PdfAbstractGenerator {
     private void generateMinimalPdf() {
         // Mandatory fields
         fillPatientDetails();
-        fillRecommendationsKontaktMedFk();
+        fillRecommendationsKontaktMedForetagshalsovarden();
         fillCapacityRelativeToNuvarandeArbete();
         fillCapacity();
         fillTravel();
