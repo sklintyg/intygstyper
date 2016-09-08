@@ -44,7 +44,7 @@ angular.module('lisu').controller('lisu.EditCertCtrl',
                     fmbService.getFMBHelpTextsByCode(intygModel.diagnoser[0].diagnosKod).then(
                         function (formData) {
                             $log.debug('fmbViewState from utkast controller');
-                            fmbViewState.setState(formData, intygModel.diagnoser[0].diagnosKod);
+                            fmbViewState.setState(formData, formData.icd10Code, formData.icd10Description, intygModel.diagnoser[0].diagnosKod);
                         },
                         function (rejectionData) {
                             $log.debug('fmbViewState from utkast controller - Error searching fmb help text');
