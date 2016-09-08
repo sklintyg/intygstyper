@@ -8,7 +8,6 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.recipient.label.inactive.recipient': 'Varför går det inte att skicka intyget till vissa mottagare?',
         'lisu.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
         'lisu.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
-        'lisu.recipient.label.downloadlink': 'Ladda ner / Skriv ut',
 
         'lisu.confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
         'lisu.confirm.label.certrowtitle': 'Intyg',
@@ -48,7 +47,7 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.label.pagedescription.certificate.to.employer.header': '<h2>Intyg till arbetsgivare</h2>',
         'lisu.label.pagedescription.certificate.to.employer': 'Du har möjlighet att anpassa läkarintyget om du ska lämna läkarintyget till din arbetsgivare. Du anpassar intyget genom att välja om du vill visa alla uppgifter i intyget eller om du vill dölja vissa delar. Klicka på knappen Anpassa intyget för att välja vilken information du vill dela.',
         'lisu.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
-        'lisu.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
+        'lisu.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'lisu.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om sjukpenning-utokad?</h2>',
         'lisu.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning-utokad och hur du ansöker.<br>',
         'lisu.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
@@ -72,7 +71,6 @@ angular.module('lisu').constant('lisu.messages', {
 
         'lisu.message.certificateloading': 'Hämtar intyg...',
         'lisu.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
-        'lisu.button.downloadprint': 'Ladda ner / Skriv ut',
         'lisu.button.send': 'Skicka',
         'lisu.button.cancel': 'Avbryt',
         'lisu.button.goback': 'Tillbaka',

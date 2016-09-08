@@ -9,7 +9,6 @@ angular.module('luae_fs').constant('luae_fs.messages', {
         'luae_fs.recipient.label.inactive.recipient': 'Varför går det inte att skicka intyget till vissa mottagare?',
         'luae_fs.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
         'luae_fs.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
-        'luae_fs.recipient.label.downloadlink': 'Ladda ner / Skriv ut',
 
         'luae_fs.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
 
@@ -40,7 +39,6 @@ angular.module('luae_fs').constant('luae_fs.messages', {
         'luae_fs.button.send.certificate': 'Skicka',
         'luae_fs.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
         'luae_fs.button.sendtofk': 'Skicka till Försäkringskassan',
-        'luae_fs.button.downloadprint': 'Ladda ner / Skriv ut',
         'luae_fs.button.cancel': 'Avbryt',
         'luae_fs.button.goback': 'Tillbaka',
         'luae_fs.button.next': 'Nästa',
@@ -65,7 +63,7 @@ angular.module('luae_fs').constant('luae_fs.messages', {
         'luae_fs.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'luae_fs.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
         'luae_fs.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
-        'luae_fs.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
+        'luae_fs.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'luae_fs.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
         'luae_fs.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Försäkringskassan eller en annan mottagare.<br>',
         'luae_fs.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om luae_fs?</h2>',
