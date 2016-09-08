@@ -182,7 +182,10 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field-static',
             templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
-                {type: 'label-vardenhet'},
+                {
+                    type: 'label-vardenhet',
+                    templateOptions: { userModel: UserModel}
+                },
                 {
                     key: 'grundData.skapadAv.vardenhet.postadress',
                     type: 'single-text',
