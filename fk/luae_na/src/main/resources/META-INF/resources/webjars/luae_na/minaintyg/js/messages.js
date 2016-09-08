@@ -5,7 +5,6 @@ angular.module('luae_na').constant('luae_na.messages', {
         'luae_na.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
         'luae_na.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
         'luae_na.recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
-        'luae_na.recipient.label.inactive.recipient': 'Varför går det inte att skicka intyget till vissa mottagare?',
         'luae_na.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
         'luae_na.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
 

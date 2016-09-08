@@ -25,7 +25,6 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
         'fk7263.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
         'fk7263.recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
-        'fk7263.recipient.label.inactive.recipient': 'Varför går det inte att skicka intyget till vissa mottagare?',
         'fk7263.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
         'fk7263.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
 
