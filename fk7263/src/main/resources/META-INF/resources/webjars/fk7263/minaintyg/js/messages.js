@@ -63,7 +63,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
         'fk7263.button.customize.certificate': 'Anpassa intyget till arbetsgivare',
         'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
-        'fk7263.button.customize.certificate.change': 'Ändra din val',
+        'fk7263.button.customize.certificate.change': 'Ändra ditt val',
 
         'fk7263.label.blank': '- ej ifyllt',
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
