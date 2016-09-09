@@ -1,7 +1,7 @@
 <a id="top"></a>
 <div class="fk-sit-common-ns luae_fs-ns container-fluid" id="edit-luae_fs">
-  <div class="row">
-    <div class="col-md-12 webcert-col webcert-col-single">
+  <div class="webcert-multicol-container webcert-multicol-background-grey" ng-class="{'collapsed' : viewState.common.collapsedHeader}" wc-size-target>
+    <div class="col-sm-6 webcert-col webcert-col-primary">
 
       <div ui-view="header"></div>
 
@@ -12,7 +12,7 @@
         </div>
       </div>
 
-      <div class="edit-form" ng-class="{'collapsed' : viewState.common.collapsedHeader}" wc-size-target>
+      <div class="edit-form">
 
         <form name="certForm" novalidate autocomplete="off" wc-auto-save>
           <div ng-hide="viewState.common.error.activeErrorMessageKey || viewState.common.deleted">
@@ -45,7 +45,6 @@
       </div>
 
     </div>
-    <!-- span12 webcert-col-single -->
+    <div class="col-sm-6 webcert-col webcert-col-secondary print-hide" wc-authority feature="hanteraFragor" intygstyp="{{widgetState.certificateType}}" ui-view="fragasvar"></div>
   </div>
-  <!-- row -->
 </div> <!-- container -->

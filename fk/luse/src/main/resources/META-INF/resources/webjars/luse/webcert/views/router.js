@@ -51,6 +51,11 @@ angular.module('luse').config(function($stateProvider) {
                 'formly@luse-edit' : {
                     templateUrl: intygsTypPath + 'views/utkast/formly.html',
                     controller: 'luse.EditCert.FormlyCtrl'
+                },
+
+                'fragasvar@luse-edit' : {
+                    templateUrl: commonPath + 'fk/arenden/arenden.html',
+                    controller: 'common.ArendeCtrl'
                 }
             }
         }).

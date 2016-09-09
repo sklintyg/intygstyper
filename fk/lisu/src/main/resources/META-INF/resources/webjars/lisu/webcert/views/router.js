@@ -51,6 +51,11 @@ angular.module('lisu').config(function($stateProvider) {
                 'formly@lisu-edit' : {
                     templateUrl: intygsTypPath + 'views/utkast/formly.html',
                     controller: 'lisu.EditCert.FormlyCtrl'
+                },
+
+                'fragasvar@lisu-edit' : {
+                    templateUrl: commonPath + 'fk/arenden/arenden.html',
+                    controller: 'common.ArendeCtrl'
                 }
             }
         }).
