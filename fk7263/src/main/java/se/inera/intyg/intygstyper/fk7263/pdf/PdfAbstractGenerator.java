@@ -270,8 +270,8 @@ public abstract class PdfAbstractGenerator {
     }
 
     // Mark this document as a copy of an electronically signed document
-    protected void markAsElectronicCopy(PdfStamper pdfStamper, String watermarkText) throws DocumentException, IOException {
-        mark(pdfStamper, watermarkText, MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, MARK_AS_COPY_HEIGTH, MARK_AS_COPY_WIDTH);
+    protected void markAsElectronicCopy(PdfStamper pdfStamper) throws DocumentException, IOException {
+        mark(pdfStamper, ELECTRONIC_COPY_WATERMARK_TEXT, MARK_AS_COPY_START_X, MARK_AS_COPY_START_Y, MARK_AS_COPY_HEIGTH, MARK_AS_COPY_WIDTH);
     }
 
     protected void mark(PdfStamper pdfStamper, String watermarkText, int startX, int startY, int height, int width) throws DocumentException, IOException {

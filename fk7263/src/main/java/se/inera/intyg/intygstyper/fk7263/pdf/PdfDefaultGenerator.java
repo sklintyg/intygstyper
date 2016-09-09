@@ -54,14 +54,14 @@ public class PdfDefaultGenerator extends PdfAbstractGenerator {
             case MINA_INTYG:
                 // perform additional decoration for MI originated pdf
                 maskSendToFkInformation(pdfStamper);
-                markAsElectronicCopy(pdfStamper, ELECTRONIC_COPY_WATERMARK_TEXT);
+                markAsElectronicCopy(pdfStamper);
                 createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), MINA_INTYG_MARGIN_TEXT);
                 break;
             case WEBCERT:
                 // perform additional decoration for WC originated pdf
                 if (isCertificateSentToFK(statuses)) {
                     maskSendToFkInformation(pdfStamper);
-                    markAsElectronicCopy(pdfStamper, ELECTRONIC_COPY_WATERMARK_TEXT);
+                    markAsElectronicCopy(pdfStamper);
                 }
                 createRightMarginText(pdfStamper, pdfReader.getNumberOfPages(), intyg.getId(), WEBCERT_MARGIN_TEXT);
                 createSignatureNotRequiredField(pdfStamper, pdfReader.getNumberOfPages());
