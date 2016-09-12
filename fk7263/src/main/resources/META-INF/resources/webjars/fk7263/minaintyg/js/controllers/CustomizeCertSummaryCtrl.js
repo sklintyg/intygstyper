@@ -107,18 +107,22 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
 
             var _fields = ViewState.checkboxModel.fields;
 
+            function _XOR(a, b) {
+                // exclusive or implementation
+                return ( a || b ) && !( a && b );
+            }
+
             function _isInvalid(value) {
                 return !value;
             }
 
             function _showField(field, isIncludedField) {
-                if (isIncludedField && field.vald) {
-                    return true;
+                // if only one value is true, then hide field
+                if (_XOR(isIncludedField, field.vald)) {
+                    return false;
                 }
-                if (!(isIncludedField || field.vald)) {
-                    return true;
-                }
-                return false;
+                // if values are both true or both false, then show field
+                return true;
             }
 
             $scope.showField1 = function _showField1(isIncludedField) {
