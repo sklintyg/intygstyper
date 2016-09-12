@@ -34,7 +34,6 @@ angular.module('fk7263').constant('fk7263.messages', {
 
         //Labels
         'fk7263.label.field': 'Fält',
-        'fk7263.label.blank': '- ej ifyllt',
         'fk7263.label.nedsattning': 'Jag bedömer att arbetsförmåga är',
         'fk7263.label.patientnamn': 'Patientens namn',
         'fk7263.label.utfardat': 'Utfärdat',

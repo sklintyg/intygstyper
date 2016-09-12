@@ -65,7 +65,6 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
         'fk7263.button.customize.certificate.change': 'Ändra ditt val',
 
-        'fk7263.label.blank': '- ej ifyllt',
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
         'fk7263.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'fk7263.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',

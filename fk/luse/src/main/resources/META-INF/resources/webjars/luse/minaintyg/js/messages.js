@@ -33,7 +33,6 @@ angular.module('luse').constant('luse.messages', {
         'luse.button.sendtofk': 'Skicka till Försäkringskassan',
         'luse.button.send.certificate': 'Skicka',
         'luse.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
-        'luse.label.blank': '- ej ifyllt',
         'luse.label.pagetitle': 'Granska och skicka intyg',
         'luse.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'luse.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',

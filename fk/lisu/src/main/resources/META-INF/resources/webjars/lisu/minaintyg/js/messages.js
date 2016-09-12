@@ -33,7 +33,6 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.button.sendtofk': 'Skicka till Försäkringskassan',
         'lisu.button.send.certificate': 'Skicka',
         'lisu.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
-        'lisu.label.blank': '- ej ifyllt',
         'lisu.label.pagetitle': 'Granska och skicka intyg',
         'lisu.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'lisu.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',

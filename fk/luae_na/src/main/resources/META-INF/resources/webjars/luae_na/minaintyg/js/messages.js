@@ -33,7 +33,6 @@ angular.module('luae_na').constant('luae_na.messages', {
         'luae_na.button.sendtofk': 'Skicka till Försäkringskassan',
         'luae_na.button.send.certificate': 'Skicka',
         'luae_na.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
-        'luae_na.label.blank': '- ej ifyllt',
         'luae_na.label.pagetitle': 'Granska och skicka intyg',
         'luae_na.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'luae_na.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',

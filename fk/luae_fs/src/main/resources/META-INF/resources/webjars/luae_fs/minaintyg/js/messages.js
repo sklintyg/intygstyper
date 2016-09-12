@@ -47,7 +47,6 @@ angular.module('luae_fs').constant('luae_fs.messages', {
 
         'luae_fs.label.latestevent': 'Senaste händelse',
         'luae_fs.label.latestevent.noevents': 'Inga händelser',
-        'luae_fs.label.blank': '- ej ifyllt',
         'luae_fs.label.pagetitle': 'Granska och skicka intyg',
         'luae_fs.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'luae_fs.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',
