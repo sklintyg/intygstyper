@@ -1,8 +1,8 @@
 angular.module('luae_na').controller('luae_na.ViewCertCtrl',
-    [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
+    [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygProxy',
         'common.messageService', 'common.UserModel', 'luae_na.IntygController.ViewStateService',
         'luae_na.FormFactory', 'common.dynamicLabelService', 'common.ObjectHelper',
-        function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
+        function($log, $rootScope, $stateParams, $scope, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService, ObjectHelper) {
             'use strict';
 

@@ -1,8 +1,8 @@
 angular.module('luse').controller('luse.ViewCertCtrl',
-    [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService','common.IntygProxy',
+    [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygProxy',
         'common.messageService', 'common.UserModel', 'luse.IntygController.ViewStateService',
         'luse.FormFactory', 'common.dynamicLabelService', 'common.ObjectHelper',
-        function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
+        function($log, $rootScope, $stateParams, $scope, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService, ObjectHelper) {
             'use strict';
 

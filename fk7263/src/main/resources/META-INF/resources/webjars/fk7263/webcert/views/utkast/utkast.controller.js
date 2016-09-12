@@ -24,10 +24,10 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
         'common.DateUtilsService', 'common.UtilsService', 'fk7263.Domain.IntygModel',
         'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService', 'common.fmb.ViewStateService',
         'common.fmbService',
-        'common.ObjectHelper', 'common.IntygProxy', 'common.IntygService',
+        'common.ObjectHelper', 'common.IntygProxy', 'common.IntygHelper',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $state, $stateParams, $q,
             UtkastService, UserModel, diagnosService, dateUtils, utils, IntygModel, viewState, anchorScrollService,
-            fmbViewState, fmbService, ObjectHelper, IntygProxy, IntygService) {
+            fmbViewState, fmbService, ObjectHelper, IntygProxy, IntygHelper) {
             'use strict';
 
             /**********************************************************************************
@@ -101,8 +101,8 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                             if (result !== null && result !== '') {
                                 var parentIntyg = result.contents;
                                 var intygMeta = {
-                                    isSent: IntygService.isSentToTarget(result.statuses, 'FK'),
-                                    isRevoked: IntygService.isRevoked(result.statuses),
+                                    isSent: IntygHelper.isSentToTarget(result.statuses, 'FK'),
+                                    isRevoked: IntygHelper.isRevoked(result.statuses),
                                     forceUseProvidedIntyg: true,
                                     kompletteringOnly: true,
                                     meddelandeId: intygModel.grundData.relation.meddelandeId

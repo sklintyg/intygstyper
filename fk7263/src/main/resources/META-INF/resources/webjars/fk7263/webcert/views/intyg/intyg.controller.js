@@ -19,9 +19,9 @@
 
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', '$state',
-        'common.IntygService','common.IntygProxy', 'common.messageService', 'common.UserModel', 'common.ObjectHelper', 'fk7263.IntygController.ViewStateService',
+        'common.IntygProxy', 'common.messageService', 'common.UserModel', 'common.ObjectHelper', 'fk7263.IntygController.ViewStateService',
         function($log, $rootScope, $stateParams, $scope, $state,
-            IntygService, IntygProxy, messageService, UserModel, ObjectHelper, ViewState) {
+            IntygProxy, messageService, UserModel, ObjectHelper, ViewState) {
             'use strict';
 
             ViewState.reset();

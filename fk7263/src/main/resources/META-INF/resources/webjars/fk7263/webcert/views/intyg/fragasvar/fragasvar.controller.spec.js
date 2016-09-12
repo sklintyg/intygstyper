@@ -24,7 +24,7 @@ describe('QACtrl', function() {
     var $rootScope;
     var fragaSvarCommonService;
     var fragaSvarService;
-    var IntygService;
+    var IntygHelper;
     var ObjectHelper;
     var pingService;
 
@@ -63,7 +63,7 @@ describe('QACtrl', function() {
         $provide.value('common.dialogService', {});
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
-        $provide.value('common.IntygService', { isSentToTarget: function() {} });
+        $provide.value('common.IntygHelper', { isSentToTarget: function() {} });
         $provide.value('common.statService', {});
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
@@ -78,20 +78,20 @@ describe('QACtrl', function() {
         $provide.value('common.pingService', pingService);
     }));
 
-    beforeEach(angular.mock.inject(['$controller', '$rootScope', 'common.IntygService',
-        function($controller, _$rootScope_, _IntygService_) {
+    beforeEach(angular.mock.inject(['$controller', '$rootScope', 'common.IntygHelper',
+        function($controller, _$rootScope_, _IntygHelper_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $controller('fk7263.QACtrl',
                 { $scope: $scope, fragaSvarCommonService: fragaSvarCommonService, fragaSvarService: fragaSvarService });
-            IntygService = _IntygService_;
+            IntygHelper = _IntygHelper_;
 
             // arrange
             spyOn($scope, '$broadcast');
 
             // ----- arrange
             // spies, mocks
-            spyOn(IntygService, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
+            spyOn(IntygHelper, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
                 // Statuses include a SENT object below so return true.
                 return true;
             });
