@@ -12,7 +12,7 @@
     </patient>
     <skapadAvHosPersonal>
       <ns2:personal-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1079"/>
-      <ns2:fullstandigtNamn>Arnold Schwarzenegger</ns2:fullstandigtNamn>
+      <ns2:fullstandigtNamn>Arnold Johansson</ns2:fullstandigtNamn>
       <ns2:forskrivarkod>0000000</ns2:forskrivarkod>
       <ns2:enhet>
         <ns2:enhets-id root="1.2.752.129.2.1.4.1" extension="TSTNMT2321000156-1077"/>
