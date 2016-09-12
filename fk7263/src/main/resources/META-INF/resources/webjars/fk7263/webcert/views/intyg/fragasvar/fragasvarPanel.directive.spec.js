@@ -26,7 +26,7 @@ describe('qaPanel', function() {
     var $rootScope;
     var fragaSvarCommonService;
     var fragaSvarService;
-    var IntygService;
+    var IntygHelper;
     var pingService;
     var deferred;
 
@@ -37,9 +37,10 @@ describe('qaPanel', function() {
         $provide.value('common.pingService', pingService);
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
-        $provide.value('common.IntygService', { isSentToTarget: function() {} });
         $provide.value('common.UserModel', {});
         $provide.value('common.FocusElementService', {});
+        $provide.value('common.IntygHelper', { isSentToTarget: function() {} });
+        $provide.value('common.User', {});
         $provide.value('common.statService', {});
         $provide.value('common.ObjectHelper', jasmine.createSpyObj('common.ObjectHelper',
             [ 'isDefined']));
@@ -54,13 +55,13 @@ describe('qaPanel', function() {
     //noinspection JSAnnotator
     beforeEach(angular.mock.module('htmlTemplates'));
 
-    beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope', '$q', '$httpBackend', 'common.IntygService',
-        function($controller, $compile, _$rootScope_, _$q_, _$httpBackend_, _IntygService_) {
+    beforeEach(angular.mock.inject(['$controller', '$compile', '$rootScope', '$q', '$httpBackend', 'common.IntygHelper',
+        function($controller, $compile, _$rootScope_, _$q_, _$httpBackend_, _IntygHelper_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
 
             $httpBackend = _$httpBackend_;
-            IntygService = _IntygService_;
+            IntygHelper = _IntygHelper_;
             $scope.qa = { svarsText: 'lite initial text', status: 'CLOSED'};
             $scope.certProperties = {};
 

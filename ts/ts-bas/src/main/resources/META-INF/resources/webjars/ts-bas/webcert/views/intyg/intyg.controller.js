@@ -19,9 +19,9 @@
 
 angular.module('ts-bas').controller('ts-bas.IntygController',
     [ '$log', '$rootScope', '$stateParams', '$scope',
-        'common.IntygService', 'common.IntygProxy', 'common.messageService','common.User',
+        'common.IntygProxy', 'common.messageService','common.User',
         'ts-bas.IntygController.ViewStateService', 'common.dynamicLabelService',
-        function($log, $rootScope, $stateParams, $scope, IntygService, IntygProxy,
+        function($log, $rootScope, $stateParams, $scope, IntygProxy,
             messageService, User, ViewState, DynamicLabelService) {
             'use strict';
 

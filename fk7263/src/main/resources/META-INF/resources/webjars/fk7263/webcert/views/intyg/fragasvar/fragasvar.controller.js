@@ -51,15 +51,12 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 isRevoked: false
             };
 
-            var unbindFastEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', function(event, intyg, intygProperties) {
+            function onFk7263LoadEvent(event, intyg, intygProperties) {
 
                 // IMPORTANT!! DON'T LET getQaForCertificate DEPEND ON THE INTYG LOAD EVENT (intyg) in this case!
                 // Messages needs to be loaded separately from the intyg as user should be able to see messages even if intyg didn't load.
                 // Used when coming from Intyg page.
                 $scope.intyg = intyg;
-                $scope.intygProperties.isLoaded = false;
-                $scope.intygProperties.isSent = false;
-                $scope.intygProperties.isRevoked = false;
 
                 if(ObjectHelper.isDefined(intyg) && ObjectHelper.isDefined(intygProperties)) {
 
@@ -76,8 +73,15 @@ angular.module('fk7263').controller('fk7263.QACtrl',
                 } else if(ObjectHelper.isDefined($stateParams.certificateId)) {
                     qaHelper.fetchFragaSvar($scope, $stateParams.certificateId, null);
                 }
+            }
+
+            var unbindSITLoadEvent = $rootScope.$on('ViewCertCtrl.load', function(event, intyg, intygProperties) {
+                onFk7263LoadEvent(event, intyg, intygProperties);
             });
-            $scope.$on('$destroy', unbindFastEvent);
+            $scope.$on('$destroy', unbindSITLoadEvent);
+
+            var unbindLegacyLoadEvent = $rootScope.$on('fk7263.ViewCertCtrl.load', onFk7263LoadEvent);
+            $scope.$on('$destroy', unbindLegacyLoadEvent);
 
             // ProxyMessage is set if question is handled and replaced by a blue context info box saying it is handled (or reopened) instead of the actual question showing.
             // Checking for proxyMessage therefore is a way to decide whether the question is shown or the message is (yes, its ugly. should be refactored)
@@ -196,13 +200,11 @@ angular.module('fk7263').controller('fk7263.QACtrl',
             var unbindmarkAnsweredAsHandledEvent = $scope.$on('markAnsweredAsHandledEvent', function($event, deferred, unhandledQas) {
                 qaHelper.updateAnsweredAsHandled(deferred, unhandledQas, true);
             });
-
             $scope.$on('$destroy', unbindmarkAnsweredAsHandledEvent);
 
             var unbindHasUnhandledQasEvent = $scope.$on('hasUnhandledQasEvent', function($event, deferred) {
                 deferred.resolve(fragaSvarCommonService.getUnhandledQas($scope.qaList));
             });
-
             $scope.$on('$destroy', unbindHasUnhandledQasEvent);
 
         }]);

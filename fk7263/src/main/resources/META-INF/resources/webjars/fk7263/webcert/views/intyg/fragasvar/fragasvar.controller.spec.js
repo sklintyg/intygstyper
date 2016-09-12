@@ -27,12 +27,12 @@ describe('QACtrl', function() {
     var $rootScope;
     var fragaSvarCommonService;
     var fragaSvarService;
-    var IntygService;
     var deferred;
+    var IntygHelper;
     var ObjectHelper;
     var pingService;
 
-    var testCert = { 'id': 'intyg-2', 'typ': 'fk7263', 'grundData': {'signeringsdatum': '2012-12-23T21:00:00.000',
+    var testIntyg = { 'id': 'intyg-2', 'typ': 'fk7263', 'grundData': {'signeringsdatum': '2012-12-23T21:00:00.000',
         'skapadAv': {'personId': 'hans', 'fullstandigtNamn': 'Hans Njurgren', 'vardenhet': {'enhetsid': 'dialys',
             'enhetsnamn': 'Centrum Väst Mott', 'postadress': 'Lasarettsvägen 13', 'postnummer': '721 61',
             'postort': 'Västerås', 'telefonnummer': '021-1818000', 'epost': 'centrum-vast@vardenhet.se',
@@ -73,7 +73,7 @@ describe('QACtrl', function() {
         $provide.value('common.dialogService', {});
         fragaSvarCommonService = jasmine.createSpyObj('common.fragaSvarCommonService', [ 'isUnhandled', 'fromFk', 'setVidareBefordradState' ]);
         $provide.value('common.fragaSvarCommonService', fragaSvarCommonService);
-        $provide.value('common.IntygService', { isSentToTarget: function() {} });
+        $provide.value('common.IntygHelper', { isSentToTarget: function() {} });
         $provide.value('common.statService', {});
         $provide.value('common.User', {});
         $provide.value('common.UserModel', {});
@@ -98,22 +98,22 @@ describe('QACtrl', function() {
      $controller('test.TestCtrl', { $scope: $scope });
      }]));*/
 
-    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend', 'common.IntygService',
-        function($controller, _$rootScope_, _$q_, _$httpBackend_, _IntygService_) {
+    beforeEach(angular.mock.inject(['$controller', '$rootScope', '$q', '$httpBackend', 'common.IntygHelper',
+        function($controller, _$rootScope_, _$q_, _$httpBackend_, _IntygHelper_) {
             $rootScope = _$rootScope_;
             $scope = $rootScope.$new();
             $controller('fk7263.QACtrl',
                 { $scope: $scope, fragaSvarCommonService: fragaSvarCommonService, fragaSvarService: fragaSvarService });
             $q = _$q_;
             $httpBackend = _$httpBackend_;
-            IntygService = _IntygService_;
+            IntygHelper = _IntygHelper_;
 
             // arrange
             spyOn($scope, '$broadcast');
 
             // ----- arrange
             // spies, mocks
-            spyOn(IntygService, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
+            spyOn(IntygHelper, 'isSentToTarget').and.callFake(function(/*statuses, target*/) {
                 // Statuses include a SENT object below so return true.
                 return true;
             });
@@ -127,7 +127,7 @@ describe('QACtrl', function() {
         it('on load fragasvar with intyg', function() {
 
             // kick off the window change event
-            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testCert, {
+            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testIntyg, {
                 isSent: true,
                 isRevoked: false
             });
@@ -138,7 +138,7 @@ describe('QACtrl', function() {
             $rootScope.$apply();
 
             // ------ assert
-            expect($scope.intyg).toEqual(testCert);
+            expect($scope.intyg).toEqual(testIntyg);
             expect($scope.certProperties.isLoaded).toBe(true);
             expect($scope.certProperties.isSent).toBe(true);
             expect($scope.certProperties.isRevoked).toBe(false);
@@ -147,7 +147,7 @@ describe('QACtrl', function() {
         it('on load fragasvar with utkast (forced parent intyg)', function() {
 
             // kick off the window change event
-            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testCert, {
+            $rootScope.$broadcast('fk7263.ViewCertCtrl.load', testIntyg, {
                 isSent: true,
                 isRevoked: false,
                 forceUseProvidedIntyg: true,
