@@ -73,7 +73,7 @@ task jsTests(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
 
 test.dependsOn(jsTests)
 
-task jsInclude(type: NodeTask, dependsOn: [npmInstall]) {
+task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
     script = file('node_modules/grunt-cli/bin/grunt')
     args = ['default']
 }

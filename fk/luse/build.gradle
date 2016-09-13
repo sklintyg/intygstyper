@@ -38,15 +38,6 @@ sourceSets {
   }
 }
 
-task copyToLib(type: Copy) {
-  from { zipTree(findJarsByName(configurations.compile, 'common-build-tools')) }
-  into "$buildDir/build-tools"
-}
-
-def findJarsByName(Configuration config, String depName) {
-  config.find { it.name.startsWith(depName) }
-}
-
 // TODO: this list should not be required, copy dependencies whose group is org.webjars instead (plus common-web)
 // List webjars = [[group: 'org.webjars', name: 'angularjs', version: '1.4.10'],
 //                 [group: 'org.webjars', name: 'angular-ui-bootstrap', version: '0.12.1'],
@@ -82,7 +73,7 @@ def findJarsByName(Configuration config, String depName) {
 
 // test.dependsOn(jsTests)
 
-task jsInclude(type: NodeTask, dependsOn: [npmInstall]) {
+task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
     script = file('node_modules/grunt-cli/bin/grunt')
     args = ['default']
 }

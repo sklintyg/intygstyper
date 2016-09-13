@@ -52,7 +52,12 @@ subprojects {
 
   jar.dependsOn(createVersionPropertyFile)
 
+  configurations {
+    buildtools
+  }
+
   dependencies {
+    buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
     testCompile "junit:junit:4.+"
     testCompile 'commons-io:commons-io:2.4'
     testCompile 'org.mockito:mockito-core:1.9.0'
@@ -60,6 +65,14 @@ subprojects {
     testCompile "org.springframework:spring-test:${springVersion}"
     testCompile 'org.unitils:unitils-core:3.3'
     testCompile 'xmlunit:xmlunit:1.4'
+  }
+
+  task unzipBuildTools(type: Copy) {
+    description 'Extracts common-build-tools'
+    into "$buildDir/build-tools/"
+    from {
+      configurations.buildtools.collect { zipTree(it) }
+    }
   }
 }
 
