@@ -6,7 +6,7 @@ angular.module('luse').constant('luse.messages', {
         'luse.message.certificateloading': 'Hämtar intyg...',
 
         'luse.label.send': 'Skicka intyg till Försäkringskassan',
-        'luse.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukersättning hos Försäkringskassan.',
+        'luse.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket skall göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukersättning hos Försäkringskassan.',
         'luse.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukersattning
