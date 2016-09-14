@@ -17,8 +17,8 @@ angular.module('luse').constant('luse.messages', {
         'sjukersattning.label.ta-bort-utkast': 'Ta bort utkast',
         'luse.label.skriv-ut-utkast': 'Skriv ut',
 
-        'luse.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
-        'luse.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
+        'luse.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.<br><br>Intyget är nu tillgängligt för patienten i Mina intyg, som nås via 1177.se.',
+        'luse.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.<br><br>Intyget är nu tillgängligt för patienten i Mina intyg, som nås via 1177.se.',
         'luse.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om sjukersättning. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
         'luse.label.datum': 'Datum',
         'luse.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
