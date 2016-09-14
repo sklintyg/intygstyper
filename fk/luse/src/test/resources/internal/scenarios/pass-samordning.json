@@ -71,7 +71,9 @@
         "enhetsnamn": "Vårdenheten",
         "enhetsid": "SE2321000016-H489"
       },
-      "specialiteter": [],
+      "specialiteter": [
+        "Kirurg"
+      ],
       "befattningar": [
         "201010",
         "204510"

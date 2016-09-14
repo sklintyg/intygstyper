@@ -1,4 +1,4 @@
-/* global luaeNaMessages */
+
 angular.module('luae_na', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('luae_na').config(function($stateProvider) {
@@ -51,8 +51,8 @@ angular.module('luae_na').config(function($stateProvider) {
 });
 
 // Inject language resources
-angular.module('luae_na').run(['common.messageService',
-    function(messageService) {
+angular.module('luae_na').run(['common.messageService', 'luae_na.messages',
+    function(messageService, luaeNaMessages) {
         'use strict';
 
         messageService.addResources(luaeNaMessages);

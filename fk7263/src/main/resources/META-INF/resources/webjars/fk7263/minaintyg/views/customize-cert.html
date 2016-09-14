@@ -23,7 +23,7 @@
 
     <br/>
 
-    <div id="certificate" class="certificate" ng-if="viewState.cert != undefined">
+    <div id="customize-certificate" class="certificate" ng-if="viewState.cert != undefined">
       <span class="hide" id="certId" title="{{viewState.cert.id}}"></span>&nbsp;<span class="hide" id="certType" title="fk7263"></span>
 
       <div class="row">
@@ -45,7 +45,7 @@
                   <span>Utfärdat:&nbsp;</span>
                   <span class="cert-titlebar-value">{{viewState.cert.grundData.signeringsdatum | date:'shortDate'}}</span>
                 </div>
-				        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mandatory">
+				        <div id="mandatory.8b" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 mandatory">
                   <span class="float-r">
                     <span>Obligatoriskt fält&nbsp;</span><span class="asterix">*</span>
                   </span>
@@ -171,8 +171,10 @@
               </div>
 
               <div mi-field-selectable field-number="5" field-label="fk7263.label.limitation.anpassatintyg" field-model="viewState.checkboxModel.fields.field5" filled="viewState.cert.aktivitetsbegransning!=null" ng-show="showField5()">
-                <div id="aktivitetsbegransning-warning" class="alert alert-warning" ng-show="viewState.checkboxModel.fields.field5.vald==false">
-                  <span message key="fk7263.customize.message.limitation"></span>
+                <div uib-collapse="viewState.checkboxModel.fields.field5.vald">
+                  <div id="aktivitetsbegransning-warning" class="alert alert-warning">
+                    <span message key="fk7263.customize.message.limitation"></span>
+                  </div>
                 </div>
                 <div id="aktivitetsbegransning" class="multiline">{{viewState.cert.aktivitetsbegransning}}</div>
               </div>

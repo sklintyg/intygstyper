@@ -63,7 +63,8 @@
         </vardgivare>
       </enhet>
       <specialistkompetens>
-        <ns3:code>Kirurg</ns3:code>
+        <ns3:code>N/A</ns3:code>
+        <ns3:displayName>Kirurg</ns3:displayName>
       </specialistkompetens>
     </skapadAv>
     <svar id="1">

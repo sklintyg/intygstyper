@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
-    ['$window', '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
-        function($window, $location, $log, $rootScope, $stateParams, $scope, IntygService, messageService, ViewState) {
+    ['$window', '$location', '$log', '$stateParams', '$scope','common.dialogService', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
+        function($window, $location, $log, $stateParams, $scope, dialogService, IntygService, messageService, ViewState) {
             'use strict';
 
             // Setup default checkbox model in case of refresh
@@ -91,7 +91,6 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                         if (result !== null) {
                             ViewState.cert = result.utlatande;
                             ViewState.cert.filteredStatuses = _filterStatuses(result.meta.statuses);
-                            $rootScope.cert = ViewState.cert;
                         } else {
                             // show error view
                             $location.path('/visafel/certnotfound');
@@ -261,6 +260,41 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                 $location.path('/web/start/#/');
             };
 
+
+            $scope.leaveSummaryPage = null;
+            $scope.toState = null;
+
+            $scope.onLeaveSummaryPage = function() {
+                $scope.leaveSummaryPage = true;
+                $location.path($scope.toState.url);
+            };
+
+            function _onStateChangeStart(event, toState, toParams, fromState, fromParams, options) {
+                // continue with event when leaveSummaryPage variable is set
+                if ($scope.leaveSummaryPage) {
+                    return;
+                }
+
+                // continue with event when navigation is back to step 1
+                if (toParams.certificateId === fromParams.certificateId) {
+                    return;
+                }
+
+                // prevent this event and display modal dialog
+                event.preventDefault();
+                $scope.toState = toState;
+                _showDialog();
+            }
+
+            $scope.$on('$stateChangeStart', _onStateChangeStart);
+
+            function _showDialog() {
+                dialogService.showDialog($scope, {
+                    dialogId: 'fk7263-customize-summary-dialog',
+                    templateUrl: '/web/webjars/fk7263/minaintyg/views/customize-cert-summary-leave.html',
+                    autoClose: true
+                });
+            }
 
             // Submit user selected fields to PDF generator
 

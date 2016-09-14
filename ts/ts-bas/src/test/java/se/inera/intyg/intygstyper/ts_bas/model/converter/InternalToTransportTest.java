@@ -20,7 +20,6 @@ package se.inera.intyg.intygstyper.ts_bas.model.converter;
 
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -28,12 +27,9 @@ import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.common.collect.ImmutableMap;
-
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.services.BefattningService;
-import se.inera.intyg.common.support.services.SpecialistkompetensService;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
@@ -62,12 +58,6 @@ public class InternalToTransportTest {
 
     @BeforeClass
     public static void setup() throws Exception {
-        SpecialistkompetensService specialistkompetensService = new SpecialistkompetensService();
-        specialistkompetensService.init();
-        Field field = SpecialistkompetensService.class.getDeclaredField("codeToDescription");
-        field.setAccessible(true);
-        field.set(specialistkompetensService, ImmutableMap.of("7199", "Hörselrubbningar"));
-
         new BefattningService().init();
     }
 
@@ -102,28 +92,18 @@ public class InternalToTransportTest {
     }
 
     @Test
-    public void testConvertMapsSpecialistkompetensCodeToDescriptionIfPossible() throws ScenarioNotFoundException, ConverterException {
-        final String specialistkompetens = "7199";
-        final String description = "Hörselrubbningar";
+    public void testConvertWithSpecialistkompetens() throws ScenarioNotFoundException, ConverterException {
+        String specialistkompetens1 = "Kirurgi";
+        String specialistkompetens2 = "Allergi";
         Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
         utlatande.getGrundData().getSkapadAv().getSpecialiteter().clear();
-        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens);
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens1);
+        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetens2);
         RegisterTSBasType res = InternalToTransport.convert(utlatande);
         SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
-        assertEquals(1, skapadAv.getSpecialiteter().size());
-        assertEquals(description, skapadAv.getSpecialiteter().get(0));
-    }
-
-    @Test
-    public void testConvertKeepSpecialistkompetensCodeIfDescriptionNotFound() throws ScenarioNotFoundException, ConverterException {
-        String specialistkompetenskod = "kod";
-        Utlatande utlatande = ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel();
-        utlatande.getGrundData().getSkapadAv().getSpecialiteter().clear();
-        utlatande.getGrundData().getSkapadAv().getSpecialiteter().add(specialistkompetenskod);
-        RegisterTSBasType res = InternalToTransport.convert(utlatande);
-        SkapadAv skapadAv = res.getIntyg().getGrundData().getSkapadAv();
-        assertEquals(1, skapadAv.getSpecialiteter().size());
-        assertEquals(specialistkompetenskod, skapadAv.getSpecialiteter().get(0));
+        assertEquals(2, skapadAv.getSpecialiteter().size());
+        assertEquals(specialistkompetens1, skapadAv.getSpecialiteter().get(0));
+        assertEquals(specialistkompetens2, skapadAv.getSpecialiteter().get(1));
     }
 
     @Test

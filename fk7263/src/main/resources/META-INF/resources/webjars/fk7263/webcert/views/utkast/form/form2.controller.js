@@ -157,7 +157,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
 
             //What we do if the call to the FMB service is successful
             var fmbSuccess = function fmbSuccess(formData) {
-                fmbViewState.setState(formData, $scope.model.diagnosKod);
+                fmbViewState.setState(formData, formData.icd10Code, formData.icd10Description, $scope.model.diagnosKod);
             };
 
             var fmbReject = function fmbReject(data) {

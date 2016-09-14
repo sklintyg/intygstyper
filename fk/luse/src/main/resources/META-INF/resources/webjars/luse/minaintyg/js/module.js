@@ -1,4 +1,4 @@
-/* global luseMessages */
+
 angular.module('luse', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
 angular.module('luse').config(function($stateProvider) {
@@ -9,7 +9,7 @@ angular.module('luse').config(function($stateProvider) {
             url :'/luse/view/:certificateId',
             templateUrl: '/web/webjars/luse/minaintyg/views/view-cert.html',
             controller: 'luse.ViewCertCtrl',
-            data : { title: 'Läkarintyg sjukersättning', keepInboxTabActive: true }
+            data : { title: 'Läkarintyg för sjukersättning', keepInboxTabActive: true }
         }).
         state('luse-recipients', {
             url : '/luse/recipients',
@@ -51,8 +51,8 @@ angular.module('luse').config(function($stateProvider) {
 });
 
 // Inject language resources
-angular.module('luse').run(['common.messageService',
-    function(messageService) {
+angular.module('luse').run(['common.messageService', 'luse.messages',
+    function(messageService, luseMessages) {
         'use strict';
 
         messageService.addResources(luseMessages);

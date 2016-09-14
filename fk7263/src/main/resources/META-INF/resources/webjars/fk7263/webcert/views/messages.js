@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var fk7263Messages = {
+/* jshint maxlen: false */
+angular.module('fk7263').constant('fk7263.messages', {
     'sv': {
         'fk7263.error.generic': 'Kunde inte visa intyget',
         'fk7263.info.loadingcertificate': 'Hämtar intyget..',
@@ -34,7 +34,6 @@ var fk7263Messages = {
 
         //Labels
         'fk7263.label.field': 'Fält',
-        'fk7263.label.blank': '- ej ifyllt',
         'fk7263.label.nedsattning': 'Jag bedömer att arbetsförmåga är',
         'fk7263.label.patientnamn': 'Patientens namn',
         'fk7263.label.utfardat': 'Utfärdat',
@@ -221,10 +220,10 @@ var fk7263Messages = {
         'fk7263.fragasvar.marked.as.hanterad': '<strong>Frågan-svaret är markerad som hanterad.</strong><br> Frågan-svaret visas under rubriken \'hanterade frågor och svar\' nedan.',
         'fk7263.fragasvar.marked.as.ohanterad': '<strong>Frågan-svaret är markerad som ej hanterad.</strong><br> Frågan-svaret visas under rubriken \'Ej hanterade frågor och svar\' ovan.',
 
-        'fk7263.fragasvar.komplettering.dialogtitle': 'Besvara komplettering',
+        'fk7263.fragasvar.komplettering.dialogtitle': 'Besvara kompletteringsbegäran',
         'fk7263.fragasvar.komplettering.help': 'Med förtydligande avses information som inte tillför ny medicinsk information, utan förtydligar, förklarar eller ytterligare specificerar medicinska begrepp, termer eller mått. Exempelvis vad avses med skrivningen ”synnerligt påverkad” (i just detta fall), vad menas med ”samsjuklighet” (i just detta fall), etc.'
     },
     'en': {
         'fk7263.label.pagetitle': 'Show Certificate'
     }
-};
+});

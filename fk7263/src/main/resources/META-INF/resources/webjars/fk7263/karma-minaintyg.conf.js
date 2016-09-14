@@ -51,8 +51,8 @@ module.exports = function(config) {
                 WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
 
             // Load these first
-                SRC_DIR + 'messages.js',
                 SRC_DIR + 'module.js',
+                SRC_DIR + 'messages.js',
 
             { pattern: SRC_DIR + '**/*' },
             { pattern: TEST_DIR + '**/*.spec.js' }

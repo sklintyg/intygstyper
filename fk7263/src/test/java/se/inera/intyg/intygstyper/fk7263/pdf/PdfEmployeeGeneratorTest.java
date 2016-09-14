@@ -35,7 +35,6 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfReader;
 
@@ -87,9 +86,6 @@ public class PdfEmployeeGeneratorTest {
 
     /**
      * This test creates a new document to compare against. The new document ends up in the project's target root.
-     *
-     * @throws IOException
-     * @throws DocumentException
      */
     @Test
     public void testWCGenerateFromScenarios() throws Exception {
@@ -102,9 +98,6 @@ public class PdfEmployeeGeneratorTest {
 
     /**
      * This test creates a new document to compare against. The new document ends up in the project's target root.
-     *
-     * @throws IOException
-     * @throws DocumentException
      */
     @Test
     public void testMIGenerateFromScenarios() throws Exception {
@@ -149,8 +142,6 @@ public class PdfEmployeeGeneratorTest {
      * This test assert that a user can print a Intyg of type FK7263 even if it hasn't yet been sent to FK.
      * - The target property of a Status object is null in this scenario.
      * - The type property of a Status object is anything but CertificateState.SENT
-     *
-     * @throws Exception
      */
     @Test
     public void testWCIntygIsSignedButNotSentToFK() throws Exception {

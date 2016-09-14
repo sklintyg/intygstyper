@@ -87,7 +87,7 @@
               <span message key="luse.button.send.certificate"></span>
             </button>
             <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
-              <span message key="luse.button.downloadprint"></span>
+              <span message key="modules.button.save.as.pdf"></span>
             </button>
           </p>
         </form>
@@ -179,7 +179,7 @@
 
               <div mi-category category-label="KAT_1.RBK">
                 <div mi-field field-dynamic-label="FRG_1" filled="cert.undersokningAvPatienten!=null ||
-                                                                        cert.telefonkontaktMedPatienten!=null ||
+                                                                        cert.annatGrundForMU!=null ||
                                                                         cert.journaluppgifter!=null ||
                                                                         cert.anhorigsBeskrivningAvPatienten!=null">
                   <ul class="padded-list">
@@ -202,11 +202,11 @@
                       <div id="annatGrundForMU">
                         <span dynamic-label key="KV_FKMU_0001.ANNAT.RBK"></span><span> | {{cert.annatGrundForMU | date:'longDate' }}</span>
                       </div>
+                      <span dynamic-label key="DFR_1.3.RBK" ng-show="cert.annatGrundForMUBeskrivning!=null"></span>
+                      <span ng-show="cert.annatGrundForMUBeskrivning!=null">
+                        {{cert.annatGrundForMUBeskrivning}}
+                      </span>
                     </li>
-                    <span dynamic-label key="DFR_1.3.RBK" ng-show="cert.annatGrundForMUBeskrivning!=null"></span>
-                    <div ng-show="cert.annatGrundForMUBeskrivning!=null">
-                      {{cert.annatGrundForMUBeskrivning}}
-                    </div>
                   </ul>
                 </div>
                 <div mi-field field-dynamic-label="FRG_2" filled="cert.kannedomOmPatient" id="kannedomOmPatient">
@@ -251,9 +251,7 @@
                     <div class="col-xs-4" id="diagnosKod{{$index}}">
                       {{diagnos.diagnosKod}}
                     </div>
-                    <div class="col-xs-8" id="diagnosBeskrivning{{$index}}" class="multiline">
-                      {{diagnos.diagnosBeskrivning}}
-                    </div>
+                    <div class="col-xs-8" id="diagnosBeskrivning{{$index}}" class="multiline">{{diagnos.diagnosBeskrivning}}</div>
                   </div>
                 </div>
                 <div mi-field field-dynamic-label="DFR_7.1" filled="cert.diagnosgrund">
@@ -262,7 +260,7 @@
                 <div mi-field field-dynamic-label="FRG_45" filled="cert.nyBedomningDiagnosgrund!=null">
                   <div boolean-view="nyBedomningDiagnosgrund" field-model="cert"></div>
                 </div>
-                <div mi-field field-dynamic-label="DFR_45.2" filled="cert.diagnosForNyBedomning!=null">
+                <div mi-field field-dynamic-label="DFR_45.2" ng-if="cert.nyBedomningDiagnosgrund === true" filled="cert.diagnosForNyBedomning!=null">
                   <div id="diagnosForNyBedomning" class="multiline">{{cert.diagnosForNyBedomning}}</div>
                 </div>
               </div>
@@ -277,32 +275,22 @@
               <!--  Funktionsnedsättning -->
               <div mi-category category-label="KAT_5.RBK">
                 <div mi-field field-dynamic-label="DFR_8.1" filled="cert.funktionsnedsattningIntellektuell">
-                  <div id="funktionsnedsattningIntellektuell" class="multiline">
-                    {{cert.funktionsnedsattningIntellektuell}}
-                  </div>
+                  <div id="funktionsnedsattningIntellektuell" class="multiline">{{cert.funktionsnedsattningIntellektuell}}</div>
                 </div>
                 <div mi-field field-dynamic-label="DFR_9.1" filled="cert.funktionsnedsattningKommunikation">
-                  <div id="funktionsnedsattningKommunikation" class="multiline">
-                    {{cert.funktionsnedsattningKommunikation}}
-                  </div>
+                  <div id="funktionsnedsattningKommunikation" class="multiline">{{cert.funktionsnedsattningKommunikation}}</div>
                 </div>
                 <div mi-field field-dynamic-label="DFR_10.1" filled="cert.funktionsnedsattningKoncentration">
-                  <div id="funktionsnedsattningKoncentration" class="multiline">
-                    {{cert.funktionsnedsattningKoncentration}}
-                  </div>
+                  <div id="funktionsnedsattningKoncentration" class="multiline">{{cert.funktionsnedsattningKoncentration}}</div>
                 </div>
                 <div mi-field field-dynamic-label="DFR_11.1" filled="cert.funktionsnedsattningPsykisk">
                   <div id="funktionsnedsattningPsykisk" class="multiline">{{cert.funktionsnedsattningPsykisk}}</div>
                 </div>
                 <div mi-field field-dynamic-label="DFR_12.1" filled="cert.funktionsnedsattningSynHorselTal">
-                  <div id="funktionsnedsattningSynHorselTal" class="multiline">
-                    {{cert.funktionsnedsattningSynHorselTal}}
-                  </div>
+                  <div id="funktionsnedsattningSynHorselTal" class="multiline">{{cert.funktionsnedsattningSynHorselTal}}</div>
                 </div>
                 <div mi-field field-dynamic-label="DFR_13.1" filled="cert.funktionsnedsattningBalansKoordination">
-                  <div id="funktionsnedsattningBalansKoordination" class="multiline">
-                    {{cert.funktionsnedsattningBalansKoordination}}
-                  </div>
+                  <div id="funktionsnedsattningBalansKoordination" class="multiline">{{cert.funktionsnedsattningBalansKoordination}}</div>
                 </div>
                 <div mi-field field-dynamic-label="DFR_14.1" filled="cert.funktionsnedsattningAnnan">
                   <div id="funktionsnedsattningAnnan" class="multiline">{{cert.funktionsnedsattningAnnan}}</div>
@@ -335,9 +323,7 @@
               <!-- Medicinska förutsättningar för arbete -->
               <div mi-category category-label="KAT_8.RBK">
                 <div mi-field field-dynamic-label="FRG_22" filled="cert.medicinskaForutsattningarForArbete">
-                  <div id="medicinskaForutsattningarForArbete" class="multiline">
-                    {{cert.medicinskaForutsattningarForArbete}}
-                  </div>
+                  <div id="medicinskaForutsattningarForArbete" class="multiline">{{cert.medicinskaForutsattningarForArbete}}</div>
                 </div>
                 <div mi-field field-dynamic-label="FRG_23" filled="cert.formagaTrotsBegransning">
                   <div id="formagaTrotsBegransning" class="multiline">{{cert.formagaTrotsBegransning}}</div>
@@ -355,13 +341,13 @@
               <div mi-category category-label="KAT_10.RBK">
                 <div mi-field field-dynamic-label="DFR_26.1" filled="true">
                   <span ng-show="cert.kontaktMedFk">
-                    <span id="kontaktFk-yes" message key="lisu.label.yes"></span>
+                    <span id="kontaktFk-yes" message key="common.yes"></span>
                   </span>
                   <span ng-show="!cert.kontaktMedFk">
-                    <span id="kontaktFk-no" message key="lisu.label.no"></span>
+                    <span id="kontaktFk-no" message key="common.no"></span>
                   </span>
                 </div>
-                <div mi-field field-dynamic-label="DFR_26.2" filled="cert.anledningTillKontakt">
+                <div mi-field field-dynamic-label="DFR_26.2" ng-if="cert.kontaktMedFk === true" filled="cert.anledningTillKontakt">
                   <div id="anledningtillkontakt" class="multiline">{{cert.anledningTillKontakt}}</div>
                 </div>
               </div>

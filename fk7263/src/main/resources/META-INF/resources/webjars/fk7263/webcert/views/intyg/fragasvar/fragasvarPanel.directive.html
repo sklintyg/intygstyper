@@ -16,7 +16,8 @@
             id="fkMeddelandeRubrik-{{qa.internReferens}}"
             ng-show="qa.meddelandeRubrik"> - {{qa.meddelandeRubrik}}</span>
         </h3>
-        <label class="checkbox" ng-if="!certProperties.kompletteringOnly">
+
+        <label class="checkbox" ng-if="showHandledButtons()">
           <input type="checkbox" ng-model="handledFunction" ng-model-options="{ getterSetter: true }">
           Hanterad
         </label>
@@ -45,7 +46,7 @@
       <div class="row" ng-if="!certProperties.kompletteringOnly">
         <div class="col-xs-9"></div>
         <div wc-authority="VIDAREBEFORDRA_FRAGASVAR" class="col-xs-3 form-inline qa-panel__vidarebefordra-placement"
-             ng-show="!certProperties.isRevoked">
+             ng-show="showHandledButtons()">
           <!--  status header -->
           <button type="button" id="{{panelId}}-vidarebefordraEjHanterad" class="btn pull-right"
                   ng-class="{'btn-info': !qa.vidarebefordrad, 'btn-default btn-secondary' : qa.vidarebefordrad}"

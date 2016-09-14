@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var tsDiabetesMessages = {
+/* jshint maxlen: false */
+angular.module('ts-diabetes').constant('ts-diabetes.messages', {
     'sv': {
         'ts-diabetes.label.intygavser': 'Avser lämplighet för körkort',
         'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
@@ -64,7 +64,7 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
         'ts-diabetes.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Transportstyrelsen.',
         'ts-diabetes.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
-        'ts-diabetes.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
+        'ts-diabetes.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'ts-diabetes.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'ts-diabetes.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
         'ts-diabetes.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
@@ -81,7 +81,6 @@ var tsDiabetesMessages = {
         'ts-diabetes.label.period': 'Period:',
         'ts-diabetes.label.errorpagetitle': 'Ett problem har uppstått',
         'ts-diabetes.message.certifits-diabetesloading': 'Hämtar intyg...',
-        'ts-diabetes.button.downloadprint': 'Ladda ner / Skriv ut',
         'ts-diabetes.button.send': 'Skicka',
         'ts-diabetes.button.cancel': 'Avbryt',
         'ts-diabetes.button.goback': 'Tillbaka',
@@ -117,4 +116,4 @@ var tsDiabetesMessages = {
     'en': {
         'ts-diabetes.label.pagetitle': 'Show Certificate'
     }
-};
+});

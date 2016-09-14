@@ -1,14 +1,12 @@
-/* jshint maxlen: false, unused: false */
-var luaeNaMessages = {
+/* jshint maxlen: false */
+angular.module('luae_na').constant('luae_na.messages', {
     'sv': {
         'luae_na.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
         'luae_na.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
         'luae_na.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
         'luae_na.recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
-        'luae_na.recipient.label.inactive.recipient': 'Varför går det inte att skicka intyget till vissa mottagare?',
         'luae_na.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
         'luae_na.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
-        'luae_na.recipient.label.downloadlink': 'Ladda ner / Skriv ut',
 
         'luae_na.confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
         'luae_na.confirm.label.certrowtitle': 'Intyg',
@@ -35,7 +33,6 @@ var luaeNaMessages = {
         'luae_na.button.sendtofk': 'Skicka till Försäkringskassan',
         'luae_na.button.send.certificate': 'Skicka',
         'luae_na.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
-        'luae_na.label.blank': '- ej ifyllt',
         'luae_na.label.pagetitle': 'Granska och skicka intyg',
         'luae_na.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'luae_na.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
@@ -48,7 +45,7 @@ var luaeNaMessages = {
         'luae_na.label.pagedescription.certificate.to.employer.header': '<h2>Intyg till arbetsgivare</h2>',
         'luae_na.label.pagedescription.certificate.to.employer': 'Du har möjlighet att anpassa läkarintyget om du ska lämna läkarintyget till din arbetsgivare. Du anpassar intyget genom att välja om du vill visa alla uppgifter i intyget eller om du vill dölja vissa delar. Klicka på knappen Anpassa intyget för att välja vilken information du vill dela.',
         'luae_na.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
-        'luae_na.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
+        'luae_na.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'luae_na.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om luae_na?</h2>',
         'luae_na.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om luae_na och hur du ansöker.<br>',
         'luae_na.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
@@ -72,7 +69,6 @@ var luaeNaMessages = {
 
         'luae_na.message.certificateloading': 'Hämtar intyg...',
         'luae_na.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
-        'luae_na.button.downloadprint': 'Ladda ner / Skriv ut',
         'luae_na.button.send': 'Skicka',
         'luae_na.button.cancel': 'Avbryt',
         'luae_na.button.goback': 'Tillbaka',
@@ -91,4 +87,4 @@ var luaeNaMessages = {
     'en': {
         'luae_na.label.pagetitle': 'Show Certificate'
     }
-};
+});

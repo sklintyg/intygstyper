@@ -17,18 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* jshint maxlen: false, unused: false */
-var fk7263Messages = {
+/* jshint maxlen: false */
+angular.module('fk7263').constant('fk7263.messages', {
     'sv': {
 
         'fk7263.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
         'fk7263.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
         'fk7263.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
         'fk7263.recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
-        'fk7263.recipient.label.inactive.recipient': 'Varför går det inte att skicka intyget till vissa mottagare?',
         'fk7263.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
         'fk7263.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
-        'fk7263.recipient.label.downloadlink': 'Ladda ner / Skriv ut',
 
         'fk7263.confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
         'fk7263.confirm.label.certrowtitle': 'Intyg',
@@ -54,7 +52,7 @@ var fk7263Messages = {
         'fk7263.customize.step.1.pageingress': '<p>Här kan du anpassa vilken information som ska synas i ett intyg som du lämnar till din arbetsgivare. Den information som du måste lämna till arbetsgivaren, obligatorisk information, är låst. Den kan inte väljas bort. I de flesta fall är du inte skyldig att lämna några andra uppgifter än dessa. Övrig information kan du välja att ta bort. Det gör du genom att bocka ur alternativet Inkludera i anpassat intyg i det fält du inte vill ska synas.</p><p>Du kan alltid återvända till Mina intyg om du behöver lämna mer information. Facket och arbetsgivaren kan exempelvis ha kommit överens om detta i kollektivavtal.</p><p>Det finns ofta fördelar med att arbetsgivaren får ta del även av frivillig information, exempelvis hur sjukdomen begränsar din aktivitetsförmåga (fält 5). Det underlättar arbetsgivarens möjlighet att anpassa din arbetsplats eller arbetssituation.</p>',
         'fk7263.customize.step.1.fishbone': 'Anpassa intyg',
         'fk7263.customize.step.2.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 2 av 2',
-        'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Ladda ner/Skriva ut.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra mina val.</p>',
+        'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Spara som PDF.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra mina val.</p>',
         'fk7263.customize.step.2.fishbone': 'Sammanfattning',
         'fk7263.customize.message.limitation': 'Informationen i fält 5 är frivillig, men informationen kan underlätta arbetsgivarens möjlighet att göra arbetsanpassningar.',
 
@@ -65,9 +63,8 @@ var fk7263Messages = {
         'fk7263.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
         'fk7263.button.customize.certificate': 'Anpassa intyget till arbetsgivare',
         'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
-        'fk7263.button.customize.certificate.change': 'Ändra din val',
+        'fk7263.button.customize.certificate.change': 'Ändra ditt val',
 
-        'fk7263.label.blank': '- ej ifyllt',
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
         'fk7263.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'fk7263.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
@@ -75,7 +72,7 @@ var fk7263Messages = {
         'fk7263.label.pagedescription.certificate.to.employer.header': '<h2>Intyg till arbetsgivare</h2>',
         'fk7263.label.pagedescription.certificate.to.employer': 'Du har möjlighet att anpassa läkarintyget om du ska lämna läkarintyget till din arbetsgivare. Du anpassar intyget genom att välja om du vill visa alla uppgifter i intyget eller om du vill dölja vissa delar. Klicka på knappen Anpassa intyget för att välja vilken information du vill dela.',
         'fk7263.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
-        'fk7263.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
+        'fk7263.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'fk7263.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om sjukpenning?</h2>',
         'fk7263.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.<br>',
         'fk7263.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
@@ -156,7 +153,6 @@ var fk7263Messages = {
 
         'fk7263.message.certificateloading': 'Hämtar intyg...',
         'fk7263.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
-        'fk7263.button.downloadprint': 'Ladda ner / Skriv ut',
         'fk7263.button.send': 'Skicka',
         'fk7263.button.cancel': 'Avbryt',
         'fk7263.button.goback': 'Tillbaka',
@@ -189,4 +185,4 @@ var fk7263Messages = {
     'en': {
         'fk7263.label.pagetitle': 'Show Certificate'
     }
-};
+});

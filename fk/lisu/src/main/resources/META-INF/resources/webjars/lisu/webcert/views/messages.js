@@ -1,5 +1,6 @@
-/* jshint maxlen: false, unused: false */
-var lisuMessages = {
+/* jshint maxlen: false */
+
+angular.module('lisu').constant('lisu.messages', {
     'sv': {
         'lisu.error.generic': 'Kunde inte visa intyget',
         'lisu.info.loadingcertificate': 'Hämtar intyget..',
@@ -129,4 +130,4 @@ var lisuMessages = {
     'en': {
         'lisu.label.pagetitle': 'Show Certificate'
     }
-};
+});

@@ -1,5 +1,5 @@
-/* jshint maxlen: false, unused: false */
-var luaeNaMessages = {
+/* jshint maxlen: false */
+angular.module('luae_na').constant('luae_na.messages', {
     'sv': {
         'luae_na.error.generic': 'Kunde inte visa intyget',
         'luae_na.info.loadingcertificate': 'Hämtar intyget..',
@@ -111,4 +111,4 @@ var luaeNaMessages = {
     'en': {
         'luae_na.label.pagetitle': 'Show Certificate'
     }
-};
+});

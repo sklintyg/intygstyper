@@ -1,5 +1,5 @@
-/* jshint maxlen: false, unused: false */
-var luaeFsMessages = {
+/* jshint maxlen: false */
+angular.module('luae_fs').constant('luae_fs.messages', {
     'sv': {
         'luae_fs.error.generic': 'Kunde inte visa intyget',
         'luae_fs.info.loadingcertificate': 'Hämtar intyget..',
@@ -95,4 +95,4 @@ var luaeFsMessages = {
     'en': {
         'luae_fs.label.pagetitle': 'Show Certificate'
     }
-};
+});

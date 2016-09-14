@@ -1,14 +1,13 @@
-/* jshint maxlen: false, unused: false */
-var luaeFsMessages = {
+/* jshint maxlen: false */
+
+angular.module('luae_fs').constant('luae_fs.messages', {
     'sv': {
         'luae_fs.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
         'luae_fs.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
         'luae_fs.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
         'luae_fs.recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
-        'luae_fs.recipient.label.inactive.recipient': 'Varför går det inte att skicka intyget till vissa mottagare?',
         'luae_fs.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
         'luae_fs.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
-        'luae_fs.recipient.label.downloadlink': 'Ladda ner / Skriv ut',
 
         'luae_fs.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
 
@@ -39,7 +38,6 @@ var luaeFsMessages = {
         'luae_fs.button.send.certificate': 'Skicka',
         'luae_fs.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
         'luae_fs.button.sendtofk': 'Skicka till Försäkringskassan',
-        'luae_fs.button.downloadprint': 'Ladda ner / Skriv ut',
         'luae_fs.button.cancel': 'Avbryt',
         'luae_fs.button.goback': 'Tillbaka',
         'luae_fs.button.next': 'Nästa',
@@ -49,7 +47,6 @@ var luaeFsMessages = {
 
         'luae_fs.label.latestevent': 'Senaste händelse',
         'luae_fs.label.latestevent.noevents': 'Inga händelser',
-        'luae_fs.label.blank': '- ej ifyllt',
         'luae_fs.label.pagetitle': 'Granska och skicka intyg',
         'luae_fs.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'luae_fs.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',
@@ -64,7 +61,7 @@ var luaeFsMessages = {
         'luae_fs.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'luae_fs.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
         'luae_fs.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
-        'luae_fs.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Ladda ner/Skriv ut för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
+        'luae_fs.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'luae_fs.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
         'luae_fs.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Försäkringskassan eller en annan mottagare.<br>',
         'luae_fs.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om luae_fs?</h2>',
@@ -99,4 +96,4 @@ var luaeFsMessages = {
     'en': {
         'luae_fs.label.pagetitle': 'Show Certificate'
     }
-};
+});

@@ -51,6 +51,11 @@ angular.module('luae_na').config(function($stateProvider) {
                 'formly@luae_na-edit' : {
                     templateUrl: intygsTypPath + 'views/utkast/formly.html',
                     controller: 'luae_na.EditCert.FormlyCtrl'
+                },
+
+                'fragasvar@luae_na-edit' : {
+                    templateUrl: commonPath + 'fk/arenden/arenden.html',
+                    controller: 'common.ArendeCtrl'
                 }
             }
         }).

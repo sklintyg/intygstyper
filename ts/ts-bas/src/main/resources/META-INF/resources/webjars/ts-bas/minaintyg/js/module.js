@@ -17,12 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* global tsBasMessages */
 angular.module('ts-bas', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common' ]);
 
 // Inject language resources
-angular.module('ts-bas').run([ 'common.messageService',
-    function(messageService) {
+angular.module('ts-bas').run([ 'common.messageService', 'ts-bas.messages',
+    function(messageService, tsBasMessages) {
         'use strict';
 
         messageService.addResources(tsBasMessages);
