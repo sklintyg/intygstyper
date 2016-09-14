@@ -19,21 +19,27 @@
 
 package se.inera.intyg.intygstyper.lisu.validator;
 
-import java.util.*;
-
+import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.collect.ImmutableList;
-
 import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
-import se.inera.intyg.intygstyper.lisu.model.internal.*;
 import se.inera.intyg.intygstyper.lisu.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
+import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
+import se.inera.intyg.intygstyper.lisu.model.internal.PrognosTyp;
+import se.inera.intyg.intygstyper.lisu.model.internal.Sjukskrivning;
+import se.inera.intyg.intygstyper.lisu.model.internal.Sysselsattning;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUtlatande> {
 
@@ -168,7 +174,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
 
     private void validateAktivitetsbegransning(LisuUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getAktivitetsbegransning())) {
-            validatorUtil.addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY,
+            validatorUtil.addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY,
                     "lisu.validation.aktivitetsbegransning.missing");
         }
     }
