@@ -9,7 +9,7 @@ angular.module('luse').config(function($stateProvider) {
             url :'/luse/view/:certificateId',
             templateUrl: '/web/webjars/luse/minaintyg/views/view-cert.html',
             controller: 'luse.ViewCertCtrl',
-            data : { title: 'Läkarintyg för sjukersättning', keepInboxTabActive: true }
+            data : { title: 'Läkarutlåtande för sjukersättning', keepInboxTabActive: true }
         }).
         state('luse-recipients', {
             url : '/luse/recipients',
