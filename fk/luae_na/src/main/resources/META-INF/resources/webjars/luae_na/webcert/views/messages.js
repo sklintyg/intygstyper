@@ -6,7 +6,7 @@ angular.module('luae_na').constant('luae_na.messages', {
         'luae_na.message.certificateloading': 'Hämtar intyg...',
 
         'luae_na.label.send': 'Skicka intyg till Försäkringskassan',
-        'luae_na.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket skall göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukersättning hos Försäkringskassan.',
+        'luae_na.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket skall göras i samråd med patienten.',
         'luae_na.button.send': 'Skicka till Försäkringskassan',
 
         // luae_na
