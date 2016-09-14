@@ -117,9 +117,9 @@ describe('QACtrl', function() {
 
             // ------ assert
             expect($scope.intyg).toEqual(testCert);
-            expect($scope.certProperties.isLoaded).toBe(true);
-            expect($scope.certProperties.isSent).toBe(true);
-            expect($scope.certProperties.isRevoked).toBe(false);
+            expect($scope.intygProperties.isLoaded).toBe(true);
+            expect($scope.intygProperties.isSent).toBe(true);
+            expect($scope.intygProperties.isRevoked).toBe(false);
         });
 
         it('on load fragasvar with utkast (forced parent intyg)', function() {
@@ -138,9 +138,9 @@ describe('QACtrl', function() {
             $rootScope.$apply();
 
             // ------ assert
-            expect($scope.certProperties.isLoaded).toBe(true);
-            expect($scope.certProperties.isSent).toBe(true);
-            expect($scope.certProperties.isRevoked).toBe(false);
+            expect($scope.intygProperties.isLoaded).toBe(true);
+            expect($scope.intygProperties.isSent).toBe(true);
+            expect($scope.intygProperties.isRevoked).toBe(false);
         });
 
         it('on load fragasvar with null', function() {
@@ -155,9 +155,9 @@ describe('QACtrl', function() {
 
             // ------ assert
             expect($scope.intyg).toEqual(null);
-            expect($scope.certProperties.isLoaded).toBe(false);
-            expect($scope.certProperties.isSent).toBe(false);
-            expect($scope.certProperties.isRevoked).toBe(false);
+            expect($scope.intygProperties.isLoaded).toBe(false);
+            expect($scope.intygProperties.isSent).toBe(false);
+            expect($scope.intygProperties.isRevoked).toBe(false);
         });
 
     });
