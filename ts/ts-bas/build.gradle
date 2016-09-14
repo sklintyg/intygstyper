@@ -16,6 +16,9 @@ buildscript {
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'com.moowork.node'
 
+def webappOutputDir = 'build/';
+def webappTestOutputDir = 'build/karma/';
+
 grunt {
   colors = true
 }
@@ -68,14 +71,14 @@ task moveJsFiles(type: Copy, dependsOn: unzipWebjars) {
 
 task jsTests(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
     script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['test']
+    args = ['test', '--outputDir=' + webappTestOutputDir, '--skip-coverage='+(!project.hasProperty('runSonar'))]
 }
 
 test.dependsOn(jsTests)
 
 task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
     script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['default']
+    args = ['default', '--outputDir=' + webappOutputDir]
 }
 
 jar.dependsOn(jsInclude)

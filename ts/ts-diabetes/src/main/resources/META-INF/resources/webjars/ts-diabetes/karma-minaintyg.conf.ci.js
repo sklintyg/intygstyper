@@ -61,16 +61,6 @@ module.exports = function(config) {
             return plugins;
         })(),
 
-        reporters: [ 'dots', 'junit', 'coverage' ],
-
-        coverageReporter: {
-            type : 'lcovonly',
-            dir : 'target/karma_coverage/minaintyg',
-            subdir: '.'
-        },
-
-        junitReporter: {
-            outputFile: 'target/surefire-reports/TEST-karma-minaintyg-test-results.xml'
-        }
+        reporters: [ 'dots', 'coverage' ]
     });
 };

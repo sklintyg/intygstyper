@@ -39,7 +39,9 @@ module.exports = function(grunt) {
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
     var TEST_DIR = 'src/test/js/';
-    var DEST_DIR = 'build/resources/main/META-INF/resources/';
+    var DEST_DIR = (grunt.option('outputDir') || 'build/') +  'resources/main/META-INF/resources/';
+    var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
+    var SKIP_COVERAGE = grunt.option('skip-coverage') !== undefined ? grunt.option('skip-coverage') : true;
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/fk7263/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
     grunt.file.write(DEST_DIR + 'webjars/fk7263/minaintyg/js/module-deps.json', JSON.stringify(minaintyg.
@@ -93,12 +95,20 @@ module.exports = function(grunt) {
 
         karma: {
             minaintyg: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/fk7263/karma-minaintyg.conf.ci.js',
-                reporters: [ 'mocha' ]
+                configFile: SRC_DIR + 'webjars/fk7263/karma-minaintyg.conf.ci.js',
+                coverageReporter: {
+                    type : 'lcovonly',
+                    dir : TEST_OUTPUT_DIR + 'minaintyg/',
+                    subdir: '.'
+                }
             },
             webcert: {
-                configFile: 'src/main/resources/META-INF/resources/webjars/fk7263/karma-webcert.conf.ci.js',
-                reporters: [ 'mocha' ]
+                configFile: SRC_DIR + 'webjars/fk7263/karma-webcert.conf.ci.js',
+                coverageReporter: {
+                    type : 'lcovonly',
+                    dir : TEST_OUTPUT_DIR + 'webcert/',
+                    subdir: '.'
+                }
             }
         },
         
@@ -156,9 +166,9 @@ module.exports = function(grunt) {
 
         lcovMerge: {
             options: {
-                outputFile: 'target/karma_coverage/merged_lcov.info'
+                outputFile: TEST_OUTPUT_DIR + 'merged_lcov.info'
             },
-            src: ['target/karma_coverage/webcert/*.info', 'target/karma_coverage/minaintyg/*.info']
+            src: [TEST_OUTPUT_DIR + 'webcert/*.info', TEST_OUTPUT_DIR +'minaintyg/*.info']
         }
     });
 
@@ -168,5 +178,5 @@ module.exports = function(grunt) {
     grunt.registerTask('lint', [ 'jshint', 'sasslint' ]);
     grunt.registerTask('test-minaintyg', [ 'karma:minaintyg' ]);
     grunt.registerTask('test-webcert', [ 'karma:webcert' ]);
-    grunt.registerTask('test', [ 'karma' ]);
+    grunt.registerTask('test', [ 'karma' ].concat(SKIP_COVERAGE?[]:['lcovMerge']));
 };

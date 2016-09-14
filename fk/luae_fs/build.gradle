@@ -16,6 +16,9 @@ buildscript {
 apply plugin: 'com.moowork.grunt'
 apply plugin: 'com.moowork.node'
 
+def webappOutputDir = 'build/';
+def webappTestOutputDir = 'build/karma/';
+
 grunt {
   colors = true
 }
@@ -39,8 +42,8 @@ sourceSets {
 }
 
 task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
-    script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['default']
+  script = file('node_modules/grunt-cli/bin/grunt')
+  args = ['default', '--outputDir=' + webappOutputDir]
 }
 
 jar.dependsOn(jsInclude)
