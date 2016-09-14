@@ -74,6 +74,19 @@ subprojects {
       configurations.buildtools.collect { zipTree(it) }
     }
   }
+
+  if (project.hasProperty('codeQuality')) {
+    apply plugin: 'checkstyle'
+    checkstyle {
+      config = resources.text.fromFile("${buildDir}/build-tools/checkstyle/checkstyle.xml")
+      ignoreFailures = false
+      showViolations = true
+    }
+
+    checkstyleMain.dependsOn unzipBuildTools
+    checkstyleMain.source = "src/main/java"
+    checkstyleTest.enabled = false
+  }
 }
 
 subprojects {
