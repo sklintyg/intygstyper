@@ -111,4 +111,9 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
             return null;
         }
     }
+
+    @Override
+    public String getExternalId() {
+        return MODULE_ID.toUpperCase();
+    }
 }

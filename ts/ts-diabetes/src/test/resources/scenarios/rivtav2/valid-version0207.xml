@@ -24,7 +24,7 @@
             <ns3:extension>987654321</ns3:extension>
         </intygs-id>
         <typ>
-            <ns3:code>TS-DIABETES</ns3:code>
+            <ns3:code>TSTRK1031</ns3:code>
             <ns3:codeSystem>f6fb361a-e31d-48b8-8657-99b63912dd9b</ns3:codeSystem>
             <ns3:displayName>Transportstyrelsens läkarintyg, diabetes</ns3:displayName>
         </typ>
