@@ -99,7 +99,7 @@ public class RoundTripTest {
         XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected.toString(), actualSw.toString());
         diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
-        diff.overrideDifferenceListener(new IgnoreNamespacePrexifDifferenceListener());
+        diff.overrideDifferenceListener(new IgnoreNamespacePrefixDifferenceListener());
         assertTrue(name + " " + diff.toString(), diff.similar());
     }
 
@@ -116,10 +116,11 @@ public class RoundTripTest {
         XMLUnit.setIgnoreAttributeOrder(true);
         Diff diff = XMLUnit.compareXML(expected.toString(), actual);
         diff.overrideElementQualifier(new ElementNameAndAttributeQualifier("id"));
+        diff.overrideDifferenceListener(new IgnoreNamespacePrefixDifferenceListener());
         assertTrue(name + " " + diff.toString(), diff.similar());
     }
 
-    private class IgnoreNamespacePrexifDifferenceListener implements DifferenceListener {
+    private class IgnoreNamespacePrefixDifferenceListener implements DifferenceListener {
         @Override
         public int differenceFound(Difference difference) {
             if (difference.getId() == DifferenceConstants.NAMESPACE_PREFIX_ID) {

@@ -38,7 +38,7 @@
       <reg:utlatande>
 
         <xsl:call-template name="utlatandeHeader">
-          <xsl:with-param name="displayName" select="'TSTRK1007 (U07, V06)'"/>
+          <xsl:with-param name="displayName" select="'TSTRK1007'"/>
         </xsl:call-template>
 
         <xsl:call-template name="grundData">

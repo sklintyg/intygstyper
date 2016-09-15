@@ -81,7 +81,7 @@ public class TsBasTransformerXpathTest {
         XPathEvaluator xPath = createXPathEvaluator(transformed);
 
         // Check utlatande against xpath
-        assertEquals("UtlatandeTyp", "TSTRK1007 (U07, V06)", xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
+        assertEquals("UtlatandeTyp", "TSTRK1007", xPath.evaluate(XPathExpressions.TYP_AV_UTLATANDE_XPATH));
 
         assertEquals("Utlatande-utgåva", utlatande.getUtgava(), xPath.evaluate(XPathExpressions.TS_UTGAVA_XPATH));
 

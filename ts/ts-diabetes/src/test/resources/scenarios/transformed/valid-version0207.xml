@@ -67,9 +67,9 @@
          <p:rekommendationskod code="REK8"
                                codeSystem="5a931b99-bda8-4f1e-8a6d-6f8a3f40a459"
                                codeSystemName="kv_rekommendation_intyg"/>
-         <p2:varde codeSystem="e889fa20-1dee-4f79-8b37-03853e75a9f8"
-                   codeSystemName="kv_körkortsbehörighet"
-                   code="VAR12"/>
+         <p2:varde code="VAR11"
+                   codeSystem="e889fa20-1dee-4f79-8b37-03853e75a9f8"
+                   codeSystemName="kv_körkortsbehörighet"/>
       </p:rekommendation>
       <p:observation>
          <p:observationskod codeSystem="1.2.752.116.1.1.1.1.1"
@@ -102,7 +102,8 @@
          <p:observationskod code="OBS24"
                             codeSystem="335d4bed-7e1d-4f81-ae7d-b39b266ef1a3"
                             codeSystemName="kv_observationer_intyg"/>
-         <p:forekomst>false</p:forekomst>
+         <p:observationstid>2012-12-12</p:observationstid>
+         <p:forekomst>true</p:forekomst>
       </p:observation>
       <p2:intygAvser codeSystem="24c41b8d-258a-46bf-a08a-b90738b28770"
                      codeSystemName="kv_intyget_avser"
@@ -113,7 +114,7 @@
                        codeSystemName="kv_bilaga"/>
          <p:forekomst>true</p:forekomst>
       </p2:bilaga>
-      <p2:utgava>06</p2:utgava>
+      <p2:utgava>07</p2:utgava>
       <p2:version>02</p2:version>
    </reg:utlatande>
 </reg:RegisterCertificate>
