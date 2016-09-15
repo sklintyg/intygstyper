@@ -67,7 +67,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intygProperties.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties);
+                        $rootScope.$emit('fk7263.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties, ViewState.relations);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {

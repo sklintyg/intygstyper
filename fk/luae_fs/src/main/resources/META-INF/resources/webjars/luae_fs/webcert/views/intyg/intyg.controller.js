@@ -49,7 +49,7 @@ angular.module('luae_fs').controller('luae_fs.ViewCertCtrl',
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intygProperties.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties);
+                        $rootScope.$emit('ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties, ViewState.relations);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
