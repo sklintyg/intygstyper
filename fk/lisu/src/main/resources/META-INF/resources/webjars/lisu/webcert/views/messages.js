@@ -7,7 +7,7 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.message.certificateloading': 'Hämtar intyg...',
 
         'lisu.label.send': 'Skicka intyg till Försäkringskassan',
-        'lisu.label.send.body': 'Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
+        'lisu.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket skall göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
         'lisu.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukpenning utökad
@@ -30,8 +30,8 @@ angular.module('lisu').constant('lisu.messages', {
 
         'lisu.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'lisu.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
-        'lisu.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.',
-        'lisu.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.',
+        'lisu.label.status.sent': 'Intyget är signerat och har skickats till Försäkringskassans system.<br><br>Intyget är nu tillgängligt för patienten i Mina intyg, som nås via 1177.se.',
+        'lisu.label.status.recieved': 'Intyget är signerat och mottaget av Försäkringskassans system.<br><br>Intyget är nu tillgängligt för patienten i Mina intyg, som nås via 1177.se.',
         'lisu.label.status.signed': 'Intyget är signerat. Intyget är nu tillgängligt för patienten i webbtjänsten Mina intyg, som nås via 1177.se. Intyget går även att nå via Försäkringskassans e-tjänst för ansökan om lisu. Om patienten inte har möjlighet att skicka intyget elektroniskt till Försäkringskassan kan du skicka intyget direkt till Försäkringskassan åt patienten. Observera att patientens samtycke då krävs.',
 
         'lisu.label.datum': 'Datum',
