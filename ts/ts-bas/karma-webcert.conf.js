@@ -56,6 +56,7 @@ module.exports = function(config) {
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'bower_components/momentjs/moment.js',
             // endbower
+            WEBJAR_DIR + 'common/webcert/module.min.js',
 
             // Load these first
             TEST_DIR + 'module.test.js',

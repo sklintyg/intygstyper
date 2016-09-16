@@ -42,7 +42,21 @@ module.exports = function(config) {
 
             // Dependencies
             // bower:js
+            'bower_components/jquery/jquery.js',
+            'bower_components/angular/angular.js',
+            'bower_components/angular-animate/angular-animate.js',
+            'bower_components/angular-cookies/angular-cookies.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/angular-i18n/angular-locale_sv-se.js',
+            'bower_components/angular-sanitize/angular-sanitize.js',
+            'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+            'bower_components/api-check/dist/api-check.js',
+            'bower_components/angular-formly/dist/formly.js',
+            'bower_components/angular-ui-router/release/angular-ui-router.js',
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/momentjs/moment.js',
             // endbower
+            WEBJAR_DIR + 'common/webcert/module.min.js',
 
             // Load these first
             TEST_DIR + 'module.test.js',
