@@ -3,6 +3,7 @@ target
 build
 .gradle
 *.log
+bower_components
 node
 node_modules
 rebel.xml

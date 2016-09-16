@@ -42,13 +42,7 @@ sourceSets {
 }
 
 // TODO: this list should not be required, copy dependencies whose group is org.webjars instead
-List webjars = [[group: 'org.webjars', name: 'angularjs', version: '1.4.10'],
-                [group: 'org.webjars', name: 'angular-ui-bootstrap', version: '0.12.1'],
-                [group: 'org.webjars', name: 'angular-ui-router', version: '0.2.15'],
-                [group: 'org.webjars', name: 'bootstrap', version: '3.1.1'],
-                [group: 'org.webjars', name: 'momentjs', version: '2.7.0'],
-                [group: 'org.webjars', name: 'jquery', version: '1.9.0'],
-                [group: 'se.inera.intyg.common', name: 'common-web']]
+List webjars = [[group: 'se.inera.intyg.common', name: 'common-web']]
 
 task unzipWebjars(type: Copy) {
     description 'Copies anything that is a webjar from the classpath and expands it so that we can use their static resources with karma'
