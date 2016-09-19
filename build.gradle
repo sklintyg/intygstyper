@@ -1,3 +1,16 @@
+buildscript {
+  repositories {
+    mavenLocal()
+    maven { url "https://plugins.gradle.org/m2/" }
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
+    classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
+  }
+}
+
 plugins {
   id 'org.ajoberstar.grgit' version '1.5.1'
   id 'org.sonarqube' version '2.1-rc3'
@@ -23,14 +36,6 @@ allprojects  {
   group = 'se.inera.intyg.intygstyper'
   version = System.env.BUILD_NUMBER != null ? baseVersion + System.env.BUILD_NUMBER : '0-SNAPSHOT'
   rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
-
-  buildscript {
-    repositories {
-      mavenLocal()
-      maven { url "https://plugins.gradle.org/m2/" }
-      jcenter()
-    }
-  }
 }
 
 subprojects {
@@ -143,8 +148,9 @@ subprojects {
   }
 }
 
-configure(subprojects.findAll { ['lisu', 'luae_fs', 'luae_na', 'luse', 'fk7263', 'ts-bas', 'ts-diabetes'].contains(it.name) }) {
-
+configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'luse', 'luae_fs', 'luae_na'].contains(it.name) }) {
+  apply plugin: 'com.moowork.grunt'
+  apply plugin: 'com.moowork.node'
 }
 
 project(':fk-parent') {
