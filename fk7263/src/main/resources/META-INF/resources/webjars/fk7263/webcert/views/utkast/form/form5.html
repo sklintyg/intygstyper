@@ -8,7 +8,7 @@
 
       <div ng-show="fmb.formData.AKTIVITETSBEGRANSNING">
         <wc-fmb-help-display related-form-id="FALT5" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning"
-                             help-text-contents="fmb.formData.AKTIVITETSBEGRANSNING"></wc-fmb-help-display>
+                             help-text-contents="fmb.formData.AKTIVITETSBEGRANSNING" original-diagnosis-code="fmb.originalDiagnoskod"></wc-fmb-help-display>
       </div>
 
       <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.aktivitetsbegransning"
