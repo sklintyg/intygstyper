@@ -33,6 +33,19 @@ angular.module('fk7263').directive('qaPanel',
             IntygCopyRequestModel, focusElement, pingService) {
             'use strict';
 
+            function _hasKompletteringUtkastRelation(relations) {
+                if (typeof relations === 'undefined' || relations === null) {
+                    return false;
+                }
+                for (var a = 0; a < relations.length; a++) {
+                    var relation = relations[a];
+                    if (relation.kod === 'KOMPLT') {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
             return {
                 restrict: 'A',
                 transclude: true,
@@ -137,11 +150,33 @@ angular.module('fk7263').directive('qaPanel',
                         $scope.showAnswerField = false;
                     };
 
+                    $scope.openKompletteringsUtkast = function(intygsTyp) {
+                        var latestKomplRelation;
+                        for (var a = 0; a < $scope.certProperties.relations.length; a++) {
+                            var relation =  $scope.certProperties.relations[a];
+                            if (relation.kod === 'KOMPLT') {
+                                if (typeof latestKomplRelation === 'undefined') {
+                                    latestKomplRelation = relation;
+                                } else if (relation.date > latestKomplRelation.date) {
+                                    latestKomplRelation = relation;
+                                }
+                            }
+                        }
+                        if (typeof latestKomplRelation !== 'undefined') {
+                            $state.go(intygsTyp + '-edit', {
+                                certificateId: latestKomplRelation.intygsId
+                            });
+                        }
+                    };
+
+                    $scope.svaraMedFortsattPaIntygsutkast = _hasKompletteringUtkastRelation($scope.certProperties.relations);
+
                     $scope.openKompletteringDialog = function(qa, cert) {
 
                         var kompletteringDialogModel = {
                             qa: qa,
-                            uthopp: UserModel.isUthopp()
+                            uthopp: UserModel.isUthopp(),
+                            svaraMedFortsattPaIntygsutkast: $scope.svaraMedFortsattPaIntygsutkast
                         };
 
                         kompletteringDialog = dialogService.showDialog({
@@ -173,6 +208,11 @@ angular.module('fk7263').directive('qaPanel',
                                 focusElement('answerText-' + qa.internReferens);
                             },
                             button2id: 'button2answermessage-dialog',
+                            button3click: function(modalInstance) {
+                                modalInstance.close();
+                                $scope.openKompletteringsUtkast(cert.typ);
+                            },
+                            button3id:  'button3gotoutkast-dialog',
                             autoClose: false,
                             size: 'lg'
                         }).result.then(function() {

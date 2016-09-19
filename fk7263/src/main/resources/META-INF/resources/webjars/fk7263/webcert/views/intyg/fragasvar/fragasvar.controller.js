@@ -65,6 +65,7 @@ angular.module('fk7263').controller('fk7263.QACtrl',
 
                     $scope.certProperties = certProperties;
                     $scope.certProperties.isLoaded = true;
+
                     var intygId = $stateParams.certificateId;
                     if(certProperties.forceUseProvidedIntyg) {
                         // Used for utkast page. In this case we must use the id from cert because $stateParams.certificateId is the id of the utkast, not the parentIntyg

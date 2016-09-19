@@ -85,7 +85,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                             ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
                         }
 
-                        ViewState.common.updateIntygProperties(result.statuses);
+                        ViewState.common.updateIntygProperties(result);
 
                         $scope.pdfUrl = '/moduleapi/intyg/ts-bas/' + ViewState.intygModel.id + '/pdf';
 
