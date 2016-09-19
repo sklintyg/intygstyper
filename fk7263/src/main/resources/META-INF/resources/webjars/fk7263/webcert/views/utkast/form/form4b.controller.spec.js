@@ -20,12 +20,6 @@
 describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
     'use strict';
 
-    var $scope;
-    var $rootScope;
-    var $log;
-    var model;
-    var viewState;
-
     // Load the webcert module and mock away everything that is not necessary.
 
     beforeEach(angular.mock.module('common', 'fk7263', function(/*$provide*/) {
@@ -39,7 +33,14 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
 
     }));
 
+
     // Get references to the object we want to test from the context.
+
+    var $scope;
+    var $rootScope;
+    var $log;
+    var model;
+    var viewState;
 
     beforeEach(angular.mock.inject([
         '$controller',
@@ -60,6 +61,7 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
             $controller('fk7263.EditCert.Form4bCtrl' , { $scope: $scope, $log : $log, model : model, viewState : viewState });
 
         }]));
+
 
     describe('#change in avstangningSmittskydd should trigger an update in the attic', function() {
         beforeEach(function(){
@@ -112,5 +114,80 @@ describe('fk7263.EditCertCtrl.Form4bCtrl', function() {
         });
 
     });
+
+
+    var tpl, inputElement;
+
+    describe('#manual change in date picker field should trigger value formatting', function() {
+
+        // Set up a form element
+
+        beforeEach(angular.mock.inject(['$rootScope', '$compile',
+            function($rootScope, $compile) {
+
+                tpl = angular.element(
+                    '<div ng-form="testForm">' +
+                    '<span wc-date-picker-field target-model="model" dom-id="test" override-render="true" add-date-parser="loose"></span>' +
+                    '</div>'
+                );
+
+                $scope = $rootScope.$new();
+                $scope.model = null;
+                $compile(tpl)($scope);
+                $scope.$digest();
+
+                // Find the input control:
+                inputElement = tpl.find('input');
+            }
+        ]));
+
+        it('should allow 2016-09-12', function() {
+            _applyValue('2016-09-12');
+            _validateOutcome('2016-09-12');
+        });
+
+        it('should allow 2016-0912', function() {
+            _applyValue('2016-0912');
+            _validateOutcome('2016-09-12');
+        });
+
+        it('should allow 201609-12', function() {
+            _applyValue('201609-12');
+            _validateOutcome('2016-09-12');
+        });
+
+        it('should allow 2016/09/12', function() {
+            _applyValue('2016/09/12');
+            _validateOutcome('2016-09-12');
+        });
+
+        it('should allow 2016/0912', function() {
+            _applyValue('2016/0912');
+            _validateOutcome('2016-09-12');
+        });
+
+        it('should allow 201609/12', function() {
+            _applyValue('201609/12');
+            _validateOutcome('2016-09-12');
+        });
+
+        it('should allow 20160912', function() {
+            _applyValue('20160912');
+            _validateOutcome('2016-09-12');
+        });
+
+    });
+
+
+    function _applyValue(value) {
+        angular.element(inputElement).val(value).trigger('input');
+        $scope.$apply();
+    }
+
+    function _validateOutcome(value) {
+        expect($scope.testForm.test.$viewValue).toBe(value);
+        expect($scope.testForm.test.$modelValue).toBe(value);
+    }
+
 
 });

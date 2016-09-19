@@ -27,7 +27,7 @@
                                                                                      value="true">
                     Min undersökning av patienten</label>
   <span wc-date-picker-field target-model="dates.undersokningAvPatienten"
-        dom-id="undersokningAvPatientenDate"></span>
+        dom-id="undersokningAvPatientenDate" add-date-parser="loose"></span>
             </div>
 
             <!-- Telefonkontakt -->
@@ -39,7 +39,7 @@
                                                                                      ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
                     Min telefonkontakt med patienten</label>
   <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
-        dom-id="telefonkontaktMedPatientenDate"></span>
+        dom-id="telefonkontaktMedPatientenDate" add-date-parser="loose"></span>
             </div>
 
             <!-- Journaluppgifter -->
@@ -51,7 +51,7 @@
                                                                                      ng-change="toggleBaseradPaDate('journaluppgifter')">
                     Journaluppgifter</label>
   <span wc-date-picker-field target-model="dates.journaluppgifter"
-        dom-id="journaluppgifterDate"></span>
+        dom-id="journaluppgifterDate" add-date-parser="loose"></span>
             </div>
 
             <!-- Annat -->
@@ -63,7 +63,7 @@
                                                                                      ng-change="toggleBaseradPaDate('annanReferens')">
                     Annat<span wc-help-mark field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
                 </label>
-                <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate"></span>
+                <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate" add-date-parser="loose"></span>
             </div>
             <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
                 <span>Ange vad:</span><br>
