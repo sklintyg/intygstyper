@@ -194,6 +194,23 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
   jar.dependsOn(jsInclude)
 }
 
+configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.name) }) {
+  task unzipWebjars(type: Copy) {
+    description 'Copies common-web from the classpath and expands it so that we can use their static resources with karma'
+    into "$buildDir/webjars/"
+    from {
+      configurations.compile.filter{ file -> webjars.any{jar -> file.name.startsWith('common-web') } }.collect{zipTree(it)}
+    }
+  }
+
+  task jsTests(type: NodeTask, dependsOn: [npmInstall, unzipWebjars]) {
+    script = file('node_modules/grunt-cli/bin/grunt')
+    args = ['test', '--outputDir=' + webappTestOutputDir, '--skip-coverage='+(!project.hasProperty('runSonar'))]
+  }
+
+  test.dependsOn(jsTests)
+}
+
 project(':fk-parent') {
   afterEvaluate { project ->
     project.configurations.find{ it.name == 'compile' }.resolvedConfiguration.getFirstLevelModuleDependencies().find {

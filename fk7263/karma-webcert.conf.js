@@ -21,7 +21,7 @@ module.exports = function(config) {
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/views/';
     var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/';
-    var WEBJAR_DIR = 'build/webjars/';
+    var WEBJAR_DIR = 'build/webjars/META-INF/resources/webjars/';
 
     config.set({
 
