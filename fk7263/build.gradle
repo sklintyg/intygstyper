@@ -1,20 +1,5 @@
 description = 'Intygstyper (FK7263 Läkarintyg)'
 
-def webappOutputDir = 'build/';
-def webappTestOutputDir = 'build/karma/';
-
-sourceSets {
-  main {
-    resources {
-      exclude '**/*.scss'
-      exclude '**/*.spec.js'
-      exclude '**/*.test.js'
-      exclude '**/karma*.conf.js'
-      exclude '**/karma*.conf.ci.js'
-    }
-  }
-}
-
 // TODO: this list should not be required, copy dependencies whose group is org.webjars instead
 List webjars = [[group: 'se.inera.intyg.common', name: 'common-web']]
 
@@ -22,9 +7,7 @@ task unzipWebjars(type: Copy) {
     description 'Copies anything that is a webjar from the classpath and expands it so that we can use their static resources with karma'
     into "$buildDir/webjars/"
     from {
-        configurations.compile.filter{file ->
-            webjars.any{jar -> file.name.startsWith(jar.name) }
-        }.collect{zipTree(it)}
+        configurations.compile.filter{ file -> webjars.any{jar -> file.name.startsWith(jar.name) } }.collect{zipTree(it)}
     }
 }
 
@@ -43,19 +26,6 @@ task jsTests(type: NodeTask, dependsOn: [npmInstall, moveJsFiles]) {
 }
 
 test.dependsOn(jsTests)
-
-task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
-    script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['default', '--outputDir=' + webappOutputDir]
-}
-
-jar.dependsOn(jsInclude)
-
-task packageTests(type: Jar) {
-  from sourceSets.test.output
-  classifier = 'tests'
-}
-artifacts.archives packageTests
 
 dependencies {
   compile "se.inera.intyg.common:common-support:${commonVersion}"

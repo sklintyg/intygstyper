@@ -1,33 +1,5 @@
 description = 'Intygstyper (Läkarintyg aktivitetsersättning vid förlängd skolgång)'
 
-def webappOutputDir = 'build/';
-def webappTestOutputDir = 'build/karma/';
-
-sourceSets {
-  main {
-    resources {
-      exclude '**/*.scss'
-      exclude '**/*.spec.js'
-      exclude '**/*.test.js'
-      exclude '**/karma*.conf.js'
-      exclude '**/karma*.conf.ci.js'
-    }
-  }
-}
-
-task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
-  script = file('node_modules/grunt-cli/bin/grunt')
-  args = ['default', '--outputDir=' + webappOutputDir]
-}
-
-jar.dependsOn(jsInclude)
-
-task packageTests(type: Jar) {
-  from sourceSets.test.output
-  classifier = 'tests'
-}
-artifacts.archives packageTests
-
 dependencies {
   compile project(':fk-parent')
 }

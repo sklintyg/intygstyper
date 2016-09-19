@@ -13,9 +13,3 @@ dependencies {
     compile "com.google.auto.value:auto-value:1.1"
     compile "com.helger:ph-schematron:${phSchematronVersion}"
 }
-
-task packageTests(type: Jar) {
-  from sourceSets.test.output
-  classifier = 'tests'
-}
-artifacts.archives packageTests

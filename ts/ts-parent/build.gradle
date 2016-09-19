@@ -1,20 +1,5 @@
 description = 'Intygstyper (TS Läkarintyg, parent)'
 
-task copyToLib(type: Copy) {
-  from { zipTree(findJarsByName(configurations.compile, 'common-build-tools')) }
-  into "$buildDir/build-tools"
-}
-
-def findJarsByName(Configuration config, String depName) {
-  config.find { it.name.startsWith(depName) }
-}
-
-task packageTests(type: Jar) {
-  from sourceSets.test.output
-  classifier = 'tests'
-}
-artifacts.archives packageTests
-
 dependencies {
     compile "se.inera.intyg.common:common-schemas:${commonVersion}"
     compile "se.inera.intyg.common:common-support:${commonVersion}"

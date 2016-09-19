@@ -84,6 +84,7 @@ subprojects {
 
   dependencies {
     buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
+
     testCompile "junit:junit:4.+"
     testCompile 'commons-io:commons-io:2.4'
     testCompile 'org.mockito:mockito-core:1.9.0'
@@ -100,6 +101,12 @@ subprojects {
       configurations.buildtools.collect { zipTree(it) }
     }
   }
+
+  task packageTests(type: Jar) {
+    from sourceSets.test.output
+    classifier = 'tests'
+  }
+  artifacts.archives packageTests
 
   if (project.hasProperty('codeQuality')) {
     apply plugin: 'checkstyle'
@@ -162,6 +169,29 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
     distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
   }
 
+  sourceSets {
+    main {
+      resources {
+        exclude '**/*.scss'
+        exclude '**/*.spec.js'
+        exclude '**/*.test.js'
+        exclude '**/karma*.conf.js'
+        exclude '**/karma*.conf.ci.js'
+      }
+    }
+  }
+
+  ext {
+    webappOutputDir = 'build/'
+    webappTestOutputDir = 'build/karma/'
+  }
+
+  task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
+    script = file('node_modules/grunt-cli/bin/grunt')
+    args = ['default', '--outputDir=' + webappOutputDir]
+  }
+
+  jar.dependsOn(jsInclude)
 }
 
 project(':fk-parent') {
