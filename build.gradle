@@ -151,6 +151,17 @@ subprojects {
 configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'luse', 'luae_fs', 'luae_na'].contains(it.name) }) {
   apply plugin: 'com.moowork.grunt'
   apply plugin: 'com.moowork.node'
+
+  grunt {
+    colors = true
+  }
+
+  node {
+    version = '0.12.4'
+    download = true
+    distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
+  }
+
 }
 
 project(':fk-parent') {

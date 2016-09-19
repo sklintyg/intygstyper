@@ -3,16 +3,6 @@ description = 'Intygstyper (FK7263 Läkarintyg)'
 def webappOutputDir = 'build/';
 def webappTestOutputDir = 'build/karma/';
 
-grunt {
-  colors = true
-}
-
-node {
-  version = '0.12.4'
-  download = true
-  distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
-}
-
 sourceSets {
   main {
     resources {

@@ -1,20 +1,7 @@
 description = 'Sjukpenning Utökad (läkarintyg)'
 
-apply plugin: 'com.moowork.grunt'
-apply plugin: 'com.moowork.node'
-
 def webappOutputDir = 'build/';
 def webappTestOutputDir = 'build/karma/';
-
-grunt {
-  colors = true
-}
-
-node {
-  version = '0.12.4'
-  download = true
-  distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
-}
 
 sourceSets {
   main {
