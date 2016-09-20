@@ -66,8 +66,7 @@ public class InternalToTransportTest {
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNotNull(transport.getSvarPa());
         assertEquals(meddelandeId, transport.getSvarPa().getMeddelandeId());
-        assertEquals(1, transport.getSvarPa().getReferensId().size());
-        assertEquals(referensId, transport.getSvarPa().getReferensId().get(0));
+        assertEquals(referensId, transport.getSvarPa().getReferensId());
     }
 
     @Test
@@ -77,7 +76,7 @@ public class InternalToTransportTest {
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNotNull(transport.getSvarPa());
         assertEquals(meddelandeId, transport.getSvarPa().getMeddelandeId());
-        assertTrue(transport.getSvarPa().getReferensId().isEmpty());
+        assertNull(transport.getSvarPa().getReferensId());
     }
 
     @Test

@@ -4,7 +4,6 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -75,8 +74,7 @@ public class InternalToTransportTest {
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNotNull(transport.getSvarPa());
         assertEquals(meddelandeId, transport.getSvarPa().getMeddelandeId());
-        assertEquals(1, transport.getSvarPa().getReferensId().size());
-        assertEquals(referensId, transport.getSvarPa().getReferensId().get(0));
+        assertEquals(referensId, transport.getSvarPa().getReferensId());
     }
 
     @Test
@@ -86,7 +84,7 @@ public class InternalToTransportTest {
         RegisterCertificateType transport = InternalToTransport.convert(utlatande);
         assertNotNull(transport.getSvarPa());
         assertEquals(meddelandeId, transport.getSvarPa().getMeddelandeId());
-        assertTrue(transport.getSvarPa().getReferensId().isEmpty());
+        assertNull(transport.getSvarPa().getReferensId());
     }
 
     @Test
