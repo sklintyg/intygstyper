@@ -43,16 +43,6 @@ module.exports = function(config) {
             return plugins;
         })(),
 
-        reporters: [ 'dots', 'junit', 'coverage' ],
-
-        coverageReporter: {
-            type : 'lcovonly',
-            dir : 'target/karma_coverage/webcert',
-            subdir: '.'
-        },
-
-        junitReporter: {
-            outputFile: 'target/surefire-reports/TEST-karma-webcert-test-results.xml'
-        }
+        reporters: [ 'dots', 'coverage' ]
     });
 };

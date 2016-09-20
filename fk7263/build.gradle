@@ -1,0 +1,7 @@
+description = 'Intygstyper (FK7263 Läkarintyg)'
+
+dependencies {
+  compile "se.skltp.adapterservices.insuranceprocess.healthreporting:FkEintygAdapterIC-validator:2.2-RC2-INTYG"
+
+  testRuntime 'javax.servlet:servlet-api:2.5'
+}

@@ -64,7 +64,7 @@ public final class UtlatandeToIntyg {
 
     private static TypAvIntyg getTypAvIntyg(Utlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
-        typAvIntyg.setCode(source.getTyp().toUpperCase());
+        typAvIntyg.setCode(TsDiabetesEntryPoint.KV_UTLATANDETYP_INTYG_CODE);
         typAvIntyg.setCodeSystem(KV_UTLATANDETYP_INTYG_CODE_SYSTEM);
         typAvIntyg.setDisplayName(TsDiabetesEntryPoint.MODULE_NAME);
         return typAvIntyg;
@@ -111,6 +111,7 @@ public final class UtlatandeToIntyg {
             return;
         }
         if (source.getObservationsperiod() != null) {
+            // CHECKSTYLE:OFF EmptyBlock
             try {
                 svars.add(aSvar(AR_FOR_DIABETESDIAGNOS_SVAR_ID_35)
                         .withDelsvar(AR_FOR_DIABETESDIAGNOS_DELSVAR_ID_35,
@@ -122,6 +123,7 @@ public final class UtlatandeToIntyg {
                  * be invalid - in that case conversion skips them.
                  */
             }
+            // CHECKSTYLE:ON EmptyBlock
         }
 
         if (source.getDiabetestyp() != null) {
@@ -142,6 +144,7 @@ public final class UtlatandeToIntyg {
             diabetesBehandling.withDelsvar(INSULINBEHANDLING_DELSVAR_ID_19, source.getInsulin().toString());
         }
         if (source.getInsulinBehandlingsperiod() != null) {
+            // CHECKSTYLE:OFF EmptyBlock
             try {
                 diabetesBehandling.withDelsvar(INSULINBEHANDLING_SEDAN_AR_DELSVAR_ID_19,
                         aPartialDate(PartialDateTypeFormatEnum.YYYY, Year.of(Integer.parseInt(source.getInsulinBehandlingsperiod()))));
@@ -152,6 +155,7 @@ public final class UtlatandeToIntyg {
                  * be invalid - in that case conversion skips them.
                  */
             }
+            // CHECKSTYLE:ON EmptyBlock
         }
         if (StringUtils.isNotBlank(source.getAnnanBehandlingBeskrivning())) {
             diabetesBehandling.withDelsvar(ANNAN_BEHANDLING_DELSVAR_ID_19, source.getAnnanBehandlingBeskrivning());
@@ -204,6 +208,7 @@ public final class UtlatandeToIntyg {
         }
         if (source.getAllvarligForekomstVakenTidObservationstid() != null
                 && source.getAllvarligForekomstVakenTidObservationstid().isValidDate()) {
+            // CHECKSTYLE:OFF EmptyBlock
             try {
                 allvarligHypoglykemiVakenTid.withDelsvar(TIDPUNKT_ALLVARLIG_HYPOGLYKEMI_UNDER_VAKEN_TID_DELSVAR_ID_42,
                         source.getAllvarligForekomstVakenTidObservationstid().asLocalDate().toString());
@@ -214,6 +219,7 @@ public final class UtlatandeToIntyg {
                  * be invalid - in that case conversion skips them.
                  */
             }
+            // CHECKSTYLE:ON EmptyBlock
         }
         if (CollectionUtils.isNotEmpty(allvarligHypoglykemiVakenTid.delSvars)) {
             svars.add(allvarligHypoglykemiVakenTid.build());

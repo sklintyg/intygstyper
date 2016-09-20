@@ -1,0 +1,5 @@
+description = 'Aktivitetsersattning nedsatt arbetsförmåga (läkarintyg)'
+
+dependencies {
+  compile project(':fk-parent')
+}

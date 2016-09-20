@@ -18,7 +18,7 @@
  */
 
 /* global module, require */
-var baseConfig = require('./karma-minaintyg.conf.js');
+var baseConfig = require('./karma-webcert.conf.js');
 
 var runCoverage = false;
 process.argv.forEach(function(a) {
@@ -53,7 +53,8 @@ module.exports = function(config) {
                 'karma-jasmine',
                 'karma-junit-reporter',
                 'karma-phantomjs-launcher',
-                'karma-mocha-reporter'
+                'karma-mocha-reporter',
+                'karma-ng-html2js-preprocessor'
             ];
             if (runCoverage) {
                 plugins.push('karma-coverage');
@@ -61,16 +62,6 @@ module.exports = function(config) {
             return plugins;
         })(),
 
-        reporters: [ 'dots', 'junit', 'coverage' ],
-
-        coverageReporter: {
-            type : 'lcovonly',
-            dir : 'target/karma_coverage/minaintyg',
-            subdir: '.'
-        },
-
-        junitReporter: {
-            outputFile: 'target/surefire-reports/TEST-karma-minaintyg-test-results.xml'
-        }
+        reporters: [ 'dots', 'coverage' ]
     });
 };

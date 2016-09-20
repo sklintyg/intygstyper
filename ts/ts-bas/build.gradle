@@ -1,0 +1,5 @@
+description = 'Intygstyper (TS Läkarintyg, bas)'
+
+dependencies {
+  compile project(':ts-parent')
+}

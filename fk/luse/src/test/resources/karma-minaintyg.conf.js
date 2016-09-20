@@ -4,7 +4,7 @@ module.exports = function(config) {
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/luse/minaintyg/js/';
     var TEST_DIR = 'src/test/js/minaintyg/';
-    var WEBJAR_DIR = '../target/webjardependencies/';
+    var WEBJAR_DIR = 'build/webjars/';
 
     config.set({
 

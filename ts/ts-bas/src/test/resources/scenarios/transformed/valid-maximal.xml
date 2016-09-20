@@ -27,8 +27,8 @@
       <p:utlatande-id root="1.2.752.129.2.1.2.1" extension="intygsId0"/>
       <p:typAvUtlatande codeSystem="f6fb361a-e31d-48b8-8657-99b63912dd9b"
                         codeSystemName="kv_utlåtandetyp_intyg"
-                        code="TSTRK1007 (U07, V06)"
-                        displayName="TSTRK1007 (U07, V06)"/>
+                        code="TSTRK1007"
+                        displayName="TSTRK1007"/>
       <p:kommentar>Här kommer en övrig kommentar</p:kommentar>
       <p:signeringsdatum>2013-08-12T15:57:00</p:signeringsdatum>
       <p:patient>

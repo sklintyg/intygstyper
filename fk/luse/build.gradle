@@ -1,0 +1,5 @@
+description = 'Sjukersattning (läkarintyg)'
+
+dependencies {
+  compile project(':fk-parent')
+}

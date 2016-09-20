@@ -1,0 +1,5 @@
+description = 'Intygstyper (Läkarintyg aktivitetsersättning vid förlängd skolgång)'
+
+dependencies {
+  compile project(':fk-parent')
+}

@@ -21,42 +21,51 @@
 module.exports = function(config) {
     'use strict';
 
-    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-bas/minaintyg/js/';
-    var TEST_DIR = SRC_DIR;
-    var WEBJAR_DIR = '../../target/webjardependencies/';
+    var SRC_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/views/';
+    var TEST_DIR = 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/';
+    var WEBJAR_DIR = 'build/webjars/META-INF/resources/webjars/';
 
     config.set({
 
         // base path, that will be used to resolve files and exclude
-        basePath: '../../../../../../../',
+        basePath: '',
 
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
         preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/ts-bas/minaintyg/**/*.js': ['coverage']
+            'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/**/*.js': ['coverage']
         },
 
         // list of files / patterns to load in the browser
         files: [
 
             // Dependencies
-                WEBJAR_DIR + 'jquery/jquery.min.js',
-                WEBJAR_DIR + 'angularjs/angular.js',
-                WEBJAR_DIR + 'angularjs/angular-mocks.js',
-                WEBJAR_DIR + 'angularjs/1.4.10/angular-locale_sv-se.js',
-                WEBJAR_DIR + 'angularjs/angular-cookies.js',
-                WEBJAR_DIR + 'angular-ui-router/angular-ui-router.js',
-                WEBJAR_DIR + 'angularjs/angular-sanitize.js',
-                WEBJAR_DIR + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
+            // bower:js
+            'bower_components/jquery/jquery.js',
+            'bower_components/angular/angular.js',
+            'bower_components/angular-animate/angular-animate.js',
+            'bower_components/angular-cookies/angular-cookies.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/angular-i18n/angular-locale_sv-se.js',
+            'bower_components/angular-sanitize/angular-sanitize.js',
+            'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+            'bower_components/api-check/dist/api-check.js',
+            'bower_components/angular-formly/dist/formly.js',
+            'bower_components/angular-ui-router/release/angular-ui-router.js',
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/momentjs/moment.js',
+            // endbower
+            WEBJAR_DIR + 'common/webcert/module.min.js',
 
             // Load these first
-                SRC_DIR + 'module.js',
-                SRC_DIR + 'messages.js',
+            TEST_DIR + 'module.test.js',
 
             { pattern: SRC_DIR + '**/*' },
-            { pattern: TEST_DIR + '**/*Spec.js' }
+            { pattern: TEST_DIR + '**/**/*.spec.js' }
         ],
+
+        exclude: [ SRC_DIR + 'module.js' ],
 
         // web server port
         port: 9876,

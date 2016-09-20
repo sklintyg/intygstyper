@@ -24,7 +24,7 @@ module.exports = {
     webcert: {
         cwd: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/ts-diabetes/webcert/templates.js',
+        dest: 'build/resources/main/META-INF/resources/webjars/ts-diabetes/webcert/templates.js',
         options:{
             module: 'ts-diabetes',
             url: function(url) {
@@ -35,7 +35,7 @@ module.exports = {
     minaintyg: {
         cwd: 'src/main/resources/META-INF/resources/webjars/ts-diabetes/minaintyg',
         src: ['**/*.html'],
-        dest: 'target/classes/META-INF/resources/webjars/ts-diabetes/minaintyg/templates.js',
+        dest: 'build/resources/main/META-INF/resources/webjars/ts-diabetes/minaintyg/templates.js',
         options:{
             module: 'ts-diabetes',
             url: function(url) {
