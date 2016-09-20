@@ -197,7 +197,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     description 'Copies common-web from the classpath and expands it so that we can use their static resources with karma'
     into "$buildDir/webjars/"
     from {
-      configurations.compile.filter{ it.name.startsWith('common-web') }.collect{ zipTree(it) }
+      configurations.jstests.collect { zipTree(it) }
     }
   }
 
@@ -208,9 +208,14 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
 
   test.dependsOn(jsTests)
 
+  configurations {
+    jstests
+  }
+
   dependencies {
+    jstests "se.inera.intyg.common:common-web:${commonVersion}"
+
     compile "se.inera.intyg.common:common-support:${commonVersion}"
-    compile "se.inera.intyg.common:common-web:${commonVersion}"
     compile "se.inera.intyg.common:integration-util:${commonVersion}"
     compile "se.inera.intyg.common:common-schemas:${commonVersion}"
     compile "se.inera.intyg.common:common-services:${commonVersion}"
