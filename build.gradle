@@ -132,9 +132,7 @@ subprojects {
       }
     }
   }
-}
 
-subprojects {
   uploadArchives {
     repositories.mavenDeployer {
       pom.whenConfigured {pom ->
@@ -232,7 +230,6 @@ configure(subprojects.findAll { ['fk7263', 'ts-parent', 'fk-parent'].contains(it
     compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
     compile "com.helger:ph-schematron:${phSchematronVersion}"
     compile "org.springframework:spring-tx:${springVersion}"
-    
   }
 }
 
