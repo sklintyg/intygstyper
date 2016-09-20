@@ -1,13 +1,1 @@
 description = 'Intygstyper (TS Läkarintyg, parent)'
-
-dependencies {
-    compile "se.inera.intyg.common:common-schemas:${commonVersion}"
-    compile "se.inera.intyg.common:common-support:${commonVersion}"
-    compile "se.inera.intyg.common:common-web:${commonVersion}"
-    compile "se.inera.intyg.common:integration-util:${commonVersion}"
-    compile "se.inera.intyg.common:common-services:${commonVersion}"
-
-    compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
-    compile "com.itextpdf:itextpdf:${itextVersion}"
-    compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
-}

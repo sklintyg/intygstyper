@@ -1,17 +1,7 @@
 description = 'Intygstyper (FK7263 Läkarintyg)'
 
 dependencies {
-  compile "se.inera.intyg.common:common-support:${commonVersion}"
-  compile "se.inera.intyg.common:common-web:${commonVersion}"
-  compile "se.inera.intyg.common:integration-util:${commonVersion}"
-  compile "se.inera.intyg.common:common-schemas:${commonVersion}"
-
-  compile "com.itextpdf:itextpdf:${itextVersion}"
-  compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
-  compile "com.helger:ph-schematron:${phSchematronVersion}"
-  compile "org.springframework:spring-tx:${springVersion}"
   compile "se.skltp.adapterservices.insuranceprocess.healthreporting:FkEintygAdapterIC-validator:2.2-RC2-INTYG"
 
   testRuntime 'javax.servlet:servlet-api:2.5'
 }
-

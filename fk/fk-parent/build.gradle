@@ -1,15 +1,5 @@
 description = 'Parent for fk-intyg'
 
 dependencies {
-    compile "se.inera.intyg.common:common-support:${commonVersion}"
-    compile "se.inera.intyg.common:common-services:${commonVersion}"
-    compile "se.inera.intyg.common:integration-util:${commonVersion}"
-    compile "se.inera.intyg.common:common-schemas:${commonVersion}"
-    compile "se.inera.intyg.common:common-web:${commonVersion}"
-
-    compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
-    compile "com.itextpdf:itextpdf:${itextVersion}"
-    compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
     compile "com.google.auto.value:auto-value:1.1"
-    compile "com.helger:ph-schematron:${phSchematronVersion}"
 }

@@ -199,7 +199,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     description 'Copies common-web from the classpath and expands it so that we can use their static resources with karma'
     into "$buildDir/webjars/"
     from {
-      configurations.compile.filter{ file -> webjars.any{jar -> file.name.startsWith('common-web') } }.collect{zipTree(it)}
+      configurations.compile.filter{ it.name.startsWith('common-web') }.collect{ zipTree(it) }
     }
   }
 
@@ -209,6 +209,31 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
   }
 
   test.dependsOn(jsTests)
+
+  dependencies {
+    compile "se.inera.intyg.common:common-support:${commonVersion}"
+    compile "se.inera.intyg.common:common-web:${commonVersion}"
+    compile "se.inera.intyg.common:integration-util:${commonVersion}"
+    compile "se.inera.intyg.common:common-schemas:${commonVersion}"
+    compile "se.inera.intyg.common:common-services:${commonVersion}"
+  }
+}
+
+configure(subprojects.findAll { ['fk7263', 'ts-parent', 'fk-parent'].contains(it.name) }) {
+  dependencies {
+    compile "se.inera.intyg.common:common-support:${commonVersion}"
+    compile "se.inera.intyg.common:common-web:${commonVersion}"
+    compile "se.inera.intyg.common:integration-util:${commonVersion}"
+    compile "se.inera.intyg.common:common-schemas:${commonVersion}"
+    compile "se.inera.intyg.common:common-services:${commonVersion}"
+
+    compile "com.itextpdf:itextpdf:${itextVersion}"
+    compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
+    compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
+    compile "com.helger:ph-schematron:${phSchematronVersion}"
+    compile "org.springframework:spring-tx:${springVersion}"
+    
+  }
 }
 
 project(':fk-parent') {
