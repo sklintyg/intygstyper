@@ -90,7 +90,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
                 });
             }
 
-            function filterKompletteringar(qaList, widgetState, certProperties) {
+            function filterKompletteringar(qaList, widgetState, intygProperties) {
 
                 var isAnyKompletteringarNotHandled = false;
 
@@ -105,7 +105,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
                     }
 
                     // Filter out the komplettering the utkast was based on and only that one.
-                    return isKompletteringFraga && Number(qa.internReferens) === Number(certProperties.meddelandeId);
+                    return isKompletteringFraga && Number(qa.internReferens) === Number(intygProperties.meddelandeId);
                 });
 
                 // If there aren't any kompletteringar that aren't handled already, we can show the sign that all kompletteringar are handled.
@@ -115,7 +115,7 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
 
             this.filterKompletteringar = filterKompletteringar;
 
-            this.fetchFragaSvar = function (scope, intygId, certProperties) {
+            this.fetchFragaSvar = function (scope, intygId, intygProperties) {
                 // Request loading of QA's for this certificate
                 fragaSvarProxy.getQAForCertificate(intygId, 'fk7263', function (result) {
                     $log.debug('getQAForCertificate:success data:' + result);
@@ -124,11 +124,11 @@ angular.module('fk7263').service('fk7263.QACtrl.Helper',
 
                     scope.widgetState.showAllKompletteringarHandled = false;
 
-                    decorateWithGUIParameters(result, ObjectHelper.isDefined(certProperties) ? certProperties.kompletteringOnly : false);
-                    if(ObjectHelper.isDefined(certProperties)){
+                    decorateWithGUIParameters(result, ObjectHelper.isDefined(intygProperties) ? intygProperties.kompletteringOnly : false);
+                    if(ObjectHelper.isDefined(intygProperties)){
                         // If kompletteringsmode, only show kompletteringsissues
-                        if (certProperties.kompletteringOnly) {
-                            result = filterKompletteringar(result, scope.widgetState, certProperties);
+                        if (intygProperties.kompletteringOnly) {
+                            result = filterKompletteringar(result, scope.widgetState, intygProperties);
                         }
                     }
 

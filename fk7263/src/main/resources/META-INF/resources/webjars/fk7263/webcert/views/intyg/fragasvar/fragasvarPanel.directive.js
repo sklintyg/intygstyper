@@ -171,7 +171,7 @@ angular.module('fk7263').directive('qaPanel',
 
                     $scope.svaraMedFortsattPaIntygsutkast = _hasKompletteringUtkastRelation($scope.intygProperties.relations);
 
-                    $scope.openKompletteringDialog = function(qa, cert) {
+                    $scope.openKompletteringDialog = function(qa, intyg) {
 
                         var kompletteringDialogModel = {
                             qa: qa,
@@ -185,7 +185,7 @@ angular.module('fk7263').directive('qaPanel',
                             templateUrl: '/app/partials/komplettering-dialog.html',
                             model: kompletteringDialogModel,
                             button1click: function(modalInstance) {
-                                $scope.answerWithIntyg(qa, cert).then(function(result) {
+                                $scope.answerWithIntyg(qa, intyg).then(function(result) {
 
                                     function goToDraft(type, intygId) {
                                         $state.go(type + '-edit', {
@@ -194,7 +194,7 @@ angular.module('fk7263').directive('qaPanel',
                                     }
 
                                     modalInstance.close();
-                                    goToDraft(cert.typ, result.intygsUtkastId);
+                                    goToDraft(intyg.typ, result.intygsUtkastId);
 
                                 }, function(result) {
                                     // something went wrong. leave dialog open to show error message
@@ -210,7 +210,7 @@ angular.module('fk7263').directive('qaPanel',
                             button2id: 'button2answermessage-dialog',
                             button3click: function(modalInstance) {
                                 modalInstance.close();
-                                $scope.openKompletteringsUtkast(cert.typ);
+                                $scope.openKompletteringsUtkast(intyg.typ);
                             },
                             button3id:  'button3gotoutkast-dialog',
                             autoClose: false,

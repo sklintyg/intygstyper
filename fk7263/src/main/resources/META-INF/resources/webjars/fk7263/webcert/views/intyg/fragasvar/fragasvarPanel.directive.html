@@ -116,7 +116,7 @@
         </button>
 
         <button type="button" class="btn" ng-if="svaraMedFortsattPaIntygsutkast && qa.status != 'CLOSED' && !showAnswerField"
-                ng-class="{'btn-success': qa.status != 'CLOSED' && !showAnswerField, 'btn-default btn-secondary': qa.status == 'CLOSED' || showAnswerField}" ng-click="openKompletteringsUtkast(cert.typ)"
+                ng-class="{'btn-success': qa.status != 'CLOSED' && !showAnswerField, 'btn-default btn-secondary': qa.status == 'CLOSED' || showAnswerField}" ng-click="openKompletteringsUtkast(intyg.typ)"
                 id="continueWithUtkastBtn-{{qa.internReferens}}">
 
           Fortsätt på intygsutkast</button>

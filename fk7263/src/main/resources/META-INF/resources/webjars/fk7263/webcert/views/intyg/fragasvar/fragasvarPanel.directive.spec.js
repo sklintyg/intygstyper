@@ -63,10 +63,10 @@ describe('qaPanel', function() {
             $httpBackend = _$httpBackend_;
             IntygHelper = _IntygHelper_;
             $scope.qa = { svarsText: 'lite initial text', status: 'CLOSED'};
-            $scope.certProperties = {};
+            $scope.intygProperties = {};
 
             element = angular.element('<div qa-panel' +
-                ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" intyg="intyg" intyg-properties="certProperties"></div>');
+                ' panel-id="handled" type="handled" qa="qa" qa-list="qaList" intyg="intyg" intyg-properties="intygProperties"></div>');
             element = $compile(element)($scope);
             $scope.$digest();
             $scope = element.isolateScope();

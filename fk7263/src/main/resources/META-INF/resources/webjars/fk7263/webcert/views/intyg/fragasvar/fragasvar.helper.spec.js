@@ -55,11 +55,11 @@ describe('FragaSvarHelper', function() {
                 showAllKompletteringarHandled: false
             };
 
-            var certProperties = {
+            var intygProperties = {
                 meddelandeId: '14'
             };
 
-            var resultList = fragaSvarHelper.filterKompletteringar(qaList, widgetState, certProperties);
+            var resultList = fragaSvarHelper.filterKompletteringar(qaList, widgetState, intygProperties);
 
             expect(resultList.length).toBe(1);
             expect(widgetState.showAllKompletteringarHandled).toBe(false);
@@ -90,11 +90,11 @@ describe('FragaSvarHelper', function() {
             };
 
             // Meddelande to fetch
-            var certProperties = {
+            var intygProperties = {
                 meddelandeId: '14'
             };
 
-            var resultList = fragaSvarHelper.filterKompletteringar(qaList, widgetState, certProperties);
+            var resultList = fragaSvarHelper.filterKompletteringar(qaList, widgetState, intygProperties);
 
             // Should still be 1 since its matched on ID
             expect(resultList.length).toBe(1);
