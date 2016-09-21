@@ -33,6 +33,7 @@ import javax.xml.bind.JAXBElement;
 
 import org.junit.Test;
 
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.RelationKod;
 import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.model.common.internal.*;
@@ -193,7 +194,7 @@ public class UtlatandeToIntygTest {
         utlatande.setDiagnosBeskrivning("DiagnosBeskrivning");
         utlatande.setDiagnosBeskrivning1("HuvudDiagnosBeskrivning");
         utlatande.setDiagnosKod("DiagnosKod");
-        utlatande.setDiagnosKodsystem1("DiagnosKodSystem");
+        utlatande.setDiagnosKodsystem1(Diagnoskodverk.ICD_10_SE.name());
         utlatande.setForaldrarledighet(true);
         utlatande.setFunktionsnedsattning("FunktionsNedsattning");
         utlatande.setGiltighet(new LocalDateInterval(LocalDate.now(), LocalDate.now().plusDays(4)));
@@ -329,7 +330,7 @@ public class UtlatandeToIntygTest {
         assertEquals(UtlatandeToIntyg.DIAGNOS_DELSVAR_6_2, testSvar.get(DIAGNOS_SVAR_6).get(0).getDelsvar().get(0).getId());
         JAXBElement<CVType> cv = (JAXBElement<CVType>) testSvar.get(DIAGNOS_SVAR_6).get(0).getDelsvar().get(0).getContent().get(0);
         assertEquals("DiagnosKod", cv.getValue().getCode());
-        assertEquals("DiagnosKodSystem", cv.getValue().getCodeSystem());
+        assertEquals(Diagnoskodverk.ICD_10_SE.getCodeSystem(), cv.getValue().getCodeSystem());
     }
 
     private void assertAtgard(Map<String, List<Svar>> testSvar) {

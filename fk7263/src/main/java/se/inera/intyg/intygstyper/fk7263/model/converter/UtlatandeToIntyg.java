@@ -28,6 +28,7 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 import java.util.ArrayList;
 import java.util.List;
 
+import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
@@ -292,7 +293,8 @@ public final class UtlatandeToIntyg {
     private static Svar createDiagnosSvar(Utlatande source) {
         SvarBuilder svarBuilder = aSvar(DIAGNOS_SVAR_6);
         if (source.getDiagnosKodsystem1() != null) {
-            svarBuilder = svarBuilder.withDelsvar(DIAGNOS_DELSVAR_6_2, aCV(source.getDiagnosKodsystem1(), source.getDiagnosKod(), ""));
+            svarBuilder = svarBuilder.withDelsvar(DIAGNOS_DELSVAR_6_2,
+                    aCV(Diagnoskodverk.valueOf(source.getDiagnosKodsystem1()).getCodeSystem(), source.getDiagnosKod(), null));
         }
         return svarBuilder.build();
     }
