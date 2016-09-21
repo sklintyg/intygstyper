@@ -112,7 +112,7 @@ public final class InternalToTransport {
     }
 
     private static void buildMedicinsktTillstandBeskrivning(MedicinsktTillstandType tillstand, Utlatande source) {
-        List<String> parts = new ArrayList<String>();
+        List<String> parts = new ArrayList<>();
         // Beskrivning huvuddiagnos
         if (!StringUtils.isEmpty(source.getDiagnosBeskrivning1())) {
             parts.add(source.getDiagnosBeskrivning1());
@@ -177,7 +177,7 @@ public final class InternalToTransport {
     }
 
     private static String buildArbetstidsforlaggning(Utlatande source) {
-        List<String> parts = new ArrayList<String>();
+        List<String> parts = new ArrayList<>();
         if (!StringUtils.isEmpty(source.getNedsattMed25Beskrivning())) {
             parts.add(source.getNedsattMed25Beskrivning());
         }
@@ -434,7 +434,7 @@ public final class InternalToTransport {
 
     private static MedicinsktTillstandType toMedicinsktTillstand(String diagnoskod, String diagnosKodsystem) {
         MedicinsktTillstandType tillstand = new MedicinsktTillstandType();
-        String codeSystem = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystem(true) : null;
+        String codeSystem = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystem() : null;
         String codeSystemName = diagnosKodsystem != null ? Diagnoskodverk.valueOf(diagnosKodsystem).getCodeSystemName() : null;
 
         tillstand.setTillstandskod(createCD(diagnoskod, codeSystem, codeSystemName));

@@ -255,7 +255,7 @@ public final class UtlatandeToIntyg {
             DiabetesKod diabetesKod = DiabetesKod.valueOf(source.getDiabetesTyp());
             svars.add(aSvar(TYP_AV_DIABETES_SVAR_ID_18)
                     .withDelsvar(TYP_AV_DIABETES_DELSVAR_ID_18,
-                            aCV(Diagnoskodverk.ICD_10_SE.getCodeSystem(false), diabetesKod.getCode(), diabetesKod.getDescription()))
+                            aCV(Diagnoskodverk.ICD_10_SE.getCodeSystem(), diabetesKod.getCode(), diabetesKod.getDescription()))
                     .build());
         }
         SvarBuilder diabetesBehandling = aSvar(BEHANDLING_DIABETES_SVAR_ID_19);

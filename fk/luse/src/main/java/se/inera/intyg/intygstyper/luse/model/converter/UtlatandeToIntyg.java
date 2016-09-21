@@ -126,17 +126,17 @@ public final class UtlatandeToIntyg {
             switch (i) {
             case 0:
                 diagnosSvar.withDelsvar(DIAGNOS_DELSVAR_ID_6,
-                        aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
                         .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
                 break;
             case 1:
                 diagnosSvar.withDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
-                        aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
                         .withDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
                 break;
             case 2:
                 diagnosSvar.withDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
-                        aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
                         .withDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
                 break;
             default:

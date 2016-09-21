@@ -236,7 +236,7 @@ public final class TransportToInternal {
         }
         utlatande.setDiagnosBeskrivning(source.getBeskrivning());
         utlatande.setDiagnosKod(source.getTillstandskod().getCode());
-        Diagnoskodverk kodverk = Diagnoskodverk.getEnumByCodeSystem(source.getTillstandskod().getCodeSystem(), true);
+        Diagnoskodverk kodverk = Diagnoskodverk.getEnumByCodeSystem(source.getTillstandskod().getCodeSystem());
         if (source.getTillstandskod().getCodeSystem() != null &&  kodverk != null) {
             utlatande.setDiagnosKodsystem1(kodverk.name());
         } else {

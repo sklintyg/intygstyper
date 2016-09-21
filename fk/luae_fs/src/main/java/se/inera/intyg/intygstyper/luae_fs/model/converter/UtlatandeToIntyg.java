@@ -115,7 +115,7 @@ public final class UtlatandeToIntyg {
             if (diagnos.getDiagnosKod() != null) {
                 Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
                 svars.add(aSvar(DIAGNOS_SVAR_ID_6, diagnosInstans++)
-                        .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(false), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
                         .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
             }
         }
