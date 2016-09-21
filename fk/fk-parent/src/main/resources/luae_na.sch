@@ -298,7 +298,7 @@
   <iso:pattern id="q6.2">
     <iso:rule context="//gn:delsvar[@id='6.2']"> 
       <iso:extends rule="cv"/>
-      <iso:assert test="matches(normalize-space(tp:cv/tp:codeSystem), '(1.2.752.116.1.1.1.1.3|1.2.752.116.1.3.1.1.2)')">
+      <iso:assert test="matches(normalize-space(tp:cv/tp:codeSystem), '(1.2.752.116.1.1.1.1.3|1.2.752.116.1.3.1.4.1)')">
         Diagnoskodsystem måste vara OID för ICD-10-SE eller KSH97-P.
       </iso:assert>
       <iso:assert test="matches(normalize-space(tp:cv/tp:code),'^([A-EG-Ya-eg-y][0-9]{2}[A-Za-z0-9-]*|[Zz][0-689][0-9][A-Za-z0-9-]*|[Zz]7[0-24-9][A-Za-z0-9-]*|[Zz]73[A-Za-z0-9-]+|[Ff][0-9]{2}[A-Za-z0-9-]+)$')">
