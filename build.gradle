@@ -185,9 +185,10 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
   }
 
   task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
-    inputs.dir("src/main/resources/META-INF/resources")
+    inputs.dir("$projectDir/src/main/resources")
     inputs.files(fileTree(projectDir).include('*.js'))
     inputs.files(fileTree(projectDir).include('*.json'))
+    inputs.files(configurations.compile)
     outputs.dir(webappOutputDir)
 
     script = file('node_modules/grunt-cli/bin/grunt')
@@ -207,9 +208,10 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
   }
 
   task jsTests(type: NodeTask, dependsOn: [npmInstall, unzipWebjars]) {
-    inputs.dir("src/main/resources/META-INF/resources")
+    inputs.dir("${projectDir}/src/main/resources")
     inputs.files(fileTree(projectDir).include('*.js'))
     inputs.files(fileTree(projectDir).include('*.json'))
+    inputs.files(configurations.compile)
     outputs.dir(webappTestOutputDir)
 
     script = file('node_modules/grunt-cli/bin/grunt')
