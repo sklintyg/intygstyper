@@ -271,11 +271,11 @@ public class Fk7263InternalToNotification {
             code = HandelsekodKodRestriktion.HAN_6;
             displayName = "FRAGA_FRAN_FK";
             break;
-        case NYFRTM:
+        case NYFRFV:
             code = HandelsekodKodRestriktion.HAN_8;
             displayName = "FRAGA_TILL_FK";
             break;
-        case HANFRA:
+        case HANFRFM:
             code = HandelsekodKodRestriktion.HAN_9;
             displayName = "FRAGA_FRAN_FK_HANTERAD";
             break;
@@ -307,7 +307,7 @@ public class Fk7263InternalToNotification {
             code = HandelsekodKodRestriktion.HAN_7;
             displayName = "SVAR_FRAN_FK";
             break;
-        case HANSVA:
+        case HANFRFV:
             code = HandelsekodKodRestriktion.HAN_10;
             displayName = "SVAR_FRAN_FK_HANTERAD";
             break;
