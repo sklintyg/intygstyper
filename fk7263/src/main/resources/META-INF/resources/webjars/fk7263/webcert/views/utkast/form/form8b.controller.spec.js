@@ -98,6 +98,53 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
 
     });
 
+    describe('#Verify tom-date command sequence', function() {
+
+        beforeEach(angular.mock.inject([
+            '$compile', '$templateCache', '$controller', '$rootScope', '$http', '$httpBackend', '$log',
+            'fk7263.Domain.IntygModel', 'fk7263.EditCertCtrl.ViewStateService',
+            function( $compile, $templateCache, $controller, _$rootScope_, _$http_, _$httpBackend_, _$log_, _model_, _viewState_) {
+                $rootScope = _$rootScope_;
+                $scope = $rootScope.$new();
+                $log = _$log_;
+                var IntygModel = _model_;
+                model = new IntygModel();
+                viewState = _viewState_;
+                viewState.intygModel = model;
+
+                var viewHtml = $templateCache.get('/web/webjars/fk7263/webcert/views/utkast/form/form8b.html');
+                var element = $compile(viewHtml)($scope);
+                $controller('fk7263.EditCert.Form8bCtrl',  {
+                    $scope: $scope,
+                    $log : $log,
+                    model : model,
+                    viewState : viewState,
+                    $element: element
+                });
+                $scope.$digest();
+
+                viewState.common.doneLoading = true;
+                $scope.$digest();
+            }]));
+
+        it('converts a tom-date code correctly into a future date string representation', function() {
+            // ----- act
+            $scope.$apply();
+
+            $scope.form8b.nedsattMed100from.$setViewValue(new Date(2015,5,16,0,0,0,0));
+            $scope.$apply();
+            // ----- assert
+            expect(model.nedsattMed100.from).toBe('2015-06-16');
+
+            $scope.form8b.nedsattMed100tom.$setViewValue('d11');
+            $scope.onToFieldBlur($scope.field8b.nedsattMed100);
+            $scope.$apply()
+
+            expect(model.nedsattMed100.tom).toBe('2015-06-27');
+        });
+
+    });
+
     describe('#Intygdata gets done loading before controller is initialized', function() {
 
         beforeEach(angular.mock.inject([

@@ -52,7 +52,7 @@
                           invalid="!field8b.nedsattMed25.from.viewValid" override-render="true" format='' add-date-parser="loose"></span>
           </label>
           <label class="control-label checkbox">till och med
-                        <span wc-date-picker-field target-model="model.nedsattMed25.tom"
+                        <span wc-date-picker-field target-model="model.nedsattMed25.tom" on-blur="onToFieldBlur(field8b.nedsattMed25)"
                               on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"
                               invalid="!field8b.nedsattMed25.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
@@ -100,7 +100,7 @@
                         invalid="!field8b.nedsattMed50.from.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
           <label class="control-label checkbox">till och med
-                      <span wc-date-picker-field target-model="model.nedsattMed50.tom"
+                      <span wc-date-picker-field target-model="model.nedsattMed50.tom"  on-blur="onToFieldBlur(field8b.nedsattMed50)"
                             on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50tom"
                             invalid="!field8b.nedsattMed50.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
@@ -146,7 +146,7 @@
                             invalid="!field8b.nedsattMed75.from.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
           <label class="control-label checkbox">till och med
-                      <span wc-date-picker-field target-model="model.nedsattMed75.tom"
+                      <span wc-date-picker-field target-model="model.nedsattMed75.tom"  on-blur="onToFieldBlur(field8b.nedsattMed75)"
                             on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75tom"
                             invalid="!field8b.nedsattMed75.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
@@ -192,7 +192,7 @@
                             invalid="!field8b.nedsattMed100.from.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
           <label class="control-label checkbox">till och med
-                      <span wc-date-picker-field target-model="model.nedsattMed100.tom"
+                      <span wc-date-picker-field target-model="model.nedsattMed100.tom"  on-blur="onToFieldBlur(field8b.nedsattMed100)"
                             on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100tom"
                             invalid="!field8b.nedsattMed100.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>

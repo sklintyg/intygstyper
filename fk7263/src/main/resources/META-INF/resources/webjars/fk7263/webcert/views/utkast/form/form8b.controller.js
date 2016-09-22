@@ -19,9 +19,9 @@
 
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        'fk7263.LastEffectiveDateNoticeModel',
+        'fk7263.LastEffectiveDateNoticeModel', 'common.DateUtilsService',
         'common.DateRangeService', 'common.fmb.ViewStateService', 'common.messageService',
-        function($scope, $log, viewState, LastEffectiveDateNoticeModel,
+        function($scope, $log, viewState, LastEffectiveDateNoticeModel, dateUtils,
             DateRangeService, fmbViewState, messageService) {
             'use strict';
             // private vars
@@ -77,6 +77,18 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 }
             }
 
+            $scope.onToFieldBlur = function(fromTo) {
+                //If from-field has a valid date, and the to-field contains a parsable day code, calculate a new to-field dateString
+                if (fromTo && fromTo.from.moment && fromTo.from.valid) {
+                    var days = dateUtils.parseDayCodes(fromTo.to.dateString);
+                    if (days !== null) {
+                        var toDate = moment(fromTo.from.moment).add(days, 'days').format('YYYY-MM-DD');
+                        fromTo.to.update(toDate);
+                        fromTo.to.form.$setDirty();
+                    }
+                }
+
+            };
             // 8b. Arbetsförmåga date management
             $scope.field8b = {
                 nedsattMed25 : _dateRangeService.nedsattMed25,
