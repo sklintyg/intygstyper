@@ -165,8 +165,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
     version = '0.12.4'
     download = true
     distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
-    workDir = file("${rootProject.projectDir}")
-    nodeModulesDir = file("${rootProject.projectDir}/node_modules")
+    workDir = rootProject.projectDir
+    nodeModulesDir = rootProject.projectDir
   }
 
   sourceSets {
