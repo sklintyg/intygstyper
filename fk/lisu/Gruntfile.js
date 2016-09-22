@@ -7,6 +7,10 @@ function config(name) {
 module.exports = function(grunt) {
     'use strict';
 
+    var npmDir = grunt.option('npmDir');
+    var cwd = process.cwd();
+    process.chdir(npmDir);
+
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -17,6 +21,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-sass-lint');
+
+    process.chdir(cwd);
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
     var TEST_DIR = 'src/test/js/';

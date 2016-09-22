@@ -165,6 +165,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
     version = '0.12.4'
     download = true
     distBaseUrl = 'https://build-inera.nordicmedtest.se/node/'
+    workDir = file("${rootProject.projectDir}")
+    nodeModulesDir = file("${rootProject.projectDir}/node_modules")
   }
 
   sourceSets {
@@ -191,8 +193,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
     inputs.files(configurations.compile)
     outputs.dir(webappOutputDir)
 
-    script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['default', '--outputDir=' + webappOutputDir]
+    script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
+    args = ['default', '--outputDir=' + webappOutputDir, "--npmDir=" + rootProject.projectDir]
   }
 
   jar.dependsOn(jsInclude)
@@ -214,8 +216,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     inputs.files(configurations.compile)
     outputs.dir(webappTestOutputDir)
 
-    script = file('node_modules/grunt-cli/bin/grunt')
-    args = ['test', '--outputDir=' + webappTestOutputDir, '--skip-coverage='+(!project.hasProperty('runSonar'))]
+    script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
+    args = ['test', '--outputDir=' + webappTestOutputDir, '--skip-coverage='+(!project.hasProperty('runSonar')), "--npmDir=" + rootProject.projectDir]
   }
 
   test.dependsOn(jsTests)

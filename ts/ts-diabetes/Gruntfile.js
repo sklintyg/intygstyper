@@ -27,6 +27,11 @@ module.exports = function(grunt) {
     'use strict';
 
     require('time-grunt')(grunt);
+
+    var npmDir = grunt.option('npmDir');
+    var cwd = process.cwd();
+    process.chdir(npmDir);
+    
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -39,6 +44,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-sass-lint');
     grunt.loadNpmTasks('grunt-wiredep');
+
+    process.chdir(cwd);
 
     var SRC_DIR = 'src/main/resources/META-INF/resources/';
     var DEST_DIR = (grunt.option('outputDir') || 'build/') +  'resources/main/META-INF/resources/';

@@ -21,3 +21,4 @@ ${project.build.directory}
 generated
 build
 .gradle
+node-v*
