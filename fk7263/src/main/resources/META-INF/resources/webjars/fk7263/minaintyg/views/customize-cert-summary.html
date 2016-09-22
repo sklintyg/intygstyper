@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-            <div class="cert-body">
+            <div class="intyg-body">
 
               <!--
                 Uppgifter som tas med i intyget
@@ -203,7 +203,7 @@
                 Uppgifter som INTE tas med i intyget
               -->
 
-              <h3 style="margin: 20px 0 10px 0;">Uppgifter som <u>inte</u> tas med i intyget</h3>
+              <h3 ng-if="showAllFields" style="margin: 20px 0 10px 0;">Uppgifter som <u>inte</u> tas med i intyget</h3>
 
               <div mi-field-summary field-number="1" field-label="fk7263.label.smittskydd.anpassatintyg" ng-show="showField1(false)">
                 <span ng-show="viewState.cert.avstangningSmittskydd">
@@ -250,13 +250,11 @@
               </div>
 
               <div mi-field-summary field-number="5" field-label="fk7263.label.limitation.anpassatintyg" ng-show="showField5(false)">
-                <div id="aktivitetsbegransning">
-                  <div class="alert alert-warning float-r"
-                       uib-tooltip="{{field5Tooltip}}"
-                       style="margin-left: 10px; padding: 10px;">
-                    <span class="glyphicon glyphicon-info-sign"></span>
-                  </div>
-                  <span class="multiline">{{viewState.cert.aktivitetsbegransning}}</span>
+                <div id="aktivitetsbegransning" class="tbl">
+                  <span class="tbl-col-valign multiline">{{viewState.cert.aktivitetsbegransning}}</span>
+                  <span class="tbl-col-valign float-r" uib-tooltip="{{field5Tooltip}}" style="margin-left: 10px; padding: 10px;">
+                    <div class="glyphicon glyphicon-warning-sign gi-2x"></div>
+                  </span>
                 </div>
               </div>
 
@@ -375,34 +373,33 @@
                 <div id="kommentar" class="tag multiline" ng-show="viewState.cert.kommentar.length > 0">{{viewState.cert.kommentar}}</div>
               </div>
 
-              <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="margin-top: 30px">
-                <span>När du sett över dina val klickar du på knappen&nbsp</span>
-                <span message key="modules.button.save.as.pdf" style="font-style: italic"></span>
-              </div>
-
-              <!--
-              <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" style="margin-top: 30px">
-                <div class="alert alert-info" ng-show="true">Det anpassade intyget är nu skapat. Stäng inte ner den här sidan förrän du har kontrollerat att intyget har laddats ned till din dator.</div>
-                <div class="alert alert-danger" ng-show="true">Ett problem uppstod. Försök igen. Om felet kvarstår kontakta Ineras nationella kundtjänst</div>
-              </div>
-              -->
-
-              <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                  <p class="btn-row">
-                    <button id="downloadprint" type="button" class="btn btn-success" ng-click="submit()" ng-disabled="!doneLoading">
-                      <span message key="modules.button.save.as.pdf"></span>
-                    </button>
-                    <button id="backToCustomizeCertificateBtn" type="button" class="btn btn-default" ng-click="backToCustomizeCertificate()">
-                      <span message key="fk7263.button.customize.certificate.change"></span>
-                    </button>
-                    <button id="backToInboxBtn" type="button" class="btn btn-default" ng-click="backToInbox()" ng-hide="!downloadSuccess">
-                      <span>Tillbaka till Inkorgen</span>
-                    </button>
-                  </p>
-              </div>
-
             </div>
-            <!-- cert-body -->
+            <!-- intyg-body -->
+
+            <div id="customize-summary-info">
+              <div id="pdf-info" class="tbl">
+                <span class="tbl-col-valign" message key="fk7263.customize.step.2.info.pdf" style="padding-right: 0.4em"></span>
+                <span class="tbl-col-valign" message key="modules.button.save.as.pdf" style="font-style: italic"></span>
+              </div>
+              <div id="fk-info" class="tbl">
+                <span class="tbl-col-valign glyphicon glyphicon-info-sign gi-2x" style="padding-left: 10px;"></span>
+                <span class="tbl-col-valign" message key="fk7263.customize.step.2.info.fk" style="padding-left: 10px;"></span>
+              </div>
+            </div>
+
+            <div>
+              <p>
+                <button id="downloadprint" type="button" class="btn btn-success" ng-click="submit()" ng-disabled="!doneLoading">
+                  <span message key="modules.button.save.as.pdf"></span>
+                </button>
+                <button id="backToCustomizeCertificateBtn" type="button" class="btn btn-default" ng-click="backToCustomizeCertificate()">
+                  <span message key="fk7263.button.customize.certificate.change"></span>
+                </button>
+                <button id="backToInboxBtn" type="button" class="btn btn-default" ng-click="backToInbox()" ng-hide="!downloadSuccess">
+                  <span>Tillbaka till Inkorgen</span>
+                </button>
+              </p>
+            </div>
 
           </div>
         </div>

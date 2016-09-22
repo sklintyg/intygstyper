@@ -54,7 +54,7 @@ $ss16-url: url('../img/ss16.png');
   font-weight: bold;
 }
 
-.intyg-body .body-row .title-customize {
+/*.intyg-body .body-row .title-customize {
   color: #fff;
   font-weight: bolder;
   display: block;
@@ -63,12 +63,21 @@ $ss16-url: url('../img/ss16.png');
   -webkit-border-radius: 8px 8px 0px 0px;
   -moz-border-radius: 8px 8px 0px 0px;
   border-radius: 8px 8px 0px 0px;
-}
+}*/
 
 label.checkbox-label input[type=checkbox]{
   position: relative;
   vertical-align: middle;
   bottom: 1px;
+}
+
+.intyg-body .body-row .title.row {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.intyg-body .body-row .unfilled {
+  font-weight: normal;
 }
 
 .intyg-body .summary-row {
@@ -95,11 +104,16 @@ label.checkbox-label input[type=checkbox]{
 
 .tbl {
   display: table;
-  width: 100%;
+  /*width: 100%;*/
 }
 
 .tbl-row {
   display: table-row;
+}
+
+.tbl-col-valign {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .tbl-col-l {
@@ -112,4 +126,95 @@ label.checkbox-label input[type=checkbox]{
   display: table-cell;
   padding-right: 20px;
   width: 70%;
+}
+
+/* Glyphicon styles */
+
+.gi-2x {
+  font-size: 2em;
+}
+.gi-3x {
+  font-size: 3em;
+}
+.gi-4x {
+  font-size: 4em;
+}
+.gi-5x {
+  font-size: 5em;
+}
+
+.glyphicon-warning-sign {
+  color: #8A6D00;
+}
+
+/* Center vertical and horizontal */
+.absolute-center {
+
+  /* Internet Explorer 10 */
+  display:-ms-flexbox;
+  -ms-flex-pack:center;
+  -ms-flex-align:center;
+
+  /* Firefox */
+  display:-moz-box;
+  -moz-box-pack:center;
+  -moz-box-align:center;
+
+  /* Safari, Opera, and Chrome */
+  display:-webkit-box;
+  -webkit-box-pack:center;
+  -webkit-box-align:center;
+
+  /* W3C */
+  display:box;
+  box-pack:center;
+  box-align:center;
+}
+
+/* Center vertical only */
+.absolute-vertical-center {
+  /* Internet Explorer 10 */
+  display:-ms-flexbox;
+  -ms-flex-align:center;
+
+  /* Firefox */
+  display:-moz-box;
+  -moz-box-align:center;
+
+  /* Safari, Opera, and Chrome */
+  display:-webkit-box;
+  -webkit-box-align:center;
+
+  /* W3C */
+  display:box;
+  box-align:center;
+}
+
+/* Center horizontal only */
+.absolute-horizontal-center {
+  /* Internet Explorer 10 */
+  display:-ms-flexbox;
+  -ms-flex-pack:center;
+
+  /* Firefox */
+  display:-moz-box;
+  -moz-box-pack:center;
+
+  /* Safari, Opera, and Chrome */
+  display:-webkit-box;
+  -webkit-box-pack:center;
+
+  /* W3C */
+  display:box;
+  box-pack:center;
+}
+
+#aktivitetsbegransning {
+  width: 100%;
+}
+#customize-summary-info {
+  margin: 10px 0 10px 0;
+}
+#customize-summary-info div {
+  padding: 10px 0 10px 0;
 }

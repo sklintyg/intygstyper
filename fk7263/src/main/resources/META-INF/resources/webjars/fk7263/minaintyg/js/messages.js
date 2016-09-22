@@ -54,6 +54,9 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.customize.step.2.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 2 av 2',
         'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Spara som PDF.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra mina val.</p>',
         'fk7263.customize.step.2.fishbone': 'Sammanfattning',
+        'fk7263.customize.step.2.info.fk': 'Tänk på att det anpassade intyget <u>inte</u> ska skickas till Försäkringskassan.',
+        'fk7263.customize.step.2.info.pdf': 'När du sett över dina val klickar du på knappen ',
+
         'fk7263.customize.message.limitation': 'Informationen i fält 5 är frivillig, men informationen kan underlätta arbetsgivarens möjlighet att göra arbetsanpassningar.',
 
         'fk7263.inbox.complementaryinfo': 'Intygsperiod',
@@ -63,7 +66,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
         'fk7263.button.customize.certificate': 'Anpassa intyget till arbetsgivare',
         'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
-        'fk7263.button.customize.certificate.change': 'Ändra ditt val',
+        'fk7263.button.customize.certificate.change': 'Ändra dina val',
 
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
         'fk7263.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
