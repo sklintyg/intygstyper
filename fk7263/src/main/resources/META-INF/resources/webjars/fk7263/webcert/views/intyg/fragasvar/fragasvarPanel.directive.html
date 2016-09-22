@@ -172,7 +172,7 @@
         </div-->
 
         <!-- KNAPPAR EJ HANTERADE FRÅGOR -->
-        <!-- TA BORT certProperties.kompletteringOnly NÄR "SVAR SOM FÖLJER MED" ÄR IMPLEMENTERAT -->
+        <!-- TA BORT intygProperties.kompletteringOnly NÄR "SVAR SOM FÖLJER MED" ÄR IMPLEMENTERAT -->
 
         <div ng-if="showNotHandledButtons(qa, intygProperties)">
           <div class="form-group" ng-if="hasStatus(qa, 'PENDING_INTERNAL_ACTION')">
@@ -188,7 +188,7 @@
             </div> -->
 
             <div class="controls">
-              <div class="form-group" ng-show="isAllowedToAnswer(qa, certProperties)">
+              <div class="form-group" ng-show="isAllowedToAnswer(qa, intygProperties)">
                 <textarea wc-maxlength ng-trim="false" rows="13" maxlength="5000"
                           class="form-control col-md-9 qa-block-wc" ng-model="qa.svarsText"
                           id="answerText-{{qa.internReferens}}"></textarea>
@@ -208,7 +208,7 @@
                   <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Skicka svar
                 </button>
                 <button type="button" class="btn btn-secondary" ng-click="abortAnswer()"
-                        ng-show="isKompletteringAllowed(qa, certProperties)"
+                        ng-show="isKompletteringAllowed(qa, intygProperties)"
                         id="abortAnswerBtn-{{qa.internReferens}}">
                   <img src="/img/loader-small-green.gif" ng-show="qa.updateInProgress"> Avbryt
                 </button>
