@@ -138,7 +138,7 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
 
             $scope.form8b.nedsattMed100tom.$setViewValue('d11');
             $scope.onToFieldBlur($scope.field8b.nedsattMed100);
-            $scope.$apply()
+            $scope.$apply();
 
             expect(model.nedsattMed100.tom).toBe('2015-06-27');
         });
