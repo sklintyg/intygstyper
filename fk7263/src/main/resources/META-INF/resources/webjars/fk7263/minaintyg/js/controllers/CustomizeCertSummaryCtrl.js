@@ -125,6 +125,15 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
                 return true;
             }
 
+            $scope.showAllFields = function _showAllFields() {
+                angular.forEach(_fields, function(field, key) {
+                    if (!field.vald) {
+                        return false;
+                    }
+                });
+                return true;
+            };
+
             $scope.showField1 = function _showField1(isIncludedField) {
                 if (_isInvalid(ViewState.cert.avstangningSmittskydd)) {
                     return false;
