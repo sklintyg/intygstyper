@@ -190,6 +190,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
     inputs.dir("$projectDir/src/main/resources")
     inputs.files(fileTree(projectDir).include('*.js'))
     inputs.files(fileTree(projectDir).include('*.json'))
+    inputs.files(fileTree(rootProject.projectDir).include('package.json'))
     inputs.files(configurations.compile)
     outputs.dir(webappOutputDir)
 
@@ -213,6 +214,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     inputs.dir("${projectDir}/src/main/resources")
     inputs.files(fileTree(projectDir).include('*.js'))
     inputs.files(fileTree(projectDir).include('*.json'))
+    inputs.files(fileTree(rootProject.projectDir).include('package.json'))
     inputs.files(configurations.compile)
     outputs.dir(webappTestOutputDir)
 
