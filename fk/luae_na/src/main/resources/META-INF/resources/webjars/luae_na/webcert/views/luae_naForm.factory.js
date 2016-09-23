@@ -181,8 +181,7 @@ angular.module('luae_na').factory('luae_na.FormFactory',
             templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {
-                    type: 'label-vardenhet',
-                    templateOptions: { userModel: UserModel}
+                    type: 'label-vardenhet'
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postadress',

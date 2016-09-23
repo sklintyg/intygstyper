@@ -319,8 +319,7 @@ angular.module('lisu').factory('lisu.FormFactory',
             templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
             fieldGroup: [
                 {
-                    type: 'label-vardenhet',
-                    templateOptions: { userModel: UserModel}
+                    type: 'label-vardenhet'
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postadress',
