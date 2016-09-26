@@ -120,6 +120,7 @@
         <ns3:cv>
           <ns3:code>TRE_FJARDEDEL</ns3:code>
           <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>75%</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="32.2">
@@ -135,6 +136,7 @@
         <ns3:cv>
           <ns3:code>HALFTEN</ns3:code>
           <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>50%</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="32.2">
@@ -150,6 +152,7 @@
         <ns3:cv>
           <ns3:code>EN_FJARDEDEL</ns3:code>
           <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
+          <ns3:displayName>25%</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="32.2">
