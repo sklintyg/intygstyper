@@ -202,8 +202,7 @@
               <!--
                 Uppgifter som INTE tas med i intyget
               -->
-
-              <h3 ng-if="showAllFields" style="margin: 20px 0 10px 0;">Uppgifter som <u>inte</u> tas med i intyget</h3>
+              <h3 ng-hide="showAllFields()" style="margin: 20px 0 10px 0;">Uppgifter som <u>inte</u> tas med i intyget</h3>
 
               <div mi-field-summary field-number="1" field-label="fk7263.label.smittskydd.anpassatintyg" ng-show="showField1(false)">
                 <span ng-show="viewState.cert.avstangningSmittskydd">

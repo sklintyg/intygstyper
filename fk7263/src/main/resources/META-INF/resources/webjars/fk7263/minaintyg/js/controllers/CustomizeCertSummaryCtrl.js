@@ -126,12 +126,13 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             }
 
             $scope.showAllFields = function _showAllFields() {
+                var returnValue = true;
                 angular.forEach(_fields, function(field, key) {
                     if (!field.vald) {
-                        return false;
+                        returnValue = false;
                     }
                 });
-                return true;
+                return returnValue;
             };
 
             $scope.showField1 = function _showField1(isIncludedField) {
