@@ -76,9 +76,9 @@
             <ns4:instans>1</ns4:instans>
             <ns4:delsvar id="32.1">
                 <ns6:cv>
-                    <ns6:code>4</ns6:code>
+                    <ns6:code>EN_FJARDEDEL</ns6:code>
                     <ns6:codeSystem>KV_FKMU_0003</ns6:codeSystem>
-                    <ns6:displayName>KV_FKMU_0003</ns6:displayName>
+                    <ns6:displayName>25%</ns6:displayName>
                 </ns6:cv>
             </ns4:delsvar>
             <ns4:delsvar id="32.2">

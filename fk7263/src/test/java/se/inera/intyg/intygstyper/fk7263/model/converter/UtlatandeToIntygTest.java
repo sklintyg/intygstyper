@@ -340,7 +340,6 @@ public class UtlatandeToIntygTest {
         assertEquals(rekDelsvar.get(UtlatandeToIntyg.ATGARD_INOM_SJUKVARDEN_DELSVAR_10004_2).get(0), "annan atgard");
     }
 
-
     @SuppressWarnings("unchecked")
     @Test
     public void testAddBehovAvSjukskrivningSvar() {
@@ -365,9 +364,9 @@ public class UtlatandeToIntygTest {
         assertEquals(2, intyg.getSvar().get(0).getDelsvar().size());
         assertEquals("32.1", intyg.getSvar().get(0).getDelsvar().get(0).getId());
         JAXBElement<CVType> cv = (JAXBElement<CVType>) intyg.getSvar().get(0).getDelsvar().get(0).getContent().get(0);
-        assertEquals("1", cv.getValue().getCode());
-        assertNotNull(cv.getValue().getCodeSystem());
-        assertNotNull(cv.getValue().getDisplayName());
+        assertEquals("HELT_NEDSATT", cv.getValue().getCode());
+        assertEquals("KV_FKMU_0003", cv.getValue().getCodeSystem());
+        assertEquals("100%", cv.getValue().getDisplayName());
         JAXBElement<DatePeriodType> dateperiod = (JAXBElement<DatePeriodType>) intyg.getSvar().get(0).getDelsvar().get(1).getContent().get(0);
         assertEquals(from100.asLocalDate(), dateperiod.getValue().getStart());
         assertEquals(to100.asLocalDate(), dateperiod.getValue().getEnd());
@@ -375,9 +374,9 @@ public class UtlatandeToIntygTest {
         assertEquals(2, intyg.getSvar().get(1).getDelsvar().size());
         assertEquals("32.1", intyg.getSvar().get(1).getDelsvar().get(0).getId());
         cv = (JAXBElement<CVType>) intyg.getSvar().get(1).getDelsvar().get(0).getContent().get(0);
-        assertEquals("2", cv.getValue().getCode());
-        assertNotNull(cv.getValue().getCodeSystem());
-        assertNotNull(cv.getValue().getDisplayName());
+        assertEquals("TRE_FJARDEDEL", cv.getValue().getCode());
+        assertEquals("KV_FKMU_0003", cv.getValue().getCodeSystem());
+        assertEquals("75%", cv.getValue().getDisplayName());
         dateperiod = (JAXBElement<DatePeriodType>) intyg.getSvar().get(1).getDelsvar().get(1).getContent().get(0);
         assertEquals(from75.asLocalDate(), dateperiod.getValue().getStart());
         assertEquals(to75.asLocalDate(), dateperiod.getValue().getEnd());
@@ -385,9 +384,9 @@ public class UtlatandeToIntygTest {
         assertEquals(2, intyg.getSvar().get(2).getDelsvar().size());
         assertEquals("32.1", intyg.getSvar().get(2).getDelsvar().get(0).getId());
         cv = (JAXBElement<CVType>) intyg.getSvar().get(2).getDelsvar().get(0).getContent().get(0);
-        assertEquals("3", cv.getValue().getCode());
-        assertNotNull(cv.getValue().getCodeSystem());
-        assertNotNull(cv.getValue().getDisplayName());
+        assertEquals("HALFTEN", cv.getValue().getCode());
+        assertEquals("KV_FKMU_0003", cv.getValue().getCodeSystem());
+        assertEquals("50%", cv.getValue().getDisplayName());
         dateperiod = (JAXBElement<DatePeriodType>) intyg.getSvar().get(2).getDelsvar().get(1).getContent().get(0);
         assertEquals(from50.asLocalDate(), dateperiod.getValue().getStart());
         assertEquals(to50.asLocalDate(), dateperiod.getValue().getEnd());
@@ -395,9 +394,9 @@ public class UtlatandeToIntygTest {
         assertEquals(2, intyg.getSvar().get(3).getDelsvar().size());
         assertEquals("32.1", intyg.getSvar().get(3).getDelsvar().get(0).getId());
         cv = (JAXBElement<CVType>) intyg.getSvar().get(3).getDelsvar().get(0).getContent().get(0);
-        assertEquals("4", cv.getValue().getCode());
-        assertNotNull(cv.getValue().getCodeSystem());
-        assertNotNull(cv.getValue().getDisplayName());
+        assertEquals("EN_FJARDEDEL", cv.getValue().getCode());
+        assertEquals("KV_FKMU_0003", cv.getValue().getCodeSystem());
+        assertEquals("25%", cv.getValue().getDisplayName());
         dateperiod = (JAXBElement<DatePeriodType>) intyg.getSvar().get(3).getDelsvar().get(1).getContent().get(0);
         assertEquals(from25.asLocalDate(), dateperiod.getValue().getStart());
         assertEquals(to25.asLocalDate(), dateperiod.getValue().getEnd());

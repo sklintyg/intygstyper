@@ -79,10 +79,6 @@ public final class UtlatandeToIntyg {
     public static final String ATGARD_INOM_SJUKVARDEN_SVAR_10004 = "10004";
     public static final String ATGARD_INOM_SJUKVARDEN_DELSVAR_10004_1 = "10004.1";
     public static final String ATGARD_INOM_SJUKVARDEN_DELSVAR_10004_2 = "10004.2";
-    public static final String NEDSATT_MED_100_CODE = "1";
-    public static final String NEDSATT_MED_75_CODE = "2";
-    public static final String NEDSATT_MED_50_CODE = "3";
-    public static final String NEDSATT_MED_25_CODE = "4";
     public static final String BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32 = "32";
     public static final String BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32 = "32.1";
     public static final String BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32 = "32.2";
@@ -120,16 +116,16 @@ public final class UtlatandeToIntyg {
 
         int sjukskrivningInstans = 1;
         if (source.getNedsattMed100() != null && source.getNedsattMed100().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_100_CODE, sjukskrivningInstans++, source.getNedsattMed100()));
+            svars.add(createBehovAvSjukskrivningSvar(SjukskrivningsGrad.HELT_NEDSATT, sjukskrivningInstans++, source.getNedsattMed100()));
         }
         if (source.getNedsattMed75() != null && source.getNedsattMed75().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_75_CODE, sjukskrivningInstans++, source.getNedsattMed75()));
+            svars.add(createBehovAvSjukskrivningSvar(SjukskrivningsGrad.NEDSATT_3_4, sjukskrivningInstans++, source.getNedsattMed75()));
         }
         if (source.getNedsattMed50() != null && source.getNedsattMed50().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_50_CODE, sjukskrivningInstans++, source.getNedsattMed50()));
+            svars.add(createBehovAvSjukskrivningSvar(SjukskrivningsGrad.NEDSATT_HALFTEN, sjukskrivningInstans++, source.getNedsattMed50()));
         }
         if (source.getNedsattMed25() != null && source.getNedsattMed25().isValid()) {
-            svars.add(createBehovAvSjukskrivningSvar(NEDSATT_MED_25_CODE, sjukskrivningInstans++, source.getNedsattMed25()));
+            svars.add(createBehovAvSjukskrivningSvar(SjukskrivningsGrad.NEDSATT_1_4, sjukskrivningInstans++, source.getNedsattMed25()));
         }
 
         Svar svar = createAtgard(source);
@@ -299,9 +295,9 @@ public final class UtlatandeToIntyg {
         return svarBuilder.build();
     }
 
-    private static Svar createBehovAvSjukskrivningSvar(String code, int instans, InternalLocalDateInterval interval) {
+    private static Svar createBehovAvSjukskrivningSvar(SjukskrivningsGrad sjukskrivningsgrad, int instans, InternalLocalDateInterval interval) {
         return aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32, instans).withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32,
-                aCV(SJUKSKRIVNING_CODE_SYSTEM, code, SJUKSKRIVNING_CODE_SYSTEM))
+                aCV(SJUKSKRIVNING_CODE_SYSTEM, sjukskrivningsgrad.getTransportId(), sjukskrivningsgrad.getLabel()))
                 .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32,
                         aDatePeriod(interval.fromAsLocalDate(), interval.tomAsLocalDate()))
                 .build();
@@ -325,14 +321,28 @@ public final class UtlatandeToIntyg {
             this.transportId = transportId;
             this.label = label;
         }
+    }
 
-        public static ReferensTyp byTransportId(String transportId) {
-            for (ReferensTyp referensTyp : values()) {
-                if (referensTyp.transportId.equals(transportId)) {
-                    return referensTyp;
-                }
-            }
-            throw new IllegalArgumentException();
+    private enum SjukskrivningsGrad {
+        HELT_NEDSATT("HELT_NEDSATT", "100%"),
+        NEDSATT_3_4("TRE_FJARDEDEL", "75%"),
+        NEDSATT_HALFTEN("HALFTEN", "50%"),
+        NEDSATT_1_4("EN_FJARDEDEL", "25%");
+
+        private final String transportId;
+        private final String label;
+
+        SjukskrivningsGrad(String transportId, String label) {
+            this.transportId = transportId;
+            this.label = label;
+        }
+
+        public String getTransportId() {
+            return transportId;
+        }
+
+        public String getLabel() {
+            return label;
         }
     }
 }
