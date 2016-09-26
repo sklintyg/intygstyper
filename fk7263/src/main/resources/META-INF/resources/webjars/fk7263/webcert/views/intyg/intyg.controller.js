@@ -67,11 +67,11 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
 
                         $scope.pdfUrl = '/moduleapi/intyg/'+ ViewState.common.intygProperties.type +'/' + ViewState.intygModel.id + '/pdf';
 
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties);
+                        $rootScope.$emit('ViewCertCtrl.load', ViewState.intygModel, ViewState.common.intygProperties);
                         $rootScope.$broadcast('intyg.loaded', ViewState.intygModel);
 
                     } else {
-                        $rootScope.$emit('fk7263.ViewCertCtrl.load', null, null);
+                        $rootScope.$emit('ViewCertCtrl.load', null, null);
 
                         if ($stateParams.signed) {
                             ViewState.common.activeErrorMessageKey = 'common.error.sign.not_ready_yet';
@@ -81,7 +81,7 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     }
                     $scope.intygBackup.showBackupInfo = false;
                 }, function(error) {
-                    $rootScope.$emit('fk7263.ViewCertCtrl.load', null, null);
+                    $rootScope.$emit('ViewCertCtrl.load', null, null);
                     ViewState.common.doneLoading = true;
                     ViewState.common.updateActiveError(error, $stateParams.signed);
                     $scope.intygBackup.showBackupInfo = true;

@@ -105,18 +105,19 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                                     isRevoked: IntygHelper.isRevoked(result.statuses),
                                     forceUseProvidedIntyg: true,
                                     kompletteringOnly: true,
-                                    meddelandeId: intygModel.grundData.relation.meddelandeId
+                                    meddelandeId: intygModel.grundData.relation.meddelandeId,
+                                    type: viewState.common.intyg.type
                                 };
-                                $rootScope.$emit('fk7263.ViewCertCtrl.load', parentIntyg, intygMeta);
+                                $rootScope.$emit('ViewCertCtrl.load', parentIntyg, intygMeta);
                             } else {
-                                $rootScope.$emit('fk7263.ViewCertCtrl.load', null, null);
+                                $rootScope.$emit('ViewCertCtrl.load', null, null);
                             }
                         }, function(error) {
-                            $rootScope.$emit('fk7263.ViewCertCtrl.load', null, null);
+                            $rootScope.$emit('ViewCertCtrl.load', null, null);
                         });
                 } else {
                     // Failed to load parent intyg. Tell frågasvar
-                    $rootScope.$broadcast('fk7263.ViewCertCtrl.load', null, {
+                    $rootScope.$broadcast('ViewCertCtrl.load', null, {
                         isSent: false,
                         isRevoked: false
                     });
@@ -128,7 +129,7 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                 }
 
                 // Failed to load parent intyg. Tell frågasvar
-                $rootScope.$broadcast('fk7263.ViewCertCtrl.load', null, {
+                $rootScope.$broadcast('ViewCertCtrl.load', null, {
                     isSent: false,
                     isRevoked: false
                 });
