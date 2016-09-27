@@ -275,8 +275,11 @@ if (project.hasProperty('runSonar')) {
       property "sonar.exclusions", [
         "**/stub/**",
         "**/exception/**",
-        "**/*Exception*.java"
+        "**/*Exception*.java",
+        "**/templates.js"
       ]
+
+      property "sonar.javascript.lcov.reportPath", "build/karma/merged_lcov.info"
     }
   }
 }
