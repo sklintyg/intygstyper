@@ -4,6 +4,9 @@ ext {
   phSchematronVersion = "3.0.1"
   itextVersion = "5.3.2"
   springVersion = "4.2.2.RELEASE"
+
+  webappOutputDir = 'build/'
+  webappTestOutputDir = 'build/karma/'
 }
 
 allprojects  {
@@ -22,13 +25,6 @@ subprojects {
 
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
-
-  repositories {
-    mavenLocal()
-    maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/" }
-    maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
-    maven { url "http://repo.maven.apache.org/maven2" }
-  }
 
   task createVersionPropertyFile(dependsOn: processResources) {
     def propertyFile = "${buildDir}/resources/main/version.properties"
@@ -55,22 +51,6 @@ subprojects {
   }
 
   jar.dependsOn(createVersionPropertyFile)
-
-  configurations {
-    buildtools
-  }
-
-  dependencies {
-    buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
-
-    testCompile "junit:junit:4.+"
-    testCompile 'commons-io:commons-io:2.4'
-    testCompile 'org.mockito:mockito-core:1.9.0'
-    testCompile 'org.skyscreamer:jsonassert:1.2.0'
-    testCompile "org.springframework:spring-test:${springVersion}"
-    testCompile 'org.unitils:unitils-core:3.3'
-    testCompile 'xmlunit:xmlunit:1.4'
-  }
 
   task unzipBuildTools(type: Copy) {
     description 'Extracts common-build-tools'
@@ -129,6 +109,29 @@ subprojects {
       }
     }
   }
+
+  configurations {
+    buildtools
+  }
+
+  dependencies {
+    buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
+
+    testCompile "junit:junit:4.+"
+    testCompile 'commons-io:commons-io:2.4'
+    testCompile 'org.mockito:mockito-core:1.9.0'
+    testCompile 'org.skyscreamer:jsonassert:1.2.0'
+    testCompile "org.springframework:spring-test:${springVersion}"
+    testCompile 'org.unitils:unitils-core:3.3'
+    testCompile 'xmlunit:xmlunit:1.4'
+  }
+
+  repositories {
+    mavenLocal()
+    maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases/" }
+    maven { url "https://build-inera.nordicmedtest.se/nexus/content/repositories/snapshots/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+  }
 }
 
 configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'luse', 'luae_fs', 'luae_na'].contains(it.name) }) {
@@ -157,11 +160,6 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
         exclude '**/karma*.conf.ci.js'
       }
     }
-  }
-
-  ext {
-    webappOutputDir = 'build/'
-    webappTestOutputDir = 'build/karma/'
   }
 
   task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
