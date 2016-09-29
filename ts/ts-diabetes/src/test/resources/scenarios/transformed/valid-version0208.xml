@@ -114,7 +114,7 @@
                        codeSystemName="kv_bilaga"/>
          <p:forekomst>true</p:forekomst>
       </p2:bilaga>
-      <p2:utgava>07</p2:utgava>
+      <p2:utgava>08</p2:utgava>
       <p2:version>02</p2:version>
    </reg:utlatande>
 </reg:RegisterCertificate>
