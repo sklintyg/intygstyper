@@ -2,18 +2,21 @@
   <span ng-if="fieldDynamicLabel" mi-intyg-label="fieldDynamicLabel"></span>
   <span class="title" ng-if="fieldLabel" ng-class="{ 'unfilled' : !fieldModel.vald }">
     <div class="row absolute-vertical-center">
-      <span class="col-xs-2 col-sm-2 col-md-1 col-lg-1">Fält {{fieldNumber}}</span>
+      <span class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+        <span message key="fk7263.customize.title.field"></span>
+        <span>{{fieldNumber}}</span>
+      </span>
       <span class="col-xs-6 col-sm-6 col-md-7 col-lg-7" message key="{{fieldLabel}}"></span>
       <span class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div id="mandatory.{{fieldNumber}}" class="float-r" ng-if="fieldModel.mandatory">
-          <span>Obligatoriskt fält&nbsp;</span>
+          <span message key="fk7263.customize.label.mandatory"></span>
           <span class="asterix">*</span>
         </div>
         <div id="optional.{{fieldNumber}}" class="float-r" ng-if="!fieldModel.mandatory">
           <label for="option.{{fieldNumber}}">
-            <span>Inkludera i anpassat intyg&nbsp;&nbsp;</span>
-            <span><input id="option.{{fieldNumber}}" type="checkbox" ng-model="fieldModel.vald" ng-checked="fieldModel.vald"></span>
+            <span message key="fk7263.customize.label.optional"></span>
           </label>
+          <input id="option.{{fieldNumber}}" type="checkbox" ng-model="fieldModel.vald" ng-checked="fieldModel.vald">
         </div>
       </span>
     </div>
