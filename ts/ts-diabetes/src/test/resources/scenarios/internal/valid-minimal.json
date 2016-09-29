@@ -47,8 +47,7 @@
     "hypoglykemier" : {
         "kunskapOmAtgarder" : false,
         "teckenNedsattHjarnfunktion" : false,
-        "allvarligForekomstVakenTid" : true,
-        "allvarligForekomstVakenTidObservationstid" : "2012-12-12"
+        "allvarligForekomstVakenTid" : false
     },
     "syn" : {
         "separatOgonlakarintyg" : true

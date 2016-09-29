@@ -1,7 +1,7 @@
 {
     "id": "987654321",
     "typ": "ts-diabetes",
-    "textVersion": "02.08",
+    "textVersion": "02.06",
     "grundData": {
         "signeringsdatum": "2013-08-12T15:57:00.000",
         "skapadAv": {
@@ -21,7 +21,7 @@
             }
         },
         "patient": {
-            "personId": "19121212-1212",
+            "personId": "19800191-0002",
             "fullstandigtNamn": "Johnny Appleseed",
             "fornamn": "Johnny",
             "efternamn": "Appleseed",
@@ -53,6 +53,8 @@
         "separatOgonlakarintyg" : true
     },
     "bedomning" : {
-        "kanInteTaStallning" : true
+        "korkortstyp" : [
+            {"type": "A1", "selected": true}
+        ]
     }
 }

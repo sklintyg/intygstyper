@@ -78,8 +78,7 @@
         "allvarligForekomstBeskrivning" : "Beskrivning",
         "allvarligForekomstTrafiken" : true, 
         "allvarligForekomstTrafikBeskrivning" : "Beskrivning",
-        "allvarligForekomstVakenTid" : true,
-        "allvarligForekomstVakenTidObservationstid" : "2012-12-12",
+        "allvarligForekomstVakenTid" : false,
         "egenkontrollBlodsocker" : true
     },
     "syn" : {

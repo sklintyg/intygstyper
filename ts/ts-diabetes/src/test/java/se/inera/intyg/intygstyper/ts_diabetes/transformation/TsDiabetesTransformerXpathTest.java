@@ -60,13 +60,13 @@ public class TsDiabetesTransformerXpathTest {
     @Test
     public void testMaximaltIntyg() throws IOException, ParserConfigurationException, JAXBException, XPathExpressionException, SAXException,
             TransformerException {
-        performTest(new ClassPathResource("scenarios/transport/valid-maximal.xml").getFile());
+        performTest(new ClassPathResource("scenarios/transport/transform-valid-maximal.xml").getFile());
     }
 
     @Test
     public void testMinimaltIntyg() throws IOException, ParserConfigurationException, JAXBException, XPathExpressionException, SAXException,
             TransformerException {
-        performTest(new ClassPathResource("scenarios/transport/valid-minimal.xml").getFile());
+        performTest(new ClassPathResource("scenarios/transport/transform-valid-minimal.xml").getFile());
     }
 
     private void performTest(File file) throws ParserConfigurationException, JAXBException, SAXException,

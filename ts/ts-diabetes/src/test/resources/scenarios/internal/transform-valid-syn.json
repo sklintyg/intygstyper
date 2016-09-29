@@ -1,7 +1,7 @@
 {
     "id": "987654321",
     "typ": "ts-diabetes",
-    "textVersion": "02.08",
+    "textVersion": "02.06",
     "grundData": {
         "signeringsdatum": "2013-08-12T15:57:00.000",
         "skapadAv": {
@@ -50,9 +50,28 @@
         "allvarligForekomstVakenTid" : false
     },
     "syn" : {
-        "separatOgonlakarintyg" : true
+        "separatOgonlakarintyg" : false,
+        "synfaltsprovningUtanAnmarkning" : true,
+        "hoger" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+           
+        "vanster" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+        "binokulart" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+        "diplopi" : true,
+        "synfaltsprovning" : true,
+        "provningOgatsRorlighet" : true
     },
     "bedomning" : {
-        "kanInteTaStallning" : true
+        "korkortstyp" : [
+            {"type": "A1", "selected": true}
+        ]
     }
 }
