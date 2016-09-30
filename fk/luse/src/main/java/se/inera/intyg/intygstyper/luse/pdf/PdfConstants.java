@@ -30,6 +30,8 @@ public final class PdfConstants {
     public static final Font FONT_NORMAL_7 = new Font(Font.FontFamily.HELVETICA, 7, Font.NORMAL);
     public static final Font FONT_NORMAL_9 = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);
     public static final Font FONT_NORMAL_10 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+    public static final Font FONT_NORMAL_11 = new Font(Font.FontFamily.HELVETICA, 11, Font.NORMAL);
+
     public static final Font FONT_FRAGERUBRIK = new Font(Font.FontFamily.HELVETICA, 9.5f, Font.BOLD);
 
     public static final Font FONT_NORMAL = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);

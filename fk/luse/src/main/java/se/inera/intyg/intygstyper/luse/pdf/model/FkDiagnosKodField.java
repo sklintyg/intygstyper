@@ -20,7 +20,6 @@ package se.inera.intyg.intygstyper.luse.pdf.model;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
@@ -34,70 +33,58 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 /**
  * Created by marced on 27/09/16.
  */
-public class FkValueField extends PdfComponent<FkValueField> {
+public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
 
     private String fieldLabel;
     private float fieldLabelWidth = 0;
     private final String value;
 
     private boolean withTopLabel = false;
-    private Font valueFont = PdfConstants.FONT_NORMAL_9;
-    private int valueTextVerticalAlignment = PdfPCell.ALIGN_BOTTOM;
 
-    public FkValueField(String value) {
+    public FkDiagnosKodField(String value) {
         this.value = value;
     }
 
-    public FkValueField withValueTextAlignment(int alignment) {
-        this.valueTextVerticalAlignment = alignment;
-        return this;
-    }
-
-    public FkValueField withLabel(String label, float width) {
-        this.withTopLabel = false;
-        this.fieldLabel = label;
-        this.fieldLabelWidth = width;
-        return this;
-    }
-
-    public FkValueField withTopLabel(String topLabel) {
+    public FkDiagnosKodField withTopLabel(String topLabel) {
         this.withTopLabel = true;
         this.fieldLabel = topLabel;
-        return this;
-    }
-
-    public FkValueField withValueFont(Font font) {
-        this.valueFont = font;
         return this;
     }
 
     @Override
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
 
-        PdfPTable table = new PdfPTable(2);
+        PdfPTable table = new PdfPTable(4);
+        char[] code = new char[]{' ', ' ', ' ', ' '};
+        int b = 0;
+        for(char c : value.toCharArray()) {
+            code[b++] = c;
+        }
+        float[] columnWidths = new float[] {
+                Utilities.millimetersToPoints(7.8f),
+                Utilities.millimetersToPoints(7.8f),
+                Utilities.millimetersToPoints(7.8f),
+                Utilities.millimetersToPoints(7.8f) };
+                // Utilities.millimetersToPoints(40f - (7.8f*4)) };
+        table.setTotalWidth(columnWidths);
+        for(int a = 1; a < 5; a++) {
+            canvas.moveTo(Utilities.millimetersToPoints(x + 7.8f*a), Utilities.millimetersToPoints(y - height));
+            canvas.lineTo(Utilities.millimetersToPoints(x + 7.8f*a), Utilities.millimetersToPoints(y - height + 2.5f));
+        }
 
-        table.setTotalWidth(new float[] { Utilities.millimetersToPoints(fieldLabelWidth), Utilities.millimetersToPoints(width) });
+        for(char c : code) {
+            PdfPCell charCell = new PdfPCell(new Phrase(String.valueOf(c), PdfConstants.FONT_NORMAL_11));
+            charCell.setBorder(Rectangle.NO_BORDER);
+            charCell.setFixedHeight(Utilities.millimetersToPoints(height));
+            charCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
+            charCell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
 
-        String leftSideLabelText = withTopLabel ? "" : fieldLabel;
-        PdfPCell labelCell = new PdfPCell(new Phrase(leftSideLabelText, valueFont));
-        labelCell.setBorder(Rectangle.NO_BORDER);
-        labelCell.setFixedHeight(Utilities.millimetersToPoints(height));
-        labelCell.setUseAscender(true);
-        labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        labelCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
-        table.addCell(labelCell);
+            table.addCell(charCell);
+        }
 
-        // value cell
-        PdfPCell valueCell = new PdfPCell(new Phrase(value, valueFont));
-        valueCell.setBorder(Rectangle.NO_BORDER);
-        valueCell.setFixedHeight(Utilities.millimetersToPoints(height));
-        valueCell.setUseAscender(true);
-        valueCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        valueCell.setVerticalAlignment(valueTextVerticalAlignment);
-        table.addCell(valueCell);
-        if (fieldLabel != null && withTopLabel) {
+        if (withTopLabel) {
             float pinX = Utilities.millimetersToPoints(x); // TODO: make pin optional also
-            float labelX = pinX + valueCell.getPaddingLeft();
+            float labelX = pinX + table.getRow(0).getCells()[0].getPaddingLeft();
             float labelY = Utilities.millimetersToPoints(y) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize();
 
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(fieldLabel, PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL),
@@ -111,6 +98,5 @@ public class FkValueField extends PdfComponent<FkValueField> {
         super.render(canvas, x, y);
 
     }
-
 
 }

@@ -26,12 +26,14 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkCheckbox;
+import se.inera.intyg.intygstyper.luse.pdf.model.FkDiagnosKodField;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkLabel;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkQuestion;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkValueField;
@@ -53,6 +55,7 @@ public class PdfGenerator {
     private static final float QUESTION_MARGIN_LEFT_MM = 15.5f;
 
     private static final float QUESTION_RECT_WIDTH = 180f;
+    public static final float CHECKBOX_UNDER_TOPLABEL_PADDING = 1.5f;
 
     protected LuseUtlatande intyg;
 
@@ -89,7 +92,7 @@ public class PdfGenerator {
             // Add the front page with meta info
             createPage1();
             document.newPage();
-            createPage1();
+            createPage2();
 
             // Finish off by closing the document (will invoke the event handlers)
             document.close();
@@ -101,11 +104,97 @@ public class PdfGenerator {
         return bos.toByteArray();
     }
 
+    private void createPage2() throws IOException, DocumentException {
+        List<PdfComponent> allElements = new ArrayList<>();
+        FkQuestion fraga3 = new FkQuestion("3. Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga").offset(15f, 23f).size(180f, 76f).withBorders(Rectangle.BOX);
+        FkValueField diagnos1 = new FkValueField("Detta är diagnos 1")
+                .size(140f, 11f)
+                .withValueFont(PdfConstants.FONT_NORMAL_10)
+                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withBorders(Rectangle.BOX);
+
+        FkDiagnosKodField diagnosKodField1 = new FkDiagnosKodField("J22")
+                .withTopLabel("Diagnoskod enligt ICD-10 SE")
+                .size(40f, 11f)
+                .offset(140f, 0f)
+                .withBorders(Rectangle.BOTTOM);
+        fraga3.addChild(diagnos1);
+        fraga3.addChild(diagnosKodField1);
+
+        FkValueField diagnos2 = new FkValueField("Detta är diagnos 2")
+                .size(140f, 9f)
+                .offset(0f, 11f)
+                .withValueFont(PdfConstants.FONT_NORMAL_10)
+                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withBorders(Rectangle.BOX);
+        FkDiagnosKodField diagnosKodField2 = new FkDiagnosKodField("K33")
+                .size(40f, 9f)
+                .offset(140f, 11f)
+                .withBorders(Rectangle.BOTTOM);
+        fraga3.addChild(diagnos2);
+        fraga3.addChild(diagnosKodField2);
+
+        FkValueField diagnos3 = new FkValueField("Detta är diagnos 3")
+                .size(140f, 9f)
+                .offset(0f, 20f)
+                .withBorders(Rectangle.BOX)
+                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withValueFont(PdfConstants.FONT_NORMAL_10);
+        FkDiagnosKodField diagnosKodField3 = new FkDiagnosKodField("A19")
+                .size(40f, 9f)
+                .offset(140f, 20f)
+                .withBorders(Rectangle.BOTTOM);
+        fraga3.addChild(diagnos3);
+        fraga3.addChild(diagnosKodField3);
+
+        FkValueField narOchHur = new FkValueField("Diagnosen ställdes ståendes.")
+                .size(180f, 27f)
+                .offset(0f, 29f)
+                .withBorders(Rectangle.BOTTOM)
+                .withValueFont(PdfConstants.FONT_NORMAL_10)
+                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withTopLabel("När och var ställdes diagnosen/diagnoserna?");
+        fraga3.addChild(narOchHur);
+
+        FkValueField revidera = new FkValueField("")
+                .size(180f, 11f)
+                .offset(0f, 56f)
+                .withBorders(Rectangle.BOTTOM).withValueFont(PdfConstants.FONT_NORMAL_10)
+                .withTopLabel("Finns skäll till att revidera/uppdatera tidigare satt diagnos?");
+
+        FkCheckbox noCheckbox = new FkCheckbox("Nej", false)
+                .size(24.5f, 11f)
+                .offset(0f, CHECKBOX_UNDER_TOPLABEL_PADDING)
+                .withBorders(Rectangle.NO_BORDER);
+        FkCheckbox yesCheckbox = new FkCheckbox("Ja. Fyll i nedan.", true)
+                .size(84.5f, 11f)
+                .offset(22f, CHECKBOX_UNDER_TOPLABEL_PADDING)
+                .withBorders(Rectangle.NO_BORDER);
+
+        revidera.getChildren().add(noCheckbox);
+        revidera.getChildren().add(yesCheckbox);
+
+        fraga3.addChild(revidera);
+
+        FkValueField vilkenAvses = new FkValueField("Den allra senaste diagnosen avses!")
+                .size(180f, 9f)
+                .offset(0f, 67f)
+                .withValueFont(PdfConstants.FONT_NORMAL_10)
+                .withTopLabel("Beskriv vilken eller vilka diagnoser som avses");
+        fraga3.addChild(vilkenAvses);
+
+        allElements.add(fraga3);
+
+        // Start rendering a page at upper left corner
+        doRendering(allElements, 0f, Utilities.pointsToMillimeters(document.getPageSize().getTop()));
+
+    }
+
     private void createPage1() throws IOException, DocumentException {
 
         List<PdfComponent> allElements = new ArrayList<>();
 
-        PdfComponent fraga1 = new FkQuestion("1. Utlåtandet är baserat på").offset(15f, 50f).size(180f, 55f).withBorders(Rectangle.BOX);
+        FkQuestion fraga1 = new FkQuestion("1. Utlåtandet är baserat på").offset(15f, 50f).size(180f, 55f).withBorders(Rectangle.BOX);
 
         float ROW_HEIGHT = 9f;
         float CHECKBOX_DEFAULT_WIDTH = 65f;
