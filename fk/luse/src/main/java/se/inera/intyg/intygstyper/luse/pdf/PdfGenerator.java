@@ -20,31 +20,29 @@ package se.inera.intyg.intygstyper.luse.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
-import se.inera.intyg.intygstyper.luse.pdf.fields.FkCheckbox;
-import se.inera.intyg.intygstyper.luse.pdf.fields.FkField;
-import se.inera.intyg.intygstyper.luse.pdf.fields.FkValueField;
+import se.inera.intyg.intygstyper.luse.pdf.model.FkCheckbox;
+import se.inera.intyg.intygstyper.luse.pdf.model.FkLabel;
+import se.inera.intyg.intygstyper.luse.pdf.model.FkQuestion;
+import se.inera.intyg.intygstyper.luse.pdf.model.FkValueField;
+import se.inera.intyg.intygstyper.luse.pdf.model.PdfComponent;
 
 /**
  * Created by marced on 18/08/16.
@@ -57,8 +55,6 @@ public class PdfGenerator {
     private static final float QUESTION_MARGIN_LEFT_MM = 15.5f;
 
     private static final float QUESTION_RECT_WIDTH = 180f;
-    private static final float QUESTION_RECT_BORDER_WIDTH = Utilities.millimetersToPoints(0.3f);
-    private static final float QUESTION_RUBRIK_PADDING_LEFT = Utilities.millimetersToPoints(0.0f);
 
     protected LuseUtlatande intyg;
 
@@ -109,90 +105,80 @@ public class PdfGenerator {
 
     private void createPage1() throws IOException, DocumentException {
 
-        float yStart = 150f;
-        createQuestionBox("1. Utlåtandet är baserat på", yStart, 51.5f);
+        List<PdfComponent> allElements = new ArrayList<>();
 
-        FkCheckbox cbUndersokningAvPat = new FkCheckbox("1.23", "min Undersökning av patienten", 65f, 9f, false);
-        FkValueField dlUndersokningAvPat = new FkValueField("1.23.1", 64f, 9f, "2016-12-09").withTopLabel("datum (Är månad , dag)");
+        PdfComponent fraga1 = new FkQuestion("1. Utlåtandet är baserat på").offset(15f, 50f).size(180f, 55f).withBorders(Rectangle.BOX);
 
-        FkCheckbox cbJournalUppgifter = new FkCheckbox("1.24", "journaluppgifter från den", 65f, 9f, true);
-        FkValueField dlJournalUppgifter = new FkValueField("1.24.2", 64f, 9f, "2016-12-09");
+        float ROW_HEIGHT = 9f;
+        float CHECKBOX_DEFAULT_WIDTH = 65f;
 
-        FkCheckbox cbAnhorigBeskrivning = new FkCheckbox("1.25", "anhörig/annas beskrivning av patienten", 65f, 9f, true);
-        FkValueField dlAnhorigBeskrivning = new FkValueField("1.25.1", 64f, 9f, "2015-12-09");
+        fraga1.addChild(new FkCheckbox("min Undersökning av patienten", false).offset(0f, 0f).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
 
-        FkCheckbox cbAnnat = new FkCheckbox("1.26", "annat", 65f, 9f, true);
-        FkValueField dlAnnat = new FkValueField("1.26.1", 64f, 9f, "2015-12-09");
+        PdfComponent dlUndersokningAvPat = new FkValueField("2016-12-09").offset(CHECKBOX_DEFAULT_WIDTH, 0f).size(65f, ROW_HEIGHT);
+        // TODO: withTopLabel is currently not defined in superclass since it only applies to this subtype and it messes with the
+        // builder pattern. What to do?
+        ((FkValueField) dlUndersokningAvPat).withTopLabel("datum (Är månad , dag)");
+        fraga1.addChild(dlUndersokningAvPat);
 
-        FkCheckbox cbAnnatBeskrivning = new FkCheckbox("1.26", "Ange vad annat är:", 65f, 9f);
-        FkValueField dlAnnatBeskrivning = new FkValueField("1.26.1", 64f, 9f,
-                "Hej och hå vad långa texter det blir  sf sfsd");
+        fraga1.addChild(new FkCheckbox("journaluppgifter från den", true).offset(0f, ROW_HEIGHT).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
+        fraga1.addChild(new FkValueField("2016-12-09").offset(65f, ROW_HEIGHT).size(CHECKBOX_DEFAULT_WIDTH, 9f));
 
-        yStart = renderFieldRow(Arrays.asList(cbUndersokningAvPat, dlUndersokningAvPat), yStart);
-        yStart = renderFieldRow(Arrays.asList(cbJournalUppgifter, dlJournalUppgifter), yStart);
-        yStart = renderFieldRow(Arrays.asList(cbAnhorigBeskrivning, dlAnhorigBeskrivning), yStart);
-        yStart = renderFieldRow(Arrays.asList(cbAnnat, dlAnnat), yStart);
-        yStart = renderFieldRow(Arrays.asList(cbAnnatBeskrivning, dlAnnatBeskrivning), yStart);
+        fraga1.addChild(new FkCheckbox("anhörig/anaNas beskrivning av patienten", true).offset(0f, ROW_HEIGHT * 2).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
+        fraga1.addChild(new FkValueField("2016-12-09").offset(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT * 2).size(CHECKBOX_DEFAULT_WIDTH, 9f));
 
-        FkValueField kantPatSedan = new FkValueField("1.26.1", QUESTION_RECT_WIDTH - 72f, 7f, "2016-05-05")
-                .withLabel("Jag har känt patienten sedan", 72f)
-                .withTopBorder();
-        yStart = renderFieldRow(Arrays.asList(kantPatSedan), yStart);
+        fraga1.addChild(new FkCheckbox("annat", true).offset(0f, ROW_HEIGHT * 3).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
+        fraga1.addChild(new FkValueField("2015-12-09").offset(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT * 3).size(65f, 9f));
 
-        yStart = 86f;
-        createQuestionBox("2. Är utlåtandet även baserat på andra medicinska utredningar eller underlag?", yStart, 68f);
-        FkCheckbox cb1 = new FkCheckbox("1.29.1", "Nej", 12.5f, 9f, false);
-        FkCheckbox cb2 = new FkCheckbox("1.29.2", "Ja. Fyll i nedan", 80f, 9f, true);
-        yStart = renderFieldRow(Arrays.asList(cb1, cb2), yStart);
+        fraga1.addChild(new FkLabel("Ange vad annat är:").offset(7f, ROW_HEIGHT * 4).size(58f, ROW_HEIGHT));
+        fraga1.addChild(new FkValueField("Hej och hå vad långa texter det blir  sf sfsd").offset(65f, ROW_HEIGHT * 4).size(65f, ROW_HEIGHT));
 
+        // Dessa fält har top border
+        fraga1.addChild(new FkLabel("Jag har känt patienten sedan").offset(0f, ROW_HEIGHT * 5).size(65f, ROW_HEIGHT).withBorders(Rectangle.TOP));
+        fraga1.addChild(new FkValueField("2016-09-22").offset(65f, ROW_HEIGHT * 5).size(115f, ROW_HEIGHT).withBorders(Rectangle.TOP));
+
+        allElements.add(fraga1);
+
+        PdfComponent fraga2 = new FkQuestion("2. Är utlåtandet även baserat på andra medicinska utredningar eller underlag?").offset(15f, 150f)
+                .size(180f, 55f).withBorders(Rectangle.BOX);
+        fraga2.addChild(new FkCheckbox("Nej", true).offset(0, 0).size(20.5f, ROW_HEIGHT));
+        fraga2.addChild(new FkCheckbox("Ja, fyll i nedan.", true).offset(21.5f, 0).size(40f, ROW_HEIGHT));
+
+        // This is just so that we dont have to enter all y offsets manually
+        float yOffset = ROW_HEIGHT;
         for (int i = 0; i < 3; i++) {
-            FkValueField underlag1Typ = new FkValueField("1.26.1", 72f, 9f, "Underlag från fysioTeraperut" + i).withTopLabel("Ange utredning eller underlag")
-                    .withTopBorder();
-            FkValueField underlag1Datum = new FkValueField("1.26.1", 40f, 9f, "2016-05-05").withTopLabel("datum (år, månad, dag)").withTopBorder();
-            FkCheckbox underlag1BifogasJa = new FkCheckbox("1.26", "Ja", 20f, 9f, true).withPrefixLabel("Bifogas", 15f).withTopBorder();
-            FkCheckbox underlag1BifogasNej = new FkCheckbox("1.26", "Nej", 20f, 9f, false).withTopBorder();
+            yOffset += ROW_HEIGHT * i;
+            PdfComponent<FkValueField> underlag = new FkValueField("Underlag från fysioTeraperut" + i).offset(0, yOffset).size(80, ROW_HEIGHT).withBorders(Rectangle.TOP);
+            // TODO: same type erasure problem here.. maybe just move withToplabel to superclass?
+            ((FkValueField) underlag).withTopLabel("Ange utredning eller underlag");
+            fraga2.addChild(underlag);
 
-            yStart = renderFieldRow(Arrays.asList(underlag1Typ, underlag1Datum, underlag1BifogasJa, underlag1BifogasNej), yStart);
+            PdfComponent underlagDatum = new FkValueField("2016-05-05").offset(80, yOffset).size(40f, ROW_HEIGHT).withBorders(Rectangle.TOP);
+            ((FkValueField) underlagDatum).withTopLabel("datum (år, månad, dag");
+            fraga2.addChild(underlagDatum);
+
+            fraga2.addChild(new FkLabel("Bifogas").offset(120f, yOffset).size(15f, ROW_HEIGHT).withBorders(Rectangle.TOP));
+            fraga2.addChild(new FkCheckbox("Ja", true).offset(135f, yOffset).size(30f, ROW_HEIGHT).withBorders(Rectangle.TOP));
+            fraga2.addChild(new FkCheckbox("Nej", false).offset(155f, yOffset).size(20f, ROW_HEIGHT).withBorders(Rectangle.TOP));
+
+            yOffset += ROW_HEIGHT;
+            PdfComponent underlagHamtas = new FkValueField("Hämtas från " + i).offset(0, yOffset).size(180f, ROW_HEIGHT).withBorders(Rectangle.TOP);
+            ((FkValueField) underlagHamtas).withTopLabel("Från vilken vårdgivare kan Försäkringskassa hämta information om utRedningen/underlaget?");
+            fraga2.addChild(underlagHamtas);
+        }
+        allElements.add(fraga2);
+
+        // Start rendering a page at upper left corner
+        doRendering(allElements, 0f, Utilities.pointsToMillimeters(document.getPageSize().getTop()));
+
+    }
+
+    private void doRendering(List<PdfComponent> pdfRenderables, float x, float y) throws DocumentException {
+
+        for (PdfComponent field : pdfRenderables) {
+            field.render(canvas, x + field.getParentOffsetX(), y - field.getParentOffsetY());
 
         }
 
-    }
-
-    private float renderFieldRow(List<FkField> fkFields, float mmTopY) throws DocumentException {
-        Rectangle lastRender = new Rectangle(QUESTION_MARGIN_LEFT_MM, mmTopY);
-
-        for (FkField field : fkFields) {
-            lastRender = field.render(canvas, lastRender.getRight(), lastRender.getTop());
-
-        }
-        // Return new yOffset for next row rencering call
-        return lastRender.getBottom();
-    }
-
-    private void createCheckboxLabel(Rectangle checkboxRect, String checkboxLabel) {
-        /*
-         * ----
-         * | X | Label
-         * ----
-         */
-
-        /*
-         * float padding = (checkboxRect.getHeight() - PdfConstants.FONT_INLINE_FIELD_LABEL.getSize()) / 2f;
-         * ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(checkboxLabel,
-         * PdfConstants.FONT_INLINE_FIELD_LABEL),
-         * checkboxRect.getRight() + CHECKBOX_LABEL_PADDING_LEFT, checkboxRect.getBottom() + padding * 2, 0);
-         */
-    }
-
-    private void createQuestionBox(String frageId, float yStart, float yHeight) {
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(frageId, PdfConstants.FONT_FRAGERUBRIK),
-                Utilities.millimetersToPoints(QUESTION_MARGIN_LEFT_MM + QUESTION_RUBRIK_PADDING_LEFT), Utilities.millimetersToPoints(yStart + 1.0f), 0);
-        Rectangle rect = new Rectangle(Utilities.millimetersToPoints(QUESTION_MARGIN_LEFT_MM), Utilities.millimetersToPoints(yStart - yHeight),
-                Utilities.millimetersToPoints(QUESTION_MARGIN_LEFT_MM + QUESTION_RECT_WIDTH), Utilities.millimetersToPoints(yStart));
-        rect.setBorder(Rectangle.BOX);
-        rect.setBorderWidth(QUESTION_RECT_BORDER_WIDTH);
-        rect.setBorderColor(BaseColor.BLACK);
-        canvas.rectangle(rect);
     }
 
 }

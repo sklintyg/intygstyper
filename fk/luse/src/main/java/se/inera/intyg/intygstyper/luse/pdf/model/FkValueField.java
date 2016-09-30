@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.luse.pdf.fields;
+package se.inera.intyg.intygstyper.luse.pdf.model;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -33,48 +33,42 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 /**
  * Created by marced on 27/09/16.
  */
-public class FkValueField implements FkField {
+public class FkValueField extends PdfComponent {
 
-    private final String fieldId;
     private String fieldLabel;
     private float fieldLabelWidth = 0;
-    private final float mmValueWidth;
-    private final float mmHeight;
     private final String value;
+
     private boolean withTopLabel = false;
-    private boolean topBorder = false;
 
-    public FkValueField(String fieldId, float mmValueWidth, float mmHeight, String value) {
-        this.fieldId = fieldId;
-
-        this.mmValueWidth = mmValueWidth;
-        this.mmHeight = mmHeight;
+    public FkValueField(String value) {
         this.value = value;
     }
 
-    public FkValueField withLabel(String label, float width) {
+    public PdfComponent<FkValueField> withLabel(String label, float width) {
         this.withTopLabel = false;
         this.fieldLabel = label;
         this.fieldLabelWidth = width;
         return this;
     }
 
-    public FkValueField withTopLabel(String topLabel) {
+    public PdfComponent<FkValueField> withTopLabel(String topLabel) {
         this.withTopLabel = true;
         this.fieldLabel = topLabel;
         return this;
     }
 
     @Override
-    public Rectangle render(PdfContentByte canvas, float x, float yTop) throws DocumentException {
+    public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
+
         PdfPTable table = new PdfPTable(2);
 
-        table.setTotalWidth(new float[] { Utilities.millimetersToPoints(fieldLabelWidth), Utilities.millimetersToPoints(mmValueWidth) });
+        table.setTotalWidth(new float[] { Utilities.millimetersToPoints(fieldLabelWidth), Utilities.millimetersToPoints(width) });
 
         String leftSideLabelText = withTopLabel ? "" : fieldLabel;
         PdfPCell labelCell = new PdfPCell(new Phrase(leftSideLabelText, PdfConstants.FONT_NORMAL_9));
-        labelCell.setBorder(topBorder ? PdfPCell.TOP : PdfPCell.NO_BORDER);
-        labelCell.setFixedHeight(Utilities.millimetersToPoints(mmHeight));
+        labelCell.setBorder(Rectangle.NO_BORDER);
+        labelCell.setFixedHeight(Utilities.millimetersToPoints(height));
         labelCell.setUseAscender(true);
         labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         labelCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
@@ -82,8 +76,8 @@ public class FkValueField implements FkField {
 
         // value cell
         PdfPCell valueCell = new PdfPCell(new Phrase(value, PdfConstants.FONT_NORMAL_9));
-        valueCell.setBorder(topBorder ? PdfPCell.TOP : PdfPCell.NO_BORDER);
-        valueCell.setFixedHeight(Utilities.millimetersToPoints(mmHeight));
+        valueCell.setBorder(Rectangle.NO_BORDER);
+        valueCell.setFixedHeight(Utilities.millimetersToPoints(height));
         valueCell.setUseAscender(true);
         valueCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         valueCell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
@@ -91,23 +85,18 @@ public class FkValueField implements FkField {
         if (fieldLabel != null && withTopLabel) {
             float pinX = Utilities.millimetersToPoints(x); // TODO: make pin optional also
             float labelX = pinX + valueCell.getPaddingLeft();
-            float labelY = Utilities.millimetersToPoints(yTop) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize();
+            float labelY = Utilities.millimetersToPoints(y) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize();
 
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(fieldLabel, PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL),
                     labelX, labelY, 0);
-            canvas.moveTo(pinX, Utilities.millimetersToPoints(yTop));
-            canvas.lineTo(pinX, Utilities.millimetersToPoints(yTop) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
+            canvas.moveTo(pinX, Utilities.millimetersToPoints(y));
+            canvas.lineTo(pinX, Utilities.millimetersToPoints(y) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
         }
 
-        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(yTop), canvas);
-        // Return the effective Bounding box (expressed in millimeters)
-        Rectangle result = new Rectangle(x, yTop - Utilities.pointsToMillimeters(table.getTotalHeight()),
-                x + Utilities.pointsToMillimeters(table.getTotalWidth()), yTop);
-        return result;
+        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), canvas);
+
+        super.render(canvas, x, y);
+
     }
 
-    public FkValueField withTopBorder() {
-        this.topBorder = true;
-        return this;
-    }
 }
