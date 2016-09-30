@@ -386,16 +386,16 @@
                     </span>
               </div>
 
-              <div class="body-row" ng-show="cert.kommentar.length > 0">
+              <div class="body-row">
                 <h3 class="title">
                   <span dynamic-label key="FRG_32.RBK"></span>
-            			<span>
-            				<span></span>
-            			</span>
                 </h3>
-                    <span class="text">
-                        <span id="kommentar" class="cert-answer">{{cert.kommentar}}</span>
-                    </span>
+                <span class="text" ng-show="cert.kommentar.length > 0">
+                  <span id="kommentar" class="cert-answer">{{cert.kommentar}}</span>
+                </span>
+                <span class="text" ng-show="!cert.kommentar">
+                  <span id="kommentarEjAngivet" class="cert-answer" message key="ts-diabetes.label.ej-angivet"></span>
+                </span>
               </div>
 
               <div class="row padding-bottom-30px">
