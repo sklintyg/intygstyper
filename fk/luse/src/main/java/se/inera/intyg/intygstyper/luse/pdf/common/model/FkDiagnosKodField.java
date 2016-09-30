@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.luse.pdf.model;
+package se.inera.intyg.intygstyper.luse.pdf.common.model;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -28,7 +28,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
+import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
 
 /**
  * Created by marced on 27/09/16.
@@ -55,9 +55,9 @@ public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
 
         PdfPTable table = new PdfPTable(4);
-        char[] code = new char[]{' ', ' ', ' ', ' '};
+        char[] code = new char[] { ' ', ' ', ' ', ' ' };
         int b = 0;
-        for(char c : value.toCharArray()) {
+        for (char c : value.toCharArray()) {
             code[b++] = c;
         }
         float[] columnWidths = new float[] {
@@ -65,14 +65,14 @@ public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
                 Utilities.millimetersToPoints(7.8f),
                 Utilities.millimetersToPoints(7.8f),
                 Utilities.millimetersToPoints(7.8f) };
-                // Utilities.millimetersToPoints(40f - (7.8f*4)) };
+        // Utilities.millimetersToPoints(40f - (7.8f*4)) };
         table.setTotalWidth(columnWidths);
-        for(int a = 1; a < 5; a++) {
-            canvas.moveTo(Utilities.millimetersToPoints(x + 7.8f*a), Utilities.millimetersToPoints(y - height));
-            canvas.lineTo(Utilities.millimetersToPoints(x + 7.8f*a), Utilities.millimetersToPoints(y - height + 2.5f));
+        for (int a = 1; a < 5; a++) {
+            canvas.moveTo(Utilities.millimetersToPoints(x + 7.8f * a), Utilities.millimetersToPoints(y - height));
+            canvas.lineTo(Utilities.millimetersToPoints(x + 7.8f * a), Utilities.millimetersToPoints(y - height + 2.5f));
         }
 
-        for(char c : code) {
+        for (char c : code) {
             PdfPCell charCell = new PdfPCell(new Phrase(String.valueOf(c), PdfConstants.FONT_NORMAL_11));
             charCell.setBorder(Rectangle.NO_BORDER);
             charCell.setFixedHeight(Utilities.millimetersToPoints(height));

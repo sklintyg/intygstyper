@@ -34,11 +34,13 @@ import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
+import se.inera.intyg.intygstyper.luse.pdf.common.PdfGenerator;
+import se.inera.intyg.intygstyper.luse.pdf.common.PdfGeneratorException;
 
 /**
  * @author marced
  */
-public class PdfGeneratorTest {
+public class LusePdfDefinitionBuilderTest {
 
     private static File luseUtlatandeJson;
 
@@ -58,9 +60,10 @@ public class PdfGeneratorTest {
 
         // generate PDF
 
-        PdfGenerator pdfGenerator = new PdfGenerator();
-        byte[] generatorResult = pdfGenerator.generatePdf(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT);
-        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-normal" + System.currentTimeMillis());
+        LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
+        PdfGenerator generator = new PdfGenerator();
+        byte[] generatorResult = generator.generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT));
+        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-test" + System.currentTimeMillis());
     }
 
     private void writePdfToFile(byte[] pdf, ApplicationOrigin origin, String namingPrefix) throws IOException {

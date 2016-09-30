@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.luse.pdf.model;
+package se.inera.intyg.intygstyper.luse.pdf.common.model;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -29,7 +29,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
+import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
 
 /**
  * Created by marced on 27/09/16.

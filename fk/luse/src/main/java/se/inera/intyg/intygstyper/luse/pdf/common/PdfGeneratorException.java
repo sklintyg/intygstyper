@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.luse.pdf;
+package se.inera.intyg.intygstyper.luse.pdf.common;
 
 /**
  * Created by marced on 23/09/16.
