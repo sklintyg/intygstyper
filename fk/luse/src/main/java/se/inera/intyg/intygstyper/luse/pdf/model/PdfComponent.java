@@ -18,14 +18,14 @@
  */
 package se.inera.intyg.intygstyper.luse.pdf.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfContentByte;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by marced on 29/09/16.
@@ -75,13 +75,20 @@ public abstract class PdfComponent<T extends PdfComponent> {
         return (T) this;
     }
 
+    /**
+     * Define border for this component. Combinations are supported, such as
+     * Rectangle.TOP + Rectangle.LEFT
+     * 
+     * @param border
+     * @return
+     */
     public T withBorders(int border) {
         this.border = border;
         return (T) this;
     }
 
     /**
-     * Render a field. The upper left corner coordinates as expressed in mm.
+     * Render a PdfComponent. The upper left corner coordinates as expressed in mm.
      * When actually writing to the canvas, mm units must be converted to points. Also, to coordinate system of a page
      * (0,0) start at the lower left corner.
      *

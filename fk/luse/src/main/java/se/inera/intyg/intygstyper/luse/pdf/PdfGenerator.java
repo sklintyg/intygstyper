@@ -18,8 +18,16 @@
  */
 package se.inera.intyg.intygstyper.luse.pdf;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
@@ -28,21 +36,16 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkCheckbox;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkDiagnosKodField;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkLabel;
-import se.inera.intyg.intygstyper.luse.pdf.model.FkQuestion;
+import se.inera.intyg.intygstyper.luse.pdf.model.FkCategory;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkValueField;
 import se.inera.intyg.intygstyper.luse.pdf.model.PdfComponent;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by marced on 18/08/16.
@@ -106,11 +109,12 @@ public class PdfGenerator {
 
     private void createPage2() throws IOException, DocumentException {
         List<PdfComponent> allElements = new ArrayList<>();
-        FkQuestion fraga3 = new FkQuestion("3. Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga").offset(15f, 23f).size(180f, 76f).withBorders(Rectangle.BOX);
-        FkValueField diagnos1 = new FkValueField("Detta är diagnos 1")
+        FkCategory fraga3 = new FkCategory("3. Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga").offset(15f, 23f).size(180f, 76f)
+                .withBorders(Rectangle.BOX);
+        FkValueField diagnos1 = new FkValueField("Detta är diagnos 1, kan vara så mkt text att det blir på två rader och det är ok. sen skall det klippas eller?")
                 .size(140f, 11f)
                 .withValueFont(PdfConstants.FONT_NORMAL_10)
-                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
                 .withBorders(Rectangle.BOX);
 
         FkDiagnosKodField diagnosKodField1 = new FkDiagnosKodField("J22")
@@ -125,7 +129,7 @@ public class PdfGenerator {
                 .size(140f, 9f)
                 .offset(0f, 11f)
                 .withValueFont(PdfConstants.FONT_NORMAL_10)
-                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
                 .withBorders(Rectangle.BOX);
         FkDiagnosKodField diagnosKodField2 = new FkDiagnosKodField("K33")
                 .size(40f, 9f)
@@ -138,7 +142,7 @@ public class PdfGenerator {
                 .size(140f, 9f)
                 .offset(0f, 20f)
                 .withBorders(Rectangle.BOX)
-                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
                 .withValueFont(PdfConstants.FONT_NORMAL_10);
         FkDiagnosKodField diagnosKodField3 = new FkDiagnosKodField("A19")
                 .size(40f, 9f)
@@ -152,7 +156,7 @@ public class PdfGenerator {
                 .offset(0f, 29f)
                 .withBorders(Rectangle.BOTTOM)
                 .withValueFont(PdfConstants.FONT_NORMAL_10)
-                .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE)
+                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
                 .withTopLabel("När och var ställdes diagnosen/diagnoserna?");
         fraga3.addChild(narOchHur);
 
@@ -194,62 +198,114 @@ public class PdfGenerator {
 
         List<PdfComponent> allElements = new ArrayList<>();
 
-        FkQuestion fraga1 = new FkQuestion("1. Utlåtandet är baserat på").offset(15f, 50f).size(180f, 55f).withBorders(Rectangle.BOX);
+        FkCategory fraga1 = new FkCategory("1. Utlåtandet är baserat på")
+                .offset(15f, 140f)
+                .size(180f, 55f)
+                .withBorders(Rectangle.BOX);
 
         float ROW_HEIGHT = 9f;
         float CHECKBOX_DEFAULT_WIDTH = 65f;
 
-        fraga1.addChild(new FkCheckbox("min Undersökning av patienten", false).offset(0f, 0f).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
+        fraga1.addChild(new FkCheckbox("min Undersökning av patienten", false)
+                .offset(0f, 0f)
+                .size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
 
-        PdfComponent dlUndersokningAvPat = new FkValueField("2016-12-09").offset(CHECKBOX_DEFAULT_WIDTH, 0f).size(65f, ROW_HEIGHT);
-        // TODO: withTopLabel is currently not defined in superclass since it only applies to this subtype and it messes with the
-        // builder pattern. What to do?
-        ((FkValueField) dlUndersokningAvPat).withTopLabel("datum (Är månad , dag)");
-        fraga1.addChild(dlUndersokningAvPat);
+        fraga1.addChild(new FkValueField("2016-12-09")
+                .offset(CHECKBOX_DEFAULT_WIDTH, 0f)
+                .size(65f, ROW_HEIGHT)
+                .withTopLabel("datum (Är månad , dag)"));
 
-        fraga1.addChild(new FkCheckbox("journaluppgifter från den", true).offset(0f, ROW_HEIGHT).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
-        fraga1.addChild(new FkValueField("2016-12-09").offset(65f, ROW_HEIGHT).size(CHECKBOX_DEFAULT_WIDTH, 9f));
+        fraga1.addChild(new FkCheckbox("journaluppgifter från den", true)
+                .offset(0f, ROW_HEIGHT)
+                .size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
+        fraga1.addChild(new FkValueField("2016-12-09")
+                .offset(65f, ROW_HEIGHT)
+                .size(CHECKBOX_DEFAULT_WIDTH, 9f));
 
-        fraga1.addChild(new FkCheckbox("anhörig/anaNas beskrivning av patienten", true).offset(0f, ROW_HEIGHT * 2).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
-        fraga1.addChild(new FkValueField("2016-12-09").offset(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT * 2).size(CHECKBOX_DEFAULT_WIDTH, 9f));
+        fraga1.addChild(new FkCheckbox("anhörig/anaNas beskrivning av patienten", true)
+                .offset(0f, ROW_HEIGHT * 2)
+                .size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
+        fraga1.addChild(new FkValueField("2016-12-09")
+                .offset(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT * 2)
+                .size(CHECKBOX_DEFAULT_WIDTH, 9f));
 
-        fraga1.addChild(new FkCheckbox("annat", true).offset(0f, ROW_HEIGHT * 3).size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
-        fraga1.addChild(new FkValueField("2015-12-09").offset(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT * 3).size(65f, 9f));
+        fraga1.addChild(new FkCheckbox("annat", true)
+                .offset(0f, ROW_HEIGHT * 3)
+                .size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT));
+        fraga1.addChild(new FkValueField("2015-12-09")
+                .offset(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT * 3)
+                .size(65f, 9f));
 
-        fraga1.addChild(new FkLabel("Ange vad annat är:").offset(7f, ROW_HEIGHT * 4).size(58f, ROW_HEIGHT));
-        fraga1.addChild(new FkValueField("Hej och hå vad långa texter det blir  sf sfsd").offset(65f, ROW_HEIGHT * 4).size(65f, ROW_HEIGHT));
+        fraga1.addChild(new FkLabel("Ange vad annat är:")
+                .offset(7f, ROW_HEIGHT * 4)
+                .size(58f, ROW_HEIGHT)
+                .withAlignment(Element.ALIGN_BOTTOM));
+        fraga1.addChild(new FkValueField("Hej och hå vad långa texter det blir  sf sfsd")
+                .offset(65f, ROW_HEIGHT * 4)
+                .size(65f, ROW_HEIGHT));
 
         // Dessa fält har top border
-        fraga1.addChild(new FkLabel("Jag har känt patienten sedan").offset(0f, ROW_HEIGHT * 5).size(65f, ROW_HEIGHT).withBorders(Rectangle.TOP));
-        fraga1.addChild(new FkValueField("2016-09-22").offset(65f, ROW_HEIGHT * 5).size(115f, ROW_HEIGHT).withBorders(Rectangle.TOP));
+        fraga1.addChild(new FkLabel("Jag har känt patienten sedan")
+                .offset(0f, ROW_HEIGHT * 5)
+                .size(65f, ROW_HEIGHT)
+                .withBorders(Rectangle.TOP)
+                .withAlignment(Element.ALIGN_BOTTOM));
+        fraga1.addChild(new FkValueField("2016-09-22")
+                .offset(65f, ROW_HEIGHT * 5)
+                .size(115f, ROW_HEIGHT)
+                .withBorders(Rectangle.TOP));
 
         allElements.add(fraga1);
 
-        FkQuestion fraga2 = new FkQuestion("2. Är utlåtandet även baserat på andra medicinska utredningar eller underlag?").offset(15f, 150f)
-                .size(180f, 55f).withBorders(Rectangle.BOX);
-        fraga2.addChild(new FkCheckbox("Nej", true).offset(0, 0).size(20.5f, ROW_HEIGHT));
-        fraga2.addChild(new FkCheckbox("Ja, fyll i nedan.", true).offset(21.5f, 0).size(40f, ROW_HEIGHT));
+        FkCategory fraga2 = new FkCategory("2. Är utlåtandet även baserat på andra medicinska utredningar eller underlag?")
+                .offset(15f, 210f)
+                .size(180f, 70f)
+                .withBorders(Rectangle.BOX);
+        fraga2.addChild(new FkCheckbox("Nej", true)
+                .offset(0, 0)
+                .size(20.5f, ROW_HEIGHT));
+        fraga2.addChild(new FkCheckbox("Ja, fyll i nedan.", true)
+                .offset(21.5f, 0)
+                .size(40f, ROW_HEIGHT));
 
         // This is just so that we dont have to enter all y offsets manually
-        float yOffset = ROW_HEIGHT;
+        float yOffset;
+        int row = 1;
         for (int i = 0; i < 3; i++) {
-            yOffset += ROW_HEIGHT * i;
-            FkValueField underlag = new FkValueField("Underlag från fysioTeraperut" + i).offset(0, yOffset).size(80, ROW_HEIGHT).withBorders(Rectangle.TOP).withTopLabel("Ange utredning eller underlag");
-            underlag.withTopLabel("Ange utredning eller underlag");
-            fraga2.addChild(underlag);
+            yOffset = (ROW_HEIGHT * row);
+            fraga2.addChild(new FkValueField("Underlag från fysioTeraperut" + i)
+                    .offset(0, yOffset)
+                    .size(80, ROW_HEIGHT)
+                    .withBorders(Rectangle.TOP)
+                    .withTopLabel("Ange utredning eller underlag"));
 
-            FkValueField underlagDatum = new FkValueField("2016-05-05").offset(80, yOffset).size(40f, ROW_HEIGHT).withBorders(Rectangle.TOP);
-            underlagDatum.withTopLabel("datum (år, månad, dag");
-            fraga2.addChild(underlagDatum);
+            fraga2.addChild(new FkValueField("2016-05-05")
+                    .offset(80, yOffset)
+                    .size(40f, ROW_HEIGHT)
+                    .withBorders(Rectangle.TOP)
+                    .withTopLabel("datum (år, månad, dag"));
 
-            fraga2.addChild(new FkLabel("Bifogas").offset(120f, yOffset).size(15f, ROW_HEIGHT).withBorders(Rectangle.TOP));
-            fraga2.addChild(new FkCheckbox("Ja", true).offset(135f, yOffset).size(30f, ROW_HEIGHT).withBorders(Rectangle.TOP));
-            fraga2.addChild(new FkCheckbox("Nej", false).offset(155f, yOffset).size(20f, ROW_HEIGHT).withBorders(Rectangle.TOP));
+            fraga2.addChild(new FkLabel("Bifogas")
+                    .offset(120f, yOffset)
+                    .size(15f, ROW_HEIGHT)
+                    .withBorders(Rectangle.TOP));
+            fraga2.addChild(new FkCheckbox("Ja", true)
+                    .offset(135f, yOffset)
+                    .size(30f, ROW_HEIGHT)
+                    .withBorders(Rectangle.TOP));
+            fraga2.addChild(new FkCheckbox("Nej", false)
+                    .offset(155f, yOffset)
+                    .size(25f, ROW_HEIGHT)
+                    .withBorders(Rectangle.TOP));
+            row++;
+            yOffset = (ROW_HEIGHT * row);
+            fraga2.addChild(new FkValueField("Hämtas från " + i)
+                    .offset(0, yOffset)
+                    .size(180f, ROW_HEIGHT)
+                    .withBorders(Rectangle.TOP)
+                    .withTopLabel("Från vilken vårdgivare kan Försäkringskassa hämta information om utRedningen/underlaget?"));
+            row++;
 
-            yOffset += ROW_HEIGHT;
-            FkValueField underlagHamtas = new FkValueField("Hämtas från " + i).offset(0, yOffset).size(180f, ROW_HEIGHT).withBorders(Rectangle.TOP);
-            underlagHamtas.withTopLabel("Från vilken vårdgivare kan Försäkringskassa hämta information om utRedningen/underlaget?");
-            fraga2.addChild(underlagHamtas);
         }
         allElements.add(fraga2);
 

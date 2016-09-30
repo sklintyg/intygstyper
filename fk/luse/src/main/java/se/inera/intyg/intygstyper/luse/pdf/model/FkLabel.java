@@ -34,9 +34,15 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 public class FkLabel extends PdfComponent<FkLabel> {
 
     private final String label;
+    private int valueTextVerticalAlignment = PdfPCell.ALIGN_MIDDLE;
 
     public FkLabel(String label) {
         this.label = label;
+    }
+
+    public FkLabel withAlignment(int alignment) {
+        this.valueTextVerticalAlignment = alignment;
+        return this;
     }
 
     @Override
@@ -52,7 +58,7 @@ public class FkLabel extends PdfComponent<FkLabel> {
         labelCell.setBorder(Rectangle.NO_BORDER);
         labelCell.setUseAscender(true); // needed to make vertical alignment correct
         labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        labelCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
+        labelCell.setVerticalAlignment(valueTextVerticalAlignment);
         table.addCell(labelCell);
 
         table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), canvas);

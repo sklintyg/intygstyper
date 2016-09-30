@@ -37,7 +37,7 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 public class FkValueField extends PdfComponent<FkValueField> {
 
     private String fieldLabel;
-    private float fieldLabelWidth = 0;
+    private float fieldLabelWidth = 0f;
     private final String value;
 
     private boolean withTopLabel = false;
@@ -74,6 +74,12 @@ public class FkValueField extends PdfComponent<FkValueField> {
     @Override
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
 
+        float adjustedHeight = height;
+        float adjustedY = y;
+        if (fieldLabel != null && withTopLabel) {
+            adjustedHeight -= Utilities.pointsToMillimeters(PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
+            adjustedY -= Utilities.pointsToMillimeters(PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
+        }
         PdfPTable table = new PdfPTable(2);
 
         table.setTotalWidth(new float[] { Utilities.millimetersToPoints(fieldLabelWidth), Utilities.millimetersToPoints(width) });
@@ -81,7 +87,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
         String leftSideLabelText = withTopLabel ? "" : fieldLabel;
         PdfPCell labelCell = new PdfPCell(new Phrase(leftSideLabelText, valueFont));
         labelCell.setBorder(Rectangle.NO_BORDER);
-        labelCell.setFixedHeight(Utilities.millimetersToPoints(height));
+        labelCell.setFixedHeight(Utilities.millimetersToPoints(adjustedHeight));
         labelCell.setUseAscender(true);
         labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         labelCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
@@ -90,7 +96,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
         // value cell
         PdfPCell valueCell = new PdfPCell(new Phrase(value, valueFont));
         valueCell.setBorder(Rectangle.NO_BORDER);
-        valueCell.setFixedHeight(Utilities.millimetersToPoints(height));
+        valueCell.setFixedHeight(Utilities.millimetersToPoints(adjustedHeight));
         valueCell.setUseAscender(true);
         valueCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         valueCell.setVerticalAlignment(valueTextVerticalAlignment);
@@ -106,11 +112,10 @@ public class FkValueField extends PdfComponent<FkValueField> {
             canvas.lineTo(pinX, Utilities.millimetersToPoints(y) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
         }
 
-        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), canvas);
+        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(adjustedY), canvas);
 
         super.render(canvas, x, y);
 
     }
-
 
 }
