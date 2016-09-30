@@ -36,7 +36,7 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 /**
  * Created by marced on 27/09/16.
  */
-public class FkCheckbox extends PdfComponent {
+public class FkCheckbox extends PdfComponent<FkCheckbox> {
 
     //internal property config
     private static final Rectangle CHECKBOX_DIMENSIONS_IN_POINTS = new RectangleReadOnly(Utilities.millimetersToPoints(4.2f),

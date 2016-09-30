@@ -30,7 +30,7 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 /**
  * Created by marced on 29/09/16.
  */
-public class FkQuestion extends PdfComponent {
+public class FkQuestion extends PdfComponent<FkQuestion> {
     private String label;
 
     public FkQuestion(String label) {

@@ -18,19 +18,19 @@
  */
 package se.inera.intyg.intygstyper.luse.pdf.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfContentByte;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by marced on 29/09/16.
  */
-public abstract class PdfComponent<T> {
+public abstract class PdfComponent<T extends PdfComponent> {
 
     // Expressed in millimeters
     protected float width;
@@ -63,21 +63,21 @@ public abstract class PdfComponent<T> {
     }
 
     // Builder style methods to avoid lengthy constructor argument list
-    public PdfComponent<T> offset(float x, float y) {
+    public T offset(float x, float y) {
         this.parentOffsetX = x;
         this.parentOffsetY = y;
-        return this;
+        return (T) this;
     }
 
-    public PdfComponent<T> size(float x, float y) {
+    public T size(float x, float y) {
         this.width = x;
         this.height = y;
-        return this;
+        return (T) this;
     }
 
-    public PdfComponent<T> withBorders(int border) {
+    public T withBorders(int border) {
         this.border = border;
-        return this;
+        return (T) this;
     }
 
     /**

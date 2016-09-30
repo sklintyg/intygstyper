@@ -31,7 +31,7 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 /**
  * Created by marced on 27/09/16.
  */
-public class FkLabel extends PdfComponent {
+public class FkLabel extends PdfComponent<FkLabel> {
 
     private final String label;
 

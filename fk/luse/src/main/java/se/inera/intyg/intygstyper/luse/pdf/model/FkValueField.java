@@ -33,7 +33,7 @@ import se.inera.intyg.intygstyper.luse.pdf.PdfConstants;
 /**
  * Created by marced on 27/09/16.
  */
-public class FkValueField extends PdfComponent {
+public class FkValueField extends PdfComponent<FkValueField> {
 
     private String fieldLabel;
     private float fieldLabelWidth = 0;
@@ -45,14 +45,14 @@ public class FkValueField extends PdfComponent {
         this.value = value;
     }
 
-    public PdfComponent<FkValueField> withLabel(String label, float width) {
+    public FkValueField withLabel(String label, float width) {
         this.withTopLabel = false;
         this.fieldLabel = label;
         this.fieldLabelWidth = width;
         return this;
     }
 
-    public PdfComponent<FkValueField> withTopLabel(String topLabel) {
+    public FkValueField withTopLabel(String topLabel) {
         this.withTopLabel = true;
         this.fieldLabel = topLabel;
         return this;

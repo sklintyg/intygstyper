@@ -18,13 +18,6 @@
  */
 package se.inera.intyg.intygstyper.luse.pdf;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -34,7 +27,7 @@ import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
-
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
@@ -43,6 +36,11 @@ import se.inera.intyg.intygstyper.luse.pdf.model.FkLabel;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkQuestion;
 import se.inera.intyg.intygstyper.luse.pdf.model.FkValueField;
 import se.inera.intyg.intygstyper.luse.pdf.model.PdfComponent;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by marced on 18/08/16.
@@ -138,7 +136,7 @@ public class PdfGenerator {
 
         allElements.add(fraga1);
 
-        PdfComponent fraga2 = new FkQuestion("2. Är utlåtandet även baserat på andra medicinska utredningar eller underlag?").offset(15f, 150f)
+        FkQuestion fraga2 = new FkQuestion("2. Är utlåtandet även baserat på andra medicinska utredningar eller underlag?").offset(15f, 150f)
                 .size(180f, 55f).withBorders(Rectangle.BOX);
         fraga2.addChild(new FkCheckbox("Nej", true).offset(0, 0).size(20.5f, ROW_HEIGHT));
         fraga2.addChild(new FkCheckbox("Ja, fyll i nedan.", true).offset(21.5f, 0).size(40f, ROW_HEIGHT));
@@ -147,13 +145,12 @@ public class PdfGenerator {
         float yOffset = ROW_HEIGHT;
         for (int i = 0; i < 3; i++) {
             yOffset += ROW_HEIGHT * i;
-            PdfComponent<FkValueField> underlag = new FkValueField("Underlag från fysioTeraperut" + i).offset(0, yOffset).size(80, ROW_HEIGHT).withBorders(Rectangle.TOP);
-            // TODO: same type erasure problem here.. maybe just move withToplabel to superclass?
-            ((FkValueField) underlag).withTopLabel("Ange utredning eller underlag");
+            FkValueField underlag = new FkValueField("Underlag från fysioTeraperut" + i).offset(0, yOffset).size(80, ROW_HEIGHT).withBorders(Rectangle.TOP).withTopLabel("Ange utredning eller underlag");
+            underlag.withTopLabel("Ange utredning eller underlag");
             fraga2.addChild(underlag);
 
-            PdfComponent underlagDatum = new FkValueField("2016-05-05").offset(80, yOffset).size(40f, ROW_HEIGHT).withBorders(Rectangle.TOP);
-            ((FkValueField) underlagDatum).withTopLabel("datum (år, månad, dag");
+            FkValueField underlagDatum = new FkValueField("2016-05-05").offset(80, yOffset).size(40f, ROW_HEIGHT).withBorders(Rectangle.TOP);
+            underlagDatum.withTopLabel("datum (år, månad, dag");
             fraga2.addChild(underlagDatum);
 
             fraga2.addChild(new FkLabel("Bifogas").offset(120f, yOffset).size(15f, ROW_HEIGHT).withBorders(Rectangle.TOP));
@@ -161,8 +158,8 @@ public class PdfGenerator {
             fraga2.addChild(new FkCheckbox("Nej", false).offset(155f, yOffset).size(20f, ROW_HEIGHT).withBorders(Rectangle.TOP));
 
             yOffset += ROW_HEIGHT;
-            PdfComponent underlagHamtas = new FkValueField("Hämtas från " + i).offset(0, yOffset).size(180f, ROW_HEIGHT).withBorders(Rectangle.TOP);
-            ((FkValueField) underlagHamtas).withTopLabel("Från vilken vårdgivare kan Försäkringskassa hämta information om utRedningen/underlaget?");
+            FkValueField underlagHamtas = new FkValueField("Hämtas från " + i).offset(0, yOffset).size(180f, ROW_HEIGHT).withBorders(Rectangle.TOP);
+            underlagHamtas.withTopLabel("Från vilken vårdgivare kan Försäkringskassa hämta information om utRedningen/underlaget?");
             fraga2.addChild(underlagHamtas);
         }
         allElements.add(fraga2);
