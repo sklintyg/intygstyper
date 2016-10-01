@@ -76,6 +76,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
 
         float adjustedHeight = height;
         float adjustedY = y;
+        //If were showing the label above, adjust the tables height to avoid overlap.
         if (fieldLabel != null && withTopLabel) {
             adjustedHeight -= Utilities.pointsToMillimeters(PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
             adjustedY -= Utilities.pointsToMillimeters(PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
@@ -102,7 +103,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
         valueCell.setVerticalAlignment(valueTextVerticalAlignment);
         table.addCell(valueCell);
         if (fieldLabel != null && withTopLabel) {
-            float pinX = Utilities.millimetersToPoints(x); // TODO: make pin optional also
+            float pinX = Utilities.millimetersToPoints(x); // TODO: make pin optional also?
             float labelX = pinX + valueCell.getPaddingLeft();
             float labelY = Utilities.millimetersToPoints(y) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize();
 

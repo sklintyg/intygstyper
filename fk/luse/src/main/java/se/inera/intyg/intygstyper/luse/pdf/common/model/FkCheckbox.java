@@ -47,6 +47,8 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
 
     private final String fieldLabel;
     private final boolean isChecked;
+
+    private int verticalAlignment = PdfPCell.ALIGN_MIDDLE;
     
 
     public FkCheckbox(String fieldLabel, boolean isChecked) {
@@ -54,6 +56,10 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
         this.isChecked = isChecked;
     }
 
+    public FkCheckbox withVerticalAlignment(int alignment) {
+        this.verticalAlignment = alignment;
+        return this;
+    }
     @Override
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
@@ -65,7 +71,7 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
         PdfPCell checkboxCell = new PdfPCell(checkbox);
         checkboxCell.setBorder(Rectangle.NO_BORDER);
         checkboxCell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
-        checkboxCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
+        checkboxCell.setVerticalAlignment(verticalAlignment);
         table.addCell(checkboxCell);
 
         // labelCell
@@ -77,7 +83,7 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
         labelCell.setUseAscender(true);
         //labelCell.setPaddingLeft(Utilities.millimetersToPoints(1f));
         labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        labelCell.setVerticalAlignment(PdfPCell.ALIGN_MIDDLE);
+        labelCell.setVerticalAlignment(verticalAlignment);
         table.addCell(labelCell);
 
         table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), canvas);

@@ -32,10 +32,10 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 public class FkFormIdentityEventHandler extends PdfPageEventHelper {
 
-    private static final float FORMID_X = Utilities.millimetersToPoints(11f);
+    private static final float FORMID_X = Utilities.millimetersToPoints(12f);
     private static final float FORMID_Y = Utilities.millimetersToPoints(8f);
 
-    private static final float SCANID_X = Utilities.millimetersToPoints(10f);
+    private static final float SCANID_X = Utilities.millimetersToPoints(12f);
     private static final float SCANID_Y = Utilities.millimetersToPoints(118f);
 
     private String formId;
