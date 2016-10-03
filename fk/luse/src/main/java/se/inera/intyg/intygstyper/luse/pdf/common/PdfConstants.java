@@ -39,7 +39,7 @@ public final class PdfConstants {
     public static final Font FONT_INLINE_FIELD_LABEL = new Font(Font.FontFamily.HELVETICA, 8.5f, Font.NORMAL);
     public static final Font FONT_INLINE_FIELD_LABEL_SMALL = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);
 
-
+    public static final Font FONT_BOLD_8 = new Font(Font.FontFamily.HELVETICA, 8f, Font.BOLD);
     // constructors
 
     private PdfConstants() {

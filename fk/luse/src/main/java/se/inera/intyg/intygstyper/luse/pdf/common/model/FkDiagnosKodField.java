@@ -36,7 +36,6 @@ import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
 public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
 
     private String fieldLabel;
-    private float fieldLabelWidth = 0;
     private final String value;
 
     private boolean withTopLabel = false;

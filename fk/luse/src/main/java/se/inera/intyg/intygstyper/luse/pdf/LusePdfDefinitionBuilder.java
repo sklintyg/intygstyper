@@ -18,16 +18,14 @@
  */
 package se.inera.intyg.intygstyper.luse.pdf;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
-
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
@@ -39,11 +37,16 @@ import se.inera.intyg.intygstyper.luse.pdf.common.PdfGeneratorException;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkCategory;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkCheckbox;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkDiagnosKodField;
+import se.inera.intyg.intygstyper.luse.pdf.common.model.FkImage;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkLabel;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkPage;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkPdfDefinition;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkValueField;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.PdfComponent;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by marced on 18/08/16.
@@ -89,6 +92,82 @@ public class LusePdfDefinitionBuilder {
     private FkPage createPage1(LuseUtlatande intyg) throws IOException, DocumentException {
 
         List<PdfComponent> allElements = new ArrayList<>();
+
+        // Meta elements such as FK logotype, information text(s) etc.
+        Resource resource = new ClassPathResource("images/forsakringskassans_logotyp.jpg");
+        FkImage logo = new FkImage(IOUtils.toByteArray(resource.getInputStream()))
+                .withLinearScale(0.253f)
+                .offset(16f, 20f);
+        allElements.add(logo);
+
+        FkLabel fortsBladText = new FkLabel("Använd fortsättningsblad som finns i slutet av blanketten om utrymmet i fälten inte räcker till.")
+                .offset(17.5f, 20.5f)
+                .withAlignment(Element.ALIGN_TOP)
+                .size(67f, 10f)
+                .withLeading(.0f, 1.2f);
+        allElements.add(fortsBladText);
+
+        FkLabel inteKannerPatientenText = new FkLabel("Om du inte känner patienten ska hen styrka sin\nidentitet genom legitimation med foto (SOSFS 2005:29).")
+                .offset(17.5f, 31.5f)
+                .withAlignment(Element.ALIGN_TOP)
+                .size(76f, 10f)
+                .withLeading(.0f, 1.2f);
+        allElements.add(inteKannerPatientenText);
+
+
+        FkLabel mainHeader = new FkLabel("Läkarutlåtande")
+                .offset(107.5f, 10f)
+                .size(40, 12f)
+                .withAlignment(Element.ALIGN_TOP)
+                .withFont(PdfConstants.FONT_FRAGERUBRIK)
+                .withBorders(Rectangle.NO_BORDER);
+        FkLabel subHeader = new FkLabel("för sjukersättning")
+                .offset(107.5f, 14f)
+                .size(40, 15)
+                .withAlignment(Element.ALIGN_TOP)
+                .withFont(PdfConstants.FONT_BOLD_8)
+                .withBorders(Rectangle.NO_BORDER);
+        allElements.add(mainHeader);
+        allElements.add(subHeader);
+
+        FkLabel patientNamn = new FkLabel("Tolvan Tolvansson")
+                .offset(107.5f, 18f)
+                .size(62.5f, 15)
+                .withAlignment(Element.ALIGN_TOP)
+                .withFont(PdfConstants.FONT_NORMAL_7)
+                .withBorders(Rectangle.NO_BORDER);
+        FkLabel patientPnr = new FkLabel("19121212-1212")
+                .offset(170f, 18f)
+                .size(35f, 15f)
+                .withAlignment(Element.ALIGN_TOP)
+                .withFont(PdfConstants.FONT_NORMAL_7)
+                .withBorders(Rectangle.NO_BORDER);
+        allElements.add(patientNamn);
+        allElements.add(patientPnr);
+
+        FkLabel skickaBlankettenTillLbl = new FkLabel("Skicka blanketten till")
+                .offset(113.2f, 37.5f)
+                .size(28f, 5f)
+                .withAlignment(Element.ALIGN_TOP)
+                .withFont(PdfConstants.FONT_NORMAL_7)
+                .withBorders(Rectangle.NO_BORDER);
+        allElements.add(skickaBlankettenTillLbl);
+
+        FkLabel inlasningsCentralRad1 = new FkLabel("Försäkringskassans inläsningscentral")
+                .withAlignment(Element.ALIGN_TOP)
+                .size(60f, 6f)
+                .offset(113.2f, 42f)
+                .withBorders(Rectangle.NO_BORDER);
+        FkLabel inlasningsCentralRad2 = new FkLabel("839 88 Östersund")
+                .withAlignment(Element.ALIGN_TOP)
+                .size(60f, 6f)
+                .offset(113.2f, 48.75f)
+                .withBorders(Rectangle.NO_BORDER);
+
+        allElements.add(inlasningsCentralRad1);
+        allElements.add(inlasningsCentralRad2);
+
+
 
         FkCategory fraga1 = new FkCategory("1. Utlåtandet är baserat på")
                 .offset(KATEGORI_OFFSET_X, 145f)

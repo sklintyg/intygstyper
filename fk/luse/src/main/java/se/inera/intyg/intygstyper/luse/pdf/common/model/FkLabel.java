@@ -19,6 +19,7 @@
 package se.inera.intyg.intygstyper.luse.pdf.common.model;
 
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
@@ -35,6 +36,9 @@ public class FkLabel extends PdfComponent<FkLabel> {
 
     private final String label;
     private int valueTextVerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+    private Font font = PdfConstants.FONT_INLINE_FIELD_LABEL;
+    private float fixedLeading = 0.0f;
+    private float multipliedLeading = 1.0f;
 
     public FkLabel(String label) {
         this.label = label;
@@ -45,13 +49,24 @@ public class FkLabel extends PdfComponent<FkLabel> {
         return this;
     }
 
+    public FkLabel withFont(Font font) {
+        this.font = font;
+        return this;
+    }
+
+    public FkLabel withLeading(float fixedLeading, float multipliedLeading) {
+        this.fixedLeading = fixedLeading;
+        this.multipliedLeading = multipliedLeading;
+        return this;
+    }
+
     @Override
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
         PdfPTable table = new PdfPTable(1);
         table.setTotalWidth(Utilities.millimetersToPoints(width));
 
         // labelCell
-        PdfPCell labelCell = new PdfPCell(new Phrase(label, PdfConstants.FONT_INLINE_FIELD_LABEL));
+        PdfPCell labelCell = new PdfPCell(new Phrase(label, font));
 
         // Make sure the tablecell has the correct height
         labelCell.setFixedHeight(Utilities.millimetersToPoints(height));
@@ -59,11 +74,13 @@ public class FkLabel extends PdfComponent<FkLabel> {
         labelCell.setUseAscender(true); // needed to make vertical alignment correct
         labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         labelCell.setVerticalAlignment(valueTextVerticalAlignment);
+        labelCell.setLeading(fixedLeading, multipliedLeading);
         table.addCell(labelCell);
 
         table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), canvas);
 
         super.render(canvas, x, y);
     }
+
 
 }
