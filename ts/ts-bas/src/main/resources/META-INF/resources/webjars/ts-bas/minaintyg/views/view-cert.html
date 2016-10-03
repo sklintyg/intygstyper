@@ -293,11 +293,11 @@
                 <h3 class="title">
                   <span dynamic-label key="KAT_3.RBK"></span>
                 </h3>
-            		<span class="text">
-            			<span dynamic-label key="FRG_12.RBK"></span>
-            			<span id="funktionsnedsattning" class="cert-answer" message
-                        key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
-            		</span>
+                <span class="text">
+                  <span dynamic-label key="FRG_12.RBK"></span>
+                  <span id="funktionsnedsattning" class="cert-answer" message
+                      key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
+                  </span>
 
                 <div class="indent">
                   <span class="text" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
@@ -306,15 +306,11 @@
                   </span>
                 </div>
 
-            		<span class="text" ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
-            			<span dynamic-label key="FRG_13.RBK"></span>
-            			<span id="funktionsnedsattningotillrackligRorelseformaga"
-                        ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
-                        key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span>
-            			<span ng-show="!cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
-                        key="ts-diabetes.label.ej-angivet"></span>
-            		</span>
-
+                <span class="text" ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga != null">
+                  <span dynamic-label key="FRG_13.RBK"></span>
+                  <span id="funktionsnedsattningotillrackligRorelseformaga" class="cert-answer" message
+                      key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span>
+                </span>
               </div>
 
               <!-- 4 -->
