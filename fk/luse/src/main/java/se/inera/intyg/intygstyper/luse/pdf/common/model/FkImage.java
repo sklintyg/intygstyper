@@ -2,7 +2,6 @@ package se.inera.intyg.intygstyper.luse.pdf.common.model;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.Jpeg;
 import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfContentByte;
 
@@ -29,7 +28,7 @@ public class FkImage extends PdfComponent<FkImage> {
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
         Image fkLogo = null;
         try {
-            fkLogo = new Jpeg(imageData);
+            fkLogo = Image.getInstance(imageData);
             fkLogo.setAbsolutePosition(Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y));
             fkLogo.scalePercent(linearScale*100f);
             canvas.addImage(fkLogo);

@@ -18,7 +18,6 @@
  */
 package se.inera.intyg.intygstyper.luse.pdf;
 
-import com.google.common.collect.ImmutableList;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Rectangle;
@@ -34,6 +33,7 @@ import se.inera.intyg.intygstyper.luse.pdf.common.FkFormIdentityEventHandler;
 import se.inera.intyg.intygstyper.luse.pdf.common.PageNumberingEventHandler;
 import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
 import se.inera.intyg.intygstyper.luse.pdf.common.PdfGeneratorException;
+import se.inera.intyg.intygstyper.luse.pdf.common.FkPersonnummerEventHandler;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkCategory;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkCheckbox;
 import se.inera.intyg.intygstyper.luse.pdf.common.model.FkDiagnosKodField;
@@ -75,6 +75,7 @@ public class LusePdfDefinitionBuilder {
             // Add page envent handlers
             def.addPageEvent(new PageNumberingEventHandler());
             def.addPageEvent(new FkFormIdentityEventHandler("FK 7800 (001 F 001) Fastställd av Försäkringskassan", "7800", "01"));
+            def.addPageEvent(new FkPersonnummerEventHandler("19121212-1212"));
 
             def.addPage(createPage1(intyg));
             def.addPage(createPage2(intyg));
@@ -114,34 +115,40 @@ public class LusePdfDefinitionBuilder {
                 .withLeading(.0f, 1.2f);
         allElements.add(inteKannerPatientenText);
 
-
         FkLabel mainHeader = new FkLabel("Läkarutlåtande")
                 .offset(107.5f, 10f)
                 .size(40, 12f)
                 .withAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_FRAGERUBRIK)
-                .withBorders(Rectangle.NO_BORDER);
+                .withFont(PdfConstants.FONT_FRAGERUBRIK);
         FkLabel subHeader = new FkLabel("för sjukersättning")
                 .offset(107.5f, 14f)
                 .size(40, 15)
                 .withAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_BOLD_8)
-                .withBorders(Rectangle.NO_BORDER);
+                .withFont(PdfConstants.FONT_BOLD_8);
         allElements.add(mainHeader);
         allElements.add(subHeader);
 
-        FkLabel patientNamn = new FkLabel("Tolvan Tolvansson")
+        FkLabel patientNamnLbl = new FkLabel("Patientens namn")
                 .offset(107.5f, 18f)
                 .size(62.5f, 15)
                 .withAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_NORMAL_7)
-                .withBorders(Rectangle.NO_BORDER);
-        FkLabel patientPnr = new FkLabel("19121212-1212")
+                .withFont(PdfConstants.FONT_NORMAL_7);
+        FkLabel patientPnrLbl = new FkLabel("Personnummer")
                 .offset(170f, 18f)
                 .size(35f, 15f)
                 .withAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_NORMAL_7)
-                .withBorders(Rectangle.NO_BORDER);
+                .withFont(PdfConstants.FONT_NORMAL_7);
+        allElements.add(patientNamnLbl);
+        allElements.add(patientPnrLbl);
+
+        FkLabel patientNamn = new FkLabel("Tolvan Tolvansson")
+                .offset(107.5f, 22f)
+                .size(62.5f, 15)
+                .withAlignment(Element.ALIGN_TOP);
+        FkLabel patientPnr = new FkLabel("19121212-1212")
+                .offset(170f, 22f)
+                .size(35f, 15f)
+                .withAlignment(Element.ALIGN_TOP);
         allElements.add(patientNamn);
         allElements.add(patientPnr);
 
@@ -149,25 +156,37 @@ public class LusePdfDefinitionBuilder {
                 .offset(113.2f, 37.5f)
                 .size(28f, 5f)
                 .withAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_NORMAL_7)
-                .withBorders(Rectangle.NO_BORDER);
+                .withFont(PdfConstants.FONT_NORMAL_7);
         allElements.add(skickaBlankettenTillLbl);
 
         FkLabel inlasningsCentralRad1 = new FkLabel("Försäkringskassans inläsningscentral")
                 .withAlignment(Element.ALIGN_TOP)
                 .size(60f, 6f)
-                .offset(113.2f, 42f)
-                .withBorders(Rectangle.NO_BORDER);
+                .offset(113.2f, 42f);
         FkLabel inlasningsCentralRad2 = new FkLabel("839 88 Östersund")
                 .withAlignment(Element.ALIGN_TOP)
                 .size(60f, 6f)
-                .offset(113.2f, 48.75f)
-                .withBorders(Rectangle.NO_BORDER);
+                .offset(113.2f, 48.75f);
 
         allElements.add(inlasningsCentralRad1);
         allElements.add(inlasningsCentralRad2);
 
+        FkLabel luseDescriptonText = new FkLabel("Vad är sjukersättning? Sjukersättning är en ersättning för personer mellan 30 och 64 år som har\n" +
+                "nedsatt arbetsförmåga på grund av sjukdom, skada eller funktionsnedsättning. Beroende på hur mycket arbetsförmågan\n" +
+                "är nedsatt kan man få en fjärdedels, halv, tre fjärdedels eller hel sjukersättning.\n" +
+                "\n" +
+                "Förutsättningar för att få sjukersättning Försäkringskassan bedömer arbetsförmågan i förhållande till alla arbeten\n" +
+                "på hela arbetsmarknaden, alltså även till särskilt anpassade arbeten och anställningar med lönebidrag. Man kan få\n" +
+                "sjukersättning om Försäkringskassan bedömer att arbetsförmågan är nedsatt med minst 25 procent för all överskådlig\n" +
+                "framtid och att alla rehabiliteringsmöjligheter är uttömda. Den som ansöker om sjukersättning ska skicka med ett\n" +
+                "läkarutlåtande. I pågående sjukpenningärende kan också Försäkringskassan på eget initiativ begära ett läkarutlåtande\n" +
+                "från behandlande läkare.")
+                        .withLeading(0.0f, 1.2f)
+                        .withAlignment(Element.ALIGN_TOP)
+                        .offset(19.5f, 77.5f)
+                        .size(174f, 60f);
 
+        allElements.add(luseDescriptonText);
 
         FkCategory fraga1 = new FkCategory("1. Utlåtandet är baserat på")
                 .offset(KATEGORI_OFFSET_X, 145f)
@@ -177,7 +196,7 @@ public class LusePdfDefinitionBuilder {
         float ROW_HEIGHT = 9f;
         float CHECKBOX_DEFAULT_WIDTH = 70f;
 
-        fraga1.addChild(new FkCheckbox("min Undersökning av patienten", false)
+        fraga1.addChild(new FkCheckbox("min undersökning av patienten", false)
                 .offset(0f, 0f)
                 .size(CHECKBOX_DEFAULT_WIDTH, ROW_HEIGHT)
                 .withVerticalAlignment(PdfPCell.ALIGN_MIDDLE));
@@ -707,10 +726,8 @@ public class LusePdfDefinitionBuilder {
                     .size(KATEGORI_FULL_WIDTH, 40f)
                     .withValueTextAlignment(PdfPCell.ALIGN_TOP)
                     .withTopLabel("Rubrik för tilläggsfråga med id " + tillaggsfraga.getId()));
-            offset_y+=40;
+            offset_y += 40;
         }
-
-
 
         allElements.add(tillaggsfragor);
 

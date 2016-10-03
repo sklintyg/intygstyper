@@ -77,7 +77,7 @@ public class PageNumberingEventHandler extends PdfPageEventHelper {
             cell.setBorder(Rectangle.NO_BORDER);
             table.addCell(cell);
 
-            table.writeSelectedRows(0, -1, document.right() - table.getTotalWidth(), document.getPageSize().getTop(),
+            table.writeSelectedRows(0, -1, document.right() - table.getTotalWidth(), document.getPageSize().getTop() - 10f,
                     writer.getDirectContent());
 
         } catch (DocumentException de) {
