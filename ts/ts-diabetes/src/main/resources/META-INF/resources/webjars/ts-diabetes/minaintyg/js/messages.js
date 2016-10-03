@@ -80,7 +80,7 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.label.issuer': 'Utfärdare:',
         'ts-diabetes.label.period': 'Period:',
         'ts-diabetes.label.errorpagetitle': 'Ett problem har uppstått',
-        'ts-diabetes.message.certifits-diabetesloading': 'Hämtar intyg...',
+        'ts-diabetes.message.certificateloading': 'Hämtar intyg...',
         'ts-diabetes.button.send': 'Skicka',
         'ts-diabetes.button.cancel': 'Avbryt',
         'ts-diabetes.button.goback': 'Tillbaka',
