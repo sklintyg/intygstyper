@@ -45,7 +45,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
     private int valueTextVerticalAlignment = PdfPCell.ALIGN_BOTTOM;
 
     public FkValueField(String value) {
-        this.value = value;
+        this.value = value != null ? value : "";
     }
 
     public FkValueField withValueTextAlignment(int alignment) {
@@ -76,7 +76,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
 
         float adjustedHeight = height;
         float adjustedY = y;
-        //If were showing the label above, adjust the tables height to avoid overlap.
+        // If were showing the label above, adjust the tables height to avoid overlap.
         if (fieldLabel != null && withTopLabel) {
             adjustedHeight -= Utilities.pointsToMillimeters(PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
             adjustedY -= Utilities.pointsToMillimeters(PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());

@@ -42,28 +42,45 @@ import se.inera.intyg.intygstyper.luse.pdf.common.PdfGeneratorException;
  */
 public class LusePdfDefinitionBuilderTest {
 
-    private static File luseUtlatandeJson;
+    private static File luseUtlatandeFullJson;
+    private static File luseUtlatandeMinimalJson;
 
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
     @BeforeClass
     public static void readFiles() throws IOException {
-        luseUtlatandeJson = new ClassPathResource("PdfGeneratorTest/utlatande.json").getFile();
+        luseUtlatandeFullJson = new ClassPathResource("PdfGeneratorTest/fullt_utlatande.json").getFile();
+        luseUtlatandeMinimalJson = new ClassPathResource("PdfGeneratorTest/minimalt_utlatande.json").getFile();
     }
 
     @Test
-    public void testGenerate() throws IOException, PdfGeneratorException {
+    public void testGenerateFull() throws IOException, PdfGeneratorException {
 
         @SuppressWarnings("unchecked")
 
-        LuseUtlatande intyg = objectMapper.readValue(luseUtlatandeJson, LuseUtlatande.class);
+        LuseUtlatande intyg = objectMapper.readValue(luseUtlatandeFullJson, LuseUtlatande.class);
 
         // generate PDF
 
         LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
         PdfGenerator generator = new PdfGenerator();
         byte[] generatorResult = generator.generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT));
-        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-test" + System.currentTimeMillis());
+        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-full" + System.currentTimeMillis());
+    }
+
+    @Test
+    public void testGenerateMinimal() throws IOException, PdfGeneratorException {
+
+        @SuppressWarnings("unchecked")
+
+        LuseUtlatande intyg = objectMapper.readValue(luseUtlatandeMinimalJson, LuseUtlatande.class);
+
+        // generate PDF
+
+        LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
+        PdfGenerator generator = new PdfGenerator();
+        byte[] generatorResult = generator.generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT));
+        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-minimal" + System.currentTimeMillis());
     }
 
     private void writePdfToFile(byte[] pdf, ApplicationOrigin origin, String namingPrefix) throws IOException {

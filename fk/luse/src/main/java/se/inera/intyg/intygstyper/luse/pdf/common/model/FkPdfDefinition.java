@@ -24,7 +24,7 @@ import java.util.List;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 
 /**
- * Defines the pages and Page events that constitutes a filled out FDF ready to be rendered.
+ * Defines the pages and Page events that constitutes a filled out (FK SIT type) FDF ready to be rendered.
  *
  * Created by marced on 30/09/16.
  */
