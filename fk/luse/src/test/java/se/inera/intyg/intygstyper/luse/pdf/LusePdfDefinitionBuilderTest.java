@@ -19,23 +19,24 @@
 
 package se.inera.intyg.intygstyper.luse.pdf;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import se.inera.intyg.common.support.model.Status;
+import org.springframework.test.util.ReflectionTestUtils;
+import se.inera.intyg.common.services.texts.IntygTextsServiceImpl;
+import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.pdf.common.PdfGenerator;
 import se.inera.intyg.intygstyper.luse.pdf.common.PdfGeneratorException;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * @author marced
@@ -47,10 +48,20 @@ public class LusePdfDefinitionBuilderTest {
 
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
+    private IntygTextsServiceImpl intygTextsService;
+
     @BeforeClass
     public static void readFiles() throws IOException {
         luseUtlatandeFullJson = new ClassPathResource("PdfGeneratorTest/fullt_utlatande.json").getFile();
         luseUtlatandeMinimalJson = new ClassPathResource("PdfGeneratorTest/minimalt_utlatande.json").getFile();
+    }
+
+    @Before
+    public void initTexts() {
+        intygTextsService  = new IntygTextsServiceImpl();
+        IntygTextsLuseRepositoryTestHelper intygsTextRepositoryHelper = new IntygTextsLuseRepositoryTestHelper();
+        intygsTextRepositoryHelper.update();
+        ReflectionTestUtils.setField(intygTextsService, "repo", intygsTextRepositoryHelper);
     }
 
     @Test
@@ -64,7 +75,8 @@ public class LusePdfDefinitionBuilderTest {
 
         LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
         PdfGenerator generator = new PdfGenerator();
-        byte[] generatorResult = generator.generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT));
+        IntygTexts intygTexts = intygTextsService.getIntygTextsPojo("luse", "1.0");
+        byte[] generatorResult = generator.generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<>(), ApplicationOrigin.WEBCERT, intygTexts));
         writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-full" + System.currentTimeMillis());
     }
 
@@ -79,7 +91,8 @@ public class LusePdfDefinitionBuilderTest {
 
         LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
         PdfGenerator generator = new PdfGenerator();
-        byte[] generatorResult = generator.generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<Status>(), ApplicationOrigin.WEBCERT));
+        IntygTexts intygTexts = intygTextsService.getIntygTextsPojo("luse", "1.0");
+        byte[] generatorResult = generator.generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<>(), ApplicationOrigin.WEBCERT, intygTexts));
         writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-minimal" + System.currentTimeMillis());
     }
 
@@ -89,7 +102,7 @@ public class LusePdfDefinitionBuilderTest {
             return;
         }
 
-        File file = new File(String.format("%s/%s-%s-%s", dir, origin.name(), namingPrefix, "-default-generator.pdf"));
+        File file = new File(String.format("%s/%s", dir, "luse-default-generator.pdf"));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();
