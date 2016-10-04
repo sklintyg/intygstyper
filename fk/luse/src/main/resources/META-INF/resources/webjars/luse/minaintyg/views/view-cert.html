@@ -14,30 +14,16 @@
         </h1>
         <div class="mi-text" message key="luse.label.pageingress"></div>
 
-        <div collapse="!isCollapsed1" class="collapse mi-text">
+        <div uib-collapse="!isCollapsed1" class="collapse mi-text">
           <div message key="luse.label.pagedescription.sendcertificate.header"></div>
           <div message key="luse.label.pagedescription.sendcertificate"></div>
-          <!--
-          <div message key="luse.label.pagedescription.certificate.to.employer.header"></div>
-          <div message key="luse.label.pagedescription.certificate.to.employer"></div>
-           -->
-          <div message key="luse.label.pagedescription.save.or.print.certificate.header"></div>
-          <div message key="luse.label.pagedescription.save.or.print.certificate"></div>
-          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF"
-             title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
-          <div collapse="!isCollapsedPDF" class="well well-sm margin-top-5px"><span message
-                                                                                    key="luse.helptext.readpdfhelp"></span>
-          </div>
-          <div message key="luse.label.pagedescription.sickness.benefit.header"></div>
-          <div message key="luse.label.pagedescription.sickness.benefit"></div>
           <div message key="luse.label.pagedescription.error.in.certificate.header"></div>
           <div message key="luse.label.pagedescription.error.in.certificate"></div>
           <div message key="luse.label.pagedescription.archive.header"></div>
           <div message key="luse.label.pagedescription.archive"></div>
         </div>
         <br>
-        <button type="button" ng-click="isCollapsed1 = !isCollapsed1" class="btn-link btn-link-link margin-top-5px"
-                data-toggle="collapse">
+        <button type="button" ng-click="isCollapsed1 = !isCollapsed1" class="btn-link btn-link-link margin-top-5px" data-toggle="collapse">
           <span message key="luse.label.status.{{!isCollapsed1}}"></span>
         </button>
       </div>
@@ -63,8 +49,8 @@
             <div ng-repeat="status in cert.filteredStatuses" ng-switch on="$index > 0">
               <div ng-switch-when="true">
                 <span message key="luse.status.{{cert.filteredStatuses[0].type}}"></span>
-                <span ng-show="status.type == 'SENT'"><span message
-                                                            key="luse.target.{{cert.filteredStatuses[0].target}}"></span>s system</span>
+                <span ng-show="status.type == 'SENT'">
+                  <span message key="luse.target.{{cert.filteredStatuses[0].target}}"></span>s system</span>
                 <span class="certificate-event-timestamp pull-right">{{status.timestamp | date:'short'}}</span><br>
               </div>
             </div>

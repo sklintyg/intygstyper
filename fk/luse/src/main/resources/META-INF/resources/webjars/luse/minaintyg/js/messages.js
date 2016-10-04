@@ -45,24 +45,20 @@ angular.module('luse').constant('luse.messages', {
         'luse.label.latestevent.noevents': 'Inga händelser',
 
         'luse.label.pagetitle': 'Granska och skicka intyg',
-        'luse.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
+        'luse.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan.<br>',
+
         'luse.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
         'luse.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Försäkringskassan eller en annan mottagare.<br>',
-        'luse.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',
-        'luse.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa mer',
-        'luse.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa färre händelser',
-        'luse.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa alla händelser',
-
-        'luse.label.pagedescription.certificate.to.employer.header': '<h2>Intyg till arbetsgivare</h2>',
-        'luse.label.pagedescription.certificate.to.employer': 'Du har möjlighet att anpassa läkarintyget om du ska lämna läkarintyget till din arbetsgivare. Du anpassar intyget genom att välja om du vill visa alla uppgifter i intyget eller om du vill dölja vissa delar. Klicka på knappen Anpassa intyget för att välja vilken information du vill dela.',
-        'luse.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
-        'luse.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
-        'luse.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om luse?</h2>',
-        'luse.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om luse och hur du ansöker.<br>',
         'luse.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'luse.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
         'luse.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
         'luse.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
+
+        'luse.label.status.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa mindre',
+        'luse.label.status.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa mer',
+
+        'luse.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa färre händelser',
+        'luse.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa alla händelser',
 
         'luse.label.patientname': 'Patientens namn',
         'luse.label.issued': 'Inkom till Mina intyg',
