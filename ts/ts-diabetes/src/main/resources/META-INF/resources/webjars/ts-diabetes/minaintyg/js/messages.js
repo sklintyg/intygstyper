@@ -80,7 +80,7 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.label.issuer': 'Utfärdare:',
         'ts-diabetes.label.period': 'Period:',
         'ts-diabetes.label.errorpagetitle': 'Ett problem har uppstått',
-        'ts-diabetes.message.certifits-diabetesloading': 'Hämtar intyg...',
+        'ts-diabetes.message.certificateloading': 'Hämtar intyg...',
         'ts-diabetes.button.send': 'Skicka',
         'ts-diabetes.button.cancel': 'Avbryt',
         'ts-diabetes.button.goback': 'Tillbaka',
@@ -102,7 +102,7 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'ts-diabetes.label.date': 'Datum',
         'ts-diabetes.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
-        'ts-diabetes.label.ej-angivet': 'Ej angivet',
+        'ts-diabetes.label.ej-angivet': 'Ej ifyllt',
 
         'ts-diabetes.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
 

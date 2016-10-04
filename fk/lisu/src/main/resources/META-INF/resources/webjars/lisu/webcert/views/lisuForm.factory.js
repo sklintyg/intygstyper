@@ -48,7 +48,7 @@ angular.module('lisu').factory('lisu.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_1', level: 4}},
+                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4}},
                 {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
                 {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
