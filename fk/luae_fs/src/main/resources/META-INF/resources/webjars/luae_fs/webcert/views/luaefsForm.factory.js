@@ -41,7 +41,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
                     fieldGroup: [
                         //Fråga 1 -----
-                        {type: 'headline', templateOptions: {label: 'FRG_1', level:4}},
+                        {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level:4}},
                         {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                         {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                         {
