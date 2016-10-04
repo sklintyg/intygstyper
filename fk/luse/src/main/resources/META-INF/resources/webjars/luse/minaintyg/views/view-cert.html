@@ -82,13 +82,19 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <form id="view-as-pdf" action="{{downloadAsPdfLink}}" name="pdfForm" method="get" target="_blank">
           <p class="btn-row">
-            <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success"
-                    title="{{messageService.getProperty('luse.button.send.certificate.title')}}">
-              <span message key="luse.button.send.certificate"></span>
-            </button>
-            <button id="downloadprint" type="submit" ng-click="document.pdfForm.submit()" class="btn btn-inverse">
-              <span message key="modules.button.save.as.pdf"></span>
-            </button>
+            <span uib-tooltip="{{messageService.getProperty('luse.button.send.certificate.title')}}" style="display: inline-block">
+              <button id="sendCertificateBtn" type="button" ng-click="send()" class="btn btn-success">
+                <span message key="luse.button.send.certificate"></span>
+              </button>
+            </span>
+            <!--
+              'Spara som PDF' är disablad för LUSE tillsvidare mha CSS style. Se JIRA INTYG-2962
+            -->
+            <span uib-tooltip="{{messageService.getProperty('luse.button.save.as.pdf.title')}}" style="display: inline-block">
+              <button id="downloadprint" type="submit" class="btn btn-inverse" ng-click="document.pdfForm.submit()" ng-disabled="true">
+                <span message key="modules.button.save.as.pdf"></span>
+              </button>
+            </span>
           </p>
         </form>
       </div>

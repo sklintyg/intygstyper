@@ -20,19 +20,30 @@ angular.module('luse').constant('luse.messages', {
         'luse.sent.label.result': 'Mottagare av intyget: <br>',
         'luse.sent.label.infoaboutrecipients': 'Observera att olika mottagare har olika tider när dom kan se det inskickade intyget.',
         'luse.sent.button.backtocertificate': 'Tillbaka till intyget',
-        'luse.label.latestevent': 'Senaste händelse',
-        'luse.label.latestevent.noevents': 'Inga händelser',
+
         'luse.history.label.pagetitle': 'Intygets alla händelser',
+
         'luse.status.sent': 'Mottaget av',
+
         'luse.target.fk': 'Försäkringskassan',
         'luse.target.afa': 'AFA Försäkring',
         'luse.target.skandia': 'Skandia',
 
         'luse.inbox.complementaryinfo': 'Intygsperiod',
 
+        'luse.button.send': 'Skicka',
+        'luse.button.cancel': 'Avbryt',
+        'luse.button.goback': 'Tillbaka',
+        'luse.button.next': 'Nästa',
+        'luse.button.previous': 'Föregående steg',
         'luse.button.sendtofk': 'Skicka till Försäkringskassan',
         'luse.button.send.certificate': 'Skicka',
         'luse.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
+        'luse.button.save.as.pdf.title': 'Läkarutlåtande för sjukersättning går inte att ladda ner som PDF.',
+
+        'luse.label.latestevent': 'Senaste händelse',
+        'luse.label.latestevent.noevents': 'Inga händelser',
+
         'luse.label.pagetitle': 'Granska och skicka intyg',
         'luse.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'luse.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
@@ -53,7 +64,6 @@ angular.module('luse').constant('luse.messages', {
         'luse.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
         'luse.label.pagedescription.archive': 'För att arkivera intyget klickar du på symbolen Arkivera intyg <span class="glyphicon glyphicon-folder-close"></span>.',
 
-        'luse.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
         'luse.label.patientname': 'Patientens namn',
         'luse.label.issued': 'Inkom till Mina intyg',
         'luse.label.civicnumber': 'Personnummer',
@@ -69,15 +79,12 @@ angular.module('luse').constant('luse.messages', {
 
         'luse.message.certificateloading': 'Hämtar intyg...',
         'luse.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
-        'luse.button.send': 'Skicka',
-        'luse.button.cancel': 'Avbryt',
-        'luse.button.goback': 'Tillbaka',
-        'luse.button.next': 'Nästa',
-        'luse.button.previous': 'Föregående steg',
 
         'luse.fishbone.label.valj-mottagare': 'Välj mottagare',
         'luse.fishbone.label.granska-skicka': 'Granska och skicka',
         'luse.fishbone.label.bekraftelse': 'Bekräftelse',
+
+        'luse.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
 
         'luse.common.cancel': 'Avbryt',
 
