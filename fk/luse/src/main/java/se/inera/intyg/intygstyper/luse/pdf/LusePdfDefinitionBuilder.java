@@ -405,7 +405,7 @@ public class LusePdfDefinitionBuilder {
                 .withBorders(Rectangle.BOTTOM).withValueFont(PdfConstants.FONT_NORMAL_10)
                 .withTopLabel(getText("FRG_45.RBK"));
 
-        FkCheckbox noCheckbox = new FkCheckbox("Nej",  intyg.getNyBedomningDiagnosgrund()!=null && intyg.getNyBedomningDiagnosgrund() == false)
+        FkCheckbox noCheckbox = new FkCheckbox("Nej",  intyg.getNyBedomningDiagnosgrund() != null && !intyg.getNyBedomningDiagnosgrund())
                 .size(24.5f, 11f)
                 .offset(0f, CHECKBOX_UNDER_TOPLABEL_PADDING)
                 .withBorders(Rectangle.NO_BORDER);
