@@ -109,9 +109,8 @@
         <allvarligForekomstTrafikBeskrivning>Beskrivning</allvarligForekomstTrafikBeskrivning>
         <genomforEgenkontrollBlodsocker>true
         </genomforEgenkontrollBlodsocker>
-        <harAllvarligForekomstVakenTid>true
+        <harAllvarligForekomstVakenTid>false
         </harAllvarligForekomstVakenTid>
-        <allvarligForekomstVakenTidAr>2012-12-12</allvarligForekomstVakenTidAr>
     </hypoglykemier>
     <separatOgonLakarintygKommerSkickas>false</separatOgonLakarintygKommerSkickas>
     <synfunktion>

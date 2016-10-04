@@ -62,6 +62,19 @@ module.exports = function(config) {
             return plugins;
         })(),
 
-        reporters: [ 'dots', 'coverage' ]
+        preprocessors: (function() {
+            if (runCoverage) {
+                return {'src/main/resources/META-INF/resources/webjars/ts-diabetes/webcert/**/*.js': ['coverage']};
+            }
+            return {};
+        })(),
+
+        reporters: (function() {
+            var reporters = [ 'dots' ];
+            if (runCoverage) {
+                reporters.push('coverage');
+            }
+            return reporters;
+        })()
     });
 };

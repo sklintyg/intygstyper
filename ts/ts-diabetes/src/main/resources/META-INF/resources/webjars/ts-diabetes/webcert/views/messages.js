@@ -100,7 +100,7 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing': 'f) Ett alternativ måste anges.', // 2f
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing': 'g) Ett alternativ måste anges.', // 2g
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing': 'Tidpunkt för allvarlig hypoglykemi under vaken tid saknas',
-        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd, och får inte vara senare än dagens datum.',
+        'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd, och får inte vara tidigare än ett år tillbaka eller senare än dagens datum.',
 
         'ts-diabetes.validation.syn.missing': 'Synfunktioner saknas',
         'ts-diabetes.validation.syn.separat-ogonlakarintyg.missing': 'a) Ett alternativ måste anges.',

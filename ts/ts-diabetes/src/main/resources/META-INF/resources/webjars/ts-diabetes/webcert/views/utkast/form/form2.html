@@ -105,7 +105,8 @@
                                   dom-id="allvarligForekomstVakenTidObservationstid"
                                   invalid="false"
                                   add-date-parser="loose"
-                                  max-date="{{tomorrowDate}}"></span>
+                                  min-date="{{viewState.minDate}}"
+                                  max-date="{{viewState.tomorrowDate}}"></span>
           <p>(Fyll i åååå-mm-dd)</p>
         </div>
       </td>

@@ -53,6 +53,8 @@
         "separatOgonlakarintyg" : true
     },
     "bedomning" : {
-        "kanInteTaStallning" : true
+        "korkortstyp" : [
+            {"type": "AM", "selected": true}
+        ]
     }
 }

@@ -57,6 +57,11 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.customize.step.2.info.fk': 'Tänk på att det anpassade intyget <u>inte</u> ska skickas till Försäkringskassan.',
         'fk7263.customize.step.2.info.pdf': 'När du sett över dina val klickar du på knappen ',
 
+        'fk7263.customize.title.field': 'Fält',
+
+        'fk7263.customize.label.mandatory': 'Obligatoriskt fält',
+        'fk7263.customize.label.optional': 'Inkludera i anpassat intyg',
+
         'fk7263.customize.message.limitation': 'Informationen i fält 5 är frivillig, men informationen kan underlätta arbetsgivarens möjlighet att göra arbetsanpassningar.',
 
         'fk7263.inbox.complementaryinfo': 'Intygsperiod',

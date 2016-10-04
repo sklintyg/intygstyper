@@ -40,6 +40,7 @@ angular.module('ts-diabetes').service('ts-diabetes.UtkastController.ViewStateSer
             this.reset = function() {
                 this.korkortd = false;
                 this.tomorrowDate = moment().format('YYYY-MM-DD');
+                this.minDate = moment().subtract(1, 'y').format('YYYY-MM-DD');
 
                 this.identitet = [
                     {label: 'ID-kort *', id: 'ID_KORT'},

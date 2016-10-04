@@ -24,6 +24,11 @@ $color-alto-approx: #ddd;
 //urls
 $ss16-url: url('../img/ss16.png');
 
+label[for^='option.'] span, input[id^='option.'] {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
 .soclink {
   background-image: $ss16-url;
   background-repeat: no-repeat;
@@ -52,23 +57,7 @@ $ss16-url: url('../img/ss16.png');
 .asterix {
   color: #ff0000;
   font-weight: bold;
-}
-
-/*.intyg-body .body-row .title-customize {
-  color: #fff;
-  font-weight: bolder;
-  display: block;
-  padding: 10px 20px;
-  background-color: #008391;
-  -webkit-border-radius: 8px 8px 0px 0px;
-  -moz-border-radius: 8px 8px 0px 0px;
-  border-radius: 8px 8px 0px 0px;
-}*/
-
-label.checkbox-label input[type=checkbox]{
-  position: relative;
-  vertical-align: middle;
-  bottom: 1px;
+  margin-left: 2px;
 }
 
 .intyg-body .body-row .title.row {
@@ -145,68 +134,6 @@ label.checkbox-label input[type=checkbox]{
 
 .glyphicon-warning-sign {
   color: #8A6D00;
-}
-
-/* Center vertical and horizontal */
-.absolute-center {
-
-  /* Internet Explorer 10 */
-  display:-ms-flexbox;
-  -ms-flex-pack:center;
-  -ms-flex-align:center;
-
-  /* Firefox */
-  display:-moz-box;
-  -moz-box-pack:center;
-  -moz-box-align:center;
-
-  /* Safari, Opera, and Chrome */
-  display:-webkit-box;
-  -webkit-box-pack:center;
-  -webkit-box-align:center;
-
-  /* W3C */
-  display:box;
-  box-pack:center;
-  box-align:center;
-}
-
-/* Center vertical only */
-.absolute-vertical-center {
-  /* Internet Explorer 10 */
-  display:-ms-flexbox;
-  -ms-flex-align:center;
-
-  /* Firefox */
-  display:-moz-box;
-  -moz-box-align:center;
-
-  /* Safari, Opera, and Chrome */
-  display:-webkit-box;
-  -webkit-box-align:center;
-
-  /* W3C */
-  display:box;
-  box-align:center;
-}
-
-/* Center horizontal only */
-.absolute-horizontal-center {
-  /* Internet Explorer 10 */
-  display:-ms-flexbox;
-  -ms-flex-pack:center;
-
-  /* Firefox */
-  display:-moz-box;
-  -moz-box-pack:center;
-
-  /* Safari, Opera, and Chrome */
-  display:-webkit-box;
-  -webkit-box-pack:center;
-
-  /* W3C */
-  display:box;
-  box-pack:center;
 }
 
 #aktivitetsbegransning {

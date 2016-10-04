@@ -50,9 +50,28 @@
         "allvarligForekomstVakenTid" : false
     },
     "syn" : {
-        "separatOgonlakarintyg" : true
+        "separatOgonlakarintyg" : false,
+        "synfaltsprovningUtanAnmarkning" : true,
+        "hoger" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+           
+        "vanster" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+        "binokulart" : {
+            "utanKorrektion" : 0.0,
+            "medKorrektion" : 0.0
+        },
+        "diplopi" : true,
+        "synfaltsprovning" : true,
+        "provningOgatsRorlighet" : true
     },
     "bedomning" : {
-        "kanInteTaStallning" : true
+        "korkortstyp" : [
+            {"type": "A1", "selected": true}
+        ]
     }
 }

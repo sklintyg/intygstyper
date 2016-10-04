@@ -293,11 +293,11 @@
                 <h3 class="title">
                   <span dynamic-label key="KAT_3.RBK"></span>
                 </h3>
-            		<span class="text">
-            			<span dynamic-label key="FRG_12.RBK"></span>
-            			<span id="funktionsnedsattning" class="cert-answer" message
-                        key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
-            		</span>
+                <span class="text">
+                  <span dynamic-label key="FRG_12.RBK"></span>
+                  <span id="funktionsnedsattning" class="cert-answer" message
+                      key="{{cert.funktionsnedsattning.funktionsnedsattning | BoolToTextFilter}}"></span>
+                  </span>
 
                 <div class="indent">
                   <span class="text" ng-show="cert.funktionsnedsattning.funktionsnedsattning">
@@ -306,15 +306,11 @@
                   </span>
                 </div>
 
-            		<span class="text" ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga">
-            			<span dynamic-label key="FRG_13.RBK"></span>
-            			<span id="funktionsnedsattningotillrackligRorelseformaga"
-                        ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
-                        key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span>
-            			<span ng-show="!cert.funktionsnedsattning.otillrackligRorelseformaga" class="cert-answer" message
-                        key="ts-diabetes.label.ej-angivet"></span>
-            		</span>
-
+                <span class="text" ng-show="cert.funktionsnedsattning.otillrackligRorelseformaga != null">
+                  <span dynamic-label key="FRG_13.RBK"></span>
+                  <span id="funktionsnedsattningotillrackligRorelseformaga" class="cert-answer" message
+                      key="{{cert.funktionsnedsattning.otillrackligRorelseformaga | BoolToTextFilter}}"></span>
+                </span>
               </div>
 
               <!-- 4 -->
@@ -451,7 +447,7 @@
               <!-- 11 -->
               <div class="body-row">
                 <h3 class="title">
-                  <span dynamic-label key="KAT_11,RBK"></span>
+                  <span dynamic-label key="KAT_11.RBK"></span>
                 </h3>
 
             		<span class="text no-padding-bottom">
@@ -585,9 +581,8 @@
                 <h3 class="title">
                   <span dynamic-label key="KAT_101.RBK"></span>
                 </h3>
-
+                <span class="text no-padding-bottom" dynamic-label key="FRG_33.RBK"></span>
                 <div ng-show="!cert.bedomning.kanInteTaStallning">
-                  <span class="text no-padding-bottom" dynamic-label key="FRG_33.RBK"></span>
                   <span class="text no-padding-bottom">
                       <span id="bedomning" class="cert-answer">{{view.bedomning}}</span>
                   </span>

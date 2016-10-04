@@ -32,18 +32,11 @@ module.exports = function(grunt) {
     var cwd = process.cwd();
     process.chdir(npmDir);
 
-    grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('grunt-contrib-csslint');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-lcov-merge');
-    grunt.loadNpmTasks('grunt-ng-annotate');
-    grunt.loadNpmTasks('grunt-angular-templates');
-    grunt.loadNpmTasks('grunt-sass');
-    grunt.loadNpmTasks('grunt-sass-lint');
-    grunt.loadNpmTasks('grunt-wiredep');
+    require('time-grunt')(grunt);
+    require('jit-grunt')(grunt, {
+        bower: 'grunt-bower-task',
+        ngtemplates: 'grunt-angular-templates'
+    });
 
     process.chdir(cwd);
 
@@ -112,6 +105,7 @@ module.exports = function(grunt) {
         jshint: {
             options: {
                 jshintrc: 'build/build-tools/jshint/.jshintrc',
+                reporterOutput: '',
                 force: false,
                 ignores: ['**/templates.js']
             },

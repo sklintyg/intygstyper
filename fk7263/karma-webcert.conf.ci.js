@@ -62,6 +62,20 @@ module.exports = function(config) {
             return plugins;
         })(),
 
-        reporters: [ 'dots', 'coverage' ]
+        preprocessors: (function() {
+           var preprocessors = { 'src/main/resources/META-INF/resources/webjars/fk7263/webcert/views/**/*.html': ['ng-html2js'] };
+            if (runCoverage) {
+                preprocessors['src/main/resources/META-INF/resources/webjars/fk7263/webcert/**/*.js'] = ['coverage'];
+            }
+            return preprocessors;
+        })(),
+
+        reporters: (function() {
+            var reporters = [ 'dots' ];
+            if (runCoverage) {
+                reporters.push('coverage');
+            }
+            return reporters;
+        })()
     });
 };

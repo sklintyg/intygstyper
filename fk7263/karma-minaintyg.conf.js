@@ -33,10 +33,6 @@ module.exports = function(config) {
         // frameworks to use
         frameworks: [ 'jasmine' ],
 
-        preprocessors: {
-            'src/main/resources/META-INF/resources/webjars/fk7263/minaintyg/js/**/*.js': ['coverage']
-        },
-
         // list of files / patterns to load in the browser
         files: [
 

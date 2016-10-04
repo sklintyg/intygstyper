@@ -1,6 +1,7 @@
 {
     "id": "987654321",
     "typ": "ts-diabetes",
+    "textVersion": "02.06",
     "grundData": {
         "signeringsdatum": "2013-08-12T15:57:00.000",
         "skapadAv": {
@@ -17,7 +18,13 @@
                     "vardgivarid": "SE0000000000-HAHAHHSAA",
                     "vardgivarnamn": "Vårdgivarnamn"
                 }
-            }
+            },
+            "specialiteter": [
+                "SPECIALITET"
+            ],
+            "befattningar": [
+                "ST_LAKARE"
+            ]
         },
         "patient": {
             "personId": "19121212-1212",
@@ -60,7 +67,7 @@
         "endastKost" : true,
         "tabletter" : true,
         "insulin" : true,
-        "insulinBehandlingsperiod" : "2020",
+        "insulinBehandlingsperiod" : "2012",
         "annanBehandlingBeskrivning" : "Hypnos"
     },
     "hypoglykemier" : {
@@ -71,7 +78,8 @@
         "allvarligForekomstBeskrivning" : "Beskrivning",
         "allvarligForekomstTrafiken" : true, 
         "allvarligForekomstTrafikBeskrivning" : "Beskrivning",
-        "allvarligForekomstVakenTid" : false,
+        "allvarligForekomstVakenTid" : true,
+        "allvarligForekomstVakenTidObservationstid" : "2012-12-12",
         "egenkontrollBlodsocker" : true
     },
     "syn" : {

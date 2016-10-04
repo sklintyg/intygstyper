@@ -21,7 +21,7 @@
             }
         },
         "patient": {
-            "personId": "19121212-1212",
+            "personId": "19800191-0002",
             "fullstandigtNamn": "Johnny Appleseed",
             "fornamn": "Johnny",
             "efternamn": "Appleseed",
@@ -53,6 +53,8 @@
         "separatOgonlakarintyg" : true
     },
     "bedomning" : {
-        "kanInteTaStallning" : true
+        "korkortstyp" : [
+            {"type": "A1", "selected": true}
+        ]
     }
 }

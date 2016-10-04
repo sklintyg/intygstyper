@@ -1,5 +1,7 @@
 package se.inera.intyg.intygstyper.fk7263.transformation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
@@ -13,6 +15,9 @@ import javax.xml.validation.Schema;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import com.google.common.base.Charsets;
@@ -20,9 +25,10 @@ import com.google.common.io.Resources;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 
-import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.xml.SchemaValidatorBuilder;
+import se.inera.intyg.intygstyper.fk7263.rest.Fk7263ModuleApi;
 
+@RunWith(MockitoJUnitRunner.class)
 public class Fk7263TransformerTest {
     private static final String COMMON_UTLATANDE_SCHEMA = "core_components/MU7263-RIV_3.1.xsd";
 
@@ -32,14 +38,17 @@ public class Fk7263TransformerTest {
 
     private static final String ROOT_LEVEL_UTLATANDE_SCHEMA = "interactions/RegisterMedicalCertificateInteraction/RegisterMedicalCertificateResponder_3.1.xsd";
 
-    private static final String ROOT_LEVEL_LISU_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd";
+    private static final String ROOT_LEVEL_FK7263SIT_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd";
 
-    private static final String ROOT_LEVEL_LISU_GENERAL_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_2.0.xsd";
+    private static final String ROOT_LEVEL_FK7263_GENERAL_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_2.0.xsd";
 
     private static final String CLINICAL_UTLATANDE_TYPES_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_types_2.0.xsd";
 
     private static Schema lakarutlatandeInputSchema;
-    private static Schema lisuOutputSchema;
+    private static Schema fk7263sitOutputSchema;
+
+    @InjectMocks
+    private Fk7263ModuleApi fk7263ModuleApi;
 
     @BeforeClass
     public static void initIntygstjansterSchema() throws Exception {
@@ -54,20 +63,16 @@ public class Fk7263TransformerTest {
     @BeforeClass
     public static void initGeneralLisuSchema() throws Exception {
         SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
-        Source rootSource = schemaValidatorBuilder.registerResource(ROOT_LEVEL_LISU_SCHEMA);
-        schemaValidatorBuilder.registerResource(ROOT_LEVEL_LISU_GENERAL_SCHEMA);
+        Source rootSource = schemaValidatorBuilder.registerResource(ROOT_LEVEL_FK7263SIT_SCHEMA);
+        schemaValidatorBuilder.registerResource(ROOT_LEVEL_FK7263_GENERAL_SCHEMA);
         schemaValidatorBuilder.registerResource(CLINICAL_UTLATANDE_TYPES_SCHEMA);
-        lisuOutputSchema = schemaValidatorBuilder.build(rootSource);
+        fk7263sitOutputSchema = schemaValidatorBuilder.build(rootSource);
     }
 
     @Test
-    public void testTransformation() throws Exception {
-
-        List<String> testFiles = Arrays.asList("fk7263.xml", "fk7263_utanvardkontakt.xml", "fk7263_utanreferens.xml",
-                "fk7263_utanprognosangivelse.xml", "fk7263_utanmedicinskttillstand.xml", "fk7263_utanfunktionstillstand.xml",
-                "fk7263_utanbedomttillstand.xml", "fk7263_utanarbetsbegransning.xml", "fk7263_utanaktivitet.xml", "fk7263_flerasysselsattningar.xml");
-
-        XslTransformer transformer = new XslTransformer("transform-to-statistics.xsl");
+    public void testTransformationFailsOnMissingFunktionstillstand() throws Exception {
+        List<String> testFiles = Arrays.asList(
+                "fk7263_utanfunktionstillstand.xml");
 
         for (String xmlFile : testFiles) {
             String xmlContentsInput = Resources.toString(getResource("Fk7263TransformerTest/" + xmlFile), Charsets.UTF_8);
@@ -75,27 +80,81 @@ public class Fk7263TransformerTest {
             if (!validateIntygstjansterXSD(xmlContentsInput)) {
                 fail();
             }
+            String result = fk7263ModuleApi.transformToStatisticsService(xmlContentsInput);
 
-            String result = transformer.transform(xmlContentsInput);
             if (!validateIntygstjansterOutputXSD(result)) {
                 fail();
             }
 
-            if (!validateLisuOutputSchematron(result)) {
+            SchematronOutputType output = getFk7263OutputSchematron(result);
+
+            assertEquals(1, SVRLHelper.getAllFailedAssertions(output).size());
+            assertTrue(SVRLHelper.getAllFailedAssertions(output).get(0).getText().contains("Ett 'MU' måste ha minst ett 'Behov av sjukskrivning'"));
+        }
+    }
+
+    @Test
+    public void testTransformationFailsOnMissingArbetsbegransning() throws Exception {
+        List<String> testFiles = Arrays.asList(
+                "fk7263_utanarbetsbegransning.xml");
+
+        for (String xmlFile : testFiles) {
+            String xmlContentsInput = Resources.toString(getResource("Fk7263TransformerTest/" + xmlFile), Charsets.UTF_8);
+
+            if (!validateIntygstjansterXSD(xmlContentsInput)) {
+                fail();
+            }
+            String result = fk7263ModuleApi.transformToStatisticsService(xmlContentsInput);
+
+            if (!validateIntygstjansterOutputXSD(result)) {
+                fail();
+            }
+
+            SchematronOutputType output = getFk7263OutputSchematron(result);
+
+            assertEquals(1, SVRLHelper.getAllFailedAssertions(output).size());
+            assertTrue(SVRLHelper.getAllFailedAssertions(output).get(0).getText().contains("Ett 'MU' måste ha minst ett 'Behov av sjukskrivning'"));
+        }
+    }
+
+    @Test
+    public void testTransformationAccepted() throws Exception {
+
+        List<String> testFiles = Arrays.asList("fk7263.xml", "fk7263_utanvardkontakt.xml", "fk7263_utanreferens.xml",
+                "fk7263_utanprognosangivelse.xml", "fk7263_utanmedicinskttillstand.xml",
+                "fk7263_utanbedomttillstand.xml", "fk7263_utanaktivitet.xml", "fk7263_flerasysselsattningar.xml");
+
+        for (String xmlFile : testFiles) {
+            String xmlContentsInput = Resources.toString(getResource("Fk7263TransformerTest/" + xmlFile), Charsets.UTF_8);
+
+            if (!validateIntygstjansterXSD(xmlContentsInput)) {
+                fail();
+            }
+            String result = fk7263ModuleApi.transformToStatisticsService(xmlContentsInput);
+
+            if (!validateIntygstjansterOutputXSD(result)) {
+                fail();
+            }
+
+            if (!validateFk7263OutputSchematron(result)) {
                 fail();
             }
         }
     }
 
-    private boolean validateLisuOutputSchematron(String xml) throws Exception {
-        SchematronResourceSCH schematronResource = SchematronResourceSCH.fromClassPath("lisu.sch");
+    private boolean validateFk7263OutputSchematron(String xml) throws Exception {
+        SchematronOutputType result = getFk7263OutputSchematron(xml);
+        return SVRLHelper.getAllFailedAssertions(result).size() == 0;
+    }
+
+    private SchematronOutputType getFk7263OutputSchematron(String xml) throws Exception {
+        SchematronResourceSCH schematronResource = SchematronResourceSCH.fromClassPath("fk7263sit.sch");
         if (!schematronResource.isValidSchematron()) {
             throw new IllegalArgumentException("Invalid Schematron!");
         }
-        SchematronOutputType result = schematronResource
+        return schematronResource
                 .applySchematronValidationToSVRL((new StreamSource(new ByteArrayInputStream(xml.getBytes(Charsets.UTF_8)))));
 
-        return SVRLHelper.getAllFailedAssertions(result).size() == 0;
     }
 
     private boolean validateIntygstjansterXSD(String xml) {
@@ -112,7 +171,7 @@ public class Fk7263TransformerTest {
     private boolean validateIntygstjansterOutputXSD(String xml) {
         StreamSource xmlSource = new StreamSource(new ByteArrayInputStream(xml.getBytes(Charsets.UTF_8)));
         try {
-            lisuOutputSchema.newValidator().validate(xmlSource);
+            fk7263sitOutputSchema.newValidator().validate(xmlSource);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

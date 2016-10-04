@@ -81,7 +81,8 @@
     <hypoglykemier>
         <harKunskapOmAtgarder>false</harKunskapOmAtgarder>
         <harTeckenNedsattHjarnfunktion>false</harTeckenNedsattHjarnfunktion>
-        <harAllvarligForekomstVakenTid>false</harAllvarligForekomstVakenTid>
+        <harAllvarligForekomstVakenTid>true</harAllvarligForekomstVakenTid>
+        <allvarligForekomstVakenTidAr>2012-12-12</allvarligForekomstVakenTidAr>
     </hypoglykemier>
     <separatOgonLakarintygKommerSkickas>true</separatOgonLakarintygKommerSkickas>
     <bedomning>
