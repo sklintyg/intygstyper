@@ -97,7 +97,7 @@ angular.module('ts-bas').constant('ts-bas.messages', {
         'ts-bas.label.date': 'Datum',
         'ts-bas.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
-        'ts-bas.label.bedomning-info-ej-angivet': 'Ej angivet',
+        'ts-bas.label.bedomning-info-ej-angivet': 'Ej ifyllt',
         'ts-bas.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
 
         //Helptexts
