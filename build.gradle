@@ -16,8 +16,8 @@ allprojects  {
   def baseVersion = '3.0.'
 
   group = 'se.inera.intyg.intygstyper'
-  version = System.env.BUILD_NUMBER != null ? baseVersion + System.env.BUILD_NUMBER : '0-SNAPSHOT'
-  rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : baseVersion + '+'
+  version = System.env.BUILD_NUMBER != null ? "{baseVersion}${System.env.BUILD_NUMBER}" : '0-SNAPSHOT'
+  rootProject.ext.commonVersion = (version == '0-SNAPSHOT') ? '0-SNAPSHOT' : "${baseVersion}+"
 }
 
 subprojects {
@@ -171,7 +171,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'lus
     outputs.dir(webappOutputDir)
 
     script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-    args = ['default', '--outputDir=' + webappOutputDir, "--npmDir=" + rootProject.projectDir]
+    args = ['default', "--outputDir=${webappOutputDir}", "--npmDir=${rootProject.projectDir}"]
   }
 
   jar.dependsOn(jsInclude)
@@ -195,7 +195,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     outputs.dir(webappTestOutputDir)
 
     script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-    args = ['test', '--outputDir=' + webappTestOutputDir, '--skip-coverage='+(!project.hasProperty('runSonar')), "--npmDir=" + rootProject.projectDir]
+    args = ['test', "--outputDir=${webappTestOutputDir}", '--skip-coverage='+(!project.hasProperty('runSonar')), "--npmDir=${rootProject.projectDir}"]
   }
 
   test.dependsOn(jsTests)
