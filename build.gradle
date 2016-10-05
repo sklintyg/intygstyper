@@ -258,11 +258,11 @@ if (project.hasProperty('runSonar')) {
   sonarqube {
     properties {
       property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
-      property "sonar.projectName", projectName
-      property "sonar.projectKey", projectId
+      property "sonar.projectName", "Intygstyper"
+      property "sonar.projectKey", "intygstyper"
 
       // Address of SonarQube server
-      property "sonar.host.url", "https://build-inera.nordicmedtest.se/sonar"
+      property "sonar.host.url", sonarUrl ?: "https://build-inera.nordicmedtest.se/sonar"
 
       //Exclusions
       property "sonar.test.exclusions", "src/test/**"
