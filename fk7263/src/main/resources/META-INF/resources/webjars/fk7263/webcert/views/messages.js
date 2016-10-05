@@ -26,7 +26,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.message.certificateloading': 'Hämtar intyg...',
 
         'fk7263.label.send': 'Skicka intyg till Försäkringskassan',
-        'fk7263.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket skall göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
+        'fk7263.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket ska göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
         'fk7263.button.send': 'Skicka till Försäkringskassan',
 
         // FK 7263

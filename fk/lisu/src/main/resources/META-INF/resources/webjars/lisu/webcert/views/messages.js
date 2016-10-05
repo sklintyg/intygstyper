@@ -7,7 +7,7 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.message.certificateloading': 'Hämtar intyg...',
 
         'lisu.label.send': 'Skicka intyg till Försäkringskassan',
-        'lisu.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket skall göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
+        'lisu.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket ska göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
         'lisu.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukpenning utökad
