@@ -71,13 +71,13 @@ public class PageNumberingEventHandler extends PdfPageEventHelper {
             table.setTotalWidth(Utilities.millimetersToPoints(20));
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
             table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-            table.addCell(new Phrase(String.valueOf(writer.getPageNumber()), PdfConstants.FONT_NORMAL));
+            table.addCell(new Phrase(String.valueOf(writer.getPageNumber()), PdfConstants.FONT_PAGE_NUMBERING));
 
             PdfPCell cell = new PdfPCell(Image.getInstance(total));
             cell.setBorder(Rectangle.NO_BORDER);
             table.addCell(cell);
 
-            table.writeSelectedRows(0, -1, document.right() - table.getTotalWidth(), document.getPageSize().getTop() - 10f,
+            table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(181f), document.getPageSize().getTop() - Utilities.millimetersToPoints(8f),
                     writer.getDirectContent());
 
         } catch (DocumentException de) {
@@ -96,6 +96,7 @@ public class PageNumberingEventHandler extends PdfPageEventHelper {
         // CHECKSTYLE:OFF MagicNumber
         ColumnText.showTextAligned(total,
                 Element.ALIGN_LEFT,
-                new Phrase("(" + Integer.toString(writer.getPageNumber() - 1) + ")", PdfConstants.FONT_NORMAL), 0, 5, 0);
+                new Phrase("(" + Integer.toString(writer.getPageNumber() - 1) + ")", PdfConstants.FONT_PAGE_NUMBERING), 0, Utilities.millimetersToPoints(1f),
+                0);
     }
 }

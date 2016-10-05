@@ -36,12 +36,14 @@ import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
  */
 public class FkValueField extends PdfComponent<FkValueField> {
 
+    private static final float PIN_HEIGHT = 2.5f;
     private String fieldLabel;
     private float fieldLabelWidth = 0f;
+    private float topPadding = 1f;
     private final String value;
 
     private boolean withTopLabel = false;
-    private Font valueFont = PdfConstants.FONT_NORMAL_9;
+    private Font valueFont = PdfConstants.FONT_VALUE_TEXT;
     private int valueTextVerticalAlignment = PdfPCell.ALIGN_BOTTOM;
 
     public FkValueField(String value) {
@@ -70,6 +72,12 @@ public class FkValueField extends PdfComponent<FkValueField> {
         this.valueFont = font;
         return this;
     }
+
+    public FkValueField withTopPadding(float padding) {
+        this.topPadding = padding;
+        return this;
+    }
+
 
     @Override
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
@@ -101,6 +109,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
         valueCell.setUseAscender(true);
         valueCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         valueCell.setVerticalAlignment(valueTextVerticalAlignment);
+        valueCell.setPaddingTop(Utilities.millimetersToPoints(topPadding));
         table.addCell(valueCell);
         if (fieldLabel != null && withTopLabel) {
             float pinX = Utilities.millimetersToPoints(x); // TODO: make pin optional also?
@@ -110,7 +119,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(fieldLabel, PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL),
                     labelX, labelY, 0);
             canvas.moveTo(pinX, Utilities.millimetersToPoints(y));
-            canvas.lineTo(pinX, Utilities.millimetersToPoints(y) - PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL.getCalculatedSize());
+            canvas.lineTo(pinX, Utilities.millimetersToPoints(y - PIN_HEIGHT));
         }
 
         table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(adjustedY), canvas);

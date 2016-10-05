@@ -102,7 +102,7 @@ public class LusePdfDefinitionBuilderTest {
             return;
         }
 
-        File file = new File(String.format("%s/%s", dir, "luse-default-generator.pdf"));
+        File file = new File(String.format("%s/%s-%s", dir, namingPrefix, "luse-default-generator.pdf"));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

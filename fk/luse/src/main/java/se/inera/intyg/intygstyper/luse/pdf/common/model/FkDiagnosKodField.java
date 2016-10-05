@@ -72,11 +72,12 @@ public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
         }
 
         for (char c : code) {
-            PdfPCell charCell = new PdfPCell(new Phrase(String.valueOf(c), PdfConstants.FONT_NORMAL_11));
+            PdfPCell charCell = new PdfPCell(new Phrase(String.valueOf(c), PdfConstants.FONT_DIAGNOSE_CODE));
             charCell.setBorder(Rectangle.NO_BORDER);
             charCell.setFixedHeight(Utilities.millimetersToPoints(height));
             charCell.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
             charCell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
+            charCell.setPaddingBottom(Utilities.millimetersToPoints(1.25f));
 
             table.addCell(charCell);
         }

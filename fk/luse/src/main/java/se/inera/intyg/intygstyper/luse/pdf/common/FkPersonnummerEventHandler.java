@@ -33,15 +33,15 @@ public class FkPersonnummerEventHandler extends PdfPageEventHelper {
         table.setTotalWidth(Utilities.millimetersToPoints(30));
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_TOP);
         table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
-
-        if (writer.getPageNumber() > 1) {
+        // TODO: remove manual adding of these on page1/page5 and put offset logic here instead?
+        if (writer.getPageNumber() > 1 && writer.getPageNumber() < 5) {
 
             // Page 2+
-            table.addCell(new Phrase("Personnummer", PdfConstants.FONT_NORMAL_7));
+            table.addCell(new Phrase("Personnummer", PdfConstants.FONT_STAMPER_LABEL));
             table.completeRow();
-            table.addCell(new Phrase(String.valueOf(personnummer), PdfConstants.FONT_NORMAL));
+            table.addCell(new Phrase(String.valueOf(personnummer), PdfConstants.FONT_VALUE_TEXT));
 
-            table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(152f) , document.getPageSize().getTop() - Utilities.millimetersToPoints(9f),
+            table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(152f), document.getPageSize().getTop() - Utilities.millimetersToPoints(9f),
                     writer.getDirectContent());
         }
     }

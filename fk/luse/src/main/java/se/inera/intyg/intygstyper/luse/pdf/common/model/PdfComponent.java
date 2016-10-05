@@ -32,6 +32,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
  */
 public abstract class PdfComponent<T extends PdfComponent> {
 
+    private static final float BORDER_WIDTH = 0.2f;
     // Expressed in millimeters
     protected float width;
     protected float height;
@@ -115,7 +116,7 @@ public abstract class PdfComponent<T extends PdfComponent> {
         Rectangle rect = new Rectangle(Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y - height),
                 Utilities.millimetersToPoints(x + width), Utilities.millimetersToPoints(y));
         rect.setBorder(border);
-        rect.setBorderWidth(Utilities.millimetersToPoints(0.2f));
+        rect.setBorderWidth(Utilities.millimetersToPoints(BORDER_WIDTH));
         rect.setBorderColor(BaseColor.BLACK);
         canvas.rectangle(rect);
 

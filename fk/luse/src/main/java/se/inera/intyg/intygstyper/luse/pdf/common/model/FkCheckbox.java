@@ -39,23 +39,29 @@ import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
 public class FkCheckbox extends PdfComponent<FkCheckbox> {
 
     //internal property config
-    private static final Rectangle CHECKBOX_DIMENSIONS_IN_POINTS = new RectangleReadOnly(Utilities.millimetersToPoints(4.2f),
-            Utilities.millimetersToPoints(4.2f));
-    private static final float CHECKBOX_CELL_WIDTH_IN_POINTS = Utilities.millimetersToPoints(7f);
-    private static final float CHECKBOX_BORDER_WIDTH = Utilities.millimetersToPoints(0.2f);
-    private static final float CHECKBOX_INNER_PADDING = Utilities.millimetersToPoints(0.5f);
+    private static final Rectangle CHECKBOX_DIMENSIONS_IN_POINTS = new RectangleReadOnly(Utilities.millimetersToPoints(4.5f),
+            Utilities.millimetersToPoints(4.5f));
+    private static final float CHECKBOX_BORDER_WIDTH = Utilities.millimetersToPoints(0.4f);
+    private static final float CHECKBOX_X_LINE_WIDTH = Utilities.millimetersToPoints(0.2f);
+    private static final float CHECKBOX_INNER_PADDING = Utilities.millimetersToPoints(0.7f);
+    private static final float CHECKBOX_LABEL_LEFTPADDING = Utilities.millimetersToPoints(1.5f);
+
 
     private final String fieldLabel;
     private final boolean isChecked;
 
     private int verticalAlignment = PdfPCell.ALIGN_MIDDLE;
+    private float cellWidth = 7f;
     
 
     public FkCheckbox(String fieldLabel, boolean isChecked) {
         this.fieldLabel = fieldLabel;
         this.isChecked = isChecked;
     }
-
+    public FkCheckbox withCellWith(float cellWidth) {
+        this.cellWidth = cellWidth;
+        return this;
+    }
     public FkCheckbox withVerticalAlignment(int alignment) {
         this.verticalAlignment = alignment;
         return this;
@@ -64,12 +70,14 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
         table.setTotalWidth(
-                new float[] { CHECKBOX_CELL_WIDTH_IN_POINTS, Utilities.millimetersToPoints(width) - CHECKBOX_CELL_WIDTH_IN_POINTS });
+                new float[] { Utilities.millimetersToPoints(cellWidth), Utilities.millimetersToPoints(width - cellWidth) });
 
         Image checkbox = createCheckbox(canvas, isChecked);
 
         PdfPCell checkboxCell = new PdfPCell(checkbox);
+        checkboxCell.setFixedHeight(Utilities.millimetersToPoints(height));
         checkboxCell.setBorder(Rectangle.NO_BORDER);
+        checkboxCell.setUseAscender(true);
         checkboxCell.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
         checkboxCell.setVerticalAlignment(verticalAlignment);
         table.addCell(checkboxCell);
@@ -81,7 +89,7 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
         labelCell.setFixedHeight(Utilities.millimetersToPoints(height));
         labelCell.setBorder(Rectangle.NO_BORDER);
         labelCell.setUseAscender(true);
-        //labelCell.setPaddingLeft(Utilities.millimetersToPoints(1f));
+        labelCell.setPaddingLeft(CHECKBOX_LABEL_LEFTPADDING);
         labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         labelCell.setVerticalAlignment(verticalAlignment);
         table.addCell(labelCell);
@@ -101,7 +109,7 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
 
         if (isChecked) {
             // Draw an X in the rectangle
-            template.setLineWidth(CHECKBOX_BORDER_WIDTH);
+            template.setLineWidth(CHECKBOX_X_LINE_WIDTH);
             template.moveTo(rect.getLeft() + CHECKBOX_INNER_PADDING, rect.getTop() - CHECKBOX_INNER_PADDING);
             template.lineTo(rect.getRight() - CHECKBOX_INNER_PADDING, rect.getBottom() + CHECKBOX_INNER_PADDING);
             template.moveTo(rect.getRight() - CHECKBOX_INNER_PADDING, rect.getTop() - CHECKBOX_INNER_PADDING);

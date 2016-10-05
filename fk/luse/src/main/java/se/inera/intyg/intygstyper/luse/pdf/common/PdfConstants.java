@@ -18,31 +18,70 @@
  */
 package se.inera.intyg.intygstyper.luse.pdf.common;
 
+import static com.itextpdf.text.pdf.BaseFont.createFont;
+
+import java.io.IOException;
+
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.BaseFont;
 
 /**
  * @author marced.
  */
 public final class PdfConstants {
+
     /**
-     * Fonts that will be used in PDF.
+     * * Fonts that will be used in PDF.
      */
-    public static final Font FONT_NORMAL_7 = new Font(Font.FontFamily.HELVETICA, 7, Font.NORMAL);
-    public static final Font FONT_NORMAL_9 = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);
-    public static final Font FONT_NORMAL_10 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
-    public static final Font FONT_NORMAL_11 = new Font(Font.FontFamily.HELVETICA, 11, Font.NORMAL);
 
-    public static final Font FONT_FRAGERUBRIK = new Font(Font.FontFamily.HELVETICA, 9.5f, Font.BOLD);
+    private static final String ARIAL_REGULAR_COMPATIBLE_FONT_PATH = "/fonts/LiberationSans-Regular.ttf";
+    private static final String ARIAL_BOLD_COMPATIBLE_FONT_PATH = "/fonts/LiberationSans-Bold.ttf";
 
-    public static final Font FONT_NORMAL = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);
+    private static final String TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH = "/fonts/FiraSans-Regular.ttf";
+    private static final String TREBUCHET_BOLD_COMPATIBLE_FONT_PATH = "/fonts/FiraSans-Bold.ttf";
 
-    public static final Font FONT_INLINE_FIELD_LABEL = new Font(Font.FontFamily.HELVETICA, 8.5f, Font.NORMAL);
-    public static final Font FONT_INLINE_FIELD_LABEL_SMALL = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);
 
-    public static final Font FONT_BOLD_8 = new Font(Font.FontFamily.HELVETICA, 8f, Font.BOLD);
-    // constructors
+    public static final Font FONT_FRAGERUBRIK;
+    public static final Font FONT_VALUE_TEXT;
 
-    private PdfConstants() {
+
+
+    public static final Font FONT_INLINE_FIELD_LABEL;
+    public static final Font FONT_INLINE_FIELD_LABEL_SMALL;
+
+    public static final Font FONT_BOLD_9;
+    public static final Font FONT_PAGESCAN_ID;
+    public static final Font FONT_FORM_ID_LABEL;
+
+    public static final Font FONT_DIAGNOSE_CODE;
+    public static final Font FONT_STAMPER_LABEL;
+    public static final Font FONT_PAGE_NUMBERING;
+
+    static {
+        try {
+
+            FONT_FRAGERUBRIK = new Font(createFont(ARIAL_BOLD_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11f, Font.NORMAL);
+
+            FONT_VALUE_TEXT = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10.5f, Font.NORMAL);
+
+            FONT_PAGESCAN_ID = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 9f, Font.NORMAL);
+            FONT_FORM_ID_LABEL = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 7f, Font.NORMAL);
+            FONT_DIAGNOSE_CODE = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11f, Font.NORMAL);
+
+            FONT_STAMPER_LABEL = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 8f, Font.NORMAL);
+            FONT_PAGE_NUMBERING = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10.5f, Font.NORMAL);
+
+            FONT_INLINE_FIELD_LABEL = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 8.5f, Font.NORMAL);
+            FONT_INLINE_FIELD_LABEL_SMALL = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 8f, Font.NORMAL);
+
+            FONT_BOLD_9 = new Font(createFont(ARIAL_BOLD_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 9f, Font.NORMAL);
+
+        } catch (DocumentException | IOException e) {
+            throw new RuntimeException("Failed to initialize fonts", e);
+        }
+
     }
 
 }
+

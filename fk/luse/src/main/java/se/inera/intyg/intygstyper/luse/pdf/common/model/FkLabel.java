@@ -39,12 +39,13 @@ public class FkLabel extends PdfComponent<FkLabel> {
     private Font font = PdfConstants.FONT_INLINE_FIELD_LABEL;
     private float fixedLeading = 0.0f;
     private float multipliedLeading = 1.0f;
+    private float topPadding = 1f;
 
     public FkLabel(String label) {
         this.label = label;
     }
 
-    public FkLabel withAlignment(int alignment) {
+    public FkLabel withVerticalAlignment(int alignment) {
         this.valueTextVerticalAlignment = alignment;
         return this;
     }
@@ -57,6 +58,11 @@ public class FkLabel extends PdfComponent<FkLabel> {
     public FkLabel withLeading(float fixedLeading, float multipliedLeading) {
         this.fixedLeading = fixedLeading;
         this.multipliedLeading = multipliedLeading;
+        return this;
+    }
+
+    public FkLabel withTopPadding(float padding) {
+        this.topPadding = padding;
         return this;
     }
 
@@ -74,6 +80,7 @@ public class FkLabel extends PdfComponent<FkLabel> {
         labelCell.setUseAscender(true); // needed to make vertical alignment correct
         labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
         labelCell.setVerticalAlignment(valueTextVerticalAlignment);
+        labelCell.setPaddingTop(Utilities.millimetersToPoints(topPadding));
         labelCell.setLeading(fixedLeading, multipliedLeading);
         table.addCell(labelCell);
 

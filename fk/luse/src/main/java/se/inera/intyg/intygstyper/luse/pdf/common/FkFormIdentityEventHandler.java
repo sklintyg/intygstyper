@@ -33,7 +33,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class FkFormIdentityEventHandler extends PdfPageEventHelper {
 
     private static final float FORMID_X = Utilities.millimetersToPoints(12f);
-    private static final float FORMID_Y = Utilities.millimetersToPoints(8f);
+    private static final float FORMID_Y = Utilities.millimetersToPoints(8.5f);
 
     private static final float SCANID_X = Utilities.millimetersToPoints(12f);
     private static final float SCANID_Y = Utilities.millimetersToPoints(118f);
@@ -59,9 +59,9 @@ public class FkFormIdentityEventHandler extends PdfPageEventHelper {
     public void onEndPage(PdfWriter writer, Document document) {
         PdfContentByte canvas = writer.getDirectContentUnder();
 
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(formId, PdfConstants.FONT_NORMAL_7), FORMID_X, FORMID_Y, 90);
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(formId, PdfConstants.FONT_FORM_ID_LABEL), FORMID_X, FORMID_Y, 90);
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT,
-                new Phrase(buildPageScanId(blankettId, blankettVersion, writer.getPageNumber()), PdfConstants.FONT_NORMAL_10), SCANID_X, SCANID_Y, 90);
+                new Phrase(buildPageScanId(blankettId, blankettVersion, writer.getPageNumber()), PdfConstants.FONT_PAGESCAN_ID), SCANID_X, SCANID_Y, 90);
 
     }
 
