@@ -43,7 +43,7 @@ angular.module('luae_na').factory('luae_na.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
             fieldGroup: [
-                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4}},
+                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4, noH5:false}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
@@ -86,7 +86,7 @@ angular.module('luae_na').factory('luae_na.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
+                {type: 'headline', templateOptions: {label: 'FRG_6', level:4, noH5:false}},
                 {
                     key: 'diagnoser',
                     type: 'diagnos',
