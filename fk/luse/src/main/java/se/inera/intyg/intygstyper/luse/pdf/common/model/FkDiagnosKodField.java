@@ -53,8 +53,8 @@ public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
     @Override
     public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
 
-        PdfPTable table = new PdfPTable(4);
-        char[] code = new char[] { ' ', ' ', ' ', ' ' };
+        PdfPTable table = new PdfPTable(5);
+        char[] code = new char[] { ' ', ' ', ' ', ' ', ' ' };
         int b = 0;
         for (char c : value.toCharArray()) {
             code[b++] = c;
@@ -63,7 +63,8 @@ public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
                 Utilities.millimetersToPoints(7.8f),
                 Utilities.millimetersToPoints(7.8f),
                 Utilities.millimetersToPoints(7.8f),
-                Utilities.millimetersToPoints(7.8f) };
+                Utilities.millimetersToPoints(7.8f),
+                Utilities.millimetersToPoints(7.8f)};
         // Utilities.millimetersToPoints(40f - (7.8f*4)) };
         table.setTotalWidth(columnWidths);
         for (int a = 1; a < 5; a++) {
