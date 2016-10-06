@@ -1,10 +1,20 @@
 angular.module('luse').factory('luse.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
+        'common.domain.BaseAtticModel', 'common.ObjectHelper',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ObjectHelper) {
             'use strict';
 
-            var underlagTransform = function(underlagArray) {
+            var underlagFromTransform = function(underlagArray) {
+
+                // We now always have a specific amount of underlag so add that number of empty elements  
+                for(var i = 0; underlagArray.length < 3; i++){
+                    underlagArray.push({
+                        typ: null,
+                        datum: null,
+                        hamtasFran: null
+                    });
+                }
+                
                 if (underlagArray) {
                     underlagArray.forEach(function(underlag) {
                         if (!underlag.typ) {
@@ -19,6 +29,25 @@ angular.module('luse').factory('luse.Domain.IntygModel',
                     });
                 }
                 return underlagArray;
+            };
+
+            var underlagToTransform = function(underlagArray) {
+
+                var underlagCopy = angular.copy(underlagArray);
+
+                // delete all rows with no values at all so as to not confuse backend with non-errors
+                var i = 0;
+                while(i < underlagCopy.length) {
+                    if(ObjectHelper.isEmpty(underlagCopy[i].typ) &&
+                        ObjectHelper.isEmpty(underlagCopy[i].datum) &&
+                        ObjectHelper.isEmpty(underlagCopy[i].hamtasFran)){
+                        underlagCopy.splice(i, 1);
+                    } else {
+                        i++;
+                    }
+                }
+                
+                return underlagCopy;
             };
 
             var diagnosTransform = function(diagnosArray) {
@@ -51,7 +80,7 @@ angular.module('luse').factory('luse.Domain.IntygModel',
 
                         // Kategori 2 Andra medicinska utredningar och underlag
                         'underlagFinns':undefined,
-                        'underlag':new ModelAttr('underlag', {fromTransform: underlagTransform}),
+                        'underlag':new ModelAttr('underlag', {fromTransform: underlagFromTransform, toTransform: underlagToTransform}),
 
                         // Kategori 3 Sjukdomsförlopp
                         'sjukdomsforlopp':undefined,

@@ -51,7 +51,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'single-text',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
+                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3'}
                 },
                 {
                     type: 'info',
@@ -75,8 +75,11 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                             'FORETAGSHALSOVARD',
                             'SPECIALISTKLINIK',
                             'VARD_UTOMLANDS',
-                            'OVRIGT_UTLATANDE'],
-                        label: 'FRG_4', typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                            'OVRIGT_UTLATANDE'
+                        ],
+                        typLabel: 'FRG_4',
+                        datumLabel: 'DFR_4.2',
+                        hamtasFranLabel: 'DFR_4.3'
                     },
                     watcher: {
                         expression: 'model.underlagFinns',
