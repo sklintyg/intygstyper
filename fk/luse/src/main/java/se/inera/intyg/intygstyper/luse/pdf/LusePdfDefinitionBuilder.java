@@ -842,9 +842,9 @@ public class LusePdfDefinitionBuilder {
 
             tillaggsfragor.addChild(new FkValueField(tillaggsfraga.getSvar())
                     .offset(0f, offset_y)
-                    .size(KATEGORI_FULL_WIDTH, 40f)
+                    .size(KATEGORI_FULL_WIDTH, 50f)
                     .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                    .withTopLabel("Rubrik för tilläggsfråga med id " + tillaggsfraga.getId()));
+                    .withTopLabel("Tilläggsfråga: " + getText("DFR_" + tillaggsfraga.getId() + ".1.RBK")));
             offset_y += 40;
         }
 

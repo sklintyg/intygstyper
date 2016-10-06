@@ -207,4 +207,17 @@ Exempel: Med annan kroppslig funktion avses konsekvenser av somatisk sjukdom som
 	<text id="FRG_26.HLP">Försäkringskassans handläggare tar kontakt med dig när underlaget har kommit in och handläggningen kan påbörjas.</text>
 	<text id="DFR_26.1.RBK">Jag önskar att Försäkringskassan kontaktar mig</text>
 	<text id="DFR_26.2.RBK">Ange gärna varför du vill ha kontakt</text>
+	<text id="KAT_9999.RBK">Tilläggsfrågor</text>
+	<text id="KAT_9999.HLP">TBD</text>
+
+	<tillagg>
+		<tillaggsfraga id="9001">
+			<text id="DFR_9001.1.RBK">Vilken skostorlek har patienten?</text>
+			<text id="DFR_9001.1.HLP">Ange varför.</text>
+		</tillaggsfraga>
+		<tillaggsfraga id="9002">
+			<text id="DFR_9002.1.RBK">Hur långt är ett snöre?</text>
+			<text id="DFR_9002.1.HLP">Ange längd i centimeter (cm).</text>
+		</tillaggsfraga>
+	</tillagg>
 </texter>
