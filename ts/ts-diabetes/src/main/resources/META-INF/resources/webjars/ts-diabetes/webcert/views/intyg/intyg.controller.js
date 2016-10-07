@@ -73,6 +73,8 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
 
                         if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
                             ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
+                            $scope.changedName = ViewState.common.hasChangedName(ViewState.intygModel, $stateParams);
+                            $scope.changedAddress = ViewState.common.hasChangedAddress(ViewState.intygModel, $stateParams);
                         }
 
                         ViewState.common.updateIntygProperties(result);
