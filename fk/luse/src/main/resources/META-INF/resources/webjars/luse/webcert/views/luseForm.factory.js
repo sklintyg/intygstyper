@@ -23,17 +23,17 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                 {
                     key: 'grundData.patient.postadress',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postadress', disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postadress', required: true, disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.patient.postnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postnummer', disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postnummer', required: true, disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.patient.postort',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postort', required: true, disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
                 }
             ]
         },
@@ -41,7 +41,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
             fieldGroup: [
-                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level:4, noH5:false}},
+                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level:4, noH5:false, required: true}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
@@ -51,15 +51,15 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'single-text',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
+                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true, required:true}
                 },
                 {
                     type: 'info',
                     className: 'fold-animation',
                     hideExpression: '!(model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
                     templateOptions: {label: 'luse.validation.grund-for-mu.missing_ovrigt', hideFromSigned:true}},
-                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'FRG_2'}},
-                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
+                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'FRG_2', required: true}},
+                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3', required: true}},
                 {
                     key: 'underlag', type: 'underlag',
                     className: 'slide-animation',
@@ -95,13 +95,13 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'diagnos',
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 },
-                {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'DFR_7.1'}},
-                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'FRG_45'}},
+                {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'DFR_7.1', required: true}},
+                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'FRG_45', required: true}},
                 {
                     key: 'diagnosForNyBedomning',
                     className: 'fold-animation',
                     type: 'multi-text',
-                    templateOptions: {label: 'DFR_45.2'},
+                    templateOptions: {label: 'DFR_45.2', required: true},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
             ]
@@ -110,12 +110,12 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: {category: 3, categoryName: categoryNames[3]},
             fieldGroup: [
-                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
+                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1', required: true}}
             ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 5, categoryName: categoryNames[5]},
+            templateOptions: {category: 5, categoryName: categoryNames[5], required: true},
             fieldGroup: [
                 {key: 'funktionsnedsattningIntellektuell', type: 'multi-text', templateOptions: {label: 'DFR_8.1'}},
                 {key: 'funktionsnedsattningKommunikation', type: 'multi-text', templateOptions: {label: 'DFR_9.1'}},
@@ -135,7 +135,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             templateOptions: {category: 6, categoryName: categoryNames[6]},
             fieldGroup: [
                 {
-                    key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}
+                    key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1', required: true}
                 }
             ]
         },
@@ -153,7 +153,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: {category: 8, categoryName: categoryNames[8]},
             fieldGroup: [
-                {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'DFR_22.1'}},
+                {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'DFR_22.1', required: true}},
                 {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}}
             ]
         },
@@ -188,22 +188,22 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                 {
                     key: 'grundData.skapadAv.vardenhet.postadress',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal', required: true}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal', required: true}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postort',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal', required: true}
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.telefonnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal', required: true}
                 }
             ]
         }

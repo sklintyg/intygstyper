@@ -27,14 +27,14 @@
                  ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
-      <td><span dynamic-label key="FRG_3.RBK"></span></td>
+      <td><span dynamic-label key="FRG_3.RBK"></span> *</td>
     </tr>
     <tr>
       <td><input id="synby" name="synb" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.syn.nattblindhet"></td>
       <td><input id="synbn" name="synb" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.syn.nattblindhet"></td>
-      <td><span dynamic-label key="FRG_4.RBK"></span></td>
+      <td><span dynamic-label key="FRG_4.RBK"></span> *</td>
     </tr>
     <tr>
       <td><input id="syncy" name="sync" type="radio" ng-value="true"
@@ -44,7 +44,7 @@
                  ng-model="viewState.intygModel.syn.progressivOgonsjukdom">
       </td>
       <td>
-        <p><span dynamic-label key="FRG_5.RBK"></span></p>
+        <p><span dynamic-label key="FRG_5.RBK"></span> *</p>
 
         <div class="alert alert-info"
              ng-if="viewState.intygModel.syn.progressivOgonsjukdom || viewState.intygModel.syn.nattblindhet || viewState.intygModel.syn.synfaltsdefekter">
@@ -57,14 +57,14 @@
       </td>
       <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
       </td>
-      <td><span dynamic-label key="FRG_6.RBK"></span></td>
+      <td><span dynamic-label key="FRG_6.RBK"></span> *</td>
     </tr>
     <tr>
       <td><input id="syney" name="syne" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.nystagmus">
       </td>
       <td><input id="synen" name="syne" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.nystagmus">
       </td>
-      <td><span dynamic-label key="FRG_7.RBK"></span></td>
+      <td><span dynamic-label key="FRG_7.RBK"></span> *</td>
     </tr>
     <tr>
       <td></td>
@@ -77,7 +77,7 @@
         <table class="table table-form">
           <tr>
             <th></th>
-            <th><span message key="ts-bas.label.syn.utan-korrektion"></span><span wc-help-mark
+            <th><span message key="ts-bas.label.syn.utan-korrektion"></span> * <span wc-help-mark
                                                                                   field-help-text="ts-bas.helptext.synfunktioner.utan-korrektion" />
             </th>
             <th><span message key="ts-bas.label.syn.med-korrektion"></span><span wc-help-mark

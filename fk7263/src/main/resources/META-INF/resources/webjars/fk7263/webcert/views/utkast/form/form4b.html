@@ -4,7 +4,8 @@
 
         <div id="intygetbaseraspa" wc-field field-label="fk7263.label.intygbaseratpa" field-number="4b"
              field-help-text="fk7263.helptext.intyg-baserat-pa"
-             field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa">
+             field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa"
+             field-required="true">
 
             <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygbaseratpa"
                  id="validationMessages_intygbaseratpa">
@@ -61,7 +62,7 @@
                                                                                      name="informationBasedOn.other"
                                                                                      ng-model="basedOnState.check.annanReferens"
                                                                                      ng-change="toggleBaseradPaDate('annanReferens')">
-                    Annat<span wc-help-mark field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
+                    Annat *<span wc-help-mark field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
                 </label>
                 <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate" add-date-parser="loose"></span>
             </div>

@@ -22,35 +22,31 @@
                  ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder"></td>
       <td><input id="hypoan" name="hypoa" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder"></td>
-      <td><span dynamic-label key="FRG_36.RBK"></span></td>
+      <td><span dynamic-label key="FRG_36.RBK"></span> *</td>
     </tr>
     <tr>
       <td><input id="hypoby" name="hypob" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion"></td>
       <td><input id="hypobn" name="hypob" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion"></td>
-      <td><span dynamic-label key="FRG_37.RBK"></span>
-      </td>
+      <td><span dynamic-label key="FRG_37.RBK"></span> *</td>
     </tr>
     <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypocy" name="hypoc" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
       <td><input id="hypocn" name="hypoc" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken"></td>
-      <td><span dynamic-label
-                key="FRG_38.RBK"></span></td>
+      <td><span dynamic-label key="FRG_38.RBK"></span> *</td>
     </tr>
     <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
       <td><input id="hypody" name="hypod" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst"></td>
       <td><input id="hypodn" name="hypod" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst"></td>
-      <td><span dynamic-label key="FRG_39.RBK"></span>
-
+      <td><span dynamic-label key="FRG_39.RBK"></span> *
         <div class="controls" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomst == true">
           <label for="allvarligForekomstBeskrivning">
-                              <span dynamic-label
-                                    key="DFR_39.2.RBK"></span>
+            <span dynamic-label key="DFR_39.2.RBK"></span> *
           </label>
           <input id="allvarligForekomstBeskrivning" class="form-control input-full"
                  name="allvarligForekomstBeskrivning" type="text"
@@ -64,11 +60,10 @@
                  ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken"></td>
       <td><input id="hypoen" name="hypoe" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken"></td>
-      <td><span dynamic-label key="FRG_40.RBK"></span>
+      <td><span dynamic-label key="FRG_40.RBK"></span> *
         <div class="controls" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken == true">
           <label for="allvarligForekomstTrafikBeskrivning">
-                              <span dynamic-label
-                                    key="DFR_40.2.RBK"></span>
+            <span dynamic-label key="DFR_40.2.RBK"></span> *
           </label>
           <input id="allvarligForekomstTrafikBeskrivning" class="form-control input-full"
                  name="allvarligForekomstTrafikBeskrivning" type="text"
@@ -89,7 +84,7 @@
                  ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker"></td>
       <td><input id="hypofn" name="hypof" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker"></td>
-      <td><span dynamic-label key="FRG_41.RBK"></span></td>
+      <td><span dynamic-label key="FRG_41.RBK"></span> *</td>
     </tr>
 
     <!-- 2g -->
@@ -98,9 +93,9 @@
                  ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid"></td>
       <td><input id="hypogn" name="hypog" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid"></td>
-      <td><span dynamic-label key="FRG_42.RBK"></span>
+      <td><span dynamic-label key="FRG_42.RBK"></span> *
         <div class="controls form-inline webcert-top-padding-section" ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid">
-          <label class="control-label"><span dynamic-label key="DFR_42.2.RBK"></span></label>
+          <label class="control-label"><span dynamic-label key="DFR_42.2.RBK"></span> *</label>
                             <span wc-date-picker-field target-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTidObservationstid"
                                   dom-id="allvarligForekomstVakenTidObservationstid"
                                   invalid="false"
