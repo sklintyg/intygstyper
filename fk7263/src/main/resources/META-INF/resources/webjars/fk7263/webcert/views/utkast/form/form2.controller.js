@@ -74,6 +74,37 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 }
             });
 
+            $scope.$watch('form2["diagnose.code"].$viewValue', function(newVal) {
+                if (!newVal) {
+                    $scope.model.diagnosBeskrivning1 = undefined;
+                }
+            });
+            $scope.$watch('model.diagnosBeskrivning1', function(newVal) {
+                if (!newVal) {
+                    $scope.model.diagnosKod = undefined;
+                }
+            });
+            $scope.$watch('form2["diagnose.codeOpt1"].$viewValue', function(newVal) {
+                if (!newVal) {
+                    $scope.model.diagnosBeskrivning2 = undefined;
+                }
+            });
+            $scope.$watch('model.diagnosBeskrivning2', function(newVal) {
+                if (!newVal) {
+                    $scope.model.diagnosKod2 = undefined;
+                }
+            });
+            $scope.$watch('form2["diagnose.codeOpt2"].$viewValue', function(newVal) {
+                if (!newVal) {
+                    $scope.model.diagnosBeskrivning3 = undefined;
+                }
+            });
+            $scope.$watch('model.diagnosBeskrivning3', function(newVal) {
+                if (!newVal) {
+                    $scope.model.diagnosKod3 = undefined;
+                }
+            });
+
             function setAllDiagnosKodverk(val){
                 $scope.viewModel.diagnosKodverk = val;
                 $scope.model.diagnosKodsystem1 = val;
