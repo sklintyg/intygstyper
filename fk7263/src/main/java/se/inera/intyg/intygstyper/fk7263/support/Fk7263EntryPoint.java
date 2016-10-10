@@ -73,7 +73,7 @@ public class Fk7263EntryPoint implements ModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("fk7263-features.properties");
+        return ModuleFeaturesFactory.getFeatures(MODULE_ID, "fk7263-features.properties");
     }
 
     @Override

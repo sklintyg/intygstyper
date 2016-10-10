@@ -61,7 +61,7 @@ public class LuaefsEntryPoint extends FkAbstractModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("luae_fs-features.properties");
+        return ModuleFeaturesFactory.getFeatures(MODULE_ID, "luae_fs-features.properties");
     }
 
     @Override
