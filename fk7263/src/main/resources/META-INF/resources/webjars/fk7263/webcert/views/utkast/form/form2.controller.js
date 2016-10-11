@@ -74,37 +74,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 }
             });
 
-            $scope.$watch('form2["diagnose.code"].$viewValue', function(newVal) {
-                if (!newVal) {
-                    $scope.model.diagnosBeskrivning1 = undefined;
-                }
-            });
-            $scope.$watch('model.diagnosBeskrivning1', function(newVal) {
-                if (!newVal) {
-                    $scope.model.diagnosKod = undefined;
-                }
-            });
-            $scope.$watch('form2["diagnose.codeOpt1"].$viewValue', function(newVal) {
-                if (!newVal) {
-                    $scope.model.diagnosBeskrivning2 = undefined;
-                }
-            });
-            $scope.$watch('model.diagnosBeskrivning2', function(newVal) {
-                if (!newVal) {
-                    $scope.model.diagnosKod2 = undefined;
-                }
-            });
-            $scope.$watch('form2["diagnose.codeOpt2"].$viewValue', function(newVal) {
-                if (!newVal) {
-                    $scope.model.diagnosBeskrivning3 = undefined;
-                }
-            });
-            $scope.$watch('model.diagnosBeskrivning3', function(newVal) {
-                if (!newVal) {
-                    $scope.model.diagnosKod3 = undefined;
-                }
-            });
-
             function setAllDiagnosKodverk(val){
                 $scope.viewModel.diagnosKodverk = val;
                 $scope.model.diagnosKodsystem1 = val;
@@ -126,6 +95,50 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.updateFmbText();
 
                 setAllDiagnosKodverk( $scope.viewModel.diagnosKodverk );
+            };
+
+            /**
+             * Clear diagnose description if diagnose code is cleared
+             */
+            $scope.onChangeDiagnoseCode1 = function() {
+                if (!$scope.form2['diagnose.code'].$viewValue) {
+                    $scope.model.diagnosBeskrivning1 = undefined;
+                }
+                $scope.limitDiagnosBeskrivningField('diagnosKod1');
+            };
+            $scope.onChangeDiagnoseCode2 = function() {
+                if (!$scope.form2['diagnose.codeOpt1'].$viewValue) {
+                    $scope.model.diagnosBeskrivning2 = undefined;
+                }
+                $scope.limitDiagnosBeskrivningField('diagnosKod2');
+            };
+            $scope.onChangeDiagnoseCode3 = function() {
+                if (!$scope.form2['diagnose.codeOpt2'].$viewValue) {
+                    $scope.model.diagnosBeskrivning3 = undefined;
+                }
+                $scope.limitDiagnosBeskrivningField('diagnosKod3');
+            };
+
+            /**
+             * Clear diagnose code if diagnose description is cleared
+             */
+            $scope.onChangeDiagnoseDescription1 = function() {
+                if (!$scope.model.diagnosBeskrivning1) {
+                    $scope.model.diagnosKod = undefined;
+                }
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
+            };
+            $scope.onChangeDiagnoseDescription2 = function() {
+                if (!$scope.model.diagnosBeskrivning2) {
+                    $scope.model.diagnosKod2 = undefined;
+                }
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
+            };
+            $scope.onChangeDiagnoseDescription3 = function() {
+                if (!$scope.model.diagnosBeskrivning3) {
+                    $scope.model.diagnosKod3 = undefined;
+                }
+                $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
             };
 
             $scope.getDiagnoseCodes = function(codeSystem, val) {

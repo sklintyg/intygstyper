@@ -42,13 +42,17 @@
                 <label class="control-label unbreakable">ICD-10 *</label>
                 <div class="diagnos-row">
                     <input type="text" class="form-control" id="diagnoseCode" name="diagnose.code" ng-blur="updateFmbText()"  value=""
-                           class='diagnose-code col-xs-11 form-control' ng-model="model.diagnosKod"
+                           class='diagnose-code col-xs-11 form-control'
+                           ng-model="model.diagnosKod"
+                           ng-change="onChangeDiagnoseCode1()"
                            uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
-                           typeahead-min-length="3" typeahead-editable="false" typeahead-on-select="onDiagnoseCode1Select($item)"
+                           typeahead-min-length="3"
+                           typeahead-editable="false"
+                           typeahead-on-select="onDiagnoseCode1Select($item)"
                            typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                           wc-to-uppercase
                            typeahead-loading="diagnosKodLoading[0]"
-                           typeahead-no-results="diagnosKodNoResults[0]">
+                           typeahead-no-results="diagnosKodNoResults[0]"
+                           wc-to-uppercase>
                     <img src="/img/ajax-loader-kit-16x16.gif" class="diagnos-loading" ng-if="diagnosKodLoading[0]" />
                     <span ng-if="diagnosKodNoResults[0] && form2['diagnose.code'].$viewValue.length > 2" uib-dropdown auto-close="disabled" is-open="true">
                           <ul uib-dropdown-menu>
@@ -67,10 +71,11 @@
                 <input type="text" class="form-control maxwidth" id="diagnoseDescription"
                        class="col-xs-12 form-control" name="diagnose.description" value=""
                        ng-model="model.diagnosBeskrivning1"
+                       ng-change="onChangeDiagnoseDescription1()"
                        uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue)"
                        typeahead-on-select="onDiagnoseDescription1Select($item)"
                        typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                       typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning1')">
+                       typeahead-wait-ms="100">
                 <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
             </div>
         </div>
@@ -82,12 +87,15 @@
                     <div class="bottom-padding-small clearfix">
                         <input type="text" id="diagnoseCodeOpt1" name="diagnose.codeOpt1" value=""
                                ng-model="model.diagnosKod2" class="form-control"
+                               ng-change="onChangeDiagnoseCode2()"
                                uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
-                               typeahead-min-length="3" typeahead-editable="false" typeahead-on-select="onDiagnoseCode2Select($item)"
+                               typeahead-min-length="3"
+                               typeahead-editable="false"
+                               typeahead-on-select="onDiagnoseCode2Select($item)"
                                typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                               ng-change="limitDiagnosBeskrivningField('diagnosKod2')" wc-to-uppercase
                                typeahead-loading="diagnosKodLoading[1]"
-                               typeahead-no-results="diagnosKodNoResults[1]">
+                               typeahead-no-results="diagnosKodNoResults[1]"
+                               wc-to-uppercase>
                         <img src="/img/ajax-loader-kit-16x16.gif" class="diagnos-loading" ng-if="diagnosKodLoading[1]" />
                         <span ng-if="diagnosKodNoResults[1] && form2['diagnose.codeOpt1'].$viewValue.length > 2" uib-dropdown auto-close="disabled" is-open="true">
                               <ul uib-dropdown-menu>
@@ -111,10 +119,11 @@
                 <div class="bottom-padding-small clearfix">
                     <input type="text" id="diagnoseDescriptionOpt1" name="diagnose.descriptionOpt1" value=""
                            ng-model="model.diagnosBeskrivning2" class="block col-xs-12 form-control maxwidth"
+                           ng-change="onChangeDiagnoseDescription2()"
                            uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue)"
                            typeahead-on-select="onDiagnoseDescription2Select($item)"
                            typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                           typeahead-wait-ms="100" ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning2')">
+                           typeahead-wait-ms="100">
                     <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                 </div>
             </div>
@@ -124,12 +133,15 @@
                 <div class="diagnos-row">
                     <input type="text" id="diagnoseCodeOpt2" name="diagnose.codeOpt2" value=""
                            ng-model="model.diagnosKod3" class="form-control"
+                           ng-change="onChangeDiagnoseCode3()"
                            uib-typeahead="d.value as d.label for d in getDiagnoseCodes(viewModel.diagnosKodverk, $viewValue) | limitTo:10"
-                           typeahead-min-length="3" typeahead-editable="false" typeahead-on-select="onDiagnoseCode3Select($item)"
+                           typeahead-min-length="3"
+                           typeahead-editable="false"
+                           typeahead-on-select="onDiagnoseCode3Select($item)"
                            typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                           ng-change="limitDiagnosBeskrivningField('diagnosKod3')" wc-to-uppercase
                            typeahead-loading="diagnosKodLoading[2]"
-                           typeahead-no-results="diagnosKodNoResults[2]">
+                           typeahead-no-results="diagnosKodNoResults[2]"
+                           wc-to-uppercase>
                     <img src="/img/ajax-loader-kit-16x16.gif" class="diagnos-loading" ng-if="diagnosKodLoading[2]" />
                     <span ng-if="diagnosKodNoResults[2] && form2['diagnose.codeOpt2'].$viewValue.length > 2" uib-dropdown auto-close="disabled" is-open="true">
                           <ul uib-dropdown-menu>
@@ -147,11 +159,11 @@
                 <div class="controls">
                     <input type="text" id="diagnoseDescriptionOpt2" name="diagnose.descriptionOpt2" value=""
                            ng-model="model.diagnosBeskrivning3" class="block col-xs-12 form-control maxwidth"
+                           ng-change="onChangeDiagnoseDescription3()"
                            uib-typeahead="d.value as d.label for d in searchDiagnoseByDescription(viewModel.diagnosKodverk, $viewValue)"
                            typeahead-on-select="onDiagnoseDescription3Select($item)"
                            typeahead-template-url="/web/webjars/fk7263/webcert/views/utkast/form/form2.diagnoseTemplate.html"
-                           typeahead-wait-ms="100"
-                           ng-change="limitDiagnosBeskrivningField('diagnosBeskrivning3')">
+                           typeahead-wait-ms="100">
                     <span class="counter">Tecken kvar: {{viewState.inputLimits.diagnosBeskrivning - getTotalDiagnosBeskrivningLength()}}</span>
                 </div>
             </div>

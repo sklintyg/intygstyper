@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-xdescribe('fk7263.EditCertCtrl.Form2Ctrl', function() {
+describe('fk7263.EditCertCtrl.Form2Ctrl', function() {
     'use strict';
 
     var $scope;
