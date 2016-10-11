@@ -1,6 +1,6 @@
 #!groovy
 
-def buildVersion = "3.0.${BUILD_NUMBER}"
+def buildVersion  = "3.0.${BUILD_NUMBER}"
 def commonVersion = "3.0.+"
 
 def javaEnv() {
@@ -39,8 +39,8 @@ stage('tag and upload') {
     node {
         try {
             withEnv(javaEnv()) {
-                sh "./gradlew uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD \
-                    -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion}"
+                sh "./gradlew uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD -DgithubUser=$GITHUB_USERNAME \
+                    -DgithubPassword=$GITHUB_PASSWORD -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion}"
             }
         } catch (e) {
             currentBuild.result = "FAILED"
