@@ -159,7 +159,7 @@ configure(subprojects.findAll {
     apply plugin: 'com.moowork.node'
 
     grunt {
-        colors = true
+        colors = System.properties['gruntColors'] ?: true
     }
 
     node {
