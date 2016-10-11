@@ -120,16 +120,12 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: {category: 5, categoryName: categoryNames[5]},
             fieldGroup: [
-                {key: 'funktionsnedsattningIntellektuell', type: 'multi-text', templateOptions: {label: 'DFR_8.1'}},
+                {key: 'funktionsnedsattningIntellektuell', type: 'check-multi-text', templateOptions: {label: 'DFR_8.1'}},
                 {key: 'funktionsnedsattningKommunikation', type: 'multi-text', templateOptions: {label: 'DFR_9.1'}},
                 {key: 'funktionsnedsattningKoncentration', type: 'multi-text', templateOptions: {label: 'DFR_10.1'}},
                 {key: 'funktionsnedsattningPsykisk', type: 'multi-text', templateOptions: {label: 'DFR_11.1'}},
                 {key: 'funktionsnedsattningSynHorselTal', type: 'multi-text', templateOptions: {label: 'DFR_12.1'}},
-                {
-                    key: 'funktionsnedsattningBalansKoordination',
-                    type: 'multi-text',
-                    templateOptions: {label: 'DFR_13.1'}
-                },
+                {key: 'funktionsnedsattningBalansKoordination', type: 'multi-text', templateOptions: {label: 'DFR_13.1'}},
                 {key: 'funktionsnedsattningAnnan', type: 'multi-text', templateOptions: {label: 'DFR_14.1'}}
             ]
         },
