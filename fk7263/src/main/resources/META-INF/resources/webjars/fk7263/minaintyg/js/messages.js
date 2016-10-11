@@ -86,7 +86,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
         'fk7263.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'fk7263.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om sjukpenning?</h2>',
-        'fk7263.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.<br>',
+        'fk7263.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk" target="_blank">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.<br>',
         'fk7263.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'fk7263.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
         'fk7263.label.pagedescription.archive.header': '<h2>Arkivera</h2>',
