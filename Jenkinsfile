@@ -1,5 +1,8 @@
 #!groovy
 
+def buildVersion = "3.0.${BUILD_NUMBER}"
+def commonVersion = "3.0.+"
+
 def javaEnv() {
     def javaHome = tool 'JDK8u66'
     ["PATH=${env.PATH}:${javaHome}/bin", "JAVA_HOME=${javaHome}"]
@@ -21,7 +24,8 @@ stage('build') {
     node {
         try {
             withEnv(javaEnv()) {
-                sh './gradlew --refresh-dependencies clean build sonarqube -PcodeQuality -DgruntColors=false'
+                sh "./gradlew --refresh-dependencies clean build sonarqube -PcodeQuality -DgruntColors=false \
+                    -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion}"
             }
         } catch (e) {
             currentBuild.result = "FAILED"
@@ -35,8 +39,8 @@ stage('tag and upload') {
     node {
         try {
             withEnv(javaEnv()) {
-                sh './gradlew uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD \
-                    -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD'
+                sh "./gradlew uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD \
+                    -DgithubUser=$GITHUB_USERNAME -DgithubPassword=$GITHUB_PASSWORD -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion}"
             }
         } catch (e) {
             currentBuild.result = "FAILED"
