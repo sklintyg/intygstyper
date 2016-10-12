@@ -24,6 +24,7 @@ angular.module('luse').constant('luse.messages', {
         'luse.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         'luse.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'luse.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
+        'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning': 'Information överförs till fältet \'Övriga upplysningar\' vid signering',
 
         //Validation messages
         'luse.validation.general.date_out_of_range': 'Datum får inte ligga för långt fram eller tillbaka i tiden.',
