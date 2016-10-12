@@ -51,7 +51,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     @Autowired(required = false)
     private IntygTextsService intygTexts;
 
-    private static final String PDF_PATH_V06U07 = "pdf/TSTRK1007 NKL fas4 e-tjanst 2015-04-10.pdf";
+    private static final String PDF_PATH_V06U07 = "pdf/TSTRK1007-V0607.pdf";
     // Constants for printing ID and origin in left margin
     private static final int MARGIN_TEXT_START_X = 46;
     private static final int MARGIN_TEXT_START_Y = 137;
