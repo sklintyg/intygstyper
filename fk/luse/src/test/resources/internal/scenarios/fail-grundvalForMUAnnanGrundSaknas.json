@@ -41,6 +41,7 @@
   "underlagFinns": true,
   "kannedomOmPatient": "2015-01-07",
   "annatGrundForMU": "2015-09-09",
+  "motiveringTillInteBaseratPaUndersokning" : "Motivering.",
   "textVersion": "1.0",
   "grundData": {
     "patient": {

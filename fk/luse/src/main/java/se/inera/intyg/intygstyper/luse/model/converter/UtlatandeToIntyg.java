@@ -32,6 +32,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
+import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
@@ -185,7 +186,7 @@ public final class UtlatandeToIntyg {
         addIfNotBlank(svars, MEDICINSKAFORUTSATTNINGARFORARBETE_SVAR_ID_22, MEDICINSKAFORUTSATTNINGARFORARBETE_DELSVAR_ID_22,
                 source.getMedicinskaForutsattningarForArbete());
         addIfNotBlank(svars, FORMAGATROTSBEGRANSNING_SVAR_ID_23, FORMAGATROTSBEGRANSNING_DELSVAR_ID_23, source.getFormagaTrotsBegransning());
-        addIfNotBlank(svars, OVRIGT_SVAR_ID_25, OVRIGT_DELSVAR_ID_25, source.getOvrigt());
+        addIfNotBlank(svars, OVRIGT_SVAR_ID_25, OVRIGT_DELSVAR_ID_25, buildOvrigaUpplysningar(source));
 
         if (source.getKontaktMedFk() != null) {
             if (source.getKontaktMedFk() && !StringUtils.isBlank(source.getAnledningTillKontakt())) {
@@ -201,5 +202,23 @@ public final class UtlatandeToIntyg {
         }
 
         return svars;
+    }
+
+    private static String buildOvrigaUpplysningar(LuseUtlatande source) {
+        String motiveringTillInteBaseratPaUndersokning = null;
+        String ovrigt = null;
+
+        // Since INTYG-2949, we have to concatenate information in the Övrigt-fält again... 
+        if (!StringUtils.isBlank(source.getMotiveringTillInteBaseratPaUndersokning())) {
+            motiveringTillInteBaseratPaUndersokning = "Motivering till varför utlåtandet inte baseras på undersökning av patienten: " + 
+                    source.getMotiveringTillInteBaseratPaUndersokning();
+        }
+
+        if (!StringUtils.isBlank(source.getOvrigt())) {
+            ovrigt = source.getOvrigt();
+        }
+
+        String ret = StringUtil.join("\n\n", motiveringTillInteBaseratPaUndersokning, ovrigt);
+        return !StringUtils.isBlank(ret) ? ret : null;
     }
 }

@@ -96,6 +96,7 @@ angular.module('luse').factory('luse.Domain.IntygModel',
                         'anhorigsBeskrivningAvPatienten':undefined,
                         'annatGrundForMU':undefined,
                         'annatGrundForMUBeskrivning':undefined,
+                        'motiveringTillInteBaseratPaUndersokning':undefined,
                         'kannedomOmPatient':undefined,
 
                         // Kategori 2 Andra medicinska utredningar och underlag

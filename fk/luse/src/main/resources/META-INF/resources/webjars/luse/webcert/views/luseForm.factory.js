@@ -54,6 +54,14 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3'}
                 },
                 {
+                    key: 'motiveringTillInteBaseratPaUndersokning',
+                    type: 'multi-text',
+                    className: 'fold-animation',
+                    hideExpression: 'model.undersokningAvPatienten || (!model.annatGrundForMU && !model.journaluppgifter && !anhorigBeskrivningAvPatienten)',
+                    // TODO: Change to proper label!
+                    templateOptions:{label: 'KV_FKMU_0001.ANNAT'}
+                },
+                {
                     type: 'info',
                     className: 'fold-animation',
                     hideExpression: '!(model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',

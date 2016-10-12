@@ -40,6 +40,7 @@ angular.module('luse').constant('luse.messages', {
         'luse.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
         'luse.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
         'luse.validation.grund-for-mu.missing_ovrigt': 'När \'Grund för medicinskt underlag\' besvarats med \'Journaluppgifter\', \'Anhörigs beskrivning\' eller \'Annat\' ska ställningstagandet motiveras under \'Övriga upplysningar\'',
+        'luse.validation.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.missing': 'Motivering till varför utlåtandet inte baseras på undersökning av patienten saknas',
 
         'luse.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
         'luse.validation.underlagfinns.incorrect_combination' : 'Om frågan \'Finns det andra medicinska utredningar eller underlag\' besvarats med nej får underlag inte anges.',
