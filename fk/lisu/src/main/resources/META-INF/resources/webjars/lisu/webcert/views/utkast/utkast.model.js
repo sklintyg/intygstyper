@@ -4,17 +4,6 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform, ObjectHelper) {
             'use strict';
 
-            var diagnosTransform = function(diagnosArray) {
-                if (diagnosArray.length === 0) {
-                    diagnosArray.push({
-                        diagnosKodSystem: 'ICD_10_SE',
-                        diagnosKod : undefined,
-                        diagnosBeskrivning : undefined
-                    });
-                }
-                return diagnosArray;
-            };
-
             var sjukskrivningFromTransform = function(sjukskrivningArray) {
 
                 var resultObject = {
@@ -96,7 +85,10 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
                         'arbetsmarknadspolitisktProgram': undefined,
 
                         // Kategori 3 diagnos
-                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
+                        'diagnoser':new ModelAttr('diagnoser', {
+                            fromTransform: ModelTransformService.diagnosFromTransform,
+                            toTransform: ModelTransformService.diagnosToTransform
+                        }),
 
                         // Kategori 4 Sjukdomens konsekvenser
                         'funktionsnedsattning': undefined,

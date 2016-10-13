@@ -1,7 +1,7 @@
 angular.module('luae_na').factory('luae_na.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
+        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
             'use strict';
 
             var underlagTransform = function(underlagArray) {
@@ -51,13 +51,19 @@ angular.module('luae_na').factory('luae_na.Domain.IntygModel',
 
                         // Kategori 2 Andra medicinska utredningar och underlag
                         'underlagFinns':undefined,
-                        'underlag':new ModelAttr('underlag', {fromTransform: underlagTransform}),
+                        'underlag':new ModelAttr('underlag', {
+                            fromTransform: ModelTransform.underlagFromTransform,
+                            toTransform: ModelTransform.underlagToTransform
+                        }),
 
                         // Kategori 3 Sjukdomsförlopp
                         'sjukdomsforlopp':undefined,
 
                         // Ketegori 4 diagnos
-                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
+                        'diagnoser':new ModelAttr('diagnoser', {
+                            fromTransform: ModelTransform.diagnosFromTransform,
+                            toTransform: ModelTransform.diagnosToTransform
+                        }),
                         'diagnosgrund': undefined,
                         'nyBedomningDiagnosgrund': undefined,
                         'diagnosForNyBedomning' : undefined,

@@ -1,7 +1,7 @@
 angular.module('luae_fs').factory('luae_fs.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService', 'common.ObjectHelper',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform, ObjectHelper) {
+        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
             'use strict';
 
             var underlagTransform = function(underlagArray) {
@@ -53,12 +53,18 @@ angular.module('luae_fs').factory('luae_fs.Domain.IntygModel',
 
                         // Kategori 2 Andra medicinska utredningar och underlag
                         'underlagFinns':undefined,
-                        'underlag':new ModelAttr('underlag', {fromTransform: underlagTransform}),
+                        'underlag':new ModelAttr('underlag', {
+                            fromTransform: ModelTransform.underlagFromTransform,
+                            toTransform: ModelTransform.underlagToTransform
+                        }),
 
 
 
                         // Kategori 3 diagnos
-                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
+                        'diagnoser':new ModelAttr('diagnoser', {
+                            fromTransform: ModelTransform.diagnosFromTransform,
+                            toTransform: ModelTransform.diagnosToTransform
+                        }),
 
 
                         // Kategori 4 Funktionsnedsättning
