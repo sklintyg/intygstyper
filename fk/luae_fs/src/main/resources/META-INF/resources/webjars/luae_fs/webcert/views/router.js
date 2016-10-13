@@ -54,8 +54,8 @@ angular.module('luae_fs').config(function($stateProvider) {
                 },
 
                 'fragasvar@luae_fs-edit' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeListUtkast.html',
+                    controller: 'common.ArendeListCtrl'
                 }
             }
         }).
@@ -68,8 +68,8 @@ angular.module('luae_fs').config(function($stateProvider) {
                     controller: 'luae_fs.ViewCertCtrl'
                 },
                 'fragasvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.intyg.fk.luae_fs' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
@@ -86,8 +86,8 @@ angular.module('luae_fs').config(function($stateProvider) {
                     controller: 'luae_fs.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.fragasvar.luae_fs' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',

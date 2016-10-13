@@ -104,7 +104,6 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
                                     isSent: IntygHelper.isSentToTarget(result.statuses, 'FK'),
                                     isRevoked: IntygHelper.isRevoked(result.statuses),
                                     forceUseProvidedIntyg: true,
-                                    kompletteringOnly: true,
                                     meddelandeId: intygModel.grundData.relation.meddelandeId,
                                     type: viewState.common.intyg.type
                                 };

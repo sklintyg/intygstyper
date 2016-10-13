@@ -41,8 +41,8 @@ angular.module('fk7263').config(function($stateProvider) {
                 },
 
                 'fragasvar@fk7263-edit' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeListUtkast.html',
+                    controller: 'common.ArendeListCtrl'
                 },
 
                 'wcHeader@fk7263-edit' : {
@@ -145,8 +145,8 @@ angular.module('fk7263').config(function($stateProvider) {
                     controller: 'fk7263.ViewCertCtrl'
                 },
                 'fragasvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.intyg.fk.fk7263' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
@@ -163,8 +163,8 @@ angular.module('fk7263').config(function($stateProvider) {
                     controller: 'fk7263.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.fragasvar.fk7263' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',

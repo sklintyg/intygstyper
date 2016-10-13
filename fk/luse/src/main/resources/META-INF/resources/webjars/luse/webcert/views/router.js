@@ -54,8 +54,8 @@ angular.module('luse').config(function($stateProvider) {
                 },
 
                 'fragasvar@luse-edit' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeListUtkast.html',
+                    controller: 'common.ArendeListCtrl'
                 }
             }
         }).
@@ -68,8 +68,8 @@ angular.module('luse').config(function($stateProvider) {
                     controller: 'luse.ViewCertCtrl'
                 },
                 'fragasvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.intyg.fk.luse' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
@@ -86,8 +86,8 @@ angular.module('luse').config(function($stateProvider) {
                     controller: 'luse.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.fragasvar.luse' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',

@@ -54,8 +54,8 @@ angular.module('lisu').config(function($stateProvider) {
                 },
 
                 'fragasvar@lisu-edit' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/utkast/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 }
             }
         }).
@@ -68,8 +68,8 @@ angular.module('lisu').config(function($stateProvider) {
                     controller: 'lisu.ViewCertCtrl'
                 },
                 'fragasvar@webcert.intyg.fk' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.intyg.fk.lisu' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
@@ -86,8 +86,8 @@ angular.module('lisu').config(function($stateProvider) {
                     controller: 'lisu.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
-                    templateUrl: commonPath + 'fk/arenden/arenden.html',
-                    controller: 'common.ArendeCtrl'
+                    templateUrl: commonPath + 'fk/arenden/arendeList.html',
+                    controller: 'common.ArendeListCtrl'
                 },
                 'header@webcert.fragasvar.lisu' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
