@@ -84,6 +84,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             // Sätt upp lyssnare för 'intyg.loaded' innan load anropas, säkerställer att lyssnaren hunnit registreras när load körs.
             // Get the certificate draft from the server.
-            UtkastService.load(viewState);
+            UtkastService.load(viewState).then(function() {
+                if (viewState.common.textVersionUpdated) {
+                    $scope.certForm.$setDirty();
+                }
+            });
 
         }]);
