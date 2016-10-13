@@ -66,7 +66,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
 
-                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel);
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel.textVersion);
 
                         ViewState.intygAvser = createKorkortstypListString(ViewState.intygModel.intygAvser.korkortstyp);
                         ViewState.bedomning = createKorkortstypListString(ViewState.intygModel.bedomning.korkortstyp);

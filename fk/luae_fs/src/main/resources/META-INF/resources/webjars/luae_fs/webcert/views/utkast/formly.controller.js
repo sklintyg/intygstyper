@@ -14,7 +14,7 @@ angular.module('luae_fs').controller('luae_fs.EditCert.FormlyCtrl',
             $scope.formFields = formFactory.getFormFields();
 
             tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, $scope.formFields.length - 1);
-            $scope.$on('dynamicLabels.updated', function () {
+            $scope.$on('intyg.loaded', function () {
                 tillaggsfragorHelper.buildTillaggsFragor($scope.formFields, viewState.intygModel, $scope.formFields.length - 1);
             });
         }

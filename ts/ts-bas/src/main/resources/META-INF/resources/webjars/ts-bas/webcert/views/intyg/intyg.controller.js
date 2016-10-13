@@ -71,7 +71,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
 
-                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel);
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel.textVersion);
 
                         if (ViewState.intygModel.syn.synfaltsdefekter === true || ViewState.intygModel.syn.nattblindhet === true ||
                             ViewState.intygModel.syn.progressivOgonsjukdom === true) {

@@ -38,7 +38,7 @@ angular.module('luae_fs').controller('luae_fs.ViewCertCtrl',
                         ViewState.intygModel = result.contents;
                         ViewState.relations = result.relations;
 
-                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel);
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel.textVersion);
 
                         if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
                             ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
