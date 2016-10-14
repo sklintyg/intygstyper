@@ -56,14 +56,12 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'multi-text',
                     className: 'fold-animation',
                     hideExpression: 'model.undersokningAvPatienten || !( model.journaluppgifter || model.anhorigBeskrivningAvPatienten || model.annatGrundForMU)',
-                    // TODO: Change to proper label!
-                    templateOptions: { label: 'KV_FKMU_0001.ANNAT' }
-                },
-                {
-                    type: 'info',
-                    className: 'fold-animation',
-                    hideExpression: 'model.undersokningAvPatienten || !(model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
-                    templateOptions: {label: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning'}
+                    templateOptions: {
+                        bold: 'bold', 
+                        staticLabelId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
+                        subTextId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info',
+                        subTextDynId: 'FRG_25'
+                    }
                 },
                 { key: 'kannedomOmPatient', type: 'singleDate', templateOptions: { label: 'FRG_2' } },
                 { key: 'underlagFinns', type: 'boolean', templateOptions: { label: 'FRG_3' } },
