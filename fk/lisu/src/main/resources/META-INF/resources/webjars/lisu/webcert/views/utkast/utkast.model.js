@@ -86,8 +86,8 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
 
                         // Kategori 3 diagnos
                         'diagnoser':new ModelAttr('diagnoser', {
-                            fromTransform: ModelTransformService.diagnosFromTransform,
-                            toTransform: ModelTransformService.diagnosToTransform
+                            fromTransform: ModelTransform.diagnosFromTransform,
+                            toTransform: ModelTransform.diagnosToTransform
                         }),
 
                         // Kategori 4 Sjukdomens konsekvenser

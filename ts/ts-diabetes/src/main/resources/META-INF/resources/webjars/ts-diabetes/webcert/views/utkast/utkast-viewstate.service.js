@@ -43,12 +43,12 @@ angular.module('ts-diabetes').service('ts-diabetes.UtkastController.ViewStateSer
                 this.minDate = moment().subtract(1, 'y').format('YYYY-MM-DD');
 
                 this.identitet = [
-                    {label: 'ID-kort *', id: 'ID_KORT'},
-                    {label: 'Företagskort eller tjänstekort **', id: 'FORETAG_ELLER_TJANSTEKORT'},
+                    {label: 'ID-kort ¹', id: 'ID_KORT'},
+                    {label: 'Företagskort eller tjänstekort ²', id: 'FORETAG_ELLER_TJANSTEKORT'},
                     {label: 'Svenskt körkort', id: 'KORKORT'},
                     {label: 'Personlig kännedom', id: 'PERS_KANNEDOM'},
-                    {label: 'Försäkran enligt 18 kap. 4§ ***', id: 'FORSAKRAN_KAP18'},
-                    {label: 'Pass ****', id: 'PASS'}
+                    {label: 'Försäkran enligt 18 kap. 4§ ³', id: 'FORSAKRAN_KAP18'},
+                    {label: 'Pass ⁴', id: 'PASS'}
                 ];
                 this.behorighet = null;
 

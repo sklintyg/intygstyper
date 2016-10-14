@@ -26,10 +26,10 @@
       <td><input name="medicineringa" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.medicinering.stadigvarandeMedicinering"></td>
       <td>
-        <p><span dynamic-label key="FRG_31.RBK"></span></p>
+        <p><span dynamic-label key="FRG_31.RBK"></span> *</p>
 
         <div ng-show="viewState.intygModel.medicinering.stadigvarandeMedicinering">
-          <p><span dynamic-label key="DFR_31.2.RBK"></span></p>
+          <p><span dynamic-label key="DFR_31.2.RBK"></span> *</p>
           <textarea class="form-control" data-ng-model="viewState.intygModel.medicinering.beskrivning" wc-maxlength ng-trim="false"
                     id="beskrivningMedicinering" maxlength="{{viewState.inputLimits.medicinering}}" rows="4"></textarea>
         </div>

@@ -61,7 +61,7 @@ public class LuseEntryPoint extends FkAbstractModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("luse-features.properties");
+        return ModuleFeaturesFactory.getFeatures(MODULE_ID, "luse-features.properties");
     }
 
     @Override

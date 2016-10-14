@@ -44,7 +44,7 @@ angular.module('ts-bas').constant('ts-bas.messages', {
         'ts-bas.label.bedomning': 'Bedömning',
         'ts-bas.label.vardenhet': 'Vårdenhet',
         'ts-bas.label.send': 'Skicka intyg till Transportstyrelsen',
-        'ts-bas.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Transportstyrelsens system vilket skall göras i samråd med patienten.',
+        'ts-bas.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Transportstyrelsens system vilket ska göras i samråd med patienten.',
         'ts-bas.label.makulera.confirmation': 'Transportstyrelsens läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
 
         'ts-bas.label.status.sent': 'Intyget är signerat och har skickats till Transportstyrelsens system.<br><br>Intyget är nu tillgängligt för patienten i Mina intyg, som nås via 1177.se.',

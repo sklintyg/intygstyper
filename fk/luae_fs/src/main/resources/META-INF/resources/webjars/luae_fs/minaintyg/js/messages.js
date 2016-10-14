@@ -65,7 +65,7 @@ angular.module('luae_fs').constant('luae_fs.messages', {
         'luae_fs.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
         'luae_fs.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Försäkringskassan eller en annan mottagare.<br>',
         'luae_fs.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om luae_fs?</h2>',
-        'luae_fs.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om luae_fs och hur du ansöker.<br>',
+        'luae_fs.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk" target="_blank">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om luae_fs och hur du ansöker.<br>',
 
         'luae_fs.label.patientname': 'Patientens namn',
         'luae_fs.label.issued': 'Inkom till Mina intyg',

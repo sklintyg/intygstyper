@@ -4,34 +4,6 @@ angular.module('luae_na').factory('luae_na.Domain.IntygModel',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
             'use strict';
 
-            var underlagTransform = function(underlagArray) {
-                if (underlagArray) {
-                    underlagArray.forEach(function(underlag) {
-                        if (!underlag.typ) {
-                            underlag.typ = null;
-                        }
-                        if (!underlag.datum) {
-                            underlag.datum = null;
-                        }
-                        if (!underlag.hamtasFran) {
-                            underlag.hamtasFran = null;
-                        }
-                    });
-                }
-                return underlagArray;
-            };
-
-            var diagnosTransform = function(diagnosArray) {
-                if (diagnosArray.length === 0) {
-                    diagnosArray.push({
-                        diagnosKodSystem: 'ICD_10_SE',
-                        diagnosKod : undefined,
-                        diagnosBeskrivning : undefined
-                    });
-                }
-                return diagnosArray;
-            };
-
             var LuaeNaModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();

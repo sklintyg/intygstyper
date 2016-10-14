@@ -26,10 +26,10 @@
       <td><input id="diabetesan" name="diabetesa" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.diabetes.harDiabetes"></td>
       <td>
-        <p><span dynamic-label key="FRG_17.RBK"></span></p>
+        <p><span dynamic-label key="FRG_17.RBK"></span> *</p>
 
         <div ng-show="viewState.intygModel.diabetes.harDiabetes">
-          <p><span dynamic-label key="FRG_18.RBK"></span>
+          <p><span dynamic-label key="FRG_18.RBK"></span> *
             <label class="radio">
               <input id="diabetestyp1" name="diabetestyp" type="radio" value="DIABETES_TYP_1"
                      ng-model="viewState.intygModel.diabetes.diabetesTyp">
@@ -43,7 +43,7 @@
           </p>
 
           <div ng-show="viewState.intygModel.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
-            <span dynamic-label key="FRG_19.RBK"></span>
+            <span dynamic-label key="FRG_19.RBK"></span> *
             <label class="checkbox">
               <input id="diabetestreat1" name="diabetestreat1" type="checkbox"
                      ng-model="viewState.intygModel.diabetes.kost">

@@ -68,7 +68,7 @@ public class TsDiabetesEntryPoint implements ModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("ts-diabetes-features.properties");
+        return ModuleFeaturesFactory.getFeatures(MODULE_ID, "ts-diabetes-features.properties");
     }
 
     @Override

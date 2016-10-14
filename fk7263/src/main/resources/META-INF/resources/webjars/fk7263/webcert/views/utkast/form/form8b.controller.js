@@ -82,7 +82,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 if (fromTo && fromTo.from.moment && fromTo.from.valid) {
                     var days = dateUtils.parseDayCodes(fromTo.to.dateString);
                     if (days !== null) {
-                        var toDate = moment(fromTo.from.moment).add(days, 'days').format('YYYY-MM-DD');
+                        //Take away 1 day, because the dayCode defines the total length of the interval we should get.
+                        var toDate = moment(fromTo.from.moment).add(days - 1 , 'days').format('YYYY-MM-DD');
                         fromTo.to.update(toDate);
                         fromTo.to.form.$setDirty();
                     }

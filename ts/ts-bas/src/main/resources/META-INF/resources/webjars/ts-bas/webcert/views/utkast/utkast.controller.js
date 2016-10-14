@@ -82,6 +82,10 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             };
 
             // Get the certificate draft from the server.
-            UtkastService.load(viewState);
+            UtkastService.load(viewState).then(function() {
+                if (viewState.common.textVersionUpdated) {
+                    $scope.certForm.$setDirty();
+                }
+            });
 
         }]);

@@ -25,21 +25,21 @@
                  ng-model="viewState.intygModel.narkotikaLakemedel.teckenMissbruk"></td>
       <td><input name="narkotikalakemedela" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.narkotikaLakemedel.teckenMissbruk"></td>
-      <td><span dynamic-label key="DFR_25.1.RBK"></span></td>
+      <td><span dynamic-label key="DFR_25.1.RBK"></span> *</td>
     </tr>
     <tr>
       <td><input name="narkotikalakemedelb" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats"></td>
       <td><input name="narkotikalakemedelb" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.narkotikaLakemedel.foremalForVardinsats"></td>
-      <td><span dynamic-label key="DFR_25.2.RBK"></span></td>
+      <td><span dynamic-label key="DFR_25.2.RBK"></span> *</td>
     </tr>
 
     <tr ng-show="viewState.intygModel.narkotikaLakemedel.teckenMissbruk || viewState.intygModel.narkotikaLakemedel.foremalForVardinsats">
       <td colspan="2"></td>
       <td>
         <p>
-        <div style="margin-bottom:12px;" dynamic-label key="DFR_25.3.RBK"></div>
+        <div style="margin-bottom:12px;" dynamic-label key="DFR_25.3.RBK"></div> *
         <label class="radio">
           <input name="narkotikalakemedelb2" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.narkotikaLakemedel.provtagningBehovs">
@@ -61,11 +61,10 @@
       <td><input name="narkotikalakemedelc" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk"></td>
       <td>
-        <p><span dynamic-label key="FRG_26.RBK"></span>
-        </p>
+        <p><span dynamic-label key="FRG_26.RBK"></span> *</p>
 
         <div ng-show="viewState.intygModel.narkotikaLakemedel.lakarordineratLakemedelsbruk == true">
-          <p><span dynamic-label key="DFR_26.1.RBK"></span></p>
+          <p><span dynamic-label key="DFR_26.1.RBK"></span> *</p>
           <textarea class="form-control" data-ng-model="viewState.intygModel.narkotikaLakemedel.lakemedelOchDos"
                     id="beskrivningNarkotikalakemedel" wc-maxlength ng-trim="false"
                     maxlength="{{viewState.inputLimits.lakemedelOchDos}}" rows="3"></textarea>
