@@ -11,14 +11,14 @@ stage('checkout') {
 
 stage('build') {
     node {
-        shgradle "./gradlew --refresh-dependencies clean build sonarqube -PcodeQuality -DgruntColors=false \
+        shgradle "--refresh-dependencies clean build sonarqube -PcodeQuality -DgruntColors=false \
                   -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion}"
     }
 }
 
 stage('tag and upload') {
     node {
-        shgradle "./gradlew uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD -DgithubUser=$GITHUB_USERNAME \
+        shgradle "uploadArchives tagRelease -DnexusUsername=$NEXUS_USERNAME -DnexusPassword=$NEXUS_PASSWORD -DgithubUser=$GITHUB_USERNAME \
                   -DgithubPassword=$GITHUB_PASSWORD -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion}"
     }
 }
