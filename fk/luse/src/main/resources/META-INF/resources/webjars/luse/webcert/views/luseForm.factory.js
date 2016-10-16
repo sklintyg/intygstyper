@@ -32,6 +32,11 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     key: 'grundData.patient.postort',
                     type: 'single-text',
                     templateOptions: { staticLabel: 'Postort', required: true, disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal' }
+                },
+                {
+                    type: 'patient-address-updater',
+                    hideExpression: function() { return UserModel.isDjupintegration(); },
+                    templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned:true}
                 }
             ]
         },
