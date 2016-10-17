@@ -36,7 +36,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                 {
                     type: 'patient-address-updater',
                     hideExpression: function() { return UserModel.isDjupintegration(); },
-                    templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned:true}
+                    templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned: true }
                 }
             ]
         },
@@ -44,17 +44,17 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: { category: 1, categoryName: categoryNames[1], prototypeName: 'default' },
             fieldGroup: [
-                { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After:false, required: true } },
+                { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After: false, required: true } },
                 { key: 'undersokningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.UNDERSOKNING' } },
                 { key: 'journaluppgifter', type: 'date', templateOptions: { label: 'KV_FKMU_0001.JOURNALUPPGIFTER' } },
                 { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANHORIG' } },
                 { key: 'annatGrundForMU', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANNAT' } },
                 {
                     key: 'annatGrundForMUBeskrivning',
-                    type: 'single-text',
+                    type: 'single-text-vertical',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required:true }
+                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full' }
                 },
                 {
                     key: 'motiveringTillInteBaseratPaUndersokning',
@@ -62,7 +62,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     className: 'fold-animation',
                     hideExpression: 'model.undersokningAvPatienten || !( model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
                     templateOptions: {
-                        bold: 'bold', 
+                        bold: 'bold',
                         staticLabelId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
                         subTextId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info',
                         subTextDynId: 'FRG_25',
@@ -185,7 +185,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
-                    className: 'fold-animation',
+                    className: 'fold-animation webcert-top-padding-section',
                     hideExpression: '!model.kontaktMedFk',
                     templateOptions: { label: 'DFR_26.2' }
                 }
