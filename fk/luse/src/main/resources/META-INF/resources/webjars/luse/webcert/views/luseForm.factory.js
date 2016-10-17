@@ -66,7 +66,8 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                         staticLabelId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
                         subTextId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info',
                         subTextDynId: 'FRG_25',
-                        hideFromSigned:true
+                        hideFromSigned: true,
+                        required: true
                     }
                 },
                 { key: 'kannedomOmPatient', type: 'singleDate', templateOptions: { label: 'FRG_2', required: true } },
@@ -105,7 +106,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: { category: 4, categoryName: categoryNames[4] },
             fieldGroup: [
-                { type: 'headline', templateOptions: { label: 'FRG_6', level: 4, noH5After:false } },
+                { type: 'headline', templateOptions: { label: 'FRG_6', level: 4, noH5After: false, required: true } },
                 {
                     key: 'diagnoser',
                     type: 'diagnos',

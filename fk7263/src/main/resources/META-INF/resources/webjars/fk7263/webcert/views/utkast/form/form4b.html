@@ -62,12 +62,12 @@
                                                                                      name="informationBasedOn.other"
                                                                                      ng-model="basedOnState.check.annanReferens"
                                                                                      ng-change="toggleBaseradPaDate('annanReferens')">
-                    Annat *<span wc-help-mark field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
+                    Annat<span wc-help-mark field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
                 </label>
                 <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate" add-date-parser="loose"></span>
             </div>
             <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
-                <span>Ange vad:</span><br>
+                <span>Ange vad:</span> *<br>
   <textarea id="informationBasedOnOtherText" name="informationBasedOn.otherText" rows='2'
             class='form-control otherInformation' ng-model="model.annanReferensBeskrivning"
             ng-change="viewState.limitOtherField('annanReferensBeskrivning')"></textarea>

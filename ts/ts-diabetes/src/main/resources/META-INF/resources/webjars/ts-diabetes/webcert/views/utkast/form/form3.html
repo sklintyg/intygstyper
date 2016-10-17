@@ -62,7 +62,7 @@
                  ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning"></td>
       <td>
         <span dynamic-label key="FRG_44.RBK"></span>
-        <span ng-if="!viewState.intygModel.syn.separatOgonlakarintyg">*</span>
+        <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
       </td>
     </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
@@ -79,7 +79,7 @@
           <tr>
             <th></th>
             <th>Utan korrektion
-              <span ng-if="!viewState.intygModel.syn.separatOgonlakarintyg">*</span>
+              <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
               <span wc-help-mark field-help-text="ts-diabetes.helptext.synfunktioner.utan-korrektion"></span>
             </th>
             <th>Med korrektion
@@ -116,7 +116,7 @@
       </td>
       <td>
         <span dynamic-label key="FRG_6.RBK"></span>
-        <span ng-if="!viewState.intygModel.syn.separatOgonlakarintyg">*</span>
+        <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
       </td>
     </tr>
   </table>
