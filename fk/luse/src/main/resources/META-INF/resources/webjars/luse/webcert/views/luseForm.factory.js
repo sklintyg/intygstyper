@@ -60,7 +60,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     key: 'motiveringTillInteBaseratPaUndersokning',
                     type: 'multi-text',
                     className: 'fold-animation',
-                    hideExpression: 'model.undersokningAvPatienten || !( model.journaluppgifter || model.anhorigBeskrivningAvPatienten || model.annatGrundForMU)',
+                    hideExpression: 'model.undersokningAvPatienten || !( model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
                     templateOptions: {
                         bold: 'bold', 
                         staticLabelId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
