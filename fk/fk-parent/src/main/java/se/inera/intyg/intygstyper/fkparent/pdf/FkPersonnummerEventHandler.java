@@ -1,4 +1,4 @@
-package se.inera.intyg.intygstyper.luse.pdf.common;
+package se.inera.intyg.intygstyper.fkparent.pdf;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;

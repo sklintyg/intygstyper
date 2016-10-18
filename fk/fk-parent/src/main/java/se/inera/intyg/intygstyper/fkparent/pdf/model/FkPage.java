@@ -16,27 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.luse.pdf.common;
+package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 /**
- * Created by marced on 23/09/16.
+ * Created by marced on 30/09/16.
+ *
+ * Simply a container for child components without implementation, but a concrete class is
+ * needed since PdfComponent is abstract.
  */
-public class PdfGeneratorException extends Exception {
+public class FkPage extends PdfComponent<FkPage> {
 
-    private static final long serialVersionUID = 1L;
-
-    public PdfGeneratorException() {
-    }
-
-    public PdfGeneratorException(String message) {
-        super(message);
-    }
-
-    public PdfGeneratorException(Throwable cause) {
-        super(cause);
-    }
-
-    public PdfGeneratorException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.luse.pdf.common.model;
+package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -27,7 +27,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
  * Created by marced on 27/09/16.
@@ -88,6 +88,5 @@ public class FkLabel extends PdfComponent<FkLabel> {
 
         super.render(canvas, x, y);
     }
-
 
 }

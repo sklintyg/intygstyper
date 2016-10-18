@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.luse.pdf.common;
+package se.inera.intyg.intygstyper.fkparent.pdf;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
@@ -29,8 +29,8 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkPage;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkPdfDefinition;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPage;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 
 /**
  * Created by marced on 30/09/16.

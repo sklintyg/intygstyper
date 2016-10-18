@@ -42,20 +42,20 @@ import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
-import se.inera.intyg.intygstyper.luse.pdf.common.FkFormIdentityEventHandler;
-import se.inera.intyg.intygstyper.luse.pdf.common.FkPersonnummerEventHandler;
-import se.inera.intyg.intygstyper.luse.pdf.common.PageNumberingEventHandler;
-import se.inera.intyg.intygstyper.luse.pdf.common.PdfConstants;
-import se.inera.intyg.intygstyper.luse.pdf.common.PdfGeneratorException;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkCategory;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkCheckbox;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkDiagnosKodField;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkImage;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkLabel;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkPage;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkPdfDefinition;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.FkValueField;
-import se.inera.intyg.intygstyper.luse.pdf.common.model.PdfComponent;
+import se.inera.intyg.intygstyper.fkparent.pdf.FkFormIdentityEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.FkPersonnummerEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.PageNumberingEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCategory;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCheckbox;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkDiagnosKodField;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkImage;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkLabel;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPage;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkValueField;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.PdfComponent;
 
 /**
  * Created by marced on 18/08/16.
@@ -755,7 +755,7 @@ public class LusePdfDefinitionBuilder {
                 .withBorders(Rectangle.BOTTOM)
                 .withValueTextAlignment(PdfPCell.ALIGN_TOP)
                 .withTopLabel("Eventuell specialistkompetens"));
-        // TODO: Är getPersonId = HSA-id eller personnr?
+        // skapadAv.personId is always a hsa-id
         fraga11.addChild(new FkValueField(intyg.getGrundData().getSkapadAv().getPersonId())
                 .offset(0f, 35f)
                 .size(90f, 9f)
@@ -768,8 +768,8 @@ public class LusePdfDefinitionBuilder {
                 .withValueTextAlignment(PdfPCell.ALIGN_BOTTOM)
                 .withBorders(Rectangle.BOTTOM)
                 .withTopLabel("Arbetsplatskod"));
-        // TODO: Är getPersonId = HSA-id eller personnr?
-        fraga11.addChild(new FkValueField(intyg.getGrundData().getSkapadAv().getPersonId())
+        // We only have an hsa-Id - so we never fill this field
+        fraga11.addChild(new FkValueField("")
                 .offset(0f, 45f)
                 .size(KATEGORI_FULL_WIDTH, 9f)
                 .withValueTextAlignment(PdfPCell.ALIGN_BOTTOM)

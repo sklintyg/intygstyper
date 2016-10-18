@@ -30,8 +30,8 @@ import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
-import se.inera.intyg.intygstyper.luse.pdf.common.PdfGenerator;
-import se.inera.intyg.intygstyper.luse.pdf.common.PdfGeneratorException;
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfGenerator;
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
 
 import java.io.File;
 import java.io.FileOutputStream;

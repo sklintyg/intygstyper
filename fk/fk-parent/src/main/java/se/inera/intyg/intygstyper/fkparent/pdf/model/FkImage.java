@@ -1,4 +1,4 @@
-package se.inera.intyg.intygstyper.luse.pdf.common.model;
+package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
