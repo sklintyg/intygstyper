@@ -55,6 +55,7 @@ angular.module('luse').constant('luse.messages', {
         'luse.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
         'luse.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i',
+        'luse.validation.diagnos.missing': 'Huvuddiagnos måste anges',
         'luse.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'luse.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'luse.validation.diagnos0.length-3': 'Diagnoskod på huvuddiagnosen ska anges med så många positioner som möjligt, men minst tre positioner.',

@@ -60,6 +60,7 @@ angular.module('luae_na').constant('luae_na.messages', {
         'luae_na.validation.sjukdomsforlopp.missing': '\'Beskrivning av sjukdomsförlopp\' måste anges',
 
         'luae_na.validation.diagnosgrund.missing': 'Fältet \'När och var ställdes den/de diagnoser som orsakar nedsatt arbetsförmåga?\' måste fyllas i',
+        'luae_na.validation.diagnos.missing': 'Huvuddiagnos måste anges',
         'luae_na.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'luae_na.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'luae_na.validation.diagnos0.length-3': 'Diagnoskod på huvuddiagnosen ska anges med så många positioner som möjligt, men minst tre positioner.',
