@@ -36,7 +36,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
+import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;

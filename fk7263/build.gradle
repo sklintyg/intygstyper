@@ -1,7 +1,9 @@
 description = 'Intygstyper (FK7263 Läkarintyg)'
 
 dependencies {
-  compile "se.skltp.adapterservices.insuranceprocess.healthreporting:FkEintygAdapterIC-validator:2.2-RC2-INTYG"
-  compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schematron:1.0.0"
-  testRuntime 'javax.servlet:servlet-api:2.5'
+    compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.3"
+    compile "se.skltp.adapterservices.insuranceprocess.healthreporting:FkEintygAdapterIC-validator:2.2-RC2-INTYG"
+    compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schematron:1.0.0"
+
+    testRuntime 'javax.servlet:servlet-api:2.5'
 }

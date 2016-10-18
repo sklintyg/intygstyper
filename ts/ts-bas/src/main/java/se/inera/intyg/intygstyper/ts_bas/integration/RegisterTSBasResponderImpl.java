@@ -31,7 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Throwables;
 
-import se.inera.intyg.common.schemas.intygstjansten.ts.utils.ResultTypeUtil;
+import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.CertificateAlreadyExistsException;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
