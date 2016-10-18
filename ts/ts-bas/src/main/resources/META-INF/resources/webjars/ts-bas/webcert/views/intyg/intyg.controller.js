@@ -71,7 +71,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
 
-                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel);
+                        DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel.textVersion);
 
                         if (ViewState.intygModel.syn.synfaltsdefekter === true || ViewState.intygModel.syn.nattblindhet === true ||
                             ViewState.intygModel.syn.progressivOgonsjukdom === true) {
@@ -81,6 +81,7 @@ angular.module('ts-bas').controller('ts-bas.IntygController',
                         ViewState.bedomning = createKorkortstypListString(ViewState.intygModel.bedomning.korkortstyp);
 
                         ViewState.relations = result.relations;
+
                         if(ViewState.intygModel !== undefined && ViewState.intygModel.grundData !== undefined){
                             ViewState.enhetsId = ViewState.intygModel.grundData.skapadAv.vardenhet.enhetsid;
                         }

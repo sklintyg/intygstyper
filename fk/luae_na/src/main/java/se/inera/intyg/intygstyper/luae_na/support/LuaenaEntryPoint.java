@@ -60,7 +60,7 @@ public class LuaenaEntryPoint extends FkAbstractModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("luae_na-features.properties");
+        return ModuleFeaturesFactory.getFeatures(MODULE_ID, "luae_na-features.properties");
     }
 
     @Override

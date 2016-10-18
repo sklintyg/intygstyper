@@ -3,7 +3,8 @@
 
     <div id="sysselsattning" wc-field field-label="fk7263.label.sysselsattning" field-number="8a"
          field-help-text="fk7263.helptext.sysselsattning"
-         field-has-errors="viewState.common.validationMessagesGrouped.sysselsattning">
+         field-has-errors="viewState.common.validationMessagesGrouped.sysselsattning"
+         field-required="true">
 
         <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.sysselsattning"
              id="validationMessages_sysselsattning">
@@ -25,7 +26,7 @@
                                         field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
 
                 <div class="indent" ng-if="model.nuvarandeArbete">
-                    <label for="currentWork">Ange aktuella arbetsuppgifter</label>
+                    <label for="currentWork">Ange aktuella arbetsuppgifter *</label>
 
                     <div class="controls">
                         <textarea id="currentWork" class="" name="currentWork" rows='2'

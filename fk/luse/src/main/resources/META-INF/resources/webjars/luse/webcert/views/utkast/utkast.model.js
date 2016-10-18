@@ -1,36 +1,8 @@
 angular.module('luse').factory('luse.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel) {
+        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
             'use strict';
-
-            var underlagTransform = function(underlagArray) {
-                if (underlagArray) {
-                    underlagArray.forEach(function(underlag) {
-                        if (!underlag.typ) {
-                            underlag.typ = null;
-                        }
-                        if (!underlag.datum) {
-                            underlag.datum = null;
-                        }
-                        if (!underlag.hamtasFran) {
-                            underlag.hamtasFran = null;
-                        }
-                    });
-                }
-                return underlagArray;
-            };
-
-            var diagnosTransform = function(diagnosArray) {
-                if (diagnosArray.length === 0) {
-                    diagnosArray.push({
-                        diagnosKodSystem: 'ICD_10_SE',
-                        diagnosKod : undefined,
-                        diagnosBeskrivning : undefined
-                    });
-                }
-                return diagnosArray;
-            };
 
             var LuseModel = BaseAtticModel._extend({
                 init: function init() {
@@ -47,17 +19,24 @@ angular.module('luse').factory('luse.Domain.IntygModel',
                         'anhorigsBeskrivningAvPatienten':undefined,
                         'annatGrundForMU':undefined,
                         'annatGrundForMUBeskrivning':undefined,
+                        'motiveringTillInteBaseratPaUndersokning':undefined,
                         'kannedomOmPatient':undefined,
 
                         // Kategori 2 Andra medicinska utredningar och underlag
                         'underlagFinns':undefined,
-                        'underlag':new ModelAttr('underlag', {fromTransform: underlagTransform}),
+                        'underlag':new ModelAttr('underlag', {
+                            fromTransform: ModelTransform.underlagFromTransform,
+                            toTransform: ModelTransform.underlagToTransform
+                        }),
 
                         // Kategori 3 Sjukdomsförlopp
                         'sjukdomsforlopp':undefined,
 
                         // Ketegori 4 diagnos
-                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
+                        'diagnoser':new ModelAttr('diagnoser', {
+                            fromTransform: ModelTransform.diagnosFromTransform,
+                            toTransform: ModelTransform.diagnosToTransform
+                        }),
                         'diagnosgrund': undefined,
                         'nyBedomningDiagnosgrund': undefined,
                         'diagnosForNyBedomning' : undefined,

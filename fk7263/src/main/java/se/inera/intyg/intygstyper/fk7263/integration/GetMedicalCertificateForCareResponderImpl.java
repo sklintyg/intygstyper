@@ -36,6 +36,7 @@ import se.inera.intyg.common.support.integration.module.exception.InvalidCertifi
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 
 /**
@@ -63,6 +64,9 @@ public class GetMedicalCertificateForCareResponderImpl implements
 
         try {
             certificate = moduleContainer.getCertificate(certificateId, nationalIdentityNumber, false);
+            if (!Fk7263EntryPoint.MODULE_ID.equalsIgnoreCase(certificate.getType())) {
+                throw new InvalidCertificateException(certificateId, nationalIdentityNumber);
+            }
             if (nationalIdentityNumber != null && !certificate.getCivicRegistrationNumber().equals(nationalIdentityNumber)) {
                 response.setResult(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "nationalIdentityNumber mismatch"));
                 return response;

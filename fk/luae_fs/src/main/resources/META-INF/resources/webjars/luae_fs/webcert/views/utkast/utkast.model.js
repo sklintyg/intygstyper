@@ -1,38 +1,8 @@
 angular.module('luae_fs').factory('luae_fs.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
-        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService', 'common.ObjectHelper',
-        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform, ObjectHelper) {
+        'common.domain.BaseAtticModel', 'common.domain.ModelTransformService',
+        function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform) {
             'use strict';
-
-            var underlagTransform = function(underlagArray) {
-                if (underlagArray) {
-                    underlagArray.forEach(function(underlag) {
-                        if (!underlag.typ) {
-                            underlag.typ = null;
-                        }
-                        if (!underlag.datum) {
-                            underlag.datum = null;
-                        }
-                        if (!underlag.hamtasFran) {
-                            underlag.hamtasFran = null;
-                        }
-                    });
-                }
-                return underlagArray;
-            };
-            
-            var diagnosTransform = function(diagnosArray) {
-                if (diagnosArray.length === 0) {
-                    diagnosArray.push({
-                        diagnosKodSystem: 'ICD_10_SE',
-                        diagnosKod : undefined,
-                        diagnosBeskrivning : undefined
-                    });
-                }
-                return diagnosArray;
-            };
-
-
 
             var LuaeFsModel = BaseAtticModel._extend({
                 init: function init() {
@@ -53,12 +23,18 @@ angular.module('luae_fs').factory('luae_fs.Domain.IntygModel',
 
                         // Kategori 2 Andra medicinska utredningar och underlag
                         'underlagFinns':undefined,
-                        'underlag':new ModelAttr('underlag', {fromTransform: underlagTransform}),
+                        'underlag':new ModelAttr('underlag', {
+                            fromTransform: ModelTransform.underlagFromTransform,
+                            toTransform: ModelTransform.underlagToTransform
+                        }),
 
 
 
                         // Kategori 3 diagnos
-                        'diagnoser':new ModelAttr('diagnoser', {fromTransform: diagnosTransform}),
+                        'diagnoser':new ModelAttr('diagnoser', {
+                            fromTransform: ModelTransform.diagnosFromTransform,
+                            toTransform: ModelTransform.diagnosToTransform
+                        }),
 
 
                         // Kategori 4 Funktionsnedsättning

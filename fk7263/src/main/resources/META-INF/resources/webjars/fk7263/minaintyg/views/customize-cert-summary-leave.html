@@ -1,17 +1,16 @@
 <div class="modal-header">
   <button type="button" class="close" ng-click="$dismiss()">×</button>
-  <h3>Lämna anpassat intyg?</h3>
+  <h3><span message key="fk7263.customize.summary.leave.header"></span></h3>
 </div>
 <div class="modal-body">
-  Observera att det anpassade intyget inte sparas i Mina intyg.
-  Se därför till att det har laddats ned till din dator innan du lämnar sidan.
+  <span message key="fk7263.customize.summary.leave"></span>
 </div>
 <div class="modal-footer">
   <button type="button" id="buttonYes" class="btn btn-success" ng-click="onLeaveSummaryPage()">
-    Ja, lämna anpassat intyg
+    <span message key="fk7263.customize.summary.leave.yes"></span>
   </button>
 
   <button type="button" id="buttonNoDontAsk" class="btn btn-info" ng-click="$dismiss()">
-    Nej, stanna kvar
+    <span message key="fk7263.customize.summary.leave.no"></span>
   </button>
 </div>

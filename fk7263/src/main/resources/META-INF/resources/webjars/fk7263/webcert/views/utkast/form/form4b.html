@@ -4,7 +4,8 @@
 
         <div id="intygetbaseraspa" wc-field field-label="fk7263.label.intygbaseratpa" field-number="4b"
              field-help-text="fk7263.helptext.intyg-baserat-pa"
-             field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa">
+             field-has-errors="viewState.common.validationMessagesGrouped.intygbaseratpa"
+             field-required="true">
 
             <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygbaseratpa"
                  id="validationMessages_intygbaseratpa">
@@ -66,7 +67,7 @@
                 <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate" add-date-parser="loose"></span>
             </div>
             <div class="otherText indent" ng-if="basedOnState.check.annanReferens">
-                <span>Ange vad:</span><br>
+                <span>Ange vad:</span> *<br>
   <textarea id="informationBasedOnOtherText" name="informationBasedOn.otherText" rows='2'
             class='form-control otherInformation' ng-model="model.annanReferensBeskrivning"
             ng-change="viewState.limitOtherField('annanReferensBeskrivning')"></textarea>

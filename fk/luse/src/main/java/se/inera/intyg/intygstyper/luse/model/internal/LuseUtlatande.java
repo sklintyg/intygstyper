@@ -77,6 +77,9 @@ public abstract class LuseUtlatande implements Utlatande, SitUtlatande {
     @Nullable
     public abstract String getAnnatGrundForMUBeskrivning();
 
+    @Nullable
+    public abstract String getMotiveringTillInteBaseratPaUndersokning();
+
     // Fråga 2
     @Nullable
     public abstract InternalDate getKannedomOmPatient();
@@ -227,6 +230,9 @@ public abstract class LuseUtlatande implements Utlatande, SitUtlatande {
 
         @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_BESKRIVNING_DELSVAR_JSON_ID_1)
         public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
+
+        @JsonProperty(MOTIVERING_TILL_INTE_BASERAT_PA_UNDERLAG_ID_1)
+        public abstract Builder setMotiveringTillInteBaseratPaUndersokning(String motiveringTillInteBaseratPaUndersokning);
 
         @JsonProperty(KANNEDOM_SVAR_JSON_ID_2)
         public abstract Builder setKannedomOmPatient(InternalDate kannedomOmPatient);

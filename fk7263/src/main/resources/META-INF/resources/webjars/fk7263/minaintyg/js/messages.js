@@ -52,7 +52,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.customize.step.1.pageingress': '<p>Här kan du skapa ett anpassat intyg till din arbetsgivare genom att välja vilken information du vill ta med och inte. Viss information måste lämnas till arbetsgivaren och kan inte väljas bort. I de flesta fall är du inte skyldig att lämna mer information än den obligatoriska, men om ni har ett kollektivavtal kan det finnas andra regler för vilken information som måste tas med. Det finns ofta fördelar med att arbetsgivaren får ta del även av frivillig information, exempelvis hur sjukdomen begränsar din aktivitetsförmåga (fält 5). Det ger arbetsgivaren bättre möjlighet att anpassa din arbetsplats eller arbetssituation. Du kan alltid återvända till Mina intyg vid senare tillfälle för att skapa ett nytt anpassat intyg med mer information.</p><p>För att välja bort information bockar du ur alternativet <i>Inkludera i anpassat intyg</i> i det fält du inte vill ska synas.</p>',
         'fk7263.customize.step.1.fishbone': 'Anpassa intyg',
         'fk7263.customize.step.2.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 2 av 2',
-        'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Spara som PDF.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra mina val.</p>',
+        'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Spara som PDF.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra val.</p>',
         'fk7263.customize.step.2.fishbone': 'Sammanfattning',
         'fk7263.customize.step.2.info.fk': 'Tänk på att det anpassade intyget <u>inte</u> ska skickas till Försäkringskassan.',
         'fk7263.customize.step.2.info.pdf': 'När du sett över dina val klickar du på knappen ',
@@ -64,6 +64,11 @@ angular.module('fk7263').constant('fk7263.messages', {
 
         'fk7263.customize.message.limitation': 'Informationen i fält 5 är frivillig, men informationen kan underlätta arbetsgivarens möjlighet att göra arbetsanpassningar.',
 
+        'fk7263.customize.summary.leave.header':'Vill du lämna anpassat intyg?',
+        'fk7263.customize.summary.leave': 'Observera att ditt anpassade intyg inte sparas i Mina intyg efter att du navigerat till en annan sida. Se därför till att du har laddat ner det till din dator innan du lämnar sidan.',
+        'fk7263.customize.summary.leave.yes': 'Ja, lämna anpassat intyg',
+        'fk7263.customize.summary.leave.no': 'Nej, stanna kvar',
+
         'fk7263.inbox.complementaryinfo': 'Intygsperiod',
 
         'fk7263.button.sendtofk': 'Skicka till Försäkringskassan',
@@ -71,7 +76,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
         'fk7263.button.customize.certificate': 'Anpassa intyget till arbetsgivare',
         'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
-        'fk7263.button.customize.certificate.change': 'Ändra dina val',
+        'fk7263.button.customize.certificate.change': 'Ändra val',
 
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
         'fk7263.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
@@ -82,7 +87,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.label.pagedescription.save.or.print.certificate.header': '<h2>Spara eller skriva ut</h2>',
         'fk7263.label.pagedescription.save.or.print.certificate': 'Klicka på knappen Spara som PDF för att spara eller skriva ut ditt intyg. Intyget öppnas eller laddas ner som en pdf-fil som du kan spara på din dator eller skriva ut.',
         'fk7263.label.pagedescription.sickness.benefit.header': '<h2>Vill du ansöka om sjukpenning?</h2>',
-        'fk7263.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.<br>',
+        'fk7263.label.pagedescription.sickness.benefit': 'Det gör du enklast på <a href="http://www.forsakringskassan.se/sjuk" target="_blank">www.forsakringskassan.se/sjuk</a>. Där kan du läsa mer om sjukpenning och hur du ansöker.<br>',
         'fk7263.label.pagedescription.error.in.certificate.header': '<h2>Fel i intyget?</h2>',
         'fk7263.label.pagedescription.error.in.certificate': 'Om någon uppgift är fel i läkarintyget så ska du kontakta den som utfärdat ditt läkarintyg.',
         'fk7263.label.pagedescription.archive.header': '<h2>Arkivera</h2>',

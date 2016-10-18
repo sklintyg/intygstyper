@@ -33,6 +33,11 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                             key: 'grundData.patient.postort',
                             type: 'single-text',
                             templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                        },
+                        {
+                            type: 'patient-address-updater',
+                            hideExpression: function() { return UserModel.isDjupintegration(); },
+                            templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned:true}
                         }
                     ]
                 },
@@ -41,7 +46,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
                     fieldGroup: [
                         //Fråga 1 -----
-                        {type: 'headline', templateOptions: {label: 'FRG_1', level:4}},
+                        {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level:4, noH5:false}},
                         {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                         {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                         {
@@ -93,7 +98,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 3, categoryName: categoryNames[3]},
                     fieldGroup: [
-                        {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
+                        {type: 'headline', templateOptions: {label: 'FRG_6', level:4, noH5:false}},
                         {
                             key: 'diagnoser',
                             type: 'diagnos',

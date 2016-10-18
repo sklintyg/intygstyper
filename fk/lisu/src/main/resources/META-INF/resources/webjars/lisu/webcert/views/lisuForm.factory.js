@@ -41,6 +41,11 @@ angular.module('lisu').factory('lisu.FormFactory',
                     key: 'grundData.patient.postort',
                     type: 'single-text',
                     templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                },
+                {
+                    type: 'patient-address-updater',
+                    hideExpression: function() { return UserModel.isDjupintegration(); },
+                    templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned:true}
                 }
             ]
         },
@@ -48,7 +53,7 @@ angular.module('lisu').factory('lisu.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_1', level: 4}},
+                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4, noH5:false}},
                 {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
                 {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
@@ -91,12 +96,12 @@ angular.module('lisu').factory('lisu.FormFactory',
             templateOptions: {category: 3, categoryName: categoryNames[3]},
             fieldGroup: [
                 { type: 'fmb',
-                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'DIAGNOS', panelClass: 'sit-fmb-medium'},
+                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'DIAGNOS', panelClass: 'sit-fmb-medium', hideFromSigned:true},
                     hideExpression:  function($viewValue, $modelValue, scope) {
                         return _missingInfoForFmbKey(scope, 'DIAGNOS');
                     }
                 },
-                {type: 'headline', templateOptions: {label: 'FRG_6', level:4}},
+                {type: 'headline', templateOptions: {label: 'FRG_6', level:4, noH5:false}},
                 {
                     key: 'diagnoser',
                     type: 'diagnos',
@@ -111,7 +116,7 @@ angular.module('lisu').factory('lisu.FormFactory',
             fieldGroup: [
                 {
                     type: 'fmb',
-                    templateOptions: {relatedFormId: categoryNames[4], helpTextContents: 'FUNKTIONSNEDSATTNING', panelClass: 'sit-fmb-small'},
+                    templateOptions: {relatedFormId: categoryNames[4], helpTextContents: 'FUNKTIONSNEDSATTNING', panelClass: 'sit-fmb-small', hideFromSigned:true},
                     hideExpression:  function($viewValue, $modelValue, scope) {
                         return _missingInfoForFmbKey(scope, 'FUNKTIONSNEDSATTNING');
                     }
@@ -119,7 +124,7 @@ angular.module('lisu').factory('lisu.FormFactory',
                 {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
 
                 {type: 'fmb',
-                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'AKTIVITETSBEGRANSNING', panelClass: 'sit-fmb-large'},
+                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'AKTIVITETSBEGRANSNING', panelClass: 'sit-fmb-large', hideFromSigned:true},
                     hideExpression:  function($viewValue, $modelValue, scope) {
                         return _missingInfoForFmbKey(scope, 'AKTIVITETSBEGRANSNING');
                     }
@@ -139,9 +144,9 @@ angular.module('lisu').factory('lisu.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 6, categoryName: categoryNames[6]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_32'}},
+                {type: 'headline', templateOptions: {label: 'FRG_32', hideFromSigned:true}},
                 { type: 'fmb',
-                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'ARBETSFORMAGA', panelClass: 'sit-fmb-large'},
+                    templateOptions: {relatedFormId: categoryNames[3], helpTextContents: 'ARBETSFORMAGA', panelClass: 'sit-fmb-large', hideFromSigned:true},
                     hideExpression:  function($viewValue, $modelValue, scope) {
                         return _missingInfoForFmbKey(scope, 'ARBETSFORMAGA');
                     }

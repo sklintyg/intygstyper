@@ -25,15 +25,15 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
             'use strict';
 
             ViewState.reset();
+            ViewState.intygModel = {};
+            ViewState.intygModel.filledAlways = true;
+
             $scope.viewState = ViewState;
+            $scope.user = UserModel;
 
             // Check if the user used the special qa-link to get here.
             $scope.isQaOnly = UserModel.isUthopp();
 
-            // Page setup
-            $scope.user = UserModel;
-
-            ViewState.intygModel.filledAlways = true;
 
             $scope.gotoRelatedIntyg = function(intyg) {
                 if (intyg.status === 'SIGNED') {

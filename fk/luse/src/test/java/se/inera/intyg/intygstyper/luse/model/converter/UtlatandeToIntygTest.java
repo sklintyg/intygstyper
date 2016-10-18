@@ -131,6 +131,15 @@ public class UtlatandeToIntygTest {
         assertTrue(intyg.getSvar().isEmpty());
     }
 
+    @Test
+    public void testConvertWithConcatToOvrigt() {
+        LuseUtlatande utlatande = buildUtlatande().toBuilder().setMotiveringTillInteBaseratPaUndersokning("Motivering!").build();
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(intyg.getSvar().size() == 1);
+        assertEquals("Motivering till varför utlåtandet inte baseras på undersökning av patienten: Motivering!", 
+                intyg.getSvar().get(0).getDelsvar().get(0).getContent().get(0));
+    }
+
     private LuseUtlatande buildUtlatande() {
         return buildUtlatande(null, null);
     }

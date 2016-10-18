@@ -68,7 +68,7 @@ public class TsBasEntryPoint implements ModuleEntryPoint {
 
     @Override
     public Map<String, Boolean> getModuleFeatures() {
-        return ModuleFeaturesFactory.getFeatures("ts-bas-features.properties");
+        return ModuleFeaturesFactory.getFeatures(MODULE_ID, "ts-bas-features.properties");
     }
 
     @Override

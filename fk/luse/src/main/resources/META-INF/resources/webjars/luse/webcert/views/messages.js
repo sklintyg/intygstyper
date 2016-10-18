@@ -6,7 +6,7 @@ angular.module('luse').constant('luse.messages', {
         'luse.message.certificateloading': 'Hämtar intyg...',
 
         'luse.label.send': 'Skicka intyg till Försäkringskassan',
-        'luse.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket skall göras i samråd med patienten.',
+        'luse.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket ska göras i samråd med patienten.',
         'luse.button.send': 'Skicka till Försäkringskassan',
 
         // Sjukersattning
@@ -24,6 +24,8 @@ angular.module('luse').constant('luse.messages', {
         'luse.label.kontakt-info': 'Namn och kontaktuppgifter till vårdenheten',
         'luse.label.makulera.confirmation': 'Läkarintyg utställd på ${namn} – ${personnummer} är återtaget. Mottagare av intyget är notifierade om detta.',
         'luse.label.kopiera.text': 'Skapar en kopia av befintligt intyg. Det nya utkastet (kopian) kan ändras och signeras.',
+        'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning': 'Motivering till varför utlåtandet inte baseras på undersökning av patienten',
+        'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info': 'Information överförs till fältet {0} vid signering.',
 
         //Validation messages
         'luse.validation.general.date_out_of_range': 'Datum får inte ligga för långt fram eller tillbaka i tiden.',
@@ -40,6 +42,7 @@ angular.module('luse').constant('luse.messages', {
         'luse.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',
         'luse.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Anhörigs beskrivning av patienten\'',
         'luse.validation.grund-for-mu.missing_ovrigt': 'När \'Grund för medicinskt underlag\' besvarats med \'Journaluppgifter\', \'Anhörigs beskrivning\' eller \'Annat\' ska ställningstagandet motiveras under \'Övriga upplysningar\'',
+        'luse.validation.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.missing': 'Motivering till varför utlåtandet inte baseras på undersökning av patienten saknas',
 
         'luse.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
         'luse.validation.underlagfinns.incorrect_combination' : 'Om frågan \'Finns det andra medicinska utredningar eller underlag\' besvarats med nej får underlag inte anges.',

@@ -41,7 +41,7 @@
                  ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
                  ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
-      <td><span dynamic-label key="FRG_43.RBK"></span></td>
+      <td><span dynamic-label key="FRG_43.RBK"></span> *</td>
     </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
@@ -62,6 +62,7 @@
                  ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning"></td>
       <td>
         <span dynamic-label key="FRG_44.RBK"></span>
+        <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
       </td>
     </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
@@ -77,11 +78,12 @@
         <table class="table table-form">
           <tr>
             <th></th>
-            <th>Utan korrektion <span wc-help-mark
-                                      field-help-text="ts-diabetes.helptext.synfunktioner.utan-korrektion"></span>
+            <th>Utan korrektion
+              <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
+              <span wc-help-mark field-help-text="ts-diabetes.helptext.synfunktioner.utan-korrektion"></span>
             </th>
-            <th>Med korrektion <span wc-help-mark
-                                     field-help-text="ts-diabetes.helptext.synfunktioner.med-korrektion"></span>
+            <th>Med korrektion
+              <span wc-help-mark field-help-text="ts-diabetes.helptext.synfunktioner.med-korrektion"></span>
             </th>
           </tr>
           <tr>
@@ -112,7 +114,10 @@
       </td>
       <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
       </td>
-      <td><span dynamic-label key="FRG_6.RBK"></span></td>
+      <td>
+        <span dynamic-label key="FRG_6.RBK"></span>
+        <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
+      </td>
     </tr>
   </table>
 </div>
