@@ -49,9 +49,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
 
-import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateResponseType;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v1.RegisterCertificateType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.ResultCodeType;
+import se.riv.clinicalprocess.healthcond.certificate.v1.ResultType;
 import se.riv.clinicalprocess.healthcond.certificate.v1.Utlatande;
 
 import com.google.common.base.Throwables;
@@ -96,8 +97,14 @@ public final class RegisterCertificateResponderStub implements Provider<SOAPMess
         LOGGER.info("TS-STUB Received request");
         LOGGER.info("Request with id: {}", request.getUtlatande().getUtlatandeId().getExtension());
         tsCertificatesStore.addCertificate(id, props);
-        response.setResult(ResultTypeUtil.okResult());
+        response.setResult(okResult());
         return response;
+    }
+
+    private ResultType okResult() {
+        ResultType result = new ResultType();
+        result.setResultCode(ResultCodeType.OK);
+        return result;
     }
 
     public boolean isThrowException() {

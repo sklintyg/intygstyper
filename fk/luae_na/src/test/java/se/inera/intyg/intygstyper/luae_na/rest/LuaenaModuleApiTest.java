@@ -45,7 +45,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.v2.ResultTypeUtil;
+import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;

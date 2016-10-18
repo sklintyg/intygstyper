@@ -29,9 +29,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.common.base.Throwables;
 
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
-import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.*;
-import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.converter.ModelConverter;
-import se.inera.intyg.common.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareRequestType;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponderInterface;
+import se.inera.intyg.clinicalprocess.healthcond.certificate.getmedicalcertificateforcare.v1.GetMedicalCertificateForCareResponseType;
+import se.inera.intyg.intygstyper.fk7263.schemas.clinicalprocess.healthcond.certificate.converter.ModelConverter;
+import se.inera.intyg.intygstyper.fk7263.schemas.clinicalprocess.healthcond.certificate.utils.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.ModuleContainerApi;
@@ -42,8 +44,7 @@ import se.riv.clinicalprocess.healthcond.certificate.v1.ErrorIdType;
 /**
  * @author andreaskaltenbach
  */
-public class GetMedicalCertificateForCareResponderImpl implements
-        GetMedicalCertificateForCareResponderInterface {
+public class GetMedicalCertificateForCareResponderImpl implements GetMedicalCertificateForCareResponderInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetMedicalCertificateForCareResponderImpl.class);
 
@@ -52,7 +53,7 @@ public class GetMedicalCertificateForCareResponderImpl implements
 
     @Override
     public GetMedicalCertificateForCareResponseType getMedicalCertificateForCare(String logicalAddress,
-            GetMedicalCertificateForCareRequestType request) {
+                                                                                 GetMedicalCertificateForCareRequestType request) {
 
         GetMedicalCertificateForCareResponseType response = new GetMedicalCertificateForCareResponseType();
 

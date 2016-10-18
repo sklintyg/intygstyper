@@ -122,8 +122,8 @@ subprojects {
         compile "se.inera.intyg.common:common-support:${commonVersion}"
         compile "se.inera.intyg.common:common-web:${commonVersion}"
         compile "se.inera.intyg.common:integration-util:${commonVersion}"
-        compile "se.inera.intyg.common:common-schemas:${commonVersion}"
         compile "se.inera.intyg.common:common-services:${commonVersion}"
+        compile "se.inera.intyg.common:common-schemas:${commonVersion}"
 
         compile "com.itextpdf:itextpdf:${itextVersion}"
         compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
@@ -239,11 +239,6 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
 
     dependencies {
         jstests "se.inera.intyg.common:common-web:${commonVersion}"
-
-        compile "se.inera.intyg.common:common-support:${commonVersion}"
-        compile "se.inera.intyg.common:integration-util:${commonVersion}"
-        compile "se.inera.intyg.common:common-schemas:${commonVersion}"
-        compile "se.inera.intyg.common:common-services:${commonVersion}"
     }
 }
 
