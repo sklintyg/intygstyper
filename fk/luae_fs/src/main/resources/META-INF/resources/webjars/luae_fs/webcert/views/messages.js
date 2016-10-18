@@ -48,9 +48,8 @@ angular.module('luae_fs').constant('luae_fs.messages', {
         'luae_fs.validation.underlag.date.incorrect_format': 'Fel datumformat för underlag',
 
         'luae_fs.validation.diagnos.max-diagnoser': 'Du kan endast ange upp till tre st diagnoser.',
-        'luae_fs.validation.diagnos.missing': 'Du måste ange en diagnos.',
-
         'luae_fs.validation.diagnos.missing': 'Huvuddiagnos måste anges',
+
         'luae_fs.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'luae_fs.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'luae_fs.validation.diagnos0.length-3': 'Diagnoskod på huvuddiagnosen ska anges med så många positioner som möjligt, men minst tre positioner.',
