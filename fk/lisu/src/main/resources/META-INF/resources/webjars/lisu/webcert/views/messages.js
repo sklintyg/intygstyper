@@ -52,6 +52,7 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.validation.sysselsattning.ampolitisktprogram.missing': 'Beskrivning för arbetsmarknadspolitiskt program måste fyllas i.',
         'lisu.validation.sysselsattning.ampolitisktprogram.invalid_combination': 'Beskrivning för arbetsmarknadspolitiskt program måste bara fyllas i om arbetsmarknadspolitiskt program valts.', // Should never happen because GUI should block this combination
 
+        'lisu.validation.diagnos.missing': 'Huvuddiagnos måste anges',
         'lisu.validation.diagnos0.missing': 'ICD-10 kod saknas på huvuddiagnosen.',
         'lisu.validation.diagnos0.invalid': 'ICD-10 kod på huvuddiagnosen är ej giltig',
         'lisu.validation.diagnos0.length-3': 'Diagnoskod på huvuddiagnosen ska anges med så många positioner som möjligt, men minst tre positioner.',
