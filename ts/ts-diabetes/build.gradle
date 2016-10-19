@@ -1,5 +1,9 @@
 description = 'Intygstyper (TS Läkarintyg, diabetes)'
 
+ext {
+    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile.js"
+}
+
 dependencies {
   compile project(':ts-parent')
 }

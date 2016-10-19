@@ -166,7 +166,7 @@ String findResolvedVersion(Project project, String groupName) {
 
 configure(subprojects.findAll {
         ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'luse', 'luae_fs', 'luae_na'].contains(it.name)
-    }) {
+    }) { subProject ->
     apply plugin: 'com.moowork.grunt'
     apply plugin: 'com.moowork.node'
 
@@ -191,7 +191,7 @@ configure(subprojects.findAll {
         outputs.dir(webappOutputDir)
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ['default', "--outputDir=${webappOutputDir}", "--npmDir=${rootProject.projectDir}"]
+        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappOutputDir}", "--npmDir=${rootProject.projectDir}", 'default']
     }
 
     jar.dependsOn(jsInclude)
@@ -224,10 +224,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
         doFirst {
-            args = ['test',
-                    "--outputDir=${webappTestOutputDir}",
-                    '--skip-coverage=' + !gradle.taskGraph.allTasks.any { it.name == 'sonarcube' },
-                    "--npmDir=${rootProject.projectDir}"]
+            args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}", "--npmDir=${rootProject.projectDir}", 'test',
+                    '--skip-coverage=' + !gradle.taskGraph.allTasks.any { it.name == 'sonarcube' }]
         }
     }
 

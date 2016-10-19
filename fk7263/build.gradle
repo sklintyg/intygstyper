@@ -1,5 +1,9 @@
 description = 'Intygstyper (FK7263 Läkarintyg)'
 
+ext {
+    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile.js"
+}
+
 dependencies {
     compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schemas:1.0.3"
     compile "se.skltp.adapterservices.insuranceprocess.healthreporting:FkEintygAdapterIC-validator:2.2-RC2-INTYG"
