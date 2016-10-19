@@ -3,6 +3,7 @@ ext {
 
     cxfVersion = "3.1.3"
     commonsCollectionsVersion = "3.2.1"
+    commonsIoVersion = "2.4"
     phSchematronVersion = "3.0.1"
     itextVersion = "5.3.2"
     springVersion = "4.2.2.RELEASE"

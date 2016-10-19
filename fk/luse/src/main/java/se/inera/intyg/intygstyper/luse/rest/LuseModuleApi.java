@@ -22,22 +22,33 @@ package se.inera.intyg.intygstyper.luse.rest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfGenerator;
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 import se.inera.intyg.intygstyper.fkparent.rest.FkParentModuleApi;
 import se.inera.intyg.intygstyper.luse.model.converter.InternalToTransport;
 import se.inera.intyg.intygstyper.luse.model.converter.TransportToInternal;
 import se.inera.intyg.intygstyper.luse.model.converter.UtlatandeToIntyg;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
+import se.inera.intyg.intygstyper.luse.pdf.LusePdfDefinitionBuilder;
 import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
+    private static final Logger LOG = LoggerFactory.getLogger(LuseModuleApi.class);
+
     public LuseModuleApi() {
         super(LuseUtlatande.class);
     }
@@ -47,7 +58,17 @@ public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
      */
     @Override
     public PdfResponse pdf(String internalModel, List<Status> statuses, ApplicationOrigin applicationOrigin) throws ModuleException {
-        throw new RuntimeException("Not implemented");
+        try {
+            LuseUtlatande luseIntyg = getInternal(internalModel);
+            LusePdfDefinitionBuilder builder = new LusePdfDefinitionBuilder();
+            IntygTexts texts = getTexts(LuseEntryPoint.MODULE_ID, luseIntyg.getTextVersion());
+
+            final FkPdfDefinition fkPdfDefinition = builder.buildPdfDefinition(luseIntyg, statuses, applicationOrigin, texts);
+            return new PdfResponse(PdfGenerator.generatePdf(fkPdfDefinition), PdfGenerator.generatePdfFilename(luseIntyg, LuseEntryPoint.MODULE_ID));
+        } catch (PdfGeneratorException e) {
+            LOG.error("Failed to generate PDF for certificate!", e);
+            throw new ModuleSystemException("Failed to generate (standard copy) PDF for certificate!", e);
+        }
     }
 
     @Override
