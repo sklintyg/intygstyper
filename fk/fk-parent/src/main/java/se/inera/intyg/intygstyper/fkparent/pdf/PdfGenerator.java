@@ -29,6 +29,8 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPage;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 
@@ -37,7 +39,7 @@ import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
  */
 public class PdfGenerator {
 
-    public byte[] generatePdf(FkPdfDefinition model) throws PdfGeneratorException {
+    public static byte[] generatePdf(FkPdfDefinition model) throws PdfGeneratorException {
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
@@ -75,5 +77,11 @@ public class PdfGenerator {
         }
 
         return bos.toByteArray();
+    }
+
+    public static String generatePdfFilename(Utlatande utlatande, String moduleId) {
+        Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
+        final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
+        return String.format("%s_lakarutlatande_%s.pdf", moduleId, personnummerString);
     }
 }

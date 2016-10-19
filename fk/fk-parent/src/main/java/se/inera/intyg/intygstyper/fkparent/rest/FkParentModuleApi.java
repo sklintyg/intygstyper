@@ -38,6 +38,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import se.inera.intyg.common.services.texts.IntygTextsService;
+import se.inera.intyg.common.services.texts.IntygTextsServiceImpl;
+import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -68,6 +71,9 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
 
     @Autowired(required = false)
     protected WebcertModuleService moduleService;
+
+    @Autowired(required = false)
+    private IntygTextsService intygTexts;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -318,6 +324,13 @@ public abstract class FkParentModuleApi<T extends Utlatande> implements ModuleAp
         } catch (IOException e) {
             throw new ModuleSystemException("Failed to serialize internal model", e);
         }
+    }
+
+    protected IntygTexts getTexts(String intygsTyp, String version) {
+        if (intygTexts == null) {
+            throw new IllegalStateException("intygTextsService not available in this context");
+        }
+        return intygTexts.getIntygTextsPojo(intygsTyp, version);
     }
 
     private IntygId getIntygsId(String certificateId) {

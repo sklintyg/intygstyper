@@ -74,9 +74,9 @@ public class LusePdfDefinitionBuilder {
     private static final float FRAGA_7_DELFRAGA_RUBRIK_HEIGHT = 5f;
 
     private static final float FRAGA_8_DELFRAGA_HEIGHT = 27f;
-    private static final float FRAGA_8_DELFRAGA_RUBRIK_HEIGHT = 6.5f;
 
     private static final float FRAGA_9_DELFRAGA_HEIGHT = 28f;
+
     private static final String DATE_PATTERN = "yyyy-MM-dd";
 
     private IntygTexts intygTexts;
@@ -894,7 +894,7 @@ public class LusePdfDefinitionBuilder {
         sb.append(nullSafeString(ve.getEnhetsnamn())).append("\n")
                 .append(nullSafeString(ve.getPostadress())).append("\n")
                 .append(nullSafeString(ve.getPostnummer())).append(" ").append(nullSafeString(ve.getPostort())).append("\n")
-                .append("Telefon:").append(nullSafeString(ve.getTelefonnummer()));
+                .append("Telefon: ").append(nullSafeString(ve.getTelefonnummer()));
         return sb.toString();
 
     }
