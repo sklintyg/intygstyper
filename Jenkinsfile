@@ -11,8 +11,13 @@ stage('checkout') {
 
 stage('build') {
     node {
-        shgradle "--refresh-dependencies clean build sonarqube -PcodeQuality -DgruntColors=false \
+        try {
+            shgradle "--refresh-dependencies clean build sonarqube -PcodeQuality -DgruntColors=false \
                   -DbuildVersion=${buildVersion} -DcommonVersion=${commonVersion}"
+        } finally {
+            publishHTML allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'build/reports/allTests', \
+                reportFiles: 'index.html', reportName: 'JUnit results'
+        }
     }
 }
 
