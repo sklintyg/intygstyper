@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = (grunt.option('outputDir') || 'build/') +  'resources/main/META-INF/resources/';
     var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
-    var SKIP_COVERAGE = grunt.option('skip-coverage') !== undefined ? grunt.option('skip-coverage') : true;
+    var SKIP_COVERAGE = true;
     var MODULE = grunt.option('module');
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/' + MODULE + '/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
