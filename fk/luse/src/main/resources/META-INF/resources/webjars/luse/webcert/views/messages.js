@@ -37,6 +37,7 @@ angular.module('luse').constant('luse.messages', {
         'luse.validation.grund-for-mu.annat.incorrect_format': 'Fel datumformat för annan referens',
         'luse.validation.grund-for-mu.annat.missing': 'Fritextfältet som hör till alternativet Annat under \'Uppgifterna i intyget baseras på\' måste fyllas i.',
 
+        'luse.validation.grund-for-mu.kannedom.after': 'Får inte vara senare än datum för \'{0}\'',
         'luse.validation.grund-for-mu.kannedom.missing': 'Fältet \'Jag har känt patienten sedan\' måste fyllas i.',
         'luse.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för \'Kännedom om patienten\'',
         'luse.validation.grund-for-mu.kannedom.after.undersokning': '\'Kännedom om patienten\' får inte vara senare än datum för \'Min undersökning av patienten\'',

@@ -46,7 +46,7 @@ public class InternalValidatorUtil {
     public void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
         if (diagnoser == null || diagnoser.isEmpty()) {
-            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+            addValidationError(validationMessages, "diagnos.diagnoser.0.diagnoskod", ValidationMessageType.EMPTY,
                     intygsTyp + ".validation.diagnos.missing");
         }
 
@@ -57,24 +57,24 @@ public class InternalValidatorUtil {
                R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.EMPTY,
                         intygsTyp + ".validation.diagnos" + i + ".missing");
             } else {
                 String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
                 if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
                         && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
+                    addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
                             intygsTyp + ".validation.diagnos" + i + ".psykisk.length-4");
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
+                    addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
                             intygsTyp + ".validation.diagnos" + i + ".length-3");
                 } else {
-                    validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
+                    validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos.diagnoser",
                             intygsTyp + ".validation.diagnos" + i + ".invalid", validationMessages);
                 }
             }
             if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
+                addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnosbeskrivning", ValidationMessageType.EMPTY,
                         intygsTyp + ".validation.diagnos" + i + ".description.missing");
             }
         }
