@@ -54,7 +54,7 @@ angular.module('lisu').config(function($stateProvider) {
                 },
 
                 'fragasvar@lisu-edit' : {
-                    templateUrl: commonPath + 'fk/arenden/utkast/arendeList.html',
+                    templateUrl: commonPath + 'fk/arenden/arendeListUtkast.html',
                     controller: 'common.ArendeListCtrl'
                 }
             }
