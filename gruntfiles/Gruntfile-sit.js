@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     var TEST_DIR = 'src/test/js/';
     var DEST_DIR = (grunt.option('outputDir') || 'build/') +  'resources/main/META-INF/resources/';
     var TEST_OUTPUT_DIR = (grunt.option('outputDir') || 'build/karma/');
-    var SKIP_COVERAGE = true;
+    var RUN_COVERAGE = grunt.option('run-coverage') !== undefined ? grunt.option('run-coverage') : false;
     var MODULE = grunt.option('module');
 
     var minaintyg = grunt.file.expand({cwd:SRC_DIR}, ['webjars/' + MODULE + '/minaintyg/**/*.js', '!**/*.spec.js', '!**/module.js']).sort();
@@ -171,11 +171,11 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'sass', 'jshint' ]);
+    grunt.registerTask('default', [ 'ngtemplates', 'concat', 'ngAnnotate', 'uglify', 'sass' ]);
     grunt.registerTask('lint-minaintyg', [ 'jshint:minaintyg' ]);
     grunt.registerTask('lint-webcert', [ 'jshint:webcert' ]);
-    grunt.registerTask('lint', [ 'jshint', 'sasslint' ]);
+    grunt.registerTask('lint', [ 'jshint' ]);
     grunt.registerTask('test-minaintyg', [ 'karma:minaintyg' ]);
     grunt.registerTask('test-webcert', [ 'karma:webcert' ]);
-    grunt.registerTask('test', [ 'karma' ].concat(SKIP_COVERAGE?[]:['lcovMerge']));
+    grunt.registerTask('test', [ 'karma' ].concat(RUN_COVERAGE?['lcovMerge']:[]));
 };

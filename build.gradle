@@ -197,6 +197,16 @@ configure(subprojects.findAll {
 
     jar.dependsOn(jsInclude)
 
+    task jsCodeQuality(type: NodeTask, dependsOn: [npmInstall]) {
+        outputs.upToDateWhen { false }
+
+        script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
+        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--npmDir=${rootProject.projectDir}", 'lint']
+    }
+
+    checkstyleMain.dependsOn(jsCodeQuality)
+    jsCodeQuality.onlyIf { project.hasProperty('codeQuality') }
+
     jar {
         exclude '**/*.scss'
         exclude '**/*.spec.js'
@@ -223,10 +233,9 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
         inputs.files(configurations.compile)
         outputs.dir(webappTestOutputDir)
 
-        logger.quiet("doSkip: are we here?")
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}", "--npmDir=${rootProject.projectDir}", 'test']
-                
+        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}",
+                "--npmDir=${rootProject.projectDir}", 'test']
     }
 
     test.dependsOn(jsTests)
