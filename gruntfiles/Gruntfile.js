@@ -78,8 +78,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: 'build/build-tools/jshint/.jshintrc',
                 reporterOutput: '',
-                force: false,
-                ignores: ['**/templates.js']
+                force: false
             },
             minaintyg: {
                 src: [ 'Gruntfile.js', SRC_DIR + 'webjars/' + MODULE + '/minaintyg/**/*.js', TEST_DIR + 'minaintyg/**/*.js' ]
@@ -113,20 +112,21 @@ module.exports = function(grunt) {
             options: {
             },
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: SRC_DIR + 'webjars/' + MODULE + '/webcert/css/',
-                    src: ['*.scss'],
-                    dest: DEST_DIR + 'webjars/' + MODULE + '/webcert/css',
-                    ext: '.css'
-                }, 
-                {
-                    expand: true,
-                    cwd: SRC_DIR + 'webjars/' + MODULE + '/minaintyg/css/',
-                    src: ['*.scss'],
-                    dest: DEST_DIR + 'webjars/' + MODULE + '/minaintyg/css',
-                    ext: '.css'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: SRC_DIR + 'webjars/' + MODULE + '/webcert/css/',
+                        src: ['*.scss'],
+                        dest: DEST_DIR + 'webjars/' + MODULE + '/webcert/css',
+                        ext: '.css'
+                    }, 
+                    {
+                        expand: true,
+                        cwd: SRC_DIR + 'webjars/' + MODULE + '/minaintyg/css/',
+                        src: ['*.scss'],
+                        dest: DEST_DIR + 'webjars/' + MODULE + '/minaintyg/css',
+                        ext: '.css'
+                    }]
             }
         },
 

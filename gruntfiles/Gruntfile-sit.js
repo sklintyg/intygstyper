@@ -92,13 +92,14 @@ module.exports = function(grunt) {
             options: {
             },
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: SRC_DIR + 'webjars/' + MODULE + '/webcert/css/',
-                    src: ['*.scss'],
-                    dest: DEST_DIR + 'webjars/' + MODULE + '/webcert/css',
-                    ext: '.css'
-                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: SRC_DIR + 'webjars/' + MODULE + '/webcert/css/',
+                        src: ['*.scss'],
+                        dest: DEST_DIR + 'webjars/' + MODULE + '/webcert/css',
+                        ext: '.css'
+                    },
                     {
                         expand: true,
                         cwd: SRC_DIR + 'webjars/' + MODULE + '/minaintyg/css/',
