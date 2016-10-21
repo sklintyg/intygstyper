@@ -1,94 +1,92 @@
 <a id="top"></a>
-<div class="fk7263-ns container-fluid" id="edit-fk7263">
-  <div class="row">
-    <div class="col-md-12">
+<div class="fk7263-ns" id="edit-fk7263">
 
-      <div ui-view="header"></div>
+	<div ui-view="header"></div>
 
-      <!-- Integration deleted message -->
-      <div id="integration-deleted" ng-if="viewState.common.deleted">
-        <div class="alert alert-info banner-margin">
-          Utkastet är raderat och borttaget från Webcert.
-        </div>
-      </div>
+	<!-- Integration deleted message -->
+	<div id="integration-deleted" ng-if="viewState.common.deleted">
+		<div class="alert alert-info banner-margin">
+			Utkastet är raderat och borttaget från Webcert.
+		</div>
+	</div>
 
-      <!-- FK 7263 -->
-      <div class="edit-form">
+	<!-- FK 7263 -->
+	<div class="edit-form">
 
-        <form name="certForm" novalidate autocomplete="off" wc-auto-save>
-          <div ng-hide="viewState.common.error.activeErrorMessageKey || viewState.common.deleted">
+		<form name="certForm" novalidate autocomplete="off" wc-auto-save>
+			<div ng-hide="viewState.common.error.activeErrorMessageKey || viewState.common.deleted">
 
-            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
-                 show-content="viewState.common.doneLoading">
+				<div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading" show-content="viewState.common.doneLoading">
 
-              <div wc-utkast-error-summary view-state="viewState"></div>
+					<div wc-utkast-error-summary view-state="viewState"></div>
 
-              <div id="certificate" class="row certificate certificate--lg">
-                <div class="col-md-12 intyg-body">
+					<div id="certificate" class="certificate certificate--lg">
+						<div class="intyg-body">
 
-                  <!-- 1. Smittskydd -->
-                  <div ui-view="form1"/>
+							<!-- 1. Smittskydd -->
+							<div ui-view="form1" />
 
-                  <!-- 4b. Intyger baseras på -->
-                  <div ui-view="form4b"/>
+							<!-- 4b. Intyger baseras på -->
+							<div ui-view="form4b" />
 
-                  <!-- 2. Diagnosis -->
-                  <div ui-view="form2"/>
+							<!-- 2. Diagnosis -->
+							<div ui-view="form2" />
 
-                  <!-- 3. Sjukdomsförlopp-->
-                  <div ui-view="form3"/>
+							<!-- 3. Sjukdomsförlopp-->
+							<div ui-view="form3" />
 
-                  <!-- 4. Funktionsnedsättning-->
-                  <div ui-view="form4"/>
+							<!-- 4. Funktionsnedsättning-->
+							<div ui-view="form4" />
 
-                  <!-- 5. Aktivitetsbegränsning -->
-                  <div ui-view="form5"/>
+							<!-- 5. Aktivitetsbegränsning -->
+							<div ui-view="form5" />
 
-                  <!-- 8a. Arbete -->
-                  <div ui-view="form8a"/>
+							<!-- 8a. Arbete -->
+							<div ui-view="form8a" />
 
-                  <!-- 8b. Arbetsförmåga -->
-                  <div ui-view="form8b"/>
+							<!-- 8b. Arbetsförmåga -->
+							<div ui-view="form8b" />
 
-                  <!-- 9. Arbetsförmåga -->
-                  <div ui-view="form9"/>
+							<!-- 9. Arbetsförmåga -->
+							<div ui-view="form9" />
 
-                  <!-- 10. Prognos -->
-                  <div ui-view="form10"/>
+							<!-- 10. Prognos -->
+							<div ui-view="form10" />
 
-                  <!-- 6b. Åtgärder -->
-                  <div ui-view="form6b"/>
+							<!-- 6b. Åtgärder -->
+							<div ui-view="form6b" />
 
-                  <!-- 6a, 7, 11. Rekommendationer -->
-                  <div ui-view="form6a-7-11"/>
+							<!-- 6a, 7, 11. Rekommendationer -->
+							<div ui-view="form6a-7-11" />
 
-                  <!-- 12. Kontakt -->
-                  <div ui-view="form12"/>
+							<!-- 12. Kontakt -->
+							<div ui-view="form12" />
 
-                  <!-- 13. upplysningar -->
-                  <div ui-view="form13"/>
+							<!-- 13. upplysningar -->
+							<div ui-view="form13" />
 
-                  <!-- 15. upplysningar -->
-                  <div ui-view="form15"/>
+							<!-- 15. upplysningar -->
+							<div ui-view="form15" />
 
-                  <div wc-field-signing-doctor></div>
+							<div wc-field-signing-doctor></div>
 
-                </div>
-                <!-- intyg body -->
+						</div>
+						<!-- intyg body -->
 
-              </div>
-              <!-- certificate -->
+					</div>
+					<!-- certificate -->
 
-              <div ui-view="footer"></div>
+					<div ui-view="footer"></div>
 
-            </div>
-          </div>
+				</div>
+			</div>
 
-        </form>
-      </div>
+		</form>
+	</div>
 
-    </div>
-    <!-- span12 webcert-col-single -->
-  </div>
-  <!-- row -->
-</div> <!-- container -->
+</div>
+<!-- span12 webcert-col-single -->
+</div>
+<!-- row -->
+</div>
+<!-- container -->
