@@ -18,13 +18,14 @@
  */
 package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
@@ -41,14 +42,9 @@ public class FkCategory extends PdfComponent<FkCategory> {
     }
 
     @Override
-    public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
-        // Render label above x,(y - space between children and label)
-        /*
-         * ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(label, PdfConstants.FONT_FRAGERUBRIK),
-         * Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y + 2.0f), 0);
-         */
+    public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
 
-        // The label of a category is actually placed above/outside the specified area. this is because it is much
+         // The label of a category is actually placed above/outside the specified area. this is because it is much
         // easier to measure using the borders around fields on the paper copy.
         PdfPTable table = new PdfPTable(1);
         table.setTotalWidth(Utilities.millimetersToPoints(width));
@@ -65,9 +61,9 @@ public class FkCategory extends PdfComponent<FkCategory> {
 
         // Output the table above the actual bordered category component area, and with some margin.
         table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x),
-                Utilities.millimetersToPoints(y + CATEGORY_LABEL_HEIGHT_MM + CATEGORY_LABEL_BORDER_MARGIN_MM), canvas);
+                Utilities.millimetersToPoints(y + CATEGORY_LABEL_HEIGHT_MM + CATEGORY_LABEL_BORDER_MARGIN_MM), writer.getDirectContent());
 
-        super.render(canvas, x, y);
+        super.render(document, writer, x, y);
     }
 
 }

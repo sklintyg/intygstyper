@@ -21,10 +21,11 @@ package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 import java.io.IOException;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Utilities;
-import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * Created by eriklupander on 2016-10-03.
@@ -45,13 +46,13 @@ public class FkImage extends PdfComponent<FkImage> {
         this.imageData = imageData;
     }
 
-    public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
+    public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
         Image fkLogo = null;
         try {
             fkLogo = Image.getInstance(imageData);
             fkLogo.setAbsolutePosition(Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y));
             fkLogo.scalePercent(linearScale * 100f);
-            canvas.addImage(fkLogo);
+            writer.getDirectContent().addImage(fkLogo);
         } catch (IOException e) {
             throw new DocumentException("Unable to render Image: " + e.getMessage());
         }

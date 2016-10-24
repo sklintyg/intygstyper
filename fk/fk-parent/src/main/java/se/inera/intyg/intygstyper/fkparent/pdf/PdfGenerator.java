@@ -25,7 +25,6 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Utilities;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -37,6 +36,7 @@ import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 /**
  * Created by marced on 30/09/16.
  */
+// CHECKSTYLE:OFF MagicNumber
 public final class PdfGenerator {
     private PdfGenerator() {
     }
@@ -49,29 +49,29 @@ public final class PdfGenerator {
 
             Document document = new Document();
             document.setPageSize(PageSize.A4);
+            document.setMargins(model.getPageMargins()[0], model.getPageMargins()[1], model.getPageMargins()[2], model.getPageMargins()[3]);
 
             PdfWriter writer = PdfWriter.getInstance(document, bos);
 
-            // Add handlers for page events
+            // Add specified event handlers
             for (PdfPageEventHelper eventHelper : model.getPageEvents()) {
                 writer.setPageEvent(eventHelper);
             }
 
             document.open();
 
-            PdfContentByte canvas = writer.getDirectContent();
-
             List<FkPage> pages = model.getPages();
+
             for (int i = 0, pagesSize = pages.size(); i < pagesSize; i++) {
                 FkPage page = pages.get(i);
-
-                page.render(canvas, 0f, Utilities.pointsToMillimeters(document.getPageSize().getTop()));
+                // Initial offset is upper left corner when starting a page render
+                page.render(document, writer, 0f, Utilities.pointsToMillimeters(document.getPageSize().getTop()));
                 if (i < (pagesSize - 1)) {
                     document.newPage();
                 }
             }
 
-            // Finish off by closing the document (will invoke the event handlers)
+            // Finish off by closing the document (this will invoke the event handlers)
             document.close();
 
         } catch (DocumentException | RuntimeException e) {

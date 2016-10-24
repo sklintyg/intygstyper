@@ -20,12 +20,15 @@ package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * Created by marced on 29/09/16.
@@ -89,25 +92,34 @@ public abstract class PdfComponent<T extends PdfComponent> {
     }
 
     /**
+     * Flattens the tree that this components holds.
+     * @return All children as a stream
+     */
+    public Stream<PdfComponent<?>> flattened() {
+        return Stream.concat(
+                Stream.of(this),
+                getChildren().stream().flatMap(PdfComponent::flattened));
+    }
+
+    /**
      * Render a PdfComponent. The upper left corner coordinates as expressed in mm.
      * When actually writing to the canvas, mm units must be converted to points. Also, to coordinate system of a page
      * (0,0) start at the lower left corner.
      *
-     * @param canvas
+     * @param document
+     * @param writer
      * @param x
-     *            - left starting point to render at (mm)
      * @param y
-     *            - top starting point to render at (mm)
      * @throws DocumentException
      */
-    public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
+    public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
 
         // Border rendering is handled here
-        drawborder(canvas, x, y);
+        drawborder(writer.getDirectContent(), x, y);
 
         for (PdfComponent child : this.getChildren()) {
             // give children x,y adjusted for this parents offset.
-            child.render(canvas, x + child.getParentOffsetX(), y - child.getParentOffsetY());
+            child.render(document, writer, x + child.getParentOffsetX(), y - child.getParentOffsetY());
         }
     }
 

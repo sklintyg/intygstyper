@@ -20,7 +20,9 @@ package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 
 /**
@@ -29,6 +31,14 @@ import com.itextpdf.text.pdf.PdfPageEventHelper;
  * Created by marced on 30/09/16.
  */
 public class FkPdfDefinition {
+
+    // Default page margins (left,right,top,bottom)
+    private static final float[] DEFAULT_PAGE_MARGINS = new float[] {
+            Utilities.millimetersToPoints(15f),
+            Utilities.millimetersToPoints(15f),
+            Utilities.millimetersToPoints(40f),
+            Utilities.millimetersToPoints(10f)
+    };
 
     private List<FkPage> pages = new ArrayList<>();
     private List<PdfPageEventHelper> pageEvents = new ArrayList<>();
@@ -55,5 +65,22 @@ public class FkPdfDefinition {
 
     public void addPageEvent(PdfPageEventHelper pageEvent) {
         this.pageEvents.add(pageEvent);
+    }
+
+    public float[] getPageMargins() {
+        return DEFAULT_PAGE_MARGINS;
+    }
+
+    public List<FkOverflowableValueField> collectOverflowingComponents() {
+
+        final List<PdfComponent> rootChildren = getPages().stream().flatMap(p -> p.getChildren().stream()).collect(Collectors.toList());
+
+        // Flatten structure and filter out only FkOverflowableValueField's that has overflow
+        final List<FkOverflowableValueField> overflowingList = (List<FkOverflowableValueField>) rootChildren.stream().flatMap(c -> c.flattened())
+                .filter(FkOverflowableValueField.class::isInstance)
+                .filter(candidate -> ((FkOverflowableValueField) candidate).getOverFlowingText() != null)
+                .collect(Collectors.toList());
+
+        return overflowingList;
     }
 }

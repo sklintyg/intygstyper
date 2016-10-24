@@ -18,35 +18,41 @@
  */
 package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 30/09/16.
- *
- * Simply a container for child components with an optional title text
+ * Created by marced on 2016-10-24.
  */
-public class FkPage extends PdfComponent<FkPage> {
-    private String pageTitle;
+public class FkTillaggsFraga extends PdfComponent<FkTillaggsFraga> {
+    private String label;
+    private String value;
 
-    public FkPage() {
-    }
-
-    public FkPage(String pageTitle) {
-        this.pageTitle = pageTitle;
+    public FkTillaggsFraga(String label, String value) {
+        this.label = label;
+        this.value = value;
     }
 
     @Override
     public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
-        if (pageTitle != null) {
-            Paragraph header = new Paragraph(pageTitle, PdfConstants.FONT_PAGETITLE);
-            header.setIndentationLeft(2f);
-            document.add(header);
-        }
+        Paragraph p = new Paragraph();
+        p.setIndentationLeft(2f);
+        p.setIndentationRight(2f);
+        p.setKeepTogether(true);
+
+        p.add(Chunk.NEWLINE);
+        p.add(new Phrase(label, PdfConstants.FONT_FRAGERUBRIK));
+        p.add(Chunk.NEWLINE);
+
+        p.add(new Phrase(value, PdfConstants.FONT_VALUE_TEXT_ARIAL_COMPATIBLE));
+
+        document.add(p);
 
         super.render(document, writer, x, y);
     }

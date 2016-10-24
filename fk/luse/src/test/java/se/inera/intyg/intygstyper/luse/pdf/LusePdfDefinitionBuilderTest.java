@@ -47,6 +47,7 @@ public class LusePdfDefinitionBuilderTest {
 
     private static File luseUtlatandeFullJson;
     private static File luseUtlatandeMinimalJson;
+    private static File luseUtlatandeOverflowJson;
 
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
@@ -56,6 +57,7 @@ public class LusePdfDefinitionBuilderTest {
     public static void readFiles() throws IOException {
         luseUtlatandeFullJson = new ClassPathResource("PdfGeneratorTest/fullt_utlatande.json").getFile();
         luseUtlatandeMinimalJson = new ClassPathResource("PdfGeneratorTest/minimalt_utlatande.json").getFile();
+        luseUtlatandeOverflowJson= new ClassPathResource("PdfGeneratorTest/overfyllnad_utlatande.json").getFile();
     }
 
     @Before
@@ -64,6 +66,23 @@ public class LusePdfDefinitionBuilderTest {
         IntygTextsLuseRepositoryTestHelper intygsTextRepositoryHelper = new IntygTextsLuseRepositoryTestHelper();
         intygsTextRepositoryHelper.update();
         ReflectionTestUtils.setField(intygTextsService, "repo", intygsTextRepositoryHelper);
+    }
+
+    @Test
+    public void testGenerateOverflow() throws IOException, PdfGeneratorException {
+
+        @SuppressWarnings("unchecked")
+
+        LuseUtlatande intyg = objectMapper.readValue(luseUtlatandeOverflowJson, LuseUtlatande.class);
+
+        // generate PDF
+
+        LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
+
+        IntygTexts intygTexts = intygTextsService.getIntygTextsPojo("luse", "1.0");
+        byte[] generatorResult = PdfGenerator
+                .generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<>(), ApplicationOrigin.WEBCERT, intygTexts));
+        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-overflow" + System.currentTimeMillis());
     }
 
     @Test
