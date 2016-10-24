@@ -242,15 +242,16 @@ public class LusePdfDefinitionBuilder {
                     .withBorders(Rectangle.TOP)
                     .withTopLabel("datum (år, månad, dag"));
 
+            //Bifogas Ja/Nej är bara till för manuell/fysisk/pappers ifyllnad och skall därför alltid vara ej ifylld i vårt fall.
             fraga2.addChild(new FkLabel("Bifogas")
                     .offset(120f, yOffset)
                     .size(15f, CHECKBOXROW_DEFAULT_HEIGHT)
                     .withBorders(Rectangle.TOP));
-            fraga2.addChild(new FkCheckbox("Ja", hamtasFran != null)
+            fraga2.addChild(new FkCheckbox("Ja", false)
                     .offset(132.5f, yOffset)
                     .size(30f, CHECKBOXROW_DEFAULT_HEIGHT)
                     .withBorders(Rectangle.TOP));
-            fraga2.addChild(new FkCheckbox("Nej", hamtasFran == null)
+            fraga2.addChild(new FkCheckbox("Nej", false)
                     .offset(155f, yOffset)
                     .size(25f, CHECKBOXROW_DEFAULT_HEIGHT)
                     .withBorders(Rectangle.TOP));
