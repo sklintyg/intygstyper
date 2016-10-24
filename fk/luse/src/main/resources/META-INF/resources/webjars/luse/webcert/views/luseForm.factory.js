@@ -45,10 +45,10 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             templateOptions: { category: 1, categoryName: categoryNames[1], prototypeName: 'default' },
             fieldGroup: [
                 { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After: false, required: true } },
-                { key: 'undersokningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.UNDERSOKNING' } },
-                { key: 'journaluppgifter', type: 'date', templateOptions: { label: 'KV_FKMU_0001.JOURNALUPPGIFTER' } },
-                { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANHORIG' } },
-                { key: 'annatGrundForMU', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANNAT' } },
+                { key: 'undersokningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.UNDERSOKNING', hideWhenEmpty: true } },
+                { key: 'journaluppgifter', type: 'date', templateOptions: { label: 'KV_FKMU_0001.JOURNALUPPGIFTER', hideWhenEmpty: true } },
+                { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANHORIG', hideWhenEmpty: true } },
+                { key: 'annatGrundForMU', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANNAT', hideWhenEmpty: true } },
                 {
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text-vertical',
