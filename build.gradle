@@ -10,6 +10,15 @@ ext {
 
     webappOutputDir = 'build/'
     webappTestOutputDir = 'build/karma/'
+    autovalueVersion = "1.1"
+    
+    schematronVersion = "1.0.1"
+    rivtaInsuranceprocessHealthreportingSchemasVersion = "3.1.0.4"
+    intygTransportstyrelsenSchemasVersion = "1.0.4"
+    intygCertificateSchemasVersion = "1.0.4"
+    
+    fkEIntygAdapterVersion = "2.2-RC2-INTYG"
+    servletApiVersion = "2.5"
 }
 
 allprojects {
