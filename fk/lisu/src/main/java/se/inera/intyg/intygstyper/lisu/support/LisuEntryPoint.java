@@ -32,9 +32,10 @@ import se.inera.intyg.intygstyper.lisu.rest.LisuModuleApi;
 public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
 
     public static final String MODULE_ID = "lisu";
-    public static final String MODULE_NAME = "Läkarintyg för sjukpenning utökat";
-    public static final String MODULE_DESCRIPTION = "Läkarintyg för sjukpenning utökat";
+    public static final String MODULE_NAME = "Läkarintyg för sjukpenning";
+    public static final String MODULE_DESCRIPTION = "Läkarintyg för sjukpenning";
     public static final String SCHEMATRON_FILE = "lisu.sch";
+    public static final String KV_INTYGSTYP_CODE = "LISJP";
 
     @Autowired
     private LisuModuleApi moduleApi;
@@ -98,5 +99,10 @@ public class LisuEntryPoint extends FkAbstractModuleEntryPoint {
         default:
             return null;
         }
+    }
+
+    @Override
+    public String getExternalId() {
+        return KV_INTYGSTYP_CODE;
     }
 }

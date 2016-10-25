@@ -6,9 +6,9 @@
       <ns3:extension>9020fbb9-e387-40b0-ba75-ac2746e4736b</ns3:extension>
     </intygs-id>
     <typ>
-      <ns3:code>LISU</ns3:code>
+      <ns3:code>LISJP</ns3:code>
       <ns3:codeSystem>b64ea353-e8f6-4832-b563-fc7d46f29548</ns3:codeSystem>
-      <ns3:displayName>L&#xE4;karintyg f&#xF6;r sjukpenning ut&#xF6;kat</ns3:displayName>
+      <ns3:displayName>L&#xE4;karintyg f&#xF6;r sjukpenning</ns3:displayName>
     </typ>
     <version>0.9</version>
     <signeringstidpunkt>2016-08-10T08:59:13</signeringstidpunkt>

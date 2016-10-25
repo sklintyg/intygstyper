@@ -75,9 +75,9 @@ public class UtlatandeToIntygTest {
         assertEquals(enhetsId, intyg.getIntygsId().getRoot());
         assertEquals(intygsId, intyg.getIntygsId().getExtension());
         assertEquals(textVersion, intyg.getVersion());
-        assertEquals(utlatande.getTyp().toUpperCase(), intyg.getTyp().getCode());
+        assertEquals("LISJP", intyg.getTyp().getCode());
         assertEquals("b64ea353-e8f6-4832-b563-fc7d46f29548", intyg.getTyp().getCodeSystem());
-        assertNotNull(intyg.getTyp().getDisplayName());
+        assertEquals("Läkarintyg för sjukpenning", intyg.getTyp().getDisplayName());
         assertEquals(signeringsdatum, intyg.getSigneringstidpunkt());
         assertNotNull(patientPersonId, intyg.getPatient().getPersonId().getRoot());
         assertEquals(patientPersonId, intyg.getPatient().getPersonId().getExtension());

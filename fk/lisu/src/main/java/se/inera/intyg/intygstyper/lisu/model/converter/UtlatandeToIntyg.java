@@ -58,7 +58,7 @@ public final class UtlatandeToIntyg {
 
     private static TypAvIntyg getTypAvIntyg(LisuUtlatande source) {
         TypAvIntyg typAvIntyg = new TypAvIntyg();
-        typAvIntyg.setCode(source.getTyp().toUpperCase());
+        typAvIntyg.setCode(LisuEntryPoint.KV_INTYGSTYP_CODE);
         typAvIntyg.setCodeSystem(KV_INTYGSTYP_CODE_SYSTEM);
         typAvIntyg.setDisplayName(LisuEntryPoint.MODULE_NAME);
         return typAvIntyg;
