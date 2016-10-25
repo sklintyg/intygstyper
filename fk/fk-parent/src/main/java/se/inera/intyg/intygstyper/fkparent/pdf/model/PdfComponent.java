@@ -67,12 +67,27 @@ public abstract class PdfComponent<T extends PdfComponent> {
     }
 
     // Builder style methods to avoid lengthy constructor argument list
+
+    /**
+     * Define the offset (in mm) from the parents top left corner.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public T offset(float x, float y) {
         this.parentOffsetX = x;
         this.parentOffsetY = y;
         return (T) this;
     }
 
+    /**
+     * Define the size (in mm) of the component.
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public T size(float x, float y) {
         this.width = x;
         this.height = y;

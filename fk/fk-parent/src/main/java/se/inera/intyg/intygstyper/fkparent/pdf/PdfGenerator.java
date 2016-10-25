@@ -19,7 +19,6 @@
 package se.inera.intyg.intygstyper.fkparent.pdf;
 
 import java.io.ByteArrayOutputStream;
-import java.util.List;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -30,10 +29,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPage;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 
 /**
+ * Generic PDF renderer that delegates all actual output to the defined model.
+ *
  * Created by marced on 30/09/16.
  */
 // CHECKSTYLE:OFF MagicNumber
@@ -60,17 +60,7 @@ public final class PdfGenerator {
 
             document.open();
 
-            List<FkPage> pages = model.getPages();
-
-            for (int i = 0, pagesSize = pages.size(); i < pagesSize; i++) {
-                FkPage page = pages.get(i);
-                // Initial offset is upper left corner when starting a page render
-                page.render(document, writer, 0f, Utilities.pointsToMillimeters(document.getPageSize().getTop()));
-                if (i < (pagesSize - 1)) {
-                    document.newPage();
-                }
-            }
-
+            model.render(document, writer, 0f, Utilities.pointsToMillimeters(document.getPageSize().getTop()));
             // Finish off by closing the document (this will invoke the event handlers)
             document.close();
 

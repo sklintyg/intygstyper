@@ -42,6 +42,9 @@ public class FkPage extends PdfComponent<FkPage> {
 
     @Override
     public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
+
+        document.newPage();
+
         if (pageTitle != null) {
             Paragraph header = new Paragraph(pageTitle, PdfConstants.FONT_PAGETITLE);
             header.setIndentationLeft(2f);

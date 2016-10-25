@@ -45,21 +45,15 @@ public class FkOverflowPage extends FkPage {
 
     @Override
     public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
-        final List<FkOverflowableValueField> fkOverflowedFields = model.collectOverflowingComponents();
-        renderOverflowingItems(document, fkOverflowedFields);
-
         super.render(document, writer, x, y);
+        renderOverflowingItems(document, model.collectOverflowingComponents());
     }
+
     private void renderOverflowingItems(Document document, List<FkOverflowableValueField> overflowingComponents) throws DocumentException {
         // Skip if nothing to do here..
         if (overflowingComponents.size() < 1) {
             return;
         }
-
-        // Should only be present on first page, so just add it once.
-        Paragraph header = new Paragraph(pageTitle, PdfConstants.FONT_FRAGERUBRIK);
-        header.setIndentationLeft(2f);
-        document.add(header);
 
         for (FkOverflowableValueField item : overflowingComponents) {
             Paragraph p = new Paragraph();

@@ -26,42 +26,26 @@ import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 
 /**
- * Defines the pages and Page events that constitutes a filled out (FK SIT type) FDF ready to be rendered.
+ * Defines the pages and Page events that constitutes a filled out (FK SIT type) PDF ready to be rendered.
  *
  * Created by marced on 30/09/16.
  */
-public class FkPdfDefinition {
+public class FkPdfDefinition extends PdfComponent<FkPdfDefinition> {
 
     // Default page margins (left,right,top,bottom)
-    private static final float[] DEFAULT_PAGE_MARGINS = new float[] {
+    private static final float[] DEFAULT_PAGE_MARGINS = new float[]{
             Utilities.millimetersToPoints(15f),
             Utilities.millimetersToPoints(15f),
             Utilities.millimetersToPoints(40f),
             Utilities.millimetersToPoints(10f)
     };
 
-    private List<FkPage> pages = new ArrayList<>();
     private List<PdfPageEventHelper> pageEvents = new ArrayList<>();
-
-    public List<FkPage> getPages() {
-        return pages;
-    }
-
-    public void setPages(List<FkPage> pages) {
-        this.pages = pages;
-    }
-
-    public void addPage(FkPage page) {
-        this.pages.add(page);
-    }
 
     public List<PdfPageEventHelper> getPageEvents() {
         return pageEvents;
     }
 
-    public void setPageEvents(List<PdfPageEventHelper> pageEvents) {
-        this.pageEvents = pageEvents;
-    }
 
     public void addPageEvent(PdfPageEventHelper pageEvent) {
         this.pageEvents.add(pageEvent);
@@ -71,14 +55,14 @@ public class FkPdfDefinition {
         return DEFAULT_PAGE_MARGINS;
     }
 
+
     public List<FkOverflowableValueField> collectOverflowingComponents() {
 
-        final List<PdfComponent> rootChildren = getPages().stream().flatMap(p -> p.getChildren().stream()).collect(Collectors.toList());
-
-        // Flatten structure and filter out only FkOverflowableValueField's that has overflow
-        final List<FkOverflowableValueField> overflowingList = (List<FkOverflowableValueField>) rootChildren.stream().flatMap(c -> c.flattened())
+        // Flatten structure and filter out only FkOverflowableValueField's that have overflowed values
+        final List<FkOverflowableValueField> overflowingList = this.flattened()
                 .filter(FkOverflowableValueField.class::isInstance)
-                .filter(candidate -> ((FkOverflowableValueField) candidate).getOverFlowingText() != null)
+                .map(pdfComponent -> (FkOverflowableValueField) pdfComponent)
+                .filter(candidate -> candidate.getOverFlowingText() != null)
                 .collect(Collectors.toList());
 
         return overflowingList;

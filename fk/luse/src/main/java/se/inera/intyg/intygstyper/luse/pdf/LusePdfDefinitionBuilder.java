@@ -101,19 +101,19 @@ public class LusePdfDefinitionBuilder {
             def.addPageEvent(new FkLogoEventHandler(5, 99));
             def.addPageEvent(new FkDynamicPageDecoratorEventHandler(5, def.getPageMargins(), "Läkarutlåtande", "för sjukersättning"));
 
-            def.addPage(createPage1(intyg));
-            def.addPage(createPage2(intyg));
-            def.addPage(createPage3(intyg));
-            def.addPage(createPage4(intyg));
+            def.addChild(createPage1(intyg));
+            def.addChild(createPage2(intyg));
+            def.addChild(createPage3(intyg));
+            def.addChild(createPage4(intyg));
 
             // Only add tillaggsfragor page if there are some
             if (intyg.getTillaggsfragor().size() > 0) {
-                def.addPage(createPage5(intyg));
+                def.addChild(createPage5(intyg));
             }
 
             // Always add the overflow page last, as it will scan the model for overflowing content and must therefore
             // also be renderad last.
-            def.addPage(new FkOverflowPage("Fortsättningsblad, svar med hänvisning fortsätter nedan", def));
+            def.addChild(new FkOverflowPage("Fortsättningsblad, svar med hänvisning fortsätter nedan", def));
 
             return def;
         } catch (IOException | DocumentException e) {
