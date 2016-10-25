@@ -208,17 +208,17 @@ public final class UtlatandeToIntyg {
         String motiveringTillInteBaseratPaUndersokning = null;
         String ovrigt = null;
 
-        // Since INTYG-2949, we have to concatenate information in the Övrigt-fält again... 
+        // Since INTYG-2949, we have to concatenate information in the Övrigt-fält again...
         if (!StringUtils.isBlank(source.getMotiveringTillInteBaseratPaUndersokning())) {
-            motiveringTillInteBaseratPaUndersokning = "Motivering till varför utlåtandet inte baseras på undersökning av patienten: " + 
-                    source.getMotiveringTillInteBaseratPaUndersokning();
+            motiveringTillInteBaseratPaUndersokning = "Motivering till varför utlåtandet inte baseras på undersökning av patienten: "
+                    + source.getMotiveringTillInteBaseratPaUndersokning();
         }
 
         if (!StringUtils.isBlank(source.getOvrigt())) {
             ovrigt = source.getOvrigt();
         }
 
-        String ret = StringUtil.join("\n\n", motiveringTillInteBaseratPaUndersokning, ovrigt);
+        String ret = StringUtil.join("\\n", motiveringTillInteBaseratPaUndersokning, ovrigt);
         return !StringUtils.isBlank(ret) ? ret : null;
     }
 }

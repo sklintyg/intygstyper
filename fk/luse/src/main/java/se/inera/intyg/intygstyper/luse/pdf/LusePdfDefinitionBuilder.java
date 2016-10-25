@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Rectangle;
@@ -661,8 +663,18 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, 27f)
                 .withBorders(Rectangle.BOX);
 
+        StringBuilder ovrigt = new StringBuilder();
+
+        if (!StringUtils.isBlank(intyg.getMotiveringTillInteBaseratPaUndersokning())) {
+            ovrigt.append("Motivering till varför utlåtandet inte baseras på undersökning av patienten: " + intyg.getMotiveringTillInteBaseratPaUndersokning() + "\n");
+        }
+
+        if (!StringUtils.isBlank(intyg.getOvrigt())) {
+            ovrigt.append(intyg.getOvrigt());
+        }
+
         //OBS: Övrigt fältet skall behålla radbytformattering eftersom detta kan vara sammanslaget med motiveringstext
-        fraga9.addChild(new FkOverflowableValueField(intyg.getOvrigt(), getText("FRG_25.RBK"))
+        fraga9.addChild(new FkOverflowableValueField(ovrigt.toString(), getText("FRG_25.RBK"))
                 .offset(0f, 0f)
                 .size(KATEGORI_FULL_WIDTH, FRAGA_9_DELFRAGA_HEIGHT)
                 .keepNewLines());
