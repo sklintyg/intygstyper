@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        function($scope, $log, viewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.ObjectHelper',
+        function($scope, $log, viewState, ObjectHelper) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -87,6 +87,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
             }
 
             $scope.onPrognosChange = function() {
+
+                var changingToOrFromGarInteBedoma =
+                 (model.prognosBedomning === 'arbetsformagaPrognosGarInteAttBedoma' && $scope.radioGroups.prognos !== prognosStates.UNKNOWN)
+                 || (model.prognosBedomning !== 'arbetsformagaPrognosGarInteAttBedoma' && $scope.radioGroups.prognos === prognosStates.UNKNOWN);
+
                 switch ($scope.radioGroups.prognos) {
                 case prognosStates.YES:
                     model.prognosBedomning = 'arbetsformagaPrognosJa';
@@ -103,7 +108,17 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 default :
                     model.prognosBedomning = undefined;
                 }
-                model.updateToAttic(model.properties.form10);
+
+                // Load garInteBedomaBeskrivning to/from attic when changing to or from garInteBedoma
+                var modelSubProperty = model.properties.form10.arbetsformagaPrognosGarInteAttBedomaBeskrivning;
+                if (viewState.common.doneLoading && changingToOrFromGarInteBedoma && model.prognosBedomning !== 'arbetsformagaPrognosGarInteAttBedoma') {
+                    // Upload to attic when selecting something else FROM garInteBedoma
+                    model.updateToAttic(modelSubProperty);
+                    model.clear(modelSubProperty);
+                } else if(model.isInAttic(modelSubProperty)) {
+                    // restore from attic when selecting garInteBedoma if there is a stored attic value for garInteBedomaBeskrivning
+                    model.restoreFromAttic(modelSubProperty);
+                }
             };
 
             $scope.showInteAttBedoma = function() {
