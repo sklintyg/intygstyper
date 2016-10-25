@@ -242,7 +242,8 @@ public class LusePdfDefinitionBuilder {
                     .withBorders(Rectangle.TOP)
                     .withTopLabel("datum (år, månad, dag"));
 
-            //Bifogas Ja/Nej är bara till för manuell/fysisk/pappers ifyllnad och skall därför alltid vara ej ifylld i vårt fall.
+            // Bifogas Ja/Nej är bara till för manuell/fysisk/pappers ifyllnad och skall därför alltid vara ej ifylld i
+            // vårt fall.
             fraga2.addChild(new FkLabel("Bifogas")
                     .offset(120f, yOffset)
                     .size(15f, CHECKBOXROW_DEFAULT_HEIGHT)
@@ -660,9 +661,11 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, 27f)
                 .withBorders(Rectangle.BOX);
 
+        //OBS: Övrigt fältet skall behålla radbytformattering eftersom detta kan vara sammanslaget med motiveringstext
         fraga9.addChild(new FkOverflowableValueField(intyg.getOvrigt(), getText("FRG_25.RBK"))
                 .offset(0f, 0f)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_9_DELFRAGA_HEIGHT));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_9_DELFRAGA_HEIGHT)
+                .keepNewLines());
 
         allElements.add(fraga9);
 

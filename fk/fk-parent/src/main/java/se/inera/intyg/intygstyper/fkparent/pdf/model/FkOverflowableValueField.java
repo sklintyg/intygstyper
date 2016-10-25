@@ -40,6 +40,7 @@ import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
  */
 // CHECKSTYLE:OFF MagicNumber
 public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueField> {
+
     private static final String SEE_APPENDIX_PAGE_TEXT = "...Se fortsättningsblad!";
     // What is considered a word boundary
     private static final String WHITESPACE_REGEXP = "\\s";
@@ -54,6 +55,9 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
     // Defines if the label should be rendered inline in the form (some use a separate FKLabel)
     private boolean showLabelOnTop;
 
+    // Defines if newline characters should be kept in value text or not
+    private boolean keepNewlines = false;
+
     // Holder for any overflowing text content not fitting the form area
     private String overflowingText;
 
@@ -62,12 +66,17 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
     private Font topLabelFont = PdfConstants.FONT_INLINE_FIELD_LABEL_SMALL;
 
     public FkOverflowableValueField(String value, String label) {
-        this.value = value != null ? trimNewLines(value) : "";
+        this.value = value != null ? value : "";
         this.label = label;
     }
 
     public FkOverflowableValueField showLabelOnTop() {
         this.showLabelOnTop = true;
+        return this;
+    }
+
+    public FkOverflowableValueField keepNewLines() {
+        this.keepNewlines = true;
         return this;
     }
 
@@ -89,6 +98,10 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
         float effectiveHeight = height;
         float effectiveY = y;
 
+        String textValue = value;
+        if (!keepNewlines) {
+            textValue = trimNewLines(textValue);
+        }
         // If were showing the label above, adjust the area available to the actual content.
         if (showLabelOnTop) {
             float labelX = Utilities.millimetersToPoints(x) + INLINE_LABEL_INDENTATION_LEFT;
@@ -107,23 +120,23 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
                 Utilities.millimetersToPoints(effectiveY));
 
         // First: Check if entire text will fit..
-        int charsToWrite = findFittingLength(canvas, targetRect, value, "");
+        int charsToWrite = findFittingLength(canvas, targetRect, textValue, "");
 
-        if (charsToWrite < value.length()) {
+        if (charsToWrite < textValue.length()) {
             // Entire text did NOT fit - find how much of original value that will fit (while adding the
             // "to-be-continued" text)
-            charsToWrite = findFittingLength(canvas, targetRect, value, SEE_APPENDIX_PAGE_TEXT);
+            charsToWrite = findFittingLength(canvas, targetRect, textValue, SEE_APPENDIX_PAGE_TEXT);
 
             if (charsToWrite > 0) {
                 // Write the text that fits..
-                writeText(canvas, targetRect, value.substring(0, charsToWrite), SEE_APPENDIX_PAGE_TEXT, false);
+                writeText(canvas, targetRect, textValue.substring(0, charsToWrite), SEE_APPENDIX_PAGE_TEXT, false);
                 // Save overflowing text for later. Since we break on a whitespace, trim it.
-                overflowingText = value.substring(charsToWrite).trim();
+                overflowingText = textValue.substring(charsToWrite).trim();
             }
 
         } else {
             // NO overflow detected - write entire text for real this time - with now suffix text added.
-            int status = writeText(canvas, targetRect, value, "", false);
+            int status = writeText(canvas, targetRect, textValue, "", false);
 
         }
 
