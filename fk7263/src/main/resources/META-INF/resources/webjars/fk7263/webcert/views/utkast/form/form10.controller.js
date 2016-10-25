@@ -89,8 +89,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
             $scope.onPrognosChange = function() {
 
                 var changingToOrFromGarInteBedoma =
-                 (model.prognosBedomning === 'arbetsformagaPrognosGarInteAttBedoma' && $scope.radioGroups.prognos !== prognosStates.UNKNOWN)
-                 || (model.prognosBedomning !== 'arbetsformagaPrognosGarInteAttBedoma' && $scope.radioGroups.prognos === prognosStates.UNKNOWN);
+                 (model.prognosBedomning === 'arbetsformagaPrognosGarInteAttBedoma' && $scope.radioGroups.prognos !== prognosStates.UNKNOWN) ||
+                 (model.prognosBedomning !== 'arbetsformagaPrognosGarInteAttBedoma' && $scope.radioGroups.prognos === prognosStates.UNKNOWN);
 
                 switch ($scope.radioGroups.prognos) {
                 case prognosStates.YES:
