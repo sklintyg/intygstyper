@@ -25,18 +25,16 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.SitUtlatande;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.lisu.support.LisuEntryPoint;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.Utlatande;
+import se.inera.intyg.intygstyper.fkparent.model.internal.*;
+import se.inera.intyg.intygstyper.lisu.support.LisuEntryPoint;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_LisuUtlatande.Builder.class)
@@ -58,6 +56,11 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
 
     @Override
     public abstract String getTextVersion();
+
+    // Kategori 10 - Smittbärarpenning
+    // Fråga 27
+    @Nullable
+    public abstract Boolean getAvstangningSmittskydd();
 
     // Kategori 1 – Grund för medicinskt underlag
     // Fråga 1
@@ -210,6 +213,9 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
 
         @JsonProperty(TEXTVERSION_JSON_ID)
         public abstract Builder setTextVersion(String textVersion);
+
+        @JsonProperty(AVSTANGNING_SMITTSKYDD_SVAR_JSON_ID_27)
+        public abstract Builder setAvstangningSmittskydd(Boolean avstangningSmittskydd);
 
         @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1)
         public abstract Builder setUndersokningAvPatienten(InternalDate undersokningAvPatienten);

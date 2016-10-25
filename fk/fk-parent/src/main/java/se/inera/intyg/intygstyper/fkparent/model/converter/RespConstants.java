@@ -157,6 +157,10 @@ public final class RespConstants {
     public static final String ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26 = "anledningTillKontakt";
     public static final String ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26 = "26.2";
 
+    public static final String AVSTANGNING_SMITTSKYDD_SVAR_ID_27 = "27";
+    public static final String AVSTANGNING_SMITTSKYDD_DELSVAR_ID_27 = "27.1";
+    public static final String AVSTANGNING_SMITTSKYDD_SVAR_JSON_ID_27 = "avstangningSmittskydd";
+
     public static final String TYP_AV_SYSSELSATTNING_SVAR_ID_28 = "28";
     public static final String TYP_AV_SYSSELSATTNING_DELSVAR_ID_28 = "28.1";
     public static final String TYP_AV_SYSSELSATTNING_SVAR_JSON_ID_28 = "sysselsattning";
@@ -270,6 +274,8 @@ public final class RespConstants {
             return KONTAKT_ONSKAS_SVAR_JSON_ID_26;
         case ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26:
             return ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26;
+        case AVSTANGNING_SMITTSKYDD_SVAR_ID_27:
+            return AVSTANGNING_SMITTSKYDD_SVAR_JSON_ID_27;
         case TYP_AV_SYSSELSATTNING_SVAR_ID_28:
             return TYP_AV_SYSSELSATTNING_SVAR_JSON_ID_28;
         case NUVARANDE_ARBETE_SVAR_ID_29:

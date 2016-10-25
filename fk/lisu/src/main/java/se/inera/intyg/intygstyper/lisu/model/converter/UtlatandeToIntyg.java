@@ -20,10 +20,7 @@
 package se.inera.intyg.intygstyper.lisu.model.converter;
 
 import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.util.ArrayList;
@@ -66,6 +63,8 @@ public final class UtlatandeToIntyg {
 
     private static List<Svar> getSvar(LisuUtlatande source) {
         List<Svar> svars = new ArrayList<>();
+
+        addIfNotNull(svars, AVSTANGNING_SMITTSKYDD_SVAR_ID_27, AVSTANGNING_SMITTSKYDD_DELSVAR_ID_27, source.getAvstangningSmittskydd());
 
         int grundForMUInstans = 1;
         if (source.getUndersokningAvPatienten() != null && source.getUndersokningAvPatienten().isValidDate()) {

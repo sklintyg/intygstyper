@@ -38,6 +38,7 @@ import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.Referen
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
 import se.inera.intyg.intygstyper.lisu.model.internal.*;
+import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande.Builder;
 import se.inera.intyg.intygstyper.lisu.model.internal.Sjukskrivning.SjukskrivningsGrad;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.CVType;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.DatePeriodType;
@@ -68,6 +69,9 @@ public final class TransportToInternal {
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
+            case AVSTANGNING_SMITTSKYDD_SVAR_ID_27:
+                handleAvstangningSmyttskydd(utlatande, svar);
+                break;
             case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1:
                 handleGrundForMedicinsktUnderlag(utlatande, svar);
                 break;
@@ -133,6 +137,18 @@ public final class TransportToInternal {
         utlatande.setSjukskrivningar(sjukskrivningar);
         utlatande.setDiagnoser(diagnoser);
         utlatande.setTillaggsfragor(tillaggsfragor);
+    }
+
+    private static void handleAvstangningSmyttskydd(Builder utlatande, Svar svar) {
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+            case AVSTANGNING_SMITTSKYDD_DELSVAR_ID_27:
+                utlatande.setAvstangningSmittskydd(Boolean.valueOf(getStringContent(delsvar)));
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
     private static void handleArbetslivsinriktadeAtgarder(LisuUtlatande.Builder utlatande, Svar svar) throws ConverterException {

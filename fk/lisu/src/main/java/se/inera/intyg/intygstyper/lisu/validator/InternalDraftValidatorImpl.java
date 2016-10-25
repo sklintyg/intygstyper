@@ -19,27 +19,21 @@
 
 package se.inera.intyg.intygstyper.lisu.validator;
 
-import com.google.common.collect.ImmutableList;
+import java.util.*;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.collect.ImmutableList;
+
 import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.lisu.model.internal.*;
 import se.inera.intyg.intygstyper.lisu.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.intyg.intygstyper.lisu.model.internal.LisuUtlatande;
-import se.inera.intyg.intygstyper.lisu.model.internal.PrognosTyp;
-import se.inera.intyg.intygstyper.lisu.model.internal.Sjukskrivning;
-import se.inera.intyg.intygstyper.lisu.model.internal.Sysselsattning;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUtlatande> {
 
@@ -61,14 +55,18 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
         validateGrundForMU(utlatande, validationMessages);
 
         // Kategori 2 – Sysselsättning
-        validateSysselsattning(utlatande, validationMessages);
+        if (!isAvstangningSmittskydd(utlatande)) {
+            validateSysselsattning(utlatande, validationMessages);
+        }
 
         // Kategori 3 – Diagnos
         validatorUtil.validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
 
         // Kategori 4 – Sjukdomens konsekvenser
-        validateFunktionsnedsattning(utlatande, validationMessages);
-        validateAktivitetsbegransning(utlatande, validationMessages);
+        if (!isAvstangningSmittskydd(utlatande)) {
+            validateFunktionsnedsattning(utlatande, validationMessages);
+            validateAktivitetsbegransning(utlatande, validationMessages);
+        }
 
         // Kategori 5 – Medicinska behandlingar/åtgärder
 
@@ -76,7 +74,9 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
         validateBedomning(utlatande, validationMessages);
 
         // Kategori 7 – Åtgärder
-        validateAtgarder(utlatande, validationMessages);
+        if (!isAvstangningSmittskydd(utlatande)) {
+            validateAtgarder(utlatande, validationMessages);
+        }
 
         // Kategori 8 – Övrigt
 
@@ -94,13 +94,15 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
 
         // R1 - no need to check. they are already separated and cannot occur twice.
 
-        // One of the following is required
-        if (utlatande.getUndersokningAvPatienten() == null
-                && utlatande.getTelefonkontaktMedPatienten() == null
-                && utlatande.getJournaluppgifter() == null
-                && utlatande.getAnnatGrundForMU() == null) {
-            validatorUtil.addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
-                    "lisu.validation.grund-for-mu.missing");
+        // One of the following is required if not smittskydd
+        if (!isAvstangningSmittskydd(utlatande)) {
+            if (utlatande.getUndersokningAvPatienten() == null
+                    && utlatande.getTelefonkontaktMedPatienten() == null
+                    && utlatande.getJournaluppgifter() == null
+                    && utlatande.getAnnatGrundForMU() == null) {
+                validatorUtil.addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
+                        "lisu.validation.grund-for-mu.missing");
+            }
         }
 
         if (utlatande.getUndersokningAvPatienten() != null) {
@@ -197,17 +199,19 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
         }
 
         // Prognos
-        if (utlatande.getPrognos() == null || utlatande.getPrognos().getTyp() == null) {
-            validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                    "lisu.validation.bedomning.prognos.missing");
-        } else {
-            // New rule since INTYG-2286
-            if (utlatande.getPrognos().getTyp() == PrognosTyp.ATER_X_ANTAL_DGR && utlatande.getPrognos().getDagarTillArbete() == null) {
+        if (!isAvstangningSmittskydd(utlatande)) {
+            if (utlatande.getPrognos() == null || utlatande.getPrognos().getTyp() == null) {
                 validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                        "lisu.validation.bedomning.prognos.dagarTillArbete.missing");
-            } else if (utlatande.getPrognos().getTyp() != PrognosTyp.ATER_X_ANTAL_DGR && utlatande.getPrognos().getDagarTillArbete() != null) {
-                validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                        "lisu.validation.bedomning.prognos.dagarTillArbete.invalid_combination");
+                        "lisu.validation.bedomning.prognos.missing");
+            } else {
+                // New rule since INTYG-2286
+                if (utlatande.getPrognos().getTyp() == PrognosTyp.ATER_X_ANTAL_DGR && utlatande.getPrognos().getDagarTillArbete() == null) {
+                    validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                            "lisu.validation.bedomning.prognos.dagarTillArbete.missing");
+                } else if (utlatande.getPrognos().getTyp() != PrognosTyp.ATER_X_ANTAL_DGR && utlatande.getPrognos().getDagarTillArbete() != null) {
+                    validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
+                            "lisu.validation.bedomning.prognos.dagarTillArbete.invalid_combination");
+                }
             }
         }
     }
@@ -305,7 +309,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
     }
 
     private boolean isArbetstidsforlaggningMandatory(LisuUtlatande utlatande) {
-        return utlatande.getSjukskrivningar()
+        return !isAvstangningSmittskydd(utlatande) && utlatande.getSjukskrivningar()
                 .stream()
                 .anyMatch(e -> e.getSjukskrivningsgrad() == Sjukskrivning.SjukskrivningsGrad.NEDSATT_3_4
                         || e.getSjukskrivningsgrad() == Sjukskrivning.SjukskrivningsGrad.NEDSATT_HALFTEN
@@ -319,7 +323,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
     }
 
     private void validateAtgarder(LisuUtlatande utlatande, List<ValidationMessage> validationMessages) {
-
         // Anything checked at all?
         if (utlatande.getArbetslivsinriktadeAtgarder() == null || utlatande.getArbetslivsinriktadeAtgarder().size() < 1) {
             validatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
@@ -470,6 +473,10 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
 
         }
 
+    }
+
+    private boolean isAvstangningSmittskydd(LisuUtlatande utlatande) {
+        return (utlatande.getAvstangningSmittskydd() != null && utlatande.getAvstangningSmittskydd());
     }
 
     private boolean isBlankButNotNull(String stringFromField) {
