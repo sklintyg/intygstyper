@@ -82,10 +82,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             });
 
             $scope.$watch('model.annanReferens', function(newVal, oldVal) {
-                /*var isChangingToOrFromAnnanReferens =
-                    (ObjectHelper.isEmpty(model.annanReferens) && !ObjectHelper.isEmpty($scope.dates.annanReferens)) ||
-                    (!ObjectHelper.isEmpty(model.annanReferens) && ObjectHelper.isEmpty($scope.dates.annanReferens));
-*/
                 if(newVal !== oldVal){
                     // Load annanReferensBeskrivning to/from attic when setting or removing a value for annanReferens
                     var modelSubProperty = model.properties.form4b.annanReferensBeskrivning;
@@ -98,7 +94,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                         model.restoreFromAttic(modelSubProperty);
                     }                
                 }
-
             }, true);
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
