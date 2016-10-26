@@ -20,7 +20,7 @@ ext {
 
     mockitoVersion = "1.9.0"
 }
-
+ 
 allprojects {
     group = 'se.inera.intyg.intygstyper'
     version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
