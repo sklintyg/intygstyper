@@ -140,7 +140,7 @@
       <delsvar id="39.2">Error</delsvar>
       <delsvar id="39.3">
         <ns3:cv>
-          <ns3:code>30_DAGAR</ns3:code>
+          <ns3:code>TRETTIO_DGR</ns3:code>
           <ns3:codeSystem>KV_FKMU_0007</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
