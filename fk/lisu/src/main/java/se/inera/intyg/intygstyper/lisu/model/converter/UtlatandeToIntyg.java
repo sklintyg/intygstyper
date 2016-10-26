@@ -105,14 +105,36 @@ public final class UtlatandeToIntyg {
         addIfNotBlank(svars, ARBETSMARKNADSPOLITISKT_PROGRAM_SVAR_ID_30, ARBETSMARKNADSPOLITISKT_PROGRAM_DELSVAR_ID_30,
                 source.getArbetsmarknadspolitisktProgram());
 
-        int diagnosInstans = 1;
-        for (Diagnos diagnos : source.getDiagnoser()) {
-            if (diagnos.getDiagnosKod() != null) {
-                Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-                svars.add(aSvar(DIAGNOS_SVAR_ID_6, diagnosInstans++)
-                        .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                        .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
+        // Handle diagnoser
+        SvarBuilder diagnosSvar = aSvar(DIAGNOS_SVAR_ID_6);
+        for (int i = 0; i < source.getDiagnoser().size(); i++) {
+            Diagnos diagnos = source.getDiagnoser().get(i);
+            if (diagnos.getDiagnosKod() == null) {
+                continue;
             }
+            Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
+            switch (i) {
+            case 0:
+                diagnosSvar.withDelsvar(DIAGNOS_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
+                break;
+            case 1:
+                diagnosSvar.withDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
+                break;
+            case 2:
+                diagnosSvar.withDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
+                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
+                        .withDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
+        }
+        if (CollectionUtils.isNotEmpty(diagnosSvar.delSvars)) {
+            svars.add(diagnosSvar.build());
         }
 
         addIfNotBlank(svars, FUNKTIONSNEDSATTNING_SVAR_ID_35, FUNKTIONSNEDSATTNING_DELSVAR_ID_35, source.getFunktionsnedsattning());

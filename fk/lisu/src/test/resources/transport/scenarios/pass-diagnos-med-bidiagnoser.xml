@@ -63,7 +63,8 @@
         </vardgivare>
       </enhet>
       <specialistkompetens>
-        <ns3:code>Kirurg</ns3:code>
+        <ns3:code>N/A</ns3:code>
+        <ns3:displayName>Kirurg</ns3:displayName>
       </specialistkompetens>
     </skapadAv>
     <svar id="1">
@@ -72,26 +73,17 @@
         <ns3:cv>
           <ns3:code>TELEFONKONTAKT</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
+          <ns3:displayName>Min telefonkontakt med patienten</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="1.2">2015-12-08</delsvar>
-    </svar>
-    <svar id="1">
-      <instans>2</instans>
-      <delsvar id="1.1">
-        <ns3:cv>
-          <ns3:code>ANNAT</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
-      <delsvar id="1.2">2015-12-07</delsvar>
-      <delsvar id="1.3">Barndomsvän</delsvar>
     </svar>
     <svar id="28">
       <delsvar id="28.1">
         <ns3:cv>
           <ns3:code>NUVARANDE_ARBETE</ns3:code>
           <ns3:codeSystem>KV_FKMU_0002</ns3:codeSystem>
+          <ns3:displayName>Nuvarande arbete</ns3:displayName>
         </ns3:cv>
       </delsvar>
     </svar>
@@ -103,6 +95,20 @@
       <delsvar id="6.2">
         <ns3:cv>
           <ns3:code>S47</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.3">Accentuering av personlighetsdrag</delsvar>
+      <delsvar id="6.4">
+        <ns3:cv>
+          <ns3:code>Z731</ns3:code>
+          <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="6.5">Shigellos, ospecificerad</delsvar>
+      <delsvar id="6.6">
+        <ns3:cv>
+          <ns3:code>A039</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
@@ -129,40 +135,8 @@
         </ns3:datePeriod>
       </delsvar>
     </svar>
-    <svar id="32">
-      <instans>2</instans>
-      <delsvar id="32.1">
-        <ns3:cv>
-          <ns3:code>HALFTEN</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
-          <ns3:displayName>50%</ns3:displayName>
-        </ns3:cv>
-      </delsvar>
-      <delsvar id="32.2">
-        <ns3:datePeriod>
-          <ns3:start>2015-12-12</ns3:start>
-          <ns3:end>2015-12-14</ns3:end>
-        </ns3:datePeriod>
-      </delsvar>
-    </svar>
-    <svar id="32">
-      <instans>3</instans>
-      <delsvar id="32.1">
-        <ns3:cv>
-          <ns3:code>EN_FJARDEDEL</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0003</ns3:codeSystem>
-          <ns3:displayName>25%</ns3:displayName>
-        </ns3:cv>
-      </delsvar>
-      <delsvar id="32.2">
-        <ns3:datePeriod>
-          <ns3:start>2015-12-15</ns3:start>
-          <ns3:end>2015-12-20</ns3:end>
-        </ns3:datePeriod>
-      </delsvar>
-    </svar>
     <svar id="37">
-      <delsvar id="37.1">Överskrider inte FMB</delsvar>
+      <delsvar id="37.1">överskrider inte FMB</delsvar>
     </svar>
     <svar id="33">
       <delsvar id="33.1">true</delsvar>
@@ -172,13 +146,14 @@
       <delsvar id="34.1">true</delsvar>
     </svar>
     <svar id="23">
-      <delsvar id="23.1">Är bra på att dansa!</delsvar>
+      <delsvar id="23.1">är bra på att dansa!</delsvar>
     </svar>
     <svar id="39">
       <delsvar id="39.1">
         <ns3:cv>
-          <ns3:code>PROGNOS_OKLAR</ns3:code>
+          <ns3:code>STOR_SANNOLIKHET</ns3:code>
           <ns3:codeSystem>KV_FKMU_0006</ns3:codeSystem>
+          <ns3:displayName>Patienten kommer med stor sannolikhet att kunna återgå helt i nuvarande sysselsättning efter denna sjukskrivning</ns3:displayName>
         </ns3:cv>
       </delsvar>
     </svar>
@@ -187,12 +162,7 @@
         <ns3:cv>
           <ns3:code>OVRIGA_ATGARDER</ns3:code>
           <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
-      <delsvar id="40.1">
-        <ns3:cv>
-          <ns3:code>KONFLIKTHANTERING</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
+          <ns3:displayName>Övrigt</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="40.2">Jobbar bra om man inte stör honom</delsvar>
