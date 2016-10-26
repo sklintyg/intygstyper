@@ -118,7 +118,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     key: 'diagnosForNyBedomning',
                     className: 'fold-animation',
                     type: 'multi-text',
-                    templateOptions: { label: 'DFR_45.2', required: true },
+                    templateOptions: { label: 'DFR_45.2', required: true, hideWhenEmpty: true},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
             ]
