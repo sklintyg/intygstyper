@@ -36,7 +36,8 @@ import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 public class FkLabel extends PdfComponent<FkLabel> {
 
     private final String label;
-    private int valueTextVerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+    private int verticalAlignment = PdfPCell.ALIGN_MIDDLE;
+    private int horizontalAlignment = PdfPCell.ALIGN_LEFT;
     private Font font = PdfConstants.FONT_INLINE_FIELD_LABEL;
     private float fixedLeading = 0.0f;
     private float multipliedLeading = 1.0f;
@@ -46,8 +47,12 @@ public class FkLabel extends PdfComponent<FkLabel> {
         this.label = label;
     }
 
+    public FkLabel withHorizontalAlignment(int alignment) {
+        this.horizontalAlignment = alignment;
+        return this;
+    }
     public FkLabel withVerticalAlignment(int alignment) {
-        this.valueTextVerticalAlignment = alignment;
+        this.verticalAlignment = alignment;
         return this;
     }
 
@@ -79,8 +84,8 @@ public class FkLabel extends PdfComponent<FkLabel> {
         labelCell.setFixedHeight(Utilities.millimetersToPoints(height));
         labelCell.setBorder(Rectangle.NO_BORDER);
         labelCell.setUseAscender(true); // needed to make vertical alignment correct
-        labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        labelCell.setVerticalAlignment(valueTextVerticalAlignment);
+        labelCell.setHorizontalAlignment(horizontalAlignment);
+        labelCell.setVerticalAlignment(verticalAlignment);
         labelCell.setPaddingTop(Utilities.millimetersToPoints(topPadding));
         labelCell.setLeading(fixedLeading, multipliedLeading);
         table.addCell(labelCell);

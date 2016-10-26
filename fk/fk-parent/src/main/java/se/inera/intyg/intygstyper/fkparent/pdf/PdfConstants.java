@@ -35,6 +35,8 @@ public final class PdfConstants {
     private PdfConstants() {
     }
 
+    public static final String ELECTRONIC_COPY_WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
+
     /**
      * * Fonts that will be used in FK PDF's.
      */

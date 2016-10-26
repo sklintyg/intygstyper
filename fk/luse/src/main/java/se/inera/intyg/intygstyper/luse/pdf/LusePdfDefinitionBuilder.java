@@ -22,23 +22,22 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 
 import se.inera.intyg.common.services.texts.model.IntygTexts;
-import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
+import se.inera.intyg.intygstyper.fkparent.pdf.FkBasePdfDefinitionBuilder;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkDynamicPageDecoratorEventHandler;
@@ -46,6 +45,7 @@ import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkFormIdentityEvent
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkFormPagePersonnummerEventHandlerImpl;
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkLogoEventHandler;
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkOverflowPagePersonnummerEventHandlerImpl;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkPrintedByEventHandler;
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.PageNumberingEventHandler;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCategory;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCheckbox;
@@ -65,7 +65,7 @@ import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
  * Created by marced on 18/08/16.
  */
 // CHECKSTYLE:OFF MagicNumber
-public class LusePdfDefinitionBuilder {
+public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
 
     private static final float KATEGORI_FULL_WIDTH = 180f;
     private static final float KATEGORI_OFFSET_X = 15f;
@@ -81,9 +81,6 @@ public class LusePdfDefinitionBuilder {
 
     private static final float FRAGA_9_DELFRAGA_HEIGHT = 28f;
 
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
-
-    private IntygTexts intygTexts;
     private static final float CHECKBOXROW_DEFAULT_HEIGHT = 9f;
     private static final float CHECKBOX_DEFAULT_WIDTH = 72.2f;
 
@@ -99,11 +96,13 @@ public class LusePdfDefinitionBuilder {
             def.addPageEvent(new FkFormIdentityEventHandler("FK 7800 (001 F 001) Fastställd av Försäkringskassan", "7800", "01"));
             def.addPageEvent(new FkFormPagePersonnummerEventHandlerImpl(intyg.getGrundData().getPatient().getPersonId().getPersonnummer()));
             def.addPageEvent(new FkOverflowPagePersonnummerEventHandlerImpl(intyg.getGrundData().getPatient().getPersonId().getPersonnummer()));
+            def.addPageEvent(new FkPrintedByEventHandler(intyg.getId(), getPrintedByText(applicationOrigin)));
+
             def.addPageEvent(new FkLogoEventHandler(1, 1));
             def.addPageEvent(new FkLogoEventHandler(5, 99));
             def.addPageEvent(new FkDynamicPageDecoratorEventHandler(5, def.getPageMargins(), "Läkarutlåtande", "för sjukersättning"));
 
-            def.addChild(createPage1(intyg));
+            def.addChild(createPage1(intyg, statuses, applicationOrigin));
             def.addChild(createPage2(intyg));
             def.addChild(createPage3(intyg));
             def.addChild(createPage4(intyg));
@@ -124,11 +123,19 @@ public class LusePdfDefinitionBuilder {
 
     }
 
-    private FkPage createPage1(LuseUtlatande intyg) throws IOException, DocumentException {
+    private FkPage createPage1(LuseUtlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
 
         List<PdfComponent> allElements = new ArrayList<>();
 
-        addPage1MiscFields(intyg, allElements);
+        boolean showFkAddress;
+        if (applicationOrigin.equals(ApplicationOrigin.MINA_INTYG)) {
+            // we never include FK address in MI prints..
+            showFkAddress = false;
+        } else {
+            showFkAddress = !isSentToFk(statuses);
+        }
+        addPage1MiscFields(intyg, showFkAddress, allElements);
+
         // START KATEGORI 1. (Utlåtandet är baserat på....)
         FkCategory fraga1 = new FkCategory("1. " + getText("FRG_1.RBK"))
                 .offset(KATEGORI_OFFSET_X, 150f)
@@ -275,8 +282,17 @@ public class LusePdfDefinitionBuilder {
         return thisPage;
     }
 
-    private void addPage1MiscFields(LuseUtlatande intyg, List<PdfComponent> allElements) throws IOException {
+    private void addPage1MiscFields(LuseUtlatande intyg, boolean showFkAddress, List<PdfComponent> allElements) throws IOException {
         // Meta information text(s) etc.
+
+        FkLabel elektroniskKopia = new FkLabel(PdfConstants.ELECTRONIC_COPY_WATERMARK_TEXT)
+                .offset(20f, 60f)
+                .withHorizontalAlignment(PdfPCell.ALIGN_CENTER)
+                .withVerticalAlignment(Element.ALIGN_MIDDLE)
+                .size(70f, 12f)
+                .withFont(PdfConstants.FONT_BOLD_9)
+                .withBorders(Rectangle.BOX, BaseColor.RED);
+        allElements.add(elektroniskKopia);
 
         FkLabel fortsBladText = new FkLabel("Använd fortsättningsblad som finns i slutet av blanketten om utrymmet i fälten inte räcker till.")
                 .offset(17.5f, 20.5f)
@@ -329,25 +345,26 @@ public class LusePdfDefinitionBuilder {
         allElements.add(patientNamn);
         allElements.add(patientPnr);
 
-        FkLabel skickaBlankettenTillLbl = new FkLabel("Skicka blanketten till")
-                .offset(113.2f, 37.5f)
-                .size(35f, 5f)
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_STAMPER_LABEL);
-        allElements.add(skickaBlankettenTillLbl);
+        if (showFkAddress) {
+            FkLabel skickaBlankettenTillLbl = new FkLabel("Skicka blanketten till")
+                    .offset(113.2f, 37.5f)
+                    .size(35f, 5f)
+                    .withVerticalAlignment(Element.ALIGN_TOP)
+                    .withFont(PdfConstants.FONT_STAMPER_LABEL);
+            allElements.add(skickaBlankettenTillLbl);
 
-        FkLabel inlasningsCentralRad1 = new FkLabel("Försäkringskassans inläsningscentral")
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .size(60f, 6f)
-                .offset(113.2f, 42f);
-        FkLabel inlasningsCentralRad2 = new FkLabel("839 88 Östersund")
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .size(60f, 6f)
-                .offset(113.2f, 48.75f);
+            FkLabel inlasningsCentralRad1 = new FkLabel("Försäkringskassans inläsningscentral")
+                    .withVerticalAlignment(Element.ALIGN_TOP)
+                    .size(60f, 6f)
+                    .offset(113.2f, 42f);
+            FkLabel inlasningsCentralRad2 = new FkLabel("839 88 Östersund")
+                    .withVerticalAlignment(Element.ALIGN_TOP)
+                    .size(60f, 6f)
+                    .offset(113.2f, 48.75f);
 
-        allElements.add(inlasningsCentralRad1);
-        allElements.add(inlasningsCentralRad2);
-
+            allElements.add(inlasningsCentralRad1);
+            allElements.add(inlasningsCentralRad2);
+        }
         // Ledtext: Vad är sjukersättning
         FkLabel luseDescriptonText = new FkLabel(getText("FRM_2.RBK"))
                 .withLeading(0.0f, 1.2f)
@@ -673,7 +690,7 @@ public class LusePdfDefinitionBuilder {
             ovrigt.append(intyg.getOvrigt());
         }
 
-        //OBS: Övrigt fältet skall behålla radbytformattering eftersom detta kan vara sammanslaget med motiveringstext
+        // OBS: Övrigt fältet skall behålla radbytformattering eftersom detta kan vara sammanslaget med motiveringstext
         fraga9.addChild(new FkOverflowableValueField(ovrigt.toString(), getText("FRG_25.RBK"))
                 .offset(0f, 0f)
                 .size(KATEGORI_FULL_WIDTH, FRAGA_9_DELFRAGA_HEIGHT)
@@ -789,53 +806,6 @@ public class LusePdfDefinitionBuilder {
         FkPage thisPage = new FkPage("Tilläggsfrågor");
         thisPage.getChildren().addAll(allElements);
         return thisPage;
-    }
-
-    private String getText(String key) {
-        return intygTexts.getTexter().get(key);
-    }
-
-    private String nullSafeString(String string) {
-        return string != null ? string : "";
-    }
-
-    private String nullSafeString(InternalDate date) {
-        return date != null ? date.getDate() : "";
-    }
-
-    private Diagnos safeGetDiagnos(LuseUtlatande intyg, int index) {
-        if (index < intyg.getDiagnoser().size()) {
-            return intyg.getDiagnoser().get(index);
-        }
-        return Diagnos.create("", "", "", "");
-    }
-
-    private boolean safeBoolean(Boolean b) {
-        if (b == null) {
-            return false;
-        }
-        return b.booleanValue();
-    }
-
-    private String concatStringList(List<String> strings) {
-        StringJoiner sj = new StringJoiner(", ");
-        for (String s : strings) {
-            sj.add(s);
-        }
-        return sj.toString();
-    }
-
-    private String buildVardEnhetAdress(Vardenhet ve) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(nullSafeString(ve.getEnhetsnamn())).append("\n")
-                .append(nullSafeString(ve.getPostadress())).append("\n")
-                .append(nullSafeString(ve.getPostnummer())).append(" ").append(nullSafeString(ve.getPostort())).append("\n");
-        if (nullSafeString(ve.getTelefonnummer()).length() > 0) {
-            sb.append("Telefon: ").append(nullSafeString(ve.getTelefonnummer()));
-        }
-
-        return sb.toString();
-
     }
 
 }

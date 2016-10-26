@@ -44,6 +44,7 @@ public abstract class PdfComponent<T extends PdfComponent> {
 
     // Default border
     protected int border = Rectangle.NO_BORDER;
+    protected BaseColor borderColor = BaseColor.BLACK;
 
     protected List<PdfComponent> children = new ArrayList<>();
 
@@ -106,6 +107,12 @@ public abstract class PdfComponent<T extends PdfComponent> {
         return (T) this;
     }
 
+    public T withBorders(int border, BaseColor borderColor) {
+        this.border = border;
+        this.borderColor = borderColor;
+        return (T) this;
+    }
+
     /**
      * Flattens the tree that this components holds.
      * @return All children as a stream
@@ -144,9 +151,10 @@ public abstract class PdfComponent<T extends PdfComponent> {
                 Utilities.millimetersToPoints(x + width), Utilities.millimetersToPoints(y));
         rect.setBorder(border);
         rect.setBorderWidth(Utilities.millimetersToPoints(BORDER_WIDTH));
-        rect.setBorderColor(BaseColor.BLACK);
+        rect.setBorderColor(borderColor);
         canvas.rectangle(rect);
 
     }
+
 
 }

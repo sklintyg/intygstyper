@@ -18,28 +18,31 @@
  */
 package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
+import java.util.List;
+
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
-import java.util.List;
-
 /**
- * This page should be added last - since it scans the model looking for fields that had overflow when they wer'e rendered.
+ * A FkOverflowPage should be added last - since it scans the model looking for fields that had overflow when they wer'e
+ * rendered.
  *
  * Created by marced on 2016-10-24.
  */
+// CHECKSTYLE:OFF MagicNumber
 public class FkOverflowPage extends FkPage {
-    private String pageTitle;
     private FkPdfDefinition model;
 
     public FkOverflowPage(String pageTitle, FkPdfDefinition model) {
-        this.pageTitle = pageTitle;
+        super(pageTitle);
         this.model = model;
     }
 
@@ -54,6 +57,14 @@ public class FkOverflowPage extends FkPage {
         if (overflowingComponents.size() < 1) {
             return;
         }
+        // We use a table here so that we can control that a row/cell is kept on the same page if possible. Otherwise
+        // it's not unusual that the page-breaks separate label and text.
+        PdfPTable table = new PdfPTable(1);
+
+        table.setWidthPercentage(100f);
+        // Important, we want to make sure label and text is kept together
+        table.setSplitRows(false);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         for (FkOverflowableValueField item : overflowingComponents) {
             Paragraph p = new Paragraph();
@@ -67,8 +78,9 @@ public class FkOverflowPage extends FkPage {
 
             p.add(new Phrase(item.getOverFlowingText(), PdfConstants.FONT_VALUE_TEXT_ARIAL_COMPATIBLE));
 
-            document.add(p);
-        }
+            table.addCell(p);
 
+        }
+        document.add(table);
     }
 }
