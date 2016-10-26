@@ -187,7 +187,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'multi-text',
                     className: 'fold-animation webcert-top-padding-section',
                     hideExpression: '!model.kontaktMedFk',
-                    templateOptions: { label: 'DFR_26.2' }
+                    templateOptions: { label: 'DFR_26.2', hideWhenEmpty: true}
                 }
             ]
         },
