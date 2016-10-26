@@ -218,7 +218,7 @@ public final class UtlatandeToIntyg {
             ovrigt = source.getOvrigt();
         }
 
-        String ret = StringUtil.join("\\n", motiveringTillInteBaseratPaUndersokning, ovrigt);
+        String ret = StringUtil.join("\n", motiveringTillInteBaseratPaUndersokning, ovrigt);
         return !StringUtils.isBlank(ret) ? ret : null;
     }
 }
