@@ -669,41 +669,6 @@ public class InternalDraftValidatorTest {
     }
 
     @Test
-    public void validateBedomningFormagaTrotsBegransning() throws Exception {
-        LisuUtlatande utlatande = builderTemplate
-                .setFormagaTrotsBegransning("formagaTrotsBegransning")
-                .build();
-
-        ValidateDraftResponse res = validator.validateDraft(utlatande);
-
-        assertTrue(res.getValidationErrors().isEmpty());
-    }
-
-    @Test
-    public void validateBedomningFormagaTrotsBegransningNull() throws Exception {
-        LisuUtlatande utlatande = builderTemplate
-                .setFormagaTrotsBegransning(null)
-                .build();
-
-        ValidateDraftResponse res = validator.validateDraft(utlatande);
-
-        assertTrue(res.getValidationErrors().isEmpty());
-    }
-
-    @Test
-    public void validateBedomningFormagaTrotsBegransningBlank() throws Exception {
-        LisuUtlatande utlatande = builderTemplate
-                .setFormagaTrotsBegransning(" ")
-                .build();
-
-        ValidateDraftResponse res = validator.validateDraft(utlatande);
-
-        assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.bedomning.formagatrotsbegransning.empty", res.getValidationErrors().get(0).getMessage());
-        assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
-    }
-
-    @Test
     public void validateBedomningPrognosMissing() throws Exception {
         LisuUtlatande utlatande = builderTemplate
                 .setPrognos(null)

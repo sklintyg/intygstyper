@@ -115,9 +115,6 @@ public final class TransportToInternal {
             case ARBETSRESOR_SVAR_ID_34:
                 handleArbetsresor(utlatande, svar);
                 break;
-            case FORMAGATROTSBEGRANSNING_SVAR_ID_23:
-                handleFormagaTrotsBegransning(utlatande, svar);
-                break;
             case PROGNOS_SVAR_ID_39:
                 handlePrognos(utlatande, svar);
                 break;
@@ -195,18 +192,6 @@ public final class TransportToInternal {
             if (prognosKod != null) {
                 utlatande.setPrognos(Prognos.create(PrognosTyp.fromTransportId(prognosKod),
                         dagarTillArbete != null ? PrognosDagarTillArbeteTyp.fromTransportId(dagarTillArbete) : null));
-            }
-        }
-    }
-
-    private static void handleFormagaTrotsBegransning(LisuUtlatande.Builder utlatande, Svar svar) {
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case FORMAGATROTSBEGRANSNING_DELSVAR_ID_23:
-                utlatande.setFormagaTrotsBegransning(getStringContent(delsvar));
-                break;
-            default:
-                throw new IllegalArgumentException();
             }
         }
     }

@@ -145,8 +145,6 @@ public class InternalToTransportTest {
 
         utlatande.setArbetsresor(true);
 
-        utlatande.setFormagaTrotsBegransning("Är bra på att dansa!");
-
         utlatande.setPrognos(Prognos.create(PrognosTyp.PROGNOS_OKLAR, null));
 
         utlatande.setArbetslivsinriktadeAtgarder(asList(

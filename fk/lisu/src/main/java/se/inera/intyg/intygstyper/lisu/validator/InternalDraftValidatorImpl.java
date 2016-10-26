@@ -201,12 +201,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
                     "lisu.validation.bedomning.fmb.empty");
         }
 
-        // Förmåga trots begränsning
-        if (utlatande.getFormagaTrotsBegransning() != null && StringUtils.isBlank(utlatande.getFormagaTrotsBegransning())) {
-            validatorUtil.addValidationError(validationMessages, "bedomning", ValidationMessageType.EMPTY,
-                    "lisu.validation.bedomning.formagatrotsbegransning.empty");
-        }
-
         // Prognos
         if (!isAvstangningSmittskydd(utlatande)) {
             if (utlatande.getPrognos() == null || utlatande.getPrognos().getTyp() == null) {

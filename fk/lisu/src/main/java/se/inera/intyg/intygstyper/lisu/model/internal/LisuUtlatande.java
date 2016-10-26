@@ -147,11 +147,6 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
     @Nullable
     public abstract Boolean getArbetsresor();
 
-    // Fråga 23 - Förmåga trots begränsning
-    // 23.1
-    @Nullable
-    public abstract String getFormagaTrotsBegransning();
-
     // Fråga 39
     @Nullable
     public abstract Prognos getPrognos();
@@ -276,9 +271,6 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
 
         @JsonProperty(ARBETSRESOR_SVAR_JSON_ID_34)
         public abstract Builder setArbetsresor(Boolean arbetsresor);
-
-        @JsonProperty(FORMAGATROTSBEGRANSNING_SVAR_JSON_ID_23)
-        public abstract Builder setFormagaTrotsBegransning(String formagaTrotsBegransning);
 
         @JsonProperty(PROGNOS_SVAR_JSON_ID_39)
         public abstract Builder setPrognos(Prognos prognos);
