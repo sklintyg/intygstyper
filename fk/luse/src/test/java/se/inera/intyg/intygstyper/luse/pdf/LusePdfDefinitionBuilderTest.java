@@ -103,7 +103,7 @@ public class LusePdfDefinitionBuilderTest {
             assertEquals(LuseEntryPoint.MODULE_ID + "_lakarutlatande_" + intyg.getGrundData().getPatient().getPersonId().getPersonnummer() + ".pdf",
                     PdfGenerator.generatePdfFilename(intyg, LuseEntryPoint.MODULE_ID));
 
-            writePdfToFile(generatorResult, origin, scenarioName, intyg.getId() + System.currentTimeMillis());
+            writePdfToFile(generatorResult, origin, scenarioName, intyg.getId());
         }
     }
 
