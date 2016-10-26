@@ -5,7 +5,7 @@ def commonVersion = "3.1.+"
 
 stage('checkout') {
     node {
-        git url: "https://github.com/sklintyg/intygstyper.git", branch: 'develop'
+        git url: "https://github.com/sklintyg/intygstyper.git", branch: GIT_BRANCH
         util.run { checkout scm }
     }
 }
@@ -29,7 +29,7 @@ stage('tag and upload') {
 }
 
 stage('propagate') {
-    build job: 'intyg-intygstjanst-pipeline', wait: false //, parameters: [[$class: 'StringParameterValue', name: 'GIT_BRANCH', value: GIT_BRANCH]]
-    build job: 'intyg-webcert-pipeline', wait: false //, parameters: [[$class: 'StringParameterValue', name: 'GIT_BRANCH', value: GIT_BRANCH]]
-    build job: 'intyg-minaintyg-pipeline', wait: false //, parameters: [[$class: 'StringParameterValue', name: 'GIT_BRANCH', value: GIT_BRANCH]]
+    build job: 'intyg-intygstjanst-pipeline', wait: false, parameters: [[$class: 'StringParameterValue', name: 'GIT_BRANCH', value: GIT_BRANCH]]
+    build job: 'intyg-webcert-pipeline', wait: false, parameters: [[$class: 'StringParameterValue', name: 'GIT_BRANCH', value: GIT_BRANCH]]
+    build job: 'intyg-minaintyg-pipeline', wait: false, parameters: [[$class: 'StringParameterValue', name: 'GIT_BRANCH', value: GIT_BRANCH]]
 }
