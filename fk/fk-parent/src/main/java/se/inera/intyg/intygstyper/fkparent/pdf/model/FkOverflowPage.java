@@ -48,15 +48,17 @@ public class FkOverflowPage extends FkPage {
 
     @Override
     public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
+        final List<FkOverflowableValueField> fkOverflowableValueFields = model.collectOverflowingComponents();
+        // Skip if nothing to do here..
+        if (fkOverflowableValueFields.size() < 1) {
+            return;
+        }
+
         super.render(document, writer, x, y);
-        renderOverflowingItems(document, model.collectOverflowingComponents());
+        renderOverflowingItems(document, fkOverflowableValueFields);
     }
 
     private void renderOverflowingItems(Document document, List<FkOverflowableValueField> overflowingComponents) throws DocumentException {
-        // Skip if nothing to do here..
-        if (overflowingComponents.size() < 1) {
-            return;
-        }
         // We use a table here so that we can control that a row/cell is kept on the same page if possible. Otherwise
         // it's not unusual that the page-breaks separate label and text.
         PdfPTable table = new PdfPTable(1);
