@@ -37,10 +37,10 @@ import com.itextpdf.text.pdf.PdfWriter;
  */
 // CHECKSTYLE:OFF MagicNumber
 public class FkLogoEventHandler extends PdfPageEventHelper {
-    private static String LOGO_PATH = "images/forsakringskassans_logotyp.jpg";
-    private float LINEAR_SCALE = 0.253f;
-    private float LEFT_OFFSET = Utilities.millimetersToPoints(16f);
-    private final float TOP_OFFSET = Utilities.millimetersToPoints(20f);
+    private static String logoPath = "images/forsakringskassans_logotyp.jpg";
+    private float linearScale = 0.253f;
+    private float leftOffset = Utilities.millimetersToPoints(16f);
+    private final float topOffset = Utilities.millimetersToPoints(20f);
 
     private int activeFromPage;
     private int activeToPage;
@@ -50,9 +50,9 @@ public class FkLogoEventHandler extends PdfPageEventHelper {
         this.activeFromPage = activeFromPage;
         this.activeToPage = activeToPage;
         try {
-            Resource resource = new ClassPathResource(LOGO_PATH);
+            Resource resource = new ClassPathResource(logoPath);
             fkLogo = Image.getInstance(IOUtils.toByteArray(resource.getInputStream()));
-            fkLogo.scalePercent(LINEAR_SCALE * 100f);
+            fkLogo.scalePercent(linearScale * 100f);
         } catch (IOException e) {
             throw new DocumentException("Unable to initialise FkLogoEventHandler: " + e.getMessage());
         }
@@ -69,7 +69,7 @@ public class FkLogoEventHandler extends PdfPageEventHelper {
         if (writer.getPageNumber() >= activeFromPage && writer.getPageNumber() <= activeToPage) {
 
             try {
-                fkLogo.setAbsolutePosition(LEFT_OFFSET, document.getPageSize().getTop() - TOP_OFFSET);
+                fkLogo.setAbsolutePosition(leftOffset, document.getPageSize().getTop() - topOffset);
                 writer.getDirectContent().addImage(fkLogo);
             } catch (DocumentException e) {
                 throw new RuntimeException(e);
