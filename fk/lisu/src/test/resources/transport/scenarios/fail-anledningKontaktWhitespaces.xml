@@ -82,6 +82,7 @@
       <delsvar id="26.2"></delsvar>
     </svar>
     <svar id="28">
+      <instans>1</instans>
       <delsvar id="28.1">
         <ns3:cv>
           <ns3:code>NUVARANDE_ARBETE</ns3:code>

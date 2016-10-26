@@ -50,7 +50,7 @@ public class InternalDraftValidatorTest {
                 .setId("intygsId")
                 .setGrundData(buildGrundData(LocalDateTime.now()))
                 .setUndersokningAvPatienten(new InternalDate(LocalDate.now()))
-                .setSysselsattning(Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE)))
                 .setDiagnoser(buildDiagnoser("J22"))
                 .setFunktionsnedsattning("funktionsnedsattning")
                 .setAktivitetsbegransning("aktivitetsbegransning")
@@ -224,7 +224,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningMissing() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(null)
+                .setSysselsattning(new ArrayList<>())
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -237,7 +237,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningTypMissing() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(Sysselsattning.create(null))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(null)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -250,7 +250,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningNuvarandeArbete() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(Sysselsattning.create(SysselsattningsTyp.NUVARANDE_ARBETE))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.NUVARANDE_ARBETE)))
                 .setNuvarandeArbete("nuvarandeArbete")
                 .build();
 
@@ -262,7 +262,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningNuvarandeArbeteBeskrivingMissing() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(Sysselsattning.create(SysselsattningsTyp.NUVARANDE_ARBETE))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.NUVARANDE_ARBETE)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -275,7 +275,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningNuvarandeArbeteBeskrivingOnly() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE)))
                 .setNuvarandeArbete("nuvarandeArbete")
                 .build();
 
@@ -289,7 +289,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningArbetsmarknadspolitisktProgram() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(Sysselsattning.create(SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)))
                 .setArbetsmarknadspolitisktProgram("arbetsmarknadspolitisktProgram")
                 .build();
 
@@ -301,7 +301,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningArbetsmarknadspolitisktProgramBeskrivingMissing() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(Sysselsattning.create(SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -314,7 +314,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateSysselsattningArbetsmarknadspolitisktProgramBeskrivingOnly() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setSysselsattning(Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE))
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE)))
                 .setArbetsmarknadspolitisktProgram("arbetsmarknadspolitisktProgram")
                 .build();
 
@@ -324,6 +324,38 @@ public class InternalDraftValidatorTest {
         assertEquals("lisu.validation.sysselsattning.ampolitisktprogram.invalid_combination", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
+
+    @Test
+    public void validateSysselsattningMultipleOK() throws Exception {
+        LisuUtlatande utlatande = builderTemplate
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.NUVARANDE_ARBETE),
+                        Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE),
+                        Sysselsattning.create(SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)))
+                .setNuvarandeArbete("nuvarandeArbete")
+                .setArbetsmarknadspolitisktProgram("arbetsmarknadspolitisktProgram")
+                .build();
+
+        ValidateDraftResponse res = validator.validateDraft(utlatande);
+
+        assertTrue(res.getValidationErrors().isEmpty());
+    }
+
+    @Test
+    public void validateSysselsattningTooMany() throws Exception {
+        LisuUtlatande utlatande = builderTemplate
+                .setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE),
+                        Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE), Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE),
+                        Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE), Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE),
+                        Sysselsattning.create(SysselsattningsTyp.ARBETSSOKANDE)))
+                .build();
+
+        ValidateDraftResponse res = validator.validateDraft(utlatande);
+
+        assertEquals(1, res.getValidationErrors().size());
+        assertEquals("lisu.validation.sysselsattning.too-many", res.getValidationErrors().get(0).getMessage());
+        assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
+    }
+
 
     @Test
     public void validateDiagnosis() throws Exception {

@@ -21,6 +21,7 @@ package se.inera.intyg.intygstyper.lisu.validator;
 
 import java.util.*;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,6 +39,7 @@ import se.inera.intyg.intygstyper.lisu.model.internal.ArbetslivsinriktadeAtgarde
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUtlatande> {
 
     private static final int MAX_ARBETSLIVSINRIKTADE_ATGARDER = 10;
+    private static final int MAX_SYSSELSATTNING = 5;
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
@@ -132,37 +134,44 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
     }
 
     private void validateSysselsattning(LisuUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (utlatande.getSysselsattning() == null || utlatande.getSysselsattning().getTyp() == null) {
+        if (CollectionUtils.isEmpty(utlatande.getSysselsattning())
+                || !utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() != null)) {
             validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                     "lisu.validation.sysselsattning.missing");
         } else {
 
             // R9
-            if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
-                    && StringUtils.isBlank(utlatande.getNuvarandeArbete())) {
+            if (StringUtils.isBlank(utlatande.getNuvarandeArbete()) &&
+                    utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.missing");
             }
 
             // R10
-            if (utlatande.getSysselsattning().getTyp() != Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE
-                    && !StringUtils.isBlank(utlatande.getNuvarandeArbete())) {
+            if (!StringUtils.isBlank(utlatande.getNuvarandeArbete()) &&
+                    !utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.invalid_combination");
             }
 
             // R11
-            if (utlatande.getSysselsattning().getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
-                    && StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())) {
+            if (StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram()) &&
+                    utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.ampolitisktprogram.missing");
             }
 
             // R12
-            if (utlatande.getSysselsattning().getTyp() != Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM
-                    && !StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())) {
+            if (!StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram()) &&
+                    !utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.ampolitisktprogram.invalid_combination");
+            }
+
+            // No more than 5 entries are allowed
+            if (utlatande.getSysselsattning().size() > MAX_SYSSELSATTNING) {
+                validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
+                        "lisu.validation.sysselsattning.too-many");
             }
         }
     }

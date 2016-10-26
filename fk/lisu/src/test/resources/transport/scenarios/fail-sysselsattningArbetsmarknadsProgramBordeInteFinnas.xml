@@ -77,6 +77,7 @@
       <delsvar id="1.2">2015-12-08</delsvar>
     </svar>
     <svar id="28">
+      <instans>1</instans>
       <delsvar id="28.1">
         <ns3:cv>
           <ns3:code>ARBETSSOKANDE</ns3:code>

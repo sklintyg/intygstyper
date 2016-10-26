@@ -74,9 +74,11 @@
       "diagnosKod": "S47"
     }
   ],
-  "sysselsattning": {
-    "typ": 5
-  },
+  "sysselsattning": [
+    {
+      "typ": 5
+    }
+  ],
   "arbetsmarknadspolitisktProgram" : "Arbetsmarknadspolitiskt program",
   "telefonkontaktMedPatienten": "2015-12-08"
 }

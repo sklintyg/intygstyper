@@ -74,9 +74,11 @@
     }
   ],
   "nuvarandeArbete": "Smed",
-  "sysselsattning": {
-    "typ": 1
-  },
+  "sysselsattning": [
+    {
+      "typ": 1
+    }
+  ],
   "annatGrundForMUBeskrivning": "Barndomsvän",
   "annatGrundForMU": "2015-12-07",
   "telefonkontaktMedPatienten": "2015-12-08"

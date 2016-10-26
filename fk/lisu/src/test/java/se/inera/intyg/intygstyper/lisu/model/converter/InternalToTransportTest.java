@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import javax.xml.transform.stream.StreamSource;
 
@@ -121,7 +122,7 @@ public class InternalToTransportTest {
         utlatande.setAnnatGrundForMU(new InternalDate("2015-12-07"));
         utlatande.setAnnatGrundForMUBeskrivning("Barndomsvän");
 
-        utlatande.setSysselsattning(Sysselsattning.create(Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE));
+        utlatande.setSysselsattning(Arrays.asList(Sysselsattning.create(Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE)));
         utlatande.setNuvarandeArbete("Smed");
 
         utlatande.setDiagnoser(asList((Diagnos.create("S47", "ICD_10_SE", "Klämskada skuldra", "Klämskada skuldra"))));

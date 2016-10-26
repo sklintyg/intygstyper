@@ -94,10 +94,15 @@ public final class UtlatandeToIntyg {
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1, source.getAnnatGrundForMUBeskrivning()).build());
         }
 
-        if (source.getSysselsattning() != null && source.getSysselsattning().getTyp() != null) {
-            svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID_28).withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID_28,
-                    aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, source.getSysselsattning().getTyp().getTransportId(), source.getSysselsattning().getTyp().getLabel()))
-                    .build());
+        int sysselsattningInstans = 1;
+        if (source.getSysselsattning() != null) {
+            for (Sysselsattning sysselsattning : source.getSysselsattning()) {
+                if (sysselsattning.getTyp() != null) {
+                    svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID_28, sysselsattningInstans++).withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID_28,
+                            aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, sysselsattning.getTyp().getTransportId(), sysselsattning.getTyp().getLabel()))
+                            .build());
+                }
+            }
         }
 
         addIfNotBlank(svars, NUVARANDE_ARBETE_SVAR_ID_29, NUVARANDE_ARBETE_DELSVAR_ID_29, source.getNuvarandeArbete());

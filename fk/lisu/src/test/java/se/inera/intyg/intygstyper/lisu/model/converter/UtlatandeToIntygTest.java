@@ -135,7 +135,7 @@ public class UtlatandeToIntygTest {
     @Test
     public void testConvertDoesNotAddSvarForSysselsattningWithoutType() {
         Sysselsattning sysselsattning = Sysselsattning.create(null);
-        LisuUtlatande utlatande = buildUtlatande().toBuilder().setSysselsattning(sysselsattning ).build();
+        LisuUtlatande utlatande = buildUtlatande().toBuilder().setSysselsattning(Arrays.asList(sysselsattning)).build();
 
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
         assertTrue(intyg.getSvar().isEmpty());

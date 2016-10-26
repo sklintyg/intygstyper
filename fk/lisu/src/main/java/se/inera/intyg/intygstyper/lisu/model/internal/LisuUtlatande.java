@@ -84,7 +84,7 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
     // Fråga 28
     // Fråga 28.1
     @Nullable
-    public abstract Sysselsattning getSysselsattning();
+    public abstract ImmutableList<Sysselsattning> getSysselsattning();
 
     // Fråga 29 - Nuvarande arbete
     // Fråga 29.1
@@ -196,6 +196,7 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
         return new AutoValue_LisuUtlatande.Builder()
             .setDiagnoser(ImmutableList.<Diagnos> of())
             .setSjukskrivningar(ImmutableList.<Sjukskrivning> of())
+            .setSysselsattning(ImmutableList.<Sysselsattning> of())
             .setArbetslivsinriktadeAtgarder(ImmutableList.<ArbetslivsinriktadeAtgarder> of())
             .setTillaggsfragor(ImmutableList.<Tillaggsfraga>of());
     }
@@ -233,7 +234,11 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
         public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
 
         @JsonProperty(TYP_AV_SYSSELSATTNING_SVAR_JSON_ID_28)
-        public abstract Builder setSysselsattning(Sysselsattning sysselsattning);
+        public Builder setSysselsattning(List<Sysselsattning> sysselsattning) {
+            return setSysselsattning(ImmutableList.copyOf(sysselsattning));
+        }
+        /* package private */
+        abstract Builder setSysselsattning(ImmutableList<Sysselsattning> sysselsattning);
 
         @JsonProperty(NUVARANDE_ARBETE_SVAR_JSON_ID_29)
         public abstract Builder setNuvarandeArbete(String nuvarandeArbete);

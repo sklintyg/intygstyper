@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -39,7 +40,7 @@ public class TransportToInternalTest {
 
         utlatande.setArbetslivsinriktadeAtgarder(asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)));
 
-        utlatande.setSysselsattning(Sysselsattning.create(SysselsattningsTyp.STUDIER));
+        utlatande.setSysselsattning(Arrays.asList(Sysselsattning.create(SysselsattningsTyp.STUDIER)));
         utlatande.setPrognos(Prognos.create(PrognosTyp.ATER_X_ANTAL_DGR, PrognosDagarTillArbeteTyp.DAGAR_30));
         utlatande.setFunktionsnedsattning("Funktionsnedsättning");
 

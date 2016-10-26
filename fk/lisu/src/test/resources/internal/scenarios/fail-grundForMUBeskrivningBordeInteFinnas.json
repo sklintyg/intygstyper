@@ -75,9 +75,11 @@
     }
   ],
   "nuvarandeArbete": "Smed",
-  "sysselsattning": {
-    "typ": 1
-  },
+  "sysselsattning": [
+    {
+      "typ": 1
+    }
+  ],
   "annatGrundForMUBeskrivning" : "Annan grund för MU",
   "telefonkontaktMedPatienten": "2015-12-08"
 }

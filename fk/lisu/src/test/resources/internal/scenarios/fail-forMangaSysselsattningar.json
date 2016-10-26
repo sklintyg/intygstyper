@@ -69,16 +69,32 @@
   "funktionsnedsattning": "Haltar när han dansar",
   "diagnoser": [
     {
-      "diagnosBeskrivning": "Error",
+      "diagnosBeskrivning": "Klämskada skuldra",
       "diagnosKodSystem": "ICD_10_SE",
-      "diagnosKod": "Z73"
+      "diagnosKod": "S47"
     }
   ],
   "nuvarandeArbete": "Smed",
   "sysselsattning": [
     {
       "typ": 1
+    },
+    {
+      "typ": 2
+    },
+    {
+      "typ": 3
+    },
+    {
+      "typ": 4
+    },
+    {
+      "typ": 5
+    },
+    {
+      "typ": 4
     }
   ],
+  "arbetsmarknadspolitisktProgram" : "Arbetsmarknadspolitiskt program",
   "telefonkontaktMedPatienten": "2015-12-08"
 }

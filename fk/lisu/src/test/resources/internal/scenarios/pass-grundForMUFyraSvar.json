@@ -75,9 +75,11 @@
     }
   ],
   "nuvarandeArbete": "Smed",
-  "sysselsattning": {
-    "typ": 1
-  },
+  "sysselsattning": [
+    {
+      "typ": 1
+    }
+  ],
   "telefonkontaktMedPatienten": "2015-12-08",
   "undersokningAvPatienten" : "2015-12-09",
   "journaluppgifter" : "2015-12-10",

@@ -68,6 +68,7 @@ public final class TransportToInternal {
         List<Diagnos> diagnoser = new ArrayList<>();
         List<Tillaggsfraga> tillaggsfragor = new ArrayList<>();
         List<Sjukskrivning> sjukskrivningar = new ArrayList<>();
+        List<Sysselsattning> sysselsattning = new ArrayList<>();
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
@@ -78,7 +79,7 @@ public final class TransportToInternal {
                 handleGrundForMedicinsktUnderlag(utlatande, svar);
                 break;
             case TYP_AV_SYSSELSATTNING_SVAR_ID_28:
-                handleSysselsattning(utlatande, svar);
+                handleSysselsattning(sysselsattning, svar);
                 break;
             case NUVARANDE_ARBETE_SVAR_ID_29:
                 handleNuvarandeArbete(utlatande, svar);
@@ -137,6 +138,7 @@ public final class TransportToInternal {
         }
 
         utlatande.setSjukskrivningar(sjukskrivningar);
+        utlatande.setSysselsattning(sysselsattning);
         utlatande.setDiagnoser(diagnoser);
         utlatande.setTillaggsfragor(tillaggsfragor);
     }
@@ -306,12 +308,12 @@ public final class TransportToInternal {
         }
     }
 
-    private static void handleSysselsattning(LisuUtlatande.Builder utlatande, Svar svar) throws ConverterException {
+    private static void handleSysselsattning(List<Sysselsattning> sysselsattning, Svar svar) throws ConverterException {
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case TYP_AV_SYSSELSATTNING_DELSVAR_ID_28:
                 String sysselsattningsTypString = getCVSvarContent(delsvar).getCode();
-                utlatande.setSysselsattning(Sysselsattning.create(Sysselsattning.SysselsattningsTyp.fromTransportId(sysselsattningsTypString)));
+                sysselsattning.add(Sysselsattning.create(Sysselsattning.SysselsattningsTyp.fromTransportId(sysselsattningsTypString)));
                 break;
             default:
                 throw new IllegalArgumentException();
