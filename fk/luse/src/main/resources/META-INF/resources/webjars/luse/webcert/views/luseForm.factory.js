@@ -54,7 +54,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'single-text-vertical',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full' }
+                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full', hideWhenEmpty: true, forceLine: true }
                 },
                 {
                     key: 'motiveringTillInteBaseratPaUndersokning',
