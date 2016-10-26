@@ -69,6 +69,7 @@ public final class TransportToInternal {
         List<Tillaggsfraga> tillaggsfragor = new ArrayList<>();
         List<Sjukskrivning> sjukskrivningar = new ArrayList<>();
         List<Sysselsattning> sysselsattning = new ArrayList<>();
+        List<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder = new ArrayList<>();
 
         for (Svar svar : source.getSvar()) {
             switch (svar.getId()) {
@@ -121,7 +122,7 @@ public final class TransportToInternal {
                 handlePrognos(utlatande, svar);
                 break;
             case ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40:
-                handleArbetslivsinriktadeAtgarder(utlatande, svar);
+                handleArbetslivsinriktadeAtgarder(arbetslivsinriktadeAtgarder, svar);
                 break;
             case OVRIGT_SVAR_ID_25:
                 handleOvrigt(utlatande, svar);
@@ -139,6 +140,7 @@ public final class TransportToInternal {
 
         utlatande.setSjukskrivningar(sjukskrivningar);
         utlatande.setSysselsattning(sysselsattning);
+        utlatande.setArbetslivsinriktadeAtgarder(arbetslivsinriktadeAtgarder);
         utlatande.setDiagnoser(diagnoser);
         utlatande.setTillaggsfragor(tillaggsfragor);
     }
@@ -155,27 +157,25 @@ public final class TransportToInternal {
         }
     }
 
-    private static void handleArbetslivsinriktadeAtgarder(LisuUtlatande.Builder utlatande, Svar svar) throws ConverterException {
-        List<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder = new ArrayList<>();
-
+    private static void handleArbetslivsinriktadeAtgarder(List<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder, Svar svar) throws ConverterException {
+        ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal val = null;
+        String beskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40:
                 String arbetslivsinriktadeAtgarderValKod = getCVSvarContent(delsvar).getCode();
-                arbetslivsinriktadeAtgarder.add(ArbetslivsinriktadeAtgarder
-                        .create(ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal.fromTransportId(arbetslivsinriktadeAtgarderValKod)));
+                val = ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal.fromTransportId(arbetslivsinriktadeAtgarderValKod);
                 break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40:
-                utlatande.setArbetslivsinriktadeAtgarderAktuelltBeskrivning(getStringContent(delsvar));
-                break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40:
-                utlatande.setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning(getStringContent(delsvar));
+            case ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40:
+                beskrivning = getStringContent(delsvar);
                 break;
             default:
                 throw new IllegalArgumentException();
             }
         }
-        utlatande.setArbetslivsinriktadeAtgarder(arbetslivsinriktadeAtgarder);
+        if (val != null) {
+            arbetslivsinriktadeAtgarder.add(ArbetslivsinriktadeAtgarder.create(val, beskrivning));
+        }
     }
 
     private static void handlePrognos(LisuUtlatande.Builder utlatande, Svar svar) throws ConverterException {

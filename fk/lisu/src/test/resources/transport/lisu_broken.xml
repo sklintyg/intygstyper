@@ -174,12 +174,17 @@
       <delsvar id="39.2">Kan bara jobba på nätterna.</delsvar>
     </svar>
     <svar id="40">
+      <instans>1</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>OVRIGA_ATGARDER</ns3:code>
           <ns3:codeSystem>KV_FKMU_0004</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning övriga åtgärder</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>2</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>KONFLIKTHANTERING</ns3:code>

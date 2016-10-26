@@ -45,11 +45,23 @@
   "arbetslivsinriktadeAtgarder": [
     {
       "val": 11,
-      "beskrivning": "Jobbar bra om man inte stör honom"
+      "beskrivning": "Beskrivning övrigt"
+    },
+    {
+      "val": 4,
+      "beskrivning": "Beskrivning söka nytt arbete"
+    },
+    {
+      "val": 6,
+      "beskrivning": "Beskrivning ergonomisk bedömning"
+    },
+    {
+      "val": 3,
+      "beskrivning": "Beskrivning arbetsanpassning"
     }
   ],
   "prognos": {
-    "typ": 4
+    "typ": 1
   },
   "formagaTrotsBegransning": "är bra på att dansa!",
   "arbetsresor": true,
@@ -69,9 +81,9 @@
   "funktionsnedsattning": "Haltar när han dansar",
   "diagnoser": [
     {
-      "diagnosBeskrivning": "Error",
+      "diagnosBeskrivning": "Klämskada skuldra",
       "diagnosKodSystem": "ICD_10_SE",
-      "diagnosKod": "Z73"
+      "diagnosKod": "S47"
     }
   ],
   "nuvarandeArbete": "Smed",

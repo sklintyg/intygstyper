@@ -247,6 +247,7 @@
       </delsvar>
     </svar>
     <svar id="40">
+      <instans>1</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>ARBETSTRANING</ns3:code>
@@ -254,6 +255,10 @@
           <ns3:displayName>Arbetstr&#xE4;ning</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning arbetsträning</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>2</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>ARBETSANPASSNING</ns3:code>
@@ -261,6 +266,10 @@
           <ns3:displayName>Arbetsanpassning</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning arbetsanpassning</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>3</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>SOKA_NYTT_ARBETE</ns3:code>
@@ -268,6 +277,10 @@
           <ns3:displayName>S&#xF6;ka nytt arbete</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning söka nytt arbete</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>4</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>BESOK_ARBETSPLATS</ns3:code>
@@ -275,6 +288,10 @@
           <ns3:displayName>Bes&#xF6;k p&#xE5; arbetsplatsen</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning besök arbetsplats</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>5</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>ERGONOMISK</ns3:code>
@@ -282,6 +299,10 @@
           <ns3:displayName>Ergonomisk bed&#xF6;mning</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning ergonomisk bedömning</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>6</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>HJALPMEDEL</ns3:code>
@@ -289,6 +310,10 @@
           <ns3:displayName>Hj&#xE4;lpmedel</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning hjälpmedel</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>7</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>KONFLIKTHANTERING</ns3:code>
@@ -296,6 +321,10 @@
           <ns3:displayName>Konflikthantering</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning konflikthantering</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>8</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>KONTAKT_FHV</ns3:code>
@@ -303,6 +332,10 @@
           <ns3:displayName>Kontakt med f&#xF6;retagsh&#xE4;lsov&#xE5;rd</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning kontakt fhv</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>9</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>OMFORDELNING</ns3:code>
@@ -310,6 +343,10 @@
           <ns3:displayName>Omf&#xF6;rdelning av arbetsuppgifter</ns3:displayName>
         </ns3:cv>
       </delsvar>
+      <delsvar id="40.2">Beskrivning omfordelning</delsvar>
+    </svar>
+    <svar id="40">
+      <instans>10</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>OVRIGA_ATGARDER</ns3:code>

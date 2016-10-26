@@ -203,11 +203,8 @@ public final class RespConstants {
 
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40 = "40";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40 = "40.1";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40 = "40.2";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40 = "40.3";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40 = "40.2";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarder";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderAktuelltBeskrivning";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderEjAktuelltBeskrivning";
 
     public static final String TILLAGGSFRAGOR_SVAR_JSON_ID = "tillaggsfragor";
     public static final int TILLAGGSFRAGOR_START = 9000;

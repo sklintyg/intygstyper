@@ -21,6 +21,8 @@ package se.inera.intyg.intygstyper.lisu.model.internal;
 
 import java.util.EnumSet;
 
+import javax.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
 
@@ -30,11 +32,14 @@ public abstract class ArbetslivsinriktadeAtgarder {
     }
 
     @JsonCreator
-    public static ArbetslivsinriktadeAtgarder create(@JsonProperty("val") ArbetslivsinriktadeAtgarderVal val) {
-        return new AutoValue_ArbetslivsinriktadeAtgarder(val);
+    public static ArbetslivsinriktadeAtgarder create(@JsonProperty("val") ArbetslivsinriktadeAtgarderVal val, @JsonProperty("beskrivning") String beskrivning) {
+        return new AutoValue_ArbetslivsinriktadeAtgarder(val, beskrivning);
     }
 
     public abstract ArbetslivsinriktadeAtgarderVal getVal();
+
+    @Nullable
+    public abstract String getBeskrivning();
 
     public enum ArbetslivsinriktadeAtgarderVal {
         /**

@@ -160,14 +160,6 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
     // Fråga 40 - Arbetslivsinriktade åtgärder
     public abstract ImmutableList<ArbetslivsinriktadeAtgarder> getArbetslivsinriktadeAtgarder();
 
-    @Nullable
-    // Delfråga 40.2 - Arbetslivsinriktade åtgärder aktuellt beksrivning
-    public abstract String getArbetslivsinriktadeAtgarderAktuelltBeskrivning();
-
-    @Nullable
-    // Delfråga 40.3 - Arbetslivsinriktade åtgärder ej aktuellt beksrivning
-    public abstract String getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning();
-
     // Kategori 8 - Övrigt
     // Fråga 25
     @Nullable
@@ -298,12 +290,6 @@ public abstract class LisuUtlatande implements Utlatande, SitUtlatande {
 
         /* package private*/
         abstract Builder setArbetslivsinriktadeAtgarder(ImmutableList<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder);
-
-        @JsonProperty(ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40)
-        public abstract Builder setArbetslivsinriktadeAtgarderAktuelltBeskrivning(String arbetslivsinriktadeAtgarderAktuelltBeskrivning);
-
-        @JsonProperty(ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40)
-        public abstract Builder setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning(String arbetslivsinriktadeAtgarderEjAktuelltBeskrivning);
 
         @JsonProperty(OVRIGT_SVAR_JSON_ID_25)
         public abstract Builder setOvrigt(String ovrigt);

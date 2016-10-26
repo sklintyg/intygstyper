@@ -42,10 +42,10 @@
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
   "tillaggsfragor": [],
-  "arbetslivsinriktadeAtgarderAktuelltBeskrivning": "Jobbar bra om man inte stör honom",
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": 11
+      "val": 11,
+      "beskrivning": "Jobbar bra om man inte stör honom"
     }
   ],
   "formagaTrotsBegransning": "är bra på att dansa!",

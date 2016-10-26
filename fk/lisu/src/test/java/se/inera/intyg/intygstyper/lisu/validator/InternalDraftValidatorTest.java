@@ -57,8 +57,7 @@ public class InternalDraftValidatorTest {
                 .setPrognos(Prognos.create(PrognosTyp.MED_STOR_SANNOLIKHET, null))
                 .setSjukskrivningar(Arrays.asList(Sjukskrivning.create(SjukskrivningsGrad.HELT_NEDSATT,
                         new InternalLocalDateInterval(new InternalDate(LocalDate.now()), new InternalDate(LocalDate.now().plusDays(7))))))
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING)))
-                .setArbetslivsinriktadeAtgarderAktuelltBeskrivning("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING, "Beskrivning arbetsträning")))
                 .setTextVersion("");
 
         when(moduleService.validateDiagnosisCode(anyString(), anyString())).thenReturn(true);
@@ -783,9 +782,7 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateAtgarderInteAktuell() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)))
-                .setArbetslivsinriktadeAtgarderAktuelltBeskrivning(null)
-                .setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning("arbetslivsinriktadeAtgarderEjAktuelltBeskrivning")
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT, null)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -796,93 +793,68 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateAtgarderInteAktuellCombined() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
-                .setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning("arbetslivsinriktadeAtgarderEjAktuelltBeskrivning")
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT, null),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskriving arbetsanpassning")))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
-        assertEquals(2, res.getValidationErrors().size());
+        assertEquals(1, res.getValidationErrors().size());
         assertEquals("lisu.validation.atgarder.inte_aktuellt_no_combine", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
-        assertEquals("lisu.validation.atgarder.invalid_combination", res.getValidationErrors().get(1).getMessage());
-        assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(1).getType());
     }
 
     @Test
-    public void validateAtgarderInteAktuellBeskrivningMissing() throws Exception {
+    public void validateAtgarderInteAktuellBeskrivning() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)))
-                .setArbetslivsinriktadeAtgarderAktuelltBeskrivning(null)
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT, "Beskrivning")))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.atgarder.inte_aktuellt_missing_description", res.getValidationErrors().get(0).getMessage());
-        assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
-    }
-
-    @Test
-    public void validateAtgarderInteAktuellAktuellBeskrivning() throws Exception {
-        LisuUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)))
-                .setArbetslivsinriktadeAtgarderAktuelltBeskrivning("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
-                .setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning("arbetslivsinriktadeAtgarderEjAktuelltBeskrivning")
-                .build();
-
-        ValidateDraftResponse res = validator.validateDraft(utlatande);
-
-        assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.atgarder.invalid_combination", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisu.validation.atgarder.1.invalid_combination", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
     @Test
     public void validateAtgarderAktuellBeskrivningMissing() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
-                .setArbetslivsinriktadeAtgarderAktuelltBeskrivning(" ")
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, null)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.atgarder.aktuelltbeskrivning.missing", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisu.validation.atgarder.3.missing_description", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
     @Test
-    public void validateAtgarderAktuellEjAktuellBeskrivning() throws Exception {
+    public void validateAtgarderAktuell() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
-                .setArbetslivsinriktadeAtgarderAktuelltBeskrivning("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
-                .setArbetslivsinriktadeAtgarderEjAktuelltBeskrivning("arbetslivsinriktadeAtgarderEjAktuelltBeskrivning")
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskrivning arbetsanpassning")))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
-        assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.atgarder.invalid_combination", res.getValidationErrors().get(0).getMessage());
-        assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
+        assertTrue(res.getValidationErrors().isEmpty());
     }
 
     @Test
     public void validateAtgarderTooMany() throws Exception {
         LisuUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.BESOK_PA_ARBETSPLATSEN),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ERGONOMISK_BEDOMNING),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.HJALPMEDEL),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONFLIKTHANTERING),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONTAKT_MED_FORETAGSHALSOVARD),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OMFORDELNING_AV_ARBETSUPPGIFTER),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.SOKA_NYTT_ARBETE),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
-                .setArbetslivsinriktadeAtgarderAktuelltBeskrivning("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.BESOK_PA_ARBETSPLATSEN, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ERGONOMISK_BEDOMNING, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.HJALPMEDEL, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONFLIKTHANTERING, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONTAKT_MED_FORETAGSHALSOVARD, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OMFORDELNING_AV_ARBETSUPPGIFTER, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.SOKA_NYTT_ARBETE, "Beskrivning"),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskrivning")))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);

@@ -345,33 +345,18 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
                         "lisu.validation.atgarder.inte_aktuellt_no_combine");
             }
 
-            // R24 If INTE_AKTUELLT is checked, arbetslivsinriktadeAtgarderEjAktuelltBeskrivning must be specified
-            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
-                validatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
-                        "lisu.validation.atgarder.inte_aktuellt_missing_description");
-            }
-
-            // R23 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning() must not be
-            // answered
-            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
-                validatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
-                        "lisu.validation.atgarder.invalid_combination");
-            }
-
-            // R22 If other choices than INTE_AKTUELLT are checked beskrivning åtgärder aktuellt is required
-            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> ArbetslivsinriktadeAtgarderVal.ATGARD_AKTUELL.contains(e.getVal()))
-                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
-                validatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
-                        "lisu.validation.atgarder.aktuelltbeskrivning.missing");
-            }
-
-            // R25 If INTE_AKTUELLT is NOT checked beskrivning åtgärder ej aktuellt is not allowed
-            if (!utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
-                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
-                validatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
-                        "lisu.validation.atgarder.invalid_combination");
+            for (ArbetslivsinriktadeAtgarder atgard : utlatande.getArbetslivsinriktadeAtgarder()) {
+                if (atgard.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT) {
+                    // R36 Beskrivning must not be specified for atgard of type INTE_AKTUELLT
+                    if (StringUtils.isNotBlank(atgard.getBeskrivning())) {
+                        validatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                                "lisu.validation.atgarder." + atgard.getVal().getId() + ".invalid_combination");
+                    }
+                } else if (StringUtils.isBlank(atgard.getBeskrivning())) {
+                    // R35 Beskrivning must be specified for each atgard that is not of type INTE_AKTUELLT
+                    validatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                            "lisu.validation.atgarder." + atgard.getVal().getId() + ".missing_description");
+                }
             }
 
             // No more than 10 entries are allowed

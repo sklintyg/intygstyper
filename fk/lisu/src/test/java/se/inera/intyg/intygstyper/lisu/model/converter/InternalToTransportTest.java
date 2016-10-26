@@ -150,9 +150,8 @@ public class InternalToTransportTest {
         utlatande.setPrognos(Prognos.create(PrognosTyp.PROGNOS_OKLAR, null));
 
         utlatande.setArbetslivsinriktadeAtgarder(asList(
-                ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT),
-                ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONFLIKTHANTERING)));
-        utlatande.setArbetslivsinriktadeAtgarderAktuelltBeskrivning("Jobbar bra om man inte stör honom");
+                ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT, "Jobbar bra om man inte stör honom"),
+                ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONFLIKTHANTERING, "Beskriving konflikthantering")));
 
         return utlatande.build();
     }

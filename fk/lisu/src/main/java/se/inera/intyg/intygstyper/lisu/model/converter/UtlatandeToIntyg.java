@@ -193,29 +193,15 @@ public final class UtlatandeToIntyg {
             }
         }
 
-        /* Build complex object */
-        SvarBuilder arbetslivsinriktadeAtgarderBuilder = aSvar(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40);
-
-        source.getArbetslivsinriktadeAtgarder().stream()
-                .forEach((ArbetslivsinriktadeAtgarder atgarder) -> {
-                    arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
-                            aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getTransportId(), atgarder.getVal().getLabel()));
-                });
-
-        if (!StringUtils.isBlank(source.getArbetslivsinriktadeAtgarderAktuelltBeskrivning())) {
-            arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40,
-                    source.getArbetslivsinriktadeAtgarderAktuelltBeskrivning());
+        int arbetslivsinriktadeAtgarderInstans = 1;
+        for (ArbetslivsinriktadeAtgarder atgarder : source.getArbetslivsinriktadeAtgarder()) {
+            SvarBuilder atgardBuilder = aSvar(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40, arbetslivsinriktadeAtgarderInstans++).withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
+                    aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getTransportId(), atgarder.getVal().getLabel()));
+            if (!StringUtils.isBlank(atgarder.getBeskrivning())) {
+                atgardBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40, atgarder.getBeskrivning());
+            }
+            svars.add(atgardBuilder.build());
         }
-
-        if (!StringUtils.isBlank(source.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning())) {
-            arbetslivsinriktadeAtgarderBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40,
-                    source.getArbetslivsinriktadeAtgarderEjAktuelltBeskrivning());
-        }
-
-        if (CollectionUtils.isNotEmpty(arbetslivsinriktadeAtgarderBuilder.delSvars)) {
-            svars.add(arbetslivsinriktadeAtgarderBuilder.build());
-        }
-        /* End complex object */
 
         addIfNotBlank(svars, OVRIGT_SVAR_ID_25, OVRIGT_DELSVAR_ID_25, source.getOvrigt());
 

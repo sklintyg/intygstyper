@@ -45,7 +45,10 @@
   "arbetslivsinriktadeAtgarder": [
     {
       "val": 11,
-      "beskrivning": "Jobbar bra om man inte stör honom"
+      "beskrivning": "Beskrivning"
+    },
+    {
+      "val": 4
     }
   ],
   "prognos": {
@@ -69,9 +72,9 @@
   "funktionsnedsattning": "Haltar när han dansar",
   "diagnoser": [
     {
-      "diagnosBeskrivning": "Error",
+      "diagnosBeskrivning": "Klämskada skuldra",
       "diagnosKodSystem": "ICD_10_SE",
-      "diagnosKod": "Z73"
+      "diagnosKod": "S47"
     }
   ],
   "nuvarandeArbete": "Smed",
@@ -80,5 +83,7 @@
       "typ": 1
     }
   ],
+  "annatGrundForMUBeskrivning": "Barndomsvän",
+  "annatGrundForMU": "2015-12-07",
   "telefonkontaktMedPatienten": "2015-12-08"
 }

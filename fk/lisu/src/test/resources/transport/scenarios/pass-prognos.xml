@@ -152,6 +152,7 @@
       </delsvar>
     </svar>
     <svar id="40">
+      <instans>1</instans>
       <delsvar id="40.1">
         <ns3:cv>
           <ns3:code>OVRIGA_ATGARDER</ns3:code>
