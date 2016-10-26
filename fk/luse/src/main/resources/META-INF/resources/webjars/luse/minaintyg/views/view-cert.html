@@ -73,14 +73,9 @@
                 <span message key="luse.button.send.certificate"></span>
               </button>
             </span>
-            <!--
-              'Spara som PDF' är disablad för LUSE tillsvidare mha CSS style. Se JIRA INTYG-2962
-            -->
-            <span uib-tooltip="{{messageService.getProperty('luse.button.save.as.pdf.title')}}" style="display: inline-block">
-              <button id="downloadprint" type="submit" class="btn btn-inverse" ng-click="document.pdfForm.submit()" ng-disabled="true">
-                <span message key="modules.button.save.as.pdf"></span>
-              </button>
-            </span>
+            <button id="downloadprint" type="submit" class="btn btn-inverse" ng-click="document.pdfForm.submit()">
+              <span message key="modules.button.save.as.pdf"></span>
+            </button>
           </p>
         </form>
       </div>
