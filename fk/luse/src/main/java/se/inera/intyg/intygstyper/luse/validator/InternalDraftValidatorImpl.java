@@ -156,9 +156,9 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         }
 
         // INTYG-2949
-        if (utlatande.getUndersokningAvPatienten() == null && 
-                (utlatande.getJournaluppgifter() != null || utlatande.getAnhorigsBeskrivningAvPatienten() != null || utlatande.getAnnatGrundForMU() != null) &&
-                StringUtils.isBlank(utlatande.getMotiveringTillInteBaseratPaUndersokning())) {
+        if (utlatande.getUndersokningAvPatienten() == null && (utlatande.getJournaluppgifter() != null
+                || utlatande.getAnhorigsBeskrivningAvPatienten() != null || utlatande.getAnnatGrundForMU() != null)
+                && StringUtils.isBlank(utlatande.getMotiveringTillInteBaseratPaUndersokning())) {
             addValidationError(validationMessages, "grundformu", ValidationMessageType.EMPTY,
                     "luse.validation.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.missing");
         }

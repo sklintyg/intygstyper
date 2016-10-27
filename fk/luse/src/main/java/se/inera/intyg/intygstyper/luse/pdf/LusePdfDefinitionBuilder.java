@@ -65,6 +65,7 @@ import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
  * Created by marced on 18/08/16.
  */
 // CHECKSTYLE:OFF MagicNumber
+// CHECKSTYLE:OFF MethodLength
 public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
 
     private static final float KATEGORI_FULL_WIDTH = 180f;
@@ -124,7 +125,6 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
     }
 
     private FkPage createPage1(LuseUtlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
-
         List<PdfComponent> allElements = new ArrayList<>();
 
         boolean showFkAddress;
@@ -809,3 +809,5 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
     }
 
 }
+// CHECKSTYLE:ON MagicNumber
+// CHECKSTYLE:ON MethodLength
