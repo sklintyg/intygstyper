@@ -82,7 +82,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             });
 
             $scope.$watch('model.annanReferens', function(newVal, oldVal) {
-                if(newVal !== oldVal){
+                // Ensure that this is only run when avstangningSmittskydd is false, otherwise attic values get overwritten.
+                if(newVal !== oldVal && ObjectHelper.isFalsy(viewState.avstangningSmittskyddValue)){
                     // Load annanReferensBeskrivning to/from attic when setting or removing a value for annanReferens
                     var modelSubProperty = model.properties.form4b.annanReferensBeskrivning;
                     if (viewState.common.doneLoading && ObjectHelper.isEmpty(model.annanReferens)) {
@@ -92,7 +93,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                     } else if(model.isInAttic(modelSubProperty)) {
                         // restore from attic when selecting annanReferens if there is a stored attic value for annanReferensBeskrivning
                         model.restoreFromAttic(modelSubProperty);
-                    }                
+                    }
                 }
             }, true);
 
@@ -133,7 +134,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                 $scope.dates.telefonkontaktMedPatienten = $scope.model.telefonkontaktMedPatienten;
                 $scope.dates.journaluppgifter = $scope.model.journaluppgifter;
                 $scope.dates.annanReferens = $scope.model.annanReferens;
-
             }
 
 
