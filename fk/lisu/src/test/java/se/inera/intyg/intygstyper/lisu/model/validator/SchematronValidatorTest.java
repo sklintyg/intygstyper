@@ -17,7 +17,7 @@ import se.inera.intyg.intygstyper.fkparent.model.validator.XmlValidator;
 
 public class SchematronValidatorTest {
 
-    private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("lisu.sch");
+    private static final RegisterCertificateValidator VALIDATOR = new RegisterCertificateValidator("lisjp.sch");
 
     static {
         // avoid com.helger debug log
