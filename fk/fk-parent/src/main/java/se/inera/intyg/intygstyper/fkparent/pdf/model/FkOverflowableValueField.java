@@ -41,7 +41,7 @@ import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 // CHECKSTYLE:OFF MagicNumber
 public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueField> {
 
-    private static final String SEE_APPENDIX_PAGE_TEXT = "...Se fortsättningsblad!";
+    private static final String SEE_APPENDIX_PAGE_TEXT = "... Se fortsättningsblad!";
     // What is considered a word boundary
     private static final String WHITESPACE_REGEXP = "\\s";
     private static final float INLINE_LABEL_INDENTATION_LEFT = 2f;
