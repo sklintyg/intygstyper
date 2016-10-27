@@ -141,29 +141,29 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisuUt
         } else {
 
             // R9
-            if (StringUtils.isBlank(utlatande.getNuvarandeArbete()) &&
-                    utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE)) {
+            if (StringUtils.isBlank(utlatande.getNuvarandeArbete())
+                    && utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.missing");
             }
 
             // R10
-            if (!StringUtils.isBlank(utlatande.getNuvarandeArbete()) &&
-                    !utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE)) {
+            if (!StringUtils.isBlank(utlatande.getNuvarandeArbete())
+                    && !utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.NUVARANDE_ARBETE)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.nuvarandearbete.invalid_combination");
             }
 
             // R11
-            if (StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram()) &&
-                    utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)) {
+            if (StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())
+                    && utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.ampolitisktprogram.missing");
             }
 
             // R12
-            if (!StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram()) &&
-                    !utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)) {
+            if (!StringUtils.isBlank(utlatande.getArbetsmarknadspolitisktProgram())
+                    && !utlatande.getSysselsattning().stream().anyMatch(e -> e.getTyp() == Sysselsattning.SysselsattningsTyp.ARBETSMARKNADSPOLITISKT_PROGRAM)) {
                 validatorUtil.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY,
                         "lisu.validation.sysselsattning.ampolitisktprogram.invalid_combination");
             }
