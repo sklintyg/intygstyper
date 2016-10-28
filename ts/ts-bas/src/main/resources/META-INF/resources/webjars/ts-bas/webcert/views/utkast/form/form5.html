@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.diabetes"
      id="diabetesForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.diabetes">
-              <span message key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -29,45 +18,51 @@
         <p><span dynamic-label key="FRG_17.RBK"></span> *</p>
 
         <div ng-show="viewState.intygModel.diabetes.harDiabetes">
-          <p><span dynamic-label key="FRG_18.RBK"></span> *
-            <label class="radio">
-              <input id="diabetestyp1" name="diabetestyp" type="radio" value="DIABETES_TYP_1"
-                     ng-model="viewState.intygModel.diabetes.diabetesTyp">
-              <span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_1"></span>
-            </label>
-            <label class="radio">
-              <input id="diabetestyp2" name="diabetestyp" type="radio" value="DIABETES_TYP_2"
-                     ng-model="viewState.intygModel.diabetes.diabetesTyp">
-              <span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_2"></span>
-            </label>
+          <p>
+            <wc-validation-group field-type="radio-group" validations="viewState.getValidationErrors('diabetestyp')">
+              <span dynamic-label key="FRG_18.RBK"></span> *
+              <label class="radio">
+                <input id="diabetestyp1" name="diabetestyp" type="radio" value="DIABETES_TYP_1"
+                       ng-model="viewState.intygModel.diabetes.diabetesTyp">
+                <span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_1"></span>
+              </label>
+              <label class="radio">
+                <input id="diabetestyp2" name="diabetestyp" type="radio" value="DIABETES_TYP_2"
+                       ng-model="viewState.intygModel.diabetes.diabetesTyp">
+                <span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_2"></span>
+              </label>
+            </wc-validation-group>
           </p>
 
-          <div ng-show="viewState.intygModel.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
-            <span dynamic-label key="FRG_19.RBK"></span> *
-            <label class="checkbox">
-              <input id="diabetestreat1" name="diabetestreat1" type="checkbox"
-                     ng-model="viewState.intygModel.diabetes.kost">
-              <span dynamic-label key="DFR_19.1.RBK"></span>
-            </label>
-            <label class="checkbox">
-              <input id="diabetestreat2" name="diabetestreat2" type="checkbox"
-                     ng-model="viewState.intygModel.diabetes.tabletter">
-              <span dynamic-label key="DFR_19.2.RBK"></span>
-            </label>
-            <label class="checkbox">
-              <input id="diabetestreat3" name="diabetestreat3" type="checkbox"
-                     ng-model="viewState.intygModel.diabetes.insulin">
-              <span dynamic-label key="DFR_19.3.RBK"></span>
-            </label>
-
-            <div class="alert alert-info"
-                 ng-show="viewState.intygModel.diabetes.tabletter || viewState.intygModel.diabetes.insulin">
-              <span dynamic-label key="DFR_19.3.INF"></span>
+          <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('diabetestyp.behandlingstyp')">
+            <div ng-show="viewState.intygModel.diabetes.diabetesTyp == 'DIABETES_TYP_2'">
+              <span dynamic-label key="FRG_19.RBK"></span> *
+              <label class="checkbox">
+                <input id="diabetestreat1" name="diabetestreat1" type="checkbox"
+                       ng-model="viewState.intygModel.diabetes.kost">
+                <span dynamic-label key="DFR_19.1.RBK"></span>
+              </label>
+              <label class="checkbox">
+                <input id="diabetestreat2" name="diabetestreat2" type="checkbox"
+                       ng-model="viewState.intygModel.diabetes.tabletter">
+                <span dynamic-label key="DFR_19.2.RBK"></span>
+              </label>
+              <label class="checkbox">
+                <input id="diabetestreat3" name="diabetestreat3" type="checkbox"
+                       ng-model="viewState.intygModel.diabetes.insulin">
+                <span dynamic-label key="DFR_19.3.RBK"></span>
+              </label>
             </div>
+          </wc-validation-group>
 
+          <div class="alert alert-info"
+               ng-show="viewState.intygModel.diabetes.tabletter || viewState.intygModel.diabetes.insulin">
+            <span dynamic-label key="DFR_19.3.INF"></span>
           </div>
+
         </div>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('hardiabetes')"></wc-field-validation></td></tr>
   </table>
 </div>

@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.neurologi"
      id="neurologiForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.neurologi" id="validationMessages_neurologi">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.neurologi"><span message
-                                                                                                  key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -29,5 +18,6 @@
         <p><span dynamic-label key="FRG_20.RBK"></span> *</p>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('neurologiskSjukdom')"></wc-field-validation></td></tr>
   </table>
 </div>
