@@ -73,7 +73,7 @@ public final class UtlatandeToIntyg {
             for (Sysselsattning sysselsattning : source.getSysselsattning()) {
                 if (sysselsattning.getTyp() != null) {
                     svars.add(aSvar(TYP_AV_SYSSELSATTNING_SVAR_ID_28, sysselsattningInstans++).withDelsvar(TYP_AV_SYSSELSATTNING_DELSVAR_ID_28,
-                            aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, sysselsattning.getTyp().getTransportId(), sysselsattning.getTyp().getLabel()))
+                            aCV(TYP_AV_SYSSELSATTNING_CODE_SYSTEM, sysselsattning.getTyp().getId(), sysselsattning.getTyp().getLabel()))
                             .build());
                 }
             }
@@ -124,7 +124,7 @@ public final class UtlatandeToIntyg {
         int sjukskrivningInstans = 1;
         for (Sjukskrivning sjukskrivning : source.getSjukskrivningar()) {
             svars.add(aSvar(BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32, sjukskrivningInstans++).withDelsvar(BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32,
-                    aCV(SJUKSKRIVNING_CODE_SYSTEM, sjukskrivning.getSjukskrivningsgrad().getTransportId(),
+                    aCV(SJUKSKRIVNING_CODE_SYSTEM, sjukskrivning.getSjukskrivningsgrad().getId(),
                             sjukskrivning.getSjukskrivningsgrad().getLabel()))
                     .withDelsvar(BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32,
                             aDatePeriod(sjukskrivning.getPeriod().fromAsLocalDate(), sjukskrivning.getPeriod().tomAsLocalDate()))
@@ -152,14 +152,14 @@ public final class UtlatandeToIntyg {
         if (source.getPrognos() != null && source.getPrognos().getTyp() != null) {
             if (source.getPrognos().getDagarTillArbete() != null) {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
-                        aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getTransportId(),
+                        aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getId(),
                                 source.getPrognos().getTyp().getLabel()))
                         .withDelsvar(PROGNOS_DAGAR_TILL_ARBETE_DELSVAR_ID_39,
-                                aCV(PROGNOS_DAGAR_TILL_ARBETE_CODE_SYSTEM, source.getPrognos().getDagarTillArbete().getTransportId(),
+                                aCV(PROGNOS_DAGAR_TILL_ARBETE_CODE_SYSTEM, source.getPrognos().getDagarTillArbete().getId(),
                                         source.getPrognos().getDagarTillArbete().getLabel())).build());
             } else {
                 svars.add(aSvar(PROGNOS_SVAR_ID_39).withDelsvar(PROGNOS_BESKRIVNING_DELSVAR_ID_39,
-                        aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getTransportId(),
+                        aCV(PROGNOS_CODE_SYSTEM, source.getPrognos().getTyp().getId(),
                                 source.getPrognos().getTyp().getLabel()))
                         .build());
             }
@@ -168,7 +168,7 @@ public final class UtlatandeToIntyg {
         int arbetslivsinriktadeAtgarderInstans = 1;
         for (ArbetslivsinriktadeAtgarder atgarder : source.getArbetslivsinriktadeAtgarder()) {
             SvarBuilder atgardBuilder = aSvar(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40, arbetslivsinriktadeAtgarderInstans++).withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
-                    aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getTransportId(), atgarder.getVal().getLabel()));
+                    aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getId(), atgarder.getVal().getLabel()));
             if (!StringUtils.isBlank(atgarder.getBeskrivning())) {
                 atgardBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40, atgarder.getBeskrivning());
             }

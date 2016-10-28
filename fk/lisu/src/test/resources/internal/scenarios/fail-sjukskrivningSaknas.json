@@ -44,12 +44,12 @@
   "tillaggsfragor": [],
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": 11,
+      "val": "OVRIGA_ATGARDER",
       "beskrivning": "Jobbar bra om man inte stör honom"
     }
   ],
   "prognos": {
-    "typ": 4
+    "typ": "PROGNOS_OKLAR"
   },
   "arbetsresor": true,
   "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
@@ -69,7 +69,7 @@
   "nuvarandeArbete": "Smed",
   "sysselsattning": [
     {
-      "typ": 1
+      "typ": "NUVARANDE_ARBETE"
     }
   ],
   "telefonkontaktMedPatienten": "2015-12-08"

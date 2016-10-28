@@ -45,39 +45,33 @@ public abstract class Sjukskrivning {
 
     public enum SjukskrivningsGrad {
         /**
-         * Helt nedsatt (id 1).
+         * Helt nedsatt.
          */
-        HELT_NEDSATT(1, "HELT_NEDSATT", "100%"),
+        HELT_NEDSATT("HELT_NEDSATT", "100%"),
         /**
-         * Nedsatt till 3/4 (id 2).
+         * Nedsatt till 3/4.
          */
-        NEDSATT_3_4(2, "TRE_FJARDEDEL", "75%"),
+        NEDSATT_3_4("TRE_FJARDEDEL", "75%"),
         /**
-         * Nedsatt till hälften (id 3).
+         * Nedsatt till hälften.
          */
-        NEDSATT_HALFTEN(3, "HALFTEN", "50%"),
+        NEDSATT_HALFTEN("HALFTEN", "50%"),
         /**
-         * Nedsatt till 1/4 (id 4).
+         * Nedsatt till 1/4.
          */
-        NEDSATT_1_4(4, "EN_FJARDEDEL", "25%");
+        NEDSATT_1_4("EN_FJARDEDEL", "25%");
 
-        private final int id;
-        private final String transportId;
+        private final String id;
         private final String label;
 
-        SjukskrivningsGrad(int id, String transportId, String label) {
+        SjukskrivningsGrad(String id, String label) {
             this.id = id;
-            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
-        public int getId() {
+        public String getId() {
             return id;
-        }
-
-        public String getTransportId() {
-            return transportId;
         }
 
         public String getLabel() {
@@ -85,18 +79,9 @@ public abstract class Sjukskrivning {
         }
 
         @JsonCreator
-        public static SjukskrivningsGrad fromId(@JsonProperty("id") int id) {
+        public static SjukskrivningsGrad fromId(@JsonProperty("id") String id) {
             for (SjukskrivningsGrad typ : values()) {
-                if (typ.id == id) {
-                    return typ;
-                }
-            }
-            throw new IllegalArgumentException();
-        }
-
-        public static SjukskrivningsGrad fromTransportId(String transportId) {
-            for (SjukskrivningsGrad typ : values()) {
-                if (typ.transportId.equals(transportId)) {
+                if (typ.id.equals(id)) {
                     return typ;
                 }
             }

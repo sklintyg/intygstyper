@@ -42,72 +42,34 @@ public abstract class ArbetslivsinriktadeAtgarder {
     public abstract String getBeskrivning();
 
     public enum ArbetslivsinriktadeAtgarderVal {
-        /**
-         * id 1.
-         */
-        INTE_AKTUELLT(1, "EJ_AKTUELLT", "Inte aktuellt"),
-        /**
-         * id 2.
-         */
-        ARBETSTRANING(2, "ARBETSTRANING", "Arbetsträning"),
-        /**
-         * id 3.
-         */
-        ARBETSANPASSNING(3, "ARBETSANPASSNING", "Arbetsanpassning"),
-        /**
-         * id 4.
-         */
-        SOKA_NYTT_ARBETE(4, "SOKA_NYTT_ARBETE", "Söka nytt arbete"),
-        /**
-         * id 5.
-         */
-        BESOK_PA_ARBETSPLATSEN(5, "BESOK_ARBETSPLATS", "Besök på arbetsplatsen"),
-        /**
-         * id 6.
-         */
-        ERGONOMISK_BEDOMNING(6, "ERGONOMISK", "Ergonomisk bedömning"),
-        /**
-         * id 7.
-         */
-        HJALPMEDEL(7, "HJALPMEDEL", "Hjälpmedel"),
-        /**
-         * id 8.
-         */
-        KONFLIKTHANTERING(8, "KONFLIKTHANTERING", "Konflikthantering"),
-        /**
-         * id 9.
-         */
-        KONTAKT_MED_FORETAGSHALSOVARD(9, "KONTAKT_FHV", "Kontakt med företagshälsovård"),
-        /**
-         * id 10.
-         */
-        OMFORDELNING_AV_ARBETSUPPGIFTER(10, "OMFORDELNING", "Omfördelning av arbetsuppgifter"),
-        /**
-         * id 11.
-         */
-        OVRIGT(11, "OVRIGA_ATGARDER", "Övrigt");
 
-        private final int id;
-        private final String transportId;
+        INTE_AKTUELLT("EJ_AKTUELLT", "Inte aktuellt"),
+        ARBETSTRANING("ARBETSTRANING", "Arbetsträning"),
+        ARBETSANPASSNING("ARBETSANPASSNING", "Arbetsanpassning"),
+        SOKA_NYTT_ARBETE("SOKA_NYTT_ARBETE", "Söka nytt arbete"),
+        BESOK_PA_ARBETSPLATSEN("BESOK_ARBETSPLATS", "Besök på arbetsplatsen"),
+        ERGONOMISK_BEDOMNING("ERGONOMISK", "Ergonomisk bedömning"),
+        HJALPMEDEL("HJALPMEDEL", "Hjälpmedel"),
+        KONFLIKTHANTERING("KONFLIKTHANTERING", "Konflikthantering"),
+        KONTAKT_MED_FORETAGSHALSOVARD("KONTAKT_FHV", "Kontakt med företagshälsovård"),
+        OMFORDELNING_AV_ARBETSUPPGIFTER("OMFORDELNING", "Omfördelning av arbetsuppgifter"),
+        OVRIGT("OVRIGA_ATGARDER", "Övrigt");
+
+        private final String id;
         private final String label;
 
         public static final EnumSet<ArbetslivsinriktadeAtgarderVal> ATGARD_AKTUELL = EnumSet.of(ARBETSTRANING, ARBETSANPASSNING, SOKA_NYTT_ARBETE,
                 BESOK_PA_ARBETSPLATSEN, ERGONOMISK_BEDOMNING, HJALPMEDEL, KONFLIKTHANTERING, KONTAKT_MED_FORETAGSHALSOVARD, KONTAKT_MED_FORETAGSHALSOVARD,
                 OMFORDELNING_AV_ARBETSUPPGIFTER, OMFORDELNING_AV_ARBETSUPPGIFTER, OVRIGT);
 
-        ArbetslivsinriktadeAtgarderVal(int id, String transportId, String label) {
+        ArbetslivsinriktadeAtgarderVal(String id, String label) {
             this.id = id;
-            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
-        public int getId() {
+        public String getId() {
             return id;
-        }
-
-        public String getTransportId() {
-            return transportId;
         }
 
         public String getLabel() {
@@ -115,18 +77,9 @@ public abstract class ArbetslivsinriktadeAtgarder {
         }
 
         @JsonCreator
-        public static ArbetslivsinriktadeAtgarderVal fromId(@JsonProperty("id") int id) {
+        public static ArbetslivsinriktadeAtgarderVal fromId(@JsonProperty("id") String id) {
             for (ArbetslivsinriktadeAtgarderVal typ : values()) {
-                if (typ.id == id) {
-                    return typ;
-                }
-            }
-            throw new IllegalArgumentException();
-        }
-
-        public static ArbetslivsinriktadeAtgarderVal fromTransportId(String transportId) {
-            for (ArbetslivsinriktadeAtgarderVal typ : values()) {
-                if (typ.transportId.equals(transportId)) {
+                if (typ.id.equals(id)) {
                     return typ;
                 }
             }

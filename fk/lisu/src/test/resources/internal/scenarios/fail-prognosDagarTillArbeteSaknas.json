@@ -44,12 +44,12 @@
   "tillaggsfragor": [],
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": 11,
+      "val": "OVRIGA_ATGARDER",
       "beskrivning": "Jobbar bra om man inte stör honom"
     }
   ],
   "prognos": {
-    "typ": 5
+    "typ": "ATER_X_ANTAL_DGR"
   },
   "arbetsresor": true,
   "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
@@ -61,7 +61,7 @@
         "from": "2015-12-07",
         "tom": "2015-12-10"
       },
-      "sjukskrivningsgrad": 2
+      "sjukskrivningsgrad": "TRE_FJARDEDEL"
     }
   ],
   "aktivitetsbegransning": "Kommer inte in i bilen",
@@ -76,7 +76,7 @@
   "nuvarandeArbete": "Smed",
   "sysselsattning": [
     {
-      "typ": 1
+      "typ": "NUVARANDE_ARBETE"
     }
   ],
   "telefonkontaktMedPatienten": "2015-12-08"

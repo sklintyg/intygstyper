@@ -19,48 +19,40 @@
 
 package se.inera.intyg.intygstyper.lisu.model.internal;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.*;
 
 /**
  * Implements KV_FKMU_0006.
  */
 public enum PrognosTyp {
     /**
-     * Med stor sannolikhet (id 1).
+     * Med stor sannolikhet.
      */
-    MED_STOR_SANNOLIKHET(1, "STOR_SANNOLIKHET", "Patienten kommer med stor sannolikhet att kunna återgå helt i nuvarande sysselsättning efter denna sjukskrivning"),
+    MED_STOR_SANNOLIKHET("STOR_SANNOLIKHET", "Patienten kommer med stor sannolikhet att kunna återgå helt i nuvarande sysselsättning efter denna sjukskrivning"),
     /**
-     * Sannolikt ej återgå till nuvarande sysselsättning (id 3).
+     * Sannolikt ej återgå till nuvarande sysselsättning.
      */
-    SANNOLIKT_EJ_ATERGA_TILL_SYSSELSATTNING(3, "SANNOLIKT_INTE", "Patienten kan sannolikt inte återgå till nuvarande sysselsättning"),
+    SANNOLIKT_EJ_ATERGA_TILL_SYSSELSATTNING("SANNOLIKT_INTE", "Patienten kan sannolikt inte återgå till nuvarande sysselsättning"),
     /**
-     * Prognos oklar (id 4).
+     * Prognos oklar.
      */
-    PROGNOS_OKLAR(4, "PROGNOS_OKLAR", "Prognos för återgång i nuvarande sysselsättning är oklar"),
+    PROGNOS_OKLAR("PROGNOS_OKLAR", "Prognos för återgång i nuvarande sysselsättning är oklar"),
     /**
-     * Sannolikt återgå i sysselsättning efter x antal dagar (id 5).
+     * Sannolikt återgå i sysselsättning efter x antal dagar.
      */
-    ATER_X_ANTAL_DGR(5, "ATER_X_ANTAL_DGR", "Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar");
+    ATER_X_ANTAL_DGR("ATER_X_ANTAL_DGR", "Patienten kommer med stor sannolikhet att återgå helt i nuvarande sysselsättning efter x antal dagar");
 
-    private final int id;
-    private final String transportId;
+    private final String id;
     private final String label;
 
-    PrognosTyp(int id, String transportId, String label) {
+    PrognosTyp(String id, String label) {
         this.id = id;
-        this.transportId = transportId;
         this.label = label;
     }
 
     @JsonValue
-    public int getId() {
+    public String getId() {
         return id;
-    }
-
-    public String getTransportId() {
-        return transportId;
     }
 
     public String getLabel() {
@@ -68,18 +60,9 @@ public enum PrognosTyp {
     }
 
     @JsonCreator
-    public static PrognosTyp fromId(@JsonProperty("id") int id) {
+    public static PrognosTyp fromId(@JsonProperty("id") String id) {
         for (PrognosTyp typ : values()) {
-            if (typ.id == id) {
-                return typ;
-            }
-        }
-        throw new IllegalArgumentException();
-    }
-
-    public static PrognosTyp fromTransportId(String transportId) {
-        for (PrognosTyp typ : values()) {
-            if (typ.transportId.equals(transportId)) {
+            if (typ.id.equals(id)) {
                 return typ;
             }
         }

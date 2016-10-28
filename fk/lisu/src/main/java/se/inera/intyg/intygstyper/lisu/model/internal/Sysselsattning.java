@@ -39,29 +39,23 @@ public abstract class Sysselsattning {
     public abstract SysselsattningsTyp getTyp();
 
     public enum SysselsattningsTyp {
-        NUVARANDE_ARBETE(1, "NUVARANDE_ARBETE", "Nuvarande arbete"),
-        ARBETSSOKANDE(2, "ARBETSSOKANDE", "Arbetssökande"),
-        FORADLRARLEDIGHET_VARD_AV_BARN(3, "FORALDRALEDIG", "Föräldraledighet för vård av barn"),
-        STUDIER(4, "STUDIER", "Studier"),
-        ARBETSMARKNADSPOLITISKT_PROGRAM(5, "PROGRAM", "Deltagande i arbetsmarknadspolitiskt program");
+        NUVARANDE_ARBETE("NUVARANDE_ARBETE", "Nuvarande arbete"),
+        ARBETSSOKANDE("ARBETSSOKANDE", "Arbetssökande"),
+        FORADLRARLEDIGHET_VARD_AV_BARN("FORALDRALEDIG", "Föräldraledighet för vård av barn"),
+        STUDIER("STUDIER", "Studier"),
+        ARBETSMARKNADSPOLITISKT_PROGRAM("PROGRAM", "Deltagande i arbetsmarknadspolitiskt program");
 
-        private final int id;
-        private final String transportId;
+        private final String id;
         private final String label;
 
-        SysselsattningsTyp(int id, String transportId, String label) {
+        SysselsattningsTyp(String id, String label) {
             this.id = id;
-            this.transportId = transportId;
             this.label = label;
         }
 
         @JsonValue
-        public int getId() {
+        public String getId() {
             return id;
-        }
-
-        public String getTransportId() {
-            return transportId;
         }
 
         public String getLabel() {
@@ -69,18 +63,9 @@ public abstract class Sysselsattning {
         }
 
         @JsonCreator
-        public static SysselsattningsTyp fromId(@JsonProperty("id") int id) {
+        public static SysselsattningsTyp fromId(@JsonProperty("id") String id) {
             for (SysselsattningsTyp typ : values()) {
-                if (typ.id == id) {
-                    return typ;
-                }
-            }
-            throw new IllegalArgumentException();
-        }
-
-        public static SysselsattningsTyp fromTransportId(String transportId) {
-            for (SysselsattningsTyp typ : values()) {
-                if (typ.transportId.equals(transportId)) {
+                if (typ.id.equals(id)) {
                     return typ;
                 }
             }

@@ -44,15 +44,15 @@
   "tillaggsfragor": [],
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": 11,
+      "val": "OVRIGA_ATGARDER",
       "beskrivning": "Beskrivning"
     },
     {
-      "val": 4
+      "val": "SOKA_NYTT_ARBETE"
     }
   ],
   "prognos": {
-    "typ": 4
+    "typ": "PROGNOS_OKLAR"
   },
   "arbetsresor": true,
   "arbetstidsforlaggningMotivering": "Kan bara jobba på nätterna.",
@@ -64,7 +64,7 @@
         "from": "2015-12-07",
         "tom": "2015-12-10"
       },
-      "sjukskrivningsgrad": 2
+      "sjukskrivningsgrad": "TRE_FJARDEDEL"
     }
   ],
   "aktivitetsbegransning": "Kommer inte in i bilen",
@@ -79,7 +79,7 @@
   "nuvarandeArbete": "Smed",
   "sysselsattning": [
     {
-      "typ": 1
+      "typ": "NUVARANDE_ARBETE"
     }
   ],
   "annatGrundForMUBeskrivning": "Barndomsvän",

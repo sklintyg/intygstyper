@@ -459,7 +459,7 @@ public class InternalDraftValidatorTest {
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.bedomning.sjukskrivningar.period1.missing", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisu.validation.bedomning.sjukskrivningar.periodHELT_NEDSATT.missing", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
@@ -475,7 +475,7 @@ public class InternalDraftValidatorTest {
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.bedomning.sjukskrivningar.period1.invalid_format", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisu.validation.bedomning.sjukskrivningar.periodHELT_NEDSATT.invalid_format", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
@@ -537,9 +537,9 @@ public class InternalDraftValidatorTest {
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(2, res.getValidationErrors().size());
-        assertEquals("lisu.validation.bedomning.sjukskrivningar.period1.overlap", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisu.validation.bedomning.sjukskrivningar.periodHELT_NEDSATT.overlap", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
-        assertEquals("lisu.validation.bedomning.sjukskrivningar.period3.overlap", res.getValidationErrors().get(1).getMessage());
+        assertEquals("lisu.validation.bedomning.sjukskrivningar.periodHALFTEN.overlap", res.getValidationErrors().get(1).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(1).getType());
     }
 
@@ -778,7 +778,7 @@ public class InternalDraftValidatorTest {
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.atgarder.1.invalid_combination", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisu.validation.atgarder.EJ_AKTUELLT.invalid_combination", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
@@ -791,7 +791,7 @@ public class InternalDraftValidatorTest {
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisu.validation.atgarder.3.missing_description", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisu.validation.atgarder.ARBETSANPASSNING.missing_description", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 

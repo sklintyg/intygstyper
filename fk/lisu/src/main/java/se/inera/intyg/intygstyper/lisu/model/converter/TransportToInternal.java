@@ -161,7 +161,7 @@ public final class TransportToInternal {
             switch (delsvar.getId()) {
             case ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40:
                 String arbetslivsinriktadeAtgarderValKod = getCVSvarContent(delsvar).getCode();
-                val = ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal.fromTransportId(arbetslivsinriktadeAtgarderValKod);
+                val = ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal.fromId(arbetslivsinriktadeAtgarderValKod);
                 break;
             case ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40:
                 beskrivning = getStringContent(delsvar);
@@ -190,8 +190,8 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
             if (prognosKod != null) {
-                utlatande.setPrognos(Prognos.create(PrognosTyp.fromTransportId(prognosKod),
-                        dagarTillArbete != null ? PrognosDagarTillArbeteTyp.fromTransportId(dagarTillArbete) : null));
+                utlatande.setPrognos(Prognos.create(PrognosTyp.fromId(prognosKod),
+                        dagarTillArbete != null ? PrognosDagarTillArbeteTyp.fromId(dagarTillArbete) : null));
             }
         }
     }
@@ -251,7 +251,7 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
             }
             if (sjukskrivningsnivaString != null && period != null) {
-                sjukskrivningar.add(Sjukskrivning.create(SjukskrivningsGrad.fromTransportId(sjukskrivningsnivaString), period));
+                sjukskrivningar.add(Sjukskrivning.create(SjukskrivningsGrad.fromId(sjukskrivningsnivaString), period));
             }
         }
     }
@@ -298,7 +298,7 @@ public final class TransportToInternal {
             switch (delsvar.getId()) {
             case TYP_AV_SYSSELSATTNING_DELSVAR_ID_28:
                 String sysselsattningsTypString = getCVSvarContent(delsvar).getCode();
-                sysselsattning.add(Sysselsattning.create(Sysselsattning.SysselsattningsTyp.fromTransportId(sysselsattningsTypString)));
+                sysselsattning.add(Sysselsattning.create(Sysselsattning.SysselsattningsTyp.fromId(sysselsattningsTypString)));
                 break;
             default:
                 throw new IllegalArgumentException();

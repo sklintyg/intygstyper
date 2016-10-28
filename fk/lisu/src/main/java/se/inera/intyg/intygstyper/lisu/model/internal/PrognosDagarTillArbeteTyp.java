@@ -26,43 +26,37 @@ import com.fasterxml.jackson.annotation.*;
  */
 public enum PrognosDagarTillArbeteTyp {
     /**
-     * 30 dagarm, id 1.
+     * 30 dagarm.
      */
-    DAGAR_30(1, "TRETTIO_DGR", "30 dagar"),
+    DAGAR_30("TRETTIO_DGR", "30 dagar"),
     /**
-     * 60 dagar, id 2.
+     * 60 dagar.
      */
-    DAGAR_60(2, "SEXTIO_DGR", "60 dagar"),
+    DAGAR_60("SEXTIO_DGR", "60 dagar"),
     /**
-     * 90 dagar, id 3.
+     * 90 dagar.
      */
-    DAGAR_90(3, "NITTIO_DGR", "90 dagar"),
+    DAGAR_90("NITTIO_DGR", "90 dagar"),
     /**
-     * 180 dagar, id 4.
+     * 180 dagar.
      */
-    DAGAR_180(4, "HUNDRAATTIO_DAGAR", "180 dagar"),
+    DAGAR_180("HUNDRAATTIO_DAGAR", "180 dagar"),
     /**
-     * 365 dagar, id 5.
+     * 365 dagar.
      */
-    DAGAR_365(5, "TREHUNDRASEXTIOFEM_DAGAR", "365 dagar");
+    DAGAR_365("TREHUNDRASEXTIOFEM_DAGAR", "365 dagar");
 
-    private final int id;
-    private final String transportId;
+    private final String id;
     private final String label;
 
-    PrognosDagarTillArbeteTyp(int id, String transportId, String label) {
+    PrognosDagarTillArbeteTyp(String id, String label) {
         this.id = id;
-        this.transportId = transportId;
         this.label = label;
     }
 
     @JsonValue
-    public int getId() {
+    public String getId() {
         return id;
-    }
-
-    public String getTransportId() {
-        return transportId;
     }
 
     public String getLabel() {
@@ -70,21 +64,13 @@ public enum PrognosDagarTillArbeteTyp {
     }
 
     @JsonCreator
-    public static PrognosDagarTillArbeteTyp fromId(@JsonProperty("id") int id) {
+    public static PrognosDagarTillArbeteTyp fromId(@JsonProperty("id") String id) {
         for (PrognosDagarTillArbeteTyp typ : values()) {
-            if (typ.id == id) {
+            if (typ.id.equals(id)) {
                 return typ;
             }
         }
         throw new IllegalArgumentException();
     }
 
-    public static PrognosDagarTillArbeteTyp fromTransportId(String transportId) {
-        for (PrognosDagarTillArbeteTyp typ : values()) {
-            if (typ.transportId.equals(transportId)) {
-                return typ;
-            }
-        }
-        throw new IllegalArgumentException();
-    }
 }
