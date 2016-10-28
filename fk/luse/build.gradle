@@ -1,9 +1,5 @@
 description = 'Sjukersattning (läkarintyg)'
 
-ext {
-    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile.js"
-}
-
 dependencies {
   compile project(':fk-parent')
 }

@@ -200,7 +200,7 @@ configure(subprojects.findAll {
         outputs.dir(webappOutputDir)
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappOutputDir}",
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappOutputDir}",
                 "--npmDir=${rootProject.projectDir}", 'default']
     }
 
@@ -210,7 +210,8 @@ configure(subprojects.findAll {
         outputs.upToDateWhen { false }
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--npmDir=${rootProject.projectDir}", 'lint']
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}",
+                "--npmDir=${rootProject.projectDir}", 'lint']
     }
 
     checkstyleMain.dependsOn(jsCodeQuality)
@@ -243,7 +244,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
         outputs.dir(webappTestOutputDir)
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}",
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}",
                 "--npmDir=${rootProject.projectDir}", 'test']
     }
 

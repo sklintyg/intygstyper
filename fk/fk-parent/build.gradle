@@ -1,9 +1,5 @@
 description = 'Parent for fk-intyg'
 
-ext {
-    gruntfile = "${rootProject.projectDir}/fk/fk-parent/Gruntfile.js"
-}
-
 dependencies {
     compile "com.google.auto.value:auto-value:${autovalueVersion}"
     compile "commons-io:commons-io:${commonsIoVersion}"
