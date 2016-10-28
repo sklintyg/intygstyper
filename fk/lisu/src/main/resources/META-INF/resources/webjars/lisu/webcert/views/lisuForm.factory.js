@@ -1,4 +1,4 @@
-angular.module('lisu').factory('lisu.FormFactory',
+angular.module('lisjp').factory('lisjp.FormFactory',
     ['common.DateUtilsService', 'common.ObjectHelper', 'common.fmb.ViewStateService', 'common.UserModel',
         function(DateUtils, ObjectHelper, fmbViewState, UserModel) {
 

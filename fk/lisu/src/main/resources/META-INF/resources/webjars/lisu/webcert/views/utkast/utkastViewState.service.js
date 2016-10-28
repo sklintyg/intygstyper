@@ -1,5 +1,5 @@
-angular.module('lisu').service('lisu.EditCertCtrl.ViewStateService',
-    ['$log', '$state', 'common.UtkastViewStateService', 'lisu.Domain.IntygModel',
+angular.module('lisjp').service('lisjp.EditCertCtrl.ViewStateService',
+    ['$log', '$state', 'common.UtkastViewStateService', 'lisjp.Domain.IntygModel',
         function($log, $state, CommonViewState, IntygModel) {
             'use strict';
 

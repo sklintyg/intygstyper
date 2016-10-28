@@ -1,9 +1,9 @@
-angular.module('lisu', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
+angular.module('lisjp', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common', 'formly' ]);
 
 // Inject language resources
-angular.module('lisu').run(['common.messageService', 'lisu.messages',
-    function(messageService, lisuMessages) {
+angular.module('lisjp').run(['common.messageService', 'lisjp.messages',
+    function(messageService, lisjpMessages) {
         'use strict';
 
-        messageService.addResources(lisuMessages);
+        messageService.addResources(lisjpMessages);
     }]);

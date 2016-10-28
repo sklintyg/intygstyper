@@ -1,7 +1,7 @@
-angular.module('lisu').controller('lisu.ViewCertCtrl',
+angular.module('lisjp').controller('lisjp.ViewCertCtrl',
     [ '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygProxy',
-        'common.messageService', 'common.UserModel', 'lisu.IntygController.ViewStateService',
-        'lisu.FormFactory', 'common.dynamicLabelService', 'common.ObjectHelper',
+        'common.messageService', 'common.UserModel', 'lisjp.IntygController.ViewStateService',
+        'lisjp.FormFactory', 'common.dynamicLabelService', 'common.ObjectHelper',
         function($log, $rootScope, $stateParams, $scope, IntygProxy,
             messageService, UserModel, ViewState, formFactory, DynamicLabelService, ObjectHelper) {
             'use strict';
@@ -75,7 +75,7 @@ angular.module('lisu').controller('lisu.ViewCertCtrl',
              * @type {{}}
              */
             $scope.intygBackup = {intyg: null, showBackupInfo: false};
-            var unbindFastEventFail = $rootScope.$on('lisu.ViewCertCtrl.load.failed', function(event, intyg) {
+            var unbindFastEventFail = $rootScope.$on('lisjp.ViewCertCtrl.load.failed', function(event, intyg) {
                 $scope.intygBackup.intyg = intyg;
             });
             $scope.$on('$destroy', unbindFastEventFail);

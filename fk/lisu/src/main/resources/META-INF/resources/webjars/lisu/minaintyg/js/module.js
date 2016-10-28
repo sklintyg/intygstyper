@@ -1,58 +1,58 @@
-angular.module('lisu', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
+angular.module('lisjp', [ 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'common']);
 
-angular.module('lisu').config(function($stateProvider) {
+angular.module('lisjp').config(function($stateProvider) {
     'use strict';
 
     $stateProvider.
-        state('lisu-view', {
-            url :'/lisu/view/:certificateId',
+        state('lisjp-view', {
+            url :'/lisjp/view/:certificateId',
             templateUrl: '/web/webjars/lisu/minaintyg/views/view-cert.html',
-            controller: 'lisu.ViewCertCtrl',
+            controller: 'lisjp.ViewCertCtrl',
             data : { title: 'Läkarintyg för sjukpenning', keepInboxTabActive: true }
         }).
-        state('lisu-recipients', {
-            url : '/lisu/recipients',
+        state('lisjp-recipients', {
+            url : '/lisjp/recipients',
             templateUrl: '/web/webjars/lisu/minaintyg/views/recipients.html',
             controller: 'common.SendCertWizardCtrl',
             data : { title: 'Skicka intyg till mottagare' }
         }).
-        state('lisu-statushistory', {
-            url : '/lisu/statushistory',
+        state('lisjp-statushistory', {
+            url : '/lisjp/statushistory',
             templateUrl: '/web/webjars/lisu/minaintyg/views/status-history.html',
-            controller: 'lisu.ViewCertCtrl',
+            controller: 'lisjp.ViewCertCtrl',
             data : { title: 'Alla intygets händelser' }
         }).
-        state('lisu-summary', {
-            url : '/lisu/summary',
+        state('lisjp-summary', {
+            url : '/lisjp/summary',
             templateUrl: '/web/webjars/lisu/minaintyg/views/send-summary.html',
             controller: 'common.SendCertWizardCtrl',
             data : { title: 'Kontrollera och skicka intyget' }
         }).
-        state('lisu-sent', {
-            url : '/lisu/sent',
+        state('lisjp-sent', {
+            url : '/lisjp/sent',
             templateUrl: '/web/webjars/lisu/minaintyg/views/sent-cert.html',
             controller: 'common.SendCertWizardCtrl',
             data : { title: 'Intyget har skickats' }
         }).
-        state('lisu-fel', {
-            url : '/lisu/fel/:errorCode',
+        state('lisjp-fel', {
+            url : '/lisjp/fel/:errorCode',
             templateUrl: '/web/webjars/lisu/minaintyg/views/error.html',
-            controller: 'lisu.ErrorCtrl',
+            controller: 'lisjp.ErrorCtrl',
             data : { title: 'Fel' }
         }).
-        state('lisu-visafel', {
-            url :'/lisu/visafel/:errorCode',
+        state('lisjp-visafel', {
+            url :'/lisjp/visafel/:errorCode',
             templateUrl: '/web/webjars/lisu/minaintyg/views/error.html',
-            controller: 'lisu.ErrorCtrl',
+            controller: 'lisjp.ErrorCtrl',
             data : { title: 'Fel',
                     backLink: '/web/start' }
         });
 });
 
 // Inject language resources
-angular.module('lisu').run(['common.messageService', 'lisu.messages',
-    function(messageService, lisuMessages) {
+angular.module('lisjp').run(['common.messageService', 'lisjp.messages',
+    function(messageService, lisjpMessages) {
         'use strict';
 
-        messageService.addResources(lisuMessages);
+        messageService.addResources(lisjpMessages);
     }]);

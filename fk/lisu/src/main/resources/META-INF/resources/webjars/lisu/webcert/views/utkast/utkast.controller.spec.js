@@ -12,7 +12,7 @@ describe('UtkastController', function() {
     }));
 
     // Load the webcert module and mock away everything that is not necessary.
-    beforeEach(angular.mock.module('lisu', function($provide) {
+    beforeEach(angular.mock.module('lisjp', function($provide) {
         /*        featureService = {
          features:{
          HANTERA_INTYGSUTKAST: 'hanteraIntygsutkast'

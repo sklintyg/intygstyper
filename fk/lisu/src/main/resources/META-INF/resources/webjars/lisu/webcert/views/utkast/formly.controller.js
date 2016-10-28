@@ -1,5 +1,5 @@
-angular.module('lisu').controller('lisu.EditCert.FormlyCtrl',
-    ['$scope', 'lisu.EditCertCtrl.ViewStateService', 'lisu.FormFactory', 'common.TillaggsfragorHelper',
+angular.module('lisjp').controller('lisjp.EditCert.FormlyCtrl',
+    ['$scope', 'lisjp.EditCertCtrl.ViewStateService', 'lisjp.FormFactory', 'common.TillaggsfragorHelper',
      'common.fmb.ViewStateService',
         function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper, fmbViewState) {
 

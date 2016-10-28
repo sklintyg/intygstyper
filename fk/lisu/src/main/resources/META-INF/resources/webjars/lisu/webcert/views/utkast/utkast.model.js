@@ -1,4 +1,4 @@
-angular.module('lisu').factory('lisu.Domain.IntygModel',
+angular.module('lisjp').factory('lisjp.Domain.IntygModel',
     ['common.Domain.GrundDataModel', 'common.Domain.DraftModel', 'common.domain.ModelAttr',
         'common.domain.BaseAtticModel', 'common.domain.ModelTransformService', 'common.ObjectHelper',
         function(GrundData, DraftModel, ModelAttr, BaseAtticModel, ModelTransform, ObjectHelper) {
@@ -60,10 +60,10 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
                 return resultArray;
             };
 
-            var LisuModel = BaseAtticModel._extend({
+            var LisjpModel = BaseAtticModel._extend({
                 init: function init() {
                     var grundData = GrundData.build();
-                    init._super.call(this, 'lisuModel', {
+                    init._super.call(this, 'lisjpModel', {
 
                         'id': undefined,
                         'textVersion': undefined,
@@ -167,13 +167,13 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
 
             }, {
                 build : function(){
-                    return new DraftModel(new LisuModel());
+                    return new DraftModel(new LisjpModel());
                 }
             });
 
             /**
              * Return the constructor function IntygModel
              */
-            return LisuModel;
+            return LisjpModel;
 
         }]);

@@ -1,4 +1,4 @@
-angular.module('lisu').controller('lisu.ViewCertCtrl',
+angular.module('lisjp').controller('lisjp.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
         'common.IntygService', 'common.dialogService', 'common.messageService',
         function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService, dialogService,
@@ -13,7 +13,7 @@ angular.module('lisu').controller('lisu.ViewCertCtrl',
             $scope.doneLoading = false;
 
             $scope.send = function() {
-                $location.path('/lisu/recipients').search({ module: 'lisu', defaultRecipient: 'FK'});
+                $location.path('/lisjp/recipients').search({ module: 'lisjp', defaultRecipient: 'FK'});
             };
 
             $scope.visibleStatuses = [ 'SENT' ];
@@ -41,7 +41,7 @@ angular.module('lisu').controller('lisu.ViewCertCtrl',
                         $location.path('#/start');
                     } else {
                         // show error view
-                        $location.path('/lisu/fel/couldnotarchivecert');
+                        $location.path('/lisjp/fel/couldnotarchivecert');
                     }
                 });
             };
@@ -89,17 +89,17 @@ angular.module('lisu').controller('lisu.ViewCertCtrl',
             };
 
             $scope.showStatusHistory = function() {
-                $location.path('/lisu/statushistory');
+                $location.path('/lisjp/statushistory');
             };
 
             $scope.backToViewCertificate = function() {
-                $location.path('/lisu/view/' + $stateParams.certificateId);
+                $location.path('/lisjp/view/' + $stateParams.certificateId);
             };
 
             // expose calculated static link for pdf download
-            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'lisu' + '/' + $stateParams.certificateId + '/pdf';
+            $scope.downloadAsPdfLink = '/moduleapi/certificate/' + 'lisjp' + '/' + $stateParams.certificateId + '/pdf';
 
-            certificateService.getCertificate('lisu', $stateParams.certificateId, function(result) {
+            certificateService.getCertificate('lisjp', $stateParams.certificateId, function(result) {
                 $scope.doneLoading = true;
                 if (result !== null) {
                     $log.info('res in virecertcontr' + JSON.stringify(result));

@@ -17,79 +17,79 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('lisu').config(function($stateProvider) {
+angular.module('lisjp').config(function($stateProvider) {
     'use strict';
 
     var commonPath = '/web/webjars/common/webcert/';
     var intygsTypPath = '/web/webjars/lisu/webcert/';
 
     $stateProvider.
-        state('lisu-edit', {
-            data: { defaultActive : 'index', intygType: 'lisu' },
-            url : '/lisu/edit/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:sjf',
+        state('lisjp-edit', {
+            data: { defaultActive : 'index', intygType: 'lisjp' },
+            url : '/lisjp/edit/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:sjf',
             views : {
                 'content@' : {
                     templateUrl: intygsTypPath + 'views/utkast/utkast.html',
-                    controller: 'lisu.EditCertCtrl'
+                    controller: 'lisjp.EditCertCtrl'
                 },
 
-                'wcHeader@lisu-edit' : {
+                'wcHeader@lisjp-edit' : {
                     templateUrl: commonPath + 'gui/headers/wcHeader.partial.html',
                     controller: 'common.wcHeaderController'
                 },
 
-                'header@lisu-edit' : {
+                'header@lisjp-edit' : {
                     templateUrl: commonPath + 'utkast/utkast-header/utkastHeader.html',
                     controller: 'common.UtkastHeader'
                 },
 
-                'footer@lisu-edit' : {
+                'footer@lisjp-edit' : {
                     templateUrl: commonPath + 'utkast/utkast-footer/utkastFooter.html',
                     controller: 'common.UtkastFooter'
                 },
 
-                'formly@lisu-edit' : {
+                'formly@lisjp-edit' : {
                     templateUrl: intygsTypPath + 'views/utkast/formly.html',
-                    controller: 'lisu.EditCert.FormlyCtrl'
+                    controller: 'lisjp.EditCert.FormlyCtrl'
                 },
 
-                'fragasvar@lisu-edit' : {
+                'fragasvar@lisjp-edit' : {
                     templateUrl: commonPath + 'fk/arenden/arendeListUtkast.html',
                     controller: 'common.ArendeListCtrl'
                 }
             }
         }).
-        state('webcert.intyg.fk.lisu', {
-            data: { defaultActive : 'index', intygType: 'lisu' },
-            url:'/intyg/lisu/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:signed&:sjf',
+        state('webcert.intyg.fk.lisjp', {
+            data: { defaultActive : 'index', intygType: 'lisjp' },
+            url:'/intyg/lisjp/:certificateId?:patientId&:hospName&:fornamn&:efternamn&:mellannamn&:postadress&:postnummer&:postort&:signed&:sjf',
             views: {
                 'intyg@webcert.intyg.fk' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
-                    controller: 'lisu.ViewCertCtrl'
+                    controller: 'lisjp.ViewCertCtrl'
                 },
                 'fragasvar@webcert.intyg.fk' : {
                     templateUrl: commonPath + 'fk/arenden/arendeList.html',
                     controller: 'common.ArendeListCtrl'
                 },
-                'header@webcert.intyg.fk.lisu' : {
+                'header@webcert.intyg.fk.lisjp' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
                     controller: 'common.IntygHeader'
                 }
             }
         }).
-        state('webcert.fragasvar.lisu', {
-            data: { defaultActive : 'unhandled-qa', intygType: 'lisu'  },
-            url: '/fragasvar/lisu/:certificateId',
+        state('webcert.fragasvar.lisjp', {
+            data: { defaultActive : 'unhandled-qa', intygType: 'lisjp'  },
+            url: '/fragasvar/lisjp/:certificateId',
             views: {
                 'intyg@webcert.fragasvar' : {
                     templateUrl: intygsTypPath + 'views/intyg/intyg.html',
-                    controller: 'lisu.ViewCertCtrl'
+                    controller: 'lisjp.ViewCertCtrl'
                 },
                 'fragasvar@webcert.fragasvar' : {
                     templateUrl: commonPath + 'fk/arenden/arendeList.html',
                     controller: 'common.ArendeListCtrl'
                 },
-                'header@webcert.fragasvar.lisu' : {
+                'header@webcert.fragasvar.lisjp' : {
                     templateUrl: commonPath + 'intyg/intyg-header/intyg-header.html',
                     controller: 'common.IntygHeader'
                 }

@@ -1,4 +1,4 @@
-angular.module('lisu').controller('lisu.ErrorCtrl',
+angular.module('lisjp').controller('lisjp.ErrorCtrl',
     function($state, $stateParams, $scope) {
         'use strict';
 
