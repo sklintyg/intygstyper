@@ -14,7 +14,8 @@ angular.module('lisu').factory('lisu.FormFactory',
         'bedomning',
         'atgarder',
         'ovrigt',
-        'kontakt'
+        'kontakt',
+        'smittbararpenning'
     ];
 
     // Determine if we have fmb data available for a specific section or not
@@ -51,15 +52,22 @@ angular.module('lisu').factory('lisu.FormFactory',
         },
         {
             wrapper: 'wc-field',
+            templateOptions: {category: 10, categoryName: categoryNames[10]},
+            fieldGroup: [
+                {key: 'avstangningSmittskydd', type: 'checkbox-inline', templateOptions: {label: 'FRG_27'}}
+            ]
+        },
+        {
+            wrapper: 'wc-field',
             templateOptions: {category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
                 {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4, noH5:false}},
                 {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
                 {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
-                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.1'}},
-                {key: 'telefonkontaktMedPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.2'}},
-                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.3'}},
-                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.5'}},
+                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
+                {key: 'telefonkontaktMedPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.TELEFONKONTAKT'}},
+                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
+                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT'}},
                 {
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text',
@@ -74,21 +82,26 @@ angular.module('lisu').factory('lisu.FormFactory',
             templateOptions: {category: 2, categoryName: categoryNames[2]},
             fieldGroup: [
                 {
-                    key: 'sysselsattning.typ', type: 'radio-group',
+                    key: 'sysselsattning', type: 'check-group',
                     templateOptions: {
-                        label: 'DFR_28.1',
+                        label: 'FRG_28',
                         code: 'KV_FKMU_0002',
-                        choices: [1, 2, 3, 4, 5]
+                        choices: ['NUVARANDE_ARBETE',
+                            'ARBETSSOKANDE',
+                            'FORALDRALEDIG',
+                            'STUDIER',
+                            'PROGRAM'
+                        ]
                     }
                 },
                 {key: 'nuvarandeArbete', type: 'multi-text',
                     className: 'fold-animation',
-                    hideExpression: 'model.sysselsattning.typ != 1',
-                    templateOptions: {label: 'DFR_29.1'}},
+                    hideExpression: '!model.sysselsattning["NUVARANDE_ARBETE"]',
+                    templateOptions: {label: 'FRG_29'}},
                 {key: 'arbetsmarknadspolitisktProgram', type: 'multi-text',
                     className: 'fold-animation',
-                    hideExpression: 'model.sysselsattning.typ != 5',
-                    templateOptions: {label: 'DFR_30.1'}}
+                    hideExpression: '!model.sysselsattning["PROGRAM"]',
+                    templateOptions: {label: 'FRG_30'}}
             ]
         },
         {
@@ -156,7 +169,11 @@ angular.module('lisu').factory('lisu.FormFactory',
                     templateOptions: {
                         label: 'DFR_32.1',
                         code: 'KV_FKMU_0003',
-                        fields: [1, 2, 3, 4]
+                        fields: ['HELT_NEDSATT',
+                            'TRE_FJARDEDEL',
+                            'HALFTEN',
+                            'EN_FJARDEDEL'
+                        ]
                     }
                 },
                 {key: 'forsakringsmedicinsktBeslutsstod', type: 'multi-text', templateOptions: {label: 'DFR_37.1'}},
@@ -168,7 +185,7 @@ angular.module('lisu').factory('lisu.FormFactory',
 
                         var nedsatt75under = false;
                         angular.forEach(sjukskrivningar, function(item, key) {
-                           if(!nedsatt75under && key > 1) {
+                           if(!nedsatt75under && key !== 'HELT_NEDSATT') {
                                if(item.period && DateUtils.isDate(item.period.from) && DateUtils.isDate(item.period.tom)) {
                                    nedsatt75under = true;
                                }
@@ -177,7 +194,7 @@ angular.module('lisu').factory('lisu.FormFactory',
 
                         return !nedsatt75under;
                     },
-                    templateOptions: {label: 'DFR_33.1'}},
+                    templateOptions: {label: 'FRG_33'}},
                 {key: 'arbetstidsforlaggningMotivering', type: 'multi-text',
                     className: 'fold-animation',
                     hideExpression: function($viewValue, $modelValue, scope) {
@@ -186,19 +203,21 @@ angular.module('lisu').factory('lisu.FormFactory',
                     templateOptions: {label: 'DFR_33.2'}},
                 {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
 
-                {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
-
                 { key: 'prognos.typ', type: 'radio-group',
                     templateOptions: {
-                        label: 'DFR_39.1',
+                        label: 'FRG_39',
                         code: 'KV_FKMU_0006',
-                        choices: [1, 3, 4, 5]
+                        choices: ['STOR_SANNOLIKHET',
+                            'SANNOLIKT_INTE',
+                            'PROGNOS_OKLAR',
+                            'ATER_X_ANTAL_DGR'
+                        ]
                     },
                     watcher: {
                         expression: 'model.prognos.typ',
                         listener:  function _prognosTypListener(field, newValue, oldValue, scope, stopWatching) {
                             var model = scope.model;
-                            if (newValue === 5) {
+                            if (newValue === 'ATER_X_ANTAL_DGR') {
                                 model.restoreFromAttic('prognos.dagarTillArbete');
                             } else {
                                 model.updateToAttic('prognos.dagarTillArbete');
@@ -210,12 +229,17 @@ angular.module('lisu').factory('lisu.FormFactory',
                 { key: 'prognos.dagarTillArbete', type: 'radio-group',
                     className: 'fold-animation',
                     hideExpression: function($viewValue, $modelValue, scope) {
-                        return !ObjectHelper.isDefined(scope.model.prognos) || scope.model.prognos.typ !== 5;
+                        return !ObjectHelper.isDefined(scope.model.prognos) || scope.model.prognos.typ !== 'ATER_X_ANTAL_DGR';
                     },
                     templateOptions: {
                         label: 'DFR_39.3',
                         code: 'KV_FKMU_0007',
-                        choices: [1, 2, 3, 4]
+                        choices: ['TRETTIO_DGR',
+                            'SEXTIO_DGR',
+                            'NITTIO_DGR',
+                            'HUNDRAATTIO_DAGAR',
+                            'TREHUNDRASEXTIOFEM_DAGAR'
+                        ]
                     }
                 }
             ]
@@ -225,76 +249,51 @@ angular.module('lisu').factory('lisu.FormFactory',
             templateOptions: {category: 7, categoryName: categoryNames[7]},
             fieldGroup: [
                 {
-                    key: 'arbetslivsinriktadeAtgarder', type: 'check-group',
+                    key: 'arbetslivsinriktadeAtgarder', type: 'check-group-description',
                     templateOptions: {
-                        label: 'DFR_40.1',
+                        label: 'FRG_40',
+                        descLabel: 'DFR_40.2',
                         code: 'KV_FKMU_0004',
-                        choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                        choices: [
+                            { id : 'EJ_AKTUELLT', usesDescription : false },
+                            { id : 'ARBETSTRANING', usesDescription : true },
+                            { id : 'ARBETSANPASSNING', usesDescription : true },
+                            { id : 'SOKA_NYTT_ARBETE', usesDescription : true },
+                            { id : 'BESOK_ARBETSPLATS', usesDescription : true },
+                            { id : 'ERGONOMISK', usesDescription : true },
+                            { id : 'HJALPMEDEL', usesDescription : true },
+                            { id : 'KONFLIKTHANTERING', usesDescription : true },
+                            { id : 'KONTAKT_FHV', usesDescription : true },
+                            { id : 'OMFORDELNING', usesDescription : true },
+                            { id : 'OVRIGA_ATGARDER', usesDescription : true }
+                        ]
                     },
                     expressionProperties: {
-                        // Disable option 1 if any option 2-11 is selected
-                        'templateOptions.disabled[1]': function($viewValue, $modelValue) {
+                        // Disable option 'EJ_AKTUELLT' if any other option is selected
+                        'templateOptions.disabled["EJ_AKTUELLT"]': function($viewValue, $modelValue) {
                             if (!$modelValue) {
                                 return;
                             }
                             var disabled = false;
-                            for(var i=2; i<=11; i++) {
-                                if ($modelValue[i]) {
+                            angular.forEach($modelValue, function(item, key) {
+                                if(item.checked && key !== 'EJ_AKTUELLT') {
                                     disabled = true;
                                 }
-                            }
+                            });
                             return disabled;
                         },
-                        // Disable option 2-11 if option 1 is selected
-                        'templateOptions.disabled[2]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[3]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[4]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[5]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[6]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[7]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[8]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[9]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[10]': 'model.arbetslivsinriktadeAtgarder[1]',
-                        'templateOptions.disabled[11]': 'model.arbetslivsinriktadeAtgarder[1]'
+                        // Disable other options if option 'EJ_AKTUELLT' is selected
+                        'templateOptions.disabled["ARBETSTRANING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["ARBETSANPASSNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["SOKA_NYTT_ARBETE"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["BESOK_ARBETSPLATS"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["ERGONOMISK"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["HJALPMEDEL"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["KONFLIKTHANTERING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["KONTAKT_FHV"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["OMFORDELNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
+                        'templateOptions.disabled["OVRIGA_ATGARDER"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked'
                     }
-                },
-                {
-                    key: 'arbetslivsinriktadeAtgarderAktuelltBeskrivning',
-                    type: 'multi-text',
-                    className: 'fold-animation',
-                    hideExpression: function($viewValue, $modelValue, scope) {
-                        var arrayAtgarder = [];
-                        angular.forEach(scope.model.arbetslivsinriktadeAtgarder, function(atgard, key) {
-                            if(atgard === true) {
-                                arrayAtgarder.push(key);
-                            }
-                        });
-
-                        var results = arrayAtgarder.filter(function(item) {
-                            return Number(item) > 1;
-                        });
-                        return results.length <= 0;
-                    },
-                    templateOptions: {label: 'DFR_40.2'}
-                },
-                {
-                    key: 'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning',
-                    type: 'multi-text',
-                    className: 'fold-animation',
-                    hideExpression: function($viewValue, $modelValue, scope) {
-                        var arrayAtgarder = [];
-                        angular.forEach(scope.model.arbetslivsinriktadeAtgarder, function(atgard, key) {
-                            if(atgard === true) {
-                                arrayAtgarder.push(key);
-                            }
-                        });
-
-                        var results = arrayAtgarder.filter(function(item) {
-                            return Number(item) === 1;
-                        });
-                        return results.length <= 0;
-                    },
-                    templateOptions: {label: 'DFR_40.3'}
                 }
             ]
         },

@@ -8,7 +8,7 @@ angular.module('lisu').config(function($stateProvider) {
             url :'/lisu/view/:certificateId',
             templateUrl: '/web/webjars/lisu/minaintyg/views/view-cert.html',
             controller: 'lisu.ViewCertCtrl',
-            data : { title: 'Läkarintyg sjukersättning', keepInboxTabActive: true }
+            data : { title: 'Läkarintyg för sjukpenning', keepInboxTabActive: true }
         }).
         state('lisu-recipients', {
             url : '/lisu/recipients',

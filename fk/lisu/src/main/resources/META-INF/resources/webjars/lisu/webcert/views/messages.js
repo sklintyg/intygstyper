@@ -10,8 +10,8 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Försäkringskassans system vilket ska göras i samråd med patienten.<br><br>Upplys patienten om att även göra en ansökan om sjukpenning hos Försäkringskassan.',
         'lisu.button.send': 'Skicka till Försäkringskassan',
 
-        // Sjukpenning utökad
-        'lisu.label.certtitle': 'Läkarintyg för sjukpenning utökat',
+        // Sjukpenning
+        'lisu.label.certtitle': 'Läkarintyg för sjukpenning',
 
         // TODO: REMOVE THESE AND GENERATE from dynamic labels instead
         'lisu.label.grundformu': 'Utlåtandet är baserat på',
@@ -93,7 +93,6 @@ angular.module('lisu').constant('lisu.messages', {
         'lisu.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.invalid_combination': 'Motivering till arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.', // Should never happen
 
         'lisu.validation.bedomning.fmb.empty' : 'Beskriv varför arbetsförmågan bedöms vara nedsatt längre tid än den som det försäkringsmedicinska beslutstödet anger kan inte fyllas i med endast blanksteg', 
-        'lisu.validation.bedomning.formagatrotsbegransning.empty' : ' Beskriv vad patienten kan göra trots sin sjukdom relaterat till sitt arbete kan inte fyllas i med endast blanksteg', 
 
         'lisu.validation.bedomning.prognos.missing': 'Prognos måste fyllas i.',
         'lisu.validation.bedomning.prognos.dagartillarbete.missing': 'Dagar till arbete måste fyllas i om prognosen "kan återgå helt i nuvarande sysselsättning efter x antal dagar valts"',

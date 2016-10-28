@@ -7,25 +7,25 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
             var sjukskrivningFromTransform = function(sjukskrivningArray) {
 
                 var resultObject = {
-                    1: {
+                    HELT_NEDSATT: {
                         period: {
                             from: '',
                             tom: ''
                         }
                     },
-                    2: {
+                    TRE_FJARDEDEL: {
                         period: {
                             from: '',
                             tom: ''
                         }
                     },
-                    3: {
+                    HALFTEN: {
                         period: {
                             from: '',
                             tom: ''
                         }
                     },
-                    4: {
+                    EN_FJARDEDEL: {
                         period: {
                             from: '',
                             tom: ''
@@ -45,11 +45,10 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
             var sjukskrivningToTransform = function(sjukskrivningObject) {
 
                 var resultArray = [];
-
                 angular.forEach(sjukskrivningObject, function(value, key) {
                     if(!ObjectHelper.isEmpty(value.period.from) || !ObjectHelper.isEmpty(value.period.tom)) {
                         resultArray.push({
-                            sjukskrivningsgrad: Number(key),
+                            sjukskrivningsgrad: key,
                             period: {
                                 from: value.period.from,
                                 tom: value.period.tom
@@ -70,6 +69,9 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
                         'textVersion': undefined,
                         'grundData': grundData,
 
+                        // Kategori 10 Smittbärarpenning
+                        'avstangningSmittskydd': new ModelAttr( 'avstangningSmittskydd', { defaultValue : false }),
+
                         // Kategori 1 Grund för medicinskt underlag
                         'undersokningAvPatienten': undefined,
                         'telefonkontaktMedPatienten': undefined,
@@ -78,9 +80,10 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
                         'annatGrundForMUBeskrivning': undefined,
 
                         // Kategori 2 sysselsättning
-                        'sysselsattning': {
-                            typ: undefined
-                        },
+                        'sysselsattning': new ModelAttr('sysselsattning', {
+                            toTransform: ModelTransform.sysselsattningToTransform,
+                            fromTransform: ModelTransform.sysselsattningFromTransform
+                        }),
                         'nuvarandeArbete' : undefined,
                         'arbetsmarknadspolitisktProgram': undefined,
 
@@ -101,25 +104,25 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
                         // Kategory 6 Bedömning
                         'sjukskrivningar': new ModelAttr('sjukskrivningar', {
                             defaultValue : {
-                                1: {
+                                HELT_NEDSATT: {
                                     period: {
                                         from: '',
                                         tom: ''
                                     }
                                 },
-                                2: {
+                                TRE_FJARDEDEL: {
                                     period: {
                                         from: '',
                                         tom: ''
                                     }
                                 },
-                                3: {
+                                HALFTEN: {
                                     period: {
                                         from: '',
                                         tom: ''
                                     }
                                 },
-                                4: {
+                                EN_FJARDEDEL: {
                                     period: {
                                         from: '',
                                         tom: ''
@@ -133,7 +136,6 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
                         'arbetstidsforlaggning': undefined,
                         'arbetstidsforlaggningMotivering': undefined,
                         'arbetsresor': undefined,
-                        'formagaTrotsBegransning': undefined,
                         'prognos': {
                             'typ': undefined,
                             'dagarTillArbete': undefined
@@ -141,11 +143,9 @@ angular.module('lisu').factory('lisu.Domain.IntygModel',
 
                         // Kategori 7 Åtgärder
                         'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {
-                            toTransform: ModelTransform.toTypeTransform,
-                            fromTransform: ModelTransform.fromTypeTransform
+                            toTransform: ModelTransform.atgarderToTransform,
+                            fromTransform: ModelTransform.atgarderFromTransform
                         }),
-                        'arbetslivsinriktadeAtgarderAktuelltBeskrivning': undefined,
-                        'arbetslivsinriktadeAtgarderEjAktuelltBeskrivning': undefined,
 
                         // Kategori 8 Övrigt
                         'ovrigt': undefined,
