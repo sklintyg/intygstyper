@@ -1,7 +1,7 @@
 description = 'Intygstyper (Läkarintyg aktivitetsersättning vid förlängd skolgång)'
 
 ext {
-    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile-sit.js"
+    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile.js"
 }
 
 dependencies {

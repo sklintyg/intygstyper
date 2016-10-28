@@ -1,7 +1,7 @@
 description = 'Aktivitetsersattning nedsatt arbetsförmåga (läkarintyg)'
 
 ext {
-    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile-sit.js"
+    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile.js"
 }
 
 dependencies {
