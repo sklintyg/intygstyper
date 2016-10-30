@@ -174,7 +174,7 @@ String findResolvedVersion(Project project, String groupName) {
 }
 
 configure(subprojects.findAll {
-        ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'luse', 'luae_fs', 'luae_na'].contains(it.name)
+        ['fk7263', 'ts-bas', 'ts-diabetes', 'lisjp', 'luse', 'luae_fs', 'luae_na'].contains(it.name)
     }) {
     apply plugin: 'com.moowork.grunt'
     apply plugin: 'com.moowork.node'

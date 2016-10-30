@@ -1,5 +1,0 @@
-description = 'Sjukpenning Utökad (läkarintyg)'
-
-dependencies {
-  compile project(':fk-parent')
-}
