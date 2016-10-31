@@ -107,7 +107,7 @@ public class InternalValidatorTest {
         int index = 0;
         assertEquals("diabetes.observationsperiod", validationResponse.getValidationErrors().get(index++).getField());
         assertEquals("diabetes.diabetesTyp", validationResponse.getValidationErrors().get(index++).getField());
-        assertEquals("diabetes", validationResponse.getValidationErrors().get(index).getField());
+        assertEquals("diabetes.behandling", validationResponse.getValidationErrors().get(index).getField());
     }
 
     /*

@@ -20,11 +20,16 @@
 /* jshint maxlen: false */
 angular.module('ts-diabetes').constant('ts-diabetes.messages', {
     'sv': {
+        'ts-diabetes.form.postadress': 'Postadress',
+        'ts-diabetes.form.postnummer': 'Postnummer',
+        'ts-diabetes.form.postort': 'Postort',
+
         'ts-diabetes.button.send': 'Skicka till Transportstyrelsen',
         'ts-diabetes.label.empty': '',
         'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg, diabetes',
         'ts-diabetes.label.send': 'Skicka intyg till Transportstyrelsen',
         'ts-diabetes.label.send.body': 'Om du går vidare kommer intyget skickas direkt till Transportstyrelsens system vilket ska göras i samråd med patienten.',
+        'ts-diabetes.label.patientadress': 'Patientens adressuppgifter',
         'ts-diabetes.label.intygavser': 'Intyget avser',
         'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
         'ts-diabetes.label.diabetes': '1. Allmänt',
@@ -101,6 +106,8 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing': 'g) Ett alternativ måste anges.', // 2g
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing': 'Tidpunkt för allvarlig hypoglykemi under vaken tid saknas',
         'ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date': 'Tidpunkt för allvarlig hypoglykemi under vaken tid måste anges som åååå-mm-dd, och får inte vara tidigare än ett år tillbaka eller senare än dagens datum.',
+
+        'ts-diabetes.validation.syn.out-of-bounds': 'Måste ligga i intervallet 0,0 till 2,0.',
 
         'ts-diabetes.validation.syn.missing': 'Synfunktioner saknas',
         'ts-diabetes.validation.syn.separat-ogonlakarintyg.missing': 'a) Ett alternativ måste anges.',

@@ -96,9 +96,9 @@ public class InternalValidatorInstance {
         if (patient == null) {
             return;
         }
-        assertDescriptionNotEmpty(patient.getPostadress(), "patient.postadress", "ts-diabetes.validation.patient.postadress.missing");
-        assertDescriptionNotEmpty(patient.getPostnummer(), "patient.postnummer", "ts-diabetes.validation.patient.postnummer.missing");
-        assertDescriptionNotEmpty(patient.getPostort(), "patient.postort", "ts-diabetes.validation.patient.postort.missing");
+        assertDescriptionNotEmpty(patient.getPostadress(), "patientadress.postadress", "ts-diabetes.validation.patient.postadress.missing");
+        assertDescriptionNotEmpty(patient.getPostnummer(), "patientadress.postnummer", "ts-diabetes.validation.patient.postnummer.missing");
+        assertDescriptionNotEmpty(patient.getPostort(), "patientadress.postort", "ts-diabetes.validation.patient.postort.missing");
     }
 
     private void validateHypoglykemi(Hypoglykemier hypoglykemier) {
@@ -108,48 +108,40 @@ public class InternalValidatorInstance {
         }
 
         if (hypoglykemier.getKunskapOmAtgarder() == null) {
-            addValidationError("hypoglykemier.kunskapOmAtgarder", ValidationMessageType.EMPTY,
-                    "ts-diabetes.validation.hypoglykemier.kunskap-om-atgarder.missing");
+            addValidationError("hypoglykemier.kunskapOmAtgarder", ValidationMessageType.EMPTY);
         }
 
         if (hypoglykemier.getTeckenNedsattHjarnfunktion() == null) {
-            addValidationError("hypoglykemier.teckenNedsattHjarnfunktion", ValidationMessageType.EMPTY,
-                    "ts-diabetes.validation.hypoglykemier.tecken-nedsatt-hjarnfunktion.missing");
+            addValidationError("hypoglykemier.teckenNedsattHjarnfunktion", ValidationMessageType.EMPTY);
         }
 
         if (isTrue(hypoglykemier.getTeckenNedsattHjarnfunktion())) {
             if (hypoglykemier.getSaknarFormagaKannaVarningstecken() == null) {
-                addValidationError("hypoglykemier.saknarFormagaKannaVarningstecken", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.hypoglykemier.saknar-formaga-kanna-varningstecken.missing");
+                addValidationError("hypoglykemier.saknarFormagaKannaVarningstecken", ValidationMessageType.EMPTY);
             }
 
             if (hypoglykemier.getAllvarligForekomst() == null) {
-                addValidationError("hypoglykemier.allvarligForekomst", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst.missing");
+                addValidationError("hypoglykemier.allvarligForekomst", ValidationMessageType.EMPTY);
             }
 
             if (hypoglykemier.getAllvarligForekomstTrafiken() == null) {
-                addValidationError("hypoglykemier.allvarligForekomstTrafiken", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.missing");
+                addValidationError("hypoglykemier.allvarligForekomstTrafiken", ValidationMessageType.EMPTY);
             }
         }
 
         if (isTrue(hypoglykemier.getAllvarligForekomst())) {
             assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstBeskrivning(),
-                    "hypoglykemier.allvarligForekomstBeskrivning",
-                    "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst.beskrivning.missing");
+                    "hypoglykemier.allvarligForekomstBeskrivning");
         }
 
         if (isTrue(hypoglykemier.getAllvarligForekomstTrafiken())) {
             assertDescriptionNotEmpty(hypoglykemier.getAllvarligForekomstTrafikBeskrivning(),
-                    "hypoglykemier.allvarligForekomstTrafikBeskrivning",
-                    "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-trafiken.beskrivning.missing");
+                    "hypoglykemier.allvarligForekomstTrafikBeskrivning");
         }
 
         if (isTrue(hypoglykemier.getAllvarligForekomstVakenTid())) {
             if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid() == null) {
-                addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.missing");
+                addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid", ValidationMessageType.EMPTY);
             } else if (hypoglykemier.getAllvarligForekomstVakenTidObservationstid().beforeMinDateOrInFuture(LocalDate.now().minusYears(1))) {
                 addValidationError("hypoglykemier.allvarligForekomstVakenTidObservationstid", ValidationMessageType.INVALID_FORMAT,
                         "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.observationstid.incorrect-date");
@@ -158,13 +150,11 @@ public class InternalValidatorInstance {
 
         if (context.isHogreBehorighetContext()) {
             if (hypoglykemier.getEgenkontrollBlodsocker() == null) {
-                addValidationError("hypoglykemier.egenkontrollBlodsocker", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.hypoglykemier.egenkontroll-blodsocker.missing");
+                addValidationError("hypoglykemier.egenkontrollBlodsocker", ValidationMessageType.EMPTY);
             }
 
             if (hypoglykemier.getAllvarligForekomstVakenTid() == null) {
-                addValidationError("hypoglykemier.allvarligForekomstVakenTid", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.hypoglykemier.allvarlig-forekomst-vaken-tid.missing");
+                addValidationError("hypoglykemier.allvarligForekomstVakenTid", ValidationMessageType.EMPTY);
             }
         }
 
@@ -172,28 +162,27 @@ public class InternalValidatorInstance {
 
     private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {
         if (vardkontakt == null) {
-            addValidationError("identitet", ValidationMessageType.EMPTY, "ts-diabetes.validation.vardkontakt.missing");
+            addValidationError("identitet", ValidationMessageType.EMPTY);
             return;
         }
         if (vardkontakt.getIdkontroll() == null) {
-            addValidationError("identitet", ValidationMessageType.EMPTY, "ts-diabetes.validation.identitet.missing");
+            addValidationError("identitet", ValidationMessageType.EMPTY);
         }
     }
 
     private void validateBedomning(final Bedomning bedomning) {
 
         if (bedomning == null) {
-            addValidationError("bedomning", ValidationMessageType.EMPTY, "ts-diabetes.validation.bedomning.missing");
+            addValidationError("bedomning", ValidationMessageType.EMPTY);
             return;
         }
         if (bedomning.getKorkortstyp().isEmpty() && (bedomning.getKanInteTaStallning() == null || isFalse(bedomning.getKanInteTaStallning()))) {
-            addValidationError("bedomning", ValidationMessageType.EMPTY, "ts-diabetes.validation.bedomning.must-choose-one");
+            addValidationError("bedomning", ValidationMessageType.EMPTY);
         }
 
         if (context.isHogreBehorighetContext()) {
             if (bedomning.getLamplighetInnehaBehorighet() == null) {
-                addValidationError("bedomning.lamplighetInnehaBehorighet", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.bedomning.lamplighet-inneha-behorighet.missing");
+                addValidationError("bedomning.lamplighetInnehaBehorighet", ValidationMessageType.EMPTY);
             }
         }
     }
@@ -206,19 +195,19 @@ public class InternalValidatorInstance {
         }
 
         if (diabetes.getObservationsperiod() == null) {
-            addValidationError("diabetes.observationsperiod", ValidationMessageType.EMPTY, "ts-diabetes.validation.diabetes.observationsperiod.missing");
+            addValidationError("diabetes.observationsperiod", ValidationMessageType.EMPTY);
         } else if (!STRING_VALIDATOR.validateStringIsYear(diabetes.getObservationsperiod())) {
             addValidationError("diabetes.observationsperiod", ValidationMessageType.INVALID_FORMAT, "ts-diabetes.validation.diabetes.observationsperiod.incorrect-format");
         }
 
         if (diabetes.getDiabetestyp() == null) {
-            addValidationError("diabetes.diabetesTyp", ValidationMessageType.EMPTY, "ts-diabetes.validation.diabetes.diabetesTyp.missing");
+            addValidationError("diabetes.diabetesTyp", ValidationMessageType.EMPTY);
         }
 
         boolean annanBehandling = diabetes.getAnnanBehandlingBeskrivning() != null
                 && !diabetes.getAnnanBehandlingBeskrivning().isEmpty();
         if (!(isTrue(diabetes.getEndastKost()) || isTrue(diabetes.getTabletter()) || isTrue(diabetes.getInsulin()) || annanBehandling)) {
-            addValidationError("diabetes", ValidationMessageType.EMPTY, "ts-diabetes.validation.diabetes.behandling.missing");
+            addValidationError("diabetes.behandling", ValidationMessageType.EMPTY, "ts-diabetes.validation.diabetes.behandling.missing");
         }
 
         if (isTrue(diabetes.getInsulin())) {
@@ -235,18 +224,19 @@ public class InternalValidatorInstance {
             LOG.debug("No HoSPersonal found");
             return;
         }
-        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostadress(), "vardenhet.postadress",
+        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostadress(), "vardenhet.vardenhet.postadress",
                 "ts-diabetes.validation.vardenhet.postadress.missing");
-        if (assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostnummer(), "vardenhet.postnummer",
+        if (assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostnummer(), "vardenhet.vardenhet.postnummer",
                 "ts-diabetes.validation.vardenhet.postnummer.missing").success()) {
             if (!STRING_VALIDATOR.validateStringAsPostalCode(skapadAv.getVardenhet().getPostnummer())) {
-                addValidationError("vardenhet.postnummer", ValidationMessageType.INVALID_FORMAT, "ts-diabetes.validation.vardenhet.postnummer.incorrect-format");
+                addValidationError("vardenhet.vardenhet.postnummer", ValidationMessageType.INVALID_FORMAT,
+                    "ts-diabetes.validation.vardenhet.postnummer.incorrect-format");
             }
         }
 
-        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostort(), "vardenhet.postort",
+        assertDescriptionNotEmpty(skapadAv.getVardenhet().getPostort(), "vardenhet.vardenhet.postort",
                 "ts-diabetes.validation.vardenhet.postort.missing");
-        assertDescriptionNotEmpty(skapadAv.getVardenhet().getTelefonnummer(), "vardenhet.telefonnummer",
+        assertDescriptionNotEmpty(skapadAv.getVardenhet().getTelefonnummer(), "vardenhet.vardenhet.telefonnummer",
                 "ts-diabetes.validation.vardenhet.telefonnummer.missing");
 
     }
@@ -254,12 +244,12 @@ public class InternalValidatorInstance {
     private void validateIntygAvser(final IntygAvser intygAvser) {
 
         if (intygAvser == null) {
-            addValidationError("intygAvser", ValidationMessageType.EMPTY, "ts-diabetes.validation.intygAvser.missing");
+            addValidationError("intygAvser", ValidationMessageType.EMPTY);
             return;
         }
 
         if (intygAvser.getKorkortstyp().isEmpty()) {
-            addValidationError("intygAvser", ValidationMessageType.EMPTY, "ts-diabetes.validation.intygAvser.must-choose-one");
+            addValidationError("intygAvser", ValidationMessageType.EMPTY);
         }
     }
 
@@ -270,68 +260,68 @@ public class InternalValidatorInstance {
         }
 
         if (syn.getSeparatOgonlakarintyg() == null) {
-            addValidationError("syn.separatOgonlakarintyg", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.separat-ogonlakarintyg.missing");
+            addValidationError("syn.separatOgonlakarintyg", ValidationMessageType.EMPTY);
 
         } else if (!syn.getSeparatOgonlakarintyg()) {
 
             if (syn.getSynfaltsprovningUtanAnmarkning() == null) {
-                addValidationError("syn.provningUtanAnmarkning", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.provning-utan-anmarkning.missing");
+                addValidationError("syn.provningUtanAnmarkning", ValidationMessageType.EMPTY);
             }
 
             if (syn.getHoger() == null || syn.getHoger().getUtanKorrektion() == null) {
-                addValidationError("syn.hoger.utanKorrektion", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.hoger.utanKorrektion.missing");
+                addValidationError("syn.hoger.utanKorrektion", ValidationMessageType.EMPTY);
 
             } else {
                 if (syn.getHoger().getUtanKorrektion() < 0.0 || syn.getHoger().getUtanKorrektion() > 2.0) {
                     addValidationError("syn.hoger.utanKorrektion", ValidationMessageType.INVALID_FORMAT,
-                            "ts-diabetes.validation.syn.hoger.utankorrektion.out-of-bounds");
+                            "ts-diabetes.validation.syn.out-of-bounds");
                 }
 
                 if (syn.getHoger().getMedKorrektion() != null) {
                     if (syn.getHoger().getMedKorrektion() < 0.0 || syn.getHoger().getMedKorrektion() > 2.0) {
                         addValidationError("syn.hoger.medKorrektion", ValidationMessageType.INVALID_FORMAT,
-                                "ts-diabetes.validation.syn.hoger.medKorrektion.out-of-bounds");
+                                "ts-diabetes.validation.syn.out-of-bounds");
                     }
                 }
             }
 
             if (syn.getVanster() == null || syn.getVanster().getUtanKorrektion() == null) {
-                addValidationError("syn.vanster.utanKorrektion", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.vanster.utankorrektion.missing");
+                addValidationError("syn.vanster.utanKorrektion", ValidationMessageType.EMPTY);
 
             } else {
 
                 if (syn.getVanster().getUtanKorrektion() < 0.0 || syn.getVanster().getUtanKorrektion() > 2.0) {
-                    addValidationError("syn.vanster.utanKorrektion", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.vanster.utankorrektion.missing");
+                    addValidationError("syn.vanster.utanKorrektion", ValidationMessageType.INVALID_FORMAT,
+                                "ts-diabetes.validation.syn.out-of-bounds");
                 }
 
                 if (syn.getVanster().getMedKorrektion() != null) {
                     if (syn.getVanster().getMedKorrektion() < 0.0 || syn.getVanster().getMedKorrektion() > 2.0) {
                         addValidationError("syn.vanster.medKorrektion", ValidationMessageType.INVALID_FORMAT,
-                                "ts-diabetes.validation.syn.vanster.medkorrektion.out-of-bounds");
+                                "ts-diabetes.validation.syn.out-of-bounds");
                     }
                 }
             }
 
             if (syn.getBinokulart() == null || syn.getBinokulart().getUtanKorrektion() == null) {
-                addValidationError("syn.binokulart.utanKorrektion", ValidationMessageType.EMPTY,
-                        "ts-diabetes.validation.syn.binokulart.utankorrektion.missing");
+                addValidationError("syn.binokulart.utanKorrektion", ValidationMessageType.EMPTY);
 
             } else {
                 if (syn.getBinokulart().getUtanKorrektion() < 0.0 || syn.getBinokulart().getUtanKorrektion() > 2.0) {
                     addValidationError("syn.binokulart.utanKorrektion", ValidationMessageType.INVALID_FORMAT,
-                            "ts-diabetes.validation.syn.binokulart.utankorrektion.out-of-bounds");
+                            "ts-diabetes.validation.syn.out-of-bounds");
                 }
 
                 if (syn.getBinokulart().getMedKorrektion() != null) {
                     if (syn.getBinokulart().getMedKorrektion() < 0.0 || syn.getBinokulart().getMedKorrektion() > 2.0) {
                         addValidationError("syn.binokulart.medKorrektion", ValidationMessageType.INVALID_FORMAT,
-                                "ts-diabetes.validation.syn.binokulart.medkorrektion.out-of-bounds");
+                                "ts-diabetes.validation.syn.out-of-bounds");
                     }
                 }
             }
 
             if (syn.getDiplopi() == null) {
-                addValidationError("syn.diplopi", ValidationMessageType.EMPTY, "ts-diabetes.validation.syn.diplopi.missing");
+                addValidationError("syn.diplopi", ValidationMessageType.EMPTY);
             }
         }
     }
@@ -360,6 +350,14 @@ public class InternalValidatorInstance {
         return AssertionResult.SUCCESS;
     }
 
+    private AssertionResult assertDescriptionNotEmpty(String beskrivning, String field) {
+        if (beskrivning == null || beskrivning.isEmpty()) {
+            addValidationError(field, ValidationMessageType.EMPTY);
+            return AssertionResult.FAILURE;
+        }
+        return AssertionResult.SUCCESS;
+    }
+
     /**
      * Check if there are validation errors.
      *
@@ -381,6 +379,12 @@ public class InternalValidatorInstance {
         validationMessages.add(new ValidationMessage(field, type, msg));
         LOG.debug(field + " " + msg);
     }
+
+    private void addValidationError(String field, ValidationMessageType type) {
+        validationMessages.add(new ValidationMessage(field, type));
+        LOG.debug(field + " " + type.toString());
+    }
+
 
     /**
      * Since the validator assertions doesn't throw exceptions on assertion failure, they instead return an assertion
