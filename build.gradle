@@ -11,7 +11,7 @@ ext {
     itextVersion = "5.3.2"
     springVersion = "4.2.2.RELEASE"
     autovalueVersion = "1.1"
-    schematronVersion = "1.0.2"
+    schematronVersion = "1.0.3"
     rivtaInsuranceprocessHealthreportingSchemasVersion = "3.1.0.4"
     intygTransportstyrelsenSchemasVersion = "1.0.4"
     intygCertificateSchemasVersion = "1.0.4"
