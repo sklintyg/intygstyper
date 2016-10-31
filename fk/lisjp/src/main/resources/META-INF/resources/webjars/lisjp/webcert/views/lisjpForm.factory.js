@@ -203,14 +203,21 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     templateOptions: {label: 'DFR_33.2'}},
                 {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
 
-                { key: 'prognos.typ', type: 'radio-group',
+                { key: 'prognos', type: 'prognos',
                     templateOptions: {
                         label: 'FRG_39',
                         code: 'KV_FKMU_0006',
-                        choices: ['STOR_SANNOLIKHET',
-                            'SANNOLIKT_INTE',
-                            'PROGNOS_OKLAR',
-                            'ATER_X_ANTAL_DGR'
+                        choices: [{ id: 'STOR_SANNOLIKHET', showDropDown : false },
+                            { id: 'SANNOLIKT_INTE', showDropDown : false },
+                            { id: 'PROGNOS_OKLAR', showDropDown : false },
+                            { id: 'ATER_X_ANTAL_DGR', showDropDown : true }
+                        ],
+                        prognosDagarTillArbeteCode: 'KV_FKMU_0007',
+                        prognosDagarTillArbeteTyper: ['TRETTIO_DGR',
+                            'SEXTIO_DGR',
+                            'NITTIO_DGR',
+                            'HUNDRAATTIO_DAGAR',
+                            'TREHUNDRASEXTIOFEM_DAGAR'
                         ]
                     },
                     watcher: {
@@ -220,26 +227,12 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             if (newValue === 'ATER_X_ANTAL_DGR') {
                                 model.restoreFromAttic('prognos.dagarTillArbete');
                             } else {
-                                model.updateToAttic('prognos.dagarTillArbete');
+                                if (oldValue === 'ATER_X_ANTAL_DGR') {
+                                    model.updateToAttic('prognos.dagarTillArbete');
+                                }
                                 model.clear('prognos.dagarTillArbete');
                             }
                         }
-                    }
-                },
-                { key: 'prognos.dagarTillArbete', type: 'radio-group',
-                    className: 'fold-animation',
-                    hideExpression: function($viewValue, $modelValue, scope) {
-                        return !ObjectHelper.isDefined(scope.model.prognos) || scope.model.prognos.typ !== 'ATER_X_ANTAL_DGR';
-                    },
-                    templateOptions: {
-                        label: 'DFR_39.3',
-                        code: 'KV_FKMU_0007',
-                        choices: ['TRETTIO_DGR',
-                            'SEXTIO_DGR',
-                            'NITTIO_DGR',
-                            'HUNDRAATTIO_DAGAR',
-                            'TREHUNDRASEXTIOFEM_DAGAR'
-                        ]
                     }
                 }
             ]
