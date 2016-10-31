@@ -13,15 +13,6 @@
                              help-text-contents="fmb.formData.ARBETSFORMAGA"></wc-fmb-help-display>
       </div>
 
-      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.nedsattning"
-           id="validationMessages_arbetsformaga">
-        <ul>
-          <li ng-repeat="message in viewState.common.validationMessagesGrouped.nedsattning"><span message
-                                                                                                  key="{{message.message}}"></span>
-          </li>
-        </ul>
-      </div>
-
       <div class="form-group form-inline">
         Faktisk tjänstgöringstid <input style="width: 3em;" type="text" wc-decimal-number
                                         id="capacityForWorkActualWorkingHoursPerWeek"
@@ -58,6 +49,7 @@
                               invalid="!field8b.nedsattMed25.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
         </div>
+        <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed25')"></wc-field-validation>
         <div class="indent pad10" ng-if="field8b.nedsattMed25.workState">
           <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
             Arbetstid timmar/vecka: <strong id="arbetstid25">{{model.tjanstgoringstid * 0.75 |
@@ -106,6 +98,7 @@
                             invalid="!field8b.nedsattMed50.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
         </div>
+        <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed50')"></wc-field-validation>
         <div class="indent pad10" ng-if="field8b.nedsattMed50.workState">
           <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
             Arbetstid timmar/vecka: <strong id="arbetstid50">{{model.tjanstgoringstid * 0.5 |
@@ -152,6 +145,7 @@
                             invalid="!field8b.nedsattMed75.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
         </div>
+        <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed75')"></wc-field-validation>
         <div class="indent pad10" ng-if="field8b.nedsattMed75.workState">
           <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
             Arbetstid timmar/vecka: <strong id="arbetstid75">{{model.tjanstgoringstid * 0.25 |
@@ -198,6 +192,7 @@
                             invalid="!field8b.nedsattMed100.to.viewValid" override-render="true" add-date-parser="loose"></span>
           </label>
         </div>
+        <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed100')"></wc-field-validation>
       </div>
 
       <div ng-show="field8b.info.totalCertDays">

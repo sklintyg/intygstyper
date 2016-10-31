@@ -4,17 +4,7 @@
      field-has-errors="viewState.common.validationMessagesGrouped.medicinering"
      id="medicineringForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.medicinering" id="validationMessages_medicinering">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.medicinering"><span message
-                                                                                                     key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
+
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -29,11 +19,14 @@
         <p><span dynamic-label key="FRG_31.RBK"></span> *</p>
 
         <div ng-show="viewState.intygModel.medicinering.stadigvarandeMedicinering">
-          <p><span dynamic-label key="DFR_31.2.RBK"></span> *</p>
-          <textarea class="form-control" data-ng-model="viewState.intygModel.medicinering.beskrivning" wc-maxlength ng-trim="false"
-                    id="beskrivningMedicinering" maxlength="{{viewState.inputLimits.medicinering}}" rows="4"></textarea>
+          <wc-validation-wrapper field-type="multi-text" validations="viewState.getValidationErrors('medicineringBeskrivning')">
+            <p><span dynamic-label key="DFR_31.2.RBK"></span> *</p>
+            <textarea class="form-control" data-ng-model="viewState.intygModel.medicinering.beskrivning" wc-maxlength ng-trim="false"
+                      id="beskrivningMedicinering" maxlength="{{viewState.inputLimits.medicinering}}" rows="4"></textarea>
+          </wc-validation-wrapper>
         </div>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('stadigvarandeMedicinering')"></wc-field-validation></td></tr>
   </table>
 </div>

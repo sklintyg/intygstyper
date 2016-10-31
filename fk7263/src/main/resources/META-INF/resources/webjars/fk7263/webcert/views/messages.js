@@ -195,12 +195,6 @@ angular.module('fk7263').constant('fk7263.messages', {
 
         'fk7263.validation.forandrat-ressatt.choose-one': 'Endast ett alternativ kan anges avseende förändrat ressätt. (Fält 11)',
 
-        'fk7263.validation.vardenhet.telefonnummer.missing' : 'Telefonnummer för vårdenhet måste anges (Fält 15)',
-        'fk7263.validation.vardenhet.postadress.missing' : 'Postadress för vårdenhet måste anges (Fält 15)',
-        'fk7263.validation.vardenhet.postnummer.missing' : 'Postnummer för vårdenhet måste anges (Fält 15)',
-        'fk7263.validation.vardenhet.postnummer.incorrect-format' : 'Postnummer har fel format (Fält 15)',
-        'fk7263.validation.vardenhet.postort.missing' : 'Postort för vårdenhet måste anges (Fält 15)',
-
 
         // errors
         'fk7263.error.could_not_load_cert': '<strong>Intyget gick inte att läsa in.</strong><br>Prova att ladda om sidan. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Nationell kundservice på 0771-251010.',

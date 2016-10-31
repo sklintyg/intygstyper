@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.utvecklingsstorning"
      id="utvecklingsstorningForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.utvecklingsstorning" id="validationMessages_utvecklingsstorning">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.utvecklingsstorning"><span message
-                                                                                                            key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -27,6 +16,7 @@
                  ng-model="viewState.intygModel.utvecklingsstorning.psykiskUtvecklingsstorning"></td>
       <td><span dynamic-label key="FRG_28.RBK"></span> *</td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('harSyndrom')"></wc-field-validation></td></tr>
     <tr>
       <td><input name="utvecklingsstorningb" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.utvecklingsstorning.harSyndrom"></td>
@@ -34,5 +24,6 @@
                  ng-model="viewState.intygModel.utvecklingsstorning.harSyndrom"></td>
       <td><span dynamic-label key="FRG_29.RBK"></span> *</td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('psykiskUtvecklingsstorning')"></wc-field-validation></td></tr>
   </table>
 </div>
