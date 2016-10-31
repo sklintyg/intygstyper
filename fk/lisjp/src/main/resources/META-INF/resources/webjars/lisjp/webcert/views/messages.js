@@ -13,16 +13,6 @@ angular.module('lisjp').constant('lisjp.messages', {
         // Sjukpenning
         'lisjp.label.certtitle': 'Läkarintyg för sjukpenning',
 
-        // TODO: REMOVE THESE AND GENERATE from dynamic labels instead
-        'lisjp.label.grundformu': 'Utlåtandet är baserat på',
-        'lisjp.label.diagnos': 'Diagnos/diagnoser som orsakar nedsatt arbetsförmåga',
-        'lisjp.label.sysselsattning': 'I relation till vilken sysselsättning gör du den medicinska bedömningen?',
-        'lisjp.label.funktionsnedsattning': 'Funktionsnedsättning',
-        'lisjp.label.aktivitetsbegransning': 'Aktivitetsbegränsning',
-        'lisjp.label.bedomning': 'Bedömning',
-        'lisjp.label.atgarder': 'Åtgärder',
-        'lisjp.label.kontakt': 'Vill du att Försäkringskassan kontaktar dig?',
-
         //Labels
         'lisjp.label.spara-utkast': 'Spara',
         'lisjp.label.ta-bort-utkast': 'Ta bort utkast',
@@ -75,18 +65,18 @@ angular.module('lisjp').constant('lisjp.messages', {
 
         'lisjp.validation.bedomning.sjukskrivningar.missing': 'Minst en sjukskrivningsperiod måste anges.',
         'lisjp.validation.bedomning.sjukskrivningar.sjukskrivningsgrad.missing': 'Tekniskt fel. Sjukskrivningsgrad saknas.', // Should never happen because GUI should block this combination
-        'lisjp.validation.bedomning.sjukskrivningar.period1.missing': 'Helt nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
-        'lisjp.validation.bedomning.sjukskrivningar.period1.invalid_format': 'Helt nedsatt: Felaktigt datumformat.',
-        'lisjp.validation.bedomning.sjukskrivningar.period1.overlap': 'Helt nedsatt: Datumintervall överlappar.',
-        'lisjp.validation.bedomning.sjukskrivningar.period2.missing': '75% nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
-        'lisjp.validation.bedomning.sjukskrivningar.period2.invalid_format': '75% nedsatt: Felaktigt datumformat.',
-        'lisjp.validation.bedomning.sjukskrivningar.period2.overlap': '75% nedsatt: Datumintervall överlappar.',
-        'lisjp.validation.bedomning.sjukskrivningar.period3.missing': '50% nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
-        'lisjp.validation.bedomning.sjukskrivningar.period3.invalid_format': '50% nedsatt: Felaktigt datumformat.',
-        'lisjp.validation.bedomning.sjukskrivningar.period3.overlap': '50% nedsatt: Datumintervall överlappar.',
-        'lisjp.validation.bedomning.sjukskrivningar.period4.missing': '25% nedsatt: Period saknas.', // Should never happen because GUI should block this combination
-        'lisjp.validation.bedomning.sjukskrivningar.period4.invalid_format': '25% nedsatt: Felaktigt datumformat.',
-        'lisjp.validation.bedomning.sjukskrivningar.period4.overlap': '25% nedsatt: Datumintervall överlappar.',
+        'lisjp.validation.bedomning.sjukskrivningar.periodhelt_nedsatt.missing': 'Helt nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
+        'lisjp.validation.bedomning.sjukskrivningar.periodhelt_nedsatt.invalid_format': 'Helt nedsatt: Felaktigt datumformat.',
+        'lisjp.validation.bedomning.sjukskrivningar.periodhelt_nedsatt.overlap': 'Helt nedsatt: Datumintervall överlappar.',
+        'lisjp.validation.bedomning.sjukskrivningar.periodtre_fjardedel.missing': '75% nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
+        'lisjp.validation.bedomning.sjukskrivningar.periodtre_fjardedel.invalid_format': '75% nedsatt: Felaktigt datumformat.',
+        'lisjp.validation.bedomning.sjukskrivningar.periodtre_fjardedel.overlap': '75% nedsatt: Datumintervall överlappar.',
+        'lisjp.validation.bedomning.sjukskrivningar.periodhalften.missing': '50% nedsatt: Tekniskt fel. Period saknas.', // Should never happen because GUI should block this combination
+        'lisjp.validation.bedomning.sjukskrivningar.periodhalften.invalid_format': '50% nedsatt: Felaktigt datumformat.',
+        'lisjp.validation.bedomning.sjukskrivningar.periodhalften.overlap': '50% nedsatt: Datumintervall överlappar.',
+        'lisjp.validation.bedomning.sjukskrivningar.perioden_fjardedel.missing': '25% nedsatt: Period saknas.', // Should never happen because GUI should block this combination
+        'lisjp.validation.bedomning.sjukskrivningar.perioden_fjardedel.invalid_format': '25% nedsatt: Felaktigt datumformat.',
+        'lisjp.validation.bedomning.sjukskrivningar.perioden_fjardedel.overlap': '25% nedsatt: Datumintervall överlappar.',
 
         'lisjp.validation.bedomning.sjukskrivningar.arbetstidsforlaggning.missing': 'Arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.',
         'lisjp.validation.bedomning.sjukskrivningar.arbetstidsforlaggningmotivering.missing': 'Arbetstidsförläggning måste fyllas i om period 75%, 50% eller 25% har valts.',
@@ -101,9 +91,17 @@ angular.module('lisjp').constant('lisjp.messages', {
         'lisjp.validation.atgarder.missing': 'Åtgärder måste väljas eller Inte aktuellt.',
         'lisjp.validation.atgarder.inte_aktuellt_no_combine': 'Inte aktuellt kan inte kombineras med andra val.', // Should never happen because GUI should block this combination
         'lisjp.validation.atgarder.invalid_combination': 'Beskrivning för arbetslivsinriktade åtgärder kan inte kombineras med åtgärd på detta sätt.', // Should never happen because GUI should block this combination
-        'lisjp.validation.atgarder.aktuelltbeskrivning.missing': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.besok_arbetsplats.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.soka_nytt_arbete.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.arbetsanpassning.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.arbetstraning.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.ergonomisk.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.hjalpmedel.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.konflikthantering.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.kontakt_fhv.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.omfordelning.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
+        'lisjp.validation.atgarder.ovriga_atgarder.missing_description': 'Beskrivning av arbetslivsinriktade åtgärder måste fyllas i.',
         'lisjp.validation.atgarder.too-many': 'För många val på åtgärder.', // Should never happen because GUI should block this combination
-        'lisjp.validation.atgarder.inte_aktuellt_missing_description' : 'Om Arbetslivsinriktade åtgärder inte är aktuellt måste fältet "Beskriv varför arbetslivsinriktade åtgärder just nu inte skulle underlätta återgång i arbete" fyllas i.',
 
         'lisjp.validation.kontakt.invalid_combination': 'Anledning får inte fyllas i när man svarat nej på kontakt.',
 
