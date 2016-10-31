@@ -1,9 +1,6 @@
 ext {
     commonVersion = System.properties['commonVersion'] ?: '0-SNAPSHOT'
 
-    webappOutputDir = 'build/'
-    webappTestOutputDir = 'build/karma/'
-
     cxfVersion = "3.1.3"
     commonsCollectionsVersion = "3.2.1"
     commonsIoVersion = "2.4"
@@ -25,6 +22,7 @@ allprojects {
     group = 'se.inera.intyg.intygstyper'
     version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
 
+    apply plugin: 'inera-intyg'
     apply plugin: 'maven'
     apply plugin: 'org.ajoberstar.grgit'
 }
@@ -35,31 +33,7 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    task createVersionPropertyFile(dependsOn: processResources) {
-        def propertyFile = "${buildDir}/resources/main/version.properties"
-        def projectVersion = rootProject.version
-        def gitCommit = grgit.head().id
-        def gitBranch = grgit.branch.getCurrent().getName()
-        def buildNumber = System.env.BUILD_NUMBER
-
-        inputs.property("project.version", projectVersion)
-        inputs.property("gitCommit", gitCommit)
-        inputs.property("gitBranch", gitBranch)
-        inputs.property("buildNumber", buildNumber)
-        outputs.file(propertyFile)
-
-        doLast {
-            ant.touch(file: propertyFile, mkdirs: "true")
-            ant.propertyfile(file: propertyFile) {
-                entry(key: 'project.version', default: projectVersion)
-                entry(key: 'gitCommit', default: gitCommit)
-                entry(key: 'gitBranch', default: gitBranch)
-                entry(key: 'buildNumber', default: buildNumber)
-            }
-        }
-    }
-
-    jar.dependsOn(createVersionPropertyFile)
+    task createVersionPropertyFile(type: VersionPropertyFileTask)
 
     task unzipBuildTools(type: Copy) {
         description 'Extracts common-build-tools'
@@ -159,25 +133,8 @@ subprojects {
     }
 }
 
-String findResolvedVersion(Project project, String groupName) {
-    String version
-    project.configurations.find {
-        it.name == 'compile'
-    }.resolvedConfiguration.getFirstLevelModuleDependencies().find {
-        if (it.moduleGroup == groupName) {
-            version = it.moduleVersion
-            return true
-        }
-        return false
-    }
-    return version
-}
-
-configure(subprojects.findAll {
-        ['fk7263', 'ts-bas', 'ts-diabetes', 'lisjp', 'luse', 'luae_fs', 'luae_na'].contains(it.name)
-    }) {
+configure(subprojects.findAll {['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'luse', 'luae_fs', 'luae_na'].contains(it.name)}) {
     apply plugin: 'com.moowork.grunt'
-    apply plugin: 'com.moowork.node'
 
     grunt {
         colors = System.properties['gruntColors'] ? System.properties['gruntColors'].toBoolean() : true
@@ -192,6 +149,8 @@ configure(subprojects.findAll {
     }
 
     task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
+        def webappOutputDir = 'build/'
+
         inputs.dir("$projectDir/src/main/resources")
         inputs.files(fileTree(projectDir).include('*.js'))
         inputs.files(fileTree(projectDir).include('*.json'))
@@ -236,6 +195,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     }
 
     task jsTests(type: NodeTask, dependsOn: [npmInstall, unzipWebjars]) {
+        def webappTestOutputDir = 'build/karma/'
+
         inputs.dir("${projectDir}/src/main/resources")
         inputs.files(fileTree(projectDir).include('*.js'))
         inputs.files(fileTree(projectDir).include('*.json'))
@@ -259,23 +220,9 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     }
 }
 
-task tagRelease {
-    description = 'Tags the current head with the projects version.'
-    doLast {
-        def grgit = org.ajoberstar.grgit.Grgit.open(creds: new org.ajoberstar.grgit.Credentials(System.properties['githubUser'],
-                                                                                                System.properties['githubPassword']))
-        grgit.tag.add {
-            name = "v" + version
-            message = "Release of ${version}"
-        }
-        grgit.push(tags: true)
-    }
-}
-
-task testReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/allTests")
-    reportOn subprojects*.test // Include the results from the 'test' task in all subprojects
-}
+task tagRelease(type: TagReleaseTask)
+                      
+task testReport(type: SharedTestReportTask)
 
 apply plugin: "org.sonarqube"
 
@@ -293,10 +240,11 @@ sonarqube {
 
 buildscript {
     dependencies {
-        classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
-        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1"
-        classpath 'org.ajoberstar:gradle-git:1.5.1'
+        classpath 'se.inera.intyg:gradle-intyg-plugin:1.0.+'
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.+'
+        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.+'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.+"
+        classpath 'org.ajoberstar:gradle-git:1.+'
     }
 
     repositories {
