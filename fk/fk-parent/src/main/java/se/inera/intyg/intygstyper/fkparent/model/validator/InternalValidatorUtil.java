@@ -131,10 +131,10 @@ public class InternalValidatorUtil {
      *            intervals
      * @return booleans
      */
-    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
+    protected boolean validateIntervals(String intygsTyp, List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
         if (intervals == null || allNulls(intervals)) {
             addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
-                    "luae_na.validation.nedsattning.choose-at-least-one");
+                    intygsTyp + ".validation.nedsattning.choose-at-least-one");
             return false;
         }
 
@@ -144,7 +144,7 @@ public class InternalValidatorUtil {
                     // Overlap OR abuts(one intervals tom day == another's from day) is considered invalid
                     if (intervals[j] != null && intervals[i].overlaps(intervals[j])) {
                         addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                "luae_na.validation.nedsattning.overlapping-date-interval");
+                                intygsTyp + ".validation.nedsattning.overlapping-date-interval");
                         return false;
                     }
                 }
@@ -153,7 +153,7 @@ public class InternalValidatorUtil {
         return true;
     }
 
-    public boolean validateDate(InternalDate date, List<ValidationMessage> validationMessages, String field) {
+    public boolean validateDate(String intygsTyp, InternalDate date, List<ValidationMessage> validationMessages, String field) {
         boolean valid = true;
         if (!date.isValidDate()) {
             addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT);
@@ -162,15 +162,15 @@ public class InternalValidatorUtil {
 
         if (!date.isReasonable()) {
             addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT,
-                    "luse.validation.general.date_out_of_range");
+                    intygsTyp + ".validation.general.date_out_of_range");
             valid = false;
         }
         return valid;
     }
 
-    public void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+    public void validateGrundForMuDate(String intygsTyp, InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
         String validationType = "grundformu." + type.getFieldName();
-        validateDate(date, validationMessages, validationType);
+        validateDate(intygsTyp, date, validationMessages, validationType);
     }
 
     public boolean isBlankButNotNull(String stringFromField) {
