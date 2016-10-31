@@ -20,64 +20,10 @@
 /* jshint maxlen: false */
 angular.module('fk7263').constant('fk7263.messages', {
     'sv': {
+        // FK 7263
+        'fk7263.label.certtitle': 'Läkarintyg FK 7263',
 
-        'fk7263.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
-        'fk7263.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
-        'fk7263.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
-        'fk7263.recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
-        'fk7263.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
-        'fk7263.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
-
-        'fk7263.confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
-        'fk7263.confirm.label.certrowtitle': 'Intyg',
-        'fk7263.confirm.label.recipienttitle': 'Mottagare',
-        'fk7263.confirm.label.summarypagedesc': '<p><b>Du har valt att skicka det här intyget.</b></p>',
-        'fk7263.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck "Skicka"',
-        'fk7263.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
-
-        'fk7263.sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
-        'fk7263.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
-        'fk7263.sent.label.result': 'Mottagare av intyget: <br>',
-        'fk7263.sent.label.infoaboutrecipients': 'Observera att olika mottagare har olika tider när dom kan se det inskickade intyget.',
-        'fk7263.sent.button.backtocertificate': 'Tillbaka till intyget',
-        'fk7263.label.latestevent': 'Senaste händelse',
-        'fk7263.label.latestevent.noevents': 'Inga händelser',
-        'fk7263.history.label.pagetitle': 'Intygets alla händelser',
-        'fk7263.status.sent': 'Mottaget av',
-        'fk7263.target.fk': 'Försäkringskassan',
-        'fk7263.target.afa': 'AFA Försäkring',
-        'fk7263.target.skandia': 'Skandia',
-
-        'fk7263.customize.step.1.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 1 av 2',
-        'fk7263.customize.step.1.pageingress': '<p>Här kan du skapa ett anpassat intyg till din arbetsgivare genom att välja vilken information du vill ta med och inte. Viss information måste lämnas till arbetsgivaren och kan inte väljas bort. I de flesta fall är du inte skyldig att lämna mer information än den obligatoriska, men om ni har ett kollektivavtal kan det finnas andra regler för vilken information som måste tas med. Det finns ofta fördelar med att arbetsgivaren får ta del även av frivillig information, exempelvis hur sjukdomen begränsar din aktivitetsförmåga (fält 5). Det ger arbetsgivaren bättre möjlighet att anpassa din arbetsplats eller arbetssituation. Du kan alltid återvända till Mina intyg vid senare tillfälle för att skapa ett nytt anpassat intyg med mer information.</p><p>För att välja bort information bockar du ur alternativet <i>Inkludera i anpassat intyg</i> i det fält du inte vill ska synas.</p>',
-        'fk7263.customize.step.1.fishbone': 'Anpassa intyg',
-        'fk7263.customize.step.2.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 2 av 2',
-        'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Spara som PDF.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra val.</p>',
-        'fk7263.customize.step.2.fishbone': 'Sammanfattning',
-        'fk7263.customize.step.2.info.fk': 'Tänk på att det anpassade intyget <u>inte</u> ska skickas till Försäkringskassan.',
-        'fk7263.customize.step.2.info.pdf': 'När du sett över dina val klickar du på knappen ',
-
-        'fk7263.customize.title.field': 'Fält',
-
-        'fk7263.customize.label.mandatory': 'Obligatoriskt fält',
-        'fk7263.customize.label.optional': 'Inkludera i anpassat intyg',
-
-        'fk7263.customize.message.limitation': 'Informationen i fält 5 är frivillig, men informationen kan underlätta arbetsgivarens möjlighet att göra arbetsanpassningar.',
-
-        'fk7263.customize.summary.leave.header':'Vill du lämna anpassat intyg?',
-        'fk7263.customize.summary.leave': 'Observera att ditt anpassade intyg inte sparas i Mina intyg efter att du navigerat till en annan sida. Se därför till att du har laddat ner det till din dator innan du lämnar sidan.',
-        'fk7263.customize.summary.leave.yes': 'Ja, lämna anpassat intyg',
-        'fk7263.customize.summary.leave.no': 'Nej, stanna kvar',
-
-        'fk7263.inbox.complementaryinfo': 'Intygsperiod',
-
-        'fk7263.button.sendtofk': 'Skicka till Försäkringskassan',
-        'fk7263.button.send.certificate': 'Skicka',
-        'fk7263.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
-        'fk7263.button.customize.certificate': 'Anpassa intyget till arbetsgivare',
-        'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
-        'fk7263.button.customize.certificate.change': 'Ändra val',
-
+        // Labels
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
         'fk7263.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',
         'fk7263.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
@@ -98,7 +44,6 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.label.showevents.false': '<span class="glyphicon glyphicon-chevron-up"></span> Visa färre händelser',
         'fk7263.label.showevents.true': '<span class="glyphicon glyphicon-chevron-down"></span> Visa alla händelser',
 
-        'fk7263.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
         'fk7263.label.nedsattning': 'Jag bedömer att arbetsförmåga är (fält 8b)',
         'fk7263.label.nedsattning.anpassatintyg': 'Jag bedömer att arbetsförmåga är',
         'fk7263.label.patientname': 'Patientens namn',
@@ -164,8 +109,15 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.label.date': 'Datum',
         'fk7263.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
-        'fk7263.message.certificateloading': 'Hämtar intyg...',
-        'fk7263.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
+        'fk7263.label.latestevent': 'Senaste händelse',
+        'fk7263.label.latestevent.noevents': 'Inga händelser',
+
+        'fk7263.button.sendtofk': 'Skicka till Försäkringskassan',
+        'fk7263.button.send.certificate': 'Skicka',
+        'fk7263.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
+        'fk7263.button.customize.certificate': 'Anpassa intyget till arbetsgivare',
+        'fk7263.button.customize.certificate.title': 'Anpassa detta intyg för att lämna till arbetsgivaren.',
+        'fk7263.button.customize.certificate.change': 'Ändra val',
         'fk7263.button.send': 'Skicka',
         'fk7263.button.cancel': 'Avbryt',
         'fk7263.button.goback': 'Tillbaka',
@@ -176,20 +128,78 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.fishbone.label.granska-skicka': 'Granska och skicka',
         'fk7263.fishbone.label.bekraftelse': 'Bekräftelse',
 
+        'fk7263.recipient.label.pagetitle': 'Skicka intyg - steg 1 av 3',
+        'fk7263.recipient.label.selectrecipents': 'Här ser du de mottagare som du kan skicka intyget till elektroniskt. Välj önskad mottagare och klicka sedan på knappen Nästa för att gå vidare till nästa steg.',
+        'fk7263.recipient.label.recipientlisttitle': 'Myndigheter och försäkringsbolag',
+        'fk7263.recipient.label.recipientlisttitle.others': 'Myndigheter och försäkringsbolag',
+        'fk7263.recipient.label.missing.recipients-1': 'Om du saknar din mottagare i listan beror det troligen på att mottagaren inte kan ta emot elektroniska läkarintyg. Du kan då ',
+        'fk7263.recipient.label.missing.recipients-2': ' och skicka det per post istället.',
+
+        'fk7263.recipients.label.pagetitle': 'Skicka intyg - välj mottagare',
+
+        'fk7263.confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
+        'fk7263.confirm.label.certrowtitle': 'Intyg',
+        'fk7263.confirm.label.recipienttitle': 'Mottagare',
+        'fk7263.confirm.label.summarypagedesc': '<p><b>Du har valt att skicka det här intyget.</b></p>',
+        'fk7263.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck "Skicka"',
+        'fk7263.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
+
+        'fk7263.sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
+        'fk7263.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
+        'fk7263.sent.label.result': 'Mottagare av intyget: <br>',
+        'fk7263.sent.label.infoaboutrecipients': 'Observera att olika mottagare har olika tider när dom kan se det inskickade intyget.',
+        'fk7263.sent.button.backtocertificate': 'Tillbaka till intyget',
+
+        'fk7263.target.fk': 'Försäkringskassan',
+        'fk7263.target.afa': 'AFA Försäkring',
+        'fk7263.target.skandia': 'Skandia',
+
         'fk7263.nedsattningsgrad.helt_nedsatt': 'Helt nedsatt',
         'fk7263.nedsattningsgrad.nedsatt_med_3_4': 'Nedsatt med 3/4',
         'fk7263.nedsattningsgrad.nedsatt_med_1_2': 'Nedsatt med hälften',
         'fk7263.nedsattningsgrad.nedsatt_med_1_4': 'Nedsatt med 1/4',
+
         'fk7263.vardkontakt.5880005': 'Min undersökning av patienten den %0',
         'fk7263.vardkontakt.undersokning': 'Min undersökning av patienten den ',
         'fk7263.vardkontakt.185317003': 'Min telefonkontakt med patienten den %0',
         'fk7263.vardkontakt.telefonkontakt': 'Min telefonkontakt med patienten den ',
+
         'fk7263.referens.419891008': 'Journaluppgifter, den %0',
         'fk7263.referens.journal': 'Journaluppgifter, den ',
         'fk7263.referens.74964007': 'Annat, den %0',
         'fk7263.referens.annat': 'Annat, den ',
-        'fk7263.common.cancel': 'Avbryt',
 
+        // Anpassat intyg
+        'fk7263.customize.step.1.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 1 av 2',
+        'fk7263.customize.step.1.pageingress': '<p>Här kan du skapa ett anpassat intyg till din arbetsgivare genom att välja vilken information du vill ta med och inte. Viss information måste lämnas till arbetsgivaren och kan inte väljas bort. I de flesta fall är du inte skyldig att lämna mer information än den obligatoriska, men om ni har ett kollektivavtal kan det finnas andra regler för vilken information som måste tas med. Det finns ofta fördelar med att arbetsgivaren får ta del även av frivillig information, exempelvis hur sjukdomen begränsar din aktivitetsförmåga (fält 5). Det ger arbetsgivaren bättre möjlighet att anpassa din arbetsplats eller arbetssituation. Du kan alltid återvända till Mina intyg vid senare tillfälle för att skapa ett nytt anpassat intyg med mer information.</p><p>För att välja bort information bockar du ur alternativet <i>Inkludera i anpassat intyg</i> i det fält du inte vill ska synas.</p>',
+        'fk7263.customize.step.1.fishbone': 'Anpassa intyg',
+        'fk7263.customize.step.2.pagetitle': 'Anpassa intygsinformation till din arbetsgivare - steg 2 av 2',
+        'fk7263.customize.step.2.pageingress': '<p>Om du vill spara ditt anpassade intyg som PDF klickar du på knappen Spara som PDF.</p><p>Om du märker att du har valt bort ett fält som du vill ha med, eller tvärt om, klickar du på Ändra val.</p>',
+        'fk7263.customize.step.2.fishbone': 'Sammanfattning',
+        'fk7263.customize.step.2.info.fk': 'Tänk på att det anpassade intyget <u>inte</u> ska skickas till Försäkringskassan.',
+        'fk7263.customize.step.2.info.pdf': 'När du sett över dina val klickar du på knappen ',
+
+        'fk7263.customize.title.field': 'Fält',
+
+        'fk7263.customize.label.mandatory': 'Obligatoriskt fält',
+        'fk7263.customize.label.optional': 'Inkludera i anpassat intyg',
+
+        'fk7263.customize.message.limitation': 'Informationen i fält 5 är frivillig, men informationen kan underlätta arbetsgivarens möjlighet att göra arbetsanpassningar.',
+
+        'fk7263.customize.summary.leave.header':'Vill du lämna anpassat intyg?',
+        'fk7263.customize.summary.leave': 'Observera att ditt anpassade intyg inte sparas i Mina intyg efter att du navigerat till en annan sida. Se därför till att du har laddat ner det till din dator innan du lämnar sidan.',
+        'fk7263.customize.summary.leave.yes': 'Ja, lämna anpassat intyg',
+        'fk7263.customize.summary.leave.no': 'Nej, stanna kvar',
+
+        // Misc
+        'fk7263.common.cancel': 'Avbryt',
+        'fk7263.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
+        'fk7263.history.label.pagetitle': 'Intygets alla händelser',
+        'fk7263.inbox.complementaryinfo': 'Intygsperiod',
+        'fk7263.message.certificateloading': 'Hämtar intyg...',
+        'fk7263.status.sent': 'Mottaget av',
+
+        // Errors
         'fk7263.error.generic': 'Intyget kunde inte visas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href="/web/start">Gå till Inkorgen och försök igen</a>',
         'fk7263.error.couldnotsend': 'Intyget kunde inte skickas till Försäkringskassan. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>.<br><br><a href="/web/start">Gå till Inkorgen och försök igen</a>',
         'fk7263.error.certnotfound': 'Intygen i Inkorgen kunde inte visas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href="/web/start">Gå till Inkorgen och försök igen</a>',

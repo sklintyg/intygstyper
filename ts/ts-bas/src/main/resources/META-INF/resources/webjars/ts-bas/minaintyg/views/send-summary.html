@@ -12,33 +12,34 @@
 	  			<div class="cert-titlebar">
 		  			<img class="cert-icon" alt="" ng-src="/web/webjars/ts-bas/minaintyg/img/ts-bas.png" src="/web/webjars/ts-bas/minaintyg/img/ts-bas.png">
 		  			<div class="row">
-		  				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-		                  <h2 class="cert-title">
-		                    <span message key="ts-bas.label.certtitle"></span> <span class="cert-titlebar-type"><span message key="ts-bas.typename"></span></span>
-		                  </h2>
-		                </div>
-		                <div class="col-xs-6 col-sm-5 col-md-5 col-lg-5 issue">
-		                  <span><span message key="ts-bas.label.issued"></span></span> <span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'longDate'}}</span>
-		                </div>
+		  				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-7">
+								<h2 class="cert-title">
+									<span message key="ts-bas.label.certtitle"></span>
+								</h2>
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-5 issue ts-issue">
+								<span class="text-nowrap"><span message key="ts-bas.label.issued"></span></span>
+								<span class="text-nowrap"><span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'longDate'}}</span></span>
+							</div>
 		  			</div>
 		  		</div>
 		  		<div class="cert-header">
 		  			<div class="row">
 			  			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
-		                  <h3 class="tag">
-		                    <span message key="ts-bas.label.unit"></span>
-		                  </h3>
-		                  <span id="careunit">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span>
-		                </div>
-		                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
-		                  <h3 class="tag">
-		                    <span message key="ts-bas.inbox.complementaryinfo"></span>
-		                  </h3>
-		                  <label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
-	                        <span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
-	                  	  </label>
-		                </div>
-		            </div>
+								<h3 class="tag">
+									<span message key="ts-bas.label.unit"></span>
+								</h3>
+								<span id="careunit">{{cert.grundData.skapadAv.vardenhet.enhetsnamn}}</span>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 header-row">
+								<h3 class="tag">
+									<span message key="ts-bas.inbox.complementaryinfo"></span>
+								</h3>
+								<label ng-repeat="typ in filtered.korkortstyp = (cert.intygAvser.korkortstyp | filter:{selected : true})" id="caregiver">
+										<span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span><span ng-show="filtered.korkortstyp.length > 1">, </span>
+									</label>
+							</div>
+						</div>
 		  		</div>
 		  		<div class="table-bottom"></div>
 	  		</div>
@@ -66,14 +67,10 @@
 	      <p message key="ts-bas.confirm.label.summarypagedesc"></p>
 	      <div class="well cert-summary">
 	        <span>{{cert.grundData.skickatdatum | date:'longDate'}}</span>
-	        <span message key="certificatetypes.ts-bas.commonname"></span>
-	        <span message key="certificatetypes.ts-bas.typename"></span>
-	        <span>{{cert.giltighet.from |
-	          date:'longDate'}}&ndash;{{cert.giltighet.tom | date:'longDate'}}</span>
-	          <span>{{cert.vardenhet.namn}}</span>
-
+	        <span message key="{{cert.type}}.label.certtitle"></span>
+	        <span>{{cert.giltighet.from | date:'longDate'}}&ndash;{{cert.giltighet.tom | date:'longDate'}}</span>
+					<span>{{cert.vardenhet.namn}}</span>
 	      </div>
-
 
 	      <h2>
 	        <span message key="ts-bas.confirm.label.recipienttitle"></span>

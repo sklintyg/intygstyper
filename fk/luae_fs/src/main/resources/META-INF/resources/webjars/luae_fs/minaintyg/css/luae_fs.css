@@ -22,3 +22,8 @@ table.table.luae_fs-underlag tbody td {
 .luae_fs-underlag-title {
     font-weight: bold;
 }
+
+.luae_fs-issue {
+    text-align: right;
+    padding-right: 20px;
+}

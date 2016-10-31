@@ -11,14 +11,15 @@
 	  			<div class="cert-titlebar">
 		  			<img class="cert-icon" alt="" ng-src="/web/webjars/lisjp/minaintyg/img/lisjp.png" src="/web/webjars/lisjp/minaintyg/img/lisjp.png">
 		  			<div class="row">
-		  				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-		                  <h2 class="cert-title">
-		                    <span message key="certificatetypes.lisjp.commonname"></span> <span class="cert-titlebar-type"><span message key="certificatetypes.lisjp.typename"></span></span>
-		                  </h2>
-		                </div>
-		                <div class="col-xs-6 col-sm-5 col-md-5 col-lg-5 issue">
-		                  <span><span message key="lisjp.label.issued"></span></span> <span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'longDate'}}</span>
-		                </div>
+		  				<div class="col-xs-8 col-sm-8 col-md-8 col-lg-7">
+								<h2 class="cert-title">
+									<span message key="lisjp.label.certtitle"></span>
+								</h2>
+							</div>
+							<div class="col-xs-4 col-sm-4 col-md-4 col-lg-5 issue lisjp-issue">
+								<span class="text-nowrap"><span message key="lisjp.label.issued"></span></span>
+								<span class="text-nowrap"><span class="cert-titlebar-value">{{cert.grundData.signeringsdatum | date:'longDate'}}</span></span>
+							</div>
 		  			</div>
 		  		</div>
 		  		<div class="cert-header">
@@ -82,7 +83,7 @@
 	          <span message key="lisjp.button.previous"></span>
 	        </button>
 	        <button id="cancelSendBtn" type="button" ng-click="backToViewCertificate()" class="btn btn-default">
-	          <span message key="lisjp.common.cancel"></span>
+	          <span message key="lisjp.button.cancel"></span>
 	        </button>
 	      </p>
 	    </div>

@@ -17,14 +17,10 @@
       <p message key="ts-diabetes.confirm.label.summarypagedesc"></p>
       <div class="well cert-summary">
         <span>{{cert.grundData.skickatdatum | date:'longDate'}}</span>
-        <span message key="certificatetypes.ts-diabetes.commonname"></span>
-        <span message key="certificatetypes.ts-diabetes.typename"></span>
-        <span>{{cert.giltighet.from |
-          date:'longDate'}}&ndash;{{cert.giltighet.tom | date:'longDate'}}</span>
-          <span>{{cert.vardenhet.namn}}</span>
-
+        <span message key="ts-diabetes.label.certtitle"></span>
+        <span>{{cert.giltighet.from | date:'longDate'}}&ndash;{{cert.giltighet.tom | date:'longDate'}}</span>
+        <span>{{cert.vardenhet.namn}}</span>
       </div>
-
 
       <h2>
         <span message key="ts-diabetes.confirm.label.recipienttitle"></span>
@@ -43,7 +39,7 @@
           <span message key="ts-diabetes.button.send"></span>
         </button>
         <button id="cancelSendBtn" type="button" ng-click="backToViewCertificate()" class="btn btn-default">
-          <span message key="ts-diabetes.common.cancel"></span>
+          <span message key="ts-diabetes.button.cancel"></span>
         </button>
       </p>
     </div>

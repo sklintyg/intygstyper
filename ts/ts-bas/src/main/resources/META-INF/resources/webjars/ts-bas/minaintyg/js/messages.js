@@ -20,10 +20,13 @@
 /* jshint maxlen: false */
 angular.module('ts-bas').constant('ts-bas.messages', {
     'sv': {
+        // TS-BAS
+        'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
+
+        // Labels
         'ts-bas.label.intygavser': 'Avser behörighet för körkort',
         'ts-bas.label.identitet': 'Identiteten är styrkt genom',
         'ts-bas.label.unit': 'Vårdenhet',
-
 
         'ts-bas.label.syn.binokulart': 'Binokulärt',
         'ts-bas.label.syn.hogeroga': 'Höger öga',
@@ -39,25 +42,10 @@ angular.module('ts-bas').constant('ts-bas.messages', {
         'ts-bas.label.true': 'JA',
         'ts-bas.label.false': 'NEJ',
 
-        'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
+        'ts-bas.label.pagetitle': 'Granska och skicka intyg',
         'ts-bas.label.pagetitle.step1': 'Skicka intyg - steg 1 av 2',
         'ts-bas.label.pagetitle.step2': 'Skicka intyg - steg 2 av 2',
-        'ts-bas.confirm.label.summarypagedesc': 'Du har valt att skicka följande intyg: ',
-        'ts-bas.confirm.label.recipienttitle': 'Mottagare: ',
-        'ts-bas.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck på Skicka.',
-        'ts-bas.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
-        'ts-bas.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
 
-        'ts-bas.typename': '',
-        'ts-bas.label.pagetitle': 'Granska och skicka intyg',
-        'ts-bas.button.send': 'Skicka',
-        'ts-bas.button.send.certificate.title': 'Skicka detta intyg till Transportstyrelsen.',
-        'ts-bas.common.cancel': 'Avbryt',
-
-        'ts-bas.fishbone.label.granska-skicka': 'Granska och skicka',
-        'ts-bas.fishbone.label.bekraftelse': 'Bekräftelse',
-
-        'ts-button.detail.send': 'Skicka',
         'ts-bas.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Transportstyrelsen, du kan även skriva ut eller spara intyget.<br>',
         'ts-bas.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
         'ts-bas.label.pagedescription.sendcertificate': 'Klicka på knappen Skicka för att skicka intyget elektroniskt till Transportstyrelsen.',
@@ -78,30 +66,47 @@ angular.module('ts-bas').constant('ts-bas.messages', {
         'ts-bas.label.issuer': 'Utfärdare:',
         'ts-bas.label.period': 'Period:',
         'ts-bas.label.errorpagetitle': 'Ett problem har uppstått',
-        'ts-bas.message.certifits-basloading': 'Hämtar intyg...',
-        'ts-bas.button.sendtofk': 'Skicka',
-        'ts-bas.button.goback': 'Tillbaka',
-        'ts-bas.button.cancel': 'Avbryt',
-        'ts-bas.error.generic': 'Kunde inte visa intyget',
-        'ts-bas.label.latestevent': 'Senaste händelse',
-        'ts-bas.label.latestevent.noevents': 'Inga händelser',
-        'ts-bas.label.latestevent.showall': 'Visa alla händelser',
-        'ts-bas.history.label.pagetitle': 'Intygets alla händelser',
-        'ts-bas.status.sent': 'Mottaget av',
-        'ts-bas.target.mi': 'Försäkringsbolaget',
-        'ts-bas.target.ts': 'Transportstyrelsen',
-        'ts-bas.sent.label.result': 'Mottagare av intyget: ',
-        'ts-bas.sent.button.backtocertificate': 'Tillbaka till intyget',
 
         'ts-bas.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'ts-bas.label.date': 'Datum',
         'ts-bas.label.contactinfo': 'Namn och kontaktuppgifter till vårdenheten',
 
         'ts-bas.label.bedomning-info-ej-angivet': 'Ej ifyllt',
-        'ts-bas.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
+
+        'ts-bas.label.latestevent': 'Senaste händelse',
+        'ts-bas.label.latestevent.noevents': 'Inga händelser',
+        'ts-bas.label.latestevent.showall': 'Visa alla händelser',
+
+        'ts-bas.confirm.label.summarypagedesc': 'Du har valt att skicka följande intyg: ',
+        'ts-bas.confirm.label.recipienttitle': 'Mottagare: ',
+        'ts-bas.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck på Skicka.',
+        'ts-bas.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
+
+        'ts-bas.button.send': 'Skicka',
+        'ts-bas.button.send.certificate.title': 'Skicka detta intyg till Transportstyrelsen.',
+        'ts-bas.button.sendtofk': 'Skicka',
+        'ts-bas.button.goback': 'Tillbaka',
+        'ts-bas.button.cancel': 'Avbryt',
+
+        'ts-bas.fishbone.label.granska-skicka': 'Granska och skicka',
+        'ts-bas.fishbone.label.bekraftelse': 'Bekräftelse',
+
+        'ts-bas.target.mi': 'Försäkringsbolaget',
+        'ts-bas.target.ts': 'Transportstyrelsen',
+
+        'ts-bas.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
+        'ts-bas.sent.label.result': 'Mottagare av intyget: ',
+        'ts-bas.sent.button.backtocertificate': 'Tillbaka till intyget',
+
+        'ts-button.detail.send': 'Skicka',
+        'ts-bas.message.certifits-basloading': 'Hämtar intyg...',
+        'ts-bas.error.generic': 'Kunde inte visa intyget',
+        'ts-bas.history.label.pagetitle': 'Intygets alla händelser',
+        'ts-bas.status.sent': 'Mottaget av',
+        'ts-bas.inbox.complementaryinfo': 'Avser behörighet',
 
         //Helptexts
-        'ts-bas.inbox.complementaryinfo': 'Avser behörighet'
+        'ts-bas.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.'
 
     },
     'en': {
