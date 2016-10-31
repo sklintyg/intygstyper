@@ -42,7 +42,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
         },
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 1, categoryName: categoryNames[1], prototypeName: 'default' },
+            templateOptions: { category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
                 { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After: false, required: true } },
                 {
@@ -207,7 +207,8 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
         {
             wrapper: 'wc-field-static',
             templateOptions: { staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet' },
-            fieldGroup: [{
+            fieldGroup: [
+                {
                     type: 'label-vardenhet'
                 },
                 {

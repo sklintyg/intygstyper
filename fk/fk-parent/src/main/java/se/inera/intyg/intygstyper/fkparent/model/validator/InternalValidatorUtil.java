@@ -25,10 +25,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
+
 
 /**
  * Created by BESA on 2016-02-23.
@@ -42,6 +48,28 @@ public class InternalValidatorUtil {
 
     private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
     private static final int MIN_SIZE_DIAGNOS = 3;
+
+    public enum GrundForMu {
+        UNDERSOKNING,
+        JOURNALUPPGIFTER,
+        ANHORIGSBESKRIVNING,
+        ANNAT;
+
+        public String getFieldName() {
+            switch (this) {
+                case UNDERSOKNING:
+                    return GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
+                case ANHORIGSBESKRIVNING:
+                    return GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
+                case JOURNALUPPGIFTER:
+                    return GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
+                case ANNAT:
+                    return GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
+                default:
+                    return "annat";
+            }
+        }
+    }
 
     public void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
@@ -94,6 +122,75 @@ public class InternalValidatorUtil {
     }
 
     /**
+     *
+     * @param validationMessages
+     *            list collecting message
+     * @param fieldId
+     *            field id
+     * @param intervals
+     *            intervals
+     * @return booleans
+     */
+    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
+        if (intervals == null || allNulls(intervals)) {
+            addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
+                    "luae_na.validation.nedsattning.choose-at-least-one");
+            return false;
+        }
+
+        for (int i = 0; i < intervals.length; i++) {
+            if (intervals[i] != null) {
+                for (int j = i + 1; j < intervals.length; j++) {
+                    // Overlap OR abuts(one intervals tom day == another's from day) is considered invalid
+                    if (intervals[j] != null && intervals[i].overlaps(intervals[j])) {
+                        addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
+                                "luae_na.validation.nedsattning.overlapping-date-interval");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean validateDate(InternalDate date, List<ValidationMessage> validationMessages, String field) {
+        boolean valid = true;
+        if (!date.isValidDate()) {
+            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT);
+            return false;
+        }
+
+        if (!date.isReasonable()) {
+            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT,
+                    "luse.validation.general.date_out_of_range");
+            valid = false;
+        }
+        return valid;
+    }
+
+    public void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+        String validationType = "grundformu." + type.getFieldName();
+        validateDate(date, validationMessages, validationType);
+    }
+
+    public boolean isBlankButNotNull(String stringFromField) {
+        return (!StringUtils.isEmpty(stringFromField)) && StringUtils.isBlank(stringFromField);
+    }
+
+    /**
+     * Check if there are validation errors.
+     *
+     */
+    public ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
+        return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
+    }
+
+    public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg, String dynamicLabel) {
+        validationMessages.add(new ValidationMessage(field, type, msg, dynamicLabel));
+        LOG.debug(field + " " + msg);
+    }
+
+    /**
      * Create a ValidationMessage and add it to the list of messages.
      *
      * @param validationMessages
@@ -106,6 +203,25 @@ public class InternalValidatorUtil {
     public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
         validationMessages.add(new ValidationMessage(field, type, msg));
         LOG.debug(field + " " + msg);
+    }
+
+    public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type) {
+        validationMessages.add(new ValidationMessage(field, type));
+        LOG.debug(field + " " + type.toString());
+    }
+
+    /**
+     * @param intervals
+     *            intervals
+     * @return boolean
+     */
+    public boolean allNulls(InternalLocalDateInterval[] intervals) {
+        for (InternalLocalDateInterval interval : intervals) {
+            if (interval != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
