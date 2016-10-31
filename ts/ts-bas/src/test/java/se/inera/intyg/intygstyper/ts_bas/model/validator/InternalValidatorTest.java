@@ -78,7 +78,7 @@ public class InternalValidatorTest {
                 .asInternalModel();
         ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
-        assertEquals("diabetes.diabetesTyp", getSingleElement(validationResponse.getValidationErrors()).getField());
+        assertEquals("diabetes.diabetesTyp.behandlingsTyp", getSingleElement(validationResponse.getValidationErrors()).getField());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class InternalValidatorTest {
                 .asInternalModel();
         ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
 
-        assertEquals("funktionsnedsattning.beskrivning", getSingleElement(validationResponse.getValidationErrors())
+        assertEquals("funktionsnedsattning.funktionsnedsattningBeskrivning", getSingleElement(validationResponse.getValidationErrors())
                 .getField());
     }
 
