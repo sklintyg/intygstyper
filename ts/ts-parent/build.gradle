@@ -1,6 +1,6 @@
 description = 'Intygstyper (TS Läkarintyg, parent)'
 
 dependencies {
-    compile "se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:${rivtaInsuranceprocessHealthreportingSchemasVersion}"
+    compile "se.riv.insuranceprocess.healthreporting:insuranceprocess-healthreporting-schemas:${rivtaInsuranceprocessSchemasVersion}"
     compile "se.inera.intyg.transportstyrelsen:intyg-transportstyrelsen-schemas:${intygTransportstyrelsenSchemasVersion}"
 }

@@ -1,11 +1,16 @@
 ext {
     commonVersion = System.properties['commonVersion'] ?: '0-SNAPSHOT'
 
-    cxfVersion = "3.1.3"
+    intygCertificateSchemasVersion = "1.0.4"
+    intygTransportstyrelsenSchemasVersion = "1.0.4"
+    rivtaInsuranceprocessSchemasVersion = "3.1.0.4"
+
+    autovalueVersion = "1.1"
     commonsCollectionsVersion = "3.2.1"
     commonsIoVersion = "2.4"
-    phSchematronVersion = "3.0.1"
+    fkEIntygAdapterVersion = "2.2-RC2-INTYG"
     itextVersion = "5.3.2"
+<<<<<<< Updated upstream
     springVersion = "4.2.2.RELEASE"
     autovalueVersion = "1.1"
     schematronVersion = "1.0.4"
@@ -13,9 +18,25 @@ ext {
     intygTransportstyrelsenSchemasVersion = "1.0.4"
     intygCertificateSchemasVersion = "1.0.4"
     fkEIntygAdapterVersion = "2.2-RC2-INTYG"
+||||||| merged common ancestors
+    springVersion = "4.2.2.RELEASE"
+    autovalueVersion = "1.1"
+    schematronVersion = "1.0.3"
+    rivtaInsuranceprocessHealthreportingSchemasVersion = "3.1.0.4"
+    intygTransportstyrelsenSchemasVersion = "1.0.4"
+    intygCertificateSchemasVersion = "1.0.4"
+    fkEIntygAdapterVersion = "2.2-RC2-INTYG"
+=======
+    phSchematronVersion = "3.0.1"
+    schematronVersion = "1.0.3"
+>>>>>>> Stashed changes
     servletApiVersion = "2.5"
+    springVersion = "4.2.2.RELEASE"
 
+    jsonAssertVersion = "1.2.0"
     mockitoVersion = "1.9.0"
+    unitilsCoreVersion = "3.3"
+    xmlUnitVersion = "1.4"
 }
 
 allprojects {
@@ -99,19 +120,18 @@ subprojects {
 
         compile "com.itextpdf:itextpdf:${itextVersion}"
         compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
-        compile "org.apache.cxf:cxf-rt-frontend-jaxrs:${cxfVersion}"
         compile "com.helger:ph-schematron:${phSchematronVersion}"
         compile "org.springframework:spring-tx:${springVersion}"
 
         buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
 
         testCompile "junit:junit:4.+"
-        testCompile 'commons-io:commons-io:2.4'
+        testCompile "commons-io:commons-io:${commonsIoVersion}"
         testCompile "org.mockito:mockito-core:${mockitoVersion}"
-        testCompile 'org.skyscreamer:jsonassert:1.2.0'
+        testCompile "org.skyscreamer:jsonassert:${jsonAssertVersion}"
         testCompile "org.springframework:spring-test:${springVersion}"
-        testCompile 'org.unitils:unitils-core:3.3'
-        testCompile 'xmlunit:xmlunit:1.4'
+        testCompile "org.unitils:unitils-core:${unitilsCoreVersion}"
+        testCompile "xmlunit:xmlunit:${xmlUnitVersion}"
     }
 
     repositories {
@@ -147,8 +167,8 @@ configure(subprojects.findAll {['fk7263', 'ts-bas', 'ts-diabetes', 'lisjp', 'lus
         outputs.dir(webappOutputDir)
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappOutputDir}",
-                "--npmDir=${rootProject.projectDir}", 'default']
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}",
+                "--outputDir=${webappOutputDir}", "--npmDir=${rootProject.projectDir}", 'default']
     }
 
     jar.dependsOn(jsInclude)
@@ -193,8 +213,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
         outputs.dir(webappTestOutputDir)
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}",
-                "--npmDir=${rootProject.projectDir}", 'test']
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}",
+                "--outputDir=${webappTestOutputDir}", "--npmDir=${rootProject.projectDir}", 'test']
     }
 
     test.dependsOn(jsTests)
