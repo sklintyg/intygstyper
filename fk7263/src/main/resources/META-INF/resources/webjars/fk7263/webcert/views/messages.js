@@ -21,7 +21,6 @@
 angular.module('fk7263').constant('fk7263.messages', {
     'sv': {
         'fk7263.error.generic': 'Kunde inte visa intyget',
-        'fk7263.info.loadingcertificate': 'Hämtar intyget..',
         'fk7263.info.loading.existing.qa': 'Hämtar tidigare frågor och svar...',
         'fk7263.message.certificateloading': 'Hämtar intyg...',
 

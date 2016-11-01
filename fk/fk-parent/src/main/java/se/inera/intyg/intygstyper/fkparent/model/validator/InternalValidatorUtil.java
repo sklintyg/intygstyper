@@ -27,10 +27,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
+import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
@@ -45,6 +47,7 @@ public class InternalValidatorUtil {
     private WebcertModuleService moduleService;
 
     private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorUtil.class);
+    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
     private static final int MIN_SIZE_DIAGNOS = 3;
@@ -136,9 +139,30 @@ public class InternalValidatorUtil {
         return valid;
     }
 
-    public void validateGrundForMuDate(String intygsTyp, InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+    public void validateVardenhet(GrundData grundData, List<ValidationMessage> validationMessages) {
+        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getPostadress())) {
+            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postadress", ValidationMessageType.EMPTY);
+        }
+
+        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getPostnummer())) {
+            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.EMPTY);
+        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(grundData.getSkapadAv().getVardenhet().getPostnummer())) {
+            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.INVALID_FORMAT,
+                    "common.validation.postnummer.incorrect-format");
+        }
+
+        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getPostort())) {
+            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postort", ValidationMessageType.EMPTY);
+        }
+
+        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getTelefonnummer())) {
+            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.telefonnummer", ValidationMessageType.EMPTY);
+        }
+    }
+
+    public void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
         String validationType = "grundformu." + type.getFieldName();
-        validateDate(intygsTyp, date, validationMessages, validationType);
+        validateDate(date, validationMessages, validationType);
     }
 
     public boolean isBlankButNotNull(String stringFromField) {
