@@ -42,6 +42,7 @@
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
   "tillaggsfragor": [],
+  "avstangningSmittskydd" : "false",
   "arbetslivsinriktadeAtgarder": [
     {
       "val": "OVRIGA_ATGARDER",
