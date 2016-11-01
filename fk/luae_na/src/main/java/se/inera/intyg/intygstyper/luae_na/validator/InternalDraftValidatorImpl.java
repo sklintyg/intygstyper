@@ -76,7 +76,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         // Kategori 10 – Kontakt
         validateKontaktMedFk(utlatande, validationMessages);
         // vårdenhet
-        validateVardenhet(utlatande, validationMessages);
+        validatorUtil.validateVardenhet(utlatande.getGrundData(), validationMessages);
 
         validateBlanksForOptionalFields(utlatande, validationMessages);
 
@@ -91,16 +91,16 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         }
 
         if (utlatande.getUndersokningAvPatienten() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getUndersokningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.UNDERSOKNING);
+            validatorUtil.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.UNDERSOKNING);
         }
         if (utlatande.getJournaluppgifter() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getJournaluppgifter(), validationMessages, InternalValidatorUtil.GrundForMu.JOURNALUPPGIFTER);
+            validatorUtil.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, InternalValidatorUtil.GrundForMu.JOURNALUPPGIFTER);
         }
         if (utlatande.getAnhorigsBeskrivningAvPatienten() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.ANHORIGSBESKRIVNING);
+            validatorUtil.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.ANHORIGSBESKRIVNING);
         }
         if (utlatande.getAnnatGrundForMU() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getAnnatGrundForMU(), validationMessages, InternalValidatorUtil.GrundForMu.ANNAT);
+            validatorUtil.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, InternalValidatorUtil.GrundForMu.ANNAT);
         }
 
         // R2
@@ -116,7 +116,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         if (utlatande.getKannedomOmPatient() == null) {
             validatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.EMPTY);
         } else {
-            boolean dateIsValid = validatorUtil.validateDate(utlatande.getTyp(), utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
+            boolean dateIsValid = validatorUtil.validateDate(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
             if (dateIsValid) {
             if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
                     && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {
@@ -184,27 +184,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
     private void validateSjukdomsforlopp(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getSjukdomsforlopp())) {
             validatorUtil.addValidationError(validationMessages, "sjukdomsforlopp", ValidationMessageType.EMPTY);
-        }
-    }
-
-    private void validateVardenhet(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.adress", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.EMPTY);
-        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.INVALID_FORMAT,
-                    "common.validation.postnummer.incorrect-format");
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postort", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.telefonnummer", ValidationMessageType.EMPTY);
         }
     }
 

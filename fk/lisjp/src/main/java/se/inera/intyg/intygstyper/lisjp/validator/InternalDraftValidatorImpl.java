@@ -87,7 +87,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
 
         validateBlanksForOptionalFields(utlatande, validationMessages);
         // vårdenhet
-        validateVardenhet(utlatande, validationMessages);
+        validatorUtil.validateVardenhet(utlatande, validationMessages);
 
         return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
     }
@@ -359,27 +359,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
         }
     }
 
-    private void validateVardenhet(LisjpUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postadress", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.EMPTY);
-        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.EMPTY,
-                    "lisjp.validation.vardenhet.postnummer.incorrect-format");
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postort", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
-            validatorUtil.addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.telefonnummer", ValidationMessageType.EMPTY);
-        }
-    }
-
     private void validateBlanksForOptionalFields(LisjpUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
             validatorUtil.addValidationError(validationMessages, "anledningtillkontakt.blanksteg", ValidationMessageType.EMPTY,
@@ -405,16 +384,5 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
 
     private boolean isAvstangningSmittskydd(LisjpUtlatande utlatande) {
         return (utlatande.getAvstangningSmittskydd() != null && utlatande.getAvstangningSmittskydd());
-    }
-
-    private boolean isBlankButNotNull(String stringFromField) {
-        return (!StringUtils.isEmpty(stringFromField)) && StringUtils.isBlank(stringFromField);
-    }
-
-    /**
-     * Check if there are validation errors.
-     */
-    private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
-        return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
     }
 }
