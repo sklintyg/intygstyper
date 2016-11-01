@@ -68,7 +68,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         // Kategori 3 – Sjukdomsförlopp
         validateSjukdomsforlopp(utlatande, validationMessages);
         // Kategori 4 – Diagnos
-        validatorUtil.validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
+        validatorUtil.validateDiagnose(utlatande.getDiagnoser(), validationMessages);
         // Diagnosgrund
         validateDiagnosgrund(utlatande, validationMessages);
         // Kategori 5 – Funktionsnedsättning
@@ -144,7 +144,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
             }
 
         }
-
     }
 
     private void validateUnderlag(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {

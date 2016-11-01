@@ -62,7 +62,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         // Kategori 3 – Sjukdomsförlopp
         validateSjukdomsforlopp(utlatande, validationMessages);
         // Kategori 4 – Diagnos
-        validatorUtil.validateDiagnose(utlatande.getTyp(), utlatande.getDiagnoser(), validationMessages);
+        validatorUtil.validateDiagnose(utlatande.getDiagnoser(), validationMessages);
         // Diagnosgrund
         validateDiagnosgrund(utlatande, validationMessages);
         // Kategori 5 – Funktionsnedsättning

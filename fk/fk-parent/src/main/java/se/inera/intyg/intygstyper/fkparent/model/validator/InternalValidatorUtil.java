@@ -71,11 +71,11 @@ public class InternalValidatorUtil {
         }
     }
 
-    public void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
+    public void validateDiagnose(List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
         if (diagnoser == null || diagnoser.isEmpty()) {
             addValidationError(validationMessages, "diagnos.diagnoser.0.diagnoskod", ValidationMessageType.EMPTY,
-                    intygsTyp + ".validation.diagnos.missing");
+                    "common.validation.diagnos.missing");
         }
 
         for (int i = 0; i < diagnoser.size(); i++) {
@@ -86,24 +86,24 @@ public class InternalValidatorUtil {
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
                 addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.EMPTY,
-                        intygsTyp + ".validation.diagnos" + i + ".missing");
+                        "common.validation.diagnos" + i + ".missing");
             } else {
                 String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
                 if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
                         && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
                     addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
-                            intygsTyp + ".validation.diagnos" + i + ".psykisk.length-4");
+                            "common.validation.diagnos" + i + ".psykisk.length-4");
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
                     addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
-                            intygsTyp + ".validation.diagnos" + i + ".length-3");
+                            "common.validation.diagnos" + i + ".length-3");
                 } else {
                     validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos.diagnoser",
-                            intygsTyp + ".validation.diagnos" + i + ".invalid", validationMessages);
+                            "common.validation.diagnos" + i + ".invalid", validationMessages);
                 }
             }
             if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
                 addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnosbeskrivning", ValidationMessageType.EMPTY,
-                        intygsTyp + ".validation.diagnos" + i + ".description.missing");
+                        "common.validation.diagnos" + i + ".description.missing");
             }
         }
     }
@@ -121,38 +121,6 @@ public class InternalValidatorUtil {
 
     }
 
-    /**
-     *
-     * @param validationMessages
-     *            list collecting message
-     * @param fieldId
-     *            field id
-     * @param intervals
-     *            intervals
-     * @return booleans
-     */
-    protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
-        if (intervals == null || allNulls(intervals)) {
-            addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
-                    "luae_na.validation.nedsattning.choose-at-least-one");
-            return false;
-        }
-
-        for (int i = 0; i < intervals.length; i++) {
-            if (intervals[i] != null) {
-                for (int j = i + 1; j < intervals.length; j++) {
-                    // Overlap OR abuts(one intervals tom day == another's from day) is considered invalid
-                    if (intervals[j] != null && intervals[i].overlaps(intervals[j])) {
-                        addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
-                                "luae_na.validation.nedsattning.overlapping-date-interval");
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
     public boolean validateDate(InternalDate date, List<ValidationMessage> validationMessages, String field) {
         boolean valid = true;
         if (!date.isValidDate()) {
@@ -162,7 +130,7 @@ public class InternalValidatorUtil {
 
         if (!date.isReasonable()) {
             addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT,
-                    "luse.validation.general.date_out_of_range");
+                    "common.validation.date_out_of_range");
             valid = false;
         }
         return valid;
