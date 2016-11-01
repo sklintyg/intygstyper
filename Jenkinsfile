@@ -5,6 +5,7 @@ def commonVersion = "3.1.+"
 
 stage('checkout') {
     node {
+        git url: "https://github.com/sklintyg/intygstyper.git", branch: GIT_BRANCH
         util.run { checkout scm }
     }
 }

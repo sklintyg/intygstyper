@@ -7,15 +7,22 @@ ext {
     phSchematronVersion = "3.0.1"
     itextVersion = "5.3.2"
     springVersion = "4.2.2.RELEASE"
+    autovalueVersion = "1.1"
+    schematronVersion = "1.0.3"
+    rivtaInsuranceprocessHealthreportingSchemasVersion = "3.1.0.4"
+    intygTransportstyrelsenSchemasVersion = "1.0.4"
+    intygCertificateSchemasVersion = "1.0.4"
+    fkEIntygAdapterVersion = "2.2-RC2-INTYG"
+    servletApiVersion = "2.5"
 
-    webappOutputDir = 'build/'
-    webappTestOutputDir = 'build/karma/'
+    mockitoVersion = "1.9.0"
 }
 
 allprojects {
     group = 'se.inera.intyg.intygstyper'
     version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
 
+    apply plugin: 'inera-intyg'
     apply plugin: 'maven'
     apply plugin: 'org.ajoberstar.grgit'
 }
@@ -26,31 +33,7 @@ subprojects {
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    task createVersionPropertyFile(dependsOn: processResources) {
-        def propertyFile = "${buildDir}/resources/main/version.properties"
-        def projectVersion = rootProject.version
-        def gitCommit = grgit.head().id
-        def gitBranch = grgit.branch.getCurrent().getName()
-        def buildNumber = System.env.BUILD_NUMBER
-
-        inputs.property("project.version", projectVersion)
-        inputs.property("gitCommit", gitCommit)
-        inputs.property("gitBranch", gitBranch)
-        inputs.property("buildNumber", buildNumber)
-        outputs.file(propertyFile)
-
-        doLast {
-            ant.touch(file: propertyFile, mkdirs: "true")
-            ant.propertyfile(file: propertyFile) {
-                entry(key: 'project.version', default: projectVersion)
-                entry(key: 'gitCommit', default: gitCommit)
-                entry(key: 'gitBranch', default: gitBranch)
-                entry(key: 'buildNumber', default: buildNumber)
-            }
-        }
-    }
-
-    jar.dependsOn(createVersionPropertyFile)
+    task createVersionPropertyFile(type: VersionPropertyFileTask)
 
     task unzipBuildTools(type: Copy) {
         description 'Extracts common-build-tools'
@@ -91,26 +74,15 @@ subprojects {
         }
     }
 
-    uploadArchives {
-        repositories.mavenDeployer {
-            pom.whenConfigured { pom ->
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
-                }
-            }
-            repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
-                authentication(userName: System.properties['nexusUsername'], password: System.properties['nexusPassword'])
-            }
+    uploadArchives.repositories.mavenDeployer {
+        repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
+            authentication(userName: System.properties['nexusUsername'], password: System.properties['nexusPassword'])
         }
     }
 
-    install {
-        repositories.mavenInstaller {
-            pom.whenConfigured { pom ->
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
-                }
-            }
+    [install.repositories.mavenInstaller, uploadArchives.repositories.mavenDeployer]*.pom*.whenConfigured { pom ->
+        pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
+            it.version = findResolvedVersion(project, 'se.inera.intyg.common')
         }
     }
 
@@ -135,7 +107,7 @@ subprojects {
 
         testCompile "junit:junit:4.+"
         testCompile 'commons-io:commons-io:2.4'
-        testCompile 'org.mockito:mockito-core:1.9.0'
+        testCompile "org.mockito:mockito-core:${mockitoVersion}"
         testCompile 'org.skyscreamer:jsonassert:1.2.0'
         testCompile "org.springframework:spring-test:${springVersion}"
         testCompile 'org.unitils:unitils-core:3.3'
@@ -150,25 +122,8 @@ subprojects {
     }
 }
 
-String findResolvedVersion(Project project, String groupName) {
-    String version
-    project.configurations.find {
-        it.name == 'compile'
-    }.resolvedConfiguration.getFirstLevelModuleDependencies().find {
-        if (it.moduleGroup == groupName) {
-            version = it.moduleVersion
-            return true
-        }
-        return false
-    }
-    return version
-}
-
-configure(subprojects.findAll {
-        ['fk7263', 'ts-bas', 'ts-diabetes', 'lisu', 'luse', 'luae_fs', 'luae_na'].contains(it.name)
-    }) {
+configure(subprojects.findAll {['fk7263', 'ts-bas', 'ts-diabetes', 'lisjp', 'luse', 'luae_fs', 'luae_na'].contains(it.name)}) {
     apply plugin: 'com.moowork.grunt'
-    apply plugin: 'com.moowork.node'
 
     grunt {
         colors = System.properties['gruntColors'] ? System.properties['gruntColors'].toBoolean() : true
@@ -183,6 +138,8 @@ configure(subprojects.findAll {
     }
 
     task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
+        def webappOutputDir = 'build/'
+
         inputs.dir("$projectDir/src/main/resources")
         inputs.files(fileTree(projectDir).include('*.js'))
         inputs.files(fileTree(projectDir).include('*.json'))
@@ -191,7 +148,7 @@ configure(subprojects.findAll {
         outputs.dir(webappOutputDir)
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappOutputDir}",
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappOutputDir}",
                 "--npmDir=${rootProject.projectDir}", 'default']
     }
 
@@ -201,7 +158,8 @@ configure(subprojects.findAll {
         outputs.upToDateWhen { false }
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--npmDir=${rootProject.projectDir}", 'lint']
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}",
+                "--npmDir=${rootProject.projectDir}", 'lint']
     }
 
     checkstyleMain.dependsOn(jsCodeQuality)
@@ -226,6 +184,8 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     }
 
     task jsTests(type: NodeTask, dependsOn: [npmInstall, unzipWebjars]) {
+        def webappTestOutputDir = 'build/karma/'
+
         inputs.dir("${projectDir}/src/main/resources")
         inputs.files(fileTree(projectDir).include('*.js'))
         inputs.files(fileTree(projectDir).include('*.json'))
@@ -234,7 +194,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
         outputs.dir(webappTestOutputDir)
 
         script = file("${rootProject.projectDir}/node_modules/grunt-cli/bin/grunt")
-        args = ["--gruntfile=${-> project.gruntfile}", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}",
+        args = ["--gruntfile=${rootProject.projectDir}/Gruntfile.js", "--base=${projectDir}", "--module=${project.name}", "--outputDir=${webappTestOutputDir}",
                 "--npmDir=${rootProject.projectDir}", 'test']
     }
 
@@ -249,23 +209,9 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
     }
 }
 
-task tagRelease {
-    description = 'Tags the current head with the projects version.'
-    doLast {
-        def grgit = org.ajoberstar.grgit.Grgit.open(creds: new org.ajoberstar.grgit.Credentials(System.properties['githubUser'],
-                                                                                                System.properties['githubPassword']))
-        grgit.tag.add {
-            name = "v" + version
-            message = "Release of ${version}"
-        }
-        grgit.push(tags: true)
-    }
-}
+task tagRelease(type: TagReleaseTask)
 
-task testReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/allTests")
-    reportOn subprojects*.test // Include the results from the 'test' task in all subprojects
-}
+task testReport(type: SharedTestReportTask)
 
 apply plugin: "org.sonarqube"
 
@@ -276,22 +222,18 @@ sonarqube {
         property "sonar.projectKey", "intygstyper"
         property "sonar.host.url", System.properties['sonarUrl'] ?: "https://build-inera.nordicmedtest.se/sonar"
         property "sonar.test.exclusions", "src/test/**"
-        property "sonar.exclusions", [
-                                      "**/stub/**",
-                                      "**/exception/**",
-                                      "**/*Exception*.java",
-                                      "**/templates.js"
-                                      ]
+        property "sonar.exclusions", ["**/stub/**", "**/exception/**", "**/*Exception*.java", "**/templates.js"]
         property "sonar.javascript.lcov.reportPath", "build/karma/merged_lcov.info"
     }
 }
 
 buildscript {
     dependencies {
-        classpath 'com.moowork.gradle:gradle-node-plugin:0.12'
-        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.1"
-        classpath 'org.ajoberstar:gradle-git:1.5.1'
+        classpath 'se.inera.intyg:gradle-intyg-plugin:1.0.+'
+        classpath 'com.moowork.gradle:gradle-node-plugin:0.+'
+        classpath 'com.moowork.gradle:gradle-grunt-plugin:0.+'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.+"
+        classpath 'org.ajoberstar:gradle-git:1.+'
     }
 
     repositories {

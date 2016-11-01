@@ -93,8 +93,8 @@ public class InternalDraftValidatorTest {
 
         assertTrue(2 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.grund-for-mu.missing", 0);
-        assertValidationMessage("luae_fs.validation.grund-for-mu.kannedom.missing", 1);
+        assertValidationMessageField("grundformu.baserasPa", 0);
+        assertValidationMessageField("grundformu.kannedomOmPatient", 1);
         assertValidationMessageType(ValidationMessageType.EMPTY, 0);
         assertValidationMessageType(ValidationMessageType.EMPTY, 1);
     }
@@ -109,7 +109,7 @@ public class InternalDraftValidatorTest {
 
         assertTrue(1 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.grund-for-mu.kannedom.missing", 0);
+        assertValidationMessageField("grundformu.kannedomOmPatient", 0);
         assertValidationMessageType(ValidationMessageType.EMPTY, 0);
     }
 
@@ -124,7 +124,8 @@ public class InternalDraftValidatorTest {
 
         assertTrue(1 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.grund-for-mu.kannedom.after.undersokning", 0);
+        assertValidationMessage("luae_fs.validation.grund-for-mu.kannedom.after", 0);
+        assertValidationMessageDynamicKey("KV_FKMU_0001.UNDERSOKNING.RBK", 0);
         assertValidationMessageType(ValidationMessageType.OTHER, 0);
     }
 
@@ -139,7 +140,8 @@ public class InternalDraftValidatorTest {
 
         assertTrue(1 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning", 0);
+        assertValidationMessage("luae_fs.validation.grund-for-mu.kannedom.after", 0);
+        assertValidationMessageDynamicKey("KV_FKMU_0001.ANHORIG.RBK", 0);
         assertValidationMessageType(ValidationMessageType.OTHER, 0);
     }
 
@@ -154,7 +156,7 @@ public class InternalDraftValidatorTest {
 
         assertTrue(2 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.grund-for-mu.missing", 0);
+        assertValidationMessageField("grundformu.baserasPa", 0);
         assertValidationMessageType(ValidationMessageType.EMPTY, 0);
         assertValidationMessage("luae_fs.validation.grund-for-mu.annat.beskrivning.invalid_combination", 1);
         assertValidationMessageType(ValidationMessageType.EMPTY, 1);
@@ -171,7 +173,7 @@ public class InternalDraftValidatorTest {
 
         assertTrue(1 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.grund-for-mu.annat.beskrivning.missing", 0);
+        assertValidationMessageField("grundformu.annatGrundForMUBeskrivning", 0);
         assertValidationMessageType(ValidationMessageType.EMPTY, 0);
     }
 
@@ -185,7 +187,7 @@ public class InternalDraftValidatorTest {
 
         assertTrue(1 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.underlagfinns.missing", 0);
+        assertValidationMessageField("grundformu.underlagFinns", 0);
         assertValidationMessageType(ValidationMessageType.EMPTY, 0);
     }
 
@@ -197,7 +199,7 @@ public class InternalDraftValidatorTest {
 
         assertTrue(1 == validationMessages.size());
 
-        assertValidationMessage("luae_fs.validation.underlagfinns.missing", 0);
+        assertValidationMessageField("grundformu.underlag", 0);
         assertValidationMessageType(ValidationMessageType.EMPTY, 0);
     }
 
@@ -405,6 +407,14 @@ public class InternalDraftValidatorTest {
 
     private void assertValidationMessage(String expectedMessage, int index) {
         assertEquals(expectedMessage, validationMessages.get(index).getMessage());
+    }
+
+    private void assertValidationMessageDynamicKey(String expectedDynamicKey, int index) {
+        assertEquals(expectedDynamicKey, validationMessages.get(index).getDynamicKey());
+    }
+
+    private void assertValidationMessageField(String expectedField, int index) {
+        assertEquals(expectedField, validationMessages.get(index).getField());
     }
 
     private void assertValidationMessageType(ValidationMessageType expectedType, int index) {

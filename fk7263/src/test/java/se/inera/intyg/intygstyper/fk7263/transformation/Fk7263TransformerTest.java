@@ -61,7 +61,7 @@ public class Fk7263TransformerTest {
     }
 
     @BeforeClass
-    public static void initGeneralLisuSchema() throws Exception {
+    public static void initGeneralSchema() throws Exception {
         SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
         Source rootSource = schemaValidatorBuilder.registerResource(ROOT_LEVEL_FK7263SIT_SCHEMA);
         schemaValidatorBuilder.registerResource(ROOT_LEVEL_FK7263_GENERAL_SCHEMA);

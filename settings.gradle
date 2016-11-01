@@ -3,7 +3,7 @@ rootProject.name = 'intygstyper'
 include ':fk7263'
 include ':fk-parent'
 include ':luse'
-include ':lisu'
+include ':lisjp'
 include ':luae_na'
 include ':luae_fs'
 include ':ts-parent'
@@ -12,7 +12,7 @@ include ':ts-diabetes'
 
 project(':fk-parent').projectDir = "$rootDir/fk/fk-parent" as File
 project(':luse').projectDir = "$rootDir/fk/luse" as File
-project(':lisu').projectDir = "$rootDir/fk/lisu" as File
+project(':lisjp').projectDir = "$rootDir/fk/lisjp" as File
 project(':luae_na').projectDir = "$rootDir/fk/luae_na" as File
 project(':luae_fs').projectDir = "$rootDir/fk/luae_fs" as File
 project(':ts-parent').projectDir = "$rootDir/ts/ts-parent" as File

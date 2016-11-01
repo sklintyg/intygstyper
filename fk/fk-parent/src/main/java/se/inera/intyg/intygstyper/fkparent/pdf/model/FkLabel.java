@@ -18,14 +18,15 @@
  */
 package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Utilities;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
@@ -35,7 +36,8 @@ import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 public class FkLabel extends PdfComponent<FkLabel> {
 
     private final String label;
-    private int valueTextVerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+    private int verticalAlignment = PdfPCell.ALIGN_MIDDLE;
+    private int horizontalAlignment = PdfPCell.ALIGN_LEFT;
     private Font font = PdfConstants.FONT_INLINE_FIELD_LABEL;
     private float fixedLeading = 0.0f;
     private float multipliedLeading = 1.0f;
@@ -45,8 +47,12 @@ public class FkLabel extends PdfComponent<FkLabel> {
         this.label = label;
     }
 
+    public FkLabel withHorizontalAlignment(int alignment) {
+        this.horizontalAlignment = alignment;
+        return this;
+    }
     public FkLabel withVerticalAlignment(int alignment) {
-        this.valueTextVerticalAlignment = alignment;
+        this.verticalAlignment = alignment;
         return this;
     }
 
@@ -67,7 +73,7 @@ public class FkLabel extends PdfComponent<FkLabel> {
     }
 
     @Override
-    public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
+    public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
         PdfPTable table = new PdfPTable(1);
         table.setTotalWidth(Utilities.millimetersToPoints(width));
 
@@ -78,15 +84,15 @@ public class FkLabel extends PdfComponent<FkLabel> {
         labelCell.setFixedHeight(Utilities.millimetersToPoints(height));
         labelCell.setBorder(Rectangle.NO_BORDER);
         labelCell.setUseAscender(true); // needed to make vertical alignment correct
-        labelCell.setHorizontalAlignment(PdfPCell.ALIGN_LEFT);
-        labelCell.setVerticalAlignment(valueTextVerticalAlignment);
+        labelCell.setHorizontalAlignment(horizontalAlignment);
+        labelCell.setVerticalAlignment(verticalAlignment);
         labelCell.setPaddingTop(Utilities.millimetersToPoints(topPadding));
         labelCell.setLeading(fixedLeading, multipliedLeading);
         table.addCell(labelCell);
 
-        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), canvas);
+        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), writer.getDirectContent());
 
-        super.render(canvas, x, y);
+        super.render(document, writer, x, y);
     }
 
 }

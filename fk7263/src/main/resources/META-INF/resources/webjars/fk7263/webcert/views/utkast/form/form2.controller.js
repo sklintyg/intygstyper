@@ -18,9 +18,9 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'common.fmbService', 'common.fmb.ViewStateService',
-        'fk7263.EditCertCtrl.Helper',
-        function($scope, $log, viewState, diagnosService, fmbService, fmbViewState, helper) {
+    ['$scope', '$log', '$http', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'common.fmbService', 'common.fmb.ViewStateService',
+        'fk7263.EditCertCtrl.Helper', 'common.MonitoringLogService',
+        function($scope, $log, $http, viewState, diagnosService, fmbService, fmbViewState, helper, monitoringService) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -72,6 +72,13 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                         setAllDiagnosKodverk( $scope.model.diagnosKodsystem1 );
                     }
                 }
+            });
+
+            $scope.$watch('viewModel.diagnosKodverk', function(newVal, oldVal) {
+                if(newVal === oldVal || oldVal === ''){
+                    return;
+                }
+                monitoringService.diagnoskodverkChanged(viewState.intygModel.id, 'fk7263');
             });
 
             function setAllDiagnosKodverk(val){

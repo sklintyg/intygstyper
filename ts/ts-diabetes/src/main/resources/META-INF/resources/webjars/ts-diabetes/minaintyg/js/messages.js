@@ -20,6 +20,10 @@
 /* jshint maxlen: false */
 angular.module('ts-diabetes').constant('ts-diabetes.messages', {
     'sv': {
+        // TS-DAIBETES
+        'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg - Diabetes',
+
+        // Labels
         'ts-diabetes.label.intygavser': 'Avser lämplighet för körkort',
         'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',
         'ts-diabetes.label.allmant': '1. Allmänt',
@@ -43,22 +47,9 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.label.true': 'JA',
         'ts-diabetes.label.false': 'NEJ',
 
-        'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg',
-        'ts-diabetes.confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
-        'ts-diabetes.confirm.label.summarypagedesc': 'Du har valt att skicka följande intyg: ',
-        'ts-diabetes.confirm.label.recipienttitle': 'Mottagare: ',
-        'ts-diabetes.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck på "Skicka".',
-        'ts-diabetes.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
-
-        'ts-diabetes.typename': ' - Diabetes',
         'ts-diabetes.label.pagetitle': 'Granska och skicka intyg',
-        'ts-diabetes.common.cancel': 'Avbryt',
-
-        'ts-diabetes.detail.send': 'Skicka',
-        'ts-diabetes.button.send.certificate.title': 'Skicka detta intyg till Transportstyrelsen.',
-
-        'ts-diabetes.fishbone.label.granska-skicka': 'Granska och skicka',
-        'ts-diabetes.fishbone.label.bekraftelse': 'Bekräftelse',
+        'ts-diabetes.label.pagetitle.step1': 'Skicka intyg - steg 1 av 2',
+        'ts-diabetes.label.pagetitle.step2': 'Skicka intyg - steg 2 av 2',
 
         'ts-diabetes.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Transportstyrelsen, du kan även skriva ut eller spara intyget.<br>',
         'ts-diabetes.label.pagedescription.sendcertificate.header': '<h2>Skicka intyg</h2>',
@@ -80,24 +71,10 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.label.issuer': 'Utfärdare:',
         'ts-diabetes.label.period': 'Period:',
         'ts-diabetes.label.errorpagetitle': 'Ett problem har uppstått',
-        'ts-diabetes.message.certificateloading': 'Hämtar intyg...',
-        'ts-diabetes.button.send': 'Skicka',
-        'ts-diabetes.button.cancel': 'Avbryt',
-        'ts-diabetes.button.goback': 'Tillbaka',
-        'ts-diabetes.sent.label.result': 'Mottagare av intyget: ',
-        'ts-diabetes.sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
-        'ts-diabetes.sent.button.backtocertificate': 'Tillbaka till intyget',
-        'ts-diabetes.error.generic': 'Kunde inte visa intyget',
+
         'ts-diabetes.label.latestevent': 'Senaste händelse',
         'ts-diabetes.label.latestevent.noevents': 'Inga händelser',
         'ts-diabetes.label.latestevent.showall': 'Visa alla händelser',
-        'ts-diabetes.history.label.pagetitle': 'Intygets alla händelser',
-        'ts-diabetes.status.sent': 'Mottaget av',
-        'ts-diabetes.target.mi': 'Försäkringsbolaget',
-        'ts-diabetes.target.ts': 'Transportstyrelsen',
-        'ts-diabetes.label.pagetitle.step1': 'Skicka intyg - steg 1 av 2',
-        'ts-diabetes.label.pagetitle.step2': 'Skicka intyg - steg 2 av 2',
-        'ts-diabetes.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
 
         'ts-diabetes.label.confirmedby': 'Ovanstående uppgifter och bedömningar bekräftas',
         'ts-diabetes.label.date': 'Datum',
@@ -106,11 +83,38 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
 
         'ts-diabetes.label.bedomning.kan-inte-ta-stallning': 'Kan inte ta ställning',
 
+        'ts-diabetes.confirm.label.pagetitle': 'Skicka intyg - steg 2 av 3',
+        'ts-diabetes.confirm.label.summarypagedesc': 'Du har valt att skicka följande intyg: ',
+        'ts-diabetes.confirm.label.recipienttitle': 'Mottagare: ',
+        'ts-diabetes.confirm.label.verifytext': 'Kontrollera att uppgifterna ovan stämmer och tryck på "Skicka".',
+        'ts-diabetes.confirm.message.alreadysent': '<strong>Observera!</strong> Intyget har redan skickats till: <br>',
+
+        'ts-diabetes.detail.send': 'Skicka',
+        'ts-diabetes.message.certificateloading': 'Hämtar intyg...',
+
+        'ts-diabetes.fishbone.label.granska-skicka': 'Granska och skicka',
+        'ts-diabetes.fishbone.label.bekraftelse': 'Bekräftelse',
+
+        'ts-diabetes.button.send': 'Skicka',
+        'ts-diabetes.button.cancel': 'Avbryt',
+        'ts-diabetes.button.goback': 'Tillbaka',
+        'ts-diabetes.button.send.certificate.title': 'Skicka detta intyg till Transportstyrelsen.',
+
+        'ts-diabetes.sent.label.result': 'Mottagare av intyget: ',
+        'ts-diabetes.sent.label.pagetitle': 'Skicka intyg - steg 3 av 3',
+        'ts-diabetes.sent.button.backtocertificate': 'Tillbaka till intyget',
+        'ts-diabetes.sent.label.pageinformation': 'Intyget har nu skickats och nedan presenteras försändelsen.',
+
+        'ts-diabetes.error.generic': 'Kunde inte visa intyget',
+        'ts-diabetes.history.label.pagetitle': 'Intygets alla händelser',
+        'ts-diabetes.status.sent': 'Mottaget av',
+        'ts-diabetes.inbox.complementaryinfo': 'Avser behörighet',
+
+        'ts-diabetes.target.mi': 'Försäkringsbolaget',
+        'ts-diabetes.target.ts': 'Transportstyrelsen',
+
         // Helptexts
-
-        'ts-diabetes.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
-
-        'ts-diabetes.inbox.complementaryinfo': 'Avser behörighet'
+        'ts-diabetes.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.'
 
     },
     'en': {

@@ -157,6 +157,10 @@ public final class RespConstants {
     public static final String ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26 = "anledningTillKontakt";
     public static final String ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26 = "26.2";
 
+    public static final String AVSTANGNING_SMITTSKYDD_SVAR_ID_27 = "27";
+    public static final String AVSTANGNING_SMITTSKYDD_DELSVAR_ID_27 = "27.1";
+    public static final String AVSTANGNING_SMITTSKYDD_SVAR_JSON_ID_27 = "avstangningSmittskydd";
+
     public static final String TYP_AV_SYSSELSATTNING_SVAR_ID_28 = "28";
     public static final String TYP_AV_SYSSELSATTNING_DELSVAR_ID_28 = "28.1";
     public static final String TYP_AV_SYSSELSATTNING_SVAR_JSON_ID_28 = "sysselsattning";
@@ -199,11 +203,8 @@ public final class RespConstants {
 
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40 = "40";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40 = "40.1";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_ID_40 = "40.2";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_ID_40 = "40.3";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40 = "40.2";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarder";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderAktuelltBeskrivning";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_EJ_AKTUELLT_BESKRIVNING_DELSVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarderEjAktuelltBeskrivning";
 
     public static final String TILLAGGSFRAGOR_SVAR_JSON_ID = "tillaggsfragor";
     public static final int TILLAGGSFRAGOR_START = 9000;
@@ -270,6 +271,8 @@ public final class RespConstants {
             return KONTAKT_ONSKAS_SVAR_JSON_ID_26;
         case ANLEDNING_TILL_KONTAKT_DELSVAR_ID_26:
             return ANLEDNING_TILL_KONTAKT_DELSVAR_JSON_ID_26;
+        case AVSTANGNING_SMITTSKYDD_SVAR_ID_27:
+            return AVSTANGNING_SMITTSKYDD_SVAR_JSON_ID_27;
         case TYP_AV_SYSSELSATTNING_SVAR_ID_28:
             return TYP_AV_SYSSELSATTNING_SVAR_JSON_ID_28;
         case NUVARANDE_ARBETE_SVAR_ID_29:

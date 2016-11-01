@@ -64,8 +64,9 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'single-text-vertical',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full' }
-                },{
+                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full', hideWhenEmpty: true, forceLine: true }
+                },
+                {
                     key: 'motiveringTillInteBaseratPaUndersokning',
                     type: 'multi-text',
                     className: 'fold-animation',
@@ -127,7 +128,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     key: 'diagnosForNyBedomning',
                     className: 'fold-animation',
                     type: 'multi-text',
-                    templateOptions: { label: 'DFR_45.2', required: true },
+                    templateOptions: { label: 'DFR_45.2', required: true, hideWhenEmpty: true},
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
             ]
@@ -200,7 +201,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                     type: 'multi-text',
                     className: 'fold-animation webcert-top-padding-section',
                     hideExpression: '!model.kontaktMedFk',
-                    templateOptions: { label: 'DFR_26.2' }
+                    templateOptions: { label: 'DFR_26.2', hideWhenEmpty: true}
                 }
             ]
         },

@@ -35,6 +35,8 @@ public final class PdfConstants {
     private PdfConstants() {
     }
 
+    public static final String ELECTRONIC_COPY_WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
+
     /**
      * * Fonts that will be used in FK PDF's.
      */
@@ -45,7 +47,10 @@ public final class PdfConstants {
     private static final String TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH = "/fonts/FiraSans-Regular.ttf";
 
     public static final Font FONT_FRAGERUBRIK;
+    public static final Font FONT_PAGETITLE;
     public static final Font FONT_VALUE_TEXT;
+    public static final Font FONT_VALUE_TEXT_ARIAL_COMPATIBLE;
+    public static final Font FONT_VALUE_TEXT_OVERFLOWINFO_ARIAL_COMPATIBLE;
 
     public static final Font FONT_INLINE_FIELD_LABEL;
     public static final Font FONT_INLINE_FIELD_LABEL_SMALL;
@@ -62,8 +67,11 @@ public final class PdfConstants {
         try {
 
             FONT_FRAGERUBRIK = new Font(createFont(ARIAL_BOLD_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11f, Font.NORMAL);
+            FONT_PAGETITLE = new Font(createFont(ARIAL_BOLD_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11f, Font.NORMAL);
 
             FONT_VALUE_TEXT = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10.5f, Font.NORMAL);
+            FONT_VALUE_TEXT_ARIAL_COMPATIBLE = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10f, Font.NORMAL);
+            FONT_VALUE_TEXT_OVERFLOWINFO_ARIAL_COMPATIBLE = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10f, Font.BOLD);
 
             FONT_PAGESCAN_ID = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 9f, Font.NORMAL);
             FONT_FORM_ID_LABEL = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 7f, Font.NORMAL);

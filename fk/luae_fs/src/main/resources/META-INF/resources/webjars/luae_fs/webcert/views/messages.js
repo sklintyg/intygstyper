@@ -36,8 +36,7 @@ angular.module('luae_fs').constant('luae_fs.messages', {
         'luae_fs.validation.grund-for-mu.annat.beskrivning.invalid_combination': 'Om inte alternativet Annat är angett får inte beskrivningsfältet anges',
         'luae_fs.validation.grund-for-mu.kannedom.missing' : 'Fältet \'Jag har känt patienten sedan\' måste fyllas i.',
         'luae_fs.validation.grund-for-mu.kannedom.incorrect_format': 'Fel datumformat för kännedom om patienten',
-        'luae_fs.validation.grund-for-mu.kannedom.after.undersokning' : 'Datum förkännedom om patienten får inte vara senare än datum för undersökning',
-        'luae_fs.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning' : 'Datum förkännedom om patienten får inte vara senare än datum för anhörigs beskrivning',
+        'luae_fs.validation.grund-for-mu.kannedom.after': 'Får inte vara senare än datum för \'{0}\'',
 
         'luae_fs.validation.underlagfinns.missing': 'Frågan \'Finns det andra medicinska utredningar eller underlag\' måste besvaras',
         'luae_fs.validation.underlagfinns.incorrect_combination' : 'Om frågan \'Finns det andra medicinska utredningar eller underlag\' besvarats med nej får underlag inte anges.',

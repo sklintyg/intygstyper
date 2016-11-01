@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
-        function($scope, $log, viewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.ObjectHelper',
+        function($scope, $log, viewState, ObjectHelper) {
             'use strict';
 
             var model = viewState.intygModel;
@@ -27,22 +27,44 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
             $scope.viewState = viewState;
 
             $scope.onSysselsattningChange = function(){
+
+                var nuvarandeArbeteChanged = false;
+                if(ObjectHelper.isDefined(model.nuvarandeArbete) && model.nuvarandeArbete !== viewState.sysselsattningValue[0]){
+                    nuvarandeArbeteChanged = true;
+                }
+
                 viewState.sysselsattningValue = [model.nuvarandeArbete, model.arbetsloshet, model.foraldrarledighet];
+                
+                // only do this once the page is loaded and changes come from the gui!
+                if(viewState.common.doneLoading && nuvarandeArbeteChanged) {
+                    var modelSubProperty = model.properties.form8a.nuvarandeArbetsuppgifter;
+                    if (model.nuvarandeArbete === false) {
+                        model.updateToAttic(modelSubProperty);
+                        model.clear(modelSubProperty);
+                    } else if(model.isInAttic(modelSubProperty)){
+                        model.restoreFromAttic(modelSubProperty);
+                    }
+                }
             };
 
-            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
-                if(newVal === oldVal){
-                    return;
-                }
+
+            function syncAttic(valueHidden){
                 // only do this once the page is loaded and changes come from the gui!
                 if(viewState.common.doneLoading) {
-                    if (newVal === true) {
+                    if (valueHidden === true) {
                         model.updateToAttic(model.properties.form8a);
                         model.clear(model.properties.form8a);
                     } else if(model.isInAttic(model.properties.form8a)){
                         model.restoreFromAttic(model.properties.form8a);
                     }
                 }
+            }
+
+            $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
+                if(newVal === oldVal){
+                    return;
+                }
+                syncAttic(newVal);
             });
 
         }]);

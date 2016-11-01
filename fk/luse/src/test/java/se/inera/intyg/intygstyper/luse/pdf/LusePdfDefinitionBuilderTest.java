@@ -19,13 +19,17 @@
 
 package se.inera.intyg.intygstyper.luse.pdf;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -34,80 +38,83 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import se.inera.intyg.common.services.texts.IntygTextsServiceImpl;
 import se.inera.intyg.common.services.texts.model.IntygTexts;
+import se.inera.intyg.common.support.common.enumerations.PartKod;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
+import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 
 /**
+ * Generate some variants of a LUSE pdf, partly to see that not exceptions occur but mainly for manual visual inspection
+ * of the resulting pdf files, as we don't have any way of programatically assert the content of the pdf.
+ * 
  * @author marced
  */
 public class LusePdfDefinitionBuilderTest {
 
-    private static File luseUtlatandeFullJson;
-    private static File luseUtlatandeMinimalJson;
-
     private ObjectMapper objectMapper = new CustomObjectMapper();
 
     private IntygTextsServiceImpl intygTextsService;
+    private List<LuseUtlatande> intygList = new ArrayList<>();
 
-    @BeforeClass
-    public static void readFiles() throws IOException {
-        luseUtlatandeFullJson = new ClassPathResource("PdfGeneratorTest/fullt_utlatande.json").getFile();
-        luseUtlatandeMinimalJson = new ClassPathResource("PdfGeneratorTest/minimalt_utlatande.json").getFile();
-    }
+    private LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
+    private IntygTexts intygTexts;
 
     @Before
-    public void initTexts() {
+    public void initTexts() throws IOException {
         intygTextsService = new IntygTextsServiceImpl();
         IntygTextsLuseRepositoryTestHelper intygsTextRepositoryHelper = new IntygTextsLuseRepositoryTestHelper();
         intygsTextRepositoryHelper.update();
         ReflectionTestUtils.setField(intygTextsService, "repo", intygsTextRepositoryHelper);
+        intygTextsService.getIntygTextsPojo("luse", "1.0");
+
+        intygList.add(objectMapper.readValue(new ClassPathResource("PdfGeneratorTest/minimalt_utlatande.json").getFile(), LuseUtlatande.class));
+        intygList.add(objectMapper.readValue(new ClassPathResource("PdfGeneratorTest/fullt_utlatande.json").getFile(), LuseUtlatande.class));
+        intygList.add(objectMapper.readValue(new ClassPathResource("PdfGeneratorTest/overfyllnad_utlatande.json").getFile(), LuseUtlatande.class));
+
+        intygTexts = intygTextsService.getIntygTextsPojo("luse", "1.0");
     }
 
     @Test
-    public void testGenerateFull() throws IOException, PdfGeneratorException {
-
-        @SuppressWarnings("unchecked")
-
-        LuseUtlatande intyg = objectMapper.readValue(luseUtlatandeFullJson, LuseUtlatande.class);
-
-        // generate PDF
-
-        LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
-
-        IntygTexts intygTexts = intygTextsService.getIntygTextsPojo("luse", "1.0");
-        byte[] generatorResult = PdfGenerator
-                .generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<>(), ApplicationOrigin.WEBCERT, intygTexts));
-        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-full" + System.currentTimeMillis());
+    public void testGenerateNotSentToFK() throws Exception {
+        generate("unsent", new ArrayList<>(), ApplicationOrigin.MINA_INTYG);
+        generate("unsent", new ArrayList<>(), ApplicationOrigin.WEBCERT);
     }
 
     @Test
-    public void testGenerateMinimal() throws IOException, PdfGeneratorException {
+    public void testGenerateAlreadySentTOFK() throws Exception {
+        List<Status> statuses = new ArrayList<>();
+        statuses.add(new Status(CertificateState.SENT, PartKod.FKASSA.getValue(), LocalDateTime.now()));
 
-        @SuppressWarnings("unchecked")
-
-        LuseUtlatande intyg = objectMapper.readValue(luseUtlatandeMinimalJson, LuseUtlatande.class);
-
-        // generate PDF
-
-        LusePdfDefinitionBuilder lusePdfDefinitionBuilder = new LusePdfDefinitionBuilder();
-
-        IntygTexts intygTexts = intygTextsService.getIntygTextsPojo("luse", "1.0");
-        byte[] generatorResult = PdfGenerator
-                .generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, new ArrayList<>(), ApplicationOrigin.WEBCERT, intygTexts));
-        writePdfToFile(generatorResult, ApplicationOrigin.WEBCERT, "-minimal" + System.currentTimeMillis());
+        generate("sent", statuses, ApplicationOrigin.MINA_INTYG);
+        generate("sent", statuses, ApplicationOrigin.WEBCERT);
     }
 
-    private void writePdfToFile(byte[] pdf, ApplicationOrigin origin, String namingPrefix) throws IOException {
+    private void generate(String scenarioName, List<Status> statuses, ApplicationOrigin origin) throws PdfGeneratorException, IOException {
+        for (LuseUtlatande intyg : intygList) {
+            byte[] generatorResult = PdfGenerator
+                    .generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, statuses, origin, intygTexts));
+
+            assertNotNull(generatorResult);
+            assertEquals(LuseEntryPoint.MODULE_ID + "_lakarutlatande_" + intyg.getGrundData().getPatient().getPersonId().getPersonnummer() + ".pdf",
+                    PdfGenerator.generatePdfFilename(intyg, LuseEntryPoint.MODULE_ID));
+
+            writePdfToFile(generatorResult, origin, scenarioName, intyg.getId());
+        }
+    }
+
+    private void writePdfToFile(byte[] pdf, ApplicationOrigin origin, String scenarioName, String namingPrefix) throws IOException {
         String dir = "build/tmp";// TODO: System.getProperty("pdfOutput.dir") only existed in POM file - need to find a
                                  // way in gradle;
         if (dir == null) {
             return;
         }
 
-        File file = new File(String.format("%s/%s-%s", dir, namingPrefix, "luse-default-generator.pdf"));
+        File file = new File(String.format("%s/%s-%s-%s-%s", dir, origin.name(), scenarioName, namingPrefix, "luse.pdf"));
         FileOutputStream fop = new FileOutputStream(file);
 
         file.createNewFile();

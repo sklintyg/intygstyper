@@ -18,7 +18,7 @@
  */
 
 package se.inera.intyg.intygstyper.ts_parent.integration;
-        
+
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
 import se.inera.intygstjanster.ts.services.v1.ResultCodeType;
 import se.inera.intygstjanster.ts.services.v1.ResultatTyp;

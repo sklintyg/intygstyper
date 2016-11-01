@@ -136,9 +136,9 @@ public class InternalValidatorUtil {
         return valid;
     }
 
-    public void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+    public void validateGrundForMuDate(String intygsTyp, InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
         String validationType = "grundformu." + type.getFieldName();
-        validateDate(date, validationMessages, validationType);
+        validateDate(intygsTyp, date, validationMessages, validationType);
     }
 
     public boolean isBlankButNotNull(String stringFromField) {

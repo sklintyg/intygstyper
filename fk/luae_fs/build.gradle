@@ -1,9 +1,5 @@
 description = 'Intygstyper (Läkarintyg aktivitetsersättning vid förlängd skolgång)'
 
-ext {
-    gruntfile = "${rootProject.projectDir}/gruntfiles/Gruntfile-sit.js"
-}
-
 dependencies {
   compile project(':fk-parent')
 }

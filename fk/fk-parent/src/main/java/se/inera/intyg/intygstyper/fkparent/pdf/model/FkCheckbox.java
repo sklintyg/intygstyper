@@ -20,6 +20,7 @@ package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Phrase;
@@ -31,6 +32,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfTemplate;
 
+import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
@@ -70,12 +72,12 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
     }
 
     @Override
-    public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
+    public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
         PdfPTable table = new PdfPTable(2);
         table.setTotalWidth(
                 new float[] { Utilities.millimetersToPoints(cellWidth), Utilities.millimetersToPoints(width - cellWidth) });
 
-        Image checkbox = createCheckbox(canvas, isChecked);
+        Image checkbox = createCheckbox(writer.getDirectContent(), isChecked);
 
         PdfPCell checkboxCell = new PdfPCell(checkbox);
         checkboxCell.setFixedHeight(Utilities.millimetersToPoints(height));
@@ -97,8 +99,8 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
         labelCell.setVerticalAlignment(verticalAlignment);
         table.addCell(labelCell);
 
-        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), canvas);
-        super.render(canvas, x, y);
+        table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y), writer.getDirectContent());
+        super.render(document, writer, x, y);
     }
 
     private Image createCheckbox(PdfContentByte canvas, boolean isChecked) throws BadElementException {

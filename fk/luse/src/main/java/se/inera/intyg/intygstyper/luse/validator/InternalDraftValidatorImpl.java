@@ -97,22 +97,22 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         }
 
         if (utlatande.getUndersokningAvPatienten() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.UNDERSOKNING);
+            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getUndersokningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.UNDERSOKNING);
         }
         if (utlatande.getJournaluppgifter() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, InternalValidatorUtil.GrundForMu.JOURNALUPPGIFTER);
+            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getJournaluppgifter(), validationMessages, InternalValidatorUtil.GrundForMu.JOURNALUPPGIFTER);
         }
         if (utlatande.getAnhorigsBeskrivningAvPatienten() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.ANHORIGSBESKRIVNING);
+            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.ANHORIGSBESKRIVNING);
         }
         if (utlatande.getAnnatGrundForMU() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, InternalValidatorUtil.GrundForMu.ANNAT);
+            validatorUtil.validateGrundForMuDate(utlatande.getTyp(), utlatande.getAnnatGrundForMU(), validationMessages, InternalValidatorUtil.GrundForMu.ANNAT);
         }
 
         // INTYG-2949
-        if (utlatande.getUndersokningAvPatienten() == null && 
-                (utlatande.getJournaluppgifter() != null || utlatande.getAnhorigsBeskrivningAvPatienten() != null || utlatande.getAnnatGrundForMU() != null) &&
-                StringUtils.isBlank(utlatande.getMotiveringTillInteBaseratPaUndersokning())) {
+        if (utlatande.getUndersokningAvPatienten() == null && (utlatande.getJournaluppgifter() != null
+                || utlatande.getAnhorigsBeskrivningAvPatienten() != null || utlatande.getAnnatGrundForMU() != null)
+                && StringUtils.isBlank(utlatande.getMotiveringTillInteBaseratPaUndersokning())) {
             validatorUtil.addValidationError(validationMessages, "grundformu.motiveringTillInteBaseratPaUndersokning", ValidationMessageType.EMPTY);
         }
 
@@ -129,7 +129,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         if (utlatande.getKannedomOmPatient() == null) {
             validatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.EMPTY);
         } else {
-            boolean dateIsValid = validatorUtil.validateDate(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
+            boolean dateIsValid = validatorUtil.validateDate(utlatande.getTyp(), utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
             if (dateIsValid) {
                 if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
                         && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {
