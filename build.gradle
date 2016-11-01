@@ -17,7 +17,7 @@ ext {
 
     mockitoVersion = "1.9.0"
 }
- 
+
 allprojects {
     group = 'se.inera.intyg.intygstyper'
     version = System.properties['buildVersion'] ?: '0-SNAPSHOT'
@@ -74,26 +74,15 @@ subprojects {
         }
     }
 
-    uploadArchives {
-        repositories.mavenDeployer {
-            pom.whenConfigured { pom ->
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
-                }
-            }
-            repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
-                authentication(userName: System.properties['nexusUsername'], password: System.properties['nexusPassword'])
-            }
+    uploadArchives.repositories.mavenDeployer {
+        repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
+            authentication(userName: System.properties['nexusUsername'], password: System.properties['nexusPassword'])
         }
     }
 
-    install {
-        repositories.mavenInstaller {
-            pom.whenConfigured { pom ->
-                pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
-                    it.version = findResolvedVersion(project, 'se.inera.intyg.common')
-                }
-            }
+    [install.repositories.mavenInstaller, uploadArchives.repositories.mavenDeployer]*.pom*.whenConfigured { pom ->
+        pom.dependencies.findAll { dep -> dep.groupId == 'se.inera.intyg.common' }.each {
+            it.version = findResolvedVersion(project, 'se.inera.intyg.common')
         }
     }
 
@@ -221,7 +210,7 @@ configure(subprojects.findAll { ['fk7263', 'ts-bas', 'ts-diabetes'].contains(it.
 }
 
 task tagRelease(type: TagReleaseTask)
-                      
+
 task testReport(type: SharedTestReportTask)
 
 apply plugin: "org.sonarqube"
