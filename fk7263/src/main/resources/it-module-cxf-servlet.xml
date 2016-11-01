@@ -73,9 +73,5 @@
                   serviceClass="se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificate.rivtabp20.v3.RegisterMedicalCertificateResponderInterface"
                   address="${registermedicalcertificatev3.endpoint.url}">
   </jaxws:client>
-  
-   <bean id="fXslTransformer" class="se.inera.intyg.common.support.model.converter.util.XslTransformer">
-    <constructor-arg value="transform-to-statistics.xsl"/>
-  </bean>
 
 </beans>
