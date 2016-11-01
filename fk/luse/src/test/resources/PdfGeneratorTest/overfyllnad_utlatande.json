@@ -1,0 +1,115 @@
+{
+  "typ": "luse",
+  "tillaggsfragor": [
+    {
+      "svar": "Skostorleken är 37.",
+      "id": "9001"
+    },
+    {
+      "svar": "Längden är 166 centimeter.",
+      "id": "9002"
+    }
+  ],
+  "kontaktMedFk" : true,
+  "anledningTillKontakt" : "Behöver prata mer om detta\nÄr faktiskt lite orolig. En del dom skriver långa berättelse i dom här fälten om varför kontakt önskas. Varför är högst oklart, många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken men vi måste ju hantera det i allafall, och det gör vi ju nu!",
+  "ovrigt": "Patientens tillstånd bedöms behöva en ny bedömning om 12 månader för att avgöra grad av arbetsförmåga, men många tecken många tecken många tecken många tecken många tecken många tecken många tecken många teckenån ett annat fält i GUI. tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken  till åtminstone viss del kommer patientens arbetsförmåga att vara fortsatt nedsatt. Övrigt är typiskt ett fält som bör kunna överifyllas av en skrivglad läkare.",
+  "formagaTrotsBegransning": "Med höger kan patienten lyfta lättare saker om det inte sker för frekvent eller kräver hög precision. många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken. arbetsförmågan trots begränsningarna fortsätter hele tiden.  Patienten kan göra saker med övriga delar av kroppen i kortare stunder och även längre stunder om det inte kräver hög precision eller på annat sätt för stor koncentration.",
+  "medicinskaForutsattningarForArbete": "Patienten kommer sannolikt inte att kunna arbeta fullt ut med höger arm framgent. Framförallt är det nervskadorna med smärtkänslighet, nedsatt kraft, uttröttbarhet och svårigheten attmånga tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken  koncentrera sig som försvårar ett heltidsarbete. Ett deltidsarbete måste också ta hänsyn (Detta är medicinska förutsättningar slutet på lång text) till dessa begränsningar men bedöms kunna utföras på 50 procent av en heltid.",
+  "aktivitetsbegransning": "Svårt att utföra arbeten med höger arm (högerhänt). Kan lyfta lättare saker men tappar lätt föremål.många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken  Nedsatt koncentrationsförmåga många tecken många många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken tecken många tecken många tecken vilket påverkar arbeten där han behöver övervaka processer. aktivitetbegränsningar slut här.",
+  "funktionsnedsattningIntellektuell": "Den intellektuella funktionen hos patienten kan tyckas svårbedömd, men om mna tittar lite närmare på vilka metoder som använts kan man se att vissa områden inte är heltäckande. Varför skulle till exempel inte så långa texter som 4000 tecken kunna förekomma i ett fritextfält som i modellen inte har en max-begränsning? Detta måste utredan på ett bra sätt innan vi kan vara säkra på att ingen information går förlorad. Upplever ofta svårigheter att följa med i diskussioner och samtal med kollegor, även enklare uppgifter.\nRekommenderar inte att pat. fortsätter sitt arbete som korsordskonstruktör.",
+  "funktionsnedsattningKoncentration": "Upplever stora koncentrationssvårigheter, speciellt med avseende på DET STÄNDIGA BORRANDET I BETONGVÄGGAR! många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken koncentrationsfrågan slutar här.",
+  "funktionsnedsattningKommunikation": "Nedsatt initiativförmåga, drar sig ofta undan folksamlingar. Ev. föreligger sk. torgskräck men man skall inte tro på allt man hör. Detta fält skall också hantera överifylland så här kommer det en massa tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken än till fortsättningsbladet under en rubrik som heter något med kommunikation. Ibland är det inte mycket som hamnar där men funktionen behövs ju ändå.",
+  "funktionsnedsattningPsykisk": "Den mentala biten verkar saknas helt - kanske pga. långvarigt tittande på Big Brother och liknande program. Detta fält skall också hantera överifylland så här kommer det en massa tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken än många tecken många teckenmånga teckenmånga teckenmånga teckenmånga tecken många teckenmånga tecken till fortsättningsbladet under psykisk",
+  "funktionsnedsattningSynHorselTal": "Hör bra med tanke på avsaknad av öron. Vissa svårigheter att höra höga toner. Detta fält skall också hantera överifylland så här kommer det en massa tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken än till fortsättningsbladet under syn hörsel och tal.",
+  "funktionsnedsattningBalansKoordination": "Vid yrselanfall (även lättare) är balansen mkt starkt påverkad och nedsatt.Detta fält skall också hantera överifylland så här kommer det en massa tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken tecken tecken än till fortsättningsbladet under koordnination",
+  "funktionsnedsattningAnnan": "Har svårt att lyfta föremål med höger hand. Dels nedsatt kraft, dels lättutlösta blixtrande smärtor upp i höger arm. Ser trött ut och uppger sömnsvårigheter med domningar och smärtor i höger arm, svårt att somna in, ytlig sömn, täta uppvaknanden och frekventa intensiva mardrömmar. Detta fält skall också hantera överifylland så här kommer det en massa tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken många tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken än till fortsättningsbladet under funktionsnedsättning annan.",
+
+  "avslutadBehandling": "Utretts av smärtspecialist (se bilaga) med flertal behandlingsförsök (t ex TENS, blockader, karbamazepin, xylocain intravenöst, opioider mm) under perioden 141103-150602 men endast begränsad eller övergående effekt (se bilaga). Utredning och behandling av fysioterapeut under perioden 140901-150630 för att försöka återställa funktion så långt möjligt. Har egenträningsprogram, men borde kanske överväga att skaffa en personlig tränare för att maximera effekten av sin träning. Många går idag på yoga och tycker det hjälper mot stelhet och annat. Patienten kan med fördel strecha i hemmet eller på annat sätt tänja ut sin kropp, beroende på hur lång patienten redan är innan behandlingen. Man får passa sig så att man inte tänjer för mycket och får sk. gummi-armar bara.",
+  "pagaendeBehandling": "Har haft kontakt med psykolog sedan 141204, får nu samtalsbehandling parallellt med medicinsk behandling med läkemedel. Har förbättrats i sin depression men är inte helt bra. Det här fältet hanterar överifyllnad, men vi lämnar det lite kortare bara för att testa hur det ser ut utan att det krävs fortsättningsblad.",
+  "planeradBehandling": "Fortsatt depressionsbehandling via VC och psykolog.Detta fält skall också hantera överifylland så här kommer det en massa tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken teckenmånga tecken många tecken många tecken många tecken många tecken många tecken  tecken tecken tecken tecken än till fortsättningsbladet under planerade behandlingar frågan.",
+  "substansintag": "Fluoxetin mot depressionen.\nVatten för törst och mat mot hunger. Inget annat skall intas. Detta fält skall också hantera överifylland så här kommer det en massa tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken tecken teckenmånga tecken många tecken många tecken många tecken  tecken tecken tecken tecken tecken tecken tecken tecken än till fortsättningsbladet under substansinstag",
+  "motiveringTillInteBaseratPaUndersokning": "Patienten var vid undersökningstillfället osynlig, så jag kan inte säga att jag undersökt ordentligt.",
+  "nyBedomningDiagnosgrund": true,
+  "diagnosForNyBedomning" : "Det gäller den första diagnosen, detta fält kan också vara upp till 4000 tkn enligt fk's syftesbeskrivning, men i PDF'en är den bara en rad så här kanske det ofta blir överifyllnad kanske? Well well skall det vara så så gör vi det så.",
+  "diagnosgrund": "Diagnoserna ställdes vid besök\n\rpå AVC Södra\rÄlvsborgs\n sjukhus\r\n i Borås 2014-07-09 och på Vårdenheten 2015-03-02. Detta fält har i formulärssidan en viss höjd och skall stödja overflow så att resten visas på en fortsättningssida. Behöver kolla mer på om vi skall tvätta bort radbryt alltid, eller bara ibland. Med en tillräckligt lång text skall pat. inte behöve missa någonting. Förhoppningsvis kommer all denna text med, även om en del hamnar på fortsättningssidan, men det är helt ok nu, eftersom vi också hanterar vääääldigt långa texter, allt för att vi skall få med så komplett information som möjligt. Vi ser också till att inte bryta mitt i ett ord.",
+  "diagnoser": [
+    {
+      "diagnosBeskrivning": "Skada på multipla böjmuskler och deras senor på handleds- och handnivå AB   ab cde efhjik",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosKod": "S666"
+    },
+    {
+      "diagnosBeskrivning": "Icke specificerad neuralgi och neurit - en del annan text okså kan hantera 2 rader i allafall",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosKod": "M461D"
+    },
+    {
+      "diagnosBeskrivning": "Depressiv episod",
+      "diagnosKodSystem": "ICD_10_SE",
+      "diagnosKod": "F320"
+    }
+  ],
+  "sjukdomsforlopp": "Arbetsplatsolycka där patienten fastnade med höger hand i en vals 2014-07-09.\nOmhändertogs initialt på akutmottagningen AVC Södra \u00c4lvsborgs sjukhus i Borås. Vävnadsförluster i 3:e och 4:e fingret. Nedsatt kraft, känsel och funktion i handen, smärtsyndom i hela höger arm.\n\nSedan några månader depression som har varit svår att behandla medikamentellt. Här lägger vi till ite onödigt lång text för att återigen testa att överifyllnad (många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken många tecken )hanteras korrekt för de fält som kräver det. Så just denna text skall hamna på forsättningssidan under sjukdomsförlopp",
+  "underlag": [
+    {
+      "hamtasFran": "Skickas med posten",
+      "datum": "2015-09-03",
+      "typ": "PSYKOLOG"
+    },
+    {
+      "datum": "2015-06-30",
+      "typ": "FYSIOTERAPEUT"
+    },
+    {
+      "hamtasFran": "Abcdefghi1Abcdefghi2Abcdefghi3Abcdefghi4Abcdefghi5123 totalt är detta 76 tkn",
+      "datum": "2015-06-30",
+      "typ": "FYSIOTERAPEUT"
+    }
+  ],
+  "underlagFinns": true,
+  "undersokningAvPatienten": "2015-09-09",
+  "journaluppgifter": "2015-09-10",
+  "anhorigsBeskrivningAvPatienten": "2015-09-11",
+  "annatGrundForMU": "2015-09-12",
+  "annatGrundForMUBeskrivning": "Jag undersökte pat i hemmet vid en fika, det en ledde till det andra och helt plöstsligt ville patienten att jag skulle udnersöka på plats. Jag gjorde det och resultatet är detta intyg.",
+  "kannedomOmPatient": "2015-01-07",
+  "textVersion": "1.0",
+  "grundData": {
+    "patient": {
+      "samordningsNummer": false,
+      "efternamn": "Tolvansson",
+      "fornamn": "Tolvan",
+      "fullstandigtNamn": "Tolvan full Tolvansson",
+      "personId": "19121212-1212",
+      "postadress": "Adressen",
+      "postnummer": "11111",
+      "postort": "Testorten"
+    },
+    "skapadAv": {
+      "vardenhet": {
+        "arbetsplatsKod": "45312",
+        "vardgivare": {
+          "vardgivarnamn": "Vårdgivaren",
+          "vardgivarid": "SE2321000016-39KJ"
+        },
+        "epost": "ve1@vg1.se",
+        "telefonnummer": "0812341234",
+        "postort": "Stadby",
+        "postnummer": "100 10",
+        "postadress": "Enhetsg. 1A",
+        "enhetsnamn": "Vårdenheten",
+        "enhetsid": "SE2321000016-H489"
+      },
+      "specialiteter": [
+        "Onkologi",
+        "Polymorfism"
+      ],
+      "befattningar": ["Läkare","Doktor"],
+      "forskrivarKod": "09874321",
+      "fullstandigtNamn": "Karl Karlsson",
+      "personId": "SE2321000016-6G5R"
+    },
+    "signeringsdatum": "2016-09-26T15:48:05.000"
+  },
+  "id": "overflow-5a9c-450a-bd74-08af43750788"
+}

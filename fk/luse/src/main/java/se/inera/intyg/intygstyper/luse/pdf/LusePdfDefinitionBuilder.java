@@ -22,37 +22,40 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
-import org.apache.commons.io.IOUtils;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.apache.commons.lang3.StringUtils;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 
 import se.inera.intyg.common.services.texts.model.IntygTexts;
-import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.Status;
-import se.inera.intyg.common.support.model.common.internal.Vardenhet;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
-import se.inera.intyg.intygstyper.fkparent.pdf.FkFormIdentityEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.FkPersonnummerEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.PageNumberingEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.FkBasePdfDefinitionBuilder;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkDynamicPageDecoratorEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkFormIdentityEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkFormPagePersonnummerEventHandlerImpl;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkLogoEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkOverflowPagePersonnummerEventHandlerImpl;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkPrintedByEventHandler;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.PageNumberingEventHandler;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCategory;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCheckbox;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkDiagnosKodField;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkImage;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkLabel;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkOverflowPage;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkOverflowableValueField;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPage;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkTillaggsFraga;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkValueField;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.PdfComponent;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
@@ -62,7 +65,8 @@ import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
  * Created by marced on 18/08/16.
  */
 // CHECKSTYLE:OFF MagicNumber
-public class LusePdfDefinitionBuilder {
+// CHECKSTYLE:OFF MethodLength
+public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
 
     private static final float KATEGORI_FULL_WIDTH = 180f;
     private static final float KATEGORI_OFFSET_X = 15f;
@@ -78,9 +82,6 @@ public class LusePdfDefinitionBuilder {
 
     private static final float FRAGA_9_DELFRAGA_HEIGHT = 28f;
 
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
-
-    private IntygTexts intygTexts;
     private static final float CHECKBOXROW_DEFAULT_HEIGHT = 9f;
     private static final float CHECKBOX_DEFAULT_WIDTH = 72.2f;
 
@@ -94,13 +95,27 @@ public class LusePdfDefinitionBuilder {
             // Add page envent handlers
             def.addPageEvent(new PageNumberingEventHandler());
             def.addPageEvent(new FkFormIdentityEventHandler("FK 7800 (001 F 001) Fastställd av Försäkringskassan", "7800", "01"));
-            def.addPageEvent(new FkPersonnummerEventHandler(intyg.getGrundData().getPatient().getPersonId().getPersonnummer()));
+            def.addPageEvent(new FkFormPagePersonnummerEventHandlerImpl(intyg.getGrundData().getPatient().getPersonId().getPersonnummer()));
+            def.addPageEvent(new FkOverflowPagePersonnummerEventHandlerImpl(intyg.getGrundData().getPatient().getPersonId().getPersonnummer()));
+            def.addPageEvent(new FkPrintedByEventHandler(intyg.getId(), getPrintedByText(applicationOrigin)));
 
-            def.addPage(createPage1(intyg));
-            def.addPage(createPage2(intyg));
-            def.addPage(createPage3(intyg));
-            def.addPage(createPage4(intyg));
-            def.addPage(createPage5(intyg));
+            def.addPageEvent(new FkLogoEventHandler(1, 1));
+            def.addPageEvent(new FkLogoEventHandler(5, 99));
+            def.addPageEvent(new FkDynamicPageDecoratorEventHandler(5, def.getPageMargins(), "Läkarutlåtande", "för sjukersättning"));
+
+            def.addChild(createPage1(intyg, statuses, applicationOrigin));
+            def.addChild(createPage2(intyg));
+            def.addChild(createPage3(intyg));
+            def.addChild(createPage4(intyg));
+
+            // Only add tillaggsfragor page if there are some
+            if (intyg.getTillaggsfragor().size() > 0) {
+                def.addChild(createPage5(intyg));
+            }
+
+            // Always add the overflow page last, as it will scan the model for overflowing content and must therefore
+            // also be renderad last.
+            def.addChild(new FkOverflowPage("Fortsättningsblad, svar med hänvisning fortsätter nedan", def));
 
             return def;
         } catch (IOException | DocumentException e) {
@@ -109,11 +124,18 @@ public class LusePdfDefinitionBuilder {
 
     }
 
-    private FkPage createPage1(LuseUtlatande intyg) throws IOException, DocumentException {
-
+    private FkPage createPage1(LuseUtlatande intyg, List<Status> statuses, ApplicationOrigin applicationOrigin) throws IOException, DocumentException {
         List<PdfComponent> allElements = new ArrayList<>();
 
-        addPage1MiscFields(intyg, allElements);
+        boolean showFkAddress;
+        if (applicationOrigin.equals(ApplicationOrigin.MINA_INTYG)) {
+            // we never include FK address in MI prints..
+            showFkAddress = false;
+        } else {
+            showFkAddress = !isSentToFk(statuses);
+        }
+        addPage1MiscFields(intyg, showFkAddress, allElements);
+
         // START KATEGORI 1. (Utlåtandet är baserat på....)
         FkCategory fraga1 = new FkCategory("1. " + getText("FRG_1.RBK"))
                 .offset(KATEGORI_OFFSET_X, 150f)
@@ -168,11 +190,9 @@ public class LusePdfDefinitionBuilder {
                 .offset(7f, 36f)
                 .size(58f, 9f)
                 .withVerticalAlignment(Element.ALIGN_MIDDLE));
-        fraga1.addChild(new FkValueField(nullSafeString(intyg.getAnnatGrundForMUBeskrivning()))
-                .offset(CHECKBOX_DEFAULT_WIDTH, 36f)
-                .size(CHECKBOX_DEFAULT_WIDTH, 9f)
-                .withValueFont(PdfConstants.FONT_INLINE_FIELD_LABEL)
-                .withValueTextAlignment(Element.ALIGN_MIDDLE));
+        fraga1.addChild(new FkOverflowableValueField(nullSafeString(intyg.getAnnatGrundForMUBeskrivning()), getText("DFR_1.3.RBK"))
+                .offset(CHECKBOX_DEFAULT_WIDTH, 37f)
+                .size(KATEGORI_FULL_WIDTH - CHECKBOX_DEFAULT_WIDTH, 6f));
 
         // Dessa fält har top border
         // FRG_2.RBK
@@ -231,15 +251,17 @@ public class LusePdfDefinitionBuilder {
                     .withBorders(Rectangle.TOP)
                     .withTopLabel("datum (år, månad, dag"));
 
+            // Bifogas Ja/Nej är bara till för manuell/fysisk/pappers ifyllnad och skall därför alltid vara ej ifylld i
+            // vårt fall.
             fraga2.addChild(new FkLabel("Bifogas")
                     .offset(120f, yOffset)
                     .size(15f, CHECKBOXROW_DEFAULT_HEIGHT)
                     .withBorders(Rectangle.TOP));
-            fraga2.addChild(new FkCheckbox("Ja", hamtasFran != null)
+            fraga2.addChild(new FkCheckbox("Ja", false)
                     .offset(132.5f, yOffset)
                     .size(30f, CHECKBOXROW_DEFAULT_HEIGHT)
                     .withBorders(Rectangle.TOP));
-            fraga2.addChild(new FkCheckbox("Nej", hamtasFran == null)
+            fraga2.addChild(new FkCheckbox("Nej", false)
                     .offset(155f, yOffset)
                     .size(25f, CHECKBOXROW_DEFAULT_HEIGHT)
                     .withBorders(Rectangle.TOP));
@@ -260,13 +282,17 @@ public class LusePdfDefinitionBuilder {
         return thisPage;
     }
 
-    private void addPage1MiscFields(LuseUtlatande intyg, List<PdfComponent> allElements) throws IOException {
-        // Meta elements such as FK logotype, information text(s) etc.
-        Resource resource = new ClassPathResource("images/forsakringskassans_logotyp.jpg");
-        FkImage logo = new FkImage(IOUtils.toByteArray(resource.getInputStream()))
-                .withLinearScale(0.253f)
-                .offset(16f, 20f);
-        allElements.add(logo);
+    private void addPage1MiscFields(LuseUtlatande intyg, boolean showFkAddress, List<PdfComponent> allElements) throws IOException {
+        // Meta information text(s) etc.
+
+        FkLabel elektroniskKopia = new FkLabel(PdfConstants.ELECTRONIC_COPY_WATERMARK_TEXT)
+                .offset(20f, 60f)
+                .withHorizontalAlignment(PdfPCell.ALIGN_CENTER)
+                .withVerticalAlignment(Element.ALIGN_MIDDLE)
+                .size(70f, 12f)
+                .withFont(PdfConstants.FONT_BOLD_9)
+                .withBorders(Rectangle.BOX, BaseColor.RED);
+        allElements.add(elektroniskKopia);
 
         FkLabel fortsBladText = new FkLabel("Använd fortsättningsblad som finns i slutet av blanketten om utrymmet i fälten inte räcker till.")
                 .offset(17.5f, 20.5f)
@@ -319,25 +345,26 @@ public class LusePdfDefinitionBuilder {
         allElements.add(patientNamn);
         allElements.add(patientPnr);
 
-        FkLabel skickaBlankettenTillLbl = new FkLabel("Skicka blanketten till")
-                .offset(113.2f, 37.5f)
-                .size(28f, 5f)
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_STAMPER_LABEL);
-        allElements.add(skickaBlankettenTillLbl);
+        if (showFkAddress) {
+            FkLabel skickaBlankettenTillLbl = new FkLabel("Skicka blanketten till")
+                    .offset(113.2f, 37.5f)
+                    .size(35f, 5f)
+                    .withVerticalAlignment(Element.ALIGN_TOP)
+                    .withFont(PdfConstants.FONT_STAMPER_LABEL);
+            allElements.add(skickaBlankettenTillLbl);
 
-        FkLabel inlasningsCentralRad1 = new FkLabel("Försäkringskassans inläsningscentral")
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .size(60f, 6f)
-                .offset(113.2f, 42f);
-        FkLabel inlasningsCentralRad2 = new FkLabel("839 88 Östersund")
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .size(60f, 6f)
-                .offset(113.2f, 48.75f);
+            FkLabel inlasningsCentralRad1 = new FkLabel("Försäkringskassans inläsningscentral")
+                    .withVerticalAlignment(Element.ALIGN_TOP)
+                    .size(60f, 6f)
+                    .offset(113.2f, 42f);
+            FkLabel inlasningsCentralRad2 = new FkLabel("839 88 Östersund")
+                    .withVerticalAlignment(Element.ALIGN_TOP)
+                    .size(60f, 6f)
+                    .offset(113.2f, 48.75f);
 
-        allElements.add(inlasningsCentralRad1);
-        allElements.add(inlasningsCentralRad2);
-
+            allElements.add(inlasningsCentralRad1);
+            allElements.add(inlasningsCentralRad2);
+        }
         // Ledtext: Vad är sjukersättning
         FkLabel luseDescriptonText = new FkLabel(getText("FRM_2.RBK"))
                 .withLeading(0.0f, 1.2f)
@@ -391,11 +418,10 @@ public class LusePdfDefinitionBuilder {
         fraga3.addChild(diagnosKodField3);
 
         // När och var ställdes diagnosen/diagnoserna?
-        FkValueField narOchHur = new FkValueField(intyg.getDiagnosgrund())
+        FkOverflowableValueField narOchHur = new FkOverflowableValueField(intyg.getDiagnosgrund(), getText("FRG_7.RBK"))
                 .size(KATEGORI_FULL_WIDTH, 27f).offset(0f, 29f)
                 .withBorders(Rectangle.BOTTOM)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                .withTopLabel(getText("FRG_7.RBK"));
+                .showLabelOnTop();
         fraga3.addChild(narOchHur);
 
         // Finns skäl till att revidera/uppdatera tidigare satt diagnos?
@@ -416,9 +442,9 @@ public class LusePdfDefinitionBuilder {
         fraga3.addChild(revidera);
 
         // Beskriv vilken eller vilka diagnoser som avses
-        FkValueField vilkenAvses = new FkValueField(intyg.getDiagnosForNyBedomning())
-                .size(KATEGORI_FULL_WIDTH, 9f).offset(0f, 67f)
-                .withTopLabel(getText("DFR_45.2.RBK"));
+        FkOverflowableValueField vilkenAvses = new FkOverflowableValueField(intyg.getDiagnosForNyBedomning(), getText("DFR_45.2.RBK"))
+                .size(KATEGORI_FULL_WIDTH, 12f).offset(0f, 67.5f)
+                .showLabelOnTop();
         fraga3.addChild(vilkenAvses);
         allElements.add(fraga3);
 
@@ -428,9 +454,9 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, 22.5f)
                 .withBorders(Rectangle.BOX);
 
-        FkValueField bakgrund = new FkValueField(intyg.getSjukdomsforlopp())
-                .size(KATEGORI_FULL_WIDTH, 20f)
-                .offset(0f, 0f).withValueTextAlignment(Element.ALIGN_TOP);
+        FkOverflowableValueField bakgrund = new FkOverflowableValueField(intyg.getSjukdomsforlopp(), getText("FRG_5.RBK"))
+                .size(KATEGORI_FULL_WIDTH, 22f)
+                .offset(0f, 0f);
         fraga4.addChild(bakgrund);
         allElements.add(fraga4);
 
@@ -448,10 +474,9 @@ public class LusePdfDefinitionBuilder {
                         .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_RUBRIK_HEIGHT)
                         .withBorders(Rectangle.BOTTOM));
         fraga5YOffset += FRAGA_5_DELFRAGA_RUBRIK_HEIGHT;
-        fraga5.addChild(new FkValueField(intyg.getFunktionsnedsattningIntellektuell())
+        fraga5.addChild(new FkOverflowableValueField(intyg.getFunktionsnedsattningIntellektuell(), getText("FRG_8.RBK"))
                 .offset(0f, fraga5YOffset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT));
         fraga5YOffset += FRAGA_5_DELFRAGA_HEIGHT;
 
         // Kommunikation och social interaktion
@@ -462,10 +487,9 @@ public class LusePdfDefinitionBuilder {
                         .withBorders(Rectangle.BOX));
         fraga5YOffset += FRAGA_5_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga5.addChild(new FkValueField(intyg.getFunktionsnedsattningKommunikation())
+        fraga5.addChild(new FkOverflowableValueField(intyg.getFunktionsnedsattningKommunikation(), getText("FRG_9.RBK"))
                 .offset(0f, fraga5YOffset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT));
 
         fraga5YOffset += FRAGA_5_DELFRAGA_HEIGHT;
         // Uppmärksamhet, koncentration och exekutiv funktion
@@ -475,10 +499,9 @@ public class LusePdfDefinitionBuilder {
                 .withBorders(Rectangle.BOX));
         fraga5YOffset += FRAGA_5_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga5.addChild(new FkValueField(intyg.getFunktionsnedsattningKoncentration())
+        fraga5.addChild(new FkOverflowableValueField(intyg.getFunktionsnedsattningKoncentration(), getText("FRG_10.RBK"))
                 .offset(0f, fraga5YOffset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT));
         fraga5YOffset += FRAGA_5_DELFRAGA_HEIGHT;
 
         // Annan psykisk funktion
@@ -488,10 +511,9 @@ public class LusePdfDefinitionBuilder {
                         .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_RUBRIK_HEIGHT)
                         .withBorders(Rectangle.BOX));
         fraga5YOffset += FRAGA_5_DELFRAGA_RUBRIK_HEIGHT;
-        fraga5.addChild(new FkValueField(intyg.getFunktionsnedsattningPsykisk())
+        fraga5.addChild(new FkOverflowableValueField(intyg.getFunktionsnedsattningPsykisk(), getText("FRG_11.RBK"))
                 .offset(0f, fraga5YOffset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT));
 
         allElements.add(fraga5);
 
@@ -520,10 +542,9 @@ public class LusePdfDefinitionBuilder {
                         .withBorders(Rectangle.BOX));
         fraga5YOffset += FRAGA_5_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga5.addChild(new FkValueField(intyg.getFunktionsnedsattningSynHorselTal())
+        fraga5.addChild(new FkOverflowableValueField(intyg.getFunktionsnedsattningSynHorselTal(), getText("FRG_12.RBK"))
                 .offset(0f, fraga5YOffset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT));
         fraga5YOffset += FRAGA_5_DELFRAGA_HEIGHT;
 
         // Balans, koordination och motorik
@@ -533,10 +554,9 @@ public class LusePdfDefinitionBuilder {
                 .withBorders(Rectangle.BOX));
         fraga5YOffset += FRAGA_5_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga5.addChild(new FkValueField(intyg.getFunktionsnedsattningBalansKoordination())
+        fraga5.addChild(new FkOverflowableValueField(intyg.getFunktionsnedsattningBalansKoordination(), getText("FRG_13.RBK"))
                 .offset(0f, fraga5YOffset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT));
         fraga5YOffset += FRAGA_5_DELFRAGA_HEIGHT;
 
         // Annan kroppslig funktion
@@ -546,10 +566,9 @@ public class LusePdfDefinitionBuilder {
                 .withBorders(Rectangle.BOX));
         fraga5YOffset += FRAGA_5_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga5.addChild(new FkValueField(intyg.getFunktionsnedsattningAnnan())
+        fraga5.addChild(new FkOverflowableValueField(intyg.getFunktionsnedsattningAnnan(), getText("FRG_14.RBK"))
                 .offset(0f, fraga5YOffset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_5_DELFRAGA_HEIGHT));
 
         allElements.add(fraga5);
 
@@ -560,11 +579,10 @@ public class LusePdfDefinitionBuilder {
                 .withBorders(Rectangle.BOX);
 
         // Ge konkreta exempel
-        fraga6.addChild(new FkValueField(intyg.getAktivitetsbegransning())
+        fraga6.addChild(new FkOverflowableValueField(intyg.getAktivitetsbegransning(), getText("DFR_17.1.RBK"))
                 .offset(0f, 0f)
-                .size(KATEGORI_FULL_WIDTH, 25f)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                .withTopLabel(getText("DFR_17.1.RBK")));
+                .size(KATEGORI_FULL_WIDTH, 32f)
+                .showLabelOnTop());
 
         allElements.add(fraga6);
 
@@ -579,11 +597,10 @@ public class LusePdfDefinitionBuilder {
                 .offset(0, fraga7Offset)
                 .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_RUBRIK_HEIGHT + 2f));
         fraga7Offset += FRAGA_7_DELFRAGA_RUBRIK_HEIGHT + 2f;
-        fraga7.addChild(new FkValueField(intyg.getAvslutadBehandling())
+
+        fraga7.addChild(new FkOverflowableValueField(intyg.getAvslutadBehandling(), getText("FRG_18.RBK") + ". " + getText("DFR_18.1.RBK"))
                 .offset(0f, fraga7Offset)
                 .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                .withTopPadding(0)
                 .withBorders(Rectangle.BOTTOM));
         fraga7Offset += FRAGA_7_DELFRAGA_HEIGHT;
 
@@ -592,11 +609,9 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_RUBRIK_HEIGHT));
         fraga7Offset += FRAGA_7_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga7.addChild(new FkValueField(intyg.getPagaendeBehandling())
+        fraga7.addChild(new FkOverflowableValueField(intyg.getPagaendeBehandling(), getText("FRG_19.RBK") + ". " + getText("DFR_19.1.RBK"))
                 .offset(0f, fraga7Offset)
                 .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                .withTopPadding(0)
                 .withBorders(Rectangle.BOTTOM));
         fraga7Offset += FRAGA_7_DELFRAGA_HEIGHT;
 
@@ -605,11 +620,9 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_RUBRIK_HEIGHT));
         fraga7Offset += FRAGA_7_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga7.addChild(new FkValueField(intyg.getPlaneradBehandling())
+        fraga7.addChild(new FkOverflowableValueField(intyg.getPlaneradBehandling(), getText("FRG_20.RBK") + ". " + getText("DFR_20.1.RBK"))
                 .offset(0f, fraga7Offset)
                 .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                .withTopPadding(0)
                 .withBorders(Rectangle.BOTTOM));
         fraga7Offset += FRAGA_7_DELFRAGA_HEIGHT;
 
@@ -618,11 +631,9 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_RUBRIK_HEIGHT));
         fraga7Offset += FRAGA_7_DELFRAGA_RUBRIK_HEIGHT;
 
-        fraga7.addChild(new FkValueField(intyg.getSubstansintag())
+        fraga7.addChild(new FkOverflowableValueField(intyg.getSubstansintag(), getText("FRG_21.RBK") + " (" + getText("DFR_21.1.RBK") + ")")
                 .offset(0f, fraga7Offset)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_HEIGHT)
-                .withTopPadding(0)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_7_DELFRAGA_HEIGHT));
 
         allElements.add(fraga7);
 
@@ -647,11 +658,9 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, 6.5f)
                 .withTopPadding(0.5f)
                 .withVerticalAlignment(PdfPCell.TOP));
-        fraga8.addChild(new FkValueField(intyg.getMedicinskaForutsattningarForArbete())
+        fraga8.addChild(new FkOverflowableValueField(intyg.getMedicinskaForutsattningarForArbete(), getText("FRG_22.RBK"))
                 .offset(0f, 6.5f)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_8_DELFRAGA_HEIGHT - 6.5f)
-                .withTopPadding(0)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_8_DELFRAGA_HEIGHT - 6.5f));
 
         fraga8.addChild(new FkLabel(getText("FRG_23.RBK"))
                 .offset(0, FRAGA_8_DELFRAGA_HEIGHT)
@@ -659,11 +668,9 @@ public class LusePdfDefinitionBuilder {
                 .withTopPadding(0.5f)
                 .withVerticalAlignment(PdfPCell.TOP)
                 .withBorders(Rectangle.TOP));
-        fraga8.addChild(new FkValueField(intyg.getFormagaTrotsBegransning())
+        fraga8.addChild(new FkOverflowableValueField(intyg.getFormagaTrotsBegransning(), getText("FRG_23.RBK"))
                 .offset(0f, FRAGA_8_DELFRAGA_HEIGHT + 4f)
-                .size(KATEGORI_FULL_WIDTH, FRAGA_8_DELFRAGA_HEIGHT - 4f)
-                .withTopPadding(0)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .size(KATEGORI_FULL_WIDTH, FRAGA_8_DELFRAGA_HEIGHT - 4f));
 
         allElements.add(fraga8);
 
@@ -673,10 +680,21 @@ public class LusePdfDefinitionBuilder {
                 .size(KATEGORI_FULL_WIDTH, 27f)
                 .withBorders(Rectangle.BOX);
 
-        fraga9.addChild(new FkValueField(intyg.getOvrigt())
+        StringBuilder ovrigt = new StringBuilder();
+
+        if (!StringUtils.isBlank(intyg.getMotiveringTillInteBaseratPaUndersokning())) {
+            ovrigt.append("Motivering till varför utlåtandet inte baseras på undersökning av patienten: " + intyg.getMotiveringTillInteBaseratPaUndersokning() + "\n");
+        }
+
+        if (!StringUtils.isBlank(intyg.getOvrigt())) {
+            ovrigt.append(intyg.getOvrigt());
+        }
+
+        // OBS: Övrigt fältet skall behålla radbytformattering eftersom detta kan vara sammanslaget med motiveringstext
+        fraga9.addChild(new FkOverflowableValueField(ovrigt.toString(), getText("FRG_25.RBK"))
                 .offset(0f, 0f)
                 .size(KATEGORI_FULL_WIDTH, FRAGA_9_DELFRAGA_HEIGHT)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP));
+                .keepNewLines());
 
         allElements.add(fraga9);
 
@@ -690,11 +708,10 @@ public class LusePdfDefinitionBuilder {
                 .offset(0f, 0f)
                 .size(KATEGORI_FULL_WIDTH, 9f)
                 .withBorders(Rectangle.BOTTOM));
-        fraga10.addChild(new FkValueField(intyg.getAnledningTillKontakt())
+        fraga10.addChild(new FkOverflowableValueField(intyg.getAnledningTillKontakt(), getText("DFR_26.2.RBK"))
                 .offset(0f, 9f)
-                .size(KATEGORI_FULL_WIDTH, 14.5f)
-                .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                .withTopLabel(getText("DFR_26.2.RBK")));
+                .size(KATEGORI_FULL_WIDTH, 15.5f)
+                .showLabelOnTop());
 
         allElements.add(fraga10);
 
@@ -751,7 +768,7 @@ public class LusePdfDefinitionBuilder {
                 .withTopLabel("Arbetsplatskod"));
         // We only have an hsa-Id - so we never fill this field
         fraga11.addChild(new FkValueField("")
-                .offset(0f, 45f)
+                .offset(0f, 44f)
                 .size(KATEGORI_FULL_WIDTH, 9f)
                 .withValueTextAlignment(PdfPCell.ALIGN_BOTTOM)
                 .withBorders(Rectangle.BOTTOM)
@@ -780,104 +797,17 @@ public class LusePdfDefinitionBuilder {
 
         List<PdfComponent> allElements = new ArrayList<>();
 
-        // Meta elements such as FK logotype, information text(s) etc.
-        Resource resource = new ClassPathResource("images/forsakringskassans_logotyp.jpg");
-        FkImage logo = new FkImage(IOUtils.toByteArray(resource.getInputStream()))
-                .withLinearScale(0.253f)
-                .offset(16f, 20f);
-        allElements.add(logo);
-
-        FkLabel mainHeader = new FkLabel("Läkarutlåtande")
-                .offset(107.5f, 10f)
-                .size(40, 12f)
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_FRAGERUBRIK);
-        FkLabel subHeader = new FkLabel("för sjukersättning")
-                .offset(107.5f, 14f)
-                .size(40, 15)
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_BOLD_9);
-        allElements.add(mainHeader);
-        allElements.add(subHeader);
-
-        FkLabel patientPnrLbl = new FkLabel("Personnummer")
-                .offset(170f, 18f)
-                .size(35f, 15f)
-                .withVerticalAlignment(Element.ALIGN_TOP)
-                .withFont(PdfConstants.FONT_STAMPER_LABEL);
-        allElements.add(patientPnrLbl);
-
-        FkLabel patientPnr = new FkLabel(intyg.getGrundData().getPatient().getPersonId().getPersonnummer())
-                .offset(170f, 22f)
-                .size(35f, 15f).withFont(PdfConstants.FONT_VALUE_TEXT)
-                .withVerticalAlignment(Element.ALIGN_TOP);
-        allElements.add(patientPnr);
-
         // Sida 5 ar en extrasida, har lagger vi ev tillaggsfragor
-        FkCategory tillaggsfragor = new FkCategory("")
-                .offset(KATEGORI_OFFSET_X, 40f)
-                .size(KATEGORI_FULL_WIDTH, 247.2f)
-                .withBorders(Rectangle.BOX);
-        float offsetY = 0;
-        for (Tillaggsfraga tillaggsfraga : intyg.getTillaggsfragor()) {
-
-            tillaggsfragor.addChild(new FkValueField(tillaggsfraga.getSvar())
-                    .offset(0f, offsetY)
-                    .size(KATEGORI_FULL_WIDTH, 50f)
-                    .withValueTextAlignment(PdfPCell.ALIGN_TOP)
-                    .withTopLabel("Tilläggsfråga: " + getText("DFR_" + tillaggsfraga.getId() + ".1.RBK")));
-            offsetY += 40;
+        for (int i = 0; i < intyg.getTillaggsfragor().size(); i++) {
+            Tillaggsfraga tillaggsfraga = intyg.getTillaggsfragor().get(i);
+            allElements.add(new FkTillaggsFraga((i + 1) + ". " + getText("DFR_" + tillaggsfraga.getId() + ".1.RBK"), tillaggsfraga.getSvar()));
         }
 
-        allElements.add(tillaggsfragor);
-
-        FkPage thisPage = new FkPage();
+        FkPage thisPage = new FkPage("Tilläggsfrågor");
         thisPage.getChildren().addAll(allElements);
         return thisPage;
     }
 
-    private String getText(String key) {
-        return intygTexts.getTexter().get(key);
-    }
-
-    private String nullSafeString(String string) {
-        return string != null ? string : "";
-    }
-
-    private String nullSafeString(InternalDate date) {
-        return date != null ? date.getDate() : "";
-    }
-
-    private Diagnos safeGetDiagnos(LuseUtlatande intyg, int index) {
-        if (index < intyg.getDiagnoser().size()) {
-            return intyg.getDiagnoser().get(index);
-        }
-        return Diagnos.create("", "", "", "");
-    }
-
-    private boolean safeBoolean(Boolean b) {
-        if (b == null) {
-            return false;
-        }
-        return b.booleanValue();
-    }
-
-    private String concatStringList(List<String> strings) {
-        StringJoiner sj = new StringJoiner(", ");
-        for (String s : strings) {
-            sj.add(s);
-        }
-        return sj.toString();
-    }
-
-    private String buildVardEnhetAdress(Vardenhet ve) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(nullSafeString(ve.getEnhetsnamn())).append("\n")
-                .append(nullSafeString(ve.getPostadress())).append("\n")
-                .append(nullSafeString(ve.getPostnummer())).append(" ").append(nullSafeString(ve.getPostort())).append("\n")
-                .append("Telefon: ").append(nullSafeString(ve.getTelefonnummer()));
-        return sb.toString();
-
-    }
-
 }
+// CHECKSTYLE:ON MagicNumber
+// CHECKSTYLE:ON MethodLength

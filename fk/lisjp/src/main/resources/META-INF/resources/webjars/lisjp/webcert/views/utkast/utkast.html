@@ -1,0 +1,50 @@
+<a id="top"></a>
+<div class="fk-sit-common-ns lisjp-ns container-fluid" id="edit-lisjp">
+  <div class="webcert-multicol-container webcert-multicol-background-grey" ng-class="{'collapsed' : viewState.common.collapsedHeader}" wc-size-target>
+    <div class="col-sm-6 webcert-col webcert-col-primary">
+
+      <div ui-view="header"></div>
+
+      <!-- Integration deleted message -->
+      <div id="integration-deleted" ng-if="viewState.common.deleted">
+        <div class="alert alert-info banner-margin">
+          Utkastet är raderat och borttaget från Webcert.
+        </div>
+      </div>
+
+      <div class="edit-form">
+
+        <form name="certForm" novalidate autocomplete="off" wc-auto-save>
+          <div ng-hide="viewState.common.error.activeErrorMessageKey || viewState.common.deleted">
+
+            <div wc-spinner label="info.loadingdata" show-spinner="!viewState.common.doneLoading"
+                 show-content="viewState.common.doneLoading">
+
+              <div wc-utkast-error-summary-fk category-names="categoryNames" view-state="viewState"></div>
+
+              <div id="certificate" class="row certificate">
+                <div class="col-md-12 intyg-body">
+
+                  <div ui-view="formly"/>
+
+                  <!-- 12. Sign doktor -->
+                  <div wc-field-signing-doctor></div>
+
+                </div>
+                <!-- intyg body -->
+
+              </div>
+              <!-- certificate -->
+
+              <div ui-view="footer"></div>
+
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+    <div class="col-sm-6 webcert-col webcert-col-secondary print-hide" wc-authority feature="hanteraFragor" intygstyp="{{widgetState.certificateType}}" ui-view="fragasvar"></div>
+  </div>
+</div> <!-- container -->

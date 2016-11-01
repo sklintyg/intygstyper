@@ -18,6 +18,7 @@
  */
 package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -29,6 +30,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
+import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
@@ -79,8 +81,8 @@ public class FkValueField extends PdfComponent<FkValueField> {
     }
 
     @Override
-    public void render(PdfContentByte canvas, float x, float y) throws DocumentException {
-
+    public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
+        final PdfContentByte canvas = writer.getDirectContent();
         float adjustedHeight = height;
         float adjustedY = y;
         // If were showing the label above, adjust the tables height to avoid overlap.
@@ -123,7 +125,7 @@ public class FkValueField extends PdfComponent<FkValueField> {
 
         table.writeSelectedRows(0, -1, Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(adjustedY), canvas);
 
-        super.render(canvas, x, y);
+        super.render(document, writer, x, y);
 
     }
 

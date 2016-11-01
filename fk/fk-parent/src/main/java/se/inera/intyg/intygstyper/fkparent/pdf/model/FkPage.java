@@ -18,12 +18,39 @@
  */
 package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
+
 /**
  * Created by marced on 30/09/16.
  *
- * Simply a container for child components without implementation, but a concrete class is
- * needed since PdfComponent is abstract.
+ * Simply a container for child components with an optional title text added to the document.
  */
 public class FkPage extends PdfComponent<FkPage> {
+    private String pageTitle;
 
+    public FkPage() {
+    }
+
+    public FkPage(String pageTitle) {
+        this.pageTitle = pageTitle;
+    }
+
+    @Override
+    public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
+
+        document.newPage();
+
+        if (pageTitle != null) {
+            Paragraph header = new Paragraph(pageTitle, PdfConstants.FONT_PAGETITLE);
+            header.setIndentationLeft(2f);
+            document.add(header);
+        }
+
+        super.render(document, writer, x, y);
+    }
 }

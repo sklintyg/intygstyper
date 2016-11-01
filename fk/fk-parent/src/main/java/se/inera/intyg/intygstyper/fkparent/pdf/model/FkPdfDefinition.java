@@ -20,40 +20,51 @@ package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 
 /**
- * Defines the pages and Page events that constitutes a filled out (FK SIT type) FDF ready to be rendered.
+ * Defines the pages and Page events that constitutes a filled out (FK SIT type) PDF ready to be rendered.
  *
  * Created by marced on 30/09/16.
  */
-public class FkPdfDefinition {
+public class FkPdfDefinition extends PdfComponent<FkPdfDefinition> {
 
-    private List<FkPage> pages = new ArrayList<>();
+    // Default page margins (left,right,top,bottom)
+    private static final float[] DEFAULT_PAGE_MARGINS = new float[]{
+            Utilities.millimetersToPoints(15f),
+            Utilities.millimetersToPoints(15f),
+            Utilities.millimetersToPoints(40f),
+            Utilities.millimetersToPoints(10f)
+    };
+
     private List<PdfPageEventHelper> pageEvents = new ArrayList<>();
-
-    public List<FkPage> getPages() {
-        return pages;
-    }
-
-    public void setPages(List<FkPage> pages) {
-        this.pages = pages;
-    }
-
-    public void addPage(FkPage page) {
-        this.pages.add(page);
-    }
 
     public List<PdfPageEventHelper> getPageEvents() {
         return pageEvents;
     }
 
-    public void setPageEvents(List<PdfPageEventHelper> pageEvents) {
-        this.pageEvents = pageEvents;
-    }
 
     public void addPageEvent(PdfPageEventHelper pageEvent) {
         this.pageEvents.add(pageEvent);
+    }
+
+    public float[] getPageMargins() {
+        return DEFAULT_PAGE_MARGINS;
+    }
+
+
+    public List<FkOverflowableValueField> collectOverflowingComponents() {
+
+        // Flatten structure and filter out only FkOverflowableValueField's that have overflowed values
+        final List<FkOverflowableValueField> overflowingList = this.flattened()
+                .filter(FkOverflowableValueField.class::isInstance)
+                .map(pdfComponent -> (FkOverflowableValueField) pdfComponent)
+                .filter(candidate -> candidate.getOverFlowingText() != null)
+                .collect(Collectors.toList());
+
+        return overflowingList;
     }
 }

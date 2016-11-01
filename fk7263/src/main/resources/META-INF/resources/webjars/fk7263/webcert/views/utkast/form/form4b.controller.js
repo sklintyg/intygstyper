@@ -19,8 +19,8 @@
 
 angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
-        'common.DateUtilsService',
-        function($scope, $log, viewState, utils, dateUtils) {
+        'common.DateUtilsService', 'common.ObjectHelper',
+        function($scope, $log, viewState, utils, dateUtils, ObjectHelper) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -81,6 +81,22 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                 }
             });
 
+            $scope.$watch('model.annanReferens', function(newVal, oldVal) {
+                // Ensure that this is only run when avstangningSmittskydd is false, otherwise attic values get overwritten.
+                if(newVal !== oldVal && ObjectHelper.isFalsy(viewState.avstangningSmittskyddValue)){
+                    // Load annanReferensBeskrivning to/from attic when setting or removing a value for annanReferens
+                    var modelSubProperty = model.properties.form4b.annanReferensBeskrivning;
+                    if (viewState.common.doneLoading && ObjectHelper.isEmpty(model.annanReferens)) {
+                        // Upload to attic when deselecting annanReferens
+                        model.updateToAttic(modelSubProperty);
+                        model.clear(modelSubProperty);
+                    } else if(model.isInAttic(modelSubProperty)) {
+                        // restore from attic when selecting annanReferens if there is a stored attic value for annanReferensBeskrivning
+                        model.restoreFromAttic(modelSubProperty);
+                    }
+                }
+            }, true);
+
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
                 if(newVal === oldVal){
                     return;
@@ -113,6 +129,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             }
 
             function transferModelToForm() {
+                
                 $scope.dates.undersokningAvPatienten = $scope.model.undersokningAvPatienten;
                 $scope.dates.telefonkontaktMedPatienten = $scope.model.telefonkontaktMedPatienten;
                 $scope.dates.journaluppgifter = $scope.model.journaluppgifter;
