@@ -56,7 +56,8 @@ public class InternalValidatorUtil {
         UNDERSOKNING,
         JOURNALUPPGIFTER,
         ANHORIGSBESKRIVNING,
-        ANNAT;
+        ANNAT,
+        TELEFONKONTAKT;
 
         public String getFieldName() {
             switch (this) {
@@ -68,6 +69,8 @@ public class InternalValidatorUtil {
                     return GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
                 case ANNAT:
                     return GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
+                case TELEFONKONTAKT:
+                    return GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1;
                 default:
                     return "annat";
             }
