@@ -64,11 +64,20 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                 {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4, noH5:false}},
                 {type: 'headline', className: 'col-md-6 no-space-left', templateOptions: {label: 'DFR_1.1', hideFromSigned:true}},
                 {type: 'headline', className: 'col-md-6', templateOptions: {label: 'DFR_1.2', hideFromSigned:true}},
-                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
-                {key: 'telefonkontaktMedPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.TELEFONKONTAKT'}},
-                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
-                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT'}},
                 {
+                    wrapper: 'validationGroup',
+                    templateOptions: { type:'check-group', validationGroup: 'baserasPa' },
+                    fieldGroup: [
+                        {key: 'undersokningAvPatienten', type: 'date', className: 'small-gap',
+                            templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING', hideWhenEmpty: true}},
+                        {key: 'telefonkontaktMedPatienten', type: 'date', className: 'small-gap',
+                            templateOptions: {label: 'KV_FKMU_0001.TELEFONKONTAKT', hideWhenEmpty: true}},
+                        {key: 'journaluppgifter', type: 'date', className: 'small-gap',
+                            templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER', hideWhenEmpty: true}},
+                        {key: 'annatGrundForMU', type: 'date',
+                            templateOptions: {label: 'KV_FKMU_0001.ANNAT', hideWhenEmpty: true}}
+                    ]
+                },{
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text',
                     className: 'fold-animation',

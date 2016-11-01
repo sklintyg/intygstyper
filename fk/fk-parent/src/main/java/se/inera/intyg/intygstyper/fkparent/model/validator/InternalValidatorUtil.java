@@ -53,7 +53,8 @@ public class InternalValidatorUtil {
         UNDERSOKNING,
         JOURNALUPPGIFTER,
         ANHORIGSBESKRIVNING,
-        ANNAT;
+        ANNAT,
+        TELEFONKONTAKT;
 
         public String getFieldName() {
             switch (this) {
@@ -65,6 +66,8 @@ public class InternalValidatorUtil {
                     return GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
                 case ANNAT:
                     return GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
+                case TELEFONKONTAKT:
+                    return GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1;
                 default:
                     return "annat";
             }
@@ -136,9 +139,9 @@ public class InternalValidatorUtil {
         return valid;
     }
 
-    public void validateGrundForMuDate(String intygsTyp, InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+    public void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
         String validationType = "grundformu." + type.getFieldName();
-        validateDate(intygsTyp, date, validationMessages, validationType);
+        validateDate(date, validationMessages, validationType);
     }
 
     public boolean isBlankButNotNull(String stringFromField) {
