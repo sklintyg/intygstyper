@@ -87,9 +87,9 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
 
         validateBlanksForOptionalFields(utlatande, validationMessages);
         // vårdenhet
-        validatorUtil.validateVardenhet(utlatande, validationMessages);
+        validatorUtil.validateVardenhet(utlatande.getGrundData(), validationMessages);
 
-        return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
+        return new ValidateDraftResponse(validatorUtil.getValidationStatus(validationMessages), validationMessages);
     }
 
     private void validateGrundForMU(LisjpUtlatande utlatande, List<ValidationMessage> validationMessages) {
@@ -360,23 +360,23 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
     }
 
     private void validateBlanksForOptionalFields(LisjpUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
+        if (validatorUtil.isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
             validatorUtil.addValidationError(validationMessages, "anledningtillkontakt.blanksteg", ValidationMessageType.EMPTY,
                     "lisjp.validation.blanksteg.otillatet");
         }
-        if (isBlankButNotNull(utlatande.getAnnatGrundForMUBeskrivning())) {
+        if (validatorUtil.isBlankButNotNull(utlatande.getAnnatGrundForMUBeskrivning())) {
             validatorUtil.addValidationError(validationMessages, "grundformu.annat.blanksteg", ValidationMessageType.EMPTY,
                     "lisjp.validation.blanksteg.otillatet");
         }
-        if (isBlankButNotNull(utlatande.getPagaendeBehandling())) {
+        if (validatorUtil.isBlankButNotNull(utlatande.getPagaendeBehandling())) {
             validatorUtil.addValidationError(validationMessages, "pagaendebehandling.blanksteg", ValidationMessageType.EMPTY,
                     "lisjp.validation.blanksteg.otillatet");
         }
-        if (isBlankButNotNull(utlatande.getPlaneradBehandling())) {
+        if (validatorUtil.isBlankButNotNull(utlatande.getPlaneradBehandling())) {
             validatorUtil.addValidationError(validationMessages, "planeradbehandling.blanksteg", ValidationMessageType.EMPTY,
                     "lisjp.validation.blanksteg.otillatet");
         }
-        if (isBlankButNotNull(utlatande.getOvrigt())) {
+        if (validatorUtil.isBlankButNotNull(utlatande.getOvrigt())) {
             validatorUtil.addValidationError(validationMessages, "ovrigt.blanksteg", ValidationMessageType.EMPTY,
                     "lisjp.validation.blanksteg.otillatet");
         }
