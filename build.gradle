@@ -1,6 +1,7 @@
 ext {
     commonVersion = System.properties['commonVersion'] ?: '0-SNAPSHOT'
 
+    intygClinicalprocessSchematronVersion = "1.0.4"
     intygCertificateSchemasVersion = "1.0.4"
     intygTransportstyrelsenSchemasVersion = "1.0.4"
     rivtaInsuranceprocessSchemasVersion = "3.1.0.4"
@@ -11,7 +12,6 @@ ext {
     fkEIntygAdapterVersion = "2.2-RC2-INTYG"
     itextVersion = "5.3.2"
     phSchematronVersion = "3.0.1"
-    schematronVersion = "1.0.4"
     servletApiVersion = "2.5"
     springVersion = "4.2.2.RELEASE"
 

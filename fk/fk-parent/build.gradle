@@ -1,7 +1,7 @@
 description = 'Parent for fk-intyg'
 
 dependencies {
-    compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schematron:${schematronVersion}"
+    compile "se.inera.intyg.clinicalprocess.healthcond.certificate:intyg-clinicalprocess-healthcond-certificate-schematron:${intygClinicalprocessSchematronVersion}"
 
     compile "com.google.auto.value:auto-value:${autovalueVersion}"
     compile "commons-io:commons-io:${commonsIoVersion}"
