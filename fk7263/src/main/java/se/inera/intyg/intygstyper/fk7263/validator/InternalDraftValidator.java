@@ -165,8 +165,7 @@ public class InternalDraftValidator {
         final int nedsattmed25Index = 3;
 
         if (validatorUtilCommon.allNulls(intervals)) {
-            validatorUtilCommon.addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY,
-                    "fk7263.validation.nedsattning.choose-at-least-one");
+            validatorUtilCommon.addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY);
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
