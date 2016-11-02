@@ -29,7 +29,7 @@ import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.intygstyper.luae_fs.utils.*;
 import se.inera.intyg.intygstyper.luae_fs.validator.InternalDraftValidatorImpl;
@@ -67,7 +67,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     private static WebcertModuleService mockModuleService;
 
     @InjectMocks
-    private InternalValidatorUtil validatorUtil;
+    private ValidatorUtilFK validatorUtil;
 
     @InjectMocks
     private static InternalDraftValidatorImpl internalValidator;
@@ -100,7 +100,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        // use reflection to set InternalValidatorUtil in InternalDraftValidator
+        // use reflection to set ValidatorUtilFK in InternalDraftValidator
         Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtil");
         field.setAccessible(true);
         field.set(internalValidator, validatorUtil);

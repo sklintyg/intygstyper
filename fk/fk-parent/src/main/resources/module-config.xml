@@ -40,7 +40,7 @@
     </beans>
 
     <beans>
-        <bean class="se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil"></bean>
+        <bean class="se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK"></bean>
     </beans>
     
     <beans profile="dev,testability-api">

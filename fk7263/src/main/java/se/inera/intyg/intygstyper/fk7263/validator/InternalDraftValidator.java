@@ -32,8 +32,10 @@ import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.StringValidator;
+import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
+import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 
 public class InternalDraftValidator {
 
@@ -41,6 +43,12 @@ public class InternalDraftValidator {
 
     @Autowired(required = false)
     private WebcertModuleService moduleService;
+
+    @Autowired
+    ValidatorUtil validatorUtilCommon;
+
+    @Autowired
+    ValidatorUtilFK validatorUtilFK;
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
@@ -65,17 +73,17 @@ public class InternalDraftValidator {
         // fält 13
         validateKommentar(utlatande, validationMessages);
         // vårdenhet
-        validateVardenhet(utlatande, validationMessages);
+        validatorUtilCommon.validateVardenhet(utlatande.getGrundData(), validationMessages);
 
-        return new ValidateDraftResponse(getValidationStatus(validationMessages), validationMessages);
+        return new ValidateDraftResponse(validatorUtilCommon.getValidationStatus(validationMessages), validationMessages);
     }
 
     private void validateVardkontakter(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getTelefonkontaktMedPatienten() != null && !utlatande.getTelefonkontaktMedPatienten().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", ValidationMessageType.INVALID_FORMAT);
+            validatorUtilCommon.addValidationError(validationMessages, "intygbaseratpa.telefonkontakt", ValidationMessageType.INVALID_FORMAT);
         }
         if (utlatande.getUndersokningAvPatienten() != null && !utlatande.getUndersokningAvPatienten().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.undersokning", ValidationMessageType.INVALID_FORMAT);
+            validatorUtilCommon.addValidationError(validationMessages, "intygbaseratpa.undersokning", ValidationMessageType.INVALID_FORMAT);
         }
     }
 
@@ -87,43 +95,18 @@ public class InternalDraftValidator {
 
             if (utlatande.getUndersokningAvPatienten() == null && utlatande.getTelefonkontaktMedPatienten() == null
                     && utlatande.getJournaluppgifter() == null && utlatande.getAnnanReferens() == null) {
-                addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY);
+                validatorUtilCommon.addValidationError(validationMessages, "intygbaseratpa", ValidationMessageType.EMPTY);
             }
         }
 
         if (utlatande.getAnnanReferens() != null && !utlatande.getAnnanReferens().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.referenser", ValidationMessageType.INVALID_FORMAT);
+            validatorUtilCommon.addValidationError(validationMessages, "intygbaseratpa.referenser", ValidationMessageType.INVALID_FORMAT);
         }
         if (utlatande.getAnnanReferens() != null && StringUtils.isBlank(utlatande.getAnnanReferensBeskrivning())) {
-            addValidationError(validationMessages, "intygbaseratpa.annat", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "intygbaseratpa.annat", ValidationMessageType.EMPTY);
         }
         if (utlatande.getJournaluppgifter() != null && !utlatande.getJournaluppgifter().isValidDate()) {
-            addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", ValidationMessageType.INVALID_FORMAT);
-        }
-    }
-
-    private void validateVardenhet(Utlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostadress())) {
-            addValidationError(validationMessages, "vardenhet.adress", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY);
-        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardenhet.postnummer", ValidationMessageType.EMPTY,
-                    "common.validation.postnummer.incorrect-format");
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getPostort())) {
-            addValidationError(validationMessages, "vardenhet.postort", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getTelefonnummer())) {
-            addValidationError(validationMessages, "vardenhet.telefonnummer", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(utlatande.getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod())) {
-            LOG.warn("Vardenhet {} has null or blank arbetsplatskod.", utlatande.getGrundData().getSkapadAv().getVardenhet());
+            validatorUtilCommon.addValidationError(validationMessages, "intygbaseratpa.journaluppgifter", ValidationMessageType.INVALID_FORMAT);
         }
     }
 
@@ -133,7 +116,7 @@ public class InternalDraftValidator {
         // field 13 should contain data.
         if (utlatande.getPrognosBedomning() == PrognosBedomning.arbetsformagaPrognosGarInteAttBedoma
                 && StringUtils.isBlank(utlatande.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
-            addValidationError(validationMessages, "prognos.arbetsformagaPrognosGarInteAttBedomaBeskrivning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "prognos.arbetsformagaPrognosGarInteAttBedomaBeskrivning", ValidationMessageType.EMPTY);
         }
     }
 
@@ -144,7 +127,7 @@ public class InternalDraftValidator {
 
         // Fält 11 - If set only one should be set
         if (inForandratRessatt && inEjForandratRessatt) {
-            addValidationError(validationMessages, "forandrat-ressatt", ValidationMessageType.OTHER,
+            validatorUtilCommon.addValidationError(validationMessages, "forandrat-ressatt", ValidationMessageType.OTHER,
                     "fk7263.validation.forandrat-ressatt.choose-one");
         }
     }
@@ -153,15 +136,15 @@ public class InternalDraftValidator {
         // Fält 8a - arbetsformoga - sysselsattning - applies of not smittskydd is set
         if (!utlatande.isAvstangningSmittskydd()) {
             if (!utlatande.isNuvarandeArbete() && !utlatande.isArbetsloshet() && !utlatande.isForaldrarledighet()) {
-                addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY);
+                validatorUtilCommon.addValidationError(validationMessages, "sysselsattning", ValidationMessageType.EMPTY);
             } else if (utlatande.isNuvarandeArbete() && StringUtils.isBlank(utlatande.getNuvarandeArbetsuppgifter())) {
-                addValidationError(validationMessages, "sysselsattning.nuvarandearbetsuppgifter", ValidationMessageType.EMPTY);
+                validatorUtilCommon.addValidationError(validationMessages, "sysselsattning.nuvarandearbetsuppgifter", ValidationMessageType.EMPTY);
             }
         }
 
         // validate 8b - regardless of smittskydd
         if (utlatande.getTjanstgoringstid() != null && !STRING_VALIDATOR.validateStringIsNumber(utlatande.getTjanstgoringstid())) {
-            addValidationError(validationMessages, "nedsattning", ValidationMessageType.OTHER,
+            validatorUtilCommon.addValidationError(validationMessages, "nedsattning", ValidationMessageType.OTHER,
                     "fk7263.validation.nedsattning.tjanstgoringstid");
         }
 
@@ -181,30 +164,30 @@ public class InternalDraftValidator {
         final int nedsattmed50Index = 2;
         final int nedsattmed25Index = 3;
 
-        if (allNulls(intervals)) {
-            addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY,
+        if (validatorUtilCommon.allNulls(intervals)) {
+            validatorUtilCommon.addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY,
                     "fk7263.validation.nedsattning.choose-at-least-one");
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
         // use independent conditions to check this to be able to give specific validation errors for each case
         if (intervals[nedsattmed100Index] != null && !intervals[nedsattmed100Index].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed100", ValidationMessageType.INVALID_FORMAT,
+            validatorUtilCommon.addValidationError(validationMessages, "nedsattning.nedsattMed100", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed100.incorrect-format");
             success = false;
         }
         if (intervals[nedsattmed75Index] != null && !intervals[nedsattmed75Index].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed75", ValidationMessageType.INVALID_FORMAT,
+            validatorUtilCommon.addValidationError(validationMessages, "nedsattning.nedsattMed75", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed75.incorrect-format");
             success = false;
         }
         if (intervals[nedsattmed50Index] != null && !intervals[nedsattmed50Index].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed50", ValidationMessageType.INVALID_FORMAT,
+            validatorUtilCommon.addValidationError(validationMessages, "nedsattning.nedsattMed50", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed50.incorrect-format");
             success = false;
         }
         if (intervals[nedsattmed25Index] != null && !intervals[nedsattmed25Index].isValid()) {
-            addValidationError(validationMessages, "nedsattning.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
+            validatorUtilCommon.addValidationError(validationMessages, "nedsattning.nedsattMed25", ValidationMessageType.INVALID_FORMAT,
                     "fk7263.validation.nedsattning.nedsattmed25.incorrect-format");
             success = false;
         }
@@ -215,7 +198,7 @@ public class InternalDraftValidator {
         // Fält 5 Aktivitetsbegränsning relaterat till diagnos och funktionsnedsättning
         String aktivitetsbegransning = utlatande.getAktivitetsbegransning();
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(aktivitetsbegransning)) {
-            addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY);
         }
     }
 
@@ -223,7 +206,7 @@ public class InternalDraftValidator {
         // Fält 4 - vänster Check that we got a funktionsnedsattning element
         String funktionsnedsattning = utlatande.getFunktionsnedsattning();
         if (!utlatande.isAvstangningSmittskydd() && StringUtils.isBlank(funktionsnedsattning)) {
-            addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY);
         }
     }
 
@@ -244,7 +227,7 @@ public class InternalDraftValidator {
             }
             validateDiagnosKod(utlatande.getDiagnosKod(), kodsystem, "diagnos.diagnosKod", "fk7263.validation.diagnos.invalid", validationMessages);
         } else {
-            addValidationError(validationMessages, "diagnos.diagnosKod", ValidationMessageType.EMPTY,
+            validatorUtilCommon.addValidationError(validationMessages, "diagnos.diagnosKod", ValidationMessageType.EMPTY,
                     "fk7263.validation.diagnos.missing");
         }
 
@@ -278,52 +261,17 @@ public class InternalDraftValidator {
         }
 
         if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
-            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
+            validatorUtilCommon.addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
         }
     }
 
     private void validateOvrigaRekommendationer(Utlatande utlatande, List<ValidationMessage> validationMessages) {
         // Fält 6a - If Övrigt is checked, something must be entered.
         if (utlatande.isRekommendationOvrigtCheck() && StringUtils.isBlank(utlatande.getRekommendationOvrigt())) {
-            addValidationError(validationMessages, "rekommendationer.rekommendationovrigt", ValidationMessageType.EMPTY,
+            validatorUtilCommon.addValidationError(validationMessages, "rekommendationer.rekommendationovrigt", ValidationMessageType.EMPTY,
                     "fk7263.validation.rekommendationer.ovriga");
         }
     }
-
-    /**
-     * Check if there are validation errors.
-     *
-     * @param validationMessages
-     *            list of validation messages
-     * @return {@link se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus#VALID} if there are no
-     *         errors, and
-     *         {@link se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus#INVALID} otherwise
-     */
-    private ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
-        return (validationMessages.isEmpty()) ? se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus.VALID
-                : se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus.INVALID;
-    }
-
-    /**
-     * Create a ValidationMessage and add it to the list of messages.
-     *
-     * @param validationMessages
-     *            list collection messages
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
-     */
-    private void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
-        validationMessages.add(new ValidationMessage(field, type, msg));
-        LOG.debug(field + " " + msg);
-    }
-
-    private void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type) {
-        validationMessages.add(new ValidationMessage(field, type));
-        LOG.debug(field + " " + type.toString());
-    }
-
 
     /**
      *
@@ -336,8 +284,8 @@ public class InternalDraftValidator {
      * @return booleans
      */
     protected boolean validateIntervals(List<ValidationMessage> validationMessages, String fieldId, InternalLocalDateInterval... intervals) {
-        if (intervals == null || allNulls(intervals)) {
-            addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
+        if (intervals == null || validatorUtilCommon.allNulls(intervals)) {
+            validatorUtilCommon.addValidationError(validationMessages, fieldId, ValidationMessageType.EMPTY,
                     "fk7263.validation.nedsattning.choose-at-least-one");
             return false;
         }
@@ -347,25 +295,11 @@ public class InternalDraftValidator {
                 for (int j = i + 1; j < intervals.length; j++) {
                     // Overlap OR abuts(one intervals tom day == another's from day) is considered invalid
                     if (intervals[j] != null && intervals[i].overlaps(intervals[j])) {
-                        addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
+                        validatorUtilCommon.addValidationError(validationMessages, fieldId, ValidationMessageType.OTHER,
                                 "fk7263.validation.nedsattning.overlapping-date-interval");
                         return false;
                     }
                 }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * @param intervals
-     *            intervals
-     * @return boolean
-     */
-    private boolean allNulls(InternalLocalDateInterval[] intervals) {
-        for (InternalLocalDateInterval interval : intervals) {
-            if (interval != null) {
-                return false;
             }
         }
         return true;

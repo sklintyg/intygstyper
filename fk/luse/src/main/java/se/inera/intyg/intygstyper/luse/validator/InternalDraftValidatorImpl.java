@@ -29,20 +29,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Strings;
 
-import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
-
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUtlatande> {
 
@@ -53,7 +49,10 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     @Autowired
-    InternalValidatorUtil validatorUtil;
+    ValidatorUtil validatorUtilCommon;
+
+    @Autowired
+    ValidatorUtilFK validatorUtilFK;
 
     @Override
     public ValidateDraftResponse validateDraft(LuseUtlatande utlatande) {
@@ -68,7 +67,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         // Kategori 3 – Sjukdomsförlopp
         validateSjukdomsforlopp(utlatande, validationMessages);
         // Kategori 4 – Diagnos
-        validatorUtil.validateDiagnose(utlatande.getDiagnoser(), validationMessages);
+        validatorUtilFK.validateDiagnose(utlatande.getDiagnoser(), validationMessages);
         // Diagnosgrund
         validateDiagnosgrund(utlatande, validationMessages);
         // Kategori 5 – Funktionsnedsättning
@@ -82,63 +81,63 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         // Kategori 10 – Kontakt
         validateKontaktMedFk(utlatande, validationMessages);
         // vårdenhet
-        validatorUtil.validateVardenhet(utlatande.getGrundData(), validationMessages);
+        validatorUtilCommon.validateVardenhet(utlatande.getGrundData(), validationMessages);
 
         validateBlanksForOptionalFields(utlatande, validationMessages);
 
-        return new ValidateDraftResponse(validatorUtil.getValidationStatus(validationMessages), validationMessages);
+        return new ValidateDraftResponse(validatorUtilCommon.getValidationStatus(validationMessages), validationMessages);
     }
 
     private void validateGrundForMU(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         if (utlatande.getUndersokningAvPatienten() == null && utlatande.getJournaluppgifter() == null
                 && utlatande.getAnhorigsBeskrivningAvPatienten() == null && utlatande.getAnnatGrundForMU() == null) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.baserasPa", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.baserasPa", ValidationMessageType.EMPTY);
         }
 
         if (utlatande.getUndersokningAvPatienten() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.UNDERSOKNING);
+            validatorUtilFK.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.UNDERSOKNING);
         }
         if (utlatande.getJournaluppgifter() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, InternalValidatorUtil.GrundForMu.JOURNALUPPGIFTER);
+            validatorUtilFK.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, ValidatorUtilFK.GrundForMu.JOURNALUPPGIFTER);
         }
         if (utlatande.getAnhorigsBeskrivningAvPatienten() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, InternalValidatorUtil.GrundForMu.ANHORIGSBESKRIVNING);
+            validatorUtilFK.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.ANHORIGSBESKRIVNING);
         }
         if (utlatande.getAnnatGrundForMU() != null) {
-            validatorUtil.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, InternalValidatorUtil.GrundForMu.ANNAT);
+            validatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
         }
 
         // INTYG-2949
         if (utlatande.getUndersokningAvPatienten() == null && (utlatande.getJournaluppgifter() != null
                 || utlatande.getAnhorigsBeskrivningAvPatienten() != null || utlatande.getAnnatGrundForMU() != null)
                 && StringUtils.isBlank(utlatande.getMotiveringTillInteBaseratPaUndersokning())) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.motiveringTillInteBaseratPaUndersokning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.motiveringTillInteBaseratPaUndersokning", ValidationMessageType.EMPTY);
         }
 
         // R2
         if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.annatGrundForMUBeskrivning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.annatGrundForMUBeskrivning", ValidationMessageType.EMPTY);
         }
         // R3
         if (utlatande.getAnnatGrundForMU() == null && !StringUtils.isEmpty(utlatande.getAnnatGrundForMUBeskrivning())) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INCORRECT_COMBINATION,
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.annat", ValidationMessageType.INCORRECT_COMBINATION,
                     "luse.validation.grund-for-mu.incorrect_combination_annat_beskrivning");
         }
 
         if (utlatande.getKannedomOmPatient() == null) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.EMPTY);
         } else {
-            boolean dateIsValid = validatorUtil.validateDate(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
+            boolean dateIsValid = validatorUtilCommon.validateDate(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
             if (dateIsValid) {
                 if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
                         && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {
-                    validatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
+                    validatorUtilCommon.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
                             "luse.validation.grund-for-mu.kannedom.after", "KV_FKMU_0001.UNDERSOKNING.RBK");
                 }
                 if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()
                         && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getAnhorigsBeskrivningAvPatienten().asLocalDate())) {
-                    validatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
+                    validatorUtilCommon.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
                             "luse.validation.grund-for-mu.kannedom.after", "KV_FKMU_0001.ANHORIG.RBK");
                 }
             }
@@ -148,23 +147,23 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
 
     private void validateUnderlag(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getUnderlagFinns() == null) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.underlagFinns", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlagFinns", ValidationMessageType.EMPTY);
         } else if (utlatande.getUnderlagFinns() && utlatande.getUnderlag().isEmpty()) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.EMPTY);
         } else if (!utlatande.getUnderlagFinns() && !utlatande.getUnderlag().isEmpty()) {
             // R6
-            validatorUtil.addValidationError(validationMessages, "grundformu.underlagFinns", ValidationMessageType.OTHER,
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlagFinns", ValidationMessageType.OTHER,
                     "luse.validation.underlagfinns.incorrect_combination");
         }
 
         if (utlatande.getUnderlag().size() > MAX_UNDERLAG) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.OTHER, "luse.validation.underlag.too_many");
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.OTHER, "luse.validation.underlag.too_many");
         }
         for (int i = 0; i < utlatande.getUnderlag().size(); i++) {
             Underlag underlag = utlatande.getUnderlag().get(i);
             // Alla underlagstyper är godkända här utom Underlag från skolhälsovård
             if (underlag.getTyp() == null) {
-                validatorUtil.addValidationError(validationMessages, "grundformu.underlag." + i + ".typ", ValidationMessageType.EMPTY,
+                validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlag." + i + ".typ", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.missing");
             } else if (!underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.NEUROPSYKIATRISKT_UTLATANDE.getId())
                     && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UNDERLAG_FRAN_HABILITERINGEN.getId())
@@ -176,18 +175,18 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
                     && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_AV_ANNAN_SPECIALISTKLINIK.getId())
                     && !underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.UTREDNING_FRAN_VARDINRATTNING_UTOMLANDS.getId())
                     && !(underlag.getTyp().getId().equals(Underlag.UnderlagsTyp.OVRIGT.getId()))) {
-                validatorUtil.addValidationError(validationMessages, "grundformu.underlag." + i + ".typ", ValidationMessageType.INVALID_FORMAT,
+                validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlag." + i + ".typ", ValidationMessageType.INVALID_FORMAT,
                         "luse.validation.underlag.incorrect_format");
             }
             if (underlag.getDatum() == null) {
-                validatorUtil.addValidationError(validationMessages, "grundformu.underlag." + i + ".datum", ValidationMessageType.EMPTY,
+                validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlag." + i + ".datum", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.date.missing");
             } else if (!underlag.getDatum().isValidDate()) {
-                validatorUtil.addValidationError(validationMessages, "grundformu.underlag." + i + ".datum", ValidationMessageType.INVALID_FORMAT,
+                validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlag." + i + ".datum", ValidationMessageType.INVALID_FORMAT,
                         "luse.validation.underlag.date.incorrect_format");
             }
             if (StringUtils.isBlank(underlag.getHamtasFran())) {
-                validatorUtil.addValidationError(validationMessages, "grundformu.underlag." + i + ".hamtasFran", ValidationMessageType.EMPTY,
+                validatorUtilCommon.addValidationError(validationMessages, "grundformu.underlag." + i + ".hamtasFran", ValidationMessageType.EMPTY,
                         "luse.validation.underlag.hamtas-fran.missing");
             }
         }
@@ -195,19 +194,19 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
 
     private void validateSjukdomsforlopp(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getSjukdomsforlopp())) {
-            validatorUtil.addValidationError(validationMessages, "sjukdomsforlopp", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "sjukdomsforlopp", ValidationMessageType.EMPTY);
         }
     }
 
     private void validateAktivitetsbegransning(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getAktivitetsbegransning())) {
-            validatorUtil.addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "aktivitetsbegransning", ValidationMessageType.EMPTY);
         }
     }
 
     private void validateMedicinskaForutsattningarForArbete(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (StringUtils.isBlank(utlatande.getMedicinskaForutsattningarForArbete())) {
-            validatorUtil.addValidationError(validationMessages, "medicinskaforutsattningarforarbete", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "medicinskaforutsattningarforarbete", ValidationMessageType.EMPTY);
         }
     }
 
@@ -220,29 +219,29 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
                 && StringUtils.isBlank(utlatande.getFunktionsnedsattningKoncentration())
                 && StringUtils.isBlank(utlatande.getFunktionsnedsattningPsykisk())
                 && StringUtils.isBlank(utlatande.getFunktionsnedsattningSynHorselTal())) {
-            validatorUtil.addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "funktionsnedsattning", ValidationMessageType.EMPTY);
         }
     }
 
     private void validateDiagnosgrund(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
         if (StringUtils.isBlank(utlatande.getDiagnosgrund())) {
-            validatorUtil.addValidationError(validationMessages, "diagnos.diagnosgrund", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "diagnos.diagnosgrund", ValidationMessageType.EMPTY);
         }
 
         if (utlatande.getNyBedomningDiagnosgrund() == null) {
-            validatorUtil.addValidationError(validationMessages, "diagnos.nyBedomningDiagnosgrund", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "diagnos.nyBedomningDiagnosgrund", ValidationMessageType.EMPTY);
         }
 
         // R13
         if (utlatande.getNyBedomningDiagnosgrund() != null && utlatande.getNyBedomningDiagnosgrund()
                 && StringUtils.isBlank(utlatande.getDiagnosForNyBedomning())) {
-            validatorUtil.addValidationError(validationMessages, "diagnos.diagnosForNyBedomning", ValidationMessageType.EMPTY);
+            validatorUtilCommon.addValidationError(validationMessages, "diagnos.diagnosForNyBedomning", ValidationMessageType.EMPTY);
         }
         // R14 Inverted test of R13
         if ((utlatande.getNyBedomningDiagnosgrund() == null || !utlatande.getNyBedomningDiagnosgrund())
                 && !Strings.isNullOrEmpty(utlatande.getDiagnosForNyBedomning())) {
-            validatorUtil.addValidationError(validationMessages, "diagnos.nyBedomningDiagnosgrund", ValidationMessageType.INCORRECT_COMBINATION,
+            validatorUtilCommon.addValidationError(validationMessages, "diagnos.nyBedomningDiagnosgrund", ValidationMessageType.INCORRECT_COMBINATION,
                     "luse.validation.diagnosfornybedomning.incorrect_combination");
         }
     }
@@ -250,35 +249,35 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
     private void validateKontaktMedFk(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
         // R11
         if ((utlatande.getKontaktMedFk() == null || !utlatande.getKontaktMedFk()) && !StringUtils.isBlank(utlatande.getAnledningTillKontakt())) {
-            validatorUtil.addValidationError(validationMessages, "Kontakt", ValidationMessageType.INCORRECT_COMBINATION,
+            validatorUtilCommon.addValidationError(validationMessages, "Kontakt", ValidationMessageType.INCORRECT_COMBINATION,
                     "luse.validation.kontakt.incorrect_combination");
         }
     }
 
     private void validateBlanksForOptionalFields(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        if (validatorUtil.isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
-            validatorUtil.addValidationError(validationMessages, "anledningtillkontakt.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getAnledningTillKontakt())) {
+            validatorUtilCommon.addValidationError(validationMessages, "anledningtillkontakt.blanksteg", ValidationMessageType.BLANK);
         }
-        if (validatorUtil.isBlankButNotNull(utlatande.getAnnatGrundForMUBeskrivning())) {
-            validatorUtil.addValidationError(validationMessages, "grundformu.annat.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getAnnatGrundForMUBeskrivning())) {
+            validatorUtilCommon.addValidationError(validationMessages, "grundformu.annat.blanksteg", ValidationMessageType.BLANK);
         }
-        if (validatorUtil.isBlankButNotNull(utlatande.getAvslutadBehandling())) {
-            validatorUtil.addValidationError(validationMessages, "avslutadBehandling.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getAvslutadBehandling())) {
+            validatorUtilCommon.addValidationError(validationMessages, "avslutadBehandling.blanksteg", ValidationMessageType.BLANK);
         }
-        if (validatorUtil.isBlankButNotNull(utlatande.getFormagaTrotsBegransning())) {
-            validatorUtil.addValidationError(validationMessages, "formagatrotsbegransning.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getFormagaTrotsBegransning())) {
+            validatorUtilCommon.addValidationError(validationMessages, "formagatrotsbegransning.blanksteg", ValidationMessageType.BLANK);
         }
-        if (validatorUtil.isBlankButNotNull(utlatande.getPagaendeBehandling())) {
-            validatorUtil.addValidationError(validationMessages, "pagaendebehandling.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getPagaendeBehandling())) {
+            validatorUtilCommon.addValidationError(validationMessages, "pagaendebehandling.blanksteg", ValidationMessageType.BLANK);
         }
-        if (validatorUtil.isBlankButNotNull(utlatande.getPlaneradBehandling())) {
-            validatorUtil.addValidationError(validationMessages, "planeradbehandling.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getPlaneradBehandling())) {
+            validatorUtilCommon.addValidationError(validationMessages, "planeradbehandling.blanksteg", ValidationMessageType.BLANK);
         }
-        if (validatorUtil.isBlankButNotNull(utlatande.getSubstansintag())) {
-            validatorUtil.addValidationError(validationMessages, "substansintag.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getSubstansintag())) {
+            validatorUtilCommon.addValidationError(validationMessages, "substansintag.blanksteg", ValidationMessageType.BLANK);
         }
-        if (validatorUtil.isBlankButNotNull(utlatande.getOvrigt())) {
-            validatorUtil.addValidationError(validationMessages, "ovrigt.blanksteg", ValidationMessageType.BLANK);
+        if (validatorUtilCommon.isBlankButNotNull(utlatande.getOvrigt())) {
+            validatorUtilCommon.addValidationError(validationMessages, "ovrigt.blanksteg", ValidationMessageType.BLANK);
         }
     }
 

@@ -26,13 +26,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.common.support.validate.StringValidator;
+import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
@@ -41,12 +39,15 @@ import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.
 /**
  * Created by BESA on 2016-02-23.
  */
-public class InternalValidatorUtil {
+public class ValidatorUtilFK {
 
     @Autowired(required = false)
     private WebcertModuleService moduleService;
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorUtil.class);
+    @Autowired
+    ValidatorUtil commonValidatorUtil;
+
+    private static final Logger LOG = LoggerFactory.getLogger(ValidatorUtilFK.class);
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
@@ -80,7 +81,7 @@ public class InternalValidatorUtil {
     public void validateDiagnose(List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
         if (diagnoser == null || diagnoser.isEmpty()) {
-            addValidationError(validationMessages, "diagnos.diagnoser.0.diagnoskod", ValidationMessageType.EMPTY,
+            commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser.0.diagnoskod", ValidationMessageType.EMPTY,
                     "common.validation.diagnos.missing");
         }
 
@@ -91,16 +92,16 @@ public class InternalValidatorUtil {
                R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
-                addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.EMPTY,
+                commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.EMPTY,
                         "common.validation.diagnos" + i + ".missing");
             } else {
                 String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
                 if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
                         && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
+                    commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
                             "common.validation.diagnos" + i + ".psykisk.length-4");
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
+                    commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
                             "common.validation.diagnos" + i + ".length-3");
                 } else {
                     validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos.diagnoser",
@@ -108,7 +109,7 @@ public class InternalValidatorUtil {
                 }
             }
             if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
-                addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnosbeskrivning", ValidationMessageType.EMPTY,
+                commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnosbeskrivning", ValidationMessageType.EMPTY,
                         "common.validation.diagnos" + i + ".description.missing");
             }
         }
@@ -122,101 +123,13 @@ public class InternalValidatorUtil {
         }
 
         if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
-            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
+            commonValidatorUtil.addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
         }
 
-    }
-
-    public boolean validateDate(InternalDate date, List<ValidationMessage> validationMessages, String field) {
-        boolean valid = true;
-        if (!date.isValidDate()) {
-            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT);
-            return false;
-        }
-
-        if (!date.isReasonable()) {
-            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT,
-                    "common.validation.date_out_of_range");
-            valid = false;
-        }
-        return valid;
-    }
-
-    public void validateVardenhet(GrundData grundData, List<ValidationMessage> validationMessages) {
-        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getPostadress())) {
-            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postadress", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.EMPTY);
-        } else if (!STRING_VALIDATOR.validateStringAsPostalCode(grundData.getSkapadAv().getVardenhet().getPostnummer())) {
-            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postnummer", ValidationMessageType.INVALID_FORMAT,
-                    "common.validation.postnummer.incorrect-format");
-        }
-
-        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getPostort())) {
-            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.postort", ValidationMessageType.EMPTY);
-        }
-
-        if (StringUtils.isBlank(grundData.getSkapadAv().getVardenhet().getTelefonnummer())) {
-            addValidationError(validationMessages, "vardenhet.grunddata.skapadAv.vardenhet.telefonnummer", ValidationMessageType.EMPTY);
-        }
     }
 
     public void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
         String validationType = "grundformu." + type.getFieldName();
-        validateDate(date, validationMessages, validationType);
+        commonValidatorUtil.validateDate(date, validationMessages, validationType);
     }
-
-    public boolean isBlankButNotNull(String stringFromField) {
-        return (!StringUtils.isEmpty(stringFromField)) && StringUtils.isBlank(stringFromField);
-    }
-
-    /**
-     * Check if there are validation errors.
-     *
-     */
-    public ValidationStatus getValidationStatus(List<ValidationMessage> validationMessages) {
-        return (validationMessages.isEmpty()) ? ValidationStatus.VALID : ValidationStatus.INVALID;
-    }
-
-    public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg, String dynamicLabel) {
-        validationMessages.add(new ValidationMessage(field, type, msg, dynamicLabel));
-        LOG.debug(field + " " + msg);
-    }
-
-    /**
-     * Create a ValidationMessage and add it to the list of messages.
-     *
-     * @param validationMessages
-     *            list collection messages
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
-     */
-    public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
-        validationMessages.add(new ValidationMessage(field, type, msg));
-        LOG.debug(field + " " + msg);
-    }
-
-    public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type) {
-        validationMessages.add(new ValidationMessage(field, type));
-        LOG.debug(field + " " + type.toString());
-    }
-
-    /**
-     * @param intervals
-     *            intervals
-     * @return boolean
-     */
-    public boolean allNulls(InternalLocalDateInterval[] intervals) {
-        for (InternalLocalDateInterval interval : intervals) {
-            if (interval != null) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

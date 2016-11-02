@@ -23,7 +23,7 @@ import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 
 /**
@@ -45,7 +45,7 @@ public class InternalDraftValidatorTest {
     InternalDraftValidatorImpl validator;
 
     @InjectMocks
-    InternalValidatorUtil validatorUtil;
+    ValidatorUtilFK validatorUtil;
 
     List<ValidationMessage> validationMessages;
 
@@ -65,7 +65,7 @@ public class InternalDraftValidatorTest {
 
         when(moduleService.validateDiagnosisCode(anyString(), anyString())).thenReturn(true);
 
-        // use reflection to set InternalValidatorUtil in InternalDraftValidator
+        // use reflection to set ValidatorUtilFK in InternalDraftValidator
         Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtil");
         field.setAccessible(true);
         field.set(validator, validatorUtil);
