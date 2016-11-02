@@ -35,7 +35,6 @@ import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 
 public class InternalDraftValidator {
 
@@ -45,10 +44,7 @@ public class InternalDraftValidator {
     private WebcertModuleService moduleService;
 
     @Autowired
-    ValidatorUtil validatorUtilCommon;
-
-    @Autowired
-    ValidatorUtilFK validatorUtilFK;
+    private ValidatorUtil validatorUtilCommon;
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 

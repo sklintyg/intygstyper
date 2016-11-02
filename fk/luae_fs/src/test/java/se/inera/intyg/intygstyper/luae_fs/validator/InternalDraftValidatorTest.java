@@ -66,7 +66,7 @@ public class InternalDraftValidatorTest {
         when(moduleService.validateDiagnosisCode(anyString(), anyString())).thenReturn(true);
 
         // use reflection to set ValidatorUtilFK in InternalDraftValidator
-        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtil");
+        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtilFK");
         field.setAccessible(true);
         field.set(validator, validatorUtil);
     }

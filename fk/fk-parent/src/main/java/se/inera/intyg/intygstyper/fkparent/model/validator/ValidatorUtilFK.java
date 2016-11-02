@@ -44,9 +44,6 @@ public class ValidatorUtilFK {
     @Autowired(required = false)
     private WebcertModuleService moduleService;
 
-    @Autowired
-    ValidatorUtil commonValidatorUtil;
-
     private static final Logger LOG = LoggerFactory.getLogger(ValidatorUtilFK.class);
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
@@ -81,7 +78,7 @@ public class ValidatorUtilFK {
     public void validateDiagnose(List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
         if (diagnoser == null || diagnoser.isEmpty()) {
-            commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser.0.diagnoskod", ValidationMessageType.EMPTY,
+            ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser.0.diagnoskod", ValidationMessageType.EMPTY,
                     "common.validation.diagnos.missing");
         }
 
@@ -92,16 +89,16 @@ public class ValidatorUtilFK {
                R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
-                commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.EMPTY,
+                ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.EMPTY,
                         "common.validation.diagnos" + i + ".missing");
             } else {
                 String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
                 if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
                         && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
-                    commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
+                    ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
                             "common.validation.diagnos" + i + ".psykisk.length-4");
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
-                    commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
+                    ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
                             "common.validation.diagnos" + i + ".length-3");
                 } else {
                     validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos.diagnoser",
@@ -109,7 +106,7 @@ public class ValidatorUtilFK {
                 }
             }
             if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
-                commonValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnosbeskrivning", ValidationMessageType.EMPTY,
+                ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnosbeskrivning", ValidationMessageType.EMPTY,
                         "common.validation.diagnos" + i + ".description.missing");
             }
         }
@@ -123,13 +120,13 @@ public class ValidatorUtilFK {
         }
 
         if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
-            commonValidatorUtil.addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
+            ValidatorUtil.addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
         }
 
     }
 
-    public void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+    public static void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
         String validationType = "grundformu." + type.getFieldName();
-        commonValidatorUtil.validateDate(date, validationMessages, validationType);
+        ValidatorUtil.validateDate(date, validationMessages, validationType);
     }
 }

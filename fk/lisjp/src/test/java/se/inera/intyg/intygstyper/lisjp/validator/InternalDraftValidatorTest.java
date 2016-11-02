@@ -24,7 +24,7 @@ import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.lisjp.model.internal.*;
 import se.inera.intyg.intygstyper.lisjp.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
 import se.inera.intyg.intygstyper.lisjp.model.internal.Sjukskrivning.SjukskrivningsGrad;
@@ -38,7 +38,7 @@ public class InternalDraftValidatorTest {
     InternalDraftValidatorImpl validator;
 
     @InjectMocks
-    InternalValidatorUtil validatorUtil;
+    ValidatorUtilFK validatorUtil;
 
     LisjpUtlatande.Builder builderTemplate;
 
@@ -64,7 +64,7 @@ public class InternalDraftValidatorTest {
         when(moduleService.validateDiagnosisCode(anyString(), anyString())).thenReturn(true);
 
         // use reflection to set InternalValidatorUtil in InternalDraftValidator
-        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtil");
+        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtilFK");
         field.setAccessible(true);
         field.set(validator, validatorUtil);
     }
@@ -1014,7 +1014,7 @@ public class InternalDraftValidatorTest {
 
         assertEquals(1, res.getValidationErrors().size());
         assertEquals("vardenhet.grunddata.skapadAv.vardenhet.postnummer", res.getValidationErrors().get(0).getField());
-        assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
+        assertEquals(ValidationMessageType.INVALID_FORMAT, res.getValidationErrors().get(0).getType());
     }
 
     @Test

@@ -101,7 +101,7 @@ public class InternalValidatorResultMatchesSchematronValidatorTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         // use reflection to set ValidatorUtilFK in InternalDraftValidator
-        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtil");
+        Field field = InternalDraftValidatorImpl.class.getDeclaredField("validatorUtilFK");
         field.setAccessible(true);
         field.set(internalValidator, validatorUtil);
     }
