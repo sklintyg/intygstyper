@@ -26,8 +26,6 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.StringValidator;
@@ -93,7 +91,7 @@ public class InternalValidatorInstance {
             validateBedomning(utlatande.getBedomning());
             ValidatorUtil.validateVardenhet(utlatande.getGrundData(), validationMessages);
         }
-        
+
         ValidateDraftResponse response = new ValidateDraftResponse(ValidatorUtil.getValidationStatus(validationMessages), validationMessages);
         return response;
     }

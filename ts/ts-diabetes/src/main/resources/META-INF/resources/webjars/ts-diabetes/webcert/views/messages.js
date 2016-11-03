@@ -70,7 +70,7 @@ angular.module('ts-diabetes').constant('ts-diabetes.messages', {
         'ts-diabetes.validation.diabetes.behandling.missing': 'Minst en behandling måste väljas.',
         'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.missing' : 'År då behandling med insulin påbörjades måste anges.',
         'ts-diabetes.validation.diabetes.insulin.behandlingsperiod.incorrect-format' : 'År måste anges enligt formatet ÅÅÅÅ. Det går inte att ange årtal som är senare än innevarande år eller tidigare än år 1900.',
-        'ts-diabetes.validation.syn.out-of-bounds': 'Måste ligga i intervallet 0,0 till 2,0.',
+        'ts-diabetes.validation.syn.out-of-bounds': 'Måste ligga i intervallet 0,0 till 2,0.'
     },
     'en': {
         'view.label.pagetitle': 'Show Certificate'
