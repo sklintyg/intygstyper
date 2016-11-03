@@ -5,17 +5,16 @@
      field-has-errors="viewState.common.validationMessagesGrouped.intygavser"
      field-required="true"
      id="intygetAvserForm">
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.intygavser" id="validationMessages_intygavser">
-    <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.intygavser"><span message
-                                                                                             key="{{message.message}}"></span>
-      </li>
-    </ul>
-  </div>
-  <div class="form-group clearfix">
-    <label class="checkbox checkbox-columns col-xs-2"
-           ng-repeat="typ in viewState.intygModel.intygAvser.korkortstyp track by $index"><input
-        id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected">
-      <span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span></label>
+
+  <div class="form-group">
+    <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('intygAvser')">
+      <div class="clearfix">
+        <label class="checkbox checkbox-columns col-xs-2"
+               ng-repeat="typ in viewState.intygModel.intygAvser.korkortstyp track by $index"><input
+            id="typcheck{{$index}}" name="typcheck{{$index}}" type="checkbox" ng-model="typ.selected">
+          <span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span>
+        </label>
+      </div>
+    </wc-validation-group>
   </div>
 </div>

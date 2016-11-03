@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.somnvakenhet"
      id="somnvakenhetForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.somnvakenhet" id="validationMessages_somnvakenhet">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.somnvakenhet">
-              <span message key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -27,5 +16,6 @@
                  ng-model="viewState.intygModel.somnVakenhet.teckenSomnstorningar"></td>
       <td><span dynamic-label key="FRG_24.RBK"></span> *</td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('teckenSomnstorningar')"></wc-field-validation></td></tr>
   </table>
 </div>

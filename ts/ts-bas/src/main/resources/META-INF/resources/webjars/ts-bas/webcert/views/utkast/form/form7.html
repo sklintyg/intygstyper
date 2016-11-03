@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.medvetandestorning"
      id="medvetandestorningForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.medvetandestorning" id="validationMessages_medvetandestorning">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.medvetandestorning">
-              <span message key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -38,5 +27,6 @@
         </div>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('medvetandestorning')"></wc-field-validation></td></tr>
   </table>
 </div>

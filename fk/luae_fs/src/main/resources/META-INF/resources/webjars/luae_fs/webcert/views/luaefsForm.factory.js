@@ -47,16 +47,16 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     fieldGroup: [
                         //Fråga 1 -----
                         {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level:4, noH5:false}},
-                        {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
-                        {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                         {
-                            key: 'anhorigsBeskrivningAvPatienten',
-                            type: 'date',
-                            templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}
-                        },
-
-                        {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT'}},
-                        {
+                            wrapper: 'validationGroup',
+                            templateOptions: { type:'check-group', validationGroup: 'baserasPa' },
+                            fieldGroup: [
+                                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
+                                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
+                                {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
+                                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT'}}
+                            ]
+                        },{
                             key: 'annatGrundForMUBeskrivning',
                             type: 'single-text',
                             className: 'fold-animation',

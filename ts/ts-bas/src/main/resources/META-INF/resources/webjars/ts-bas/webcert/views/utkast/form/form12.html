@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.psykiskt"
      id="psykisktForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.psykiskt" id="validationMessages_psykiskt">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.psykiskt">
-              <span message key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -27,5 +16,6 @@
                  ng-model="viewState.intygModel.psykiskt.psykiskSjukdom"></td>
       <td><span dynamic-label key="FRG_27.RBK"></span> *</td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('psykiskSjukdom')"></wc-field-validation></td></tr>
   </table>
 </div>

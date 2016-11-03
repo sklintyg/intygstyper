@@ -1,5 +1,5 @@
 <div class="fk-sit-common-ns luae_fs-ns weak-hidden" ng-class="{show: viewState.common.showTemplate}">
-  <div wc-spinner label="luae_fs.info.loadingcertificate" show-spinner="!viewState.common.doneLoading"
+  <div wc-spinner label="common.load.certificate" show-spinner="!viewState.common.doneLoading"
        show-content="viewState.common.doneLoading">
 
     <div ui-view="header"></div>
@@ -26,7 +26,7 @@
                   <span message key="common.label.ovanstaende-har-bekraftats"></span>
                 </h3>
                 <h4>
-                  <span message key="luae_fs.label.datum"></span>
+                  <span message key="common.date"></span>
                 </h4>
                 <p id="signeringsdatum">{{viewState.intygModel.grundData.signeringsdatum | date:'longDate'}}</p>
                 <h4>

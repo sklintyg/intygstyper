@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.sjukhusvard"
      id="sjukhusvardForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.sjukhusvard" id="validationMessages_sjukhusvard">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.sjukhusvard">
-              <span message key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -31,33 +20,43 @@
         <table ng-show="viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt">
           <tr>
             <td class="col-md-6"><span dynamic-label key="DFR_30.2.RBK"></span> *</td>
-            <td class="col-md-6 table-padding-top"><input id="tidpunkt" name="tidpunkt"
-                                                          class="form-control" type="text"
-                                                          data-ng-model="viewState.intygModel.sjukhusvard.tidpunkt"
-                                                          wc-maxlength ng-trim="false"
-                                                          maxlength="{{viewState.inputLimits.sjukhusvardtidpunkt}}">
+            <td class="col-md-6 table-padding-top">
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('tidpunkt')">
+                <input id="tidpunkt" name="tidpunkt"
+                       class="form-control" type="text"
+                       data-ng-model="viewState.intygModel.sjukhusvard.tidpunkt"
+                       wc-maxlength ng-trim="false"
+                       maxlength="{{viewState.inputLimits.sjukhusvardtidpunkt}}">
+              </wc-validation-wrapper>
             </td>
           </tr>
           <tr>
             <td class="col-md-6"><span dynamic-label key="DFR_30.3.RBK"></span> *</td>
-            <td class="col-md-6 table-padding-top"><input id="vardinrattning" name="vardinrattning"
-                                                          class="form-control" type="text"
-                                                          data-ng-model="viewState.intygModel.sjukhusvard.vardinrattning"
-                                                          wc-maxlength ng-trim="false"
-                                                          maxlength="{{viewState.inputLimits.sjukhusvardvardinrattning}}">
+            <td class="col-md-6 table-padding-top">
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('vardinrattning')">
+                <input id="vardinrattning" name="vardinrattning"
+                       class="form-control" type="text"
+                       data-ng-model="viewState.intygModel.sjukhusvard.vardinrattning"
+                       wc-maxlength ng-trim="false"
+                       maxlength="{{viewState.inputLimits.sjukhusvardvardinrattning}}">
+              </wc-validation-wrapper>
             </td>
           </tr>
           <tr>
             <td class="col-md-6"><span dynamic-label key="DFR_30.4.RBK"></span> *</td>
-            <td class="col-md-6 table-padding-top"><input id="anledning" name="anledning"
-                                                          class="form-control" type="text"
-                                                          data-ng-model="viewState.intygModel.sjukhusvard.anledning"
-                                                          wc-maxlength ng-trim="false"
-                                                          maxlength="{{viewState.inputLimits.sjukhusvardanledning}}">
+            <td class="col-md-6 table-padding-top">
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('anledning')">
+                <input id="anledning" name="anledning"
+                       class="form-control" type="text"
+                       data-ng-model="viewState.intygModel.sjukhusvard.anledning"
+                       wc-maxlength ng-trim="false"
+                       maxlength="{{viewState.inputLimits.sjukhusvardanledning}}">
+              </wc-validation-wrapper>
             </td>
           </tr>
         </table>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('sjukhusEllerLakarkontakt')"></wc-field-validation></td></tr>
   </table>
 </div>
