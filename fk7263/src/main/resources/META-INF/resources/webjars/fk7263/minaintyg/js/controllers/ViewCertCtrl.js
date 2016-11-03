@@ -137,10 +137,11 @@ angular.module('fk7263').controller('fk7263.ViewCertCtrl',
                     $rootScope.cert = ViewState.cert;
                 } else {
                     // show error view
-                    $location.path('/visafel/certnotfound');
+                    $location.path('/fk7263/visafel/certnotfound');
                 }
             }, function() {
                 $log.debug('got error');
+                $location.path('/fk7263/visafel/certnotfound');
             });
 
             $scope.pagefocus = true;

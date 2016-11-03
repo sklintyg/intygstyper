@@ -200,9 +200,10 @@ angular.module('ts-diabetes').controller('ts-diabetes.ViewCertCtrl',
 
                 } else {
                     // show error view
-                    $location.path('/visafel/certnotfound');
+                    $location.path('/ts-diabetes/visafel/certnotfound');
                 }
             }, function(error) {
                 $log.debug('got error' + error);
+                $location.path('/ts-diabetes/visafel/certnotfound');
             });
         }]);

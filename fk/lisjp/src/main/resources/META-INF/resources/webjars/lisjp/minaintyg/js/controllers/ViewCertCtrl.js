@@ -108,10 +108,11 @@ angular.module('lisjp').controller('lisjp.ViewCertCtrl',
                     $rootScope.cert = $scope.cert;
                 } else {
                     // show error view
-                    $location.path('/visafel/certnotfound');
+                    $location.path('/lisjp/visafel/certnotfound');
                 }
             }, function() {
                 $log.debug('got error');
+                $location.path('/lisjp/visafel/certnotfound');
             });
 
             $scope.pagefocus = true;

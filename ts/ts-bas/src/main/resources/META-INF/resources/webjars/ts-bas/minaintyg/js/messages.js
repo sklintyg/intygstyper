@@ -101,6 +101,7 @@ angular.module('ts-bas').constant('ts-bas.messages', {
         'ts-button.detail.send': 'Skicka',
         'ts-bas.message.certifits-basloading': 'Hämtar intyg...',
         'ts-bas.error.generic': 'Kunde inte visa intyget',
+        'ts-bas.error.certnotfound': 'Intygen i Inkorgen kunde inte visas. Om felet kvarstår kan du kontakta <a href="/web/start/#/hjalp">support</a>. Om du inte kan komma åt intyget på Mina intyg just nu så kan du kontakta din läkare för att få en kopia.<br><br><a href="/web/start">Gå till Inkorgen och försök igen</a>',
         'ts-bas.history.label.pagetitle': 'Intygets alla händelser',
         'ts-bas.status.sent': 'Mottaget av',
         'ts-bas.inbox.complementaryinfo': 'Avser behörighet',

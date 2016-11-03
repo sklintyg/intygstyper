@@ -46,5 +46,11 @@ angular.module('ts-bas').config(function($stateProvider) {
             templateUrl: '/web/webjars/ts-bas/minaintyg/views/sent-cert.html',
             controller: 'common.SendCertWizardCtrl',
             data:{title: 'Intyget skickat till mottagare'}
+        }).
+        state('ts-bas-visafel', {
+            url :'/ts-bas/visafel/:errorCode',
+            templateUrl: '/web/webjars/ts-bas/minaintyg/views/error.html',
+            controller: 'ts-bas.ErrorCtrl',
+            data : { title: 'Fel', backLink: '/web/start' }
         });
 });
