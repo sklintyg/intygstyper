@@ -22,7 +22,7 @@ angular.module('ts-bas').constant('ts-bas.messages', {
     'sv': {
         'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
 
-        'ts-bas.label.patientadress': 'Patientens adressuppgifter',
+        'ts-bas.label.patient': 'Patientens adressuppgifter',
         'ts-bas.label.intygavser': 'Intyget avser',
         'ts-bas.label.identitet': 'Identiteten är styrkt genom',
         'ts-bas.label.syn': '1. Synfunktioner',

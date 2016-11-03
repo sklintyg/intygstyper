@@ -158,7 +158,7 @@ public class InternalDraftValidator {
         final int nedsattmed25Index = 3;
 
         if (ValidatorUtil.allNulls(intervals)) {
-            ValidatorUtil.addValidationError(validationMessages, "nedsattning", ValidationMessageType.EMPTY);
+            ValidatorUtil.addValidationError(validationMessages, "nedsattning.arbetsformaga", ValidationMessageType.EMPTY);
             return false;
         }
         // if the interval is not null and either from or tom is invalid, raise validation error
