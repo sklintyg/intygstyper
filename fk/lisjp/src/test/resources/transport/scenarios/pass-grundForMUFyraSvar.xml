@@ -184,7 +184,9 @@
           <ns3:displayName>Övrigt</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Jobbar bra om man inte stör honom</delsvar>
+    </svar>
+    <svar id="44">
+      <delsvar id="44.1">Jobbar bra om man inte stör honom</delsvar>
     </svar>
   </ns2:intyg>
 </ns2:RegisterCertificate>

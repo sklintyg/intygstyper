@@ -42,13 +42,13 @@
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
   "tillaggsfragor": [],
+  "arbetslivsinriktadeAtgarderBeskrivning": "Jobbar bra om man inte stör honom",
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": "EJ_AKTUELLT"
+      "typ": "EJ_AKTUELLT"
     },
     {
-      "val": "ARBETSTRANING",
-      "beskrivning": "beskriving"
+      "typ": "ARBETSTRANING"
     }
   ],
   "prognos": {

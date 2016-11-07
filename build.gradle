@@ -1,7 +1,7 @@
 ext {
     commonVersion = System.properties['commonVersion'] ?: '0-SNAPSHOT'
 
-    intygClinicalprocessSchematronVersion = "1.0.4"
+    intygClinicalprocessSchematronVersion = "1.0.5"
     intygCertificateSchemasVersion = "1.0.4"
     intygTransportstyrelsenSchemasVersion = "1.0.4"
     rivtaInsuranceprocessSchemasVersion = "3.1.0.4"

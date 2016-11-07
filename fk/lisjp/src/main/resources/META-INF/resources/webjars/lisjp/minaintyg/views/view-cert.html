@@ -298,14 +298,14 @@
               <!-- Åtgärder -->
               <div mi-category category-label="KAT_7.RBK">
                 <div mi-field field-dynamic-label="FRG_40" filled="cert.arbetslivsinriktadeAtgarder">
-                  <div id="arbetslivsinriktadeAtgarder" class="row" ng-repeat="atgard in cert.arbetslivsinriktadeAtgarder">
-                    <div class="col-xs-4" id="atgardTyp{{$index}}">
-                      <span dynamic-label key="KV_FKMU_0004.{{atgard.val}}.RBK"></span>
-                    </div>
-                    <div class="col-xs-8" id="atgardBeskrivning{{$index}}" class="multiline">
-                      {{atgard.beskrivning}}
-                    </div>
-                  </div>
+                  <ul id="arbetslivsinriktadeAtgarder">
+                    <li ng-repeat="atgard in cert.arbetslivsinriktadeAtgarder">
+                       <span dynamic-label key="KV_FKMU_0004.{{atgard.typ}}.RBK"></span>
+                    </li>
+                  </ul>
+                </div>
+                <div mi-field field-dynamic-label="FRG_44" filled="cert.arbetslivsinriktadeAtgarderBeskrivning">
+                  <div id="arbetslivsinriktadeAtgarderBeskrivning" class="multiline">{{cert.arbetslivsinriktadeAtgarderBeskrivning}}</div>
                 </div>
               </div>
 

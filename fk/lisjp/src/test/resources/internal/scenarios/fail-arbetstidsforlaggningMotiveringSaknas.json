@@ -43,10 +43,10 @@
   },
   "tillaggsfragor": [],
   "avstangningSmittskydd" : "false",
+  "arbetslivsinriktadeAtgarderBeskrivning": "Jobbar bra om man inte stör honom",
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": "OVRIGA_ATGARDER",
-      "beskrivning": "Jobbar bra om man inte stör honom"
+      "typ": "OVRIGA_ATGARDER"
     }
   ],
   "prognos": {

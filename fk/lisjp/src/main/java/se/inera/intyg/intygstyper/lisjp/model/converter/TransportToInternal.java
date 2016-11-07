@@ -121,6 +121,9 @@ public final class TransportToInternal {
             case ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40:
                 handleArbetslivsinriktadeAtgarder(arbetslivsinriktadeAtgarder, svar);
                 break;
+            case ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_ID_44:
+                handleArbetslivsinriktadeAtgarderBeskrivning(utlatande, svar);
+                break;
             case OVRIGT_SVAR_ID_25:
                 handleOvrigt(utlatande, svar);
                 break;
@@ -155,23 +158,27 @@ public final class TransportToInternal {
     }
 
     private static void handleArbetslivsinriktadeAtgarder(List<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder, Svar svar) throws ConverterException {
-        ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal val = null;
-        String beskrivning = null;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40:
                 String arbetslivsinriktadeAtgarderValKod = getCVSvarContent(delsvar).getCode();
-                val = ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal.fromId(arbetslivsinriktadeAtgarderValKod);
-                break;
-            case ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40:
-                beskrivning = getStringContent(delsvar);
+                arbetslivsinriktadeAtgarder.add(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal.fromId(arbetslivsinriktadeAtgarderValKod)));
                 break;
             default:
                 throw new IllegalArgumentException();
             }
         }
-        if (val != null) {
-            arbetslivsinriktadeAtgarder.add(ArbetslivsinriktadeAtgarder.create(val, beskrivning));
+    }
+
+    private static void handleArbetslivsinriktadeAtgarderBeskrivning(LisjpUtlatande.Builder utlatande, Svar svar) throws ConverterException {
+        for (Delsvar delsvar : svar.getDelsvar()) {
+            switch (delsvar.getId()) {
+            case ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_44:
+                utlatande.setArbetslivsinriktadeAtgarderBeskrivning(getStringContent(delsvar));
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
         }
     }
 

@@ -203,8 +203,10 @@ public final class RespConstants {
 
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40 = "40";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40 = "40.1";
-    public static final String ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40 = "40.2";
     public static final String ARBETSLIVSINRIKTADE_ATGARDER_SVAR_JSON_ID_40 = "arbetslivsinriktadeAtgarder";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_ID_44 = "44";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_44 = "44.1";
+    public static final String ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_JSON_ID_44 = "arbetslivsinriktadeAtgarderBeskrivning";
 
     public static final String TILLAGGSFRAGOR_SVAR_JSON_ID = "tillaggsfragor";
     public static final int TILLAGGSFRAGOR_START = 9000;
@@ -293,6 +295,8 @@ public final class RespConstants {
             return PROGNOS_SVAR_JSON_ID_39;
         case ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40:
             return ARBETSLIVSINRIKTADE_ATGARDER_SVAR_JSON_ID_40;
+        case ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_ID_44:
+            return ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_JSON_ID_44;
         default:
             throw new IllegalArgumentException("The supplied value of frageId " + frageId + " is not supported.");
         }

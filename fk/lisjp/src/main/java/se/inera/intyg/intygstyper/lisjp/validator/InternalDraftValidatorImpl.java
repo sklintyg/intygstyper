@@ -29,7 +29,6 @@ import com.google.common.collect.ImmutableList;
 
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.PatientValidator;
-import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
@@ -40,8 +39,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
 
     private static final int MAX_ARBETSLIVSINRIKTADE_ATGARDER = 10;
     private static final int MAX_SYSSELSATTNING = 5;
-
-    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     @Autowired
     private ValidatorUtilFK validatorUtilFK;
@@ -107,16 +104,16 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
         }
 
         if (utlatande.getUndersokningAvPatienten() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.UNDERSOKNING);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.UNDERSOKNING);
         }
         if (utlatande.getJournaluppgifter() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, ValidatorUtilFK.GrundForMu.JOURNALUPPGIFTER);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, ValidatorUtilFK.GrundForMu.JOURNALUPPGIFTER);
         }
         if (utlatande.getTelefonkontaktMedPatienten() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getTelefonkontaktMedPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.TELEFONKONTAKT);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getTelefonkontaktMedPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.TELEFONKONTAKT);
         }
         if (utlatande.getAnnatGrundForMU() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
         }
 
         // R2
@@ -324,24 +321,24 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
         } else {
 
             // R21 If INTE_AKTUELLT is checked it must be the only selection
-            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getTyp() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
                     && utlatande.getArbetslivsinriktadeAtgarder().size() > 1) {
                 ValidatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
                         "lisjp.validation.atgarder.inte_aktuellt_no_combine");
             }
 
-            for (ArbetslivsinriktadeAtgarder atgard : utlatande.getArbetslivsinriktadeAtgarder()) {
-                if (atgard.getVal() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT) {
-                    // R36 Beskrivning must not be specified for atgard of type INTE_AKTUELLT
-                    if (StringUtils.isNotBlank(atgard.getBeskrivning())) {
-                        ValidatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
-                                "lisjp.validation.atgarder." + atgard.getVal().getId() + ".invalid_combination");
-                    }
-                } else if (StringUtils.isBlank(atgard.getBeskrivning())) {
-                    // R35 Beskrivning must be specified for each atgard that is not of type INTE_AKTUELLT
-                    ValidatorUtil.addValidationError(validationMessages, "atgarder.arbetslivsinriktadeAtgarder."
-                            + atgard.getVal().getId() + ".beskrivning", ValidationMessageType.EMPTY);
-                }
+            // R36 If INTE_AKTUELLT is checked utlatande.getArbetslivsinriktadeAtgarderBeskrivning() must not be answered
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getTyp() == ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
+                    && !StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderBeskrivning())) {
+                ValidatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisjp.validation.atgarder.invalid_combination");
+            }
+
+            // R35 If other choices than INTE_AKTUELLT are checked beskrivning åtgärder is required
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> ArbetslivsinriktadeAtgarderVal.ATGARD_AKTUELL.contains(e.getTyp()))
+                    && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderBeskrivning())) {
+                ValidatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
+                        "lisjp.validation.atgarder.aktuelltbeskrivning.missing");
             }
 
             // No more than 10 entries are allowed

@@ -42,22 +42,19 @@
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
   "tillaggsfragor": [],
+  "arbetslivsinriktadeAtgarderBeskrivning": "Jobbar bra om man inte stör honom",
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": "OVRIGA_ATGARDER",
-      "beskrivning": "Beskrivning övrigt"
+      "typ": "OVRIGA_ATGARDER"
     },
     {
-      "val": "SOKA_NYTT_ARBETE",
-      "beskrivning": "Beskrivning söka nytt arbete"
+      "typ": "SOKA_NYTT_ARBETE"
     },
     {
-      "val": "ERGONOMISK",
-      "beskrivning": "Beskrivning ergonomisk bedömning"
+      "typ": "ERGONOMISK"
     },
     {
-      "val": "ARBETSANPASSNING",
-      "beskrivning": "Beskrivning arbetsanpassning"
+      "typ": "ARBETSANPASSNING"
     }
   ],
   "prognos": {
