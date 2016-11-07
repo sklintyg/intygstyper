@@ -32,13 +32,18 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * A FkOverflowPage should be added last - since it scans the model looking for fields that had overflow when they wer'e
- * rendered.
+ * A specialized component type that inspects the entire model for overflowed text fields and renders then on separate
+ * page(s).
+ * NOTE: An FkOverflowPage must be added last in the model, since it depends on the fact that FkOverflowableValueFields
+ * reports overflowable text when actually rendered.
  *
  * Created by marced on 2016-10-24.
  */
-// CHECKSTYLE:OFF MagicNumber
 public class FkOverflowPage extends FkPage {
+    private static final float INDENTATION_LEFT = 2f;
+    private static final float INDENTATION_RIGHT = 2f;
+    private static final float FULL_WIDTH = 100f;
+
     private FkPdfDefinition model;
 
     public FkOverflowPage(String pageTitle, FkPdfDefinition model) {
@@ -55,23 +60,24 @@ public class FkOverflowPage extends FkPage {
         }
 
         super.render(document, writer, x, y);
+
         renderOverflowingItems(document, fkOverflowableValueFields);
     }
 
     private void renderOverflowingItems(Document document, List<FkOverflowableValueField> overflowingComponents) throws DocumentException {
-        // We use a table here so that we can control that a row/cell is kept on the same page if possible. Otherwise
-        // it's not unusual that the page-breaks separate label and text.
+        // We wrap all overflowing items within a table as rows so that we can control that a row/cell is kept on the same page if possible.
+        // Otherwise it's very probable that a page-break occurs between label and text.
         PdfPTable table = new PdfPTable(1);
 
-        table.setWidthPercentage(100f);
+        table.setWidthPercentage(FULL_WIDTH);
         // Important, we want to make sure label and text is kept together
         table.setSplitRows(false);
         table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
         for (FkOverflowableValueField item : overflowingComponents) {
             Paragraph p = new Paragraph();
-            p.setIndentationLeft(2f);
-            p.setIndentationRight(2f);
+            p.setIndentationLeft(INDENTATION_LEFT);
+            p.setIndentationRight(INDENTATION_RIGHT);
             p.setKeepTogether(true);
 
             p.add(Chunk.NEWLINE);

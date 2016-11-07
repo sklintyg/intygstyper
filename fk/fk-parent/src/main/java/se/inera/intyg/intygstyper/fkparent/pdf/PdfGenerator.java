@@ -32,7 +32,8 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 
 /**
- * Generic PDF renderer that delegates all actual output to the defined model.
+ * Generic PDF renderer that delegates (almost) all rendering logic to a given model.
+ * The aim is that it could be used for rendering all SIT type PDFs.
  *
  * Created by marced on 30/09/16.
  */
@@ -60,8 +61,10 @@ public final class PdfGenerator {
 
             document.open();
 
+            //Leave actual rendering to the model, giving it starting x/y offset of top-left corner.
             model.render(document, writer, 0f, Utilities.pointsToMillimeters(document.getPageSize().getTop()));
-            // Finish off by closing the document (this will invoke the event handlers)
+
+            // Finish off by closing the document (this will invoke any page event handlers)
             document.close();
 
         } catch (DocumentException | RuntimeException e) {

@@ -30,9 +30,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced.
+ * Stamps the fk form issue version info on each page (left side margin).
  */
-// CHECKSTYLE:OFF MagicNumber
 public class FkFormIdentityEventHandler extends PdfPageEventHelper {
 
     private static final float FORMID_X = Utilities.millimetersToPoints(12f);
@@ -40,6 +39,7 @@ public class FkFormIdentityEventHandler extends PdfPageEventHelper {
 
     private static final float SCANID_X = Utilities.millimetersToPoints(12f);
     private static final float SCANID_Y = Utilities.millimetersToPoints(118f);
+    private static final float ROTATION = 90f;
 
     private String formId;
     private String blankettId;
@@ -62,15 +62,15 @@ public class FkFormIdentityEventHandler extends PdfPageEventHelper {
     public void onEndPage(PdfWriter writer, Document document) {
         PdfContentByte canvas = writer.getDirectContentUnder();
 
-        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(formId, PdfConstants.FONT_FORM_ID_LABEL), FORMID_X, FORMID_Y, 90);
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(formId, PdfConstants.FONT_FORM_ID_LABEL), FORMID_X, FORMID_Y, ROTATION);
         ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT,
-                new Phrase(buildPageScanId(blankettId, blankettVersion, writer.getPageNumber()), PdfConstants.FONT_PAGESCAN_ID), SCANID_X, SCANID_Y, 90);
+                new Phrase(buildPageScanId(blankettId, blankettVersion, writer.getPageNumber()), PdfConstants.FONT_PAGESCAN_ID), SCANID_X, SCANID_Y, ROTATION);
 
     }
 
     private String buildPageScanId(String blankettId, String blankettVersion, int pageNumber) {
         /*******************************************************
-         * (Hittat i xfa xml definition) rad 445
+         * (Hittat i FK7800_001_F_001.pdf i extraherad xfa xml definition) rad 445
          * "XXXX" + "A" + "B" + "VV" *
          * *
          * XXXX = blankettnummer, t.ex. 7263 *

@@ -28,22 +28,28 @@ import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-
 import com.itextpdf.text.pdf.PdfWriter;
+
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 27/09/16.
+ * An implementation of a diagnosis code field.
+ * Handles diagnose codes up to 5 characters in length.
+ *
  */
 // CHECKSTYLE:OFF MagicNumber
 public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
 
+    private static final float DIAGNOSCODEPART_WIDTH = 7.8f;
     private String fieldLabel;
     private final String value;
 
     private boolean withTopLabel = false;
 
     public FkDiagnosKodField(String value) {
+        if (value == null || value.length() > 5) {
+            throw new IllegalArgumentException("Invalid diagnoscode '" + value + "':  must be 0-5 characters.");
+        }
         this.value = value;
     }
 
@@ -63,16 +69,16 @@ public class FkDiagnosKodField extends PdfComponent<FkDiagnosKodField> {
             code[b++] = c;
         }
         float[] columnWidths = new float[] {
-                Utilities.millimetersToPoints(7.8f),
-                Utilities.millimetersToPoints(7.8f),
-                Utilities.millimetersToPoints(7.8f),
-                Utilities.millimetersToPoints(7.8f),
-                Utilities.millimetersToPoints(7.8f)};
-        // Utilities.millimetersToPoints(40f - (7.8f*4)) };
+                Utilities.millimetersToPoints(DIAGNOSCODEPART_WIDTH),
+                Utilities.millimetersToPoints(DIAGNOSCODEPART_WIDTH),
+                Utilities.millimetersToPoints(DIAGNOSCODEPART_WIDTH),
+                Utilities.millimetersToPoints(DIAGNOSCODEPART_WIDTH),
+                Utilities.millimetersToPoints(DIAGNOSCODEPART_WIDTH) };
+
         table.setTotalWidth(columnWidths);
         for (int a = 1; a < 5; a++) {
-            canvas.moveTo(Utilities.millimetersToPoints(x + 7.8f * a), Utilities.millimetersToPoints(y - height));
-            canvas.lineTo(Utilities.millimetersToPoints(x + 7.8f * a), Utilities.millimetersToPoints(y - height + 2.5f));
+            canvas.moveTo(Utilities.millimetersToPoints(x + DIAGNOSCODEPART_WIDTH * a), Utilities.millimetersToPoints(y - height));
+            canvas.lineTo(Utilities.millimetersToPoints(x + DIAGNOSCODEPART_WIDTH * a), Utilities.millimetersToPoints(y - height + 2.5f));
         }
 
         for (char c : code) {

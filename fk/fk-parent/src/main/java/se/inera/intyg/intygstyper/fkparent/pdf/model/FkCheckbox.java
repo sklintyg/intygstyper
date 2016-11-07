@@ -31,12 +31,12 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfTemplate;
-
 import com.itextpdf.text.pdf.PdfWriter;
+
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 27/09/16.
+ * An implementation of a checkbox that can be checked with an "X" and have a label.
  */
 // CHECKSTYLE:OFF MagicNumber
 public class FkCheckbox extends PdfComponent<FkCheckbox> {
@@ -54,7 +54,6 @@ public class FkCheckbox extends PdfComponent<FkCheckbox> {
     private final boolean isChecked;
 
     private int verticalAlignment = PdfPCell.ALIGN_MIDDLE;
-
 
     public FkCheckbox(String fieldLabel, boolean isChecked) {
         this.fieldLabel = fieldLabel;

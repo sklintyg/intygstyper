@@ -26,9 +26,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 30/09/16.
- *
- * Simply a container for child components with an optional title text added to the document.
+ * A simple container for components with an optional title text.
  */
 public class FkPage extends PdfComponent<FkPage> {
     private String pageTitle;

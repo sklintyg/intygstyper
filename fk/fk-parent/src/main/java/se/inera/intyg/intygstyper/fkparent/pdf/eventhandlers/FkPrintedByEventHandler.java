@@ -30,13 +30,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 2016-10-25.
+ * Outputs certificate id and source application text in the right margin, rotated 90 deg.
  */
-// CHECKSTYLE:OFF MagicNumber
 public class FkPrintedByEventHandler extends PdfPageEventHelper {
 
     private static final float PRINTEDBY_X = Utilities.millimetersToPoints(200f);
     private static final float PRINTEDBY_Y = Utilities.millimetersToPoints(80f);
+    private static final float ROTATION = 90f;
     private String intygsId;
     private String applicationOriginText;
 
@@ -50,7 +50,8 @@ public class FkPrintedByEventHandler extends PdfPageEventHelper {
         PdfContentByte canvas = writer.getDirectContentUnder();
 
         ColumnText.showTextAligned(canvas, Element.ALIGN_CENTER,
-                new Phrase(String.format("Intygs-ID: %s. %s", intygsId, applicationOriginText), PdfConstants.FONT_STAMPER_LABEL), PRINTEDBY_X, PRINTEDBY_Y, 90);
+                new Phrase(String.format("Intygs-ID: %s. %s", intygsId, applicationOriginText), PdfConstants.FONT_STAMPER_LABEL), PRINTEDBY_X, PRINTEDBY_Y,
+                ROTATION);
 
     }
 }

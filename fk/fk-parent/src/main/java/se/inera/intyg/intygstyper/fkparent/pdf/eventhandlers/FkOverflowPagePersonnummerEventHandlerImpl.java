@@ -19,7 +19,8 @@
 package se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers;
 
 /**
- * Created by marced on 2016-10-21.
+ * Extension of the generic FkAbstractPersonnummerEventHandler, overriding the positioning an on which pages to show the
+ * personnummer on overflows pages.
  */
 // CHECKSTYLE:OFF MagicNumber
 public class FkOverflowPagePersonnummerEventHandlerImpl extends FkAbstractPersonnummerEventHandler {

@@ -33,7 +33,7 @@ import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.SitUtlatande;
 
 /**
- * Simple base class with common methods used by SIT type PDF definition construction.
+ * Base class with common methods used by SIT type PDF definition construction.
  *
  * Created by marced on 2016-10-25.
  */
@@ -64,15 +64,9 @@ public class FkBasePdfDefinitionBuilder {
     }
 
     protected boolean isSentToFk(List<Status> statuses) {
-        if (statuses != null) {
-            return statuses.stream()
-                    .filter(Objects::nonNull)
-                    .filter(s -> CertificateState.SENT.equals(s.getType()) && PartKod.FKASSA.getValue().equals(s.getTarget()))
-                    .findAny().isPresent();
-        }
-        return false;
+        return statuses != null && statuses.stream().filter(Objects::nonNull)
+                .filter(s -> CertificateState.SENT.equals(s.getType()) && PartKod.FKASSA.getValue().equals(s.getTarget())).findAny().isPresent();
     }
-
 
     protected String nullSafeString(String string) {
         return string != null ? string : "";
@@ -90,10 +84,7 @@ public class FkBasePdfDefinitionBuilder {
     }
 
     protected boolean safeBoolean(Boolean b) {
-        if (b == null) {
-            return false;
-        }
-        return b.booleanValue();
+        return b != null && b;
     }
 
     protected String concatStringList(List<String> strings) {

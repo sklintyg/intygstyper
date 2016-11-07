@@ -26,14 +26,15 @@ import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 
 /**
- * Defines the pages and Page events that constitutes a filled out (FK SIT type) PDF ready to be rendered.
+ * Defines the root element of a PdfComponent object tree hierarchy.
+ * Besides being a root element, it also holds the specified pageEvents that should be used when rendering itself.
  *
  * Created by marced on 30/09/16.
  */
 public class FkPdfDefinition extends PdfComponent<FkPdfDefinition> {
 
     // Default page margins (left,right,top,bottom)
-    private static final float[] DEFAULT_PAGE_MARGINS = new float[]{
+    private static final float[] DEFAULT_PAGE_MARGINS = new float[] {
             Utilities.millimetersToPoints(15f),
             Utilities.millimetersToPoints(15f),
             Utilities.millimetersToPoints(40f),
@@ -46,7 +47,6 @@ public class FkPdfDefinition extends PdfComponent<FkPdfDefinition> {
         return pageEvents;
     }
 
-
     public void addPageEvent(PdfPageEventHelper pageEvent) {
         this.pageEvents.add(pageEvent);
     }
@@ -55,10 +55,15 @@ public class FkPdfDefinition extends PdfComponent<FkPdfDefinition> {
         return DEFAULT_PAGE_MARGINS;
     }
 
-
+    /**
+     * Inspects itself for all overflowing text components.
+     *
+     * @return
+     *         List of all FkOverflowableValueFields that reported having overflowing text
+     */
     public List<FkOverflowableValueField> collectOverflowingComponents() {
 
-        // Flatten structure and filter out only FkOverflowableValueField's that have overflowed values
+        // Flatten structure and filter for relevant PdfComponents
         final List<FkOverflowableValueField> overflowingList = this.flattened()
                 .filter(FkOverflowableValueField.class::isInstance)
                 .map(pdfComponent -> (FkOverflowableValueField) pdfComponent)

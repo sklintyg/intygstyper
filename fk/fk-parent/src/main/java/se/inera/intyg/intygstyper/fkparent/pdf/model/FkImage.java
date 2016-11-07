@@ -28,11 +28,12 @@ import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
- * Created by eriklupander on 2016-10-03.
+ * A component that adds an image at the specified position.
  */
 // CHECKSTYLE:OFF MagicNumber
 public class FkImage extends PdfComponent<FkImage> {
 
+    private static final float FULL_WIDTH = 100f;
     private byte[] imageData;
 
     private float linearScale = 1.0f;
@@ -51,7 +52,7 @@ public class FkImage extends PdfComponent<FkImage> {
         try {
             fkLogo = Image.getInstance(imageData);
             fkLogo.setAbsolutePosition(Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y));
-            fkLogo.scalePercent(linearScale * 100f);
+            fkLogo.scalePercent(linearScale * FULL_WIDTH);
             writer.getDirectContent().addImage(fkLogo);
         } catch (IOException e) {
             throw new DocumentException("Unable to render Image: " + e.getMessage());
