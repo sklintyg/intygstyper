@@ -337,8 +337,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
             // R35 If other choices than INTE_AKTUELLT are checked beskrivning åtgärder is required
             if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> ArbetslivsinriktadeAtgarderVal.ATGARD_AKTUELL.contains(e.getTyp()))
                     && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderBeskrivning())) {
-                ValidatorUtil.addValidationError(validationMessages, "atgarder", ValidationMessageType.EMPTY,
-                        "lisjp.validation.atgarder.aktuelltbeskrivning.missing");
+                ValidatorUtil.addValidationError(validationMessages, "atgarder.arbetslivsinriktadeAtgarderBeskrivning", ValidationMessageType.EMPTY);
             }
 
             // No more than 10 entries are allowed

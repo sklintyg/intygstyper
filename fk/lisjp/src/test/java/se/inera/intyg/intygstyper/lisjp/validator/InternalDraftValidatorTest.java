@@ -797,7 +797,7 @@ public class InternalDraftValidatorTest {
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisjp.validation.atgarder.aktuelltbeskrivning.missing", res.getValidationErrors().get(0).getMessage());
+        assertEquals("atgarder.arbetslivsinriktadeAtgarderBeskrivning", res.getValidationErrors().get(0).getField());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
