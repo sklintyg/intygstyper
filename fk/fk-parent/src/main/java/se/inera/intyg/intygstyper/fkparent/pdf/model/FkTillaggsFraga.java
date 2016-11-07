@@ -28,7 +28,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 2016-10-24.
+ * Representation of a tillaggsfraga (just a question label and an text answer).
  */
 public class FkTillaggsFraga extends PdfComponent<FkTillaggsFraga> {
     private String label;

@@ -30,21 +30,27 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
+ * A simple container for other fields, roughly equivalent of a FK SIT model concept "Frågakategori" that holds a label.
+ *
+ * NOTE: Since it's easier to measure borders on a pdf printout, and the fact that on FK pdf's the label of a fieldgroup
+ * is placed above tha actual border and content, we actually place the label outsite (above) this componets effective
+ * bounding box.
+ *
  * Created by marced on 29/09/16.
  */
-public class FkCategory extends PdfComponent<FkCategory> {
+public class FkFieldGroup extends PdfComponent<FkFieldGroup> {
     private static final float CATEGORY_LABEL_HEIGHT_MM = 15f;
     private static final float CATEGORY_LABEL_BORDER_MARGIN_MM = 1f;
     private String label;
 
-    public FkCategory(String label) {
+    public FkFieldGroup(String label) {
         this.label = label;
     }
 
     @Override
     public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
 
-         // The label of a category is actually placed above/outside the specified area. this is because it is much
+        // The label of a field group is actually placed above/outside the specified area. this is because it is much
         // easier to measure using the borders around fields on the paper copy.
         PdfPTable table = new PdfPTable(1);
         table.setTotalWidth(Utilities.millimetersToPoints(width));

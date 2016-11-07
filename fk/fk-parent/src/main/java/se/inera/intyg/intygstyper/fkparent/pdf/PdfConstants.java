@@ -27,6 +27,8 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.BaseFont;
 
 /**
+ * Common constants and fonts that is used in FK SIT-type PDFs.
+ *
  * @author marced.
  */
 // CHECKSTYLE:OFF MagicNumber
@@ -38,7 +40,7 @@ public final class PdfConstants {
     public static final String ELECTRONIC_COPY_WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
 
     /**
-     * * Fonts that will be used in FK PDF's.
+     * * Fonts that will be used in FK SIT-type PDFs.
      */
 
     private static final String ARIAL_REGULAR_COMPATIBLE_FONT_PATH = "/fonts/LiberationSans-Regular.ttf";
@@ -70,8 +72,10 @@ public final class PdfConstants {
             FONT_PAGETITLE = new Font(createFont(ARIAL_BOLD_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 11f, Font.NORMAL);
 
             FONT_VALUE_TEXT = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10.5f, Font.NORMAL);
-            FONT_VALUE_TEXT_ARIAL_COMPATIBLE = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10f, Font.NORMAL);
-            FONT_VALUE_TEXT_OVERFLOWINFO_ARIAL_COMPATIBLE = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10f, Font.BOLD);
+            FONT_VALUE_TEXT_ARIAL_COMPATIBLE = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 10f,
+                    Font.NORMAL);
+            FONT_VALUE_TEXT_OVERFLOWINFO_ARIAL_COMPATIBLE = new Font(createFont(ARIAL_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED),
+                    10f, Font.BOLD);
 
             FONT_PAGESCAN_ID = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 9f, Font.NORMAL);
             FONT_FORM_ID_LABEL = new Font(createFont(TREBUCHET_REGULAR_COMPATIBLE_FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED), 7f, Font.NORMAL);

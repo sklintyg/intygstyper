@@ -49,8 +49,8 @@ import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 
 /**
- * Generate some variants of a LUSE pdf, partly to see that not exceptions occur but mainly for manual visual inspection
- * of the resulting pdf files, as we don't have any way of programatically assert the content of the pdf.
+ * Generate variants of a LUSE pdf, partly to see that make sure no exceptions occur but mainly for manual visual inspection
+ * of the resulting pdf files, as we don't have any way of programmatically assert the content of the pdf.
  * 
  * @author marced
  */

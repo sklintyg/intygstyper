@@ -36,7 +36,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced.
+ * A generic page numbering event handler.
  */
 // CHECKSTYLE:OFF MagicNumber
 public class PageNumberingEventHandler extends PdfPageEventHelper {

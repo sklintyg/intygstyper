@@ -33,33 +33,35 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Field component that can handle overflowing texts. Tet that could not be written within it's size is kept for later
- * rendering on dynamic pages.
+ * Field component that can handle overflowing texts. Text that could not be written within the components dimensions is truncated and the remainder is kept for
+ * later use (rendered on dynamic pages).
  *
  * Created by marced on 2016-10-20.
  */
-// CHECKSTYLE:OFF MagicNumber
 public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueField> {
 
     private static final String SEE_APPENDIX_PAGE_TEXT = "... Se fortsättningsblad!";
     // What is considered a word boundary
     private static final String WHITESPACE_REGEXP = "\\s";
-    private static final float INLINE_LABEL_INDENTATION_LEFT = 2f;
+
+    private static final float INDENTATION_LEFT = 2f;
+    private static final float INDENTATION_RIGHT = 2f;
+
+    private static final float LEADING_FACTOR = 1.2f;
 
     // Overflowing valuefields should hold the label even if it is displayed outside of this component as a fkLabel.
     // If overflow occurs, we need to present the label when outputting the remaining part on the extra pages at the end
     // of the document.
     private final String label;
     private final String value;
+    // Holder for any overflowing text content not fitting the form area
+    private String overflowingText;
 
     // Defines if the label should be rendered inline in the form (some use a separate FKLabel)
     private boolean showLabelOnTop;
 
     // Defines if newline characters should be kept in value text or not
     private boolean keepNewlines = false;
-
-    // Holder for any overflowing text content not fitting the form area
-    private String overflowingText;
 
     private Font valueFont = PdfConstants.FONT_VALUE_TEXT_ARIAL_COMPATIBLE;
     private Font overflowFont = PdfConstants.FONT_VALUE_TEXT_OVERFLOWINFO_ARIAL_COMPATIBLE;
@@ -99,12 +101,14 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
         float effectiveY = y;
 
         String textValue = value;
+        // Fo some fields, we may wich to keep newline characters, such as an "Övrigt" field that has contributions from
+        // multiple sources, ie. other fields contents are added to this field when signing.
         if (!keepNewlines) {
             textValue = trimNewLines(textValue);
         }
         // If were showing the label above, adjust the area available to the actual content.
         if (showLabelOnTop) {
-            float labelX = Utilities.millimetersToPoints(x) + INLINE_LABEL_INDENTATION_LEFT;
+            float labelX = Utilities.millimetersToPoints(x) + INDENTATION_LEFT;
             float labelY = Utilities.millimetersToPoints(y) - topLabelFont.getCalculatedSize();
 
             ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(label, topLabelFont),
@@ -123,7 +127,7 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
         int charsToWrite = findFittingLength(canvas, targetRect, textValue, "");
 
         if (charsToWrite < textValue.length()) {
-            // Entire text did NOT fit - find how much of original value that will fit (while adding the
+            // Entire text did NOT fit - find how much of original value that WILL fit (including the
             // "to-be-continued" text)
             charsToWrite = findFittingLength(canvas, targetRect, textValue, SEE_APPENDIX_PAGE_TEXT);
 
@@ -182,9 +186,9 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
             p.add(new Phrase(overflowInfoText, overflowFont));
         }
 
-        p.setLeading(valueFont.getSize() * 1.2f);
-        p.setIndentationLeft(INLINE_LABEL_INDENTATION_LEFT);
-        p.setIndentationRight(2f);
+        p.setLeading(valueFont.getSize() * LEADING_FACTOR);
+        p.setIndentationLeft(INDENTATION_LEFT);
+        p.setIndentationRight(INDENTATION_RIGHT);
 
         ct.addElement(p);
 

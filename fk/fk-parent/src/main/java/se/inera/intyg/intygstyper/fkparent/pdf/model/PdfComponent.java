@@ -31,12 +31,31 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
- * Created by marced on 29/09/16.
+ * Base class for all components of the pdf.
+ * <p/>
+ * The PdfComponent framework was developed to make it easier to programatically build an (almost) identical copy of a
+ * sample FK (xfa) pdf.
+ * <p/>
+ * The resulting structure is a object-graph where all childrens positions are relative to it's parent.
+ * <ul>
+ * Good to know:
+ * <li>All measurements (offsets, widths, heights etc) in a components is expressed in millimeters to make it easier to
+ * define the positioning based on measurements of a physically printed FK pdf.</li>
+ * <li>iText itself expects all values to be expressed in points, so conversion is needed when actually rendering a
+ * component e.g on a PdfContentByte.</li>
+ * <li>To avoid having extensive constructor arguments, all but the core properties of a component are set using a
+ * builder pattern.</li>
+ * </ul>
+ * <p/>
+ *
+ * @param <T>
+ *            The subtype
  */
 public abstract class PdfComponent<T extends PdfComponent> {
 
     private static final float BORDER_WIDTH = 0.2f;
-    // Expressed in millimeters
+
+    // All measures are expressed in millimeters
     protected float width;
     protected float height;
     protected float parentOffsetX;
@@ -73,9 +92,12 @@ public abstract class PdfComponent<T extends PdfComponent> {
      * Define the offset (in mm) from the parents top left corner.
      *
      * @param x
+     *            left offset relative to parent
      * @param y
-     * @return
+     *            top offset relative to parent
+     * @return The modified component instance
      */
+    @SuppressWarnings("unchecked")
     public T offset(float x, float y) {
         this.parentOffsetX = x;
         this.parentOffsetY = y;
@@ -85,28 +107,48 @@ public abstract class PdfComponent<T extends PdfComponent> {
     /**
      * Define the size (in mm) of the component.
      *
-     * @param x
-     * @param y
+     * @param width
+     *            width of the component
+     * @param height
+     *            height of the component
      * @return
      */
-    public T size(float x, float y) {
-        this.width = x;
-        this.height = y;
+    @SuppressWarnings("unchecked")
+    public T size(float width, float height) {
+        this.width = width;
+        this.height = height;
         return (T) this;
     }
 
     /**
-     * Define border for this component. Combinations are supported, such as
-     * Rectangle.TOP + Rectangle.LEFT
+     * Define border for this component.
+     * <p/>
+     * Combinations of Rectangle.XXX constants are supported, such as
+     * Rectangle.TOP + Rectangle.LEFT. Most common is to use Rectangle.BOX
      *
      * @param border
+     *            a combination of Rectangle
      * @return
      */
+    @SuppressWarnings("unchecked")
     public T withBorders(int border) {
         this.border = border;
         return (T) this;
     }
 
+    /**
+     * Define border with a specific color for this component.
+     * <p/>
+     * Combinations of Rectangle.XXX constants are supported, such as
+     * Rectangle.TOP + Rectangle.LEFT. Most common is to use Rectangle.BOX
+     *
+     * @param border
+     *            a combination of Rectangle
+     * @param borderColor
+     *            a BaseColor to use
+     * @return
+     */
+    @SuppressWarnings("unchecked")
     public T withBorders(int border, BaseColor borderColor) {
         this.border = border;
         this.borderColor = borderColor;
@@ -114,37 +156,41 @@ public abstract class PdfComponent<T extends PdfComponent> {
     }
 
     /**
-     * Flattens the tree that this components holds.
-     * @return All children as a stream
-     */
-    public Stream<PdfComponent<?>> flattened() {
-        return Stream.concat(
-                Stream.of(this),
-                getChildren().stream().flatMap(PdfComponent::flattened));
-    }
-
-    /**
      * Render a PdfComponent. The upper left corner coordinates as expressed in mm.
-     * When actually writing to the canvas, mm units must be converted to points. Also, to coordinate system of a page
-     * (0,0) start at the lower left corner.
+     * When actually writing to the canvas, mm units must be converted to points. Also, the coordinate system of an
+     * iText page (0,0) actually starts at the lower left corner.
      *
      * @param document
+     *            Document to render to
      * @param writer
+     *            PdfWriter to use
      * @param x
+     *            left starting point
      * @param y
+     *            top starting point
      * @throws DocumentException
      */
     public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
 
-        // Border rendering is handled here
+        // Border rendering is so common so it's handled here in the base class
         drawborder(writer.getDirectContent(), x, y);
 
         for (PdfComponent child : this.getChildren()) {
-            // give children x,y adjusted for this parents offset.
+            // give children an x,y value that is adjusted for this instance's offset.
             child.render(document, writer, x + child.getParentOffsetX(), y - child.getParentOffsetY());
         }
     }
 
+    /**
+     * Draws a border (with the specified borderstyle and color) around the effective bounding box of this component.
+     *
+     * @param canvas
+     *            PdfContentByte to output the border to
+     * @param x
+     *            left starting point of border
+     * @param y
+     *            top starting point of border
+     */
     private void drawborder(PdfContentByte canvas, float x, float y) {
 
         Rectangle rect = new Rectangle(Utilities.millimetersToPoints(x), Utilities.millimetersToPoints(y - height),
@@ -156,5 +202,14 @@ public abstract class PdfComponent<T extends PdfComponent> {
 
     }
 
-
+    /**
+     * Recursively flattens this component and all children it contains.
+     *
+     * @return This instance and all it's children as a stream
+     */
+    public Stream<PdfComponent<?>> flattened() {
+        return Stream.concat(
+                Stream.of(this),
+                getChildren().stream().flatMap(PdfComponent::flattened));
+    }
 }

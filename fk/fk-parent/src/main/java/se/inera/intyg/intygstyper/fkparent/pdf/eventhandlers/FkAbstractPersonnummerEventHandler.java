@@ -31,11 +31,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by eriklupander on 2016-10-03.
+ * Generic personnumber page event handler, allowing concrete subclasses to specify where and on which pages to output
+ * personnummer.
  */
-// CHECKSTYLE:OFF MagicNumber
 public abstract class FkAbstractPersonnummerEventHandler extends PdfPageEventHelper {
 
+    // Table with (in mm)
+    private static final float TABLE_WIDTH = 30f;
     private String personnummer;
 
     public FkAbstractPersonnummerEventHandler(String personnummer) {
@@ -60,7 +62,7 @@ public abstract class FkAbstractPersonnummerEventHandler extends PdfPageEventHel
     public void onEndPage(PdfWriter writer, Document document) {
 
         PdfPTable table = new PdfPTable(1);
-        table.setTotalWidth(Utilities.millimetersToPoints(30));
+        table.setTotalWidth(Utilities.millimetersToPoints(TABLE_WIDTH));
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_TOP);
         table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
         if (writer.getPageNumber() >= getActiveFromPage() && writer.getPageNumber() <= getActiveToPage()) {

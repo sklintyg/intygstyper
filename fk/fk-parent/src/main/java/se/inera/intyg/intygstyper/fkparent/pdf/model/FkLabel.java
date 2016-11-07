@@ -31,7 +31,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 27/09/16.
+ * An implementation of a generic label component. Besides the common configuration properties, other adjustments can be
+ * made to padding and leading etc.
+ *
  */
 public class FkLabel extends PdfComponent<FkLabel> {
 
@@ -51,6 +53,7 @@ public class FkLabel extends PdfComponent<FkLabel> {
         this.horizontalAlignment = alignment;
         return this;
     }
+
     public FkLabel withVerticalAlignment(int alignment) {
         this.verticalAlignment = alignment;
         return this;

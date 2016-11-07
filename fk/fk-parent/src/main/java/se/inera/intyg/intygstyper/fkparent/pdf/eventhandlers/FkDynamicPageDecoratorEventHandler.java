@@ -31,12 +31,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Decorates the "dynamic" overflow output pages with FK logo, borders etc commaon for all non-static pages in a FK SIT type PDF.
- * <p/>
- * Given that all SIT-intyg types will follow the same rules for handling overflowing fields, this eventhandler could be
+ * Decorates the "dynamic" overflow output pages with FK logo, borders etc common for all non-static pages in a FK SIT
+ * type PDF.
+ * Given that all SIT-intyg types will follow the same rules for handling overflowing fields, this event handler could
+ * be
  * reused for all those types.
- * <p/>
- * Created by marced on 2016-10-21.
  */
 // CHECKSTYLE:OFF MagicNumber
 public class FkDynamicPageDecoratorEventHandler extends PdfPageEventHelper {
@@ -62,10 +61,12 @@ public class FkDynamicPageDecoratorEventHandler extends PdfPageEventHelper {
     }
 
     /**
-     * Decorates overflow pages with logos borders.
+     * Decorates overflow pages with intygsname and a border.
      *
      * @param writer
+     *            PdfWriter
      * @param document
+     *            Document
      */
     @Override
     public void onEndPage(PdfWriter writer, Document document) {

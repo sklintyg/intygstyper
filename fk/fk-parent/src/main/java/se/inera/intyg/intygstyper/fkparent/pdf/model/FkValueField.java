@@ -29,12 +29,12 @@ import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-
 import com.itextpdf.text.pdf.PdfWriter;
+
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
 /**
- * Created by marced on 27/09/16.
+ * Representation of a common text value field.
  */
 public class FkValueField extends PdfComponent<FkValueField> {
 

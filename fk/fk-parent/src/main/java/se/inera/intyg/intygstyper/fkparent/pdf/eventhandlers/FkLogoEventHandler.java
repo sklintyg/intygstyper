@@ -33,14 +33,13 @@ import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
 /**
- * Created by marced on 2016-10-21.
+ * Generic fk-logo stamper. It's rendered at a fixed position, but page interval is configurable.
  */
-// CHECKSTYLE:OFF MagicNumber
 public class FkLogoEventHandler extends PdfPageEventHelper {
     private static String logoPath = "images/forsakringskassans_logotyp.jpg";
-    private float linearScale = 0.253f;
-    private float leftOffset = Utilities.millimetersToPoints(16f);
-    private final float topOffset = Utilities.millimetersToPoints(20f);
+    private static final float LINEAR_SCALE = 0.253f * 100f;
+    private static final float LEFT_OFFSET = Utilities.millimetersToPoints(16f);
+    private static final float TOP_OFFSET = Utilities.millimetersToPoints(20f);
 
     private int activeFromPage;
     private int activeToPage;
@@ -52,7 +51,7 @@ public class FkLogoEventHandler extends PdfPageEventHelper {
         try {
             Resource resource = new ClassPathResource(logoPath);
             fkLogo = Image.getInstance(IOUtils.toByteArray(resource.getInputStream()));
-            fkLogo.scalePercent(linearScale * 100f);
+            fkLogo.scalePercent(LINEAR_SCALE);
         } catch (IOException e) {
             throw new DocumentException("Unable to initialise FkLogoEventHandler: " + e.getMessage());
         }
@@ -69,7 +68,7 @@ public class FkLogoEventHandler extends PdfPageEventHelper {
         if (writer.getPageNumber() >= activeFromPage && writer.getPageNumber() <= activeToPage) {
 
             try {
-                fkLogo.setAbsolutePosition(leftOffset, document.getPageSize().getTop() - topOffset);
+                fkLogo.setAbsolutePosition(LEFT_OFFSET, document.getPageSize().getTop() - TOP_OFFSET);
                 writer.getDirectContent().addImage(fkLogo);
             } catch (DocumentException e) {
                 throw new RuntimeException(e);

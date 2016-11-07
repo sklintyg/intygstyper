@@ -19,6 +19,8 @@
 package se.inera.intyg.intygstyper.fkparent.pdf;
 
 /**
+ * Signals a fatal problem when generating the PDF.
+ *
  * Created by marced on 23/09/16.
  */
 public class PdfGeneratorException extends Exception {

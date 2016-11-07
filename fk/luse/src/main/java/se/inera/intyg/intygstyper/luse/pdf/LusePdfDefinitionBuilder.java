@@ -47,9 +47,9 @@ import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkLogoEventHandler;
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkOverflowPagePersonnummerEventHandlerImpl;
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkPrintedByEventHandler;
 import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.PageNumberingEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCategory;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCheckbox;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkDiagnosKodField;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkFieldGroup;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkLabel;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkOverflowPage;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkOverflowableValueField;
@@ -137,12 +137,13 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         addPage1MiscFields(intyg, showFkAddress, allElements);
 
         // START KATEGORI 1. (Utlåtandet är baserat på....)
-        FkCategory fraga1 = new FkCategory("1. " + getText("FRG_1.RBK"))
+        FkFieldGroup fraga1 = new FkFieldGroup("1. " + getText("FRG_1.RBK"))
                 .offset(KATEGORI_OFFSET_X, 150f)
                 .size(KATEGORI_FULL_WIDTH, 52f)
                 .withBorders(Rectangle.BOX);
 
-        float cbYOffset = 2;
+        //Use a variable for yOffset to minimize use of magic numbers for offsets
+        float checkBoxYOffset = 2;
 
         // Special case of first topLabel
         fraga1.addChild(new FkValueField("")
@@ -151,37 +152,37 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
                 .withTopLabel("datum (år, månad, dag)"));
 
         fraga1.addChild(new FkCheckbox(getText("KV_FKMU_0001.UNDERSOKNING.RBK"), intyg.getUndersokningAvPatienten() != null)
-                .offset(0f, cbYOffset)
+                .offset(0f, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT));
         fraga1.addChild(new FkValueField(nullSafeString(intyg.getUndersokningAvPatienten()))
-                .offset(CHECKBOX_DEFAULT_WIDTH, cbYOffset)
+                .offset(CHECKBOX_DEFAULT_WIDTH, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT)
                 .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE));
 
-        cbYOffset += CHECKBOXROW_DEFAULT_HEIGHT;
+        checkBoxYOffset += CHECKBOXROW_DEFAULT_HEIGHT;
         fraga1.addChild(new FkCheckbox(getText("KV_FKMU_0001.JOURNALUPPGIFTER.RBK"), intyg.getJournaluppgifter() != null)
-                .offset(0f, cbYOffset)
+                .offset(0f, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT));
         fraga1.addChild(new FkValueField(nullSafeString(intyg.getJournaluppgifter()))
-                .offset(CHECKBOX_DEFAULT_WIDTH, cbYOffset)
+                .offset(CHECKBOX_DEFAULT_WIDTH, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT)
                 .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE));
 
-        cbYOffset += CHECKBOXROW_DEFAULT_HEIGHT;
+        checkBoxYOffset += CHECKBOXROW_DEFAULT_HEIGHT;
         fraga1.addChild(new FkCheckbox(getText("KV_FKMU_0001.ANHORIG.RBK"), intyg.getAnhorigsBeskrivningAvPatienten() != null)
-                .offset(0f, cbYOffset)
+                .offset(0f, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT));
         fraga1.addChild(new FkValueField(nullSafeString(intyg.getAnhorigsBeskrivningAvPatienten()))
-                .offset(CHECKBOX_DEFAULT_WIDTH, cbYOffset)
+                .offset(CHECKBOX_DEFAULT_WIDTH, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT)
                 .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE));
 
-        cbYOffset += CHECKBOXROW_DEFAULT_HEIGHT;
+        checkBoxYOffset += CHECKBOXROW_DEFAULT_HEIGHT;
         fraga1.addChild(new FkCheckbox(getText("KV_FKMU_0001.ANNAT.RBK"), intyg.getAnnatGrundForMU() != null)
-                .offset(0f, cbYOffset)
+                .offset(0f, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT));
         fraga1.addChild(new FkValueField(nullSafeString(intyg.getAnnatGrundForMU()))
-                .offset(CHECKBOX_DEFAULT_WIDTH, cbYOffset)
+                .offset(CHECKBOX_DEFAULT_WIDTH, checkBoxYOffset)
                 .size(CHECKBOX_DEFAULT_WIDTH, CHECKBOXROW_DEFAULT_HEIGHT)
 
                 .withValueTextAlignment(PdfPCell.ALIGN_MIDDLE));
@@ -208,7 +209,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
 
         allElements.add(fraga1);
 
-        FkCategory fraga2 = new FkCategory("2. " + getText("FRG_3.RBK"))
+        FkFieldGroup fraga2 = new FkFieldGroup("2. " + getText("FRG_3.RBK"))
                 .offset(KATEGORI_OFFSET_X, 215f)
                 .size(KATEGORI_FULL_WIDTH, 63f)
                 .withBorders(Rectangle.BOX);
@@ -232,8 +233,8 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
 
             if (i < intyg.getUnderlag().size()) {
                 Underlag underlag = intyg.getUnderlag().get(i);
-                label = underlag.getTyp().getLabel();
-                datum = underlag.getDatum().getDate();
+                label = underlag.getTyp() != null ? underlag.getTyp().getLabel() : "";
+                datum = underlag.getDatum() != null ? underlag.getDatum().getDate() : "";
                 hamtasFran = underlag.getHamtasFran();
             }
 
@@ -381,7 +382,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         List<PdfComponent> allElements = new ArrayList<>();
 
         // Diagnos/diagnoser för sjukdom som orsakar nedsatt arbetsförmåga
-        FkCategory fraga3 = new FkCategory("3. " + getText("FRG_6.RBK"))
+        FkFieldGroup fraga3 = new FkFieldGroup("3. " + getText("FRG_6.RBK"))
                 .offset(KATEGORI_OFFSET_X, 24f).size(KATEGORI_FULL_WIDTH, 76.2f)
                 .withBorders(Rectangle.BOX);
         Diagnos currentDiagnos = safeGetDiagnos(intyg, 0);
@@ -449,7 +450,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         allElements.add(fraga3);
 
         // Fraga 4. Bakgrund - beskriv kortfattat förloppet för aktuella sjukdomar
-        FkCategory fraga4 = new FkCategory("4. " + getText("FRG_5.RBK"))
+        FkFieldGroup fraga4 = new FkFieldGroup("4. " + getText("FRG_5.RBK"))
                 .offset(KATEGORI_OFFSET_X, 113f)
                 .size(KATEGORI_FULL_WIDTH, 22.5f)
                 .withBorders(Rectangle.BOX);
@@ -461,7 +462,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         allElements.add(fraga4);
 
         // Fraga 5. Funktionsnedsättning - beskriv undersökningsfynd
-        FkCategory fraga5 = new FkCategory("5. " + getText("DFR_10.1.RBK"))
+        FkFieldGroup fraga5 = new FkFieldGroup("5. " + getText("DFR_10.1.RBK"))
                 .offset(KATEGORI_OFFSET_X, 151.5f)
                 .size(KATEGORI_FULL_WIDTH, 135f)
                 .withBorders(Rectangle.BOX);
@@ -529,7 +530,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         // Fraga 5. (Fortsattning fran sida 2 - ingen rubrik)
         // --------------------------------------------------------------------------
         float fraga5YOffset = 0;
-        FkCategory fraga5 = new FkCategory("")
+        FkFieldGroup fraga5 = new FkFieldGroup("")
                 .offset(KATEGORI_OFFSET_X, 21.5f)
                 .size(KATEGORI_FULL_WIDTH, 101f)
                 .withBorders(Rectangle.BOX);
@@ -573,7 +574,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         allElements.add(fraga5);
 
         // Fraga 6.Aktivitetsbegränsningar --------------------------------------------------------------------------
-        FkCategory fraga6 = new FkCategory("6. " + getText("FRG_17.RBK"))
+        FkFieldGroup fraga6 = new FkFieldGroup("6. " + getText("FRG_17.RBK"))
                 .offset(KATEGORI_OFFSET_X, 138.5f)
                 .size(KATEGORI_FULL_WIDTH, 29.2f)
                 .withBorders(Rectangle.BOX);
@@ -587,7 +588,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         allElements.add(fraga6);
 
         // Fraga 7.Medicinsk behandling --------------------------------------------------------------------------
-        FkCategory fraga7 = new FkCategory("7. " + getText("KAT_7.RBK"))
+        FkFieldGroup fraga7 = new FkFieldGroup("7. " + getText("KAT_7.RBK"))
                 .offset(KATEGORI_OFFSET_X, 181.2f)
                 .size(KATEGORI_FULL_WIDTH, 110.2f)
                 .withBorders(Rectangle.BOX);
@@ -648,7 +649,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         List<PdfComponent> allElements = new ArrayList<>();
         // Fraga 8. Medicinska forutsattningar
         // --------------------------------------------------------------------------
-        FkCategory fraga8 = new FkCategory("8. " + getText("KAT_8.RBK"))
+        FkFieldGroup fraga8 = new FkFieldGroup("8. " + getText("KAT_8.RBK"))
                 .offset(KATEGORI_OFFSET_X, 25.5f)
                 .size(KATEGORI_FULL_WIDTH, 54f)
                 .withBorders(Rectangle.BOX);
@@ -675,7 +676,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         allElements.add(fraga8);
 
         // Fraga 9. Övriga upplysningar --------------------------------------------------------------------------
-        FkCategory fraga9 = new FkCategory("9. " + getText("FRG_25.RBK"))
+        FkFieldGroup fraga9 = new FkFieldGroup("9. " + getText("FRG_25.RBK"))
                 .offset(KATEGORI_OFFSET_X, 93f)
                 .size(KATEGORI_FULL_WIDTH, 27f)
                 .withBorders(Rectangle.BOX);
@@ -683,7 +684,9 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         StringBuilder ovrigt = new StringBuilder();
 
         if (!StringUtils.isBlank(intyg.getMotiveringTillInteBaseratPaUndersokning())) {
-            ovrigt.append("Motivering till varför utlåtandet inte baseras på undersökning av patienten: " + intyg.getMotiveringTillInteBaseratPaUndersokning() + "\n");
+            ovrigt.append("Motivering till varför utlåtandet inte baseras på undersökning av patienten: ")
+                    .append(intyg.getMotiveringTillInteBaseratPaUndersokning())
+                    .append("\n");
         }
 
         if (!StringUtils.isBlank(intyg.getOvrigt())) {
@@ -699,7 +702,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         allElements.add(fraga9);
 
         // Fraga 10. Kontakt med FK --------------------------------------------------------------------------
-        FkCategory fraga10 = new FkCategory("10. " + getText("FRG_26.RBK"))
+        FkFieldGroup fraga10 = new FkFieldGroup("10. " + getText("FRG_26.RBK"))
                 .offset(KATEGORI_OFFSET_X, 133.5f)
                 .size(KATEGORI_FULL_WIDTH, 22.5f)
                 .withBorders(Rectangle.BOX);
@@ -716,7 +719,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
         allElements.add(fraga10);
 
         // Fraga 11. Underskrift --------------------------------------------------------------------------
-        FkCategory fraga11 = new FkCategory("11. Underskrift")
+        FkFieldGroup fraga11 = new FkFieldGroup("11. Underskrift")
                 .offset(KATEGORI_OFFSET_X, 170f)
                 .size(KATEGORI_FULL_WIDTH, 85.5f)
                 .withBorders(Rectangle.BOX);
