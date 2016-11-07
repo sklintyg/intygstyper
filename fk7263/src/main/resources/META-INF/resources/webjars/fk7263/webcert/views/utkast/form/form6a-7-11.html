@@ -2,15 +2,6 @@
     <div wc-field field-label="fk7263.label.rekommendationer" id="rekommendationerForm" field-number="6a, 7, 11"
          field-help-text="fk7263.helptext.rekommendationer">
 
-        <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.rekommendationer"
-             id="validationMessages_rekommendationer">
-            <ul>
-                <li ng-repeat="message in viewState.common.validationMessagesGrouped.rekommendationer"><span message
-                                                                                                             key="{{message.message}}"></span>
-                </li>
-            </ul>
-        </div>
-
         <!-- 11 -->
         <div>Resor till och från arbetet med annat färdmedel än normalt kan göra det möjligt för patienten
             att återgå i arbete</label> <span wc-help-mark
@@ -54,45 +45,48 @@
                     vad *)</label><span wc-help-mark
                                       field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
 
-                <div class="indent" ng-if="model.rekommendationOvrigtCheck">
-                    <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
-                           value=""
-                           class='form-control maxwidth' ng-model="model.rekommendationOvrigt" maxlength="80"
-                           wc-maxlength>
 
-                </div>
+                <wc-validation-wrapper field-type="multi-text" validations="viewState.getValidationErrors('rekommendationovrigt')">
+                    <div class="indent" ng-if="model.rekommendationOvrigtCheck">
+                        <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
+                               value=""
+                               class='form-control maxwidth' ng-model="model.rekommendationOvrigt" maxlength="80"
+                               wc-maxlength>
+
+                    </div>
+                </wc-validation-wrapper>
             </div>
 
             <!-- 7 -->
-<span id="recommendationsToFkReabInQuestionRadioGroup">
-  <h4 class="inline-block">Är arbetslivsinriktad rehabilitering aktuell?</h4><span wc-help-mark
-                                                                                   field-help-text="fk7263.helptext.rekommendationer.arbetslivsinriktad-rehabilitering"></span>
+            <span id="recommendationsToFkReabInQuestionRadioGroup">
+                  <h4 class="inline-block">Är arbetslivsinriktad rehabilitering aktuell?</h4><span wc-help-mark
+                                                                                                   field-help-text="fk7263.helptext.rekommendationer.arbetslivsinriktad-rehabilitering"></span>
 
-  <!-- Rehab -->
-  <!-- YES -->
-  <div class="form-group">
-      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion"
-                                         value="JA"
-                                         ng-model="model.rehab" id="rehabYes" ng-change="model.setrehab('JA')">
-          Ja</label>
-  </div>
+                  <!-- Rehab -->
+                  <!-- YES -->
+                  <div class="form-group">
+                      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion"
+                                                         value="JA"
+                                                         ng-model="model.rehab" id="rehabYes" ng-change="model.setrehab('JA')">
+                          Ja</label>
+                  </div>
 
-  <!-- NO -->
-  <div class="form-group">
-      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
-                                         value="NEJ" ng-model="model.rehab" id="rehabNo"
-                                         ng-change="model.setrehab('NEJ')">
-          Nej</label>
-  </div>
+                  <!-- NO -->
+                  <div class="form-group">
+                      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
+                                                         value="NEJ" ng-model="model.rehab" id="rehabNo"
+                                                         ng-change="model.setrehab('NEJ')">
+                          Nej</label>
+                  </div>
 
-  <!-- GÅR EJ ATT BEDÖMA -->
-  <div class="form-group">
-      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
-                                         value="GAREJ" ng-model="model.rehab" id="garej"
-                                         ng-change="model.setrehab('GAREJ')"> Går inte
-          att bedöma</label>
-  </div>
-</span>
+                  <!-- GÅR EJ ATT BEDÖMA -->
+                  <div class="form-group">
+                      <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
+                                                         value="GAREJ" ng-model="model.rehab" id="garej"
+                                                         ng-change="model.setrehab('GAREJ')"> Går inte
+                          att bedöma</label>
+                  </div>
+            </span>
         </div>
     </div>
 </div>

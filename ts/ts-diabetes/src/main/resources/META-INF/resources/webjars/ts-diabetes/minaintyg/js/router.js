@@ -46,5 +46,11 @@ angular.module('ts-diabetes').config(function($stateProvider) {
             templateUrl: '/web/webjars/ts-diabetes/minaintyg/views/sent-cert.html',
             controller: 'common.SendCertWizardCtrl',
             data:{title: 'Intyget skickat till mottagare'}
+        }).
+        state('ts-diabetes-visafel', {
+            url :'/ts-diabetes/visafel/:errorCode',
+            templateUrl: '/web/webjars/ts-diabetes/minaintyg/views/error.html',
+            controller: 'ts-diabetes.ErrorCtrl',
+            data : { title: 'Fel', backLink: '/web/start' }
         });
 });

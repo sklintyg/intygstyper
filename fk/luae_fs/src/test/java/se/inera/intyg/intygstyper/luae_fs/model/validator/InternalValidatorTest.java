@@ -9,7 +9,7 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.intygstyper.luae_fs.utils.ScenarioFinder;
 import se.inera.intyg.intygstyper.luae_fs.utils.ScenarioNotFoundException;
@@ -19,7 +19,7 @@ import se.inera.intyg.intygstyper.luae_fs.validator.InternalDraftValidatorImpl;
 public class InternalValidatorTest {
 
     @Spy
-    private InternalValidatorUtil validatorUtil = new InternalValidatorUtil();
+    private ValidatorUtilFK validatorUtil = new ValidatorUtilFK();
 
     @InjectMocks
     private InternalDraftValidatorImpl internalValidator;

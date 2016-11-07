@@ -25,48 +25,60 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                 {
                     key: 'grundData.patient.postadress',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postadress', disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postadress', required: true, disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.patient.postnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postnummer', disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postnummer', required: true, disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     key: 'grundData.patient.postort',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: {staticLabel: 'Postort', required: true, disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
                 },
                 {
                     type: 'patient-address-updater',
                     hideExpression: function() { return UserModel.isDjupintegration(); },
-                    templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned:true}
+                    templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned: true}
                 }
             ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 1, categoryName: categoryNames[1], prototypeName: 'default'},
+            templateOptions: {category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4, noH5:false}},
-                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
-                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
-                {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
-                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT'}},
+                {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4, noH5After:false, required: true}},
                 {
+                    wrapper: 'validationGroup',
+                    templateOptions: { type:'check-group', validationGroup: 'baserasPa' },
+                    fieldGroup: [
+                        { key: 'undersokningAvPatienten', type: 'date', className: 'small-gap', templateOptions: {
+                            label: 'KV_FKMU_0001.UNDERSOKNING', hideWhenEmpty: true }
+                        },{ key: 'journaluppgifter', type: 'date', className: 'small-gap', templateOptions: {
+                            label: 'KV_FKMU_0001.JOURNALUPPGIFTER', hideWhenEmpty: true }
+                        },{ key: 'anhorigsBeskrivningAvPatienten', className: 'small-gap', type: 'date', templateOptions: {
+                            label: 'KV_FKMU_0001.ANHORIG', hideWhenEmpty: true }
+                        },{ key: 'annatGrundForMU', type: 'date', templateOptions: {
+                            label: 'KV_FKMU_0001.ANNAT',  hideWhenEmpty: true }
+                        }
+                    ]
+                },{
                     key: 'annatGrundForMUBeskrivning',
-                    type: 'single-text',
+                    type: 'single-text-vertical',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
+                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full' }
                 },
-                {key: 'kannedomOmPatient', type: 'singleDate', templateOptions: {label: 'FRG_2'}},
-                {key: 'underlagFinns', type: 'boolean', templateOptions: {label: 'FRG_3'}},
+                { key: 'kannedomOmPatient', type: 'singleDate', templateOptions: { label: 'FRG_2', required: true } },
+                { key: 'underlagFinns', type: 'boolean', templateOptions: { label: 'FRG_3', required: true } },
                 {
-                    key: 'underlag', type: 'underlag',
+                    key: 'underlag',
+                    type: 'underlag',
                     className: 'slide-animation',
                     hideExpression: '!model.underlagFinns',
                     templateOptions: {
+                        maxUnderlag: 3,
                         underlagsTyper: ['NEUROPSYKIATRISKT',
                             'HABILITERING',
                             'ARBETSTERAPEUT',
@@ -74,11 +86,13 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                             'LOGOPED',
                             'PSYKOLOG',
                             'FORETAGSHALSOVARD',
-                            'SKOLHALSOVARD',
                             'SPECIALISTKLINIK',
                             'VARD_UTOMLANDS',
-                            'OVRIGT_UTLATANDE'],
-                        label: 'FRG_4', typLabel: 'DFR_4.1', datumLabel: 'DFR_4.2', hamtasFranLabel: 'DFR_4.3'
+                            'OVRIGT_UTLATANDE'
+                        ],
+                        typLabel: 'FRG_4',
+                        datumLabel: 'DFR_4.2',
+                        hamtasFranLabel: 'DFR_4.3'
                     },
                     watcher: {
                         expression: 'model.underlagFinns',
@@ -91,19 +105,19 @@ angular.module('luae_na').factory('luae_na.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 4, categoryName: categoryNames[4]},
             fieldGroup: [
-                {type: 'headline', templateOptions: {label: 'FRG_6', level:4, noH5:false}},
+                { type: 'headline', templateOptions: { label: 'FRG_6', level: 4, noH5After: false, required: true } },
                 {
                     key: 'diagnoser',
                     type: 'diagnos',
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 },
-                {key: 'diagnosgrund', type: 'multi-text', templateOptions: {label: 'DFR_7.1'}},
-                {key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: {label: 'FRG_45'}},
+                { key: 'diagnosgrund', type: 'multi-text', templateOptions: { label: 'DFR_7.1', required: true } },
+                { key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: { label: 'FRG_45', required: true } },
                 {
                     key: 'diagnosForNyBedomning',
                     className: 'fold-animation',
                     type: 'multi-text',
-                    templateOptions: {label: 'DFR_45.2'},
+                    templateOptions: { label: 'DFR_45.2', required: true },
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
             ]
@@ -112,52 +126,52 @@ angular.module('luae_na').factory('luae_na.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 3, categoryName: categoryNames[3]},
             fieldGroup: [
-                {key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: {label: 'DFR_5.1'}}
+                { key: 'sjukdomsforlopp', type: 'multi-text', templateOptions: { label: 'DFR_5.1', required: true } }
             ]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 5, categoryName: categoryNames[5]},
-            fieldGroup: [
-                {key: 'funktionsnedsattningIntellektuell', type: 'multi-text', templateOptions: {label: 'DFR_8.1'}},
-                {key: 'funktionsnedsattningKommunikation', type: 'multi-text', templateOptions: {label: 'DFR_9.1'}},
-                {key: 'funktionsnedsattningKoncentration', type: 'multi-text', templateOptions: {label: 'DFR_10.1'}},
-                {key: 'funktionsnedsattningPsykisk', type: 'multi-text', templateOptions: {label: 'DFR_11.1'}},
-                {key: 'funktionsnedsattningSynHorselTal', type: 'multi-text', templateOptions: {label: 'DFR_12.1'}},
-                {
-                    key: 'funktionsnedsattningBalansKoordination',
-                    type: 'multi-text',
-                    templateOptions: {label: 'DFR_13.1'}
-                },
-                {key: 'funktionsnedsattningAnnan', type: 'multi-text', templateOptions: {label: 'DFR_14.1'}}
-            ]
+            templateOptions: { category: 5, categoryName: categoryNames[5], required: true },
+            fieldGroup: [{
+                wrapper: 'validationGroup',
+                templateOptions: { type:'text-group', validationGroup: 'funktionsnedsattning' },
+                fieldGroup: [
+                    { key: 'funktionsnedsattningIntellektuell', type: 'check-multi-text', templateOptions: { frgId: '8' } },
+                    { key: 'funktionsnedsattningKommunikation', type: 'check-multi-text', templateOptions: { frgId: '9' } },
+                    { key: 'funktionsnedsattningKoncentration', type: 'check-multi-text', templateOptions: { frgId: '10' } },
+                    { key: 'funktionsnedsattningPsykisk', type: 'check-multi-text', templateOptions: { frgId: '11' } },
+                    { key: 'funktionsnedsattningSynHorselTal', type: 'check-multi-text', templateOptions: { frgId: '12' } },
+                    { key: 'funktionsnedsattningBalansKoordination', type: 'check-multi-text', templateOptions: { frgId: '13' } },
+                    { key: 'funktionsnedsattningAnnan', type: 'check-multi-text', templateOptions: { frgId: '14' }
+                }]
+            }]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 6, categoryName: categoryNames[6]},
-            fieldGroup: [
-                {
-                    key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}
-                }
-            ]
+            templateOptions: { category: 6, categoryName: categoryNames[6] },
+            fieldGroup: [{
+                key: 'aktivitetsbegransning',
+                type: 'multi-text',
+                templateOptions: { label: 'DFR_17.1', required: true }
+            }]
         },
         {
             wrapper: 'wc-field',
-            templateOptions: {category: 7, categoryName: categoryNames[7]},
+            templateOptions: { category: 7, categoryName: categoryNames[7] },
             fieldGroup: [
-                {key: 'avslutadBehandling', type: 'multi-text', templateOptions: {label: 'DFR_18.1'}},
-                {key: 'pagaendeBehandling', type: 'multi-text', templateOptions: {label: 'DFR_19.1'}},
-                {key: 'planeradBehandling', type: 'multi-text', templateOptions: {label: 'DFR_20.1'}},
-                {key: 'substansintag', type: 'multi-text', templateOptions: {label: 'DFR_21.1'}}
+                { key: 'avslutadBehandling', type: 'check-multi-text', templateOptions: { frgId: '18' } },
+                { key: 'pagaendeBehandling', type: 'check-multi-text', templateOptions: { frgId: '19' } },
+                { key: 'planeradBehandling', type: 'check-multi-text', templateOptions: { frgId: '20' } },
+                { key: 'substansintag', type: 'check-multi-text', templateOptions: { frgId: '21' } }
             ]
         },
         {
             wrapper: 'wc-field',
             templateOptions: {category: 8, categoryName: categoryNames[8]},
             fieldGroup: [
-                {key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: {label: 'DFR_22.1'}},
-                {key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'}},
-                {key: 'forslagTillAtgard', type: 'multi-text', templateOptions: {label: 'DFR_24.1'}}
+                { key: 'medicinskaForutsattningarForArbete', type: 'multi-text', templateOptions: { label: 'DFR_22.1', required: true } },
+                { key: 'formagaTrotsBegransning', type: 'multi-text', templateOptions: {label: 'DFR_23.1'} },
+                { key: 'forslagTillAtgard', type: 'multi-text', templateOptions: {label: 'DFR_24.1'} }
             ]
         },
         {
@@ -175,7 +189,7 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
-                    className: 'fold-animation',
+                    className: 'fold-animation webcert-top-padding-section',
                     hideExpression: '!model.kontaktMedFk',
                     templateOptions: {label: 'DFR_26.2'}
                 }
@@ -191,22 +205,22 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                 {
                     key: 'grundData.skapadAv.vardenhet.postadress',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: { staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal', required: true }
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: { staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal', required: true }
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.postort',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: { staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal', required: true }
                 },
                 {
                     key: 'grundData.skapadAv.vardenhet.telefonnummer',
                     type: 'single-text',
-                    templateOptions: {staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal'}
+                    templateOptions: { staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal', required: true }
                 }
             ]
         }

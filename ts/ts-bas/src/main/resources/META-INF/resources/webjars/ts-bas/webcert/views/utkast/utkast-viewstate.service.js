@@ -127,5 +127,12 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
             };
             /* jshint ignore:end */
 
+            this.getValidationErrors = function(field) {
+                if (!this.common.validationMessagesByField) {
+                    return null;
+                }
+                return this.common.validationMessagesByField[field.toLowerCase()];
+            };
+
             this.reset();
         }]);

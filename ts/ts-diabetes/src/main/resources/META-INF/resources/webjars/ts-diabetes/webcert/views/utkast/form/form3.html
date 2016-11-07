@@ -6,17 +6,6 @@
      ng-form
      name="synForm" id="synForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.syn" id="validationMessages_syn">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.syn"><span message
-                                                                                            key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <td></td>
       <td></td>
@@ -43,6 +32,8 @@
                  ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
       <td><span dynamic-label key="FRG_43.RBK"></span> *</td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('separatOgonlakarintyg')"></wc-field-validation></td></tr>
+
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
       <td></td>
@@ -65,6 +56,8 @@
         <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('provningUtanAnmarkning')"></wc-field-validation></td></tr>
+
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
       <td></td>
@@ -88,27 +81,52 @@
           </tr>
           <tr>
             <td>Höger öga</td>
-            <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hoger.utanKorrektion" maxlength="4"></td>
-            <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hoger.medKorrektion" maxlength="4"></td>
+            <td>
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('hoger.utankorrektion')">
+                <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
+                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hoger.utanKorrektion" maxlength="4">
+              </wc-validation-wrapper>
+            </td>
+            <td>
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('hoger.medKorrektion')">
+                <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
+                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hoger.medKorrektion" maxlength="4">
+              </wc-validation-wrapper>
+            </td>
           </tr>
           <tr>
             <td>Vänster öga</td>
-            <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vanster.utanKorrektion" maxlength="4"></td>
-            <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vanster.medKorrektion" maxlength="4"></td>
+            <td>
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('vanster.utankorrektion')">
+                <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
+                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vanster.utanKorrektion" maxlength="4">
+              </wc-validation-wrapper>
+            </td>
+            <td>
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('vanster.medKorrektion')">
+                <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
+                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vanster.medKorrektion" maxlength="4">
+              </wc-validation-wrapper>
+            </td>
           </tr>
           <tr>
             <td>Binokulärt</td>
-            <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4"></td>
-            <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4"></td>
+            <td>
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('binokulart.utankorrektion')">
+                <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
+                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4">
+              </wc-validation-wrapper>
+            </td>
+            <td>
+              <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('binokulart.medKorrektion')">
+                <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
+                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4">
+              </wc-validation-wrapper>
+            </td>
           </tr>
         </table>
     </tr>
+
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi">
       </td>
@@ -119,5 +137,7 @@
         <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('diplopi')"></wc-field-validation></td></tr>
+
   </table>
 </div>

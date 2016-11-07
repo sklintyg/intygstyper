@@ -38,44 +38,11 @@ subprojects {
 
     task createVersionPropertyFile(type: VersionPropertyFileTask)
 
-    task unzipBuildTools(type: Copy) {
-        description 'Extracts common-build-tools'
-        into "$buildDir/build-tools/"
-        from {
-            configurations.buildtools.collect { zipTree(it) }
-        }
-    }
-
     task packageTests(type: Jar) {
         from sourceSets.test.output
         classifier = 'tests'
     }
     artifacts.archives packageTests
-
-    apply plugin: 'checkstyle'
-
-    checkstyle {
-        config = resources.text.fromFile("${buildDir}/build-tools/checkstyle/checkstyle.xml")
-        ignoreFailures = false
-        showViolations = true
-    }
-
-    checkstyleMain.onlyIf { project.hasProperty('codeQuality') }
-    checkstyleMain.dependsOn unzipBuildTools
-    checkstyleMain.source = "src/main/java"
-    checkstyleTest.enabled = false
-
-    apply plugin: 'jacoco'
-
-    jacoco {
-        toolVersion = "0.7.6.201602180812"
-    }
-
-    test {
-        jacoco {
-            destinationFile = file("$buildDir/jacoco/test.exec")
-        }
-    }
 
     uploadArchives.repositories.mavenDeployer {
         repository(url: "https://build-inera.nordicmedtest.se/nexus/content/repositories/releases") {
@@ -89,10 +56,6 @@ subprojects {
         }
     }
 
-    configurations {
-        buildtools
-    }
-
     dependencies {
         compile "se.inera.intyg.common:common-support:${commonVersion}"
         compile "se.inera.intyg.common:common-web:${commonVersion}"
@@ -104,8 +67,6 @@ subprojects {
         compile "commons-collections:commons-collections:${commonsCollectionsVersion}"
         compile "com.helger:ph-schematron:${phSchematronVersion}"
         compile "org.springframework:spring-tx:${springVersion}"
-
-        buildtools "se.inera.intyg.common:common-build-tools:${commonVersion}"
 
         testCompile "junit:junit:4.+"
         testCompile "commons-io:commons-io:${commonsIoVersion}"
@@ -138,7 +99,7 @@ configure(subprojects.findAll {['fk7263', 'ts-bas', 'ts-diabetes', 'lisjp', 'lus
         nodeModulesDir = rootProject.projectDir
     }
 
-    task jsInclude(type: NodeTask, dependsOn: [npmInstall, unzipBuildTools]) {
+    task jsInclude(type: NodeTask, dependsOn: [npmInstall, 'unzipBuildTools']) {
         def webappOutputDir = 'build/'
 
         inputs.dir("$projectDir/src/main/resources")
@@ -163,7 +124,6 @@ configure(subprojects.findAll {['fk7263', 'ts-bas', 'ts-diabetes', 'lisjp', 'lus
                 "--npmDir=${rootProject.projectDir}", 'lint']
     }
 
-    checkstyleMain.dependsOn(jsCodeQuality)
     jsCodeQuality.onlyIf { project.hasProperty('codeQuality') }
 
     jar {
@@ -172,6 +132,10 @@ configure(subprojects.findAll {['fk7263', 'ts-bas', 'ts-diabetes', 'lisjp', 'lus
         exclude '**/*.test.js'
         exclude '**/karma*.conf.js'
         exclude '**/karma*.conf.ci.js'
+    }
+
+    afterEvaluate {
+        checkstyleMain.dependsOn jsCodeQuality
     }
 }
 
@@ -214,19 +178,7 @@ task tagRelease(type: TagReleaseTask)
 
 task testReport(type: SharedTestReportTask)
 
-apply plugin: "org.sonarqube"
-
-sonarqube {
-    properties {
-        property "sonar.jacoco.reportPath", "$buildDir/jacoco/test.exec"
-        property "sonar.projectName", "Intygstyper"
-        property "sonar.projectKey", "intygstyper"
-        property "sonar.host.url", System.properties['sonarUrl'] ?: "https://build-inera.nordicmedtest.se/sonar"
-        property "sonar.test.exclusions", "src/test/**"
-        property "sonar.exclusions", ["**/stub/**", "**/exception/**", "**/*Exception*.java", "**/templates.js"]
-        property "sonar.javascript.lcov.reportPath", "build/karma/merged_lcov.info"
-    }
-}
+apply from: file("codequality.gradle")
 
 buildscript {
     dependencies {

@@ -208,9 +208,10 @@ angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
 
                 } else {
                     // show error view
-                    $location.path('/fel');
+                    $location.path('/ts-bas/visafel/certnotfound');
                 }
             }, function(error) {
                 $log.debug(error);
+                $location.path('/ts-bas/visafel/certnotfound');
             });
         }]);

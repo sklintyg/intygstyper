@@ -1,12 +1,6 @@
 <a id="anchor.vardenhet" name="anchor.vardenhet"></a>
 <div id="vardenhetForm" wc-field field-label="ts-diabetes.label.vardenhet" field-has-errors="viewState.common.validationMessagesGrouped.vardenhet">
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.vardenhet" id="validationMessages_vardenhet">
-    <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.vardenhet"><span message
-                                                                                            key="{{message.message}}"></span>
-      </li>
-    </ul>
-  </div>
+
   <label class="control-label">{{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsnamn}}
     ({{viewState.intygModel.grundData.skapadAv.vardenhet.enhetsid}}),
     {{viewState.intygModel.grundData.skapadAv.vardenhet.vardgivare.vardgivarnamn}}</label>
@@ -17,36 +11,57 @@
   </div>
 
   <div class="form-horizontal">
+
     <div class="form-group">
-      <label class="col-xs-3 control-label">Postadress *</label>
-      <div class="col-xs-9">
-        <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
-               name="clinicInfo.postalAddress" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postadress"
-               maxlength="70">
-      </div>
+      <wc-validation-wrapper label-col-size="3" field-type="single-text" validations="viewState.getValidationErrors('vardenhet.postadress')">
+        <div class="row">
+          <label class="col-md-3 control-label">Postadress *</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
+                   name="clinicInfo.postalAddress" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postadress"
+                   maxlength="70">
+          </div>
+        </div>
+      </wc-validation-wrapper>
     </div>
+
     <div class="form-group">
-      <label class="col-xs-3 control-label">Postnummer *</label>
-      <div class="col-xs-9">
-        <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
-               name="clinicInfo.postalCode" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postnummer"
-               maxlength="6">
-      </div>
+      <wc-validation-wrapper label-col-size="3" field-type="single-text" validations="viewState.getValidationErrors('vardenhet.postnummer')">
+        <div class="row">
+          <label class="col-md-3 control-label">Postnummer *</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
+                   name="clinicInfo.postalCode" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postnummer"
+                   maxlength="6">
+          </div>
+        </div>
+      </wc-validation-wrapper>
     </div>
+
     <div class="form-group">
-      <label class="col-xs-3 control-label">Postort *</label>
-      <div class="col-xs-9">
-        <input type="text" class="form-control" id="clinicInfoPostalCity"
-               name="clinicInfo.postalCity" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postort"
-               maxlength="30">
-      </div>
+      <wc-validation-wrapper label-col-size="3" field-type="single-text" validations="viewState.getValidationErrors('vardenhet.postort')">
+        <div class="row">
+          <label class="col-md-3 control-label">Postort *</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" id="clinicInfoPostalCity"
+                   name="clinicInfo.postalCity" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postort"
+                   maxlength="30">
+          </div>
+        </div>
+      </wc-validation-wrapper>
     </div>
+
     <div class="form-group">
-      <label class="col-xs-3 control-label">Telefonnummer *</label>
-      <div class="col-xs-9">
-        <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
-               ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer" maxlength="20">
-      </div>
+      <wc-validation-wrapper label-col-size="3" field-type="single-text" validations="viewState.getValidationErrors('vardenhet.telefonnummer')">
+        <div class="row">
+          <label class="col-md-3 control-label">Telefonnummer *</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
+                   ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer" maxlength="20">
+          </div>
+        </div>
+      </wc-validation-wrapper>
     </div>
+
   </div>
 </div>

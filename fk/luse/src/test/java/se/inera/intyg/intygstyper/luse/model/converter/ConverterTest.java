@@ -26,7 +26,7 @@ import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RegisterCertificateTestValidator;
-import se.inera.intyg.intygstyper.fkparent.model.validator.InternalValidatorUtil;
+import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.validator.InternalDraftValidatorImpl;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -35,7 +35,7 @@ import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.Regi
 public class ConverterTest {
 
     @Spy
-    private InternalValidatorUtil validatorUtil = new InternalValidatorUtil();
+    private ValidatorUtilFK validatorUtil = new ValidatorUtilFK();
 
     @InjectMocks
     private InternalDraftValidatorImpl internalValidator;

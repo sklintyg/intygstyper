@@ -25,29 +25,61 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.validate.StringValidator;
+import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
+
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
+
 
 /**
  * Created by BESA on 2016-02-23.
  */
-public class InternalValidatorUtil {
+public class ValidatorUtilFK {
 
     @Autowired(required = false)
     private WebcertModuleService moduleService;
 
-    private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ValidatorUtilFK.class);
+    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
     private static final int MIN_SIZE_DIAGNOS = 3;
 
-    public void validateDiagnose(String intygsTyp, List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
+    public enum GrundForMu {
+        UNDERSOKNING,
+        JOURNALUPPGIFTER,
+        ANHORIGSBESKRIVNING,
+        ANNAT,
+        TELEFONKONTAKT;
+
+        public String getFieldName() {
+            switch (this) {
+                case UNDERSOKNING:
+                    return GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
+                case ANHORIGSBESKRIVNING:
+                    return GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
+                case JOURNALUPPGIFTER:
+                    return GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
+                case ANNAT:
+                    return GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
+                case TELEFONKONTAKT:
+                    return GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1;
+                default:
+                    return "annat";
+            }
+        }
+    }
+
+    public void validateDiagnose(List<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
 
         if (diagnoser == null || diagnoser.isEmpty()) {
-            addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                    intygsTyp + ".validation.diagnos.missing");
+            ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser.0.diagnoskod", ValidationMessageType.EMPTY,
+                    "common.validation.diagnos.missing");
         }
 
         for (int i = 0; i < diagnoser.size(); i++) {
@@ -57,25 +89,25 @@ public class InternalValidatorUtil {
                R9 För delfråga 6.2 ska diagnoskod anges med minst fyra positioner då en psykisk diagnos anges.
                Med psykisk diagnos avses alla diagnoser som börjar med Z73 eller med F (dvs. som tillhör F-kapitlet i ICD-10). */
             if (StringUtils.isBlank(diagnos.getDiagnosKod())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        intygsTyp + ".validation.diagnos" + i + ".missing");
+                ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.EMPTY,
+                        "common.validation.diagnos" + i + ".missing");
             } else {
                 String trimDiagnoskod = StringUtils.trim(diagnos.getDiagnosKod()).toUpperCase();
                 if ((trimDiagnoskod.startsWith("Z73") || trimDiagnoskod.startsWith("F"))
                         && trimDiagnoskod.length() < MIN_SIZE_PSYKISK_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            intygsTyp + ".validation.diagnos" + i + ".psykisk.length-4");
+                    ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
+                            "common.validation.diagnos" + i + ".psykisk.length-4");
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
-                    addValidationError(validationMessages, "diagnos", ValidationMessageType.INVALID_FORMAT,
-                            intygsTyp + ".validation.diagnos" + i + ".length-3");
+                    ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
+                            "common.validation.diagnos" + i + ".length-3");
                 } else {
-                    validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos",
-                            intygsTyp + ".validation.diagnos" + i + ".invalid", validationMessages);
+                    validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos.diagnoser",
+                            "common.validation.diagnos" + i + ".invalid", validationMessages);
                 }
             }
             if (StringUtils.isBlank(diagnos.getDiagnosBeskrivning())) {
-                addValidationError(validationMessages, "diagnos", ValidationMessageType.EMPTY,
-                        intygsTyp + ".validation.diagnos" + i + ".description.missing");
+                ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnosbeskrivning", ValidationMessageType.EMPTY,
+                        "common.validation.diagnos" + i + ".description.missing");
             }
         }
     }
@@ -88,24 +120,13 @@ public class InternalValidatorUtil {
         }
 
         if (!moduleService.validateDiagnosisCode(diagnosKod, kodsystem)) {
-            addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
+            ValidatorUtil.addValidationError(validationMessages, field, ValidationMessageType.INVALID_FORMAT, msgKey);
         }
 
     }
 
-    /**
-     * Create a ValidationMessage and add it to the list of messages.
-     *
-     * @param validationMessages
-     *            list collection messages
-     * @param field
-     *            a String with the name of the field
-     * @param msg
-     *            a String with an error code for the front end implementation
-     */
-    public void addValidationError(List<ValidationMessage> validationMessages, String field, ValidationMessageType type, String msg) {
-        validationMessages.add(new ValidationMessage(field, type, msg));
-        LOG.debug(field + " " + msg);
+    public static void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
+        String validationType = "grundformu." + type.getFieldName();
+        ValidatorUtil.validateDate(date, validationMessages, validationType);
     }
-
 }

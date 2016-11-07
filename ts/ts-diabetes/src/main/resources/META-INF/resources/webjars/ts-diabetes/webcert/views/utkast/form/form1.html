@@ -5,59 +5,59 @@
      class="print-pagebreak-after"
      field-has-errors="viewState.common.validationMessagesGrouped.diabetes"
      id="allmantForm">
-  <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diabetes" id="validationMessages_diabetes">
-    <ul>
-      <li ng-repeat="message in viewState.common.validationMessagesGrouped.diabetes"><span message
-                                                                                           key="{{message.message}}"></span>
-      </li>
-    </ul>
-  </div>
-  <div class="form-group">
+  <div class="form-group" wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('observationsperiod')">
     <label for="diabetesyear"><span dynamic-label key="FRG_35.RBK"></span> *</label>
     <div class="controls">
       <input id="diabetesyear" class="form-control input-year" type="text" maxlength="4"
              ng-model="viewState.intygModel.diabetes.observationsperiod" />
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('diabetesTyp')">
     <span dynamic-label key="FRG_18.RBK"></span> *
     <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_1"
                                 ng-model="viewState.intygModel.diabetes.diabetestyp">Typ 1</label>
     <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_2"
                                 ng-model="viewState.intygModel.diabetes.diabetestyp">Typ 2</label>
   </div>
-  <div class="form-group">
-    <span dynamic-label key="FRG_19.RBK"></span> *
-    <label class="checkbox"><input id="diabetestreat1" name="diabetestreat1" type="checkbox"
-                                   ng-model="viewState.intygModel.diabetes.endastKost">
-      <span dynamic-label key="DFR_19.1.RBK"></span>
-    </label>
-    <label class="checkbox"><input id="diabetestreat2" name="diabetestreat2" type="checkbox"
-                                   ng-model="viewState.intygModel.diabetes.tabletter">
-      <span dynamic-label key="DFR_19.2.RBK"></span>
-    </label>
-    <label class="checkbox"><input id="diabetestreat3" name="diabetestreat3" type="checkbox"
-                                   ng-model="viewState.intygModel.diabetes.insulin">
-      <span dynamic-label key="DFR_19.3.RBK"></span>
-    </label>
-    <div class="form-group indent" ng-show="viewState.intygModel.diabetes.insulin">
-      <label for="insulinBehandlingsperiod"><span dynamic-label
-                                                  key="DFR_19.4.RBK"></span> *</label>
-      <div class="controls">
-        <input id="insulinBehandlingsperiod" class="form-control input-year"
-               name="insulinBehandlingsperiod" type="text"
-               ng-model="viewState.intygModel.diabetes.insulinBehandlingsperiod" maxlength="4" />
+
+  <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('behandling')">
+
+    <div class="form-group">
+      <span dynamic-label key="FRG_19.RBK"></span> *
+      <label class="checkbox"><input id="diabetestreat1" name="diabetestreat1" type="checkbox"
+                                     ng-model="viewState.intygModel.diabetes.endastKost">
+        <span dynamic-label key="DFR_19.1.RBK"></span>
+      </label>
+      <label class="checkbox"><input id="diabetestreat2" name="diabetestreat2" type="checkbox"
+                                     ng-model="viewState.intygModel.diabetes.tabletter">
+        <span dynamic-label key="DFR_19.2.RBK"></span>
+      </label>
+      <label class="checkbox"><input id="diabetestreat3" name="diabetestreat3" type="checkbox"
+                                     ng-model="viewState.intygModel.diabetes.insulin">
+        <span dynamic-label key="DFR_19.3.RBK"></span>
+      </label>
+      <div class="form-group indent" ng-show="viewState.intygModel.diabetes.insulin"
+           wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('insulin')">
+        <label for="insulinBehandlingsperiod"><span dynamic-label
+                                                    key="DFR_19.4.RBK"></span> *</label>
+        <div class="controls">
+          <input id="insulinBehandlingsperiod" class="form-control input-year"
+                 name="insulinBehandlingsperiod" type="text"
+                 ng-model="viewState.intygModel.diabetes.insulinBehandlingsperiod" maxlength="4" />
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="annanBehandlingBeskrivning"><span dynamic-label
-                                                  key="DFR_19.5.RBK"></span></label>
-    <div class="controls">
-      <input id="annanBehandlingBeskrivning" class="form-control input-full"
-             name="annanBehandlingBeskrivning" type="text"
-             ng-model="viewState.intygModel.diabetes.annanBehandlingBeskrivning" wc-maxlength
-             ng-trim="false" maxlength="53" />
+
+    <div class="form-group">
+      <label for="annanBehandlingBeskrivning"><span dynamic-label
+                                                    key="DFR_19.5.RBK"></span></label>
+      <div class="controls">
+        <input id="annanBehandlingBeskrivning" class="form-control input-full"
+               name="annanBehandlingBeskrivning" type="text"
+               ng-model="viewState.intygModel.diabetes.annanBehandlingBeskrivning" wc-maxlength
+               ng-trim="false" maxlength="53" />
+      </div>
     </div>
-  </div>
+  </wc-validation-group>
+
 </div>

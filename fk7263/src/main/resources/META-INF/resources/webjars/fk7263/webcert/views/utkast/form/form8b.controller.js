@@ -80,10 +80,18 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             $scope.onToFieldBlur = function(fromTo) {
                 //If from-field has a valid date, and the to-field contains a parsable day code, calculate a new to-field dateString
                 if (fromTo && fromTo.from.moment && fromTo.from.valid) {
+                    var toDate;
                     var days = dateUtils.parseDayCodes(fromTo.to.dateString);
                     if (days !== null) {
                         //Take away 1 day, because the dayCode defines the total length of the interval we should get.
-                        var toDate = moment(fromTo.from.moment).add(days - 1 , 'days').format('YYYY-MM-DD');
+                        toDate = moment(fromTo.from.moment).add(days - 1 , 'days').format('YYYY-MM-DD');
+                    } else {
+                        var months = dateUtils.parseMonthCode(fromTo.to.dateString);
+                        if (months !== null) {
+                            toDate = moment(fromTo.from.moment).add(months, 'months').format('YYYY-MM-DD');
+                        }
+                    }
+                    if (toDate) {
                         fromTo.to.update(toDate);
                         fromTo.to.form.$setDirty();
                     }

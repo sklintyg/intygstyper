@@ -108,10 +108,11 @@ angular.module('luse').controller('luse.ViewCertCtrl',
                     $rootScope.cert = $scope.cert;
                 } else {
                     // show error view
-                    $location.path('/visafel/certnotfound');
+                    $location.path('/luse/visafel/certnotfound');
                 }
             }, function() {
                 $log.debug('got error');
+                $location.path('/luse/visafel/certnotfound');
             });
 
             $scope.pagefocus = true;

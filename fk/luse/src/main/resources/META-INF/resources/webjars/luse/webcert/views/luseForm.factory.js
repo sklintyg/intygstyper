@@ -42,14 +42,24 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
         },
         {
             wrapper: 'wc-field',
-            templateOptions: { category: 1, categoryName: categoryNames[1], prototypeName: 'default' },
+            templateOptions: { category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
                 { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After: false, required: true } },
-                { key: 'undersokningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.UNDERSOKNING', hideWhenEmpty: true } },
-                { key: 'journaluppgifter', type: 'date', templateOptions: { label: 'KV_FKMU_0001.JOURNALUPPGIFTER', hideWhenEmpty: true } },
-                { key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANHORIG', hideWhenEmpty: true } },
-                { key: 'annatGrundForMU', type: 'date', templateOptions: { label: 'KV_FKMU_0001.ANNAT', hideWhenEmpty: true } },
                 {
+                    wrapper: 'validationGroup',
+                    templateOptions: { type:'check-group', validationGroup: 'baserasPa' },
+                    fieldGroup: [
+                        { key: 'undersokningAvPatienten', type: 'date', className: 'small-gap', templateOptions: {
+                            label: 'KV_FKMU_0001.UNDERSOKNING', hideWhenEmpty: true }
+                        },{ key: 'journaluppgifter', type: 'date', className: 'small-gap', templateOptions: {
+                            label: 'KV_FKMU_0001.JOURNALUPPGIFTER', hideWhenEmpty: true }
+                        },{ key: 'anhorigsBeskrivningAvPatienten', className: 'small-gap', type: 'date', templateOptions: {
+                            label: 'KV_FKMU_0001.ANHORIG', hideWhenEmpty: true }
+                        },{ key: 'annatGrundForMU', type: 'date', templateOptions: {
+                            label: 'KV_FKMU_0001.ANNAT',  hideWhenEmpty: true }
+                        }
+                    ]
+                },{
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text-vertical',
                     className: 'fold-animation',
@@ -133,15 +143,19 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
         {
             wrapper: 'wc-field',
             templateOptions: { category: 5, categoryName: categoryNames[5], required: true },
-            fieldGroup: [
-                { key: 'funktionsnedsattningIntellektuell', type: 'check-multi-text', templateOptions: { frgId: '8' } },
-                { key: 'funktionsnedsattningKommunikation', type: 'check-multi-text', templateOptions: { frgId: '9' } },
-                { key: 'funktionsnedsattningKoncentration', type: 'check-multi-text', templateOptions: { frgId: '10' } },
-                { key: 'funktionsnedsattningPsykisk', type: 'check-multi-text', templateOptions: { frgId: '11' } },
-                { key: 'funktionsnedsattningSynHorselTal', type: 'check-multi-text', templateOptions: { frgId: '12' } },
-                { key: 'funktionsnedsattningBalansKoordination', type: 'check-multi-text', templateOptions: { frgId: '13' } },
-                { key: 'funktionsnedsattningAnnan', type: 'check-multi-text', templateOptions: { frgId: '14' } }
-            ]
+            fieldGroup: [{
+                wrapper: 'validationGroup',
+                templateOptions: { type:'text-group', validationGroup: 'funktionsnedsattning' },
+                fieldGroup: [
+                    { key: 'funktionsnedsattningIntellektuell', type: 'check-multi-text', templateOptions: { frgId: '8' } },
+                    { key: 'funktionsnedsattningKommunikation', type: 'check-multi-text', templateOptions: { frgId: '9' } },
+                    { key: 'funktionsnedsattningKoncentration', type: 'check-multi-text', templateOptions: { frgId: '10' } },
+                    { key: 'funktionsnedsattningPsykisk', type: 'check-multi-text', templateOptions: { frgId: '11' } },
+                    { key: 'funktionsnedsattningSynHorselTal', type: 'check-multi-text', templateOptions: { frgId: '12' } },
+                    { key: 'funktionsnedsattningBalansKoordination', type: 'check-multi-text', templateOptions: { frgId: '13' } },
+                    { key: 'funktionsnedsattningAnnan', type: 'check-multi-text', templateOptions: { frgId: '14' }
+                }]
+            }]
         },
         {
             wrapper: 'wc-field',
@@ -194,7 +208,8 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
         {
             wrapper: 'wc-field-static',
             templateOptions: { staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet' },
-            fieldGroup: [{
+            fieldGroup: [
+                {
                     type: 'label-vardenhet'
                 },
                 {

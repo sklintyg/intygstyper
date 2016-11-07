@@ -4,17 +4,6 @@
      field-has-errors="viewState.common.validationMessagesGrouped.hjartkarl"
      id="hjartkartForm">
   <table class="table table-form">
-    <tr ng-if="viewState.common.validationMessagesGrouped.hjartkarl" id="validationMessages_hjartkarl">
-      <td colspan="3">
-        <div class="alert alert-danger">
-          <ul>
-            <li ng-repeat="message in viewState.common.validationMessagesGrouped.hjartkarl"><span message
-                                                                                                  key="{{message.message}}"></span>
-            </li>
-          </ul>
-        </div>
-      </td>
-    </tr>
     <tr>
       <th><span message key="common.yes"></span></th>
       <th><span message key="common.no"></span></th>
@@ -27,6 +16,7 @@
                  ng-model="viewState.intygModel.hjartKarl.hjartKarlSjukdom"></td>
       <td><span dynamic-label key="FRG_14.RBK"></span> *</td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('hjartkarlsjukdom')"></wc-field-validation></td></tr>
     <tr>
       <td><input id="hjartkarlby" name="hjartkarlb" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.hjartKarl.hjarnskadaEfterTrauma"></td>
@@ -34,6 +24,7 @@
                  ng-model="viewState.intygModel.hjartKarl.hjarnskadaEfterTrauma"></td>
       <td><span dynamic-label key="FRG_15.RBK"></span> *</td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('hjarnskadaeftertrauma')"></wc-field-validation></td></tr>
     <tr>
       <td><input id="hjartkarlcy" name="hjartkarlc" type="radio" ng-value="true"
                  ng-model="viewState.intygModel.hjartKarl.riskfaktorerStroke"></td>
@@ -42,12 +33,15 @@
       <td><p><span dynamic-label key="FRG_16.RBK"></span> *</p>
 
         <div ng-show="viewState.intygModel.hjartKarl.riskfaktorerStroke">
-          <p><span dynamic-label key="DFR_16.2.RBK"></span> *</p>
-                            <textarea class="form-control" ng-model="viewState.intygModel.hjartKarl.beskrivningRiskfaktorer"
-                                      wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.beskrivningRiskfaktorer}}"
-                                      id="beskrivningRiskfaktorer" rows="4"></textarea>
+          <wc-validation-wrapper field-type="multi-text" validations="viewState.getValidationErrors('beskrivningriskfaktorer')">
+            <p><span dynamic-label key="DFR_16.2.RBK"></span> *</p>
+            <textarea class="form-control" ng-model="viewState.intygModel.hjartKarl.beskrivningRiskfaktorer"
+                      wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.beskrivningRiskfaktorer}}"
+                      id="beskrivningRiskfaktorer" rows="4"></textarea>
+          </wc-validation-wrapper>
         </div>
       </td>
     </tr>
+    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('riskfaktorerstroke')"></wc-field-validation></td></tr>
   </table>
 </div>

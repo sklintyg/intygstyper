@@ -143,6 +143,38 @@ describe('fk7263.EditCertCtrl.Form8bCtrl', function() {
             expect(model.nedsattMed100.tom).toBe('2015-06-25');
         });
 
+        it('converts a tom-date code correctly into a future date string representation plus weeks', function() {
+            // ----- act
+            $scope.$apply();
+
+            $scope.form8b.nedsattMed100from.$setViewValue(new Date(2015,5,16,0,0,0,0));
+            $scope.$apply();
+            // ----- assert
+            expect(model.nedsattMed100.from).toBe('2015-06-16');
+
+            $scope.form8b.nedsattMed100tom.$setViewValue('v6');
+            $scope.onToFieldBlur($scope.field8b.nedsattMed100);
+            $scope.$apply();
+
+            expect(model.nedsattMed100.tom).toBe('2015-07-27');
+        });
+
+        it('converts a tom-date code correctly into a future date string representation plus months', function() {
+            // ----- act
+            $scope.$apply();
+
+            $scope.form8b.nedsattMed100from.$setViewValue(new Date(2015,5,16,0,0,0,0));
+            $scope.$apply();
+            // ----- assert
+            expect(model.nedsattMed100.from).toBe('2015-06-16');
+
+            $scope.form8b.nedsattMed100tom.$setViewValue('m6');
+            $scope.onToFieldBlur($scope.field8b.nedsattMed100);
+            $scope.$apply();
+
+            expect(model.nedsattMed100.tom).toBe('2015-12-16');
+        });
+
     });
 
     describe('#Intygdata gets done loading before controller is initialized', function() {

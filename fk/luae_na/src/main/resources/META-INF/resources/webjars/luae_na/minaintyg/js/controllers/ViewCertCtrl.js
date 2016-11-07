@@ -108,10 +108,11 @@ angular.module('luae_na').controller('luae_na.ViewCertCtrl',
                     $rootScope.cert = $scope.cert;
                 } else {
                     // show error view
-                    $location.path('/visafel/certnotfound');
+                    $location.path('/luae_na/visafel/certnotfound');
                 }
             }, function() {
                 $log.debug('got error');
+                $location.path('/luae_na/visafel/certnotfound');
             });
 
             $scope.pagefocus = true;

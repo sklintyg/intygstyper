@@ -11,21 +11,14 @@
                                  help-text-contents="fmb.formData.FUNKTIONSNEDSATTNING" original-diagnosis-code="fmb.originalDiagnoskod"></wc-fmb-help-display>
         </div>
 
-        <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.funktionsnedsattning"
-             id="validationMessages_funktionsnedsattning">
-            <ul>
-                <li ng-repeat="message in viewState.common.validationMessagesGrouped.funktionsnedsattning"><span
-                        message
-                        key="{{message.message}}"></span>
-                </li>
-            </ul>
-        </div>
+        <wc-validation-wrapper field-type="multi-text" validations="viewState.getValidationErrors('funktionsnedsattning')">
+            <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
+               target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
+                försäkringsmedicinska beslutsstöd</a>
+                    <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
+                              ng-model="model.funktionsnedsattning" wc-maxlength ng-trim="false"
+                              maxlength="{{viewState.inputLimits.funktionsnedsattning}}"></textarea>
+        </wc-validation-wrapper>
 
-        <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
-           target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-            försäkringsmedicinska beslutsstöd</a>
-                <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
-                          ng-model="model.funktionsnedsattning" wc-maxlength ng-trim="false"
-                          maxlength="{{viewState.inputLimits.funktionsnedsattning}}"></textarea>
     </div>
 </div>
