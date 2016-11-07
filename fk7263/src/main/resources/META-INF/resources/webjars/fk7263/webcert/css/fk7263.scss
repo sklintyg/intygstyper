@@ -27,7 +27,8 @@ This is to avoid leaking module specific style rules outside of it's intended co
   .soclink {
     background-image: $socialstyrelsen-background-image;
     background-repeat: no-repeat;
-    padding-left: 25px;
+    padding: 0 0 3px 25px;
+    display: block;
   }
 
   .intyg-body {
