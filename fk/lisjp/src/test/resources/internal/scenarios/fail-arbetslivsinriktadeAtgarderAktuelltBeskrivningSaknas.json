@@ -44,7 +44,7 @@
   "tillaggsfragor": [],
   "arbetslivsinriktadeAtgarder": [
     {
-      "val": "OVRIGA_ATGARDER"
+      "typ": "OVRIGA_ATGARDER"
     }
   ],
   "prognos": {

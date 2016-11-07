@@ -29,7 +29,6 @@ import se.inera.intyg.intygstyper.lisjp.model.internal.*;
 import se.inera.intyg.intygstyper.lisjp.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
 import se.inera.intyg.intygstyper.lisjp.model.internal.Sjukskrivning.SjukskrivningsGrad;
 import se.inera.intyg.intygstyper.lisjp.model.internal.Sysselsattning.SysselsattningsTyp;
-import se.inera.intyg.intygstyper.lisjp.validator.InternalDraftValidatorImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InternalDraftValidatorTest {
@@ -58,7 +57,8 @@ public class InternalDraftValidatorTest {
                 .setPrognos(Prognos.create(PrognosTyp.MED_STOR_SANNOLIKHET, null))
                 .setSjukskrivningar(Arrays.asList(Sjukskrivning.create(SjukskrivningsGrad.HELT_NEDSATT,
                         new InternalLocalDateInterval(new InternalDate(LocalDate.now()), new InternalDate(LocalDate.now().plusDays(7))))))
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING, "Beskrivning arbetsträning")))
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING)))
+                .setArbetslivsinriktadeAtgarderBeskrivning("arbetslivsinriktadeAtgarderAktuelltBeskrivning")
                 .setTextVersion("");
 
         when(moduleService.validateDiagnosisCode(anyString(), anyString())).thenReturn(true);
@@ -748,7 +748,8 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateAtgarderInteAktuell() throws Exception {
         LisjpUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT, null)))
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)))
+                .setArbetslivsinriktadeAtgarderBeskrivning(null)
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -759,47 +760,52 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateAtgarderInteAktuellCombined() throws Exception {
         LisjpUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT, null),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskriving arbetsanpassning")))
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
-        assertEquals(1, res.getValidationErrors().size());
+        assertEquals(2, res.getValidationErrors().size());
         assertEquals("lisjp.validation.atgarder.inte_aktuellt_no_combine", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
+        assertEquals("lisjp.validation.atgarder.invalid_combination", res.getValidationErrors().get(1).getMessage());
+        assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(1).getType());
     }
 
     @Test
     public void validateAtgarderInteAktuellBeskrivning() throws Exception {
         LisjpUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT, "Beskrivning")))
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)))
+                .setArbetslivsinriktadeAtgarderBeskrivning("beskrivning")
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("lisjp.validation.atgarder.EJ_AKTUELLT.invalid_combination", res.getValidationErrors().get(0).getMessage());
+        assertEquals("lisjp.validation.atgarder.invalid_combination", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
     @Test
     public void validateAtgarderAktuellBeskrivningMissing() throws Exception {
         LisjpUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, null)))
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
+                .setArbetslivsinriktadeAtgarderBeskrivning(null)
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
 
         assertEquals(1, res.getValidationErrors().size());
-        assertEquals("atgarder.arbetslivsinriktadeAtgarder.ARBETSANPASSNING.beskrivning", res.getValidationErrors().get(0).getField());
+        assertEquals("lisjp.validation.atgarder.aktuelltbeskrivning.missing", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
     }
 
     @Test
     public void validateAtgarderAktuell() throws Exception {
         LisjpUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskrivning arbetsanpassning")))
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
+                .setArbetslivsinriktadeAtgarderBeskrivning("Beskrivning arbetsanpassning")
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -810,17 +816,17 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateAtgarderTooMany() throws Exception {
         LisjpUtlatande utlatande = builderTemplate
-                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.BESOK_PA_ARBETSPLATSEN, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ERGONOMISK_BEDOMNING, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.HJALPMEDEL, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONFLIKTHANTERING, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONTAKT_MED_FORETAGSHALSOVARD, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OMFORDELNING_AV_ARBETSUPPGIFTER, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.SOKA_NYTT_ARBETE, "Beskrivning"),
-                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING, "Beskrivning")))
+                .setArbetslivsinriktadeAtgarder(Arrays.asList(ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSTRANING),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.BESOK_PA_ARBETSPLATSEN),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ERGONOMISK_BEDOMNING),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.HJALPMEDEL),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONFLIKTHANTERING),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.KONTAKT_MED_FORETAGSHALSOVARD),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OMFORDELNING_AV_ARBETSUPPGIFTER),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.OVRIGT),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.SOKA_NYTT_ARBETE),
+                        ArbetslivsinriktadeAtgarder.create(ArbetslivsinriktadeAtgarderVal.ARBETSANPASSNING)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);

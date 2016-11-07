@@ -167,13 +167,11 @@ public final class UtlatandeToIntyg {
 
         int arbetslivsinriktadeAtgarderInstans = 1;
         for (ArbetslivsinriktadeAtgarder atgarder : source.getArbetslivsinriktadeAtgarder()) {
-            SvarBuilder atgardBuilder = aSvar(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40, arbetslivsinriktadeAtgarderInstans++).withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
-                    aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getVal().getId(), atgarder.getVal().getLabel()));
-            if (!StringUtils.isBlank(atgarder.getBeskrivning())) {
-                atgardBuilder.withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_40, atgarder.getBeskrivning());
-            }
-            svars.add(atgardBuilder.build());
+            svars.add(aSvar(ARBETSLIVSINRIKTADE_ATGARDER_SVAR_ID_40, arbetslivsinriktadeAtgarderInstans++).withDelsvar(ARBETSLIVSINRIKTADE_ATGARDER_VAL_DELSVAR_ID_40,
+                    aCV(ARBETSLIVSINRIKTADE_ATGARDER_CODE_SYSTEM, atgarder.getTyp().getId(), atgarder.getTyp().getLabel())).build());
         }
+
+        addIfNotBlank(svars, ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_ID_44, ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_44, source.getArbetslivsinriktadeAtgarderBeskrivning());
 
         addIfNotBlank(svars, OVRIGT_SVAR_ID_25, OVRIGT_DELSVAR_ID_25, source.getOvrigt());
 

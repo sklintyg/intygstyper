@@ -155,6 +155,10 @@ public abstract class LisjpUtlatande implements Utlatande, SitUtlatande {
     // Fråga 40 - Arbetslivsinriktade åtgärder
     public abstract ImmutableList<ArbetslivsinriktadeAtgarder> getArbetslivsinriktadeAtgarder();
 
+    @Nullable
+    // Fråga 44 - Arbetslivsinriktade åtgärder beksrivning
+    public abstract String getArbetslivsinriktadeAtgarderBeskrivning();
+
     // Kategori 8 - Övrigt
     // Fråga 25
     @Nullable
@@ -282,6 +286,9 @@ public abstract class LisjpUtlatande implements Utlatande, SitUtlatande {
 
         /* package private*/
         abstract Builder setArbetslivsinriktadeAtgarder(ImmutableList<ArbetslivsinriktadeAtgarder> arbetslivsinriktadeAtgarder);
+
+        @JsonProperty(ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_JSON_ID_44)
+        public abstract Builder setArbetslivsinriktadeAtgarderBeskrivning(String arbetslivsinriktadeAtgarderBeskrivning);
 
         @JsonProperty(OVRIGT_SVAR_JSON_ID_25)
         public abstract Builder setOvrigt(String ovrigt);

@@ -251,23 +251,22 @@ angular.module('lisjp').factory('lisjp.FormFactory',
             templateOptions: {category: 7, categoryName: categoryNames[7]},
             fieldGroup: [
                 {
-                    key: 'arbetslivsinriktadeAtgarder', type: 'check-group-description',
+                    key: 'arbetslivsinriktadeAtgarder', type: 'check-group',
                     templateOptions: {
                         label: 'FRG_40',
                         descLabel: 'DFR_40.2',
                         code: 'KV_FKMU_0004',
-                        choices: [
-                            { id : 'EJ_AKTUELLT', usesDescription : false },
-                            { id : 'ARBETSTRANING', usesDescription : true },
-                            { id : 'ARBETSANPASSNING', usesDescription : true },
-                            { id : 'SOKA_NYTT_ARBETE', usesDescription : true },
-                            { id : 'BESOK_ARBETSPLATS', usesDescription : true },
-                            { id : 'ERGONOMISK', usesDescription : true },
-                            { id : 'HJALPMEDEL', usesDescription : true },
-                            { id : 'KONFLIKTHANTERING', usesDescription : true },
-                            { id : 'KONTAKT_FHV', usesDescription : true },
-                            { id : 'OMFORDELNING', usesDescription : true },
-                            { id : 'OVRIGA_ATGARDER', usesDescription : true }
+                        choices: ['EJ_AKTUELLT',
+                            'ARBETSTRANING',
+                            'ARBETSANPASSNING',
+                            'SOKA_NYTT_ARBETE',
+                            'BESOK_ARBETSPLATS',
+                            'ERGONOMISK',
+                            'HJALPMEDEL',
+                            'KONFLIKTHANTERING',
+                            'KONTAKT_FHV',
+                            'OMFORDELNING',
+                            'OVRIGA_ATGARDER'
                         ]
                     },
                     expressionProperties: {
@@ -278,24 +277,40 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             }
                             var disabled = false;
                             angular.forEach($modelValue, function(item, key) {
-                                if(item.checked && key !== 'EJ_AKTUELLT') {
+                                if(item === true && key !== 'EJ_AKTUELLT') {
                                     disabled = true;
                                 }
                             });
                             return disabled;
                         },
                         // Disable other options if option 'EJ_AKTUELLT' is selected
-                        'templateOptions.disabled["ARBETSTRANING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["ARBETSANPASSNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["SOKA_NYTT_ARBETE"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["BESOK_ARBETSPLATS"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["ERGONOMISK"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["HJALPMEDEL"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["KONFLIKTHANTERING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["KONTAKT_FHV"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["OMFORDELNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked',
-                        'templateOptions.disabled["OVRIGA_ATGARDER"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"].checked'
+                        'templateOptions.disabled["ARBETSTRANING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["ARBETSANPASSNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["SOKA_NYTT_ARBETE"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["BESOK_ARBETSPLATS"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["ERGONOMISK"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["HJALPMEDEL"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["KONFLIKTHANTERING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["KONTAKT_FHV"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["OMFORDELNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                        'templateOptions.disabled["OVRIGA_ATGARDER"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]'
                     }
+                },
+                {
+                    key: 'arbetslivsinriktadeAtgarderBeskrivning',
+                    type: 'multi-text',
+                    className: 'fold-animation',
+                    hideExpression: function($viewValue, $modelValue, scope) {
+                        var hide = true;
+                        angular.forEach(scope.model.arbetslivsinriktadeAtgarder, function(atgard, key) {
+                            if(atgard === true && key !== 'EJ_AKTUELLT') {
+                                hide = false;
+                                return;
+                            }
+                        });
+                        return hide;
+                    },
+                    templateOptions: {label: 'FRG_44'}
                 }
             ]
         },

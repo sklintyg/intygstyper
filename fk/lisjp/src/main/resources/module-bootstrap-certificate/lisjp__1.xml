@@ -252,7 +252,6 @@
           <ns3:displayName>Arbetstr&#xE4;ning</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning arbetsträning</delsvar>
     </svar>
     <svar id="40">
       <instans>2</instans>
@@ -263,7 +262,6 @@
           <ns3:displayName>Arbetsanpassning</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning arbetsanpassning</delsvar>
     </svar>
     <svar id="40">
       <instans>3</instans>
@@ -274,7 +272,6 @@
           <ns3:displayName>S&#xF6;ka nytt arbete</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning söka nytt arbete</delsvar>
     </svar>
     <svar id="40">
       <instans>4</instans>
@@ -285,7 +282,6 @@
           <ns3:displayName>Bes&#xF6;k p&#xE5; arbetsplatsen</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning besök arbetsplats</delsvar>
     </svar>
     <svar id="40">
       <instans>5</instans>
@@ -296,7 +292,6 @@
           <ns3:displayName>Ergonomisk bed&#xF6;mning</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning ergonomisk bedömning</delsvar>
     </svar>
     <svar id="40">
       <instans>6</instans>
@@ -307,7 +302,6 @@
           <ns3:displayName>Hj&#xE4;lpmedel</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning hjälpmedel</delsvar>
     </svar>
     <svar id="40">
       <instans>7</instans>
@@ -318,7 +312,6 @@
           <ns3:displayName>Konflikthantering</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning konflikthantering</delsvar>
     </svar>
     <svar id="40">
       <instans>8</instans>
@@ -329,7 +322,6 @@
           <ns3:displayName>Kontakt med f&#xF6;retagsh&#xE4;lsov&#xE5;rd</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning kontakt fhv</delsvar>
     </svar>
     <svar id="40">
       <instans>9</instans>
@@ -340,7 +332,6 @@
           <ns3:displayName>Omf&#xF6;rdelning av arbetsuppgifter</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">Beskrivning omfordelning</delsvar>
     </svar>
     <svar id="40">
       <instans>10</instans>
@@ -351,7 +342,9 @@
           <ns3:displayName>&#xD6;vrigt</ns3:displayName>
         </ns3:cv>
       </delsvar>
-      <delsvar id="40.2">D&#xE4;rf&#xF6;r.</delsvar>
+    </svar>
+    <svar id="44">
+      <delsvar id="44.1">D&#xE4;rf&#xF6;r.</delsvar>
     </svar>
     <svar id="25">
       <delsvar id="25.1">Inga &#xF6;vriga upplysningar.</delsvar>
