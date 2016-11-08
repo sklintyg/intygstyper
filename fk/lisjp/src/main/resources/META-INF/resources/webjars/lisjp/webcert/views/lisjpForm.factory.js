@@ -75,14 +75,14 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         {key: 'journaluppgifter', type: 'date', className: 'small-gap',
                             templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER', hideWhenEmpty: true}},
                         {key: 'annatGrundForMU', type: 'date',
-                            templateOptions: {label: 'KV_FKMU_0001.ANNAT', hideWhenEmpty: true}}
+                            templateOptions: {label: 'KV_FKMU_0001.ANNAT', hideWhenEmpty: true, hideKompletteringText: true}}
                     ]
                 },{
                     key: 'annatGrundForMUBeskrivning',
                     type: 'single-text',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
+                    templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true, kompletteringKey: 'annatGrundForMU'}
                 }
             ]
         },
@@ -203,13 +203,13 @@ angular.module('lisjp').factory('lisjp.FormFactory',
 
                         return !nedsatt75under;
                     },
-                    templateOptions: {label: 'FRG_33'}},
+                    templateOptions: {label: 'FRG_33', hideKompletteringText: true}},
                 {key: 'arbetstidsforlaggningMotivering', type: 'multi-text',
                     className: 'fold-animation',
                     hideExpression: function($viewValue, $modelValue, scope) {
                         return scope.model.arbetstidsforlaggning !== true;
                     },
-                    templateOptions: {label: 'DFR_33.2'}},
+                    templateOptions: {label: 'DFR_33.2', kompletteringKey: 'arbetstidsforlaggning'}},
                 {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
 
                 { key: 'prognos', type: 'prognos',
@@ -325,13 +325,13 @@ angular.module('lisjp').factory('lisjp.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 9, categoryName: categoryNames[9]},
             fieldGroup: [
-                {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
+                {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1', hideKompletteringText: true}},
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
                     className: 'fold-animation',
                     hideExpression: '!model.kontaktMedFk',
-                    templateOptions: {label: 'DFR_26.2'}
+                    templateOptions: {label: 'DFR_26.2', kompletteringKey: 'kontaktMedFk'}
                 }
             ]
         },

@@ -60,7 +60,7 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                         },{ key: 'anhorigsBeskrivningAvPatienten', className: 'small-gap', type: 'date', templateOptions: {
                             label: 'KV_FKMU_0001.ANHORIG', hideWhenEmpty: true }
                         },{ key: 'annatGrundForMU', type: 'date', templateOptions: {
-                            label: 'KV_FKMU_0001.ANNAT',  hideWhenEmpty: true }
+                            label: 'KV_FKMU_0001.ANNAT',  hideWhenEmpty: true, hideKompletteringText: true }
                         }
                     ]
                 },{
@@ -68,7 +68,7 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                     type: 'single-text-vertical',
                     className: 'fold-animation',
                     hideExpression: '!model.annatGrundForMU',
-                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full' }
+                    templateOptions: { label: 'DFR_1.3', help: 'DFR_1.3', required: true, size: 'full', kompletteringKey: 'annatGrundForMU' }
                 },
                 { key: 'kannedomOmPatient', type: 'singleDate', templateOptions: { label: 'FRG_2', required: true } },
                 { key: 'underlagFinns', type: 'boolean', templateOptions: { label: 'FRG_3', required: true } },
@@ -112,12 +112,12 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                     templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
                 },
                 { key: 'diagnosgrund', type: 'multi-text', templateOptions: { label: 'DFR_7.1', required: true } },
-                { key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: { label: 'FRG_45', required: true } },
+                { key: 'nyBedomningDiagnosgrund', type: 'boolean', templateOptions: { label: 'FRG_45', required: true, hideKompletteringText: true } },
                 {
                     key: 'diagnosForNyBedomning',
                     className: 'fold-animation',
                     type: 'multi-text',
-                    templateOptions: { label: 'DFR_45.2', required: true },
+                    templateOptions: { label: 'DFR_45.2', required: true, kompletteringKey: 'nyBedomningDiagnosgrund' },
                     hideExpression: '!model.nyBedomningDiagnosgrund'
                 }
             ]
@@ -185,13 +185,13 @@ angular.module('luae_na').factory('luae_na.FormFactory',
             wrapper: 'wc-field',
             templateOptions: {category: 10, categoryName: categoryNames[10]},
             fieldGroup: [
-                {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
+                {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1', hideKompletteringText: true}},
                 {
                     key: 'anledningTillKontakt',
                     type: 'multi-text',
-                    className: 'fold-animation webcert-top-padding-section',
+                    className: 'fold-animation',
                     hideExpression: '!model.kontaktMedFk',
-                    templateOptions: {label: 'DFR_26.2'}
+                    templateOptions: {label: 'DFR_26.2', kompletteringKey: 'kontaktMedFk'}
                 }
             ]
         },

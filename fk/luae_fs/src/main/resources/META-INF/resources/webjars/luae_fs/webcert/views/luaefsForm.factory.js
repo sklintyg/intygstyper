@@ -54,14 +54,14 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                                 {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
                                 {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
                                 {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
-                                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT'}}
+                                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT', hideKompletteringText: true}}
                             ]
                         },{
                             key: 'annatGrundForMUBeskrivning',
                             type: 'single-text',
                             className: 'fold-animation',
                             hideExpression: '!model.annatGrundForMU',
-                            templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true}
+                            templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true, kompletteringKey: 'annatGrundForMU'}
                         },
 
                         //Fråga 2 -----
@@ -134,13 +134,13 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 6, categoryName: categoryNames[6]},
                     fieldGroup: [
-                        {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
+                        {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1', hideKompletteringText: true}},
                         {
                             key: 'anledningTillKontakt',
                             type: 'multi-text',
                             className: 'fold-animation',
                             hideExpression: '!model.kontaktMedFk',
-                            templateOptions: {label: 'DFR_26.2'}
+                            templateOptions: {label: 'DFR_26.2', kompletteringKey: 'kontaktMedFk'}
                         }
                     ]
                 },
