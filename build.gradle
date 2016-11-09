@@ -187,6 +187,7 @@ buildscript {
         classpath 'com.moowork.gradle:gradle-grunt-plugin:0.+'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.+'
         classpath 'org.ajoberstar:gradle-git:1.+'
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.+'
     }
 
     repositories {
