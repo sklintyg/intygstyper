@@ -18,6 +18,12 @@
  */
 package se.inera.intyg.intygstyper.fkparent.model.validator;
 
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
+
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,8 +39,6 @@ import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
-
 
 /**
  * Created by BESA on 2016-02-23.
@@ -49,6 +53,7 @@ public class ValidatorUtilFK {
 
     private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
     private static final int MIN_SIZE_DIAGNOS = 3;
+    private static final int MAX_SIZE_DIAGNOS = 5;
 
     public enum GrundForMu {
         UNDERSOKNING,
@@ -100,6 +105,9 @@ public class ValidatorUtilFK {
                 } else if (trimDiagnoskod.length() < MIN_SIZE_DIAGNOS) {
                     ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
                             "common.validation.diagnos" + i + ".length-3");
+                } else if (trimDiagnoskod.length() > MAX_SIZE_DIAGNOS) {
+                    ValidatorUtil.addValidationError(validationMessages, "diagnos.diagnoser." + i + ".diagnoskod", ValidationMessageType.INVALID_FORMAT,
+                            "common.validation.diagnos" + i + ".length-5");
                 } else {
                     validateDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), "diagnos.diagnoser",
                             "common.validation.diagnos" + i + ".invalid", validationMessages);
