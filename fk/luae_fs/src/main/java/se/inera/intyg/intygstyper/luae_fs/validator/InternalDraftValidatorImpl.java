@@ -25,14 +25,9 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.google.common.collect.ImmutableList;
-
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
@@ -40,7 +35,7 @@ import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuaefsUtlatande> {
 
-    public static final int MAX_DIAGNOSER = 3;
+    public static final int MAX_UNDERLAG = 3;
 
     @Autowired
     ValidatorUtilFK validatorUtilFK;
@@ -90,16 +85,16 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
         }
 
         if (utlatande.getUndersokningAvPatienten() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.UNDERSOKNING);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.UNDERSOKNING);
         }
         if (utlatande.getJournaluppgifter() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, ValidatorUtilFK.GrundForMu.JOURNALUPPGIFTER);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, ValidatorUtilFK.GrundForMu.JOURNALUPPGIFTER);
         }
         if (utlatande.getAnhorigsBeskrivningAvPatienten() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.ANHORIGSBESKRIVNING);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.ANHORIGSBESKRIVNING);
         }
         if (utlatande.getAnnatGrundForMU() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
         }
 
         // R2
@@ -146,6 +141,9 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
                     "luae_fs.validation.underlagfinns.incorrect_combination");
         }
 
+        if (utlatande.getUnderlag().size() > MAX_UNDERLAG) {
+            ValidatorUtil.addValidationError(validationMessages, "grundformu.underlag", ValidationMessageType.OTHER, "luae_fs.validation.underlag.too_many");
+        }
         for (int i = 0; i < utlatande.getUnderlag().size(); i++) {
             Underlag underlag = utlatande.getUnderlag().get(i);
             // Alla underlagstyper är godkända här utom Underlag från företagshälsovård
@@ -180,15 +178,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
     }
 
     void validateDiagnose(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
-        validateNumberOfDiagnose(utlatande.getDiagnoser(), validationMessages);
         validatorUtilFK.validateDiagnose(utlatande.getDiagnoser(), validationMessages);
-    }
-
-    private void validateNumberOfDiagnose(ImmutableList<Diagnos> diagnoser, List<ValidationMessage> validationMessages) {
-        if (diagnoser.size() > MAX_DIAGNOSER) {
-            ValidatorUtil.addValidationError(validationMessages, "diagnos", ValidationMessageType.OTHER,
-                    "luae_fs.validation.diagnos.max-diagnoser");
-        }
     }
 
     void validateFunktionsnedsattning(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {

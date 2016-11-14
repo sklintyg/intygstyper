@@ -85,7 +85,7 @@ public class RoundTripTest {
     }
 
     private JAXBElement<?> wrapJaxb(RegisterCertificateType ws) {
-        JAXBElement<?> jaxbElement = new JAXBElement<RegisterCertificateType>(
+        JAXBElement<?> jaxbElement = new JAXBElement<>(
                 new QName("urn:riv:clinicalprocess:healthcond:certificate:RegisterCertificateResponder:2", "RegisterCertificate"),
                 RegisterCertificateType.class, ws);
         return jaxbElement;

@@ -235,34 +235,27 @@
       <delsvar id="5.1">Allt kom s&#xE5; pl&#xF6;tsligt</delsvar>
     </svar>
     <svar id="6">
-      <instans>1</instans>
+      <delsvar id="6.1">Pest</delsvar>
       <delsvar id="6.2">
         <ns3:cv>
           <ns3:code>A20</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="6.1">Pest</delsvar>
-    </svar>
-    <svar id="6">
-      <instans>2</instans>
-      <delsvar id="6.2">
+      <delsvar id="6.3">HIV-infektion med mykobakterieinfektion</delsvar>
+      <delsvar id="6.4">
         <ns3:cv>
           <ns3:code>B200</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="6.1">HIV-infektion med mykobakterieinfektion</delsvar>
-    </svar>
-    <svar id="6">
-      <instans>3</instans>
-      <delsvar id="6.2">
+      <delsvar id="6.5">Malign tum&#xF6;r i &#xE4;ndtarmen</delsvar>
+      <delsvar id="6.6">
         <ns3:cv>
           <ns3:code>C20</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="6.1">Malign tum&#xF6;r i &#xE4;ndtarmen</delsvar>
     </svar>
     <svar id="7">
       <delsvar id="7.1">Ig&#xE5;r hemma hos patienten</delsvar>

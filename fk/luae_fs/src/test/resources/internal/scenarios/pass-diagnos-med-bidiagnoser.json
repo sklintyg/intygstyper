@@ -41,14 +41,8 @@
     },
     "signeringsdatum": "2015-12-07T15:48:05.000"
   },
-  "underlag": [
-    {
-      "hamtasFran": "Skickas med posten",
-      "datum": "2015-09-03",
-      "typ": "PSYKOLOG"
-    }
-  ],
-  "underlagFinns": true,
+  "underlag": [],
+  "underlagFinns": false,
   "tillaggsfragor": [],
   "kannedomOmPatient": "2015-01-07",
   "undersokningAvPatienten": "2015-09-09",
@@ -61,19 +55,15 @@
       "diagnosKod": "S47"
     },
     {
-      "diagnosBeskrivning": "Klämskada skuldra 2",
+      "diagnosBeskrivning": "Accentuering av personlighetsdrag",
       "diagnosKodSystem": "ICD_10_SE",
-      "diagnosKod": "S47"
+      "diagnosKod": "Z731"
     },
     {
-      "diagnosBeskrivning": "Klämskada skuldra 3",
+      "diagnosBeskrivning": "Shigellos, ospecificerad",
       "diagnosKodSystem": "ICD_10_SE",
-      "diagnosKod": "S47"
-    },
-    {
-      "diagnosBeskrivning": "Klämskada skuldra 4",
-      "diagnosKodSystem": "ICD_10_SE",
-      "diagnosKod": "S47"
+      "diagnosKod": "A039"
     }
-  ]
+  ],
+  "kontaktMedFk": false
 }

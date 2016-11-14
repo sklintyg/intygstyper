@@ -127,14 +127,6 @@ public class InternalValidatorTest {
     }
 
     @Test
-    public void failsWhenFourDiagnosis() throws ScenarioNotFoundException {
-        int numErrors = 1;
-        LuaefsUtlatande utlatandeFromJson = ScenarioFinder.getInternalScenario("fail-diagnos-fyradiagnoser").asInternalModel();
-        ValidateDraftResponse internalValidationResponse = internalValidator.validateDraft(utlatandeFromJson);
-        assertEquals(numErrors, getNumberOfInternalValidationErrors(internalValidationResponse));
-    }
-
-    @Test
     public void failsWhenKontaktWithFkIsFalseButReasonStated() throws ScenarioNotFoundException {
         int numErrors = 1;
         LuaefsUtlatande utlatandeFromJson = ScenarioFinder.getInternalScenario("fail-motiveringkontaktangivet-men-onskas-ej").asInternalModel();

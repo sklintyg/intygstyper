@@ -63,7 +63,8 @@
         </vardgivare>
       </enhet>
       <specialistkompetens>
-        <ns3:code>Kirurg</ns3:code>
+        <ns3:code>N/A</ns3:code>
+        <ns3:displayName>Kirurg</ns3:displayName>
       </specialistkompetens>
     </skapadAv>
     <svar id="1">
@@ -76,13 +77,48 @@
         </ns3:cv>
       </delsvar>
       <delsvar id="1.2">2015-09-09</delsvar>
-      <delsvar id="1.3">   </delsvar>
     </svar>
     <svar id="2">
       <delsvar id="2.1">2015-01-07</delsvar>
     </svar>
     <svar id="3">
-      <delsvar id="3.1">false</delsvar>
+      <delsvar id="3.1">true</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>1</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>PSYKOLOG</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag från psykolog</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2015-09-03</delsvar>
+      <delsvar id="4.3">Beskrivning</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>2</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>HABILITERING</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Underlag från habiliteringen</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2015-09-04</delsvar>
+      <delsvar id="4.3">Beskrivning2</delsvar>
+    </svar>
+    <svar id="4">
+      <instans>3</instans>
+      <delsvar id="4.1">
+        <ns3:cv>
+          <ns3:code>SPECIALISTKLINIK</ns3:code>
+          <ns3:codeSystem>KV_FKMU_0005</ns3:codeSystem>
+          <ns3:displayName>Utredning av annan specialistklinik</ns3:displayName>
+        </ns3:cv>
+      </delsvar>
+      <delsvar id="4.2">2015-09-05</delsvar>
+      <delsvar id="4.3">Beskrivning3</delsvar>
     </svar>
     <svar id="6">
       <delsvar id="6.1">Klämskada skuldra</delsvar>

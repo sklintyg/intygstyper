@@ -94,7 +94,6 @@
       <delsvar id="4.3">Har ju svarat nej på frågan om det fanns underlag så detta svar skall inte finnas</delsvar>
     </svar>
     <svar id="6">
-      <instans>1</instans>
       <delsvar id="6.1">Skada på multipla böjmuskler och deras senor på handleds- och handnivå</delsvar>
       <delsvar id="6.2">
         <ns3:cv>
@@ -103,7 +102,6 @@
         </ns3:cv>
       </delsvar>
     </svar>
-
     <svar id="15">
       <delsvar id="15.1">Skedde vid skoldansen</delsvar>
     </svar>

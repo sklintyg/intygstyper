@@ -85,7 +85,6 @@
       <delsvar id="3.1">false</delsvar>
     </svar>
     <svar id="6">
-      <instans>1</instans>
       <delsvar id="6.1">Kolera</delsvar>
       <delsvar id="6.2">
         <ns3:cv>

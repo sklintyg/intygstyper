@@ -243,6 +243,21 @@ public class InternalDraftValidatorTest {
                 .setUnderlag(buildUnderlag(
                         "NEUROPSYKIATRISKT",
                         "HABILITERING",
+                        "ARBETSTERAPEUT"))
+                .build();
+
+        validator.validateUnderlag(utlatande, validationMessages);
+
+        assertTrue(validationMessages.isEmpty());
+    }
+
+    @Test
+    public void validateUnderlag_tooMany() throws Exception {
+        LuaefsUtlatande utlatande = builderTemplate
+                .setUnderlagFinns(true)
+                .setUnderlag(buildUnderlag(
+                        "NEUROPSYKIATRISKT",
+                        "HABILITERING",
                         "ARBETSTERAPEUT",
                         "FYSIOTERAPEUT",
                         "LOGOPED",
@@ -255,7 +270,10 @@ public class InternalDraftValidatorTest {
 
         validator.validateUnderlag(utlatande, validationMessages);
 
-        assertTrue(validationMessages.isEmpty());
+        assertEquals(1, validationMessages.size());
+
+        assertValidationMessage("luae_fs.validation.underlag.too_many", 0);
+        assertValidationMessageType(ValidationMessageType.OTHER, 0);
     }
 
     @Test

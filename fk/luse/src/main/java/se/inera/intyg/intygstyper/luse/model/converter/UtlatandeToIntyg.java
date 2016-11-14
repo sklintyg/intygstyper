@@ -23,20 +23,19 @@ import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.InternalToTransportUtil.handleDiagnosSvar;
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
-import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
-import se.inera.intyg.intygstyper.fkparent.model.internal.*;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
@@ -116,37 +115,7 @@ public final class UtlatandeToIntyg {
 
         addIfNotBlank(svars, SJUKDOMSFORLOPP_SVAR_ID_5, SJUKDOMSFORLOPP_DELSVAR_ID_5, source.getSjukdomsforlopp());
 
-        // Handle diagnoser
-        SvarBuilder diagnosSvar = aSvar(DIAGNOS_SVAR_ID_6);
-        for (int i = 0; i < source.getDiagnoser().size(); i++) {
-            Diagnos diagnos = source.getDiagnoser().get(i);
-            if (diagnos.getDiagnosKod() == null) {
-                continue;
-            }
-            Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-            switch (i) {
-            case 0:
-                diagnosSvar.withDelsvar(DIAGNOS_DELSVAR_ID_6,
-                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                        .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
-                break;
-            case 1:
-                diagnosSvar.withDelsvar(BIDIAGNOS_1_DELSVAR_ID_6,
-                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                        .withDelsvar(BIDIAGNOS_1_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
-                break;
-            case 2:
-                diagnosSvar.withDelsvar(BIDIAGNOS_2_DELSVAR_ID_6,
-                        aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                        .withDelsvar(BIDIAGNOS_2_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning());
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-        if (CollectionUtils.isNotEmpty(diagnosSvar.delSvars)) {
-            svars.add(diagnosSvar.build());
-        }
+        handleDiagnosSvar(svars, source.getDiagnoser());
 
         if (source.getDiagnosgrund() != null) {
             svars.add(aSvar(DIAGNOSGRUND_SVAR_ID_7).withDelsvar(DIAGNOSGRUND_DELSVAR_ID_7, source.getDiagnosgrund()).build());

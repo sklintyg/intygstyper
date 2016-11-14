@@ -66,16 +66,6 @@
         <ns3:code>Kirurg</ns3:code>
       </specialistkompetens>
     </skapadAv>
-    <!-- <svar id="1">
-      <instans>1</instans>
-      <delsvar id="1.1">
-        <ns3:cv>
-          <ns3:code>ANHORIG</ns3:code>
-          <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
-        </ns3:cv>
-      </delsvar>
-      <delsvar id="1.2">2015-12-08</delsvar>
-    </svar> -->
     <svar id="2">
       <delsvar id="2.1">2015-12-08</delsvar>
     </svar>
@@ -94,7 +84,6 @@
       <delsvar id="4.3">Hämtas på posten</delsvar>
     </svar>
     <svar id="6">
-      <instans>1</instans>
       <delsvar id="6.1">Skada på multipla böjmuskler och deras senor på handleds- och handnivå</delsvar>
       <delsvar id="6.2">
         <ns3:cv>

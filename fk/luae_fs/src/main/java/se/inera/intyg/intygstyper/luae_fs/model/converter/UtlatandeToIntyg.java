@@ -23,6 +23,7 @@ import static se.inera.intyg.common.support.Constants.KV_INTYGSTYP_CODE_SYSTEM;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.InternalToTransportUtil.handleDiagnosSvar;
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.util.ArrayList;
@@ -30,10 +31,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants;
-import se.inera.intyg.intygstyper.fkparent.model.internal.*;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
+import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
@@ -110,15 +111,7 @@ public final class UtlatandeToIntyg {
                             .withDelsvar(UNDERLAG_HAMTAS_FRAN_DELSVAR_ID_4, underlag.getHamtasFran()).build());
         }
 
-        int diagnosInstans = 1;
-        for (Diagnos diagnos : source.getDiagnoser()) {
-            if (diagnos.getDiagnosKod() != null) {
-                Diagnoskodverk diagnoskodverk = Diagnoskodverk.valueOf(diagnos.getDiagnosKodSystem());
-                svars.add(aSvar(DIAGNOS_SVAR_ID_6, diagnosInstans++)
-                        .withDelsvar(DIAGNOS_DELSVAR_ID_6, aCV(diagnoskodverk.getCodeSystem(), diagnos.getDiagnosKod(), diagnos.getDiagnosDisplayName()))
-                        .withDelsvar(DIAGNOS_BESKRIVNING_DELSVAR_ID_6, diagnos.getDiagnosBeskrivning()).build());
-            }
-        }
+        handleDiagnosSvar(svars, source.getDiagnoser());
 
         addIfNotBlank(svars, FUNKTIONSNEDSATTNING_DEBUT_SVAR_ID_15, FUNKTIONSNEDSATTNING_DEBUT_DELSVAR_ID_15, source.getFunktionsnedsattningDebut());
         addIfNotBlank(svars, FUNKTIONSNEDSATTNING_PAVERKAN_SVAR_ID_16, FUNKTIONSNEDSATTNING_PAVERKAN_DELSVAR_ID_16, source.getFunktionsnedsattningPaverkan());

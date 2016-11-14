@@ -152,13 +152,6 @@ public class SchematronValidatorTest {
     }
 
     @Test
-    public void failsWhenFourDiagnoser() throws Exception {
-        String inputXml = Resources.toString(getResource("transport/scenarios/fail-diagnos-fyradiagnoser.xml"), Charsets.UTF_8);
-        ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);
-        assertEquals(1, response.getValidationErrors().size());
-    }
-
-    @Test
     public void failsWhenKontaktWithFkIsFalseButReasonStated() throws Exception {
         String inputXml = Resources.toString(getResource("transport/scenarios/fail-motiveringkontaktangivet-men-onskas-ej.xml"), Charsets.UTF_8);
         ValidateXmlResponse response = XmlValidator.validate(VALIDATOR, inputXml);

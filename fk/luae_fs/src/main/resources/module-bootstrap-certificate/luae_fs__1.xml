@@ -232,34 +232,27 @@
       <delsvar id="4.3">VE10</delsvar>
     </svar>
     <svar id="6">
-      <instans>1</instans>
+      <delsvar id="6.1">Cyklist skadad i kollision med fotg&#xE4;ngare eller djur</delsvar>
       <delsvar id="6.2">
         <ns3:cv>
           <ns3:code>V10</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="6.1">Cyklist skadad i kollision med fotg&#xE4;ngare eller djur</delsvar>
-    </svar>
-    <svar id="6">
-      <instans>2</instans>
-      <delsvar id="6.2">
+      <delsvar id="6.3">Motorcyklist skadad i kollision med fotg&#xE4;ngare eller djur</delsvar>
+      <delsvar id="6.4">
         <ns3:cv>
           <ns3:code>V20</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="6.1">Motorcyklist skadad i kollision med fotg&#xE4;ngare eller djur</delsvar>
-    </svar>
-    <svar id="6">
-      <instans>3</instans>
-      <delsvar id="6.2">
+      <delsvar id="6.5">F&#xF6;rare av eller passagerare i trehjuligt motorfordon i kollision med fotg&#xE4;ngare eller djur</delsvar>
+      <delsvar id="6.6">
         <ns3:cv>
           <ns3:code>V30</ns3:code>
           <ns3:codeSystem>1.2.752.116.1.1.1.1.3</ns3:codeSystem>
         </ns3:cv>
       </delsvar>
-      <delsvar id="6.1">F&#xF6;rare av eller passagerare i trehjuligt motorfordon i kollision med fotg&#xE4;ngare eller djur</delsvar>
     </svar>
     <svar id="15">
       <delsvar id="15.1">Debut f&#xF6;r funktionsneds&#xE4;ttning</delsvar>

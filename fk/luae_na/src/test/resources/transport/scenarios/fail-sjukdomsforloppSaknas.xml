@@ -102,7 +102,6 @@
       <delsvar id="4.3">Skickas med e-mail</delsvar>
 	</svar>
     <svar id="6">
-      <instans>1</instans>
       <delsvar id="6.1">Skada på multipla böjmuskler och deras senor på handleds- och handnivå</delsvar>
       <delsvar id="6.2">
         <ns3:cv>

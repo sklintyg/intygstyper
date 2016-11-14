@@ -23,13 +23,13 @@ import static se.inera.intyg.common.support.modules.converter.TransportConverter
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getGrundData;
 import static se.inera.intyg.common.support.modules.converter.TransportConverterUtil.getStringContent;
 import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.TransportToInternalUtil.handleDiagnos;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
@@ -214,31 +214,6 @@ public final class TransportToInternal {
                 throw new IllegalArgumentException();
         }
     }
-
-    private static void handleDiagnos(List<Diagnos> diagnoser, Svar svar) throws ConverterException {
-        String diagnosKod = null;
-        String diagnosKodSystem = null;
-        String diagnosDisplayName = null;
-        String diagnosBeskrivning = null;
-        for (Delsvar delsvar : svar.getDelsvar()) {
-            switch (delsvar.getId()) {
-            case DIAGNOS_DELSVAR_ID_6:
-                CVType diagnos = getCVSvarContent(delsvar);
-                diagnosKod = diagnos.getCode();
-                diagnosDisplayName = (diagnos.getDisplayName() != null) ? diagnos.getDisplayName() : "";
-                diagnosKodSystem = diagnos.getCodeSystem();
-                break;
-            case DIAGNOS_BESKRIVNING_DELSVAR_ID_6:
-                diagnosBeskrivning = getStringContent(delsvar);
-                break;
-            default:
-                throw new IllegalArgumentException();
-            }
-        }
-        Diagnoskodverk diagnoskodverk = Diagnoskodverk.getEnumByCodeSystem(diagnosKodSystem);
-        diagnoser.add(Diagnos.create(diagnosKod, diagnoskodverk.toString(), diagnosBeskrivning, diagnosDisplayName));
-    }
-
 
     private static void handleOvrigt(Builder utlatande, Svar svar) {
         Delsvar delsvar = svar.getDelsvar().get(0);
