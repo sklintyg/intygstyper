@@ -7,199 +7,203 @@
          field-has-errors="viewState.common.validationMessagesGrouped.nedsattning" id="arbetsformagaForm"
          field-required="true">
 
-      <div ng-show="fmb.formData.ARBETSFORMAGA">
-        <wc-fmb-help-display related-form-id="FALT8B" diagnosis-code="fmb.diagnosKod"
-                             diagnosis-description="fmb.diagnosBeskrivning" original-diagnosis-code="fmb.originalDiagnoskod"
-                             help-text-contents="fmb.formData.ARBETSFORMAGA"></wc-fmb-help-display>
-      </div>
+      <wc-fmb-help-display related-form-id="FALT8B" diagnosis-code="fmb.diagnosKod"
+                           diagnosis-description="fmb.diagnosBeskrivning"
+                           original-diagnosis-code="fmb.originalDiagnoskod"
+                           help-text-contents="fmb.formData.ARBETSFORMAGA">
 
-      <div class="form-group form-inline">
-        Faktisk tjänstgöringstid <input style="width: 3em;" type="text" wc-decimal-number
-                                        id="capacityForWorkActualWorkingHoursPerWeek"
-                                        name="capacityForWork.actualWorkingHoursPerWeek" value=""
-                                        class='short control-element form-control' maxlength="5"
-                                        ng-model="model.tjanstgoringstid"> <span>timmar/vecka</span> <span wc-help-mark
-                                                                                                           field-help-text="fk7263.helptext.arbetsformaga.faktisk-tjanstgoringstid"></span>
-      </div>
+        <div class="form-group form-inline">
+          Faktisk tjänstgöringstid <input style="width: 3em;" type="text" wc-decimal-number
+                                          id="capacityForWorkActualWorkingHoursPerWeek"
+                                          name="capacityForWork.actualWorkingHoursPerWeek" value=""
+                                          class='short control-element form-control' maxlength="5"
+                                          ng-model="model.tjanstgoringstid"> <span>timmar/vecka</span> <span
+            wc-help-mark field-help-text="fk7263.helptext.arbetsformaga.faktisk-tjanstgoringstid"></span>
+        </div>
 
-      <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('arbetsformaga')">
+        <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('arbetsformaga')">
 
-        <!-- 25% -->
-        <div class="form-group form-inline form8b-percentage-group">
+          <!-- 25% -->
+          <div class="form-group form-inline form8b-percentage-group">
 
-          <label class="control-label checkbox"><input type="checkbox" id="nedsattMed25" name="capacityForWork.work25"
-                                                       ng-change="field8b.onChangeWorkStateCheck('nedsattMed25')"
-                                                       ng-model="field8b.nedsattMed25.workState">
-            25%
-            nedsatt arbetsförmåga</label>
-          <uib-alert
-            id="nedsattMed25Alert"
-            type="info"
-            close="field8b.lastEffectiveDateNotice.hide()"
-            ng-if="
+            <label class="control-label checkbox"><input type="checkbox" id="nedsattMed25" name="capacityForWork.work25"
+                                                         ng-change="field8b.onChangeWorkStateCheck('nedsattMed25')"
+                                                         ng-model="field8b.nedsattMed25.workState">
+              25%
+              nedsatt arbetsförmåga</label>
+            <uib-alert id="nedsattMed25Alert" type="info" close="field8b.lastEffectiveDateNotice.hide()" ng-if="
               field8b.lastEffectiveDateNotice.isVisible &&
               field8b.lastEffectiveDateNotice.value == 'nedsattMed25'
-            ">{{lastEffectiveDateNoticeText}}</uib-alert>
-          <div class="form-group no-padding">
-            <label class="control-label checkbox">från och med
-                      <span wc-date-picker-field target-model="model.nedsattMed25.from"
-                            on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25from"
-                            invalid="!field8b.nedsattMed25.from.viewValid" override-render="true" format='' add-date-parser="loose"></span>
-            </label>
-            <label class="control-label checkbox">till och med
-                          <span wc-date-picker-field target-model="model.nedsattMed25.tom" on-blur="onToFieldBlur(field8b.nedsattMed25)"
-                                on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"
-                                invalid="!field8b.nedsattMed25.to.viewValid" override-render="true" add-date-parser="loose"></span>
-            </label>
-          </div>
-          <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed25')"></wc-field-validation>
-          <div class="indent pad10" ng-if="field8b.nedsattMed25.workState">
-            <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
-              Arbetstid timmar/vecka: <strong id="arbetstid25">{{model.tjanstgoringstid * 0.75 |
-              number}}</strong>
+            ">{{lastEffectiveDateNoticeText}}
+            </uib-alert>
+            <div class="form-group no-padding">
+              <label class="control-label checkbox">från och med
+                <span wc-date-picker-field target-model="model.nedsattMed25.from"
+                      on-change="onChangeNedsattMed('nedsattMed25', 'from')" dom-id="nedsattMed25from"
+                      invalid="!field8b.nedsattMed25.from.viewValid" override-render="true" format=''
+                      add-date-parser="loose"></span>
+              </label>
+              <label class="control-label checkbox">till och med
+                <span wc-date-picker-field target-model="model.nedsattMed25.tom"
+                      on-blur="onToFieldBlur(field8b.nedsattMed25)"
+                      on-change="onChangeNedsattMed('nedsattMed25', 'tom')" dom-id="nedsattMed25tom"
+                      invalid="!field8b.nedsattMed25.to.viewValid" override-render="true"
+                      add-date-parser="loose"></span>
+              </label>
             </div>
-            Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.nedsattMed25Beskrivning"
-                                                      id="nedsattMed25beskrivning"
-                                                      id="capacityForWork.rec25LongerWorkingHours"
-                                                      name="capacityForWork.rec25LongerWorkingHours" value=""
-                                                      class='form-control otherInformation'
-                                                      ng-change="viewState.limitOtherField('nedsattMed25Beskrivning')">
+            <wc-field-validation field-type="date"
+                                 validations="viewState.getValidationErrors('nedsattmed25')"></wc-field-validation>
+            <div class="indent pad10" ng-if="field8b.nedsattMed25.workState">
+              <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
+                Arbetstid timmar/vecka: <strong id="arbetstid25">{{model.tjanstgoringstid * 0.75 |
+                number}}</strong>
+              </div>
+              Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.nedsattMed25Beskrivning"
+                                                        id="nedsattMed25beskrivning"
+                                                        id="capacityForWork.rec25LongerWorkingHours"
+                                                        name="capacityForWork.rec25LongerWorkingHours" value=""
+                                                        class='form-control otherInformation'
+                                                        ng-change="viewState.limitOtherField('nedsattMed25Beskrivning')">
               <span
                   class="counter">Tecken kvar:  {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}</span>
 
-            <div class="info-transfer">
-              <span message key="fk7263.label.transfertoovrigt"></span>
+              <div class="info-transfer">
+                <span message key="fk7263.label.transfertoovrigt"></span>
+              </div>
+
             </div>
-
           </div>
-        </div>
 
-        <!-- 50% -->
-        <div class="form-group form-inline form8b-percentage-group">
-          <label class="control-label checkbox"><input type="checkbox" id="nedsattMed50" name="capacityForWork.work50"
-                                                       ng-change="field8b.onChangeWorkStateCheck('nedsattMed50')"
-                                                       ng-model="field8b.nedsattMed50.workState">
-            50%
-            nedsatt arbetsförmåga</label>
-          <uib-alert
-            id="nedsattMed50Alert"
-            type="info"
-            close="field8b.lastEffectiveDateNotice.hide()"
-            ng-if="
+          <!-- 50% -->
+          <div class="form-group form-inline form8b-percentage-group">
+            <label class="control-label checkbox"><input type="checkbox" id="nedsattMed50" name="capacityForWork.work50"
+                                                         ng-change="field8b.onChangeWorkStateCheck('nedsattMed50')"
+                                                         ng-model="field8b.nedsattMed50.workState">
+              50%
+              nedsatt arbetsförmåga</label>
+            <uib-alert id="nedsattMed50Alert" type="info" close="field8b.lastEffectiveDateNotice.hide()" ng-if="
               field8b.lastEffectiveDateNotice.isVisible &&
               field8b.lastEffectiveDateNotice.value == 'nedsattMed50'
-            ">{{lastEffectiveDateNoticeText}}</uib-alert>
-          <div class="form-group no-padding">
-            <label class="control-label checkbox">från och med
-                    <span wc-date-picker-field target-model="model.nedsattMed50.from"
-                          on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50from"
-                          invalid="!field8b.nedsattMed50.from.viewValid" override-render="true" add-date-parser="loose"></span>
-            </label>
-            <label class="control-label checkbox">till och med
-                        <span wc-date-picker-field target-model="model.nedsattMed50.tom"  on-blur="onToFieldBlur(field8b.nedsattMed50)"
-                              on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50tom"
-                              invalid="!field8b.nedsattMed50.to.viewValid" override-render="true" add-date-parser="loose"></span>
-            </label>
-          </div>
-          <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed50')"></wc-field-validation>
-          <div class="indent pad10" ng-if="field8b.nedsattMed50.workState">
-            <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
-              Arbetstid timmar/vecka: <strong id="arbetstid50">{{model.tjanstgoringstid * 0.5 |
-              number}}</strong>
+            ">{{lastEffectiveDateNoticeText}}
+            </uib-alert>
+            <div class="form-group no-padding">
+              <label class="control-label checkbox">från och med
+                <span wc-date-picker-field target-model="model.nedsattMed50.from"
+                      on-change="onChangeNedsattMed('nedsattMed50', 'from')" dom-id="nedsattMed50from"
+                      invalid="!field8b.nedsattMed50.from.viewValid" override-render="true"
+                      add-date-parser="loose"></span>
+              </label>
+              <label class="control-label checkbox">till och med
+                <span wc-date-picker-field target-model="model.nedsattMed50.tom"
+                      on-blur="onToFieldBlur(field8b.nedsattMed50)"
+                      on-change="onChangeNedsattMed('nedsattMed50', 'tom')" dom-id="nedsattMed50tom"
+                      invalid="!field8b.nedsattMed50.to.viewValid" override-render="true"
+                      add-date-parser="loose"></span>
+              </label>
             </div>
-            Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.nedsattMed50Beskrivning"
-                                                      id="nedsattMed50beskrivning"
-                                                      name="capacityForWork.rec50LongerWorkingHours" value=""
-                                                      class='form-control otherInformation'
-                                                      ng-change="viewState.limitOtherField('nedsattMed50Beskrivning')">
+            <wc-field-validation field-type="date"
+                                 validations="viewState.getValidationErrors('nedsattmed50')"></wc-field-validation>
+            <div class="indent pad10" ng-if="field8b.nedsattMed50.workState">
+              <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
+                Arbetstid timmar/vecka: <strong id="arbetstid50">{{model.tjanstgoringstid * 0.5 |
+                number}}</strong>
+              </div>
+              Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.nedsattMed50Beskrivning"
+                                                        id="nedsattMed50beskrivning"
+                                                        name="capacityForWork.rec50LongerWorkingHours" value=""
+                                                        class='form-control otherInformation'
+                                                        ng-change="viewState.limitOtherField('nedsattMed50Beskrivning')">
               <span
                   class="counter">Tecken kvar:  {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}</span>
 
-            <div class="info-transfer">
-              <span message key="fk7263.label.transfertoovrigt"></span>
+              <div class="info-transfer">
+                <span message key="fk7263.label.transfertoovrigt"></span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 75% -->
-        <div class="form-group form-inline form8b-percentage-group">
-          <label class="control-label checkbox"><input type="checkbox" id="nedsattMed75" name="capacityForWork.work75"
-                                                       ng-change="field8b.onChangeWorkStateCheck('nedsattMed75')"
-                                                       ng-model="field8b.nedsattMed75.workState">
-            75%
-            nedsatt arbetsförmåga</label>
-          <uib-alert
-            id="nedsattMed75Alert"
-            type="info"
-            close="field8b.lastEffectiveDateNotice.hide()"
-            ng-if="
+          <!-- 75% -->
+          <div class="form-group form-inline form8b-percentage-group">
+            <label class="control-label checkbox"><input type="checkbox" id="nedsattMed75" name="capacityForWork.work75"
+                                                         ng-change="field8b.onChangeWorkStateCheck('nedsattMed75')"
+                                                         ng-model="field8b.nedsattMed75.workState">
+              75%
+              nedsatt arbetsförmåga</label>
+            <uib-alert id="nedsattMed75Alert" type="info" close="field8b.lastEffectiveDateNotice.hide()" ng-if="
               field8b.lastEffectiveDateNotice.isVisible &&
               field8b.lastEffectiveDateNotice.value == 'nedsattMed75'
-            ">{{lastEffectiveDateNoticeText}}</uib-alert>
-          <div class="form-group no-padding">
-            <label class="control-label checkbox">från och med
-                        <span wc-date-picker-field target-model="model.nedsattMed75.from"
-                              on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75from"
-                              invalid="!field8b.nedsattMed75.from.viewValid" override-render="true" add-date-parser="loose"></span>
-            </label>
-            <label class="control-label checkbox">till och med
-                        <span wc-date-picker-field target-model="model.nedsattMed75.tom"  on-blur="onToFieldBlur(field8b.nedsattMed75)"
-                              on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75tom"
-                              invalid="!field8b.nedsattMed75.to.viewValid" override-render="true" add-date-parser="loose"></span>
-            </label>
-          </div>
-          <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed75')"></wc-field-validation>
-          <div class="indent pad10" ng-if="field8b.nedsattMed75.workState">
-            <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
-              Arbetstid timmar/vecka: <strong id="arbetstid75">{{model.tjanstgoringstid * 0.25 |
-              number}}</strong>
+            ">{{lastEffectiveDateNoticeText}}
+            </uib-alert>
+            <div class="form-group no-padding">
+              <label class="control-label checkbox">från och med
+                <span wc-date-picker-field target-model="model.nedsattMed75.from"
+                      on-change="onChangeNedsattMed('nedsattMed75', 'from')" dom-id="nedsattMed75from"
+                      invalid="!field8b.nedsattMed75.from.viewValid" override-render="true"
+                      add-date-parser="loose"></span>
+              </label>
+              <label class="control-label checkbox">till och med
+                <span wc-date-picker-field target-model="model.nedsattMed75.tom"
+                      on-blur="onToFieldBlur(field8b.nedsattMed75)"
+                      on-change="onChangeNedsattMed('nedsattMed75', 'tom')" dom-id="nedsattMed75tom"
+                      invalid="!field8b.nedsattMed75.to.viewValid" override-render="true"
+                      add-date-parser="loose"></span>
+              </label>
             </div>
-            Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.nedsattMed75Beskrivning"
-                                                      id="nedsattMed75beskrivning"
-                                                      name="capacityForWork.rec75LongerWorkingHours" value=""
-                                                      class='form-control otherInformation'
-                                                      ng-change="viewState.limitOtherField('nedsattMed75Beskrivning')">
+            <wc-field-validation field-type="date"
+                                 validations="viewState.getValidationErrors('nedsattmed75')"></wc-field-validation>
+            <div class="indent pad10" ng-if="field8b.nedsattMed75.workState">
+              <div class="workHoursPerWeek" ng-show="model.tjanstgoringstid != '' && model.tjanstgoringstid > 0">
+                Arbetstid timmar/vecka: <strong id="arbetstid75">{{model.tjanstgoringstid * 0.25 |
+                number}}</strong>
+              </div>
+              Arbetstidsförläggning (frivilligt) <input type="text" ng-model="model.nedsattMed75Beskrivning"
+                                                        id="nedsattMed75beskrivning"
+                                                        name="capacityForWork.rec75LongerWorkingHours" value=""
+                                                        class='form-control otherInformation'
+                                                        ng-change="viewState.limitOtherField('nedsattMed75Beskrivning')">
               <span
                   class="counter">Tecken kvar:  {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}</span>
 
-            <div class="info-transfer">
-              <span message key="fk7263.label.transfertoovrigt"></span>
+              <div class="info-transfer">
+                <span message key="fk7263.label.transfertoovrigt"></span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 100% -->
-        <div class="form-group form-inline form8b-percentage-group">
-          <label class="control-label checkbox"><input type="checkbox" id="nedsattMed100" name="capacityForWork.workFull"
-                                                       ng-change="field8b.onChangeWorkStateCheck('nedsattMed100')"
-                                                       ng-model="field8b.nedsattMed100.workState">
-            Helt
-            nedsatt arbetsförmåga</label>
-          <uib-alert
-            id="nedsattMed100Alert"
-            type="info"
-            close="field8b.lastEffectiveDateNotice.hide()"
-            ng-if="
+          <!-- 100% -->
+          <div class="form-group form-inline form8b-percentage-group">
+            <label class="control-label checkbox"><input type="checkbox" id="nedsattMed100"
+                                                         name="capacityForWork.workFull"
+                                                         ng-change="field8b.onChangeWorkStateCheck('nedsattMed100')"
+                                                         ng-model="field8b.nedsattMed100.workState">
+              Helt
+              nedsatt arbetsförmåga</label>
+            <uib-alert id="nedsattMed100Alert" type="info" close="field8b.lastEffectiveDateNotice.hide()" ng-if="
               field8b.lastEffectiveDateNotice.isVisible &&
               field8b.lastEffectiveDateNotice.value == 'nedsattMed100'
-            ">{{lastEffectiveDateNoticeText}}</uib-alert>
-          <div class="form-group no-padding">
-            <label class="control-label checkbox">från och med
-                        <span wc-date-picker-field target-model="model.nedsattMed100.from"
-                              on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100from"
-                              invalid="!field8b.nedsattMed100.from.viewValid" override-render="true" add-date-parser="loose"></span>
-            </label>
-            <label class="control-label checkbox">till och med
-                        <span wc-date-picker-field target-model="model.nedsattMed100.tom"  on-blur="onToFieldBlur(field8b.nedsattMed100)"
-                              on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100tom"
-                              invalid="!field8b.nedsattMed100.to.viewValid" override-render="true" add-date-parser="loose"></span>
-            </label>
+            ">{{lastEffectiveDateNoticeText}}
+            </uib-alert>
+            <div class="form-group no-padding">
+              <label class="control-label checkbox">från och med
+                <span wc-date-picker-field target-model="model.nedsattMed100.from"
+                      on-change="onChangeNedsattMed('nedsattMed100', 'from')" dom-id="nedsattMed100from"
+                      invalid="!field8b.nedsattMed100.from.viewValid" override-render="true"
+                      add-date-parser="loose"></span>
+              </label>
+              <label class="control-label checkbox">till och med
+                <span wc-date-picker-field target-model="model.nedsattMed100.tom"
+                      on-blur="onToFieldBlur(field8b.nedsattMed100)"
+                      on-change="onChangeNedsattMed('nedsattMed100', 'tom')" dom-id="nedsattMed100tom"
+                      invalid="!field8b.nedsattMed100.to.viewValid" override-render="true"
+                      add-date-parser="loose"></span>
+              </label>
+            </div>
+            <wc-field-validation field-type="date"
+                                 validations="viewState.getValidationErrors('nedsattmed100')"></wc-field-validation>
           </div>
-          <wc-field-validation field-type="date" validations="viewState.getValidationErrors('nedsattmed100')"></wc-field-validation>
-        </div>
 
-      </wc-validation-group>
-
+        </wc-validation-group>
+      </wc-fmb-help-display>
       <div ng-show="field8b.info.totalCertDays">
         <p>Detta intyg motsvarar en period på: <span id="totalCertDays">{{field8b.info.totalCertDays}}</span> <span
             ng-show="field8b.info.totalCertDays > 1">dagar</span><span

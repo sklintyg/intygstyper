@@ -1,25 +1,24 @@
 <div class="field-fade" ng-hide="viewState.avstangningSmittskydd()">
-    <a id="anchor.aktivitetsbegransning" name="anchor.aktivitetsbegransning"></a>
+  <a id="anchor.aktivitetsbegransning" name="anchor.aktivitetsbegransning"></a>
 
-    <div wc-field field-label="fk7263.label.aktivitetsbegransning" field-number="5"
-         field-help-text="fk7263.helptext.aktivitetsbegransning"
-         field-has-errors="viewState.common.validationMessagesGrouped.aktivitetsbegransning"
-         field-required="true"
-         class="print-pagebreak-after">
+  <div wc-field field-label="fk7263.label.aktivitetsbegransning" field-number="5"
+       field-help-text="fk7263.helptext.aktivitetsbegransning"
+       field-has-errors="viewState.common.validationMessagesGrouped.aktivitetsbegransning" field-required="true"
+       class="print-pagebreak-after">
 
-        <div ng-show="fmb.formData.AKTIVITETSBEGRANSNING">
-          <wc-fmb-help-display related-form-id="FALT5" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning"
-                               help-text-contents="fmb.formData.AKTIVITETSBEGRANSNING" original-diagnosis-code="fmb.originalDiagnoskod"></wc-fmb-help-display>
-        </div>
-
-        <wc-validation-wrapper field-type="multi-text" validations="viewState.getValidationErrors('aktivitetsbegransning')">
-            <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
-               target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-                försäkringsmedicinska beslutsstöd</a>
-            <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10'
-                      ng-model="model.aktivitetsbegransning" wc-maxlength ng-trim="false"
-                      maxlength="{{viewState.inputLimits.aktivitetsbegransning}}"></textarea>
-        </wc-validation-wrapper>
-
-    </div>
+    <wc-fmb-help-display related-form-id="FALT5" diagnosis-code="fmb.diagnosKod"
+                         diagnosis-description="fmb.diagnosBeskrivning"
+                         help-text-contents="fmb.formData.AKTIVITETSBEGRANSNING"
+                         original-diagnosis-code="fmb.originalDiagnoskod">
+      <wc-validation-wrapper field-type="multi-text"
+                             validations="viewState.getValidationErrors('aktivitetsbegransning')">
+        <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
+           target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
+          försäkringsmedicinska beslutsstöd</a>
+        <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10'
+                  ng-model="model.aktivitetsbegransning" wc-maxlength ng-trim="false"
+                  maxlength="{{viewState.inputLimits.aktivitetsbegransning}}"></textarea>
+      </wc-validation-wrapper>
+    </wc-fmb-help-display>
+  </div>
 </div>

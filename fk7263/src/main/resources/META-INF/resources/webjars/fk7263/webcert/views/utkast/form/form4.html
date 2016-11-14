@@ -1,24 +1,23 @@
 <div class="field-fade" ng-hide="viewState.avstangningSmittskydd()">
-    <a id="anchor.funktionsnedsattning" name="anchor.funktionsnedsattning"></a>
+  <a id="anchor.funktionsnedsattning" name="anchor.funktionsnedsattning"></a>
 
-    <div wc-field field-label="fk7263.label.funktionsnedsattning" field-number="4"
-         field-help-text="fk7263.helptext.funktionsnedsattning"
-         field-has-errors="viewState.common.validationMessagesGrouped.funktionsnedsattning"
-         field-required="true">
+  <div wc-field field-label="fk7263.label.funktionsnedsattning" field-number="4"
+       field-help-text="fk7263.helptext.funktionsnedsattning"
+       field-has-errors="viewState.common.validationMessagesGrouped.funktionsnedsattning" field-required="true">
 
-        <div ng-show="fmb.formData.FUNKTIONSNEDSATTNING">
-            <wc-fmb-help-display related-form-id="FALT4" diagnosis-code="fmb.diagnosKod" diagnosis-description="fmb.diagnosBeskrivning" 
-                                 help-text-contents="fmb.formData.FUNKTIONSNEDSATTNING" original-diagnosis-code="fmb.originalDiagnoskod"></wc-fmb-help-display>
-        </div>
-
-        <wc-validation-wrapper field-type="multi-text" validations="viewState.getValidationErrors('funktionsnedsattning')">
-            <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
-               target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-                försäkringsmedicinska beslutsstöd</a>
-                    <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
-                              ng-model="model.funktionsnedsattning" wc-maxlength ng-trim="false"
-                              maxlength="{{viewState.inputLimits.funktionsnedsattning}}"></textarea>
-        </wc-validation-wrapper>
-
-    </div>
+    <wc-fmb-help-display related-form-id="FALT4" diagnosis-code="fmb.diagnosKod"
+                         diagnosis-description="fmb.diagnosBeskrivning"
+                         help-text-contents="fmb.formData.FUNKTIONSNEDSATTNING"
+                         original-diagnosis-code="fmb.originalDiagnoskod">
+      <wc-validation-wrapper field-type="multi-text"
+                             validations="viewState.getValidationErrors('funktionsnedsattning')">
+        <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
+           target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
+          försäkringsmedicinska beslutsstöd</a>
+        <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
+                  ng-model="model.funktionsnedsattning" wc-maxlength ng-trim="false"
+                  maxlength="{{viewState.inputLimits.funktionsnedsattning}}"></textarea>
+      </wc-validation-wrapper>
+    </wc-fmb-help-display>
+  </div>
 </div>
