@@ -1,5 +1,5 @@
 angular.module('lisjp').factory('lisjp.FormFactory',
-    ['common.DateUtilsService', 'common.ObjectHelper', 'common.fmb.ViewStateService', 'common.UserModel',
+    ['common.DateUtilsService', 'common.ObjectHelper', 'common.fmbViewState', 'common.UserModel',
         function(DateUtils, ObjectHelper, fmbViewState, UserModel) {
 
             'use strict';

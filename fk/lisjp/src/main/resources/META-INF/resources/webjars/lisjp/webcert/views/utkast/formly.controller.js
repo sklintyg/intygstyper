@@ -1,6 +1,6 @@
 angular.module('lisjp').controller('lisjp.EditCert.FormlyCtrl',
     ['$scope', 'lisjp.EditCertCtrl.ViewStateService', 'lisjp.FormFactory', 'common.TillaggsfragorHelper',
-     'common.fmb.ViewStateService',
+     'common.fmbViewState',
         function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper, fmbViewState) {
 
             'use strict';

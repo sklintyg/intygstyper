@@ -18,13 +18,11 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCertCtrl',
-    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$state', '$stateParams',
-        '$q',
+    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$state', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'fk7263.diagnosService',
         'common.DateUtilsService', 'common.UtilsService', 'fk7263.Domain.IntygModel',
-        'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService', 'common.fmb.ViewStateService',
-        'common.fmbService',
-        'common.ObjectHelper', 'common.IntygProxy', 'common.IntygHelper',
+        'fk7263.EditCertCtrl.ViewStateService', 'common.anchorScrollService', 'common.fmbViewState',
+        'common.fmbService', 'common.ObjectHelper', 'common.IntygProxy', 'common.IntygHelper',
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $state, $stateParams, $q,
             UtkastService, UserModel, diagnosService, dateUtils, utils, IntygModel, viewState, anchorScrollService,
             fmbViewState, fmbService, ObjectHelper, IntygProxy, IntygHelper) {
@@ -78,19 +76,11 @@ angular.module('fk7263').controller('fk7263.EditCertCtrl',
             // Get the certificate draft from the server.
             UtkastService.load(viewState).then(function(intygModel) {
 
-                // Load FMB help text
-                if (intygModel.diagnosKod) {
-                    fmbService.getFMBHelpTextsByCode(intygModel.diagnosKod).then(
-                        function(formData) {
-                            fmbViewState.setState(formData, formData.icd10Code, formData.icd10Description, intygModel.diagnosKod);
-                        },
-                        function(rejectionData) {
-                            $log.debug('Error searching fmb help text');
-                            $log.debug(rejectionData);
-                            return [];
-                        }
-                    );
-                }
+                fmbService.updateFmbTextsForAllDiagnoses([
+                    {diagnosKod: intygModel.diagnosKod},
+                    {diagnosKod: intygModel.diagnosKod2},
+                    {diagnosKod: intygModel.diagnosKod3}
+                ]);
 
                 // Load parentIntyg to feed fragasvar component with load event
                 if (ObjectHelper.isDefined(intygModel.grundData.relation) &&

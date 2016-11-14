@@ -18,7 +18,7 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
-    ['$scope', '$log', '$http', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'common.fmbService', 'common.fmb.ViewStateService',
+    ['$scope', '$log', '$http', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'common.fmbService', 'common.fmbViewState',
         'fk7263.EditCertCtrl.Helper', 'common.MonitoringLogService',
         function($scope, $log, $http, viewState, diagnosService, fmbService, fmbViewState, helper, monitoringService) {
             'use strict';
@@ -37,6 +37,14 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
             $scope.diagnosKodNoResults = [];
 
             var diagnosKodverkStates = {ICD_10_SE:'ICD_10_SE',KSH_97_P:'KSH_97_P'};
+
+            function updateFmbTextsForAllDiagnoses() {
+                fmbService.updateFmbTextsForAllDiagnoses([
+                    {diagnosKod: $scope.model.diagnosKod},
+                    {diagnosKod: $scope.model.diagnosKod2},
+                    {diagnosKod: $scope.model.diagnosKod3}
+                ]);
+            }
 
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
                 if(newVal === oldVal){
@@ -57,7 +65,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                             }
                         }
                     }
-                    $scope.updateFmbText();
+                    updateFmbTextsForAllDiagnoses();
                 }
             });
 
@@ -99,7 +107,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod3 = undefined;
                 $scope.model.diagnosBeskrivning3 = undefined;
 
-                $scope.updateFmbText();
+                updateFmbTextsForAllDiagnoses();
 
                 setAllDiagnosKodverk( $scope.viewModel.diagnosKodverk );
             };
@@ -206,46 +214,27 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                     });
             };
 
-            //What we do if the call to the FMB service is successful
-            var fmbSuccess = function fmbSuccess(formData) {
-                fmbViewState.setState(formData, formData.icd10Code, formData.icd10Description, $scope.model.diagnosKod);
-            };
-
-            var fmbReject = function fmbReject(data) {
-                $log.debug('Error searching fmb help text');
-                $log.debug(data);
-                return [];
-            };
-
-            $scope.updateFmbText = function() {
-                if ($scope.model.diagnosKod === undefined || $scope.model.diagnosKod.length === 0) {
-                    fmbViewState.reset();
-                } else if(fmbViewState.state.diagnosKod !== $scope.model.diagnosKod) {
-                    fmbService.getFMBHelpTextsByCode($scope.model.diagnosKod).then(fmbSuccess, fmbReject);
-                }
-            };
-
             /**
              * User selects a diagnose code
              */
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-
-                $scope.updateFmbText();
-
+                fmbService.updateFmbText('main', $scope.model.diagnosKod);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
+                fmbService.updateFmbText('bi1', $scope.model.diagnosKod2);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
+                fmbService.updateFmbText('bi2', $scope.model.diagnosKod3);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
@@ -257,16 +246,15 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod = $item.value;
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-
+                fmbService.updateFmbText('main', $scope.model.diagnosKod);
                 $scope.form2.$setDirty();
-                $scope.updateFmbText();
-
                 model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseDescription2Select = function($item) {
                 $scope.model.diagnosKod2 = $item.value;
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
+                fmbService.updateFmbText('bi1', $scope.model.diagnosKod2);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
@@ -274,6 +262,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod3 = $item.value;
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
+                fmbService.updateFmbText('bi2', $scope.model.diagnosKod3);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };

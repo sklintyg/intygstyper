@@ -2,7 +2,7 @@ angular.module('lisjp').controller('lisjp.EditCertCtrl',
     ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'lisjp.Domain.IntygModel', 'lisjp.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'lisjp.FormFactory', 'common.fmbService', 'common.fmb.ViewStateService',
+        'common.anchorScrollService', 'lisjp.FormFactory', 'common.fmbService', 'common.fmbViewState',
 
         function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
             UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory,
@@ -40,22 +40,7 @@ angular.module('lisjp').controller('lisjp.EditCertCtrl',
                     $scope.certForm.$setDirty();
                 }
 
-                if(angular.isArray(intygModel.diagnoser) && intygModel.diagnoser[0].diagnosKod) {
-                    fmbService.getFMBHelpTextsByCode(intygModel.diagnoser[0].diagnosKod).then(
-                        function (formData) {
-                            $log.debug('fmbViewState from utkast controller');
-                            fmbViewState.setState(formData, formData.icd10Code, formData.icd10Description, intygModel.diagnoser[0].diagnosKod);
-                        },
-                        function (rejectionData) {
-                            $log.debug('fmbViewState from utkast controller - Error searching fmb help text');
-                            fmbViewState.reset();
-                        }
-                    );
-                } else{
-                    $log.debug('intygModel does not have diagnose code set - resetting fmbViewState');
-                    fmbViewState.reset();
-                }
-
+                fmbService.updateFmbTextsForAllDiagnoses(intygModel.diagnoser);
             });
 
             $scope.$on('saveRequest', function($event, saveDeferred) {
