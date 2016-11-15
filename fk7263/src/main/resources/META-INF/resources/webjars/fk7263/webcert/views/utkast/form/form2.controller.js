@@ -27,7 +27,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
 
             $scope.viewState = viewState;
 
-            $scope.fmb = fmbViewState.state;
+            $scope.fmbViewState = fmbViewState;
 
             $scope.viewModel = {
                 diagnosKodverk : ''
@@ -118,18 +118,21 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
             $scope.onChangeDiagnoseCode1 = function() {
                 if (!$scope.form2['diagnose.code'].$viewValue) {
                     $scope.model.diagnosBeskrivning1 = undefined;
+                    fmbService.updateFmbText('main', $scope.model.diagnosKod);
                 }
                 $scope.limitDiagnosBeskrivningField('diagnosKod1');
             };
             $scope.onChangeDiagnoseCode2 = function() {
                 if (!$scope.form2['diagnose.codeOpt1'].$viewValue) {
                     $scope.model.diagnosBeskrivning2 = undefined;
+                    fmbService.updateFmbText('bi1', $scope.model.diagnosKod2);
                 }
                 $scope.limitDiagnosBeskrivningField('diagnosKod2');
             };
             $scope.onChangeDiagnoseCode3 = function() {
                 if (!$scope.form2['diagnose.codeOpt2'].$viewValue) {
                     $scope.model.diagnosBeskrivning3 = undefined;
+                    fmbService.updateFmbText('bi2', $scope.model.diagnosKod3);
                 }
                 $scope.limitDiagnosBeskrivningField('diagnosKod3');
             };
@@ -266,7 +269,6 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
-
 
 
             /**

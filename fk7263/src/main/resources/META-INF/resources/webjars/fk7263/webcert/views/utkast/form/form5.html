@@ -6,15 +6,12 @@
        field-has-errors="viewState.common.validationMessagesGrouped.aktivitetsbegransning" field-required="true"
        class="print-pagebreak-after">
 
-    <wc-fmb-help-display related-form-id="FALT5" diagnosis-code="fmb.diagnosKod"
-                         diagnosis-description="fmb.diagnosBeskrivning"
-                         help-text-contents="fmb.formData.AKTIVITETSBEGRANSNING"
-                         original-diagnosis-code="fmb.originalDiagnoskod">
+    <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
+       target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
+      försäkringsmedicinska beslutsstöd</a>
+    <wc-fmb-help-display related-form-id="FALT5" fmb-states="fmbViewState" field-name="AKTIVITETSBEGRANSNING">
       <wc-validation-wrapper field-type="multi-text"
                              validations="viewState.getValidationErrors('aktivitetsbegransning')">
-        <a class="soclink" href="http://www.socialstyrelsen.se/riktlinjer/forsakringsmedicinsktbeslutsstod"
-           target="_blank" title="Öppnar Socialstyrelsens beslutstöd för angiven huvuddiagnos">Socialstyrelsens
-          försäkringsmedicinska beslutsstöd</a>
         <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10'
                   ng-model="model.aktivitetsbegransning" wc-maxlength ng-trim="false"
                   maxlength="{{viewState.inputLimits.aktivitetsbegransning}}"></textarea>
