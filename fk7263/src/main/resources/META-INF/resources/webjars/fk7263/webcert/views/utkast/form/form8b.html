@@ -7,10 +7,7 @@
          field-has-errors="viewState.common.validationMessagesGrouped.nedsattning" id="arbetsformagaForm"
          field-required="true">
 
-      <wc-fmb-help-display related-form-id="FALT8B" diagnosis-code="fmb.diagnosKod"
-                           diagnosis-description="fmb.diagnosBeskrivning"
-                           original-diagnosis-code="fmb.originalDiagnoskod"
-                           help-text-contents="fmb.formData.ARBETSFORMAGA">
+      <wc-fmb-help-display related-form-id="FALT8B" fmb-states="fmbViewState" field-name="ARBETSFORMAGA">
 
         <div class="form-group form-inline">
           Faktisk tjänstgöringstid <input style="width: 3em;" type="text" wc-decimal-number

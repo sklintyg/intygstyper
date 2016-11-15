@@ -29,7 +29,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             // scope
             $scope.model = viewState.intygModel;
             $scope.viewState = viewState;
-            $scope.fmb = fmbViewState.state;
+            $scope.fmbViewState = fmbViewState;
             $scope.lastEffectiveDate = '';
             $scope.lastEffectiveDateNoticeText = '';
 

@@ -26,7 +26,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form5Ctrl',
 
             $scope.viewState = viewState;
 
-            $scope.fmb = fmbViewState.state;
+            $scope.fmbViewState = fmbViewState;
+
             $scope.$watch('viewState.avstangningSmittskyddValue', function(newVal, oldVal) {
                 if(newVal === oldVal){
                     return;
