@@ -88,7 +88,6 @@ public class PdfEmployeeGenerator extends PdfAbstractGenerator {
                 break;
             }
 
-            createSignatureNotRequiredField(pdfStamper, pdfReader.getNumberOfPages());
             pdfStamper.setFormFlattening(flatten);
             pdfStamper.close();
 
