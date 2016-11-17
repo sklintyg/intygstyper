@@ -118,21 +118,21 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
             $scope.onChangeDiagnoseCode1 = function() {
                 if (!$scope.form2['diagnose.code'].$viewValue) {
                     $scope.model.diagnosBeskrivning1 = undefined;
-                    fmbService.updateFmbText('main', $scope.model.diagnosKod);
+                    fmbService.updateFmbText(0, $scope.model.diagnosKod);
                 }
                 $scope.limitDiagnosBeskrivningField('diagnosKod1');
             };
             $scope.onChangeDiagnoseCode2 = function() {
                 if (!$scope.form2['diagnose.codeOpt1'].$viewValue) {
                     $scope.model.diagnosBeskrivning2 = undefined;
-                    fmbService.updateFmbText('bi1', $scope.model.diagnosKod2);
+                    fmbService.updateFmbText(1, $scope.model.diagnosKod2);
                 }
                 $scope.limitDiagnosBeskrivningField('diagnosKod2');
             };
             $scope.onChangeDiagnoseCode3 = function() {
                 if (!$scope.form2['diagnose.codeOpt2'].$viewValue) {
                     $scope.model.diagnosBeskrivning3 = undefined;
-                    fmbService.updateFmbText('bi2', $scope.model.diagnosKod3);
+                    fmbService.updateFmbText(2, $scope.model.diagnosKod3);
                 }
                 $scope.limitDiagnosBeskrivningField('diagnosKod3');
             };
@@ -223,21 +223,21 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
             $scope.onDiagnoseCode1Select = function($item) {
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-                fmbService.updateFmbText('main', $scope.model.diagnosKod);
+                fmbService.updateFmbText(0, $scope.model.diagnosKod);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseCode2Select = function($item) {
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-                fmbService.updateFmbText('bi1', $scope.model.diagnosKod2);
+                fmbService.updateFmbText(1, $scope.model.diagnosKod2);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
             $scope.onDiagnoseCode3Select = function($item) {
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-                fmbService.updateFmbText('bi2', $scope.model.diagnosKod3);
+                fmbService.updateFmbText(2, $scope.model.diagnosKod3);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
@@ -249,7 +249,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod = $item.value;
                 $scope.model.diagnosBeskrivning1 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning1');
-                fmbService.updateFmbText('main', $scope.model.diagnosKod);
+                fmbService.updateFmbText(0, $scope.model.diagnosKod);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
@@ -257,7 +257,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod2 = $item.value;
                 $scope.model.diagnosBeskrivning2 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning2');
-                fmbService.updateFmbText('bi1', $scope.model.diagnosKod2);
+                fmbService.updateFmbText(1, $scope.model.diagnosKod2);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
@@ -265,7 +265,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 $scope.model.diagnosKod3 = $item.value;
                 $scope.model.diagnosBeskrivning3 = $item.beskrivning;
                 $scope.limitDiagnosBeskrivningField('diagnosBeskrivning3');
-                fmbService.updateFmbText('bi2', $scope.model.diagnosKod3);
+                fmbService.updateFmbText(2, $scope.model.diagnosKod3);
                 $scope.form2.$setDirty();
                 model.updateToAttic(model.properties.form2);
             };
