@@ -375,8 +375,9 @@ public class LisjpModuleApiTest {
         assertNotNull(res);
         assertEquals(3, res.keySet().size());
         assertNotNull(res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
-        assertEquals(1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertEquals(2, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(1));
         assertNotNull(res.get(PROGNOS_SVAR_ID_39));
         assertEquals(1, res.get(PROGNOS_SVAR_ID_39).size());
         assertEquals(PROGNOS_SVAR_JSON_ID_39, res.get(PROGNOS_SVAR_ID_39).get(0));

@@ -20,11 +20,7 @@ package se.inera.intyg.intygstyper.luae_na.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.util.List;
 
@@ -47,50 +43,56 @@ public class SvarIdHelperTest {
     public void testCalculateFrageIdHandleForGrundForMUNoValues() throws ConverterException {
         List<String> res = svarIdHelper.calculateFrageIdHandleForGrundForMU(buildUtlatande(null, null, null, null));
         assertNotNull(res);
-        assertTrue(res.isEmpty());
+        assertEquals(1, res.size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(0));
     }
 
     @Test
     public void testCalculateFrageIdHandleForGrundForMUUndersokningAvPatienten() throws ConverterException {
         List<String> res = svarIdHelper.calculateFrageIdHandleForGrundForMU(buildUtlatande(INTERNAL_DATE, null, null, null));
         assertNotNull(res);
-        assertEquals(1, res.size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(2, res.size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(1));
     }
 
     @Test
     public void testCalculateFrageIdHandleForGrundForMUJournalUppgifter() throws ConverterException {
         List<String> res = svarIdHelper.calculateFrageIdHandleForGrundForMU(buildUtlatande(null, INTERNAL_DATE, null, null));
         assertNotNull(res);
-        assertEquals(1, res.size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(2, res.size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1, res.get(1));
     }
 
     @Test
     public void testCalculateFrageIdHandleForGrundForMUAnhorigsBeskrivningAvPatienten() throws ConverterException {
         List<String> res = svarIdHelper.calculateFrageIdHandleForGrundForMU(buildUtlatande(null, null, INTERNAL_DATE, null));
         assertNotNull(res);
-        assertEquals(1, res.size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(2, res.size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1, res.get(1));
     }
 
     @Test
     public void testCalculateFrageIdHandleForGrundForMUAnnatGrundForMU() throws ConverterException {
         List<String> res = svarIdHelper.calculateFrageIdHandleForGrundForMU(buildUtlatande(null, null, null, INTERNAL_DATE));
         assertNotNull(res);
-        assertEquals(1, res.size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(2, res.size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1, res.get(1));
     }
 
     @Test
     public void testCalculateFrageIdHandleForGrundForMUAll() throws ConverterException {
         List<String> res = svarIdHelper.calculateFrageIdHandleForGrundForMU(buildUtlatande(INTERNAL_DATE, INTERNAL_DATE, INTERNAL_DATE, INTERNAL_DATE));
         assertNotNull(res);
-        assertEquals(4, res.size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(0));
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1, res.get(1));
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1, res.get(2));
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1, res.get(3));
+        assertEquals(5, res.size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(1));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1, res.get(2));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1, res.get(3));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1, res.get(4));
     }
 
     private LuaenaUtlatande buildUtlatande(InternalDate undersokningAvPatienten, InternalDate journaluppgifter,

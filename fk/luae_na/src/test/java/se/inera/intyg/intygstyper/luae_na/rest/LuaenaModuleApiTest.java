@@ -45,7 +45,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
@@ -53,6 +52,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.intygstyper.luae_na.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.luae_na.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
@@ -248,8 +248,9 @@ public class LuaenaModuleApiTest {
         assertNotNull(res);
         assertEquals(3, res.keySet().size());
         assertNotNull(res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
-        assertEquals(1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertEquals(2, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(1));
         assertNotNull(res.get(FORSLAG_TILL_ATGARD_SVAR_ID_24));
         assertEquals(1, res.get(FORSLAG_TILL_ATGARD_SVAR_ID_24).size());
         assertEquals(FORSLAG_TILL_ATGARD_SVAR_JSON_ID_24, res.get(FORSLAG_TILL_ATGARD_SVAR_ID_24).get(0));

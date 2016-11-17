@@ -48,7 +48,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 
-import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardgivare;
@@ -57,6 +56,7 @@ import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.modules.support.api.exception.*;
 import se.inera.intyg.common.support.modules.support.api.exception.ExternalServiceCallException.ErrorIdEnum;
+import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.intygstyper.luse.model.converter.SvarIdHelperImpl;
 import se.inera.intyg.intygstyper.luse.model.converter.WebcertModelFactoryImpl;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
@@ -372,8 +372,9 @@ public class LuseModuleApiTest {
         assertNotNull(res);
         assertEquals(4, res.keySet().size());
         assertNotNull(res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
-        assertEquals(1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
-        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertEquals(2, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).size());
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(0));
+        assertEquals(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1, res.get(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1).get(1));
         assertNotNull(res.get(KANNEDOM_SVAR_ID_2));
         assertEquals(1, res.get(KANNEDOM_SVAR_ID_2).size());
         assertEquals(KANNEDOM_SVAR_JSON_ID_2, res.get(KANNEDOM_SVAR_ID_2).get(0));

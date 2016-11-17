@@ -18,14 +18,12 @@
  */
 package se.inera.intyg.intygstyper.lisjp.model.converter;
 
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants;
 import se.inera.intyg.intygstyper.fkparent.model.converter.SvarIdHelper;
 import se.inera.intyg.intygstyper.lisjp.model.internal.LisjpUtlatande;
 
@@ -34,6 +32,7 @@ public class SvarIdHelperImpl implements SvarIdHelper<LisjpUtlatande> {
     @Override
     public List<String> calculateFrageIdHandleForGrundForMU(LisjpUtlatande utlatande) {
         List<String> filledPositions = new ArrayList<>();
+        filledPositions.add(RespConstants.getJsonPropertyFromFrageId(GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1));
         if (utlatande.getUndersokningAvPatienten() != null) {
             filledPositions.add(GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1);
         }

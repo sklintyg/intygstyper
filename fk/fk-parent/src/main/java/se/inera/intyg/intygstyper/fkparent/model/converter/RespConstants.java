@@ -32,6 +32,7 @@ public final class RespConstants {
     public static final String PROGNOS_DAGAR_TILL_ARBETE_CODE_SYSTEM = "KV_FKMU_0007";
 
     public static final String GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1 = "1";
+    public static final String GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1 = "baseratPa";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1 = "1.1";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1 = "1.2";
     public static final String GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1 = "1.3";
@@ -218,7 +219,7 @@ public final class RespConstants {
     public static String getJsonPropertyFromFrageId(String frageId) {
         switch (frageId) {
         case GRUNDFORMEDICINSKTUNDERLAG_SVAR_ID_1:
-            throw new IllegalArgumentException("Cannot decide which json property to return for fraga " + frageId + " due to multiple choices.");
+            return GRUNDFORMEDICINSKTUNDERLAG_SVAR_JSON_ID_1;
         case KANNEDOM_SVAR_ID_2:
             return KANNEDOM_SVAR_JSON_ID_2;
         case UNDERLAGFINNS_SVAR_ID_3:
