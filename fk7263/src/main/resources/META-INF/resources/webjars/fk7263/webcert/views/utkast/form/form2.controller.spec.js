@@ -112,6 +112,9 @@ describe('fk7263.EditCertCtrl.Form2Ctrl', function() {
             expect(model.samsjuklighet).toBe(false);
 
             // ----- act
+            $httpBackend.expectGET('/api/fmb/DIAGNOSKOD2').respond(200, {});
+            $httpBackend.expectGET('/api/fmb/DIAGNOSKOD3').respond(200, {});
+            $httpBackend.expectGET('/api/fmb/DIAGNOSKOD').respond(200, {});
             viewState.avstangningSmittskyddValue = false;  // this should trigger the watch event
             $scope.$apply();
 
