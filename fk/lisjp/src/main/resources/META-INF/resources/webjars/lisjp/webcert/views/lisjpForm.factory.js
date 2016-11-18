@@ -362,6 +362,27 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     ]
                 },
                 {
+                    wrapper: 'wc-field',
+                    templateOptions: {category: 8, categoryName: categoryNames[8]},
+                    fieldGroup: [
+                        {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
+                    ]
+                },
+                {
+                    wrapper: 'wc-field',
+                    templateOptions: {category: 9, categoryName: categoryNames[9]},
+                    fieldGroup: [
+                        {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
+                        {
+                            key: 'anledningTillKontakt',
+                            type: 'multi-text',
+                            className: 'fold-animation',
+                            hideExpression: '!model.kontaktMedFk',
+                            templateOptions: {label: 'DFR_26.2'}
+                        }
+                    ]
+                },
+                {
                     wrapper: 'wc-field-static',
                     templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
                     fieldGroup: [
@@ -379,68 +400,28 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             }
                         },
                         {
-                            wrapper: 'wc-field',
-                            templateOptions: {category: 8, categoryName: categoryNames[8]},
-                            fieldGroup: [
-                                {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
-                            ]
+                            key: 'grundData.skapadAv.vardenhet.postnummer',
+                            type: 'single-text',
+                            templateOptions: {
+                                staticLabel: 'Postnummer',
+                                size: '5',
+                                labelColSize: 3,
+                                formType: 'horizontal'
+                            }
                         },
                         {
-                            wrapper: 'wc-field',
-                            templateOptions: {category: 9, categoryName: categoryNames[9]},
-                            fieldGroup: [
-                                {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
-                                {
-                                    key: 'anledningTillKontakt',
-                                    type: 'multi-text',
-                                    className: 'fold-animation',
-                                    hideExpression: '!model.kontaktMedFk',
-                                    templateOptions: {label: 'DFR_26.2'}
-                                }
-                            ]
+                            key: 'grundData.skapadAv.vardenhet.postort',
+                            type: 'single-text',
+                            templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
                         },
                         {
-                            wrapper: 'wc-field-static',
-                            templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
-                            fieldGroup: [
-                                {
-                                    type: 'label-vardenhet'
-                                },
-                                {
-                                    key: 'grundData.skapadAv.vardenhet.postadress',
-                                    type: 'single-text',
-                                    templateOptions: {
-                                        staticLabel: 'Postadress',
-                                        size: 'full',
-                                        labelColSize: 3,
-                                        formType: 'horizontal'
-                                    }
-                                },
-                                {
-                                    key: 'grundData.skapadAv.vardenhet.postnummer',
-                                    type: 'single-text',
-                                    templateOptions: {
-                                        staticLabel: 'Postnummer',
-                                        size: '5',
-                                        labelColSize: 3,
-                                        formType: 'horizontal'
-                                    }
-                                },
-                                {
-                                    key: 'grundData.skapadAv.vardenhet.postort',
-                                    type: 'single-text',
-                                    templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
-                                },
-                                {
-                                    key: 'grundData.skapadAv.vardenhet.telefonnummer',
-                                    type: 'single-text',
-                                    templateOptions: {
-                                        staticLabel: 'Telefonnummer',
-                                        labelColSize: 3,
-                                        formType: 'horizontal'
-                                    }
-                                }
-                            ]
+                            key: 'grundData.skapadAv.vardenhet.telefonnummer',
+                            type: 'single-text',
+                            templateOptions: {
+                                staticLabel: 'Telefonnummer',
+                                labelColSize: 3,
+                                formType: 'horizontal'
+                            }
                         }
                     ]
                 }
