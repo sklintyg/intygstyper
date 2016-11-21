@@ -170,10 +170,10 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: { category: 7, categoryName: categoryNames[7] },
             fieldGroup: [
-                { key: 'avslutadBehandling', type: 'check-multi-text', templateOptions: { frgId: '18' } },
-                { key: 'pagaendeBehandling', type: 'check-multi-text', templateOptions: { frgId: '19' } },
-                { key: 'planeradBehandling', type: 'check-multi-text', templateOptions: { frgId: '20' } },
-                { key: 'substansintag', type: 'check-multi-text', templateOptions: { frgId: '21' } }
+                { key: 'avslutadBehandling', type: 'multi-text', templateOptions: { label: 'DFR_18.1' } },
+                { key: 'pagaendeBehandling', type: 'multi-text', templateOptions: { label: 'DFR_19.1' } },
+                { key: 'planeradBehandling', type: 'multi-text', templateOptions: { label: 'DFR_20.1' } },
+                { key: 'substansintag', type: 'multi-text', templateOptions: { label: 'DFR_21.1' } }
             ]
         },
         {
