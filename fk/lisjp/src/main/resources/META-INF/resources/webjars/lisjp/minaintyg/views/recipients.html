@@ -83,7 +83,7 @@
       	<span message key="lisjp.recipient.label.missing.recipients-2"></span>
       </p>
       <p>
-      	<button id="confirmRecipientSelectionBtn" type="button" ng-click="confirmRecipientSelection()" class="btn btn-success">
+      	<button id="confirmRecipientSelectionBtn" ng-disabled="alreadySentToRecipient()" type="button" ng-click="confirmRecipientSelection()" class="btn btn-success">
           <span message key="lisjp.button.next"></span>
         </button>
         <button id="cancelRecipientSelectionBtn" type="button" ng-click="backToViewCertificate()" class="btn btn-default">
