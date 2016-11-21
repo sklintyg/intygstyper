@@ -110,8 +110,10 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
 
                     _dateRangeService[nedsattModelName].check();
 
+                    var descriptionModelName = nedsattModelName + 'Beskrivning';
                     if (!$scope.field8b[nedsattModelName].workState) {
-                        viewState.intygModel[nedsattModelName + 'Beskrivning'] = undefined;
+                        viewState.intygModel.updateToAttic(descriptionModelName);
+                        viewState.intygModel.clear(descriptionModelName);
 
                         if (
                             !$scope.field8b.nedsattMed25.workState &&
@@ -122,6 +124,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                         ) {
                             updateMinMaxFromLastEffectiveDate();
                         }
+                    } else {
+                        viewState.intygModel.restoreFromAttic(descriptionModelName);
                     }
 
                     addHelpTextToLastEffectiveDate();

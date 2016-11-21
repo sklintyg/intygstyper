@@ -65,7 +65,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form6a711Ctrl',
                     model.updateToAttic(model.properties.form6a);
                     model.rekommendationOvrigt = undefined;
                 } else {
-                    model.updateToAttic(model.properties.form6a);
+                    model.restoreFromAttic(model.properties.form6a);
                     model.rekommendationOvrigtCheck = true;
                 }
             };
