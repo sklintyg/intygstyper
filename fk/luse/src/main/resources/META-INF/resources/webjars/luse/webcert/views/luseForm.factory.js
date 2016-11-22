@@ -44,7 +44,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
             wrapper: 'wc-field',
             templateOptions: { category: 1, categoryName: categoryNames[1]},
             fieldGroup: [
-                { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After: false, required: true } },
+                { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After: true, required: true } },
                 {
                     wrapper: 'validationGroup',
                     templateOptions: { type:'check-group', validationGroup: 'baserasPa' },
@@ -82,7 +82,6 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                 },
                 { key: 'kannedomOmPatient', type: 'singleDate', templateOptions: { label: 'FRG_2', required: true } },
                 { key: 'underlagFinns', type: 'boolean', templateOptions: { label: 'FRG_3', required: true } },
-
                 {
                     key: 'underlag',
                     type: 'underlag',
