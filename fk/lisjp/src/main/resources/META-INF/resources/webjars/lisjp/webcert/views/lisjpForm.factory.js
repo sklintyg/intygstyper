@@ -222,7 +222,6 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 6, categoryName: categoryNames[6]},
                     fieldGroup: [
-                        {type: 'headline', templateOptions: {label: 'FRG_32', hideFromSigned: true}},
                         {
                             type: 'fmb',
                             templateOptions: {
@@ -237,10 +236,11 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             templateOptions: {
                                 label: 'DFR_32.1',
                                 code: 'KV_FKMU_0003',
-                                fields: ['HELT_NEDSATT',
-                                    'TRE_FJARDEDEL',
+                                fields: [
+                                    'EN_FJARDEDEL',
                                     'HALFTEN',
-                                    'EN_FJARDEDEL'
+                                    'TRE_FJARDEDEL',
+                                    'HELT_NEDSATT'
                                 ]
                             }
                         },
