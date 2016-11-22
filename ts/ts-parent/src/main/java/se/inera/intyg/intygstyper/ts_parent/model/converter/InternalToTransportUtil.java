@@ -67,8 +67,7 @@ public final class InternalToTransportUtil {
         if (StringUtils.isBlank(source.getTextVersion())) {
             return Optional.empty();
         }
-        String[] versionInfo = source.getTextVersion().split(DELIMITER_REGEXP);
-        return Optional.of("U" + String.format("%02d", Integer.parseInt(versionInfo[1])) + ", V" + String.format("%02d", Integer.parseInt(versionInfo[0])));
+        return Optional.of(source.getTextVersion());
     }
 
     private static Patient buildPatient(se.inera.intyg.common.support.model.common.internal.Patient source) {

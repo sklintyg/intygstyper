@@ -48,7 +48,7 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
 
 public final class UtlatandeToIntyg {
 
-    private static final String DEFAULT_VERSION = "U07, V06";
+    private static final String DEFAULT_VERSION = "6.7";
 
     private UtlatandeToIntyg() {
     }

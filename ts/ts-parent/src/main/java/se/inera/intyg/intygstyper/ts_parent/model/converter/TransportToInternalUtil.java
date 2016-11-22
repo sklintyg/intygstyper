@@ -61,7 +61,7 @@ public final class TransportToInternalUtil {
     }
 
     public static String getTextVersion(String version, String utgava) {
-        return version + DELIMITER + utgava;
+        return String.valueOf(Integer.parseInt(version)) + DELIMITER + String.valueOf(Integer.parseInt(utgava));
     }
 
     private static HoSPersonal convertHoSPersonal(SkapadAv source) {

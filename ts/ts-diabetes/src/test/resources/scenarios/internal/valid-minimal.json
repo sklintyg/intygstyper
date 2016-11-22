@@ -1,7 +1,7 @@
 {
     "id": "987654321",
     "typ": "ts-diabetes",
-    "textVersion": "02.06",
+    "textVersion": "2.6",
     "grundData": {
         "signeringsdatum": "2013-08-12T15:57:00.000",
         "skapadAv": {

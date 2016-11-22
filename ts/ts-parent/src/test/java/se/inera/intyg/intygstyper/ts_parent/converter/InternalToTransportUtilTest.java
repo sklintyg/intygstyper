@@ -19,6 +19,9 @@
 package se.inera.intyg.intygstyper.ts_parent.converter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 
@@ -78,5 +81,19 @@ public class InternalToTransportUtilTest {
         se.inera.intygstjanster.ts.services.v1.GrundData res = InternalToTransportUtil.buildGrundData(grundData);
         assertEquals(Constants.SAMORDNING_ID_OID, res.getPatient().getPersonId().getRoot());
         assertEquals(personnummer, res.getPatient().getPersonId().getExtension());
+    }
+
+    @Test
+    public void testGetVersion() {
+        assertFalse(InternalToTransportUtil.getVersion(setupUtlatandeWithTextVersion(null)).isPresent());
+        assertEquals("6.7", InternalToTransportUtil.getVersion(setupUtlatandeWithTextVersion("6.7")).get());
+        assertEquals("4.2", InternalToTransportUtil.getVersion(setupUtlatandeWithTextVersion("4.2")).get());
+        assertEquals("1.0", InternalToTransportUtil.getVersion(setupUtlatandeWithTextVersion("1.0")).get());
+    }
+
+    private Utlatande setupUtlatandeWithTextVersion(String textVersion) {
+        Utlatande source = mock(Utlatande.class);
+        when(source.getTextVersion()).thenReturn(textVersion);
+        return source;
     }
 }

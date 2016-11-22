@@ -178,16 +178,17 @@ public class UtlatandeToIntygTest {
 
     @Test
     public void testConvertSetsVersionFromTextVersion() {
+        final String textVersion = "3.7";
         Utlatande utlatande = buildUtlatande();
-        utlatande.setTextVersion("03.07");
+        utlatande.setTextVersion(textVersion);
 
         Intyg intyg = UtlatandeToIntyg.convert(utlatande);
-        assertEquals("U07, V03", intyg.getVersion());
+        assertEquals(textVersion, intyg.getVersion());
     }
 
     @Test
     public void testConvertSetsDefaultVersionIfTextVersionIsNullOrEmpty() {
-        final String defaultVersion = "U06, V02";
+        final String defaultVersion = "2.6";
         Utlatande utlatande = buildUtlatande();
         utlatande.setTextVersion(null);
 
