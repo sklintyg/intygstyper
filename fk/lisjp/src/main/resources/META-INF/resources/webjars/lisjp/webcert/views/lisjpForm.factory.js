@@ -319,6 +319,52 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     templateOptions: {category: 7, categoryName: categoryNames[7]},
                     fieldGroup: [
                         {
+                            key : 'arbetslivsinriktadeAtgarder',
+                            type : 'check-group',
+                            templateOptions : {
+                                label : 'FRG_40',
+                                descLabel : 'DFR_40.2',
+                                code : 'KV_FKMU_0004',
+                                choices : ['EJ_AKTUELLT',
+                                    'ARBETSTRANING',
+                                    'ARBETSANPASSNING',
+                                    'SOKA_NYTT_ARBETE',
+                                    'BESOK_ARBETSPLATS',
+                                    'ERGONOMISK',
+                                    'HJALPMEDEL',
+                                    'KONFLIKTHANTERING',
+                                    'KONTAKT_FHV',
+                                    'OMFORDELNING',
+                                    'OVRIGA_ATGARDER'
+                                ]
+                            },
+                            expressionProperties : {
+                                // Disable option 'EJ_AKTUELLT' if any other option is selected
+                                'templateOptions.disabled["EJ_AKTUELLT"]' : function ($viewValue, $modelValue) {
+                                    if (!$modelValue) {
+                                        return;
+                                    }
+                                    var disabled = false;
+                                    angular.forEach($modelValue, function (item, key) {
+                                        if (item === true && key !== 'EJ_AKTUELLT') {
+                                            disabled = true;
+                                        }
+                                    });
+                                    return disabled;
+                                },
+                                // Disable other options if option 'EJ_AKTUELLT' is selected
+                                'templateOptions.disabled["ARBETSTRANING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["ARBETSANPASSNING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["SOKA_NYTT_ARBETE"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["BESOK_ARBETSPLATS"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["ERGONOMISK"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["HJALPMEDEL"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["KONFLIKTHANTERING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["KONTAKT_FHV"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["OMFORDELNING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["OVRIGA_ATGARDER"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]'
+                            }
+                        }, {
                             key: 'arbetslivsinriktadeAtgarderBeskrivning',
                             type: 'multi-text',
                             className: 'fold-animation',
@@ -358,27 +404,6 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             className: 'fold-animation',
                             hideExpression: '!model.kontaktMedFk',
                             templateOptions: {label: 'DFR_26.2', kompletteringKey: 'kontaktMedFk'}
-                        }
-                    ]
-                },
-                {
-                    wrapper: 'wc-field',
-                    templateOptions: {category: 8, categoryName: categoryNames[8]},
-                    fieldGroup: [
-                        {key: 'ovrigt', type: 'multi-text', templateOptions: {label: 'DFR_25.1'}}
-                    ]
-                },
-                {
-                    wrapper: 'wc-field',
-                    templateOptions: {category: 9, categoryName: categoryNames[9]},
-                    fieldGroup: [
-                        {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1'}},
-                        {
-                            key: 'anledningTillKontakt',
-                            type: 'multi-text',
-                            className: 'fold-animation',
-                            hideExpression: '!model.kontaktMedFk',
-                            templateOptions: {label: 'DFR_26.2'}
                         }
                     ]
                 },
