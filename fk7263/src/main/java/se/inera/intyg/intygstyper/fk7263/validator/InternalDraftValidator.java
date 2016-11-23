@@ -143,7 +143,7 @@ public class InternalDraftValidator {
 
         // Check that from and tom is valid in all present intervals before doing more checks
         if (isValidDateInIntervals(validationMessages, utlatande)) {
-            validateIntervals(validationMessages, "nedsattning", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
+            validateIntervals(validationMessages, "nedsattning.arbetsformaga", utlatande.getNedsattMed100(), utlatande.getNedsattMed75(),
                     utlatande.getNedsattMed50(), utlatande.getNedsattMed25());
         }
     }

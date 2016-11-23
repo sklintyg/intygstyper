@@ -150,6 +150,7 @@ angular.module('fk7263').constant('fk7263.messages', {
         'fk7263.validation.nedsattning.nedsattmed75.incorrect-format' : 'Datum för nedsatt med 75% har angetts med felaktigt format (Fält 8b)',
         'fk7263.validation.nedsattning.nedsattmed50.incorrect-format' : 'Datum för nedsatt med 50% har angetts med felaktigt format (Fält 8b)',
         'fk7263.validation.nedsattning.nedsattmed25.incorrect-format' : 'Datum för nedsatt med 25% har angetts med felaktigt format (Fält 8b)',
+        'fk7263.validation.nedsattning.overlapping-date-interval': 'Två datuminterval med överlappande datum har angetts. (Fält 8b)',
         'fk7263.validation.diagnos.missing': 'ICD-10 kod saknas på huvuddiagnosen. (Fält 2)',
         'fk7263.validation.rekommendationer.ovriga': 'Fritextfältet som hör till alternativet Övrigt måste fyllas i. (Fält 6a)'
     },
