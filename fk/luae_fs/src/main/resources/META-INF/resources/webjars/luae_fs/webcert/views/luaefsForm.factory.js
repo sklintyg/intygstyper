@@ -173,8 +173,6 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                         }
                     ]
                 }
-
-
             ];
 
             return {
