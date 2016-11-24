@@ -19,9 +19,16 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.internal;
 
-import static se.inera.intyg.common.support.common.util.StringUtil.emptyToNull;
-import static se.inera.intyg.common.support.common.util.StringUtil.join;
-import se.inera.intyg.common.support.model.*;
+import static java.lang.String.join;
+
+import java.util.Arrays;
+import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
+
+import se.inera.intyg.common.support.model.InternalDate;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.LocalDateInterval;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 
@@ -450,7 +457,9 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
     }
 
     public String getForskrivarkodOchArbetsplatskod() {
-        return emptyToNull(join(" - ", getGrundData().getSkapadAv().getForskrivarKod(), getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod()));
+        return StringUtils.trimToNull(StringUtils
+                .join(Arrays.asList(getGrundData().getSkapadAv().getForskrivarKod(), getGrundData().getSkapadAv().getVardenhet().getArbetsplatsKod()).stream()
+                        .filter(Objects::nonNull).toArray(), " - "));
     }
 
     public String getNamnfortydligandeOchAdress() {
@@ -499,9 +508,17 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String getTyp() {
         return typ;
+    }
+
+    public void setTyp(String typ) {
+        this.typ = typ;
     }
 
     @Override
@@ -511,14 +528,6 @@ public class Utlatande implements se.inera.intyg.common.support.model.common.int
 
     public void setGrundData(GrundData grundData) {
         this.grundData = grundData;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setTyp(String typ) {
-        this.typ = typ;
     }
 
     // Not used for this certificate

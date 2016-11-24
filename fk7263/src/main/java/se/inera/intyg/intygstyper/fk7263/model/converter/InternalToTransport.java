@@ -21,29 +21,14 @@ package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.AktivitetType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Aktivitetskod;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaNedsattningType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsformagaType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ArbetsuppgiftType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.BedomtTillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.FunktionstillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.LakarutlatandeType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.MedicinsktTillstandType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Nedsattningsgrad;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Prognosangivelse;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.ReferensType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Referenstyp;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.SysselsattningType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvFunktionstillstand;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.TypAvSysselsattning;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.VardkontaktType;
-import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.Vardkontakttyp;
+import se.inera.ifv.insuranceprocess.healthreporting.mu7263.v3.*;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
@@ -51,7 +36,6 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
 import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
 import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Vardenhet;
@@ -59,6 +43,9 @@ import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.join;
 
 public final class InternalToTransport {
 
@@ -82,11 +69,11 @@ public final class InternalToTransport {
         register.getLakarutlatande().setPatient(patientToJaxb(source.getGrundData().getPatient()));
         register.getLakarutlatande().setSkapadAvHosPersonal(hosPersonalToJaxb(source.getGrundData().getSkapadAv()));
 
-        if (!isNullOrEmpty(source.getSjukdomsforlopp())) {
+        if (!isEmpty(source.getSjukdomsforlopp())) {
             register.getLakarutlatande().setBedomtTillstand(sjukdomsforloppToJaxb(source.getSjukdomsforlopp()));
         }
 
-        if (!isNullOrEmpty(source.getDiagnosKod())) {
+        if (!isEmpty(source.getDiagnosKod())) {
             register.getLakarutlatande().setMedicinsktTillstand(toMedicinsktTillstand(source.getDiagnosKod(), source.getDiagnosKodsystem1()));
             buildMedicinsktTillstandBeskrivning(register.getLakarutlatande().getMedicinsktTillstand(), source);
         }
@@ -97,7 +84,7 @@ public final class InternalToTransport {
 
         convertVardkontakter(register, source);
 
-        if (!isNullOrEmpty(source.getFunktionsnedsattning())) {
+        if (!isEmpty(source.getFunktionsnedsattning())) {
             register.getLakarutlatande().getFunktionstillstand()
                     .add(toFunktionstillstand(source.getFunktionsnedsattning(), TypAvFunktionstillstand.KROPPSFUNKTION));
         }
@@ -114,23 +101,23 @@ public final class InternalToTransport {
     private static void buildMedicinsktTillstandBeskrivning(MedicinsktTillstandType tillstand, Utlatande source) {
         List<String> parts = new ArrayList<>();
         // Beskrivning huvuddiagnos
-        if (!StringUtils.isEmpty(source.getDiagnosBeskrivning1())) {
+        if (!isEmpty(source.getDiagnosBeskrivning1())) {
             parts.add(source.getDiagnosBeskrivning1());
         }
         if (source.getSamsjuklighet() != null && source.getSamsjuklighet()) {
             parts.add(SAMSJUKLIGHET_FORELIGGER);
         }
-        //Bidiagnoser
+        // Bidiagnoser
         String bidiagnoser = buildDiagnoser(source);
-        if (!StringUtils.isEmpty(bidiagnoser)) {
+        if (!isEmpty(bidiagnoser)) {
             parts.add(bidiagnoser);
         }
-        //Text från fält2
-        if (!StringUtils.isEmpty(source.getDiagnosBeskrivning())) {
+        // Text från fält2
+        if (!isEmpty(source.getDiagnosBeskrivning())) {
             parts.add(source.getDiagnosBeskrivning());
         }
         if (!parts.isEmpty()) {
-            tillstand.setBeskrivning(StringUtil.join(". ", parts));
+            tillstand.setBeskrivning(join(parts, ". "));
         } else {
             tillstand.setBeskrivning(null);
         }
@@ -140,14 +127,14 @@ public final class InternalToTransport {
         String diagnos1 = "";
         String diagnos2 = "";
 
-        if (!isNullOrEmpty(source.getDiagnosKod2()) && !isNullOrEmpty(source.getDiagnosBeskrivning2())) {
+        if (!isEmpty(source.getDiagnosKod2()) && !isEmpty(source.getDiagnosBeskrivning2())) {
             diagnos1 = source.getDiagnosKod2() + " " + source.getDiagnosBeskrivning2();
         }
 
-        if (!isNullOrEmpty(source.getDiagnosKod3()) && !isNullOrEmpty(source.getDiagnosBeskrivning3())) {
+        if (!isEmpty(source.getDiagnosKod3()) && !isEmpty(source.getDiagnosBeskrivning3())) {
             diagnos2 = source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3();
         }
-        return StringUtil.join(". ", diagnos1, diagnos2);
+        return join(Stream.of(diagnos1, diagnos2).map(StringUtils::trimToNull).filter(Objects::nonNull).toArray(), ". ");
     }
 
     private static String buildKommentar(Utlatande source) {
@@ -156,38 +143,38 @@ public final class InternalToTransport {
         String ovrigKommentar = null;
         String arbetstidsforlaggning = null;
 
-        //Falt4b
-        if (!isNullOrEmpty(source.getAnnanReferensBeskrivning())) {
+        // Falt4b
+        if (!isEmpty(source.getAnnanReferensBeskrivning())) {
             annanRef = "4b: " + source.getAnnanReferensBeskrivning();
         }
-        //Falt8b
+        // Falt8b
 
         if (!buildArbetstidsforlaggning(source).isEmpty()) {
             arbetstidsforlaggning = "8b: " + buildArbetstidsforlaggning(source);
         }
-        //Falt10
-        if (!isNullOrEmpty(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
+        // Falt10
+        if (!isEmpty(source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
             prognosBedomning = "10: " + source.getArbetsformagaPrognosGarInteAttBedomaBeskrivning();
         }
-        if (!isNullOrEmpty(source.getKommentar())) {
+        if (!isEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = StringUtil.join(". ", annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar);
-        return !isNullOrEmpty(ret) ? ret : null;
+        String ret = join(Stream.of(annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar).filter(Objects::nonNull).toArray(), ". ");
+        return !isEmpty(ret) ? ret : null;
     }
 
     private static String buildArbetstidsforlaggning(Utlatande source) {
         List<String> parts = new ArrayList<>();
-        if (!StringUtils.isEmpty(source.getNedsattMed25Beskrivning())) {
+        if (!isEmpty(source.getNedsattMed25Beskrivning())) {
             parts.add(source.getNedsattMed25Beskrivning());
         }
-        if (!StringUtils.isEmpty(source.getNedsattMed50Beskrivning())) {
+        if (!isEmpty(source.getNedsattMed50Beskrivning())) {
             parts.add(source.getNedsattMed50Beskrivning());
         }
-        if (!StringUtils.isEmpty(source.getNedsattMed75Beskrivning())) {
+        if (!isEmpty(source.getNedsattMed75Beskrivning())) {
             parts.add(source.getNedsattMed75Beskrivning());
         }
-        return StringUtil.join(". ", parts);
+        return join(parts, ". ");
     }
 
     private static FunktionstillstandType toFunktionstillstand(String source, TypAvFunktionstillstand tillstand) {
@@ -201,7 +188,7 @@ public final class InternalToTransport {
 
         ArbetsformagaType arbetsformagaType = new ArbetsformagaType();
 
-        if (!isNullOrEmpty(source.getArbetsformagaPrognos())) {
+        if (!isEmpty(source.getArbetsformagaPrognos())) {
             arbetsformagaType.setMotivering(source.getArbetsformagaPrognos());
         }
 
@@ -228,7 +215,7 @@ public final class InternalToTransport {
 
         if (source.isNuvarandeArbete()) {
             // attach arbetsuppgift if available
-            if (!isNullOrEmpty(source.getNuvarandeArbetsuppgifter())) {
+            if (!isEmpty(source.getNuvarandeArbetsuppgifter())) {
                 ArbetsuppgiftType arbetsuppgift = new ArbetsuppgiftType();
                 arbetsuppgift.setTypAvArbetsuppgift(source.getNuvarandeArbetsuppgifter());
                 arbetsformagaType.setArbetsuppgift(arbetsuppgift);
@@ -370,7 +357,7 @@ public final class InternalToTransport {
             aktivitets.add(foretagshalsovarden);
         }
 
-        if (source.isRekommendationOvrigtCheck() || !isNullOrEmpty(source.getRekommendationOvrigt())) {
+        if (source.isRekommendationOvrigtCheck() || !isEmpty(source.getRekommendationOvrigt())) {
             AktivitetType ovrigt = new AktivitetType();
             ovrigt.setAktivitetskod(Aktivitetskod.OVRIGT);
             ovrigt.setBeskrivning(source.getRekommendationOvrigt());
@@ -447,9 +434,6 @@ public final class InternalToTransport {
         if (codeSystem != null) {
             cd.setCodeSystem(codeSystem);
         }
-//        else {
-//            cd.setCodeSystem(Kodverk.ICD_10_SE.getCodeSystem());
-//        }
         if (codeSystemName != null) {
             cd.setCodeSystemName(codeSystemName);
         } else {
@@ -526,9 +510,5 @@ public final class InternalToTransport {
         id.setExtension(source.getPersonId().getPersonnummer());
         patientType.setPersonId(id);
         return patientType;
-    }
-
-    private static boolean isNullOrEmpty(String source) {
-        return source == null || source.isEmpty();
     }
 }

@@ -26,10 +26,12 @@ import static se.inera.intyg.common.support.modules.converter.InternalConverterU
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
-import se.inera.intyg.common.support.common.util.StringUtil;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
@@ -246,7 +248,7 @@ public final class UtlatandeToIntyg {
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = StringUtil.join(". ", annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar);
+        String ret = StringUtils.join(Arrays.asList(annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar).stream().filter(Objects::nonNull).toArray(), ". ");
         return !isNullOrEmpty(ret) ? ret : null;
     }
 

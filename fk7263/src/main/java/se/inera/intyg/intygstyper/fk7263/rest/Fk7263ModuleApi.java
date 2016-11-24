@@ -19,7 +19,6 @@
 
 package se.inera.intyg.intygstyper.fk7263.rest;
 
-import static se.inera.intyg.common.support.common.util.StringUtil.isNullOrEmpty;
 import static se.inera.intyg.intygstyper.fk7263.integration.RegisterMedicalCertificateResponderImpl.CERTIFICATE_ALREADY_EXISTS;
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32;
 import static se.inera.intyg.intygstyper.fk7263.model.converter.UtlatandeToIntyg.BEHOV_AV_SJUKSKRIVNING_SVAR_ID_32;
@@ -33,6 +32,7 @@ import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -400,7 +400,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             throws ModuleException {
         RegisterMedicalCertificateType request = originalRequest;
         // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
-        if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(PartKod.FKASSA.getValue())) {
+        if (!StringUtils.isEmpty(recipientId) && recipientId.equalsIgnoreCase(PartKod.FKASSA.getValue())) {
             request = whenFkIsRecipientThenSetCodeSystemToICD10(request);
         }
 
