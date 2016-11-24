@@ -18,17 +18,8 @@
  */
 package se.inera.intyg.intygstyper.fkparent.pdf.model;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.Utilities;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
 
@@ -140,8 +131,7 @@ public class FkOverflowableValueField extends PdfComponent<FkOverflowableValueFi
 
         } else {
             // NO overflow detected - write entire text for real this time - with now suffix text added.
-            int status = writeText(canvas, targetRect, textValue, "", false);
-
+            writeText(canvas, targetRect, textValue, "", false);
         }
 
         super.render(document, writer, x, y);

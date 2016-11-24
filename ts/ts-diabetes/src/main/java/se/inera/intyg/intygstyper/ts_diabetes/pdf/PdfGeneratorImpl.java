@@ -21,8 +21,7 @@ package se.inera.intyg.intygstyper.ts_diabetes.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -413,7 +412,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     }
 
     private static class CheckGroupField<T extends Enum<?>> {
-        private final HashMap<T, String> fieldMap = new HashMap<>();
+        private final Map<T, String> fieldMap = new HashMap<>();
 
         public void addField(T code, String field) {
             fieldMap.put(code, field);

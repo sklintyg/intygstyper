@@ -23,12 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.BooleanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.PatientValidator;
-import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.*;
 import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
@@ -39,10 +36,6 @@ import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
  * @author erik
  */
 public class InternalValidatorInstance {
-
-    private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
-
-    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     private List<ValidationMessage> validationMessages;
 
@@ -92,8 +85,7 @@ public class InternalValidatorInstance {
             ValidatorUtil.validateVardenhet(utlatande.getGrundData(), validationMessages);
         }
 
-        ValidateDraftResponse response = new ValidateDraftResponse(ValidatorUtil.getValidationStatus(validationMessages), validationMessages);
-        return response;
+        return new ValidateDraftResponse(ValidatorUtil.getValidationStatus(validationMessages), validationMessages);
     }
 
     private void validateIdentitetStyrkt(Vardkontakt vardkontakt) {

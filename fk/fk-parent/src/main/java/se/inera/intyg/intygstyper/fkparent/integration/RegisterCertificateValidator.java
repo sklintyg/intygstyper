@@ -26,6 +26,8 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import com.helger.schematron.xslt.SchematronResourceSCH;
 
+import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
+
 public class RegisterCertificateValidator {
     private SchematronResourceSCH schematronResource;
 
@@ -36,8 +38,12 @@ public class RegisterCertificateValidator {
         }
     }
 
-    public SchematronOutputType validateSchematron(@Nonnull final Source xmlContent) throws Exception {
-        return schematronResource.applySchematronValidationToSVRL(xmlContent);
+    public SchematronOutputType validateSchematron(@Nonnull final Source xmlContent) throws ModuleException {
+        try {
+            return schematronResource.applySchematronValidationToSVRL(xmlContent);
+        } catch (Exception e) {
+            throw new ModuleException(e);
+        }
     }
 
 }

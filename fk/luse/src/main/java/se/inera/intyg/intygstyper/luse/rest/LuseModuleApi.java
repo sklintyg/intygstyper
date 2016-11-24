@@ -37,9 +37,7 @@ import se.inera.intyg.intygstyper.fkparent.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 import se.inera.intyg.intygstyper.fkparent.rest.FkParentModuleApi;
-import se.inera.intyg.intygstyper.luse.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.luse.model.converter.TransportToInternal;
-import se.inera.intyg.intygstyper.luse.model.converter.UtlatandeToIntyg;
+import se.inera.intyg.intygstyper.luse.model.converter.*;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 import se.inera.intyg.intygstyper.luse.pdf.LusePdfDefinitionBuilder;
 import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
@@ -98,12 +96,12 @@ public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
     }
 
     @Override
-    protected void decorateDiagnoserWithDescriptions(LuseUtlatande utlatande) {
+    protected LuseUtlatande decorateDiagnoserWithDescriptions(LuseUtlatande utlatande) {
         List<Diagnos> decoratedDiagnoser = utlatande.getDiagnoser().stream()
                 .map(diagnos -> Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
                         moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem())))
                 .collect(Collectors.toList());
-        utlatande = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
+        return utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
     }
 
 }

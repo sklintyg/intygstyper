@@ -75,11 +75,11 @@ public class LisjpModuleApi extends FkParentModuleApi<LisjpUtlatande> {
     }
 
     @Override
-    protected void decorateDiagnoserWithDescriptions(LisjpUtlatande utlatande) {
+    protected LisjpUtlatande decorateDiagnoserWithDescriptions(LisjpUtlatande utlatande) {
         List<Diagnos> decoratedDiagnoser = utlatande.getDiagnoser().stream()
                 .map(diagnos -> Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
                         moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem())))
                 .collect(Collectors.toList());
-        utlatande = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
+        return utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
     }
 }

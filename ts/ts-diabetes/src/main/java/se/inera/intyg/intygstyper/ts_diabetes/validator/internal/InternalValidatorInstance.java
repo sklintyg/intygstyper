@@ -23,13 +23,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import se.inera.intyg.common.support.modules.support.api.dto.*;
-import se.inera.intyg.common.support.validate.PatientValidator;
-import se.inera.intyg.common.support.validate.StringValidator;
-import se.inera.intyg.common.support.validate.ValidatorUtil;
+import se.inera.intyg.common.support.validate.*;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 
 /**
@@ -38,8 +33,6 @@ import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
  * @author erik
  */
 public class InternalValidatorInstance {
-
-    private static final Logger LOG = LoggerFactory.getLogger(InternalValidatorInstance.class);
 
     private static final StringValidator STRING_VALIDATOR = new StringValidator();
 

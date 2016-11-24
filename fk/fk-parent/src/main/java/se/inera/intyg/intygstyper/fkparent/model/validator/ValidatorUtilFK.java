@@ -18,11 +18,7 @@
  */
 package se.inera.intyg.intygstyper.fkparent.model.validator;
 
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANHORIGS_BESKRIVNING_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_ANNAT_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_JOURNALUPPGIFTER_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_TELEFONKONTAKT_PATIENT_SVAR_JSON_ID_1;
-import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.GRUNDFORMEDICINSKTUNDERLAG_UNDERSOKNING_AV_PATIENT_SVAR_JSON_ID_1;
+import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.*;
 
 import java.util.List;
 
@@ -35,7 +31,6 @@ import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
-import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 
@@ -49,7 +44,6 @@ public class ValidatorUtilFK {
     private WebcertModuleService moduleService;
 
     private static final Logger LOG = LoggerFactory.getLogger(ValidatorUtilFK.class);
-    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     private static final int MIN_SIZE_PSYKISK_DIAGNOS = 4;
     private static final int MIN_SIZE_DIAGNOS = 3;

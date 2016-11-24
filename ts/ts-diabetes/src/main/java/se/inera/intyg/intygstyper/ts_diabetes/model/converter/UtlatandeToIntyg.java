@@ -37,7 +37,6 @@ import org.apache.commons.lang3.StringUtils;
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.ModelException;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
-import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.*;
 import se.inera.intyg.intygstyper.ts_diabetes.support.TsDiabetesEntryPoint;
 import se.inera.intyg.intygstyper.ts_parent.codes.*;
@@ -133,7 +132,7 @@ public final class UtlatandeToIntyg {
                             aCV(Diagnoskodverk.ICD_10_SE.getCodeSystem(), diabetesKod.getCode(), diabetesKod.getDescription()))
                     .build());
         }
-        SvarBuilder diabetesBehandling = aSvar(BEHANDLING_DIABETES_SVAR_ID_19);
+        InternalConverterUtil.SvarBuilder diabetesBehandling = aSvar(BEHANDLING_DIABETES_SVAR_ID_19);
         if (source.getEndastKost() != null) {
             diabetesBehandling.withDelsvar(KOSTBEHANDLING_DELSVAR_ID_19, source.getEndastKost().toString());
         }
@@ -175,7 +174,7 @@ public final class UtlatandeToIntyg {
                 source.getTeckenNedsattHjarnfunktion());
         addIfNotNull(svars, SAKNAR_FORMAGA_KANNA_VARNINGSTECKEN_SVAR_ID_38, SAKNAR_FORMAGA_KANNA_VARNINGSTECKEN_DELSVAR_ID_38,
                 source.getSaknarFormagaKannaVarningstecken());
-        SvarBuilder allvarligHypoglykemi = aSvar(ALLVARLIG_HYPOGLYKEMI_SVAR_ID_39);
+        InternalConverterUtil.SvarBuilder allvarligHypoglykemi = aSvar(ALLVARLIG_HYPOGLYKEMI_SVAR_ID_39);
         if (source.getAllvarligForekomst() != null) {
             allvarligHypoglykemi.withDelsvar(FOREKOMST_ALLVARLIG_HYPOGLYKEMI_DELSVAR_ID_39,
                     source.getAllvarligForekomst().toString());
@@ -187,7 +186,7 @@ public final class UtlatandeToIntyg {
         if (CollectionUtils.isNotEmpty(allvarligHypoglykemi.delSvars)) {
             svars.add(allvarligHypoglykemi.build());
         }
-        SvarBuilder allvarligHypoglykemiTrafiken = aSvar(ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN_SVAR_ID_40);
+        InternalConverterUtil.SvarBuilder allvarligHypoglykemiTrafiken = aSvar(ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN_SVAR_ID_40);
         if (source.getAllvarligForekomstTrafiken() != null) {
             allvarligHypoglykemiTrafiken.withDelsvar(FOREKOMST_ALLVARLIG_HYPOGLYKEMI_I_TRAFIKEN_DELSVAR_ID_40,
                     source.getAllvarligForekomstTrafiken().toString());
@@ -201,7 +200,7 @@ public final class UtlatandeToIntyg {
         }
         addIfNotNull(svars, EGENKONTROLLER_BLODSOCKER_SVAR_ID_41, EGENKONTROLLER_BLODSOCKER_DELSVAR_ID_41,
                 source.getEgenkontrollBlodsocker());
-        SvarBuilder allvarligHypoglykemiVakenTid = aSvar(ALLVARLIG_HYPOGLYKEMI_UNDER_VAKEN_TID_SVAR_ID_42);
+        InternalConverterUtil.SvarBuilder allvarligHypoglykemiVakenTid = aSvar(ALLVARLIG_HYPOGLYKEMI_UNDER_VAKEN_TID_SVAR_ID_42);
         if (source.getAllvarligForekomstVakenTid() != null) {
             allvarligHypoglykemiVakenTid.withDelsvar(FOREKOMST_ALLVARLIG_HYPOGLYKEMI_UNDER_VAKEN_TID_DELSVAR_ID_42,
                     source.getAllvarligForekomstVakenTid().toString());
@@ -235,7 +234,7 @@ public final class UtlatandeToIntyg {
         addIfNotNull(svars, SYNFALTSPROVNING_DONDER_SVAR_ID_44, SYNFALTSPROVNING_DONDER_DELSVAR_ID_44,
                 source.getSynfaltsprovningUtanAnmarkning());
 
-        SvarBuilder synskarpa = aSvar(SYNSKARPA_SVAR_ID_8);
+        InternalConverterUtil.SvarBuilder synskarpa = aSvar(SYNSKARPA_SVAR_ID_8);
         if (source.getHoger() != null) {
             if (source.getHoger().getUtanKorrektion() != null) {
                 synskarpa.withDelsvar(HOGER_OGA_UTAN_KORREKTION_DELSVAR_ID_8, source.getHoger().getUtanKorrektion().toString());

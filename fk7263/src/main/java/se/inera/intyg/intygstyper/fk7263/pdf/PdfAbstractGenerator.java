@@ -27,22 +27,12 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.CMYKColor;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.common.util.StringUtil;
-import se.inera.intyg.common.support.model.CertificateState;
-import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.model.Status;
+import se.inera.intyg.common.support.model.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
@@ -491,17 +481,11 @@ public abstract class PdfAbstractGenerator {
     }
 
     private boolean isTargetEqualTo(Status status, String recipient) {
-        if (!isNull(status) && !isNull(status.getTarget()) && status.getTarget().equals(recipient)) {
-            return true;
-        }
-        return false;
+        return !isNull(status) && !isNull(status.getTarget()) && status.getTarget().equals(recipient);
     }
 
     private boolean isTypeEqualTo(Status status, CertificateState state) {
-        if (!isNull(status) && !isNull(status.getType()) && status.getType() == state) {
-            return true;
-        }
-        return false;
+        return !isNull(status) && !isNull(status.getType()) && status.getType() == state;
     }
 
     private boolean isNull(Object object) {

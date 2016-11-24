@@ -43,7 +43,6 @@ import org.springframework.core.io.ClassPathResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 
-import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.StatusKod;
 import se.inera.intyg.common.support.model.common.internal.*;
@@ -57,6 +56,7 @@ import se.inera.intyg.common.util.integration.integration.json.CustomObjectMappe
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
 import se.inera.intyg.intygstyper.fkparent.model.converter.*;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
+import se.inera.intyg.intygstyper.fkparent.support.ResultTypeUtil;
 import se.riv.clinicalprocess.healthcond.certificate.getCertificate.v1.*;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.*;
 import se.riv.clinicalprocess.healthcond.certificate.revokeCertificate.v1.*;
@@ -369,7 +369,7 @@ public class FkParentModuleApiTest {
     @Test
     public void testUpdateBeforeSave() throws Exception {
         final String otherHosPersonalName = "Other Person";
-        doNothing().when(moduleApi).decorateDiagnoserWithDescriptions(any(Utlatande.class));
+        doAnswer(invocation -> (Utlatande) invocation.getArguments()[0]).when(moduleApi).decorateDiagnoserWithDescriptions(any(Utlatande.class));
 
         HoSPersonal hosPersonal = new HoSPersonal();
         hosPersonal.setFullstandigtNamn(otherHosPersonalName);
@@ -389,7 +389,7 @@ public class FkParentModuleApiTest {
     public void testUpdateBeforeSigning() throws Exception {
         final String otherHosPersonalName = "Other Person";
         final LocalDateTime signDate = LocalDateTime.now();
-        doNothing().when(moduleApi).decorateDiagnoserWithDescriptions(any(Utlatande.class));
+        doAnswer(invocation -> (Utlatande) invocation.getArguments()[0]).when(moduleApi).decorateDiagnoserWithDescriptions(any(Utlatande.class));
 
         HoSPersonal hosPersonal = new HoSPersonal();
         hosPersonal.setFullstandigtNamn(otherHosPersonalName);

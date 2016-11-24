@@ -20,11 +20,14 @@
 package se.inera.intyg.intygstyper.fkparent.model.converter;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 import javax.annotation.Nonnull;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
+
+import org.xml.sax.SAXException;
 
 import com.google.common.base.Charsets;
 
@@ -37,7 +40,7 @@ public class RegisterCertificateTestValidator {
 
     private Schema generalSchema;
 
-    public void initGeneralSchema() throws Exception {
+    public void initGeneralSchema() throws IOException, SAXException {
         SchemaValidatorBuilder schemaValidatorBuilder = new SchemaValidatorBuilder();
         schemaValidatorBuilder.registerResource(TYPES_SCHEMA);
         schemaValidatorBuilder.registerResource(GENERAL_SCHEMA);
@@ -45,7 +48,7 @@ public class RegisterCertificateTestValidator {
         generalSchema = schemaValidatorBuilder.build(rootSource);
     }
 
-    public boolean validateGeneral(@Nonnull final String xmlContent) throws Exception {
+    public boolean validateGeneral(@Nonnull final String xmlContent) throws IOException, SAXException {
         initGeneralSchema();
         StreamSource xmlSource = new StreamSource(new ByteArrayInputStream(xmlContent.getBytes(Charsets.UTF_8)));
         try {

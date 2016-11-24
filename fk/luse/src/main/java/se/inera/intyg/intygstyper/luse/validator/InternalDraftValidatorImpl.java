@@ -23,17 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Strings;
 
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.PatientValidator;
-import se.inera.intyg.common.support.validate.StringValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
@@ -43,10 +38,6 @@ import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUtlatande> {
 
     private static final int MAX_UNDERLAG = 3;
-
-    private static final Logger LOG = LoggerFactory.getLogger(InternalDraftValidatorImpl.class);
-
-    private static final StringValidator STRING_VALIDATOR = new StringValidator();
 
     @Autowired
     ValidatorUtilFK validatorUtilFK;
@@ -93,16 +84,16 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         }
 
         if (utlatande.getUndersokningAvPatienten() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.UNDERSOKNING);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getUndersokningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.UNDERSOKNING);
         }
         if (utlatande.getJournaluppgifter() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, ValidatorUtilFK.GrundForMu.JOURNALUPPGIFTER);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getJournaluppgifter(), validationMessages, ValidatorUtilFK.GrundForMu.JOURNALUPPGIFTER);
         }
         if (utlatande.getAnhorigsBeskrivningAvPatienten() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.ANHORIGSBESKRIVNING);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getAnhorigsBeskrivningAvPatienten(), validationMessages, ValidatorUtilFK.GrundForMu.ANHORIGSBESKRIVNING);
         }
         if (utlatande.getAnnatGrundForMU() != null) {
-            validatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
+            ValidatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
         }
 
         // INTYG-2949

@@ -28,9 +28,7 @@ import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.rest.FkParentModuleApi;
-import se.inera.intyg.intygstyper.luae_na.model.converter.InternalToTransport;
-import se.inera.intyg.intygstyper.luae_na.model.converter.TransportToInternal;
-import se.inera.intyg.intygstyper.luae_na.model.converter.UtlatandeToIntyg;
+import se.inera.intyg.intygstyper.luae_na.model.converter.*;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
 import se.inera.intyg.intygstyper.luae_na.support.LuaenaEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.registerCertificate.v2.RegisterCertificateType;
@@ -73,11 +71,11 @@ public class LuaenaModuleApi extends FkParentModuleApi<LuaenaUtlatande> {
     }
 
     @Override
-    protected void decorateDiagnoserWithDescriptions(LuaenaUtlatande utlatande) {
+    protected LuaenaUtlatande decorateDiagnoserWithDescriptions(LuaenaUtlatande utlatande) {
         List<Diagnos> decoratedDiagnoser = utlatande.getDiagnoser().stream()
                 .map(diagnos -> Diagnos.create(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem(), diagnos.getDiagnosBeskrivning(),
                         moduleService.getDescriptionFromDiagnosKod(diagnos.getDiagnosKod(), diagnos.getDiagnosKodSystem())))
                 .collect(Collectors.toList());
-        utlatande = utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
+        return utlatande.toBuilder().setDiagnoser(decoratedDiagnoser).build();
     }
 }

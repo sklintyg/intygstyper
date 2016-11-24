@@ -288,14 +288,8 @@ public class Fk7263ModuleApi implements ModuleApi {
             throw new ModuleException(e);
         }
 
-        if (modelCompareUtil.modelDiffers(oldUtlatande, newUtlatande)) {
-            return true;
-        }
-
-        return false;
+        return modelCompareUtil.modelDiffers(oldUtlatande, newUtlatande);
     }
-
-    // - - - - - Package scope - - - - - //
 
     /*
      * (non-Javadoc)
@@ -403,8 +397,9 @@ public class Fk7263ModuleApi implements ModuleApi {
         return foundAktivitet;
     }
 
-    private void sendCertificateToRecipient(RegisterMedicalCertificateType request, final String logicalAddress, final String recipientId)
+    private void sendCertificateToRecipient(RegisterMedicalCertificateType originalRequest, final String logicalAddress, final String recipientId)
             throws ModuleException {
+        RegisterMedicalCertificateType request = originalRequest;
         // This is a special case when recipient is Forsakringskassan. See JIRA issue WEBCERT-1442.
         if (!isNullOrEmpty(recipientId) && recipientId.equalsIgnoreCase(PartKod.FKASSA.getValue())) {
             request = whenFkIsRecipientThenSetCodeSystemToICD10(request);

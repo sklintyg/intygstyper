@@ -34,7 +34,7 @@ import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
-import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.ReferensTyp;
+import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
 import se.inera.intyg.intygstyper.lisjp.model.internal.*;
@@ -312,7 +312,7 @@ public final class TransportToInternal {
 
     private static void handleGrundForMedicinsktUnderlag(LisjpUtlatande.Builder utlatande, Svar svar) throws ConverterException {
         InternalDate grundForMedicinsktUnderlagDatum = null;
-        ReferensTyp grundForMedicinsktUnderlagTyp = ReferensTyp.ANNAT;
+        RespConstants.ReferensTyp grundForMedicinsktUnderlagTyp = RespConstants.ReferensTyp.ANNAT;
         for (Delsvar delsvar : svar.getDelsvar()) {
             switch (delsvar.getId()) {
             case GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1:
@@ -320,7 +320,7 @@ public final class TransportToInternal {
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_TYP_DELSVAR_ID_1:
                 String referensTypString = getCVSvarContent(delsvar).getCode();
-                grundForMedicinsktUnderlagTyp = ReferensTyp.byTransportId(referensTypString);
+                grundForMedicinsktUnderlagTyp = RespConstants.ReferensTyp.byTransportId(referensTypString);
                 break;
             case GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1:
                 utlatande.setAnnatGrundForMUBeskrivning(getStringContent(delsvar));

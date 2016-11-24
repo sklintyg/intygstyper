@@ -20,9 +20,7 @@
 package se.inera.intyg.intygstyper.ts_parent.json;
 
 import java.io.IOException;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
@@ -77,9 +75,9 @@ public abstract class AbstractEnumSetDeserializer<E extends Enum<E>> extends Jso
             while (jp.nextToken() != JsonToken.END_OBJECT) {
                 String field = jp.getCurrentName();
                 jp.nextToken();
-                if (field.equals("type")) {
+                if ("type".equals(field)) {
                     enumName = jp.getValueAsString();
-                } else if (field.equals("selected")) {
+                } else if ("selected".equals(field)) {
                     enumIsSet = jp.getValueAsBoolean();
                 }
             }
