@@ -18,31 +18,38 @@
  */
 package se.inera.intyg.intygstyper.luae_na.validator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import se.inera.intyg.common.support.model.InternalDate;
-import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
+
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InternalDraftValidatorTest {
@@ -132,8 +139,8 @@ public class InternalDraftValidatorTest {
     public void validateGrundForMUKannedomOmPatientAfterUndersokning() throws Exception {
         LuaenaUtlatande utlatande = builderTemplate
                 .setAnhorigsBeskrivningAvPatienten(null)
-                .setUndersokningAvPatienten(new InternalDate(LocalDate.now()))
-                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .setUndersokningAvPatienten(new InternalDate(LocalDate.now().minusDays(2)))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().minusDays(1)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -147,8 +154,8 @@ public class InternalDraftValidatorTest {
     @Test
     public void validateGrundForMUKannedomOmPatientAfterAnhorigsBeskrivning() throws Exception {
         LuaenaUtlatande utlatande = builderTemplate
-                .setAnhorigsBeskrivningAvPatienten(new InternalDate(LocalDate.now()))
-                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .setAnhorigsBeskrivningAvPatienten(new InternalDate(LocalDate.now().minusDays(2)))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().minusDays(1)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -160,11 +167,41 @@ public class InternalDraftValidatorTest {
     }
 
     @Test
+    public void validateGrundForMUKannedomOmPatientFramtidaDatum() throws Exception {
+        LuaenaUtlatande utlatande = builderTemplate
+                .setAnhorigsBeskrivningAvPatienten(null)
+                .setJournaluppgifter(new InternalDate(LocalDate.now().minusDays(1)))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(10)))
+                .build();
+
+        ValidateDraftResponse res = validator.validateDraft(utlatande);
+
+        assertEquals(0, res.getValidationErrors().size());
+        assertEquals(1, res.getValidationWarnings().size());
+        assertEquals("common.validation.future.datum", res.getValidationWarnings().get(0).getMessage());
+        assertEquals(ValidationMessageType.WARN, res.getValidationWarnings().get(0).getType());
+    }
+
+    @Test
+    public void validateGrundForMUKannedomOmPatientSammaDatum() throws Exception {
+        LuaenaUtlatande utlatande = builderTemplate
+                .setAnhorigsBeskrivningAvPatienten(null)
+                .setJournaluppgifter(new InternalDate(LocalDate.now().minusDays(1)))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now()))
+                .build();
+
+        ValidateDraftResponse res = validator.validateDraft(utlatande);
+
+        assertEquals(0, res.getValidationErrors().size());
+    }
+
+
+    @Test
     public void validateGrundForMUAnnanGrundBeskrivningNotAnnanGrundDatum() throws Exception {
         LuaenaUtlatande utlatande = builderTemplate
                 .setAnhorigsBeskrivningAvPatienten(null)
                 .setAnnatGrundForMUBeskrivning("En beskrivning...")
-                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().minusDays(1)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);
@@ -180,8 +217,8 @@ public class InternalDraftValidatorTest {
     public void validateGrundForMUAnnanGrundBeskrivningMissing() throws Exception {
         LuaenaUtlatande utlatande = builderTemplate
                 .setAnhorigsBeskrivningAvPatienten(null)
-                .setAnnatGrundForMU(new InternalDate(LocalDate.now()))
-                .setKannedomOmPatient(new InternalDate(LocalDate.now().plusDays(1)))
+                .setAnnatGrundForMU(new InternalDate(LocalDate.now().minusDays(1)))
+                .setKannedomOmPatient(new InternalDate(LocalDate.now().minusDays(1)))
                 .build();
 
         ValidateDraftResponse res = validator.validateDraft(utlatande);

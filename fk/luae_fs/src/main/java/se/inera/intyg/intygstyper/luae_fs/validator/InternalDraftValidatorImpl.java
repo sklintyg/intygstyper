@@ -19,19 +19,20 @@
 
 package se.inera.intyg.intygstyper.luae_fs.validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuaefsUtlatande> {
 
@@ -69,7 +70,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
         // Vårdenhet
         ValidatorUtil.validateVardenhet(utlatande.getGrundData(), validationMessages);
 
-        return new ValidateDraftResponse(ValidatorUtil.getValidationStatus(validationMessages), validationMessages);
+        return ValidatorUtil.buildValidateDraftResponse(validationMessages);
     }
 
     void validateGrundForMU(LuaefsUtlatande utlatande, List<ValidationMessage> validationMessages) {
@@ -111,7 +112,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaefs
         if (utlatande.getKannedomOmPatient() == null) {
             ValidatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.EMPTY);
         } else {
-            boolean dateIsValid = ValidatorUtil.validateDate(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
+            boolean dateIsValid = ValidatorUtil.validateDateWithWarnings(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
             if (dateIsValid) {
                 if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
                         && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {

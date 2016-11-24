@@ -18,35 +18,48 @@
  */
 package se.inera.intyg.intygstyper.lisjp.validator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.common.internal.GrundData;
+import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
+import se.inera.intyg.common.support.model.common.internal.Vardenhet;
+import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
 import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
-import se.inera.intyg.intygstyper.lisjp.model.internal.*;
+import se.inera.intyg.intygstyper.lisjp.model.internal.ArbetslivsinriktadeAtgarder;
 import se.inera.intyg.intygstyper.lisjp.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
+import se.inera.intyg.intygstyper.lisjp.model.internal.LisjpUtlatande;
+import se.inera.intyg.intygstyper.lisjp.model.internal.Prognos;
+import se.inera.intyg.intygstyper.lisjp.model.internal.PrognosDagarTillArbeteTyp;
+import se.inera.intyg.intygstyper.lisjp.model.internal.PrognosTyp;
+import se.inera.intyg.intygstyper.lisjp.model.internal.Sjukskrivning;
 import se.inera.intyg.intygstyper.lisjp.model.internal.Sjukskrivning.SjukskrivningsGrad;
+import se.inera.intyg.intygstyper.lisjp.model.internal.Sysselsattning;
 import se.inera.intyg.intygstyper.lisjp.model.internal.Sysselsattning.SysselsattningsTyp;
+
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InternalDraftValidatorTest {
@@ -237,6 +250,21 @@ public class InternalDraftValidatorTest {
         assertEquals(1, res.getValidationErrors().size());
         assertEquals("lisjp.validation.grund-for-mu.annat.beskrivning.invalid_combination", res.getValidationErrors().get(0).getMessage());
         assertEquals(ValidationMessageType.EMPTY, res.getValidationErrors().get(0).getType());
+    }
+
+    @Test
+    public void validateGrundForMUDatumIFramtidenWarning() throws Exception {
+        LisjpUtlatande utlatande = builderTemplate
+                .setJournaluppgifter(new InternalDate(LocalDate.now().minusDays(1)))
+                .setTelefonkontaktMedPatienten(new InternalDate(LocalDate.now().plusDays(10)))
+                .build();
+
+        ValidateDraftResponse res = validator.validateDraft(utlatande);
+
+        assertEquals(0, res.getValidationErrors().size());
+        assertEquals(1, res.getValidationWarnings().size());
+        assertEquals("common.validation.future.datum", res.getValidationWarnings().get(0).getMessage());
+        assertEquals(ValidationMessageType.WARN, res.getValidationWarnings().get(0).getType());
     }
 
     @Test

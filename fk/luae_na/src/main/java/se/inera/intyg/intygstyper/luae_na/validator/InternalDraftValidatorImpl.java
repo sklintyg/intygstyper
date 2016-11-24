@@ -19,21 +19,21 @@
 
 package se.inera.intyg.intygstyper.luae_na.validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.base.Strings;
-
-import se.inera.intyg.common.support.modules.support.api.dto.*;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
+import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
 import se.inera.intyg.intygstyper.luae_na.model.internal.LuaenaUtlatande;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LuaenaUtlatande> {
 
@@ -74,8 +74,10 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
 
         validateBlanksForOptionalFields(utlatande, validationMessages);
 
-        return new ValidateDraftResponse(ValidatorUtil.getValidationStatus(validationMessages), validationMessages);
+        return ValidatorUtil.buildValidateDraftResponse(validationMessages);
     }
+
+
 
     private void validateGrundForMU(LuaenaUtlatande utlatande, List<ValidationMessage> validationMessages) {
 
@@ -110,18 +112,18 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         if (utlatande.getKannedomOmPatient() == null) {
             ValidatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.EMPTY);
         } else {
-            boolean dateIsValid = ValidatorUtil.validateDate(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
+            boolean dateIsValid = ValidatorUtil.validateDateWithWarnings(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
             if (dateIsValid) {
-            if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
-                    && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {
-                ValidatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
-                        "luae_na.validation.grund-for-mu.kannedom.after.undersokning", "KV_FKMU_0001.UNDERSOKNING.RBK");
-            }
-            if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()
-                    && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getAnhorigsBeskrivningAvPatienten().asLocalDate())) {
-                ValidatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
-                        "luae_na.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning", "KV_FKMU_0001.ANHORIG.RBK");
-            }
+                if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
+                        && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {
+                    ValidatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
+                            "luae_na.validation.grund-for-mu.kannedom.after.undersokning", "KV_FKMU_0001.UNDERSOKNING.RBK");
+                }
+                if (utlatande.getAnhorigsBeskrivningAvPatienten() != null && utlatande.getAnhorigsBeskrivningAvPatienten().isValidDate()
+                        && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getAnhorigsBeskrivningAvPatienten().asLocalDate())) {
+                    ValidatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.OTHER,
+                            "luae_na.validation.grund-for-mu.kannedom.after.anhorigsbeskrivning", "KV_FKMU_0001.ANHORIG.RBK");
+                }
             }
         }
 
