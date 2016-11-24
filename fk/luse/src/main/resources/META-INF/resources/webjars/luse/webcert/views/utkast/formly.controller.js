@@ -1,14 +1,15 @@
 angular.module('luse').controller('luse.EditCert.FormlyCtrl',
-    ['$scope', 'luse.EditCertCtrl.ViewStateService', 'luse.FormFactory', 'common.TillaggsfragorHelper',
-        function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper) {
+    ['$scope', 'luse.EditCertCtrl.ViewStateService', 'luse.FormFactory', 'common.TillaggsfragorHelper', 'common.ArendeListViewStateService',
+        function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper, ArendeListViewState) {
             'use strict';
 
             $scope.viewState = viewState;
 
             $scope.model = viewState.intygModel;
 
+            // hasKompletteringar needs to be here since a formly wrapper (validationGroup.formly.js) currently can not have a controller
             $scope.options = {
-                formState:{viewState:viewState}
+                formState:{viewState:viewState, hasKompletteringar:ArendeListViewState.hasKompletteringar.bind(ArendeListViewState)}
             };
 
             $scope.formFields = formFactory.getFormFields();

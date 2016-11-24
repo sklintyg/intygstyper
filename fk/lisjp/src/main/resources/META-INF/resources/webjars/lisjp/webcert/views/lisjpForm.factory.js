@@ -87,7 +87,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         },
                         {
                             wrapper: 'validationGroup',
-                            templateOptions: {type: 'check-group', validationGroup: 'baserasPa'},
+                            templateOptions: {type: 'check-group', validationGroup: 'baserasPa', kompletteringGroup: 'baseratPa'},
                             fieldGroup: [
                                 {
                                     key: 'undersokningAvPatienten', type: 'date', className: 'small-gap',

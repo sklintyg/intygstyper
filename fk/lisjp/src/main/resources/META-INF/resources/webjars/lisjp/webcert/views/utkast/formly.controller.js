@@ -1,7 +1,7 @@
 angular.module('lisjp').controller('lisjp.EditCert.FormlyCtrl',
-    ['$scope', 'lisjp.EditCertCtrl.ViewStateService', 'lisjp.FormFactory', 'common.TillaggsfragorHelper',
+    ['$scope', 'lisjp.EditCertCtrl.ViewStateService', 'lisjp.FormFactory', 'common.TillaggsfragorHelper', 'common.ArendeListViewStateService',
      'common.fmbViewState',
-        function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper, fmbViewState) {
+        function FormlyCtrl($scope, viewState, formFactory, tillaggsfragorHelper, ArendeListViewState, fmbViewState) {
 
             'use strict';
 
@@ -11,8 +11,9 @@ angular.module('lisjp').controller('lisjp.EditCert.FormlyCtrl',
 
             viewState.fmbViewState = fmbViewState.state;
 
+            // hasKompletteringar needs to be here since a formly wrapper (validationGroup.formly.js) currently can not have a controller
             $scope.options = {
-                formState:{viewState:viewState}
+                formState:{viewState:viewState, hasKompletteringar:ArendeListViewState.hasKompletteringar.bind(ArendeListViewState)}
             };
 
             $scope.formFields = formFactory.getFormFields();

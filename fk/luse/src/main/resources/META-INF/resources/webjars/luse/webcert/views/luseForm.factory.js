@@ -47,7 +47,7 @@ angular.module('luse').factory('luse.FormFactory', ['luse.FormFactoryHelper', 'c
                 { type: 'headline', templateOptions: { id: 'FRG_1', label: 'FRG_1', level: 4, noH5After: true, required: true } },
                 {
                     wrapper: 'validationGroup',
-                    templateOptions: { type:'check-group', validationGroup: 'baserasPa' },
+                    templateOptions: { type:'check-group', validationGroup: 'baserasPa', kompletteringGroup: 'baseratPa' },
                     fieldGroup: [
                         { key: 'undersokningAvPatienten', type: 'date', className: 'small-gap', templateOptions: {
                             label: 'KV_FKMU_0001.UNDERSOKNING', hideWhenEmpty: true }

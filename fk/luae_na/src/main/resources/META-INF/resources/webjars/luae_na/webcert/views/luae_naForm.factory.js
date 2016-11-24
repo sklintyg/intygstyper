@@ -51,7 +51,7 @@ angular.module('luae_na').factory('luae_na.FormFactory',
                 {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level: 4, noH5After:false, required: true}},
                 {
                     wrapper: 'validationGroup',
-                    templateOptions: { type:'check-group', validationGroup: 'baserasPa' },
+                    templateOptions: { type:'check-group', validationGroup: 'baserasPa', kompletteringGroup: 'baseratPa' },
                     fieldGroup: [
                         { key: 'undersokningAvPatienten', type: 'date', className: 'small-gap', templateOptions: {
                             label: 'KV_FKMU_0001.UNDERSOKNING', hideWhenEmpty: true }
