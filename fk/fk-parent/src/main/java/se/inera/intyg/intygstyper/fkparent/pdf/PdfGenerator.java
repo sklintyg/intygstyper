@@ -27,7 +27,6 @@ import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 
@@ -74,9 +73,8 @@ public final class PdfGenerator {
         return bos.toByteArray();
     }
 
-    public static String generatePdfFilename(Utlatande utlatande, String moduleId) {
-        Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
+    public static String generatePdfFilename(Personnummer personId , String fileNamePrefix) {
         final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
-        return String.format("%s_lakarutlatande_%s.pdf", moduleId, personnummerString);
+        return String.format("%s_%s.pdf", fileNamePrefix, personnummerString);
     }
 }

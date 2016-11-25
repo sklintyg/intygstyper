@@ -195,17 +195,16 @@ public abstract class PdfAbstractGenerator {
 
     public static final String PDF_TEMPLATE = "pdf/RFV7263_009_J_003_statisk.pdf";
 
-    private static final String DATE_FORMAT = "yyyyMMdd";
-
     protected Utlatande intyg;
     protected ByteArrayOutputStream outputStream;
     protected AcroFields fields;
 
     public String generatePdfFilename(boolean isCustomized) {
         Personnummer personId = intyg.getGrundData().getPatient().getPersonId();
-        final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
-        return String.format((isCustomized ? "anpassat_" : "") + "lakarutlatande_%s_%s-%s.pdf", personnummerString, intyg.getGiltighet()
-                .getFrom().format(DateTimeFormatter.ofPattern(DATE_FORMAT)), intyg.getGiltighet().getTom().format(DateTimeFormatter.ofPattern(DATE_FORMAT)));
+        String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
+        String prefix =  isCustomized ? "anpassat_" : "";
+        String intygstyp = "fk7263";
+        return String.format("%slakarintyg_%s_%s.pdf", prefix, intygstyp, personnummerString);
     }
 
     public byte[] getBytes() {

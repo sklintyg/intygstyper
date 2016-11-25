@@ -30,6 +30,7 @@ import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.dto.PdfResponse;
+import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleSystemException;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
@@ -46,6 +47,7 @@ import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 
 public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
     private static final Logger LOG = LoggerFactory.getLogger(LuseModuleApi.class);
+    private static final String CERTIFICATE_FILE_PREFIX = "lakarutlatande_sjukersattning";
 
     public LuseModuleApi() {
         super(LuseUtlatande.class);
@@ -62,7 +64,8 @@ public class LuseModuleApi extends FkParentModuleApi<LuseUtlatande> {
             IntygTexts texts = getTexts(LuseEntryPoint.MODULE_ID, luseIntyg.getTextVersion());
 
             final FkPdfDefinition fkPdfDefinition = builder.buildPdfDefinition(luseIntyg, statuses, applicationOrigin, texts);
-            return new PdfResponse(PdfGenerator.generatePdf(fkPdfDefinition), PdfGenerator.generatePdfFilename(luseIntyg, LuseEntryPoint.MODULE_ID));
+            Personnummer personId = luseIntyg.getGrundData().getPatient().getPersonId();
+            return new PdfResponse(PdfGenerator.generatePdf(fkPdfDefinition), PdfGenerator.generatePdfFilename(personId, CERTIFICATE_FILE_PREFIX));
         } catch (PdfGeneratorException e) {
             LOG.error("Failed to generate PDF for certificate!", e);
             throw new ModuleSystemException("Failed to generate (standard copy) PDF for certificate!", e);

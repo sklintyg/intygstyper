@@ -164,8 +164,6 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
 
     private static final StringField SPECIALISTKOMPETENS_BESKRVNING = new StringField("Falt__102");
 
-    private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
-
     private final boolean formFlattening;
 
     public PdfGeneratorImpl(boolean formFlattening) {
@@ -175,10 +173,9 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     @Override
     public String generatePdfFilename(Utlatande utlatande) {
         Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
-        String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().format(DateTimeFormatter.ofPattern(DATEFORMAT_FOR_FILENAMES));
 
         final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
-        return String.format("lakarutlatande_%s_-%s.pdf", personnummerString, certificateSignatureDate);
+        return String.format("lakarintyg_transportstyrelsen_%s.pdf", personnummerString);
     }
 
     @Override

@@ -80,8 +80,8 @@ public class PdfEmployeeGeneratorTest {
         // generate PDF
         final PdfEmployeeGenerator pdfEmployeeGenerator = new PdfEmployeeGenerator(intyg, new ArrayList<Status>(), ApplicationOrigin.MINA_INTYG, null);
 
-        assertEquals("lakarutlatande_19121212-1212_20160815-20161030.pdf", pdfEmployeeGenerator.generatePdfFilename(false));
-        assertEquals("anpassat_lakarutlatande_19121212-1212_20160815-20161030.pdf", pdfEmployeeGenerator.generatePdfFilename(true));
+        assertEquals("lakarintyg_fk7263_19121212-1212.pdf", pdfEmployeeGenerator.generatePdfFilename(false));
+        assertEquals("anpassat_lakarintyg_fk7263_19121212-1212.pdf", pdfEmployeeGenerator.generatePdfFilename(true));
     }
 
     /**

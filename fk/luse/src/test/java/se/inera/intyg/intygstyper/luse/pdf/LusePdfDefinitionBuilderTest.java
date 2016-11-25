@@ -45,8 +45,8 @@ import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.util.integration.integration.json.CustomObjectMapper;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfGenerator;
 import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
-import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 
 /**
  * Generate variants of a LUSE pdf, partly to see that make sure no exceptions occur but mainly for manual visual inspection
@@ -96,12 +96,11 @@ public class LusePdfDefinitionBuilderTest {
 
     private void generate(String scenarioName, List<Status> statuses, ApplicationOrigin origin) throws PdfGeneratorException, IOException {
         for (LuseUtlatande intyg : intygList) {
+            FkPdfDefinition foo = lusePdfDefinitionBuilder.buildPdfDefinition(intyg, statuses, origin, intygTexts);
             byte[] generatorResult = PdfGenerator
                     .generatePdf(lusePdfDefinitionBuilder.buildPdfDefinition(intyg, statuses, origin, intygTexts));
 
             assertNotNull(generatorResult);
-            assertEquals(LuseEntryPoint.MODULE_ID + "_lakarutlatande_" + intyg.getGrundData().getPatient().getPersonId().getPersonnummer() + ".pdf",
-                    PdfGenerator.generatePdfFilename(intyg, LuseEntryPoint.MODULE_ID));
 
             writePdfToFile(generatorResult, origin, scenarioName, intyg.getId());
         }

@@ -183,8 +183,6 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     private static final CheckField ST_LAKARE_CHECK = new CheckField("Falt_93");
     private static final CheckField AT_LAKARE_CHECK = new CheckField("Falt_94");
 
-    private static final String DATEFORMAT_FOR_FILENAMES = "yyMMdd";
-
     private final boolean formFlattening;
 
     public PdfGeneratorImpl(boolean formFlattening) {
@@ -195,9 +193,8 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
     public String generatePdfFilename(Utlatande utlatande) {
         Personnummer personId = utlatande.getGrundData().getPatient().getPersonId();
         final String personnummerString = personId.getPersonnummer() != null ? personId.getPersonnummer() : "NoPnr";
-        String certificateSignatureDate = utlatande.getGrundData().getSigneringsdatum().format(DateTimeFormatter.ofPattern(DATEFORMAT_FOR_FILENAMES));
 
-        return String.format("lakarutlatande_%s_-%s.pdf", personnummerString, certificateSignatureDate);
+        return String.format("lakarintyg_transportstyrelsen_%s.pdf", personnummerString);
     }
 
     @Override
