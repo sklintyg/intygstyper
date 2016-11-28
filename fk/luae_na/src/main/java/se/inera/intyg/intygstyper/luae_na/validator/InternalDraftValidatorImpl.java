@@ -112,7 +112,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<Luaena
         if (utlatande.getKannedomOmPatient() == null) {
             ValidatorUtil.addValidationError(validationMessages, "grundformu.kannedomOmPatient", ValidationMessageType.EMPTY);
         } else {
-            boolean dateIsValid = ValidatorUtil.validateDateWithWarnings(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
+            boolean dateIsValid = ValidatorUtil.validateDateAndWarnIfFuture(utlatande.getKannedomOmPatient(), validationMessages, "grundformu.kannedomOmPatient");
             if (dateIsValid) {
                 if (utlatande.getUndersokningAvPatienten() != null && utlatande.getUndersokningAvPatienten().isValidDate()
                         && utlatande.getKannedomOmPatient().asLocalDate().isAfter(utlatande.getUndersokningAvPatienten().asLocalDate())) {

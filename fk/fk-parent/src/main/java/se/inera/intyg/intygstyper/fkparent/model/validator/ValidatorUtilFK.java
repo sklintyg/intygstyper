@@ -132,6 +132,6 @@ public class ValidatorUtilFK {
 
     public static void validateGrundForMuDate(InternalDate date, List<ValidationMessage> validationMessages, GrundForMu type) {
         String validationType = "grundformu." + type.getFieldName();
-        ValidatorUtil.validateDateWithWarnings(date, validationMessages, validationType);
+        ValidatorUtil.validateDateAndWarnIfFuture(date, validationMessages, validationType);
     }
 }
