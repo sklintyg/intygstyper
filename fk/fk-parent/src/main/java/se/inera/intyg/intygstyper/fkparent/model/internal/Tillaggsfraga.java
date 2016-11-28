@@ -19,17 +19,14 @@
 
 package se.inera.intyg.intygstyper.fkparent.model.internal;
 
+import javax.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
-import javax.annotation.Nullable;
-
 @AutoValue
 public abstract class Tillaggsfraga {
-
-    Tillaggsfraga() {
-    }
 
     @JsonCreator
     public static Tillaggsfraga create(@JsonProperty("id") String id,

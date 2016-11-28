@@ -19,26 +19,21 @@
 
 package se.inera.intyg.intygstyper.lisjp.validator;
 
-import com.google.common.collect.ImmutableList;
+import java.util.*;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessage;
-import se.inera.intyg.common.support.modules.support.api.dto.ValidationMessageType;
+
+import com.google.common.collect.ImmutableList;
+
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.common.support.validate.PatientValidator;
 import se.inera.intyg.common.support.validate.ValidatorUtil;
 import se.inera.intyg.intygstyper.fkparent.model.validator.InternalDraftValidator;
 import se.inera.intyg.intygstyper.fkparent.model.validator.ValidatorUtilFK;
+import se.inera.intyg.intygstyper.lisjp.model.internal.*;
 import se.inera.intyg.intygstyper.lisjp.model.internal.ArbetslivsinriktadeAtgarder.ArbetslivsinriktadeAtgarderVal;
-import se.inera.intyg.intygstyper.lisjp.model.internal.LisjpUtlatande;
-import se.inera.intyg.intygstyper.lisjp.model.internal.PrognosTyp;
-import se.inera.intyg.intygstyper.lisjp.model.internal.Sjukskrivning;
-import se.inera.intyg.intygstyper.lisjp.model.internal.Sysselsattning;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpUtlatande> {
 
@@ -340,7 +335,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
             }
 
             // R35 If other choices than INTE_AKTUELLT are checked beskrivning åtgärder is required
-            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> ArbetslivsinriktadeAtgarderVal.ATGARD_AKTUELL.contains(e.getTyp()))
+            if (utlatande.getArbetslivsinriktadeAtgarder().stream().anyMatch(e -> e.getTyp() != null && e.getTyp() != ArbetslivsinriktadeAtgarderVal.INTE_AKTUELLT)
                     && StringUtils.isBlank(utlatande.getArbetslivsinriktadeAtgarderBeskrivning())) {
                 ValidatorUtil.addValidationError(validationMessages, "atgarder.arbetslivsinriktadeAtgarderBeskrivning", ValidationMessageType.EMPTY);
             }
@@ -384,6 +379,6 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
     }
 
     private boolean isAvstangningSmittskydd(LisjpUtlatande utlatande) {
-        return (utlatande.getAvstangningSmittskydd() != null && utlatande.getAvstangningSmittskydd());
+        return utlatande.getAvstangningSmittskydd() != null && utlatande.getAvstangningSmittskydd();
     }
 }

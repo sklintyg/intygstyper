@@ -180,7 +180,7 @@ public class TsParentModuleApiTest {
 
     @Test(expected = ModuleSystemException.class)
     public void testPdfPdfGeneratorException() throws Exception {
-        when(pdfGenerator.generatePDF(any(Utlatande.class), any(ApplicationOrigin.class))).thenThrow(new PdfGeneratorException());
+        when(pdfGenerator.generatePDF(any(Utlatande.class), any(ApplicationOrigin.class))).thenThrow(new PdfGeneratorException("error"));
 
         moduleApi.pdf(json, new ArrayList<>(), ApplicationOrigin.INTYGSTJANST);
     }

@@ -34,7 +34,7 @@ public class ValidationContext {
     public boolean isHogreBehorighetContext() {
         for (IntygAvserKategori intygAvser : utlatande.getIntygAvser().getKorkortstyp()) {
             IntygAvserKod intygAvserEnum = IntygAvserKod.valueOf(intygAvser.name());
-            if (intygAvserEnum != null && IntygAvserKod.HOGRE_KORKORTSBEHORIGHET.contains(intygAvserEnum)) {
+            if (intygAvserEnum != null && IntygAvserKod.isHogreKorkortsbehorighet(intygAvserEnum)) {
                 return true;
             }
         }

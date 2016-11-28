@@ -377,7 +377,7 @@ public final class TransportToInternal {
      */
     private static void populateWithArbetsformaga(Utlatande utlatande, FunktionstillstandType source) {
         for (ArbetsformagaNedsattningType nedsattning : source.getArbetsformaga().getArbetsformagaNedsattning()) {
-            if (nedsattning.getNedsattningsgrad() != null && (nedsattning.getVaraktighetFrom() != null && nedsattning.getVaraktighetTom() != null)) {
+            if (nedsattning.getNedsattningsgrad() != null && nedsattning.getVaraktighetFrom() != null && nedsattning.getVaraktighetTom() != null) {
                 switch (nedsattning.getNedsattningsgrad()) {
                 case HELT_NEDSATT:
                     utlatande.setNedsattMed100(makeInterval(nedsattning));

@@ -27,6 +27,8 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import com.google.common.base.Charsets;
@@ -37,6 +39,8 @@ public class RegisterCertificateTestValidator {
     private static final String RESPONDER_SCHEMA = "interactions/RegisterCertificateInteraction/RegisterCertificateResponder_2.0.xsd";
     private static final String GENERAL_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_2.0.xsd";
     private static final String TYPES_SCHEMA = "core_components/clinicalprocess_healthcond_certificate_types_2.0.xsd";
+
+    private static final Logger LOG = LoggerFactory.getLogger(RegisterCertificateTestValidator.class);
 
     private Schema generalSchema;
 
@@ -55,7 +59,7 @@ public class RegisterCertificateTestValidator {
             generalSchema.newValidator().validate(xmlSource);
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOG.error("Error: {}", ex);
             return false;
         }
     }

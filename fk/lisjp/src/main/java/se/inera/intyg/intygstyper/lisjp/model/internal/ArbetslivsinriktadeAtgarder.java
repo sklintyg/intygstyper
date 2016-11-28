@@ -19,15 +19,11 @@
 
 package se.inera.intyg.intygstyper.lisjp.model.internal;
 
-import java.util.EnumSet;
-
 import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class ArbetslivsinriktadeAtgarder {
-    ArbetslivsinriktadeAtgarder() {
-    }
 
     @JsonCreator
     public static ArbetslivsinriktadeAtgarder create(@JsonProperty("typ") ArbetslivsinriktadeAtgarderVal typ) {
@@ -52,10 +48,6 @@ public abstract class ArbetslivsinriktadeAtgarder {
 
         private final String id;
         private final String label;
-
-        public static final EnumSet<ArbetslivsinriktadeAtgarderVal> ATGARD_AKTUELL = EnumSet.of(ARBETSTRANING, ARBETSANPASSNING, SOKA_NYTT_ARBETE,
-                BESOK_PA_ARBETSPLATSEN, ERGONOMISK_BEDOMNING, HJALPMEDEL, KONFLIKTHANTERING, KONTAKT_MED_FORETAGSHALSOVARD, KONTAKT_MED_FORETAGSHALSOVARD,
-                OMFORDELNING_AV_ARBETSUPPGIFTER, OMFORDELNING_AV_ARBETSUPPGIFTER, OVRIGT);
 
         ArbetslivsinriktadeAtgarderVal(String id, String label) {
             this.id = id;

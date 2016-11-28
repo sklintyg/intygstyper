@@ -22,9 +22,6 @@ public class PdfGeneratorException extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    public PdfGeneratorException() {
-    }
-
     public PdfGeneratorException(String message) {
         super(message);
     }

@@ -584,7 +584,7 @@ public class PdfGeneratorImpl implements PdfGenerator<Utlatande> {
                 Object[] fontInfo = AcroFields.splitDAelements(dict.getAsString(PdfName.DA).toString());
                 if (fontInfo.length >= 2) {
                     String fontName = (String) fontInfo[0];
-                    float fontSize = (((Float) fontInfo[1]).floatValue());
+                    float fontSize = ((Float) fontInfo[1]).floatValue();
 
                     PdfIndirectReference fontRef = font.getAsIndirectObject(new PdfName(fontName));
                     if (fontRef != null) {

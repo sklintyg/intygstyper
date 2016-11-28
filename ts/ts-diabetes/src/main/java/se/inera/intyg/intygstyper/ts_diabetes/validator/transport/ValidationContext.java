@@ -33,7 +33,7 @@ public class ValidationContext {
 
     public boolean isHogreContext() {
         for (KorkortsbehorighetTsDiabetes intygAvser : utlatande.getIntygAvser().getKorkortstyp()) {
-            if (intygAvser != null && IntygAvserKod.HOGRE_KORKORTSBEHORIGHET.contains(IntygAvserKod.valueOf(intygAvser.value().value()))) {
+            if (intygAvser != null && IntygAvserKod.isHogreKorkortsbehorighet(IntygAvserKod.valueOf(intygAvser.value().value()))) {
                 return true;
             }
         }

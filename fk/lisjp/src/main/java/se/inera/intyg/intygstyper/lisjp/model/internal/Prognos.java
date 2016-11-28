@@ -27,8 +27,6 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class Prognos {
-    Prognos() {
-    }
 
     @JsonCreator
     public static Prognos create(@JsonProperty("prognos") PrognosTyp typ,

@@ -25,39 +25,16 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 
 import se.inera.intyg.common.services.texts.model.IntygTexts;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
-import se.inera.intyg.intygstyper.fkparent.pdf.FkBasePdfDefinitionBuilder;
-import se.inera.intyg.intygstyper.fkparent.pdf.PdfConstants;
-import se.inera.intyg.intygstyper.fkparent.pdf.PdfGeneratorException;
-import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkDynamicPageDecoratorEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkFormIdentityEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkFormPagePersonnummerEventHandlerImpl;
-import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkLogoEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkOverflowPagePersonnummerEventHandlerImpl;
-import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.FkPrintedByEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.PageNumberingEventHandler;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkCheckbox;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkDiagnosKodField;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkFieldGroup;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkLabel;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkOverflowPage;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkOverflowableValueField;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPage;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkPdfDefinition;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkTillaggsFraga;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.FkValueField;
-import se.inera.intyg.intygstyper.fkparent.pdf.model.PdfComponent;
+import se.inera.intyg.intygstyper.fkparent.model.internal.*;
+import se.inera.intyg.intygstyper.fkparent.pdf.*;
+import se.inera.intyg.intygstyper.fkparent.pdf.eventhandlers.*;
+import se.inera.intyg.intygstyper.fkparent.pdf.model.*;
 import se.inera.intyg.intygstyper.luse.model.internal.LuseUtlatande;
 
 /**
@@ -213,7 +190,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
                 .offset(KATEGORI_OFFSET_X, 215f)
                 .size(KATEGORI_FULL_WIDTH, 63f)
                 .withBorders(Rectangle.BOX);
-        fraga2.addChild(new FkCheckbox("Nej", (intyg.getUnderlagFinns() != null) && (!intyg.getUnderlagFinns()))
+        fraga2.addChild(new FkCheckbox("Nej", intyg.getUnderlagFinns() != null && !intyg.getUnderlagFinns())
                 .offset(0, 0)
                 .withCellWith(6f)
                 .size(20.5f, CHECKBOXROW_DEFAULT_HEIGHT));
@@ -238,7 +215,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
                 hamtasFran = underlag.getHamtasFran();
             }
 
-            yOffset = (CHECKBOXROW_DEFAULT_HEIGHT * row);
+            yOffset = CHECKBOXROW_DEFAULT_HEIGHT * row;
             // Ange utredning eller underlag
             fraga2.addChild(new FkValueField(label)
                     .offset(0, yOffset)
@@ -267,7 +244,7 @@ public class LusePdfDefinitionBuilder extends FkBasePdfDefinitionBuilder {
                     .size(25f, CHECKBOXROW_DEFAULT_HEIGHT)
                     .withBorders(Rectangle.TOP));
             row++;
-            yOffset = (CHECKBOXROW_DEFAULT_HEIGHT * row);
+            yOffset = CHECKBOXROW_DEFAULT_HEIGHT * row;
 
             // Från vilken vårdgivare kan Försäkringskassan hämta information om utredningen/underlaget?
             fraga2.addChild(new FkValueField(nullSafeString(hamtasFran))

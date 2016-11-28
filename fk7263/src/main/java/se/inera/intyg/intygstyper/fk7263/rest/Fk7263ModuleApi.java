@@ -252,8 +252,7 @@ public class Fk7263ModuleApi implements ModuleApi {
             jaxbContext = JAXBContext.newInstance(RegisterCertificateType.class, DatePeriodType.class, Boolean.class);
             jaxbContext.createMarshaller().marshal(wrapJaxb(type), writer);
         } catch (JAXBException e) {
-            LOG.debug("Could not create JAXB context for conversion from fk7263 ti fk7263-sit.");
-            e.printStackTrace();
+            LOG.debug("Could not create JAXB context for conversion from fk7263 ti fk7263-sit.", e);
         }
         return writer.toString();
     }

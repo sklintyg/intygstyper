@@ -30,21 +30,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
-import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Diagnos;
-import se.inera.intyg.intygstyper.fkparent.model.internal.SitUtlatande;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.fkparent.model.internal.Underlag;
+import se.inera.intyg.intygstyper.fkparent.model.internal.*;
+import se.inera.intyg.intygstyper.luse.support.LuseEntryPoint;
 
 @AutoValue
 @JsonDeserialize(builder = AutoValue_LuseUtlatande.Builder.class)
 public abstract class LuseUtlatande implements Utlatande, SitUtlatande {
-
-    LuseUtlatande() {
-    }
 
     @Override
     public String getTyp() {

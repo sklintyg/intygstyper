@@ -28,8 +28,6 @@ import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 
 @AutoValue
 public abstract class Sjukskrivning {
-    Sjukskrivning() {
-    }
 
     @JsonCreator
     public static Sjukskrivning create(@JsonProperty("sjukskrivningsgrad") SjukskrivningsGrad sjukskrivningsgrad,

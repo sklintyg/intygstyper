@@ -18,20 +18,17 @@
  */
 package se.inera.intyg.intygstyper.fkparent.model.internal;
 
+import javax.annotation.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
-import javax.annotation.Nullable;
 
 /**
  * Created by BESA on 2016-02-23.
  */
 @AutoValue
 public abstract class Diagnos {
-
-    Diagnos() {
-    }
 
     @JsonCreator
     public static Diagnos create(@JsonProperty("diagnosKod") String diagnosKod,

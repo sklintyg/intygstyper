@@ -180,7 +180,7 @@ public class Fk7263InternalToNotification {
 
         // Default diagnosKodverk is ICD-10-SE
         String diagnosKodsystem = utlatandeSource.getDiagnosKodsystem1();
-        Diagnoskodverk diagnosKodverk = (StringUtils.isNotBlank(diagnosKodsystem)) ? Diagnoskodverk.valueOf(diagnosKodsystem)
+        Diagnoskodverk diagnosKodverk = StringUtils.isNotBlank(diagnosKodsystem) ? Diagnoskodverk.valueOf(diagnosKodsystem)
                 : Diagnoskodverk.ICD_10_SE;
 
         if (!moduleService.validateDiagnosisCode(diagnosKod, diagnosKodverk)) {
@@ -190,7 +190,7 @@ public class Fk7263InternalToNotification {
 
         // Set this to empty string if not found
         String diagnosBeskrivning = utlatandeSource.getDiagnosBeskrivning1();
-        diagnosBeskrivning = (StringUtils.isNotBlank(diagnosBeskrivning)) ? diagnosBeskrivning : "";
+        diagnosBeskrivning = StringUtils.isNotBlank(diagnosBeskrivning) ? diagnosBeskrivning : "";
 
         Diagnos diagnos = new Diagnos();
         diagnos.setCode(diagnosKod);

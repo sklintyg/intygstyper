@@ -19,19 +19,15 @@
 
 package se.inera.intyg.intygstyper.fkparent.model.internal;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.auto.value.AutoValue;
-import se.inera.intyg.common.support.model.InternalDate;
-
 import javax.annotation.Nullable;
+
+import com.fasterxml.jackson.annotation.*;
+import com.google.auto.value.AutoValue;
+
+import se.inera.intyg.common.support.model.InternalDate;
 
 @AutoValue
 public abstract class Underlag {
-
-    Underlag() {
-    }
 
     @JsonCreator
     public static Underlag create(@JsonProperty("typ") UnderlagsTyp typ,

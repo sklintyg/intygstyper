@@ -27,9 +27,6 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class Sysselsattning {
 
-    Sysselsattning() {
-    }
-
     @JsonCreator
     public static Sysselsattning create(@JsonProperty("typ") SysselsattningsTyp typ) {
         return new AutoValue_Sysselsattning(typ);

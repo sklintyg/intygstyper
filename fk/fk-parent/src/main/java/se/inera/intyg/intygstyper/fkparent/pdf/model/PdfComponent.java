@@ -22,11 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.Utilities;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -66,9 +62,6 @@ public abstract class PdfComponent<T extends PdfComponent> {
     protected BaseColor borderColor = BaseColor.BLACK;
 
     protected List<PdfComponent> children = new ArrayList<>();
-
-    public PdfComponent() {
-    }
 
     public float getParentOffsetX() {
         return parentOffsetX;

@@ -40,9 +40,6 @@ import se.inera.intyg.intygstyper.lisjp.support.LisjpEntryPoint;
 @JsonDeserialize(builder = AutoValue_LisjpUtlatande.Builder.class)
 public abstract class LisjpUtlatande implements Utlatande, SitUtlatande {
 
-    LisjpUtlatande() {
-    }
-
     @Override
     public String getTyp() {
         return LisjpEntryPoint.MODULE_ID;

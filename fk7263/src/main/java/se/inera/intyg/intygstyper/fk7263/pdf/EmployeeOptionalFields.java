@@ -54,7 +54,7 @@ public enum EmployeeOptionalFields {
     }
 
     public boolean isPresent(List<String> values) {
-        return (values != null) && values.stream().filter(s -> value.equals(s)).findAny().isPresent();
+        return values != null && values.stream().filter(s -> value.equals(s)).findAny().isPresent();
 
     }
 

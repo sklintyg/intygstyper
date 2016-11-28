@@ -40,9 +40,6 @@ import se.inera.intyg.intygstyper.luae_fs.support.LuaefsEntryPoint;
 @JsonDeserialize(builder = AutoValue_LuaefsUtlatande.Builder.class)
 public abstract class LuaefsUtlatande implements Utlatande, SitUtlatande {
 
-    LuaefsUtlatande() {
-    }
-
     @Override
     public abstract String getId();
 
