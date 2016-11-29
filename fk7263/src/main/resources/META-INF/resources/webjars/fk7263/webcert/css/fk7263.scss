@@ -52,12 +52,13 @@ This is to avoid leaking module specific style rules outside of it's intended co
   }
 
   .form8b-percentage-group {
-    > label {
-      &.control-label {
-        &.checkbox {
-          height: 24px;
-        }
-      }
+    .checkbox {
+      margin-bottom: 0;
+      padding-top: 7px;
+    }
+    .alert-info {
+      margin-top: 10px;
+      margin-bottom: 0;
     }
   }
 
