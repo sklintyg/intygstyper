@@ -192,7 +192,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 hideFromSigned: true
                             },
                             fieldGroup: [
-                                {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
+                                {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}}
                             ]
                         },
                         {
