@@ -12,7 +12,7 @@
              ng-model="viewState.intygModel.diabetes.observationsperiod" />
     </div>
   </div>
-  <div class="form-group" wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('diabetesTyp')">
+  <div class="form-group" wc-validation-wrapper field-type="radio-group" validations="viewState.getValidationErrors('diabetesTyp')">
     <span dynamic-label key="FRG_18.RBK"></span> *
     <label class="radio"><input name="diabetestyp" type="radio" value="DIABETES_TYP_1"
                                 ng-model="viewState.intygModel.diabetes.diabetestyp">Typ 1</label>
