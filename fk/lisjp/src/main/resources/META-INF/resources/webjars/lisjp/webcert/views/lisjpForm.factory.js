@@ -30,7 +30,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 disabled: UserModel.isDjupintegration(),
                                 size: 'full',
                                 labelColSize: 3,
-                                formType: 'horizontal'
+                                formType: 'horizontal',
+                                maxlength: 500
                             }
                         },
                         {
@@ -41,7 +42,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 disabled: UserModel.isDjupintegration(),
                                 size: '5',
                                 labelColSize: 3,
-                                formType: 'horizontal'
+                                formType: 'horizontal',
+                                maxlength: 6
                             }
                         },
                         {
@@ -51,7 +53,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 staticLabel: 'Postort',
                                 disabled: UserModel.isDjupintegration(),
                                 labelColSize: 3,
-                                formType: 'horizontal'
+                                formType: 'horizontal',
+                                maxlength: 100
                             }
                         },
                         {
@@ -422,7 +425,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 staticLabel: 'Postadress',
                                 size: 'full',
                                 labelColSize: 3,
-                                formType: 'horizontal'
+                                formType: 'horizontal',
+                                maxlength: 500
                             }
                         },
                         {
@@ -432,7 +436,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 staticLabel: 'Postnummer',
                                 size: '5',
                                 labelColSize: 3,
-                                formType: 'horizontal'
+                                formType: 'horizontal',
+                                maxlength: 6
                             }
                         },
                         {
@@ -446,7 +451,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             templateOptions: {
                                 staticLabel: 'Telefonnummer',
                                 labelColSize: 3,
-                                formType: 'horizontal'
+                                formType: 'horizontal',
+                                maxlength: 100
                             }
                         }
                     ]
