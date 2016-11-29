@@ -19,6 +19,7 @@
 
 package se.inera.intyg.intygstyper.luse.validator;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,7 +134,9 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LuseUt
         }
     }
 
-    private void validateUnderlag(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
+    // Package-public for testing.
+    @VisibleForTesting
+    void validateUnderlag(LuseUtlatande utlatande, List<ValidationMessage> validationMessages) {
         if (utlatande.getUnderlagFinns() == null) {
             ValidatorUtil.addValidationError(validationMessages, "grundformu.underlagFinns", ValidationMessageType.EMPTY);
         } else if (utlatande.getUnderlagFinns() && utlatande.getUnderlag().isEmpty()) {
