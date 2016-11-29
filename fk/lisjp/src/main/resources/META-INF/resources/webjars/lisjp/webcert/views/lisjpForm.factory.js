@@ -160,20 +160,22 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     templateOptions: {category: 3, categoryName: categoryNames[3]},
                     fieldGroup: [
                         {
-                            type: 'fmb',
+                            wrapper: 'fmb-wrapper',
                             templateOptions: {
                                 relatedFormId: categoryNames[3],
                                 fieldName: 'DIAGNOS',
                                 panelClass: 'sit-fmb-medium',
                                 hideFromSigned: true
-                            }
-                        },
-                        {type: 'headline', templateOptions: {label: 'FRG_6', level: 4, noH5: false}},
-                        {
-                            key: 'diagnoser',
-                            type: 'diagnos',
-                            data: {enableFMB: true},
-                            templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
+                            },
+                            fieldGroup: [
+                                {type: 'headline', templateOptions: {label: 'FRG_6', level: 4, noH5: false}},
+                                {
+                                    key: 'diagnoser',
+                                    type: 'diagnos',
+                                    data: {enableFMB: true},
+                                    templateOptions: {diagnosBeskrivningLabel: 'DFR_6.1', diagnosKodLabel: 'DFR_6.2'}
+                                }
+                            ]
                         }
                     ]
                 },
@@ -182,32 +184,29 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     templateOptions: {category: 4, categoryName: categoryNames[4]},
                     fieldGroup: [
                         {
-                            type: 'fmb',
+                            wrapper: 'fmb-wrapper',
                             templateOptions: {
                                 relatedFormId: categoryNames[4],
                                 fieldName: 'FUNKTIONSNEDSATTNING',
                                 panelClass: 'sit-fmb-small',
                                 hideFromSigned: true
-                            }/*,
-                         hideExpression: function($viewValue, $modelValue, scope) {
-                         return _missingInfoForFmbKey(scope, 'FUNKTIONSNEDSATTNING');
-                         }*/
+                            },
+                            fieldGroup: [
+                                {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
+                            ]
                         },
-                        {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}},
-
                         {
-                            type: 'fmb',
+                            wrapper: 'fmb-wrapper',
                             templateOptions: {
                                 relatedFormId: categoryNames[3],
                                 fieldName: 'AKTIVITETSBEGRANSNING',
                                 panelClass: 'sit-fmb-large',
                                 hideFromSigned: true
-                            }/*,
-                         hideExpression: function($viewValue, $modelValue, scope) {
-                         return _missingInfoForFmbKey(scope, 'AKTIVITETSBEGRANSNING');
-                         }*/
-                        },
-                        {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
+                            },
+                            fieldGroup: [
+                                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
+                            ]
+                        }
                     ]
                 },
                 {
@@ -223,26 +222,28 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     templateOptions: {category: 6, categoryName: categoryNames[6]},
                     fieldGroup: [
                         {
-                            type: 'fmb',
+                            wrapper: 'fmb-wrapper',
                             templateOptions: {
                                 relatedFormId: categoryNames[3],
                                 fieldName: 'ARBETSFORMAGA',
                                 panelClass: 'sit-fmb-large',
                                 hideFromSigned: true
-                            }
-                        },
-                        {
-                            key: 'sjukskrivningar', type: 'sjukskrivningar',
-                            templateOptions: {
-                                label: 'DFR_32.1',
-                                code: 'KV_FKMU_0003',
-                                fields: [
-                                    'EN_FJARDEDEL',
-                                    'HALFTEN',
-                                    'TRE_FJARDEDEL',
-                                    'HELT_NEDSATT'
-                                ]
-                            }
+                            },
+                            fieldGroup: [
+                                {
+                                    key: 'sjukskrivningar', type: 'sjukskrivningar',
+                                    templateOptions: {
+                                        label: 'DFR_32.1',
+                                        code: 'KV_FKMU_0003',
+                                        fields: [
+                                            'EN_FJARDEDEL',
+                                            'HALFTEN',
+                                            'TRE_FJARDEDEL',
+                                            'HELT_NEDSATT'
+                                        ]
+                                    }
+                                }
+                            ]
                         },
                         {
                             key: 'forsakringsmedicinsktBeslutsstod',
