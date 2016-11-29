@@ -65,6 +65,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.IntygController',
                     ViewState.common.doneLoading = true;
                     if (result !== null && result !== '') {
                         ViewState.intygModel = result.contents;
+                        ViewState.relations = result.relations;
 
                         DynamicLabelService.updateDynamicLabels(ViewState.common.intygProperties.type, ViewState.intygModel.textVersion);
 
