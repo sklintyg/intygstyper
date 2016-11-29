@@ -52,6 +52,7 @@ public class InternalDraftValidatorTest {
         List<ValidationMessage> validationMessages = new ArrayList<>();
         testee.validateUnderlag(utlatande, validationMessages);
         assertEquals(1, validationMessages.size());
+        assertEquals("luse.validation.underlag.hamtas-fran.missing", validationMessages.get(0).getMessage());
     }
 
     private GrundData buildGrundData() {
