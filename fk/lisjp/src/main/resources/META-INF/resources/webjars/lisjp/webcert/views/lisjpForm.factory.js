@@ -368,7 +368,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         }
                     ]
                 },
-                FactoryTemplates.vardenhet,
+                FactoryTemplates.vardenhet
             ];
 
             return {
