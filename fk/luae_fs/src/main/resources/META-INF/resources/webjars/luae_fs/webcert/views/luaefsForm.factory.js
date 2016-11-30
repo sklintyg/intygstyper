@@ -1,6 +1,6 @@
 angular.module('luae_fs').factory('luae_fs.FormFactory',
-    ['luae_fs.FormFactoryHelper', 'common.UserModel',
-        function(FactoryHelper, UserModel) {
+    ['luae_fs.FormFactoryHelper', 'common.UserModel', 'common.FactoryTemplatesHelper',
+        function(FactoryHelper, UserModel, FactoryTemplates) {
             'use strict';
 
 
@@ -14,54 +14,55 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                 'kontakt'
             ];
 
+
             var formFields = [
-                {
-                    wrapper: 'wc-field-static',
-                    templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'patient'},
-                    fieldGroup: [
-                        {
-                            key: 'grundData.patient.postadress',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Postadress', disabled: UserModel.isDjupintegration(), size: 'full', labelColSize: 3, formType: 'horizontal'}
-                        },
-                        {
-                            key: 'grundData.patient.postnummer',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Postnummer', disabled: UserModel.isDjupintegration(), size: '5', labelColSize: 3, formType: 'horizontal'}
-                        },
-                        {
-                            key: 'grundData.patient.postort',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Postort', disabled: UserModel.isDjupintegration(), labelColSize: 3, formType: 'horizontal'}
-                        },
-                        {
-                            type: 'patient-address-updater',
-                            hideExpression: function() { return UserModel.isDjupintegration(); },
-                            templateOptions: { formType: 'horizontal', labelColSize: 3, hideFromSigned:true}
-                        }
-                    ]
-                },
+                FactoryTemplates.adress,
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
                     fieldGroup: [
                         //Fråga 1 -----
-                        {type: 'headline', templateOptions: {id:'FRG_1', label: 'FRG_1', level:4, noH5:false}},
+                        {type: 'headline', templateOptions: {id: 'FRG_1', label: 'FRG_1', level: 4, noH5: false}},
                         {
                             wrapper: 'validationGroup',
-                            templateOptions: { type:'check-group', validationGroup: 'baserasPa', kompletteringGroup: 'baseratPa' },
+                            templateOptions: {
+                                type: 'check-group',
+                                validationGroup: 'baserasPa',
+                                kompletteringGroup: 'baseratPa'
+                            },
                             fieldGroup: [
-                                {key: 'undersokningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}},
-                                {key: 'journaluppgifter', type: 'date', templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}},
-                                {key: 'anhorigsBeskrivningAvPatienten', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}},
-                                {key: 'annatGrundForMU', type: 'date', templateOptions: {label: 'KV_FKMU_0001.ANNAT', hideKompletteringText: true}}
+                                {
+                                    key: 'undersokningAvPatienten',
+                                    type: 'date',
+                                    templateOptions: {label: 'KV_FKMU_0001.UNDERSOKNING'}
+                                },
+                                {
+                                    key: 'journaluppgifter',
+                                    type: 'date',
+                                    templateOptions: {label: 'KV_FKMU_0001.JOURNALUPPGIFTER'}
+                                },
+                                {
+                                    key: 'anhorigsBeskrivningAvPatienten',
+                                    type: 'date',
+                                    templateOptions: {label: 'KV_FKMU_0001.ANHORIG'}
+                                },
+                                {
+                                    key: 'annatGrundForMU',
+                                    type: 'date',
+                                    templateOptions: {label: 'KV_FKMU_0001.ANNAT', hideKompletteringText: true}
+                                }
                             ]
-                        },{
+                        }, {
                             key: 'annatGrundForMUBeskrivning',
                             type: 'single-text',
                             className: 'fold-animation',
                             hideExpression: '!model.annatGrundForMU',
-                            templateOptions: {label: 'DFR_1.3', help: 'DFR_1.3', indent: true, kompletteringKey: 'annatGrundForMU'}
+                            templateOptions: {
+                                label: 'DFR_1.3',
+                                help: 'DFR_1.3',
+                                indent: true,
+                                kompletteringKey: 'annatGrundForMU'
+                            }
                         },
 
                         //Fråga 2 -----
@@ -98,7 +99,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 3, categoryName: categoryNames[3]},
                     fieldGroup: [
-                        {type: 'headline', templateOptions: {label: 'FRG_6', level:4, noH5:false}},
+                        {type: 'headline', templateOptions: {label: 'FRG_6', level: 4, noH5: false}},
                         {
                             key: 'diagnoser',
                             type: 'diagnos',
@@ -134,7 +135,11 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 6, categoryName: categoryNames[6]},
                     fieldGroup: [
-                        {key: 'kontaktMedFk', type: 'checkbox-inline', templateOptions: {label: 'DFR_26.1', hideKompletteringText: true}},
+                        {
+                            key: 'kontaktMedFk',
+                            type: 'checkbox-inline',
+                            templateOptions: {label: 'DFR_26.1', hideKompletteringText: true}
+                        },
                         {
                             key: 'anledningTillKontakt',
                             type: 'multi-text',
@@ -144,35 +149,7 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
                         }
                     ]
                 },
-                {
-                    wrapper: 'wc-field-static',
-                    templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
-                    fieldGroup: [
-                        {
-                            type: 'label-vardenhet'
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.postadress',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Postadress', size: 'full', labelColSize: 3, formType: 'horizontal'}
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.postnummer',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Postnummer', size: '5', labelColSize: 3, formType: 'horizontal'}
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.postort',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.telefonnummer',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Telefonnummer', labelColSize: 3, formType: 'horizontal'}
-                        }
-                    ]
-                }
+                FactoryTemplates.vardenhet
             ];
 
             return {

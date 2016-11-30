@@ -1,6 +1,6 @@
 angular.module('lisjp').factory('lisjp.FormFactory',
-    ['common.DateUtilsService', 'common.ObjectHelper', 'common.UserModel',
-        function(DateUtils, ObjectHelper, UserModel) {
+    ['common.DateUtilsService', 'common.ObjectHelper', 'common.UserModel', 'common.FactoryTemplatesHelper',
+        function(DateUtils, ObjectHelper, UserModel, FactoryTemplates) {
             'use strict';
 
             var categoryNames = [
@@ -18,54 +18,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
             ];
 
             var formFields = [
-                {
-                    wrapper: 'wc-field-static',
-                    templateOptions: {staticLabel: 'common.intyg.patientadress', categoryName: 'patient'},
-                    fieldGroup: [
-                        {
-                            key: 'grundData.patient.postadress',
-                            type: 'single-text',
-                            templateOptions: {
-                                staticLabel: 'Postadress',
-                                disabled: UserModel.isDjupintegration(),
-                                size: 'full',
-                                labelColSize: 3,
-                                formType: 'horizontal',
-                                maxlength: 500
-                            }
-                        },
-                        {
-                            key: 'grundData.patient.postnummer',
-                            type: 'single-text',
-                            templateOptions: {
-                                staticLabel: 'Postnummer',
-                                disabled: UserModel.isDjupintegration(),
-                                size: '5',
-                                labelColSize: 3,
-                                formType: 'horizontal',
-                                maxlength: 6
-                            }
-                        },
-                        {
-                            key: 'grundData.patient.postort',
-                            type: 'single-text',
-                            templateOptions: {
-                                staticLabel: 'Postort',
-                                disabled: UserModel.isDjupintegration(),
-                                labelColSize: 3,
-                                formType: 'horizontal',
-                                maxlength: 100
-                            }
-                        },
-                        {
-                            type: 'patient-address-updater',
-                            hideExpression: function() {
-                                return UserModel.isDjupintegration();
-                            },
-                            templateOptions: {formType: 'horizontal', labelColSize: 3, hideFromSigned: true}
-                        }
-                    ]
-                },
+                FactoryTemplates.adress,
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 10, categoryName: categoryNames[10]},
@@ -90,7 +43,11 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         },
                         {
                             wrapper: 'validationGroup',
-                            templateOptions: {type: 'check-group', validationGroup: 'baserasPa', kompletteringGroup: 'baseratPa'},
+                            templateOptions: {
+                                type: 'check-group',
+                                validationGroup: 'baserasPa',
+                                kompletteringGroup: 'baseratPa'
+                            },
                             fieldGroup: [
                                 {
                                     key: 'undersokningAvPatienten', type: 'date', className: 'small-gap',
@@ -323,13 +280,13 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     templateOptions: {category: 7, categoryName: categoryNames[7]},
                     fieldGroup: [
                         {
-                            key : 'arbetslivsinriktadeAtgarder',
-                            type : 'check-group',
-                            templateOptions : {
-                                label : 'FRG_40',
-                                descLabel : 'DFR_40.2',
-                                code : 'KV_FKMU_0004',
-                                choices : ['EJ_AKTUELLT',
+                            key: 'arbetslivsinriktadeAtgarder',
+                            type: 'check-group',
+                            templateOptions: {
+                                label: 'FRG_40',
+                                descLabel: 'DFR_40.2',
+                                code: 'KV_FKMU_0004',
+                                choices: ['EJ_AKTUELLT',
                                     'ARBETSTRANING',
                                     'ARBETSANPASSNING',
                                     'SOKA_NYTT_ARBETE',
@@ -342,14 +299,14 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                     'OVRIGA_ATGARDER'
                                 ]
                             },
-                            expressionProperties : {
+                            expressionProperties: {
                                 // Disable option 'EJ_AKTUELLT' if any other option is selected
-                                'templateOptions.disabled["EJ_AKTUELLT"]' : function ($viewValue, $modelValue) {
+                                'templateOptions.disabled["EJ_AKTUELLT"]': function($viewValue, $modelValue) {
                                     if (!$modelValue) {
                                         return;
                                     }
                                     var disabled = false;
-                                    angular.forEach($modelValue, function (item, key) {
+                                    angular.forEach($modelValue, function(item, key) {
                                         if (item === true && key !== 'EJ_AKTUELLT') {
                                             disabled = true;
                                         }
@@ -357,16 +314,16 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                     return disabled;
                                 },
                                 // Disable other options if option 'EJ_AKTUELLT' is selected
-                                'templateOptions.disabled["ARBETSTRANING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["ARBETSANPASSNING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["SOKA_NYTT_ARBETE"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["BESOK_ARBETSPLATS"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["ERGONOMISK"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["HJALPMEDEL"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["KONFLIKTHANTERING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["KONTAKT_FHV"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["OMFORDELNING"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["OVRIGA_ATGARDER"]' : 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]'
+                                'templateOptions.disabled["ARBETSTRANING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["ARBETSANPASSNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["SOKA_NYTT_ARBETE"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["BESOK_ARBETSPLATS"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["ERGONOMISK"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["HJALPMEDEL"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["KONFLIKTHANTERING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["KONTAKT_FHV"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["OMFORDELNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
+                                'templateOptions.disabled["OVRIGA_ATGARDER"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]'
                             }
                         }, {
                             key: 'arbetslivsinriktadeAtgarderBeskrivning',
@@ -411,52 +368,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         }
                     ]
                 },
-                {
-                    wrapper: 'wc-field-static',
-                    templateOptions: {staticLabel: 'common.label.vardenhet', categoryName: 'vardenhet'},
-                    fieldGroup: [
-                        {
-                            type: 'label-vardenhet'
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.postadress',
-                            type: 'single-text',
-                            templateOptions: {
-                                staticLabel: 'Postadress',
-                                size: 'full',
-                                labelColSize: 3,
-                                formType: 'horizontal',
-                                maxlength: 500
-                            }
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.postnummer',
-                            type: 'single-text',
-                            templateOptions: {
-                                staticLabel: 'Postnummer',
-                                size: '5',
-                                labelColSize: 3,
-                                formType: 'horizontal',
-                                maxlength: 6
-                            }
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.postort',
-                            type: 'single-text',
-                            templateOptions: {staticLabel: 'Postort', labelColSize: 3, formType: 'horizontal'}
-                        },
-                        {
-                            key: 'grundData.skapadAv.vardenhet.telefonnummer',
-                            type: 'single-text',
-                            templateOptions: {
-                                staticLabel: 'Telefonnummer',
-                                labelColSize: 3,
-                                formType: 'horizontal',
-                                maxlength: 100
-                            }
-                        }
-                    ]
-                }
+                FactoryTemplates.vardenhet,
             ];
 
             return {
