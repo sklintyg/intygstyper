@@ -57,8 +57,12 @@ This is to avoid leaking module specific style rules outside of it's intended co
       padding-top: 7px;
     }
     .alert-info {
-      margin-top: 10px;
-      margin-bottom: 0;
+      margin-top: 3px;
+      margin-bottom: 10px;
+    }
+    .validation {
+      margin-top: 3px;
+      margin-bottom: 10px;
     }
   }
 
