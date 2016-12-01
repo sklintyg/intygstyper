@@ -30,7 +30,10 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
                     fieldGroup: [
-                        {type: 'headline', templateOptions: {id: 'FRG_1', label: 'FRG_1', level: 4, noH5: false, required: true}},
+                        {
+                            type: 'headline',
+                            templateOptions: {id: 'FRG_1', label: 'FRG_1', level: 4, noH5: false, required: true}
+                        },
                         {
                             type: 'headline',
                             className: 'col-md-6 no-space-left',
@@ -130,7 +133,10 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 hideFromSigned: true
                             },
                             fieldGroup: [
-                                {type: 'headline', templateOptions: {label: 'FRG_6', level: 4, noH5: false, required: true}},
+                                {
+                                    type: 'headline',
+                                    templateOptions: {label: 'FRG_6', level: 4, noH5: false, required: true}
+                                },
                                 {
                                     key: 'diagnoser',
                                     type: 'diagnos',
@@ -154,8 +160,12 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 hideFromSigned: true
                             },
                             fieldGroup: [
-                                {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1',
-                                    required: true}}
+                                {
+                                    key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {
+                                    label: 'DFR_35.1',
+                                    required: true
+                                }
+                                }
                             ]
                         },
                         {
@@ -167,8 +177,12 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 hideFromSigned: true
                             },
                             fieldGroup: [
-                                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1',
-                                    required: true}}
+                                {
+                                    key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {
+                                    label: 'DFR_17.1',
+                                    required: true
+                                }
+                                }
                             ]
                         }
                     ]
@@ -306,32 +320,30 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                     'OVRIGA_ATGARDER'
                                 ]
                             },
-                            expressionProperties: {
-                                // Disable option 'EJ_AKTUELLT' if any other option is selected
-                                'templateOptions.disabled["EJ_AKTUELLT"]': function($viewValue, $modelValue) {
-                                    if (!$modelValue) {
-                                        return;
-                                    }
-                                    var disabled = false;
-                                    angular.forEach($modelValue, function(item, key) {
-                                        if (item === true && key !== 'EJ_AKTUELLT') {
-                                            disabled = true;
+                            watcher: [{
+                                type: '$watch',
+                                watchDeep: true,
+                                expression: 'model.arbetslivsinriktadeAtgarder',
+                                listener: function(field, newValue, oldValue, scope) {
+                                    if (oldValue && newValue !== oldValue) {
+                                        if(newValue.EJ_AKTUELLT !== oldValue.EJ_AKTUELLT) {
+                                            if(newValue.EJ_AKTUELLT){
+                                                angular.forEach(scope.model.arbetslivsinriktadeAtgarder, function(atgard, key) {
+                                                    if (key !== 'EJ_AKTUELLT') {
+                                                        scope.model.arbetslivsinriktadeAtgarder[key] = undefined;
+                                                    }
+                                                });
+                                            }
+                                        } else {
+                                            angular.forEach(scope.model.arbetslivsinriktadeAtgarder, function(atgard, key) {
+                                                if (key !== 'EJ_AKTUELLT' && atgard) {
+                                                    scope.model.arbetslivsinriktadeAtgarder.EJ_AKTUELLT = undefined;
+                                                }
+                                            });
                                         }
-                                    });
-                                    return disabled;
-                                },
-                                // Disable other options if option 'EJ_AKTUELLT' is selected
-                                'templateOptions.disabled["ARBETSTRANING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["ARBETSANPASSNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["SOKA_NYTT_ARBETE"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["BESOK_ARBETSPLATS"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["ERGONOMISK"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["HJALPMEDEL"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["KONFLIKTHANTERING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["KONTAKT_FHV"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["OMFORDELNING"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]',
-                                'templateOptions.disabled["OVRIGA_ATGARDER"]': 'model.arbetslivsinriktadeAtgarder["EJ_AKTUELLT"]'
-                            }
+                                    }
+                                }
+                            }]
                         }, {
                             key: 'arbetslivsinriktadeAtgarderBeskrivning',
                             type: 'multi-text',
