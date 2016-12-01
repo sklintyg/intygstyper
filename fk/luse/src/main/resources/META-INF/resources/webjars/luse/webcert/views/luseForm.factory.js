@@ -78,6 +78,7 @@ angular.module('luse').factory('luse.FormFactory', [
                         hideExpression: 'model.undersokningAvPatienten || !( model.journaluppgifter || model.anhorigsBeskrivningAvPatienten || model.annatGrundForMU)',
                         templateOptions: {
                             bold: 'bold',
+                            forceHeadingTypeLabel: true,
                             staticLabelId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
                             subTextId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info',
                             subTextDynId: 'FRG_25',
