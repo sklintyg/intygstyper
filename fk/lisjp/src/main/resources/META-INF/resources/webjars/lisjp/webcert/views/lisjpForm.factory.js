@@ -30,7 +30,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                     wrapper: 'wc-field',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
                     fieldGroup: [
-                        {type: 'headline', templateOptions: {id: 'FRG_1', label: 'FRG_1', level: 4, noH5: false}},
+                        {type: 'headline', templateOptions: {id: 'FRG_1', label: 'FRG_1', level: 4, noH5: false, required: true}},
                         {
                             type: 'headline',
                             className: 'col-md-6 no-space-left',
@@ -79,7 +79,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 label: 'DFR_1.3',
                                 help: 'DFR_1.3',
                                 indent: true,
-                                kompletteringKey: 'annatGrundForMU'
+                                kompletteringKey: 'annatGrundForMU',
+                                required: true
                             }
                         }
                     ]
@@ -98,20 +99,21 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                     'FORALDRALEDIG',
                                     'STUDIER',
                                     'PROGRAM'
-                                ]
+                                ],
+                                required: true
                             }
                         },
                         {
                             key: 'nuvarandeArbete', type: 'multi-text',
                             className: 'fold-animation',
                             hideExpression: '!model.sysselsattning["NUVARANDE_ARBETE"]',
-                            templateOptions: {label: 'FRG_29'}
+                            templateOptions: {label: 'FRG_29', required: true}
                         },
                         {
                             key: 'arbetsmarknadspolitisktProgram', type: 'multi-text',
                             className: 'fold-animation',
                             hideExpression: '!model.sysselsattning["PROGRAM"]',
-                            templateOptions: {label: 'FRG_30'}
+                            templateOptions: {label: 'FRG_30', required: true}
                         }
                     ]
                 },
@@ -128,7 +130,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 hideFromSigned: true
                             },
                             fieldGroup: [
-                                {type: 'headline', templateOptions: {label: 'FRG_6', level: 4, noH5: false}},
+                                {type: 'headline', templateOptions: {label: 'FRG_6', level: 4, noH5: false, required: true}},
                                 {
                                     key: 'diagnoser',
                                     type: 'diagnos',
@@ -152,7 +154,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 hideFromSigned: true
                             },
                             fieldGroup: [
-                                {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1'}}
+                                {key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {label: 'DFR_35.1',
+                                    required: true}}
                             ]
                         },
                         {
@@ -164,7 +167,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 hideFromSigned: true
                             },
                             fieldGroup: [
-                                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1'}}
+                                {key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {label: 'DFR_17.1',
+                                    required: true}}
                             ]
                         }
                     ]
@@ -200,7 +204,8 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                             'HALFTEN',
                                             'TRE_FJARDEDEL',
                                             'HELT_NEDSATT'
-                                        ]
+                                        ],
+                                        required: true
                                     }
                                 }
                             ]
@@ -229,7 +234,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
 
                                 return !nedsatt75under;
                             },
-                            templateOptions: {label: 'FRG_33', hideKompletteringText: true}
+                            templateOptions: {label: 'FRG_33', hideKompletteringText: true, required: true}
                         },
                         {
                             key: 'arbetstidsforlaggningMotivering', type: 'multi-text',
@@ -244,6 +249,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             key: 'prognos', type: 'prognos',
                             templateOptions: {
                                 label: 'FRG_39',
+                                required: true,
                                 code: 'KV_FKMU_0006',
                                 choices: [{id: 'STOR_SANNOLIKHET', showDropDown: false},
                                     {id: 'ATER_X_ANTAL_DGR', showDropDown: true},
@@ -284,6 +290,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             type: 'check-group',
                             templateOptions: {
                                 label: 'FRG_40',
+                                required: true,
                                 descLabel: 'DFR_40.2',
                                 code: 'KV_FKMU_0004',
                                 choices: ['EJ_AKTUELLT',
@@ -339,7 +346,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 });
                                 return hide;
                             },
-                            templateOptions: {label: 'FRG_44'}
+                            templateOptions: {label: 'FRG_44', required: true}
                         }
                     ]
                 },
