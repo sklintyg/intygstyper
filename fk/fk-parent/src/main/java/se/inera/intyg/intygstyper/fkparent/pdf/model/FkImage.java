@@ -47,6 +47,7 @@ public class FkImage extends PdfComponent<FkImage> {
         this.imageData = imageData;
     }
 
+    @Override
     public void render(Document document, PdfWriter writer, float x, float y) throws DocumentException {
         Image fkLogo = null;
         try {

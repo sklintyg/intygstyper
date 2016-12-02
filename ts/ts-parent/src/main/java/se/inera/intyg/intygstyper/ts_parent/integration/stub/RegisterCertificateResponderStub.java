@@ -44,6 +44,7 @@ import javax.xml.ws.Provider;
 import javax.xml.ws.ServiceMode;
 import javax.xml.ws.WebServiceProvider;
 
+import com.google.common.base.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +139,7 @@ public final class RegisterCertificateResponderStub implements Provider<SOAPMess
                 Transformer transformer = factory.newTransformer();
                 transformer.transform(source, streamResult);
                 String xml = stringWriter.getBuffer().toString();
-                InputStream is = new ByteArrayInputStream(xml.getBytes());
+                InputStream is = new ByteArrayInputStream(xml.getBytes(Charsets.UTF_8));
 
                 RegisterCertificateType registerCertificateType = JAXB.unmarshal(is, RegisterCertificateType.class);
                 registerCertificate(registerCertificateType);

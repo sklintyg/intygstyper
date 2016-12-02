@@ -25,6 +25,7 @@ import se.inera.intyg.intygstyper.luae_fs.model.internal.LuaefsUtlatande;
 
 public class LuaefsModelCompareUtil extends FkParentModelCompareUtil implements ModelCompareUtil<LuaefsUtlatande> {
 
+    @Override
     public boolean isValidForNotification(LuaefsUtlatande utlatande) {
         return diagnosesAreValid(utlatande)
                 && datesAreValid(utlatande.getAnnatGrundForMU(), utlatande.getJournaluppgifter(), utlatande.getAnhorigsBeskrivningAvPatienten(),
