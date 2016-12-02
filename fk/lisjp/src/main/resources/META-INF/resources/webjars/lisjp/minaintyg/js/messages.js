@@ -34,9 +34,6 @@ angular.module('lisjp').constant('lisjp.messages', {
         'lisjp.button.send.certificate': 'Skicka',
         'lisjp.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
 
-        // LISJP
-        'lisjp.label.certtitle': 'Läkarintyg för sjukpenning',
-
         // Labels
         'lisjp.label.pagetitle': 'Granska och skicka intyg',
         'lisjp.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',

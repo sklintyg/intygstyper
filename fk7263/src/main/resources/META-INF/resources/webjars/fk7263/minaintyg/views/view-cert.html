@@ -18,10 +18,6 @@
           <div uib-collapse="!isCollapsed1" class="collapse mi-text">
             <div message key="fk7263.label.pagedescription.sendcertificate.header"></div>
 			      <div message key="fk7263.label.pagedescription.sendcertificate"></div>
-	          <!--
-	          <div message key="fk7263.label.pagedescription.certificate.to.employer.header"></div>
-	          <div message key="fk7263.label.pagedescription.certificate.to.employer"></div>
-	           -->
 			      <div message key="fk7263.label.pagedescription.save.or.print.certificate.header"></div>
 	          <div message key="fk7263.label.pagedescription.save.or.print.certificate"></div>
 	          <a class="glyphicon glyphicon-question-sign more-info" ng-click="isCollapsedPDF = !isCollapsedPDF" title="{{messageService.getProperty('common.title.helptext.moreinfo')}}"></a>
@@ -106,7 +102,7 @@
               <div class="row">
                 <div class="col-xs-6 col-sm-7 col-md-8 col-lg-8">
                   <h2 class="cert-title">
-                    <span message key="fk7263.label.certtitle"></span>
+                    <span>{{moduleService.getModuleName(cert.typ)}}</span>
                   </h2>
                 </div>
                 <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 issue">

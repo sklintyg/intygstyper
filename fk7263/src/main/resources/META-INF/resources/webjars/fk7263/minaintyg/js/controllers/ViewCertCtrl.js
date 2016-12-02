@@ -19,25 +19,26 @@
 
 angular.module('fk7263').controller('fk7263.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
-        'common.IntygService', 'common.dialogService', 'common.messageService', 'fk7263.ViewStateService',
+        'common.IntygService', 'common.dialogService', 'common.messageService', 'common.moduleService', 'fk7263.ViewStateService',
         function($location, $log, $rootScope, $stateParams, $scope, IntygListService,
-            IntygService, dialogService, messageService, ViewState) {
+            IntygService, dialogService, messageService, moduleService, ViewState) {
             'use strict';
-
-            ViewState.reset();
-            ViewState.cert = {};
 
             $rootScope.cert = {};
 
+            ViewState.reset();
+            ViewState.cert = {};
             $scope.viewState = ViewState;
+
             $scope.messageService = messageService;
+            $scope.moduleService = moduleService;
+
             $scope.doneLoading = false;
             $scope.visibleStatuses = [ 'SENT' ];
             $scope.dialog = {
                 acceptprogressdone: true,
                 focus: false
             };
-
 
             // Navigation
 

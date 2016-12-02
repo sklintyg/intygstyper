@@ -20,9 +20,6 @@
 /* jshint maxlen: false */
 angular.module('ts-bas').constant('ts-bas.messages', {
     'sv': {
-        // TS-BAS
-        'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
-
         // Labels
         'ts-bas.label.intygavser': 'Avser behörighet för körkort',
         'ts-bas.label.identitet': 'Identiteten är styrkt genom',

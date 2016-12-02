@@ -17,7 +17,7 @@
       <p message key="ts-diabetes.confirm.label.summarypagedesc"></p>
       <div class="well cert-summary">
         <span>{{cert.grundData.skickatdatum | date:'longDate'}}</span>
-        <span message key="ts-diabetes.label.certtitle"></span>
+        <span>{{moduleService.getModuleName(cert.type)}}</span>
         <span>{{cert.giltighet.from | date:'longDate'}}&ndash;{{cert.giltighet.tom | date:'longDate'}}</span>
         <span>{{cert.vardenhet.namn}}</span>
       </div>

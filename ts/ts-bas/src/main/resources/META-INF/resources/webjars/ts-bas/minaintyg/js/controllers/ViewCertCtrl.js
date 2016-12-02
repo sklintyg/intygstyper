@@ -19,13 +19,15 @@
 
 angular.module('ts-bas').controller('ts-bas.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
-        'common.IntygService', 'common.dialogService',
+        'common.IntygService', 'common.dialogService', 'common.moduleService',
         function($location, $log, $rootScope, $stateParams, $scope, IntygListService, IntygService,
-            dialogService) {
+            dialogService, moduleService) {
             'use strict';
 
             $scope.cert = {};
             $rootScope.cert = {};
+
+            $scope.moduleService = moduleService;
 
             $scope.doneLoading = false;
             $scope.shouldBeOpen = false;

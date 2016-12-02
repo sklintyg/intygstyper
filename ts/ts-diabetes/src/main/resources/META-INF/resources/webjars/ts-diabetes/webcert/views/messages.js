@@ -20,8 +20,6 @@
 /* jshint maxlen: false */
 angular.module('ts-diabetes').constant('ts-diabetes.messages', {
     'sv': {
-        'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg, diabetes',
-
         'ts-diabetes.form.postadress': 'Postadress',
         'ts-diabetes.form.postnummer': 'Postnummer',
         'ts-diabetes.form.postort': 'Postort',

@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
-    ['$window', '$location', '$log', '$stateParams', '$scope','common.dialogService', 'common.IntygService', 'common.messageService', 'fk7263.ViewStateService',
-        function($window, $location, $log, $stateParams, $scope, dialogService, IntygService, messageService, ViewState) {
+    ['$window', '$location', '$log', '$stateParams', '$scope','common.dialogService', 'common.IntygService', 'common.messageService', 'common.moduleService', 'fk7263.ViewStateService',
+        function($window, $location, $log, $stateParams, $scope, dialogService, IntygService, messageService, moduleService, ViewState) {
             'use strict';
 
             // Setup default checkbox model in case of refresh
@@ -52,6 +52,7 @@ angular.module('fk7263').controller('fk7263.CustomizeCertSummaryCtrl',
             $scope.doneLoading = false;
             $scope.downloadSuccess = false;
             $scope.messageService = messageService;
+            $scope.moduleService = moduleService;
             $scope.viewState = ViewState;
             $scope.visibleStatuses = [ 'SENT' ];
 

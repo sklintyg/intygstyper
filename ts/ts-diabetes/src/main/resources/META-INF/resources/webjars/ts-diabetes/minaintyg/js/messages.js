@@ -20,9 +20,6 @@
 /* jshint maxlen: false */
 angular.module('ts-diabetes').constant('ts-diabetes.messages', {
     'sv': {
-        // TS-DAIBETES
-        'ts-diabetes.label.certtitle': 'Transportstyrelsens läkarintyg - Diabetes',
-
         // Labels
         'ts-diabetes.label.intygavser': 'Avser lämplighet för körkort',
         'ts-diabetes.label.identitet': 'Identiteten är styrkt genom',

@@ -1,14 +1,15 @@
 angular.module('luae_na').controller('luae_na.ViewCertCtrl',
     [ '$location', '$log', '$rootScope', '$stateParams', '$scope', 'common.IntygListService',
-        'common.IntygService', 'common.dialogService', 'common.messageService',
+        'common.IntygService', 'common.dialogService', 'common.messageService', 'common.moduleService',
         function($location, $log, $rootScope, $stateParams, $scope, listCertService, certificateService, dialogService,
-            messageService) {
+            messageService, moduleService) {
             'use strict';
 
             $scope.cert = {};
             $rootScope.cert = {};
 
             $scope.messageService = messageService;
+            $scope.moduleService = moduleService;
 
             $scope.doneLoading = false;
 
