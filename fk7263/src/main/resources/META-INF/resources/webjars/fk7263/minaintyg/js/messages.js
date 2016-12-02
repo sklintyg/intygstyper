@@ -20,9 +20,6 @@
 /* jshint maxlen: false */
 angular.module('fk7263').constant('fk7263.messages', {
     'sv': {
-        // FK 7263
-        'fk7263.label.certtitle': 'Läkarintyg FK 7263',
-
         // Labels
         'fk7263.label.pagetitle': 'Granska och skicka intyg',
         'fk7263.label.pageingress': 'Här visas hela ditt läkarintyg. Från den här sidan kan du skicka intyget elektroniskt till Försäkringskassan, du kan även skriva ut och spara intyget.<br>',

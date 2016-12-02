@@ -20,8 +20,6 @@
 /* jshint maxlen: false */
 angular.module('fk7263').constant('fk7263.messages', {
     'sv': {
-        'fk7263.label.certtitle': 'Läkarintyg FK 7263',
-
         // fragaSvar errors
         'fk7263.error.external_system_problem': '<strong>Meddelandet har inte skickats till Försäkringskassan då Webcert saknar kontakt med Försäkringskassans datasystem.</strong><br>Prova att skicka om meddelandet. Om problemet kvarstår, kontakta i första hand din lokala IT-avdelning och i andra hand Nationell kundservice på 0771-251010.',
         'fk7263.error.internal_problem': '<strong>Ett tekniskt problem inträffade.</strong><br>Försök igen och kontakta supporten om problemet kvarstår.',

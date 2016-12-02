@@ -20,8 +20,6 @@
 /* jshint maxlen: false */
 angular.module('ts-bas').constant('ts-bas.messages', {
     'sv': {
-        'ts-bas.label.certtitle': 'Transportstyrelsens läkarintyg',
-
         'ts-bas.label.patient': 'Patientens adressuppgifter',
         'ts-bas.label.patientadress': 'Patientens adressuppgifter',
         'ts-bas.label.intygavser': 'Intyget avser',

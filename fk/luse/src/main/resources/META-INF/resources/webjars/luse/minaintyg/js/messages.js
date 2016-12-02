@@ -40,9 +40,6 @@ angular.module('luse').constant('luse.messages', {
         'luse.button.send.certificate': 'Skicka',
         'luse.button.send.certificate.title': 'Skicka detta intyg till en eller flera mottagare.',
 
-        // LUSE
-        'luse.label.certtitle': 'Läkarutlåtande för sjukersättning',
-
         // Labels
         'luse.label.latestevent': 'Senaste händelse',
         'luse.label.latestevent.noevents': 'Inga händelser',

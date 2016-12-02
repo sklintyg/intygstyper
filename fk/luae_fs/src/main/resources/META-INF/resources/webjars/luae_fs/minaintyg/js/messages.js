@@ -45,9 +45,6 @@ angular.module('luae_fs').constant('luae_fs.messages', {
 
         'luae_fs.helptext.readpdfhelp': '<b>Läsa en pdf-fil</b><br/>PDF är ett filformat som används för att ett dokument ska se likadant ut i olika datorer. För att kunna öppna pdf-filer behöver du en pdf-läsare exempelvis. <a href="http://get.adobe.com/se/reader/" target="_blank">Adobe Reader</a>.',
 
-        // LUAE_FS
-        'luae_fs.label.certtitle': 'Läkarutlåtande för aktivitetsersättning vid förlängd skolgång',
-
         // Labels
         'luae_fs.label.latestevent': 'Senaste händelse',
         'luae_fs.label.latestevent.noevents': 'Inga händelser',
