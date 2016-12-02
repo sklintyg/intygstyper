@@ -44,6 +44,7 @@ import se.inera.ifv.insuranceprocess.healthreporting.v2.ResultCodeEnum;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.common.internal.Utlatande;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
@@ -128,6 +129,11 @@ public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleAp
     @Override
     public String updateBeforeSave(String internalModel, HoSPersonal hosPerson) throws ModuleException {
         return updateInternal(internalModel, hosPerson, null);
+    }
+
+    @Override
+    public String updateBeforeSave(String internalModel, Patient patient) throws ModuleException {
+        return updateInternal(internalModel, patient);
     }
 
     @Override
@@ -272,6 +278,16 @@ public abstract class TsParentModuleApi<T extends Utlatande> implements ModuleAp
             throws ModuleException {
         T utlatande = getInternal(internalModel);
         WebcertModelFactoryUtil.updateSkapadAv(utlatande, hosPerson, signingDate);
+        return toInternalModelResponse(utlatande);
+    }
+
+    private String updateInternal(String internalModel, Patient patient) throws ModuleException {
+        T utlatande = getInternal(internalModel);
+        try {
+            WebcertModelFactoryUtil.populateWithPatientInfo(utlatande.getGrundData(), patient);
+        } catch (ConverterException e) {
+            throw new ModuleException("Failed to update internal model with patient", e);
+        }
         return toInternalModelResponse(utlatande);
     }
 }

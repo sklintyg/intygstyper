@@ -56,6 +56,7 @@ import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.common.enumerations.PartKod;
 import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
+import se.inera.intyg.common.support.model.common.internal.Patient;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
 import se.inera.intyg.common.support.modules.converter.TransportConverterUtil;
@@ -270,6 +271,11 @@ public class Fk7263ModuleApi implements ModuleApi {
     }
 
     @Override
+    public String updateBeforeSave(String internalModel, Patient patient) throws ModuleException {
+        return updateInternal(internalModel, patient);
+    }
+
+    @Override
     public String updateBeforeSigning(String internalModel, HoSPersonal hosPerson, LocalDateTime signingDate)
             throws ModuleException {
         return updateInternal(internalModel, hosPerson, signingDate);
@@ -464,7 +470,18 @@ public class Fk7263ModuleApi implements ModuleApi {
             WebcertModelFactoryUtil.updateSkapadAv(intyg, hosPerson, signingDate);
             return toInteralModelResponse(intyg);
         } catch (ModuleException e) {
-            throw new ModuleException("Error while updating internal model", e);
+            throw new ModuleException("Error while updating internal model skapadAv", e);
+        }
+    }
+
+    private String updateInternal(String internalModel, Patient patient)
+            throws ModuleException {
+        try {
+            Utlatande intyg = getInternal(internalModel);
+            WebcertModelFactoryUtil.populateWithPatientInfo(intyg.getGrundData(), patient);
+            return toInteralModelResponse(intyg);
+        } catch (ModuleException | ConverterException e) {
+            throw new ModuleException("Error while updating internal model with patient", e);
         }
     }
 

@@ -386,6 +386,24 @@ public class FkParentModuleApiTest {
     }
 
     @Test
+    public void testUpdatePatientBeforeSave() throws Exception {
+
+        Patient patient = new Patient();
+        patient.setEfternamn("updated lastName");
+        patient.setMellannamn("updated middle-name");
+        patient.setFornamn("updated firstName");
+        patient.setFullstandigtNamn("updated full name");
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        patient.setPostadress("updated postal address");
+        patient.setPostnummer("1111111");
+        patient.setPostort("updated post city");
+
+        String res = moduleApi.updateBeforeSave(json, patient);
+        assertNotNull(res);
+        assertEquals(patient, moduleApi.getInternal(res).getGrundData().getPatient());
+    }
+
+    @Test
     public void testUpdateBeforeSigning() throws Exception {
         final String otherHosPersonalName = "Other Person";
         final LocalDateTime signDate = LocalDateTime.now();

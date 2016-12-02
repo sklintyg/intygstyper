@@ -114,6 +114,24 @@ public class Fk7263ModuleApiTest {
         assertEquals(vardenhet.getEnhetsnamn(), updatedIntyg.getGrundData().getSkapadAv().getVardenhet()
                 .getEnhetsnamn());
     }
+    @Test
+    public void updatePatientBeforeSave() throws IOException, ModuleException {
+        Utlatande utlatande = getUtlatandeFromFile();
+
+        Patient patient = new Patient();
+        patient.setEfternamn("updated lastName");
+        patient.setMellannamn("updated middle-name");
+        patient.setFornamn("updated firstName");
+        patient.setFullstandigtNamn("updated full name");
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        patient.setPostadress("updated postal address");
+        patient.setPostnummer("1111111");
+        patient.setPostort("updated post city");
+
+        String res = fk7263ModuleApi.updateBeforeSave(toJsonString(utlatande), patient);
+        assertNotNull(res);
+        assertEquals(patient, fk7263ModuleApi.getUtlatandeFromJson(res).getGrundData().getPatient());
+    }
 
     @Test
     public void copyContainsOriginalData() throws IOException, ModuleException {
