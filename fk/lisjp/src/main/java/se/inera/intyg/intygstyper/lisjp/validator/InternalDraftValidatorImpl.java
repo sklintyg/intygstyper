@@ -116,6 +116,13 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
             ValidatorUtilFK.validateGrundForMuDate(utlatande.getAnnatGrundForMU(), validationMessages, ValidatorUtilFK.GrundForMu.ANNAT);
         }
 
+        // INTYG-3310
+        if (utlatande.getUndersokningAvPatienten() == null && (utlatande.getJournaluppgifter() != null
+                || utlatande.getTelefonkontaktMedPatienten() != null || utlatande.getAnnatGrundForMU() != null)
+                && StringUtils.isBlank(utlatande.getMotiveringTillInteBaseratPaUndersokning())) {
+            ValidatorUtil.addValidationError(validationMessages, "grundformu.motiveringTillInteBaseratPaUndersokning", ValidationMessageType.EMPTY);
+        }
+
         // R2
         if (utlatande.getAnnatGrundForMU() != null && StringUtils.isBlank(utlatande.getAnnatGrundForMUBeskrivning())) {
             ValidatorUtil.addValidationError(validationMessages, "grundformu.annatGrundForMUBeskrivning", ValidationMessageType.EMPTY);

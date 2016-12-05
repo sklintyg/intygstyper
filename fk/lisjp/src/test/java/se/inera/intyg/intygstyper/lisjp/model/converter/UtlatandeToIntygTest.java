@@ -134,6 +134,15 @@ public class UtlatandeToIntygTest {
     }
 
     @Test
+    public void testConvertWithConcatToOvrigt() {
+        LisjpUtlatande utlatande = buildUtlatande().toBuilder().setMotiveringTillInteBaseratPaUndersokning("Motivering!").build();
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(intyg.getSvar().size() == 1);
+        assertEquals("Motivering till varför utlåtandet inte baseras på undersökning av patienten: Motivering!",
+                intyg.getSvar().get(0).getDelsvar().get(0).getContent().get(0));
+    }
+
+    @Test
     public void testConvertDoesNotAddSvarForSysselsattningWithoutType() {
         Sysselsattning sysselsattning = Sysselsattning.create(null);
         LisjpUtlatande utlatande = buildUtlatande().toBuilder().setSysselsattning(Arrays.asList(sysselsattning)).build();

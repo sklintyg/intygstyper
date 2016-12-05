@@ -78,6 +78,7 @@ angular.module('lisjp').factory('lisjp.Domain.IntygModel',
                         'journaluppgifter': undefined,
                         'annatGrundForMU': undefined,
                         'annatGrundForMUBeskrivning': undefined,
+                        'motiveringTillInteBaseratPaUndersokning':undefined,
 
                         // Kategori 2 sysselsättning
                         'sysselsattning': new ModelAttr('sysselsattning', {

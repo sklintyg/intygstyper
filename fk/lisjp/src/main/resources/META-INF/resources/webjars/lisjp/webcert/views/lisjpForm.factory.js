@@ -85,6 +85,20 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 kompletteringKey: 'annatGrundForMU',
                                 required: true
                             }
+                        }, {
+                            key: 'motiveringTillInteBaseratPaUndersokning',
+                            type: 'multi-text',
+                            className: 'fold-animation',
+                            hideExpression: 'model.undersokningAvPatienten || !(model.telefonkontaktMedPatienten || model.journaluppgifter || model.annatGrundForMU)',
+                            templateOptions: {
+                                bold: 'bold',
+                                forceHeadingTypeLabel: true,
+                                staticLabelId: 'smi.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
+                                subTextId: 'smi.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info',
+                                subTextDynId: 'FRG_25',
+                                hideFromSigned: true,
+                                required: true
+                            }
                         }
                     ]
                 },

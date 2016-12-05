@@ -77,6 +77,9 @@ public abstract class LisjpUtlatande implements Utlatande, SitUtlatande {
     @Nullable
     public abstract String getAnnatGrundForMUBeskrivning();
 
+    @Nullable
+    public abstract String getMotiveringTillInteBaseratPaUndersokning();
+
     // Kategori 2 - Sysselsättning
     // Fråga 28
     // Fråga 28.1
@@ -220,6 +223,9 @@ public abstract class LisjpUtlatande implements Utlatande, SitUtlatande {
 
         @JsonProperty(GRUNDFORMEDICINSKTUNDERLAG_BESKRIVNING_DELSVAR_JSON_ID_1)
         public abstract Builder setAnnatGrundForMUBeskrivning(String annatGrundForMUBeskrivning);
+
+        @JsonProperty(MOTIVERING_TILL_INTE_BASERAT_PA_UNDERLAG_ID_1)
+        public abstract Builder setMotiveringTillInteBaseratPaUndersokning(String motiveringTillInteBaseratPaUndersokning);
 
         @JsonProperty(TYP_AV_SYSSELSATTNING_SVAR_JSON_ID_28)
         public Builder setSysselsattning(List<Sysselsattning> sysselsattning) {

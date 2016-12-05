@@ -79,8 +79,8 @@ angular.module('luse').factory('luse.FormFactory', [
                         templateOptions: {
                             bold: 'bold',
                             forceHeadingTypeLabel: true,
-                            staticLabelId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
-                            subTextId: 'luse.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info',
+                            staticLabelId: 'smi.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning',
+                            subTextId: 'smi.label.grund-for-mu.motivering_utlatande_baseras_inte_pa_undersokning.info',
                             subTextDynId: 'FRG_25',
                             hideFromSigned: true,
                             required: true

@@ -26,6 +26,8 @@ import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -140,7 +142,8 @@ public final class UtlatandeToIntyg {
 
         addIfNotBlank(svars, ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_SVAR_ID_44, ARBETSLIVSINRIKTADE_ATGARDER_BESKRIVNING_DELSVAR_ID_44, source.getArbetslivsinriktadeAtgarderBeskrivning());
 
-        addIfNotBlank(svars, OVRIGT_SVAR_ID_25, OVRIGT_DELSVAR_ID_25, source.getOvrigt());
+        addIfNotBlank(svars, OVRIGT_SVAR_ID_25, OVRIGT_DELSVAR_ID_25, buildOvrigaUpplysningar(source));
+
 
         if (source.getKontaktMedFk() != null) {
             if (source.getKontaktMedFk() && !StringUtils.isBlank(source.getAnledningTillKontakt())) {
@@ -186,6 +189,24 @@ public final class UtlatandeToIntyg {
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_DATUM_DELSVAR_ID_1, source.getAnnatGrundForMU().asLocalDate().toString())
                     .withDelsvar(GRUNDFORMEDICINSKTUNDERLAG_ANNANBESKRIVNING_DELSVAR_ID_1, source.getAnnatGrundForMUBeskrivning()).build());
         }
+    }
+
+    private static String buildOvrigaUpplysningar(LisjpUtlatande source) {
+        String motiveringTillInteBaseratPaUndersokning = null;
+        String ovrigt = null;
+
+        // Since INTYG-2949, we have to concatenate information in the Övrigt-fält again...
+        if (!StringUtils.isBlank(source.getMotiveringTillInteBaseratPaUndersokning())) {
+            motiveringTillInteBaseratPaUndersokning = "Motivering till varför utlåtandet inte baseras på undersökning av patienten: "
+                    + source.getMotiveringTillInteBaseratPaUndersokning();
+        }
+
+        if (!StringUtils.isBlank(source.getOvrigt())) {
+            ovrigt = source.getOvrigt();
+        }
+
+        String ret = StringUtils.join(Stream.of(motiveringTillInteBaseratPaUndersokning, ovrigt).filter(Objects::nonNull).toArray(), "\n");
+        return !StringUtils.isBlank(ret) ? ret : null;
     }
 
 }

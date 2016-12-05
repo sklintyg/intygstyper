@@ -70,9 +70,9 @@
       <instans>1</instans>
       <delsvar id="1.1">
         <ns3:cv>
-          <ns3:code>TELEFONKONTAKT</ns3:code>
+          <ns3:code>UNDERSOKNING</ns3:code>
           <ns3:codeSystem>KV_FKMU_0001</ns3:codeSystem>
-          <ns3:displayName>Min telefonkontakt med patienten</ns3:displayName>
+          <ns3:displayName>Min undersökning av patienten</ns3:displayName>
         </ns3:cv>
       </delsvar>
       <delsvar id="1.2">2015-12-08</delsvar>
