@@ -26,8 +26,6 @@ import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 import com.google.common.base.Joiner;
 import org.apache.commons.lang3.StringUtils;

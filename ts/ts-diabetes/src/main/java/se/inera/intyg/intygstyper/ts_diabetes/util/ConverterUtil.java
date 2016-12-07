@@ -20,7 +20,6 @@
 package se.inera.intyg.intygstyper.ts_diabetes.util;
 
 import com.google.common.base.Joiner;
-import org.apache.commons.lang3.StringUtils;
 
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;

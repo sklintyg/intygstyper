@@ -29,8 +29,6 @@ import com.google.common.base.Joiner;
 
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
-import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
-import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
 import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Rehabilitering;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
@@ -97,7 +95,7 @@ public final class UtlatandeToIntyg {
     }
 
     public static Intyg convert(Utlatande source) {
-        Intyg intyg = InternalConverterUtil.getIntyg(source);
+        Intyg intyg = getIntyg(source);
         intyg.setTyp(getTypAvIntyg(source));
         intyg.getSvar().addAll(getSvar(source));
         return intyg;
