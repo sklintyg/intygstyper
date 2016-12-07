@@ -23,10 +23,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import com.google.common.base.Joiner;
+
+import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.intyg.intygstyper.ts_bas.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSBasIntyg;
 
@@ -40,9 +43,7 @@ public class TransportValidatorTest {
             TSBasIntyg utlatande = scenario.asTransportModel().getIntyg();
             List<String> validationResponse = validator.validate(utlatande);
 
-            assertTrue(
-                    "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse, ", "), validationResponse.isEmpty());
+            assertTrue("Error in scenario " + scenario.getName() + "\n" + Joiner.on(", ").join(validationResponse), validationResponse.isEmpty());
         }
     }
 

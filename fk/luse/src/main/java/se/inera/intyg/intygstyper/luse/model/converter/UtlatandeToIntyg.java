@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import com.google.common.base.Joiner;
 import org.apache.commons.lang3.StringUtils;
 
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
@@ -187,7 +188,7 @@ public final class UtlatandeToIntyg {
             ovrigt = source.getOvrigt();
         }
 
-        String ret = StringUtils.join(Stream.of(motiveringTillInteBaseratPaUndersokning, ovrigt).filter(Objects::nonNull).toArray(), "\n");
+        String ret = Joiner.on("\n").skipNulls().join(motiveringTillInteBaseratPaUndersokning, ovrigt);
         return !StringUtils.isBlank(ret) ? ret : null;
     }
 }

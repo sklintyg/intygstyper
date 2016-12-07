@@ -23,14 +23,17 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.base.Joiner;
 
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidationStatus;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
-import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intyg.intygstyper.ts_bas.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_bas.utils.ScenarioNotFoundException;
 import se.inera.intyg.intygstyper.ts_bas.validator.TsBasValidator;
 
 public class InternalValidatorTest {
@@ -50,12 +53,12 @@ public class InternalValidatorTest {
 
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse.getValidationErrors(), ", "),
+                            + Joiner.on(", ").join(validationResponse.getValidationErrors()),
                     ValidationStatus.VALID, validationResponse.getStatus());
 
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse.getValidationErrors(), ", "), validationResponse
+                            + Joiner.on(", ").join(validationResponse.getValidationErrors()), validationResponse
                             .getValidationErrors().isEmpty());
 
         }

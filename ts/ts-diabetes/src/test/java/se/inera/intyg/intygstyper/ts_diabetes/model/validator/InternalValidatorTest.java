@@ -24,9 +24,10 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.util.Collection;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.common.base.Joiner;
 
 import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
@@ -54,13 +55,13 @@ public class InternalValidatorTest {
 
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse.getValidationErrors(), ", "),
+                            + Joiner.on(", ").join(validationResponse.getValidationErrors()),
                     ValidationStatus.VALID,
                     validationResponse.getStatus());
 
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse.getValidationErrors(), ", "),
+                            + Joiner.on(", ").join(validationResponse.getValidationErrors()),
                     validationResponse
                             .getValidationErrors().isEmpty());
 

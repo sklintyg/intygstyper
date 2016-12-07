@@ -26,7 +26,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +34,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.google.common.base.Joiner;
 
 import se.inera.intyg.common.support.modules.service.WebcertModuleService;
 import se.inera.intyg.common.support.modules.support.api.dto.ValidateDraftResponse;
@@ -64,12 +65,12 @@ public class InternalDraftValidatorTest {
             ValidateDraftResponse validationResponse = validator.validateDraft(utlatande);
             assertEquals(
                     "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse.getValidationErrors(), ", "),
+                            + Joiner.on(", ").join(validationResponse.getValidationErrors()),
                     ValidationStatus.VALID, validationResponse.getStatus());
 
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse.getValidationErrors(), ", "), validationResponse
+                            + Joiner.on(", ").join(validationResponse.getValidationErrors()), validationResponse
                             .getValidationErrors().isEmpty());
 
         }

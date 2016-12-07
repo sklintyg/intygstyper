@@ -24,9 +24,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
+
+import com.google.common.base.Joiner;
 
 import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.model.common.internal.HoSPersonal;
@@ -74,7 +75,7 @@ public final class InternalToTransportUtil {
         Patient patient = new Patient();
         patient.setEfternamn(source.getEfternamn());
         patient.setFornamn(source.getFornamn());
-        patient.setFullstandigtNamn(StringUtils.join(ArrayUtils.toArray(source.getFornamn(), source.getEfternamn()), " "));
+        patient.setFullstandigtNamn(Joiner.on(' ').skipNulls().join(source.getFornamn(), source.getEfternamn()));
         patient.setPersonId(buildII(source.getPersonId().isSamordningsNummer() ? Constants.SAMORDNING_ID_OID : Constants.PERSON_ID_OID,
                 source.getPersonId().getPersonnummer()));
         patient.setPostadress(source.getPostadress());

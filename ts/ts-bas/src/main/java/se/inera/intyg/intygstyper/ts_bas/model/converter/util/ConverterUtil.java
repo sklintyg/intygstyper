@@ -19,7 +19,7 @@
 
 package se.inera.intyg.intygstyper.ts_bas.model.converter.util;
 
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Joiner;
 
 import se.inera.intyg.common.support.modules.support.api.CertificateHolder;
 import se.inera.intyg.common.support.modules.support.api.exception.ModuleException;
@@ -41,7 +41,7 @@ public final class ConverterUtil {
         certificateHolder.setCivicRegistrationNumber(utlatande.getGrundData().getPatient().getPersonId());
         certificateHolder.setSignedDate(utlatande.getGrundData().getSigneringsdatum());
         certificateHolder.setType(TsBasEntryPoint.MODULE_ID);
-        certificateHolder.setAdditionalInfo(StringUtils.join(utlatande.getIntygAvser().getKorkortstyp(), ", "));
+        certificateHolder.setAdditionalInfo(Joiner.on(", ").join(utlatande.getIntygAvser().getKorkortstyp()));
         return certificateHolder;
     }
 

@@ -23,10 +23,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
+import com.google.common.base.Joiner;
+
+import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioNotFoundException;
 import se.inera.intyg.intygstyper.ts_diabetes.validator.transport.TransportValidatorInstance;
 import se.inera.intygstjanster.ts.services.v1.TSDiabetesIntyg;
 
@@ -42,7 +45,7 @@ public class TransportValidatorTest {
 
             assertTrue(
                     "Error in scenario " + scenario.getName() + "\n"
-                            + StringUtils.join(validationResponse, ", "), validationResponse.isEmpty());
+                            + Joiner.on(", ").join(validationResponse), validationResponse.isEmpty());
         }
     }
 

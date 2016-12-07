@@ -20,22 +20,20 @@
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
 import static se.inera.intyg.common.support.Constants.KV_UTLATANDETYP_INTYG_CODE_SYSTEM;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aDatePeriod;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aSvar;
-import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.addIfNotBlank;
+import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Joiner;
+
 import se.inera.intyg.common.support.common.enumerations.Diagnoskodverk;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
-import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.SvarBuilder;
-import se.inera.intyg.intygstyper.fk7263.model.internal.*;
+import se.inera.intyg.common.support.modules.converter.InternalConverterUtil.*;
+import se.inera.intyg.intygstyper.fk7263.model.internal.PrognosBedomning;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Rehabilitering;
+import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
@@ -248,7 +246,7 @@ public final class UtlatandeToIntyg {
         if (!isNullOrEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = StringUtils.join(Arrays.asList(annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar).stream().filter(Objects::nonNull).toArray(), ". ");
+        String ret = Joiner.on(". ").skipNulls().join(annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar);
         return !isNullOrEmpty(ret) ? ret : null;
     }
 

@@ -26,15 +26,18 @@ import static se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.Joiner;
 
 import se.inera.intyg.common.support.modules.converter.InternalConverterUtil;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RespConstants;
 import se.inera.intyg.intygstyper.fkparent.model.internal.Tillaggsfraga;
-import se.inera.intyg.intygstyper.lisjp.model.internal.*;
+import se.inera.intyg.intygstyper.lisjp.model.internal.ArbetslivsinriktadeAtgarder;
+import se.inera.intyg.intygstyper.lisjp.model.internal.LisjpUtlatande;
+import se.inera.intyg.intygstyper.lisjp.model.internal.Sjukskrivning;
+import se.inera.intyg.intygstyper.lisjp.model.internal.Sysselsattning;
 import se.inera.intyg.intygstyper.lisjp.support.LisjpEntryPoint;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.TypAvIntyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
@@ -205,7 +208,7 @@ public final class UtlatandeToIntyg {
             ovrigt = source.getOvrigt();
         }
 
-        String ret = StringUtils.join(Stream.of(motiveringTillInteBaseratPaUndersokning, ovrigt).filter(Objects::nonNull).toArray(), "\n");
+        String ret = Joiner.on("\n").skipNulls().join(motiveringTillInteBaseratPaUndersokning, ovrigt);
         return !StringUtils.isBlank(ret) ? ret : null;
     }
 

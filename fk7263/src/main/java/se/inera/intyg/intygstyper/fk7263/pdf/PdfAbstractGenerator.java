@@ -27,11 +27,17 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.itextpdf.text.*;
+import com.google.common.base.Joiner;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.*;
 
 import se.inera.intyg.common.support.common.enumerations.PartKod;
-import se.inera.intyg.common.support.model.*;
+import se.inera.intyg.common.support.model.CertificateState;
+import se.inera.intyg.common.support.model.InternalLocalDateInterval;
+import se.inera.intyg.common.support.model.Status;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 
@@ -507,7 +513,7 @@ public abstract class PdfAbstractGenerator {
         nedsattningDescription.add(intyg.getNedsattMed75Beskrivning());
         nedsattningDescription.removeIf(s -> s == null || s.length() == 0);
         if (!nedsattningDescription.isEmpty()) {
-            parts.add("8b: " + StringUtils.join(nedsattningDescription, ". "));
+            parts.add("8b: " + Joiner.on(". ").join(nedsattningDescription));
         }
 
         if (isValidString(intyg.getArbetsformagaPrognosGarInteAttBedomaBeskrivning())) {
@@ -518,7 +524,7 @@ public abstract class PdfAbstractGenerator {
             parts.add(intyg.getKommentar());
         }
 
-        return StringUtils.trimToNull(StringUtils.join(parts, ". "));
+        return StringUtils.trimToNull(Joiner.on(". ").join(parts));
     }
 
     private String buildOtherDiagnoses() {
@@ -539,7 +545,7 @@ public abstract class PdfAbstractGenerator {
         if (intyg.getSamsjuklighet() != null && intyg.getSamsjuklighet()) {
             parts.add("Samsjuklighet föreligger");
         }
-        return StringUtils.trimToNull(StringUtils.join(parts, ", "));
+        return StringUtils.trimToNull(Joiner.on(", ").join(parts));
     }
 
     private boolean isValidString(String string) {

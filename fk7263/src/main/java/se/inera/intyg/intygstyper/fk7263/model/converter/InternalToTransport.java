@@ -19,12 +19,16 @@
 
 package se.inera.intyg.intygstyper.fk7263.model.converter;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.Joiner;
 
 import iso.v21090.dt.v1.CD;
 import iso.v21090.dt.v1.II;
@@ -43,9 +47,6 @@ import se.inera.intyg.common.support.model.common.internal.Vardgivare;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.fk7263.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.fk7263.support.Fk7263EntryPoint;
-
-import static org.apache.commons.lang3.StringUtils.isEmpty;
-import static org.apache.commons.lang3.StringUtils.join;
 
 public final class InternalToTransport {
 
@@ -117,7 +118,7 @@ public final class InternalToTransport {
             parts.add(source.getDiagnosBeskrivning());
         }
         if (!parts.isEmpty()) {
-            tillstand.setBeskrivning(join(parts, ". "));
+            tillstand.setBeskrivning(Joiner.on(". ").join(parts));
         } else {
             tillstand.setBeskrivning(null);
         }
@@ -134,7 +135,7 @@ public final class InternalToTransport {
         if (!isEmpty(source.getDiagnosKod3()) && !isEmpty(source.getDiagnosBeskrivning3())) {
             diagnos2 = source.getDiagnosKod3() + " " + source.getDiagnosBeskrivning3();
         }
-        return join(Stream.of(diagnos1, diagnos2).map(StringUtils::trimToNull).filter(Objects::nonNull).toArray(), ". ");
+        return Joiner.on(". ").skipNulls().join(Stream.of(diagnos1, diagnos2).map(StringUtils::trimToNull).toArray());
     }
 
     private static String buildKommentar(Utlatande source) {
@@ -159,7 +160,7 @@ public final class InternalToTransport {
         if (!isEmpty(source.getKommentar())) {
             ovrigKommentar = source.getKommentar();
         }
-        String ret = join(Stream.of(annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar).filter(Objects::nonNull).toArray(), ". ");
+        String ret = Joiner.on(". ").skipNulls().join(annanRef, arbetstidsforlaggning, prognosBedomning, ovrigKommentar);
         return !isEmpty(ret) ? ret : null;
     }
 
@@ -174,7 +175,7 @@ public final class InternalToTransport {
         if (!isEmpty(source.getNedsattMed75Beskrivning())) {
             parts.add(source.getNedsattMed75Beskrivning());
         }
-        return join(parts, ". ");
+        return Joiner.on(". ").join(parts);
     }
 
     private static FunktionstillstandType toFunktionstillstand(String source, TypAvFunktionstillstand tillstand) {
