@@ -1,11 +1,11 @@
 angular.module('lisjp').controller('lisjp.EditCertCtrl',
-    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
+    ['$rootScope', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'lisjp.Domain.IntygModel', 'lisjp.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'lisjp.FormFactory', 'common.fmbService', 'common.fmbViewState',
+        'lisjp.FormFactory', 'common.fmbService', 'common.fmbViewState',
 
-        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory,
+        function($rootScope, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
+            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, formFactory,
             fmbService, fmbViewState) {
             'use strict';
 
@@ -21,14 +21,6 @@ angular.module('lisjp').controller('lisjp.EditCertCtrl',
             $scope.user = UserModel;
 
             $scope.categoryNames = formFactory.getCategoryNames();
-
-            /****************************************************************************
-             * Exposed interaction functions to view
-             ****************************************************************************/
-
-            $scope.scrollTo = function(message) {
-                anchorScrollService.scrollTo('anchor.' + message);
-            };
 
             /**************************************************************************
              * Load certificate and setup form / Constructor ...

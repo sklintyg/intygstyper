@@ -18,12 +18,12 @@
  */
 
 angular.module('ts-bas').controller('ts-bas.UtkastController',
-    [ '$anchorScroll', '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
+    [ '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
         'common.UtkastService', 'common.UserModel',
         'ts-bas.Domain.IntygModel',
-        'ts-bas.UtkastController.ViewStateService', 'common.anchorScrollService',
-        function($anchorScroll, $location, $q, $rootScope, $scope, $timeout, $window,
-            UtkastService, UserModel, IntygModel, viewState, anchorScrollService) {
+        'ts-bas.UtkastController.ViewStateService',
+        function($location, $q, $rootScope, $scope, $timeout, $window,
+            UtkastService, UserModel, IntygModel, viewState) {
             'use strict';
 
             /**********************************************************************************
@@ -31,13 +31,29 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
              **********************************************************************************/
 
             $scope.viewState = viewState.reset();
-            $scope.notifieringVidarebefordrad = viewState.draftModel.vidarebefordrad; // temporary hack. let view take from viewstate
             $scope.user = UserModel.user;
 
-            /***************************************************************************
-             * Private controller support functions
-             ***************************************************************************/
-
+            $scope.categoryNames = {
+                99: 'intygAvser',
+                100: 'identitet',
+                1: 'syn',
+                2: 'horselBalans',
+                3: 'funktionsnedsattning',
+                4: 'hjartKarl',
+                5: 'diabetes',
+                6: 'neurologi',
+                7: 'medvetandestorning',
+                8: 'njurar',
+                9: 'kognitivt',
+                10: 'somnVakenhet',
+                11: 'narkotikaLakemedel',
+                12: 'psykiskt',
+                13: 'utvecklingsstorning',
+                14: 'sjukhusvard',
+                15: 'medicinering',
+                16: 'ovrigt',
+                101: 'bedomning'
+            };
 
             /*************************************************************************
              * Ng-change and watches updating behaviour in form (try to get rid of these or at least make them consistent)
@@ -47,19 +63,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                 viewState.updateKravYtterligareUnderlag();
             }, true);
 
-
-            /****************************************************************************
-             * Exposed interaction functions to view
-             ****************************************************************************/
-
-            $scope.scrollTo = function(message) {
-                anchorScrollService.scrollTo('anchor.' + message);
-            };
-
             /**************************************************************************
              * Load certificate and setup form
              **************************************************************************/
-
             $scope.$on('saveRequest', function($event, saveDefered) {
                 $scope.certForm.$setPristine();
                 var intygState = {

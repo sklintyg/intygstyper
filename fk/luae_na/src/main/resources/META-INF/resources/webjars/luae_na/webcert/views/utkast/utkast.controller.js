@@ -1,10 +1,10 @@
 angular.module('luae_na').controller('luae_na.EditCertCtrl',
-    ['$rootScope', '$anchorScroll', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
+    ['$rootScope', '$filter', '$location', '$scope', '$log', '$timeout', '$stateParams', '$q',
         'common.UtkastService', 'common.UserModel', 'common.DateUtilsService', 'common.UtilsService',
         'luae_na.Domain.IntygModel', 'luae_na.EditCertCtrl.ViewStateService',
-        'common.anchorScrollService', 'luae_na.FormFactory',
-        function($rootScope, $anchorScroll, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
-            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, anchorScrollService, formFactory) {
+        'luae_na.FormFactory',
+        function($rootScope, $filter, $location, $scope, $log, $timeout, $stateParams, $q,
+            UtkastService, UserModel, dateUtils, utils, IntygModel, viewState, formFactory) {
             'use strict';
 
             /**********************************************************************************
@@ -33,14 +33,6 @@ angular.module('luae_na').controller('luae_na.EditCertCtrl',
             $scope.viewState.prototypes.selected = $scope.viewState.prototypes.prototypTemplates[0].id;
 
             $scope.categoryNames = formFactory.getCategoryNames();
-
-            /****************************************************************************
-             * Exposed interaction functions to view
-             ****************************************************************************/
-
-            $scope.scrollTo = function(message) {
-                anchorScrollService.scrollTo('anchor.' + message);
-            };
 
             /**************************************************************************
              * Load certificate and setup form / Constructor ...

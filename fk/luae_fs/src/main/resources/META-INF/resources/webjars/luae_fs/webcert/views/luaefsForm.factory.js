@@ -4,16 +4,14 @@ angular.module('luae_fs').factory('luae_fs.FormFactory',
             'use strict';
 
 
-            var categoryNames = [
-                null,
-                'grundformu',
-                'underlag',
-                'diagnos',
-                'funktionsnedsattning',
-                'ovrigt',
-                'kontakt'
-            ];
-
+            var categoryNames = {
+                1:'grundformu',
+                2:'underlag',
+                3:'diagnos',
+                4:'funktionsnedsattning',
+                5:'ovrigt',
+                6:'kontakt'
+            };
 
             var formFields = [
                 FactoryTemplates.adress,

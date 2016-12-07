@@ -20,9 +20,8 @@
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.UtkastService', 'common.UserModel',
         'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
-        'common.anchorScrollService',
         function($location, $log, $q, $rootScope, $scope, $timeout, $window, UtkastService, UserModel,
-            IntygModel, viewState, dateUtils, anchorScrollService) {
+            IntygModel, viewState, dateUtils) {
             'use strict';
 
             /**********************************************************************************
@@ -34,6 +33,15 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
 
             // Page state
             $scope.user = UserModel.user;
+
+            $scope.categoryNames = {
+                99: 'intygAvser',
+                100: 'identitet',
+                1: 'diabetes',
+                2: 'hypoglykemier',
+                3: 'syn',
+                4: 'bedomning'
+            };
 
             /******************************************************************************************
              * Private support functions
@@ -47,15 +55,6 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                 // element is updated correctly.
 
             // ---------------------------------------------------------------------------------------------------------
-
-
-            /******************************************************************************************
-             * Exposed interaction
-             ******************************************************************************************/
-
-            $scope.scrollTo = function(message) {
-                anchorScrollService.scrollTo('anchor.' + message);
-            };
 
             /**************************************************************************
              * Load certificate and setup form

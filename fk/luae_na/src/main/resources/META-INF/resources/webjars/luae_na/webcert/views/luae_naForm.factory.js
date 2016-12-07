@@ -3,19 +3,18 @@ angular.module('luae_na').factory('luae_na.FormFactory',
         function(FactoryHelper, UserModel, FactoryTemplates) {
             'use strict';
 
-            var categoryNames = [
-                null,
-                'grundformu',
-                'underlag',
-                'sjukdomsforlopp',
-                'diagnos',
-                'funktionsnedsattning',
-                'aktivitetsbegransning',
-                'medicinskabehandlingar',
-                'medicinskaforutsattningarforarbete',
-                'ovrigt',
-                'kontakt'
-            ];
+            var categoryNames = {
+                1:'grundformu',
+                2:'underlag',
+                3:'sjukdomsforlopp',
+                4:'diagnos',
+                5:'funktionsnedsattning',
+                6:'aktivitetsbegransning',
+                7:'medicinskabehandlingar',
+                8:'medicinskaforutsattningarforarbete',
+                9:'ovrigt',
+                10:'kontakt'
+            };
 
             var formFields = [
                 FactoryTemplates.adress,

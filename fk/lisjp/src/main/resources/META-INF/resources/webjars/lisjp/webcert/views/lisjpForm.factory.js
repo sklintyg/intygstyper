@@ -3,19 +3,18 @@ angular.module('lisjp').factory('lisjp.FormFactory',
         function(DateUtils, ObjectHelper, UserModel, FactoryTemplates) {
             'use strict';
 
-            var categoryNames = [
-                null,
-                'grundformu',
-                'sysselsattning',
-                'diagnos',
-                'funktionsnedsattning',
-                'medicinskaBehandlingar',
-                'bedomning',
-                'atgarder',
-                'ovrigt',
-                'kontakt',
-                'smittbararpenning'
-            ];
+            var categoryNames = {
+                1:'grundformu',
+                2:'sysselsattning',
+                3:'diagnos',
+                4:'funktionsnedsattning',
+                5:'medicinskaBehandlingar',
+                6:'bedomning',
+                7:'atgarder',
+                8:'ovrigt',
+                9:'kontakt',
+                10:'smittbararpenning'
+            };
 
             var formFields = [
                 FactoryTemplates.adress,
