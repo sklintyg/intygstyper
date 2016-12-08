@@ -184,7 +184,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         {
                             wrapper: 'fmb-wrapper',
                             templateOptions: {
-                                relatedFormId: categoryNames[3],
+                                relatedFormId: 'aktivitetsbegransning',
                                 fieldName: 'AKTIVITETSBEGRANSNING',
                                 panelClass: 'sit-fmb-large',
                                 hideFromSigned: true
@@ -215,7 +215,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         {
                             wrapper: 'fmb-wrapper',
                             templateOptions: {
-                                relatedFormId: categoryNames[3],
+                                relatedFormId: categoryNames[6],
                                 fieldName: 'ARBETSFORMAGA',
                                 panelClass: 'sit-fmb-large',
                                 hideFromSigned: true
