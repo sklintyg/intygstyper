@@ -28,6 +28,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 1, categoryName: categoryNames[1]},
+                    hideExpression: 'model.avstangningSmittskydd',
                     fieldGroup: [
                         {
                             type: 'headline',
@@ -104,6 +105,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 2, categoryName: categoryNames[2]},
+                    hideExpression: 'model.avstangningSmittskydd',
                     fieldGroup: [
                         {
                             key: 'sysselsattning', type: 'check-group',
@@ -163,6 +165,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 4, categoryName: categoryNames[4]},
+                    hideExpression: 'model.avstangningSmittskydd',
                     fieldGroup: [
                         {
                             wrapper: 'fmb-wrapper',
@@ -203,6 +206,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 5, categoryName: categoryNames[5]},
+                    hideExpression: 'model.avstangningSmittskydd',
                     fieldGroup: [
                         {key: 'pagaendeBehandling', type: 'multi-text', templateOptions: {label: 'DFR_19.1'}},
                         {key: 'planeradBehandling', type: 'multi-text', templateOptions: {label: 'DFR_20.1'}}
@@ -240,12 +244,17 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                         {
                             key: 'forsakringsmedicinsktBeslutsstod',
                             type: 'multi-text',
-                            templateOptions: {label: 'DFR_37.1'}
+                            templateOptions: {label: 'DFR_37.1'},
+                            hideExpression: 'model.avstangningSmittskydd'
                         },
                         {
                             key: 'arbetstidsforlaggning', type: 'boolean',
                             className: 'fold-animation',
                             hideExpression: function($viewValue, $modelValue, scope) {
+
+                                if (scope.model.avstangningSmittskydd) {
+                                    return true;
+                                }
 
                                 var sjukskrivningar = scope.model.sjukskrivningar;
 
@@ -267,13 +276,17 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                             key: 'arbetstidsforlaggningMotivering', type: 'multi-text',
                             className: 'fold-animation',
                             hideExpression: function($viewValue, $modelValue, scope) {
+                                if (scope.model.avstangningSmittskydd) {
+                                    return true;
+                                }
                                 return scope.model.arbetstidsforlaggning !== true;
                             },
                             templateOptions: {label: 'DFR_33.2', kompletteringKey: 'arbetstidsforlaggning'}
                         },
-                        {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}},
+                        {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}, hideExpression: 'model.avstangningSmittskydd'},
                         {
                             key: 'prognos', type: 'prognos',
+                            hideExpression: 'model.avstangningSmittskydd',
                             templateOptions: {
                                 label: 'FRG_39',
                                 required: true,
@@ -311,6 +324,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 7, categoryName: categoryNames[7]},
+                    hideExpression: 'model.avstangningSmittskydd',
                     fieldGroup: [
                         {
                             key: 'arbetslivsinriktadeAtgarder',
@@ -385,6 +399,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                 {
                     wrapper: 'wc-field',
                     templateOptions: {category: 9, categoryName: categoryNames[9]},
+                    hideExpression: 'model.avstangningSmittskydd',
                     fieldGroup: [
                         {
                             key: 'kontaktMedFk',

@@ -83,7 +83,8 @@ angular.module('lisjp').factory('lisjp.Domain.IntygModel',
                         // Kategori 2 sysselsättning
                         'sysselsattning': new ModelAttr('sysselsattning', {
                             toTransform: ModelTransform.enumToTransform,
-                            fromTransform: ModelTransform.enumFromTransform
+                            fromTransform: ModelTransform.enumFromTransform,
+                            defaultValue: {}
                         }),
                         'nuvarandeArbete' : undefined,
                         'arbetsmarknadspolitisktProgram': undefined,
@@ -145,7 +146,8 @@ angular.module('lisjp').factory('lisjp.Domain.IntygModel',
                         // Kategori 7 Åtgärder
                         'arbetslivsinriktadeAtgarder': new ModelAttr('arbetslivsinriktadeAtgarder', {
                             toTransform: ModelTransform.enumToTransform,
-                            fromTransform: ModelTransform.enumFromTransform
+                            fromTransform: ModelTransform.enumFromTransform,
+                            defaultValue: {}
                         }),
                         'arbetslivsinriktadeAtgarderBeskrivning': undefined,
 
