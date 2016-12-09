@@ -23,10 +23,17 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 
+import java.io.StringWriter;
 import java.lang.reflect.Field;
+
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBException;
+import javax.xml.soap.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,9 +43,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
@@ -52,9 +59,13 @@ import se.inera.intyg.intygstyper.ts_diabetes.model.converter.WebcertModelFactor
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.IntygAvserKategori;
 import se.inera.intyg.intygstyper.ts_diabetes.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_diabetes.pdf.PdfGeneratorImpl;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.Scenario;
-import se.inera.intyg.intygstyper.ts_diabetes.utils.ScenarioFinder;
+import se.inera.intyg.intygstyper.ts_diabetes.utils.*;
+import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
+import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
+import se.inera.intygstjanster.ts.services.GetTSDiabetesResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSDiabetesResponder.v1.*;
+import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
+import se.inera.intygstjanster.ts.services.v1.IntygMeta;
 import se.riv.clinicalprocess.healthcond.certificate.types.v2.IntygId;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Intyg;
 import se.riv.clinicalprocess.healthcond.certificate.v2.Svar;
@@ -76,6 +87,9 @@ public class TsDiabetesModuleApiTest {
     @Mock
     private RegisterTSDiabetesResponderInterface registerTSDiabetesResponderInterface;
 
+    @Mock
+    private GetTSDiabetesResponderInterface getTSDiabetesResponderInterface;
+
     @Spy
     private WebcertModelFactoryImpl webcertModelFactory = new WebcertModelFactoryImpl();
 
@@ -84,6 +98,12 @@ public class TsDiabetesModuleApiTest {
 
     @Mock
     private IntygTextsService intygTexts;
+
+    @Mock
+    private XslTransformer xslTransformer;
+
+    @Mock
+    private SendTSClient sendTsDiabetesClient;
 
     @Before
     public void setup() throws Exception {
@@ -254,6 +274,117 @@ public class TsDiabetesModuleApiTest {
         }
     }
 
+    @Test(expected = ExternalServiceCallException.class)
+    public void testRegisterCertificateErrorResult() throws Exception {
+        final String logicalAddress = "logicalAddress";
+        final String internalModel = objectMapper
+                .writeValueAsString(ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel());
+
+        RegisterTSDiabetesResponseType registerResponse = new RegisterTSDiabetesResponseType();
+        registerResponse.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "error"));
+        when(registerTSDiabetesResponderInterface.registerTSDiabetes(Mockito.eq(logicalAddress), Mockito.any(RegisterTSDiabetesType.class)))
+                .thenReturn(registerResponse);
+
+        moduleApi.registerCertificate(internalModel, logicalAddress);
+    }
+
+    @Test
+    public void testSendCertificateToRecipient() throws Exception {
+        final String xmlBody = "xmlBody";
+        final String logicalAddress = "logicalAddress";
+        final String recipientId = "recipient";
+        final String transformedXml = "transformedXml";
+        when(xslTransformer.transform(xmlBody)).thenReturn(transformedXml);
+        SOAPMessage response = mock(SOAPMessage.class);
+        when(response.getSOAPPart()).thenReturn(mock(SOAPPart.class));
+        when(response.getSOAPPart().getEnvelope()).thenReturn(mock(SOAPEnvelope.class));
+        when(response.getSOAPPart().getEnvelope().getBody()).thenReturn(mock(SOAPBody.class));
+        when(response.getSOAPPart().getEnvelope().getBody().hasFault()).thenReturn(false);
+        when(sendTsDiabetesClient.registerCertificate(transformedXml, logicalAddress)).thenReturn(response);
+
+        moduleApi.sendCertificateToRecipient(xmlBody, logicalAddress, recipientId);
+
+        verify(xslTransformer).transform(xmlBody);
+        verify(sendTsDiabetesClient).registerCertificate(transformedXml, logicalAddress);
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testSendCertificateToRecipientFault() throws Exception {
+        final String xmlBody = "xmlBody";
+        final String logicalAddress = "logicalAddress";
+        final String recipientId = "recipient";
+        final String transformedXml = "transformedXml";
+        when(xslTransformer.transform(xmlBody)).thenReturn(transformedXml);
+        SOAPMessage response = mock(SOAPMessage.class);
+        when(response.getSOAPPart()).thenReturn(mock(SOAPPart.class));
+        when(response.getSOAPPart().getEnvelope()).thenReturn(mock(SOAPEnvelope.class));
+        when(response.getSOAPPart().getEnvelope().getBody()).thenReturn(mock(SOAPBody.class));
+        when(response.getSOAPPart().getEnvelope().getBody().hasFault()).thenReturn(true);
+        when(sendTsDiabetesClient.registerCertificate(transformedXml, logicalAddress)).thenReturn(response);
+
+        moduleApi.sendCertificateToRecipient(xmlBody, logicalAddress, recipientId);
+    }
+
+    @Test
+    public void testGetCertificate() throws ModuleException, ScenarioNotFoundException {
+        GetTSDiabetesResponseType result = new GetTSDiabetesResponseType();
+        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel().getIntyg());
+        result.setMeta(createMeta());
+        result.setResultat(ResultTypeUtil.okResult());
+        Mockito.when(getTSDiabetesResponderInterface.getTSDiabetes(Mockito.eq("TS"), Mockito.any(GetTSDiabetesType.class)))
+                .thenReturn(result);
+
+        CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
+        assertNotNull(internal);
+    }
+
+    @Test
+    public void testGetCertificateRevokedReturnsCertificate() throws Exception {
+        GetTSDiabetesResponseType result = new GetTSDiabetesResponseType();
+        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel().getIntyg());
+        result.setMeta(createMeta());
+        result.setResultat(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, "error"));
+        Mockito.when(getTSDiabetesResponderInterface.getTSDiabetes(Mockito.eq("TS"), Mockito.any(GetTSDiabetesType.class)))
+                .thenReturn(result);
+
+        CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
+        assertNotNull(internal);
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testGetCertificateRevokedValidationError() throws Exception {
+        GetTSDiabetesResponseType result = new GetTSDiabetesResponseType();
+        result.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "error"));
+        Mockito.when(getTSDiabetesResponderInterface.getTSDiabetes(Mockito.eq("TS"), Mockito.any(GetTSDiabetesType.class)))
+        .thenReturn(result);
+
+        moduleApi.getCertificate("cert-id", "TS");
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testGetCertificateRevokedApplicationError() throws Exception {
+        GetTSDiabetesResponseType result = new GetTSDiabetesResponseType();
+        result.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "error"));
+        Mockito.when(getTSDiabetesResponderInterface.getTSDiabetes(Mockito.eq("TS"), Mockito.any(GetTSDiabetesType.class)))
+        .thenReturn(result);
+
+        moduleApi.getCertificate("cert-id", "TS");
+    }
+
+    @Test
+    public void testGetUtlatandeFromXml() throws Exception {
+        String xml = xmlToString(ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel());
+        Utlatande res = moduleApi.getUtlatandeFromXml(xml);
+
+        assertNotNull(res);
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testGetUtlatandeFromXmlConverterException() throws Exception {
+        String xml = xmlToString(new RegisterTSDiabetesType());
+        moduleApi.getUtlatandeFromXml(xml);
+    }
+
     private CreateNewDraftHolder createNewDraftHolder() {
         HoSPersonal hosPersonal = createHosPersonal();
         Patient patient = new Patient();
@@ -283,5 +414,18 @@ public class TsDiabetesModuleApiTest {
         vardenhet.getVardgivare().setVardgivarid("vg1");
         vardenhet.getVardgivare().setVardgivarnamn("vg1");
         return vardenhet;
+    }
+
+    private IntygMeta createMeta() throws ScenarioNotFoundException {
+        IntygMeta meta = new IntygMeta();
+        meta.setAdditionalInfo("C");
+        meta.setAvailable("true");
+        return meta;
+    }
+
+    private String xmlToString(RegisterTSDiabetesType registerTsDiabetes) throws JAXBException {
+        StringWriter stringWriter = new StringWriter();
+        JAXB.marshal(registerTsDiabetes, stringWriter);
+        return stringWriter.toString();
     }
 }

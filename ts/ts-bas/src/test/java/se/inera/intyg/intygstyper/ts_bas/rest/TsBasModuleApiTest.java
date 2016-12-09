@@ -20,12 +20,19 @@ package se.inera.intyg.intygstyper.ts_bas.rest;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static se.inera.intyg.common.support.modules.converter.InternalConverterUtil.aCV;
 
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBException;
+import javax.xml.soap.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,9 +43,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.*;
+import se.inera.intyg.common.support.model.converter.util.XslTransformer;
 import se.inera.intyg.common.support.modules.support.ApplicationOrigin;
 import se.inera.intyg.common.support.modules.support.api.ModuleApi;
 import se.inera.intyg.common.support.modules.support.api.dto.*;
@@ -52,6 +59,8 @@ import se.inera.intyg.intygstyper.ts_bas.model.converter.WebcertModelFactoryImpl
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.pdf.PdfGeneratorImpl;
 import se.inera.intyg.intygstyper.ts_bas.utils.*;
+import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
+import se.inera.intyg.intygstyper.ts_parent.integration.SendTSClient;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.v1.ErrorIdType;
@@ -88,6 +97,12 @@ public class TsBasModuleApiTest {
 
     @Mock
     private IntygTextsService intygTexts;
+
+    @Mock
+    private XslTransformer xslTransformer;
+
+    @Mock
+    private SendTSClient sendTsBasClient;
 
     @Before
     public void setup() throws Exception {
@@ -145,6 +160,17 @@ public class TsBasModuleApiTest {
             }
         }
         assertTrue(failResults.isEmpty());
+    }
+
+    @Test(expected = ExternalServiceCallException.class)
+    public void testRegisterCertificateError() throws Exception {
+        RegisterTSBasResponseType registerResponse = new RegisterTSBasResponseType();
+        registerResponse.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "error"));
+        Mockito.when(registerTSBasResponderInterface.registerTSBas(Mockito.anyString(), Mockito.any(RegisterTSBasType.class)))
+                .thenReturn(registerResponse);
+
+        String internalModel = objectMapper.writeValueAsString(ScenarioFinder.getInternalScenario("valid-minimal").asInternalModel());
+        moduleApi.registerCertificate(internalModel, "logicalAddress");
     }
 
     @Test
@@ -207,6 +233,43 @@ public class TsBasModuleApiTest {
     }
 
     @Test
+    public void testSendCertificateToRecipient() throws Exception {
+        final String xmlBody = "xmlBody";
+        final String logicalAddress = "logicalAddress";
+        final String recipientId = "recipient";
+        final String transformedXml = "transformedXml";
+        when(xslTransformer.transform(xmlBody)).thenReturn(transformedXml);
+        SOAPMessage response = mock(SOAPMessage.class);
+        when(response.getSOAPPart()).thenReturn(mock(SOAPPart.class));
+        when(response.getSOAPPart().getEnvelope()).thenReturn(mock(SOAPEnvelope.class));
+        when(response.getSOAPPart().getEnvelope().getBody()).thenReturn(mock(SOAPBody.class));
+        when(response.getSOAPPart().getEnvelope().getBody().hasFault()).thenReturn(false);
+        when(sendTsBasClient.registerCertificate(transformedXml, logicalAddress)).thenReturn(response);
+
+        moduleApi.sendCertificateToRecipient(xmlBody, logicalAddress, recipientId);
+
+        verify(xslTransformer).transform(xmlBody);
+        verify(sendTsBasClient).registerCertificate(transformedXml, logicalAddress);
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testSendCertificateToRecipientFault() throws Exception {
+        final String xmlBody = "xmlBody";
+        final String logicalAddress = "logicalAddress";
+        final String recipientId = "recipient";
+        final String transformedXml = "transformedXml";
+        when(xslTransformer.transform(xmlBody)).thenReturn(transformedXml);
+        SOAPMessage response = mock(SOAPMessage.class);
+        when(response.getSOAPPart()).thenReturn(mock(SOAPPart.class));
+        when(response.getSOAPPart().getEnvelope()).thenReturn(mock(SOAPEnvelope.class));
+        when(response.getSOAPPart().getEnvelope().getBody()).thenReturn(mock(SOAPBody.class));
+        when(response.getSOAPPart().getEnvelope().getBody().hasFault()).thenReturn(true);
+        when(sendTsBasClient.registerCertificate(transformedXml, logicalAddress)).thenReturn(response);
+
+        moduleApi.sendCertificateToRecipient(xmlBody, logicalAddress, recipientId);
+    }
+
+    @Test
     public void testGetCertificate() throws ModuleException, ScenarioNotFoundException {
         GetTSBasResponseType result = new GetTSBasResponseType();
         result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel().getIntyg());
@@ -217,6 +280,53 @@ public class TsBasModuleApiTest {
 
         CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
         assertNotNull(internal);
+    }
+
+    @Test
+    public void testGetCertificateRevokedReturnsCertificate() throws Exception {
+        GetTSBasResponseType result = new GetTSBasResponseType();
+        result.setIntyg(ScenarioFinder.getTransportScenario("valid-maximal").asTransportModel().getIntyg());
+        result.setMeta(createMeta());
+        result.setResultat(ResultTypeUtil.errorResult(ErrorIdType.REVOKED, "error"));
+        Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
+                .thenReturn(result);
+
+        CertificateResponse internal = moduleApi.getCertificate("cert-id", "TS");
+        assertNotNull(internal);
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testGetCertificateRevokedValidationError() throws Exception {
+        GetTSBasResponseType result = new GetTSBasResponseType();
+        result.setResultat(ResultTypeUtil.errorResult(ErrorIdType.VALIDATION_ERROR, "error"));
+        Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
+        .thenReturn(result);
+
+        moduleApi.getCertificate("cert-id", "TS");
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testGetCertificateRevokedApplicationError() throws Exception {
+        GetTSBasResponseType result = new GetTSBasResponseType();
+        result.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "error"));
+        Mockito.when(getTSBasResponderInterface.getTSBas(Mockito.eq("TS"), Mockito.any(GetTSBasType.class)))
+        .thenReturn(result);
+
+        moduleApi.getCertificate("cert-id", "TS");
+    }
+
+    @Test
+    public void testGetUtlatandeFromXml() throws Exception {
+        String xml = xmlToString(ScenarioFinder.getTransportScenario("valid-minimal").asTransportModel());
+        Utlatande res = moduleApi.getUtlatandeFromXml(xml);
+
+        assertNotNull(res);
+    }
+
+    @Test(expected = ModuleException.class)
+    public void testGetUtlatandeFromXmlConverterException() throws Exception {
+        String xml = xmlToString(new RegisterTSBasType());
+        moduleApi.getUtlatandeFromXml(xml);
     }
 
     @Test
@@ -348,4 +458,9 @@ public class TsBasModuleApiTest {
         return vardenhet;
     }
 
+    private String xmlToString(RegisterTSBasType registerTsBas) throws JAXBException {
+        StringWriter stringWriter = new StringWriter();
+        JAXB.marshal(registerTsBas, stringWriter);
+        return stringWriter.toString();
+    }
 }

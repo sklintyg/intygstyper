@@ -38,6 +38,10 @@ public final class TransportToInternalConverter {
     }
 
     public static Utlatande convert(TSDiabetesIntyg transport) throws ConverterException {
+        if (transport == null) {
+            throw new ConverterException("Source utlatande was null, cannot convert");
+        }
+
         Utlatande result = new Utlatande();
 
         result.setId(transport.getIntygsId());

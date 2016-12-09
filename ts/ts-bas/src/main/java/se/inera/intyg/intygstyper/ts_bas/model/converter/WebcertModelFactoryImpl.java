@@ -22,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Strings;
+
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.common.support.model.converter.util.WebcertModelFactoryUtil;
@@ -79,7 +81,7 @@ public class WebcertModelFactoryImpl implements WebcertModelFactory<Utlatande> {
     }
 
     private void populateWithId(Utlatande utlatande, String utlatandeId) throws ConverterException {
-        if (utlatandeId == null) {
+        if (Strings.isNullOrEmpty(utlatandeId)) {
             throw new ConverterException("No certificateID found");
         }
 

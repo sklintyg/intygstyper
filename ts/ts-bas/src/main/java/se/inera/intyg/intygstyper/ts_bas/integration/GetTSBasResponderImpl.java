@@ -29,15 +29,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 
-import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
 import se.inera.intyg.common.support.integration.module.exception.InvalidCertificateException;
 import se.inera.intyg.common.support.integration.module.exception.MissingConsentException;
 import se.inera.intyg.common.support.model.CertificateState;
 import se.inera.intyg.common.support.modules.support.api.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
 import se.inera.intyg.common.util.logging.LogMarkers;
+import se.inera.intyg.intygstyper.ts_parent.integration.ResultTypeUtil;
 import se.inera.intygstjanster.ts.services.GetTSBasResponder.v1.*;
 import se.inera.intygstjanster.ts.services.RegisterTSBasResponder.v1.RegisterTSBasType;
 import se.inera.intygstjanster.ts.services.v1.*;
@@ -56,7 +57,7 @@ public class GetTSBasResponderImpl implements GetTSBasResponderInterface {
         String certificateId = request.getIntygsId();
         Personnummer personNummer = request.getPersonId() != null ? new Personnummer(request.getPersonId().getExtension()) : null;
 
-        if (certificateId == null || certificateId.length() == 0) {
+        if (Strings.isNullOrEmpty(certificateId)) {
             LOGGER.info(LogMarkers.VALIDATION, "Tried to get certificate with non-existing certificateId '.");
             response.setResultat(ResultTypeUtil.errorResult(ErrorIdType.APPLICATION_ERROR, "non-existing certificateId"));
             return response;

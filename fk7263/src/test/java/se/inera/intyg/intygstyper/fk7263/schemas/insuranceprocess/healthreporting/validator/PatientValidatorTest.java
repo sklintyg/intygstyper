@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package se.inera.intyg.intygstyper.fk7263.schemas.insuranceprocess.helathreporting.validator;
+package se.inera.intyg.intygstyper.fk7263.schemas.insuranceprocess.healthreporting.validator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,7 +29,6 @@ import org.junit.Test;
 
 import iso.v21090.dt.v1.II;
 import se.inera.ifv.insuranceprocess.healthreporting.v2.PatientType;
-import se.inera.intyg.intygstyper.fk7263.schemas.insuranceprocess.healthreporting.validator.PatientValidator;
 
 public class PatientValidatorTest {
     private PatientType patient;

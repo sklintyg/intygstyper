@@ -34,8 +34,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import se.inera.intyg.common.services.texts.IntygTextsService;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.model.converter.util.ConverterException;
-import se.inera.intyg.common.support.modules.support.api.dto.CreateNewDraftHolder;
-import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
+import se.inera.intyg.common.support.modules.support.api.dto.*;
 import se.inera.intyg.intygstyper.ts_bas.model.internal.Utlatande;
 import se.inera.intyg.intygstyper.ts_bas.support.TsBasEntryPoint;
 
@@ -73,6 +72,11 @@ public class WebcertModelFactoryTest {
         // this to follow schema during CertificateStatusUpdateForCareV2
         Utlatande draft = factory.createNewWebcertDraft(buildNewDraftData("INTYG_ID"));
         assertTrue(CollectionUtils.isEmpty(UtlatandeToIntyg.convert(draft).getSvar()));
+    }
+
+    @Test(expected = ConverterException.class)
+    public void testCreateCopyCertificateIdMissing() throws Exception {
+        factory.createCopy(new CreateDraftCopyHolder("", new HoSPersonal()), new Utlatande());
     }
 
     private CreateNewDraftHolder buildNewDraftData(String intygId) {

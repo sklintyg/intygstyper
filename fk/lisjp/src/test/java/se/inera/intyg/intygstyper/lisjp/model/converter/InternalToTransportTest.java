@@ -43,6 +43,7 @@ import se.inera.intyg.common.support.model.InternalDate;
 import se.inera.intyg.common.support.model.InternalLocalDateInterval;
 import se.inera.intyg.common.support.model.common.internal.GrundData;
 import se.inera.intyg.common.support.model.common.internal.Relation;
+import se.inera.intyg.common.support.model.converter.util.ConverterException;
 import se.inera.intyg.intygstyper.fkparent.integration.RegisterCertificateValidator;
 import se.inera.intyg.intygstyper.fkparent.model.converter.IntygTestDataBuilder;
 import se.inera.intyg.intygstyper.fkparent.model.converter.RegisterCertificateTestValidator;
@@ -78,6 +79,11 @@ public class InternalToTransportTest {
         LisjpUtlatande actual = TransportToInternal.convert(transport.getIntyg());
 
         assertEquals(expected, actual);
+    }
+
+    @Test(expected = ConverterException.class)
+    public void testInternalToTransportSourceNull() throws Exception {
+        InternalToTransport.convert(null);
     }
 
     @Test

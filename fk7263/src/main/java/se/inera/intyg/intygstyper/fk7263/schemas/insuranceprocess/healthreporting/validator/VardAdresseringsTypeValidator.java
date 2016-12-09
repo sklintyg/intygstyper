@@ -19,13 +19,13 @@
 
 package se.inera.intyg.intygstyper.fk7263.schemas.insuranceprocess.healthreporting.validator;
 
-import se.inera.ifv.insuranceprocess.healthreporting.medcertqa.v1.VardAdresseringsType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.EnhetType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.HosPersonalType;
-import se.inera.ifv.insuranceprocess.healthreporting.v2.VardgivareType;
-import se.inera.intyg.common.support.Constants;
-
 import java.util.List;
+
+import com.google.common.base.Strings;
+
+import se.inera.ifv.insuranceprocess.healthreporting.medcertqa.v1.VardAdresseringsType;
+import se.inera.ifv.insuranceprocess.healthreporting.v2.*;
+import se.inera.intyg.common.support.Constants;
 
 
 /**
@@ -54,7 +54,7 @@ public class VardAdresseringsTypeValidator {
         }
 
         // Check lakar id - mandatory
-        if (hosPersonal.getPersonalId().getExtension() == null || hosPersonal.getPersonalId().getExtension().isEmpty()) {
+        if (Strings.isNullOrEmpty(hosPersonal.getPersonalId().getExtension())) {
             validationErrors.add("No personal-id found!");
         }
 
@@ -65,7 +65,7 @@ public class VardAdresseringsTypeValidator {
         }
 
         // Check lakarnamn - mandatory
-        if (hosPersonal.getFullstandigtNamn() == null || hosPersonal.getFullstandigtNamn().isEmpty()) {
+        if (Strings.isNullOrEmpty(hosPersonal.getFullstandigtNamn())) {
             validationErrors.add("No skapadAvHosPersonal fullstandigtNamn found.");
         }
 
@@ -80,8 +80,7 @@ public class VardAdresseringsTypeValidator {
         }
 
         // Check enhets id - mandatory
-        if (enhet.getEnhetsId() == null || enhet.getEnhetsId().getExtension() == null
-                || enhet.getEnhetsId().getExtension().isEmpty()) {
+        if (enhet.getEnhetsId() == null || Strings.isNullOrEmpty(enhet.getEnhetsId().getExtension())) {
             validationErrors.add("No enhets-id found!");
         }
 
@@ -92,7 +91,7 @@ public class VardAdresseringsTypeValidator {
         }
 
         // Check enhetsnamn - mandatory
-        if (enhet.getEnhetsnamn() == null || enhet.getEnhetsnamn().length() < 1) {
+        if (Strings.isNullOrEmpty(enhet.getEnhetsnamn())) {
             validationErrors.add("No enhetsnamn found!");
         }
 
@@ -106,8 +105,7 @@ public class VardAdresseringsTypeValidator {
         }
 
         // Check vardgivare id - mandatory
-        if (vardgivare.getVardgivareId() == null || vardgivare.getVardgivareId().getExtension() == null
-                || vardgivare.getVardgivareId().getExtension().isEmpty()) {
+        if (vardgivare.getVardgivareId() == null || Strings.isNullOrEmpty(vardgivare.getVardgivareId().getExtension())) {
             validationErrors.add("No vardgivare-id found!");
         }
         // Check vardgivare o.i.d.
@@ -117,7 +115,7 @@ public class VardAdresseringsTypeValidator {
         }
 
         // Check vardgivarename - mandatory
-        if (vardgivare.getVardgivarnamn() == null || vardgivare.getVardgivarnamn().isEmpty()) {
+        if (Strings.isNullOrEmpty(vardgivare.getVardgivarnamn())) {
             validationErrors.add("No vardgivarenamn found!");
         }
 

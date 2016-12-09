@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package se.inera.intyg.intygstyper.ts_parent.converter;
+package se.inera.intyg.intygstyper.ts_parent.model.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,7 +30,8 @@ import org.junit.Test;
 import se.inera.intyg.common.support.Constants;
 import se.inera.intyg.common.support.model.common.internal.*;
 import se.inera.intyg.common.support.modules.support.api.dto.Personnummer;
-import se.inera.intyg.intygstyper.ts_parent.model.converter.InternalToTransportUtil;
+import se.inera.intyg.intygstyper.ts_parent.codes.DiabetesKod;
+import se.inera.intygstjanster.ts.services.v1.DiabetesTypVarden;
 
 public class InternalToTransportUtilTest {
 
@@ -89,6 +90,46 @@ public class InternalToTransportUtilTest {
         assertEquals("6.7", InternalToTransportUtil.getVersion(setupUtlatandeWithTextVersion("6.7")).get());
         assertEquals("4.2", InternalToTransportUtil.getVersion(setupUtlatandeWithTextVersion("4.2")).get());
         assertEquals("1.0", InternalToTransportUtil.getVersion(setupUtlatandeWithTextVersion("1.0")).get());
+    }
+
+    @Test
+    public void testConvertDiabetesTyp() {
+        DiabetesTypVarden res1 = InternalToTransportUtil.convertDiabetesTyp(DiabetesKod.DIABETES_TYP_1);
+        DiabetesTypVarden res2 = InternalToTransportUtil.convertDiabetesTyp(DiabetesKod.DIABETES_TYP_2);
+
+        assertEquals(DiabetesTypVarden.TYP_1, res1);
+        assertEquals(DiabetesTypVarden.TYP_2, res2);
+    }
+
+    @Test
+    public void testBuildSkapadAvBefattningskodAndSpecialisering() {
+        final String specialisering1 = "spec1";
+        final String specialisering2 = "spec2";
+        final String befattning1 = "befattning1";
+        final String befattning2 = "befattning2";
+        GrundData grundData = new GrundData();
+        Patient patient = new Patient();
+        patient.setPersonId(new Personnummer("19121212-1212"));
+        grundData.setPatient(patient);
+        grundData.setSigneringsdatum(LocalDateTime.now());
+        HoSPersonal skapadAv = new HoSPersonal();
+        skapadAv.getSpecialiteter().add(specialisering1);
+        skapadAv.getSpecialiteter().add(specialisering2);
+        skapadAv.getBefattningar().add(befattning1);
+        skapadAv.getBefattningar().add(befattning2);
+        Vardenhet vardenhet = new Vardenhet();
+        vardenhet.setVardgivare(new Vardgivare());
+        skapadAv.setVardenhet(vardenhet);
+        grundData.setSkapadAv(skapadAv);
+
+        se.inera.intygstjanster.ts.services.v1.GrundData res = InternalToTransportUtil.buildGrundData(grundData);
+
+        assertEquals(2, res.getSkapadAv().getSpecialiteter().size());
+        assertEquals(specialisering1, res.getSkapadAv().getSpecialiteter().get(0));
+        assertEquals(specialisering2, res.getSkapadAv().getSpecialiteter().get(1));
+        assertEquals(2, res.getSkapadAv().getBefattningar().size());
+        assertEquals(befattning1, res.getSkapadAv().getBefattningar().get(0));
+        assertEquals(befattning2, res.getSkapadAv().getBefattningar().get(1));
     }
 
     private Utlatande setupUtlatandeWithTextVersion(String textVersion) {
