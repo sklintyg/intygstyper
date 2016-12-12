@@ -32,7 +32,7 @@ describe('lisjpFormFactory', function() {
         $scope = $rootScope.$new();
         $scope.model = _lisjpIntygModel_._members.build().content;
         $scope.options = {
-            formState:{viewState:{common:{}}}
+            formState:{viewState:{common:{validation:{}}}}
         };
         $scope.formFields = lispFormFactory.getFormFields();
         element =
