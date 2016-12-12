@@ -11,9 +11,9 @@
     </tr>
     <tr>
       <td><input id="diabetesay" name="diabetesa" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.diabetes.harDiabetes"></td>
+                 ng-model="viewState.intygModel.diabetes.harDiabetes" ng-change="validate()"></td>
       <td><input id="diabetesan" name="diabetesa" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.diabetes.harDiabetes"></td>
+                 ng-model="viewState.intygModel.diabetes.harDiabetes" ng-change="validate()"></td>
       <td>
         <p><span dynamic-label key="FRG_17.RBK"></span> *</p>
 
@@ -23,12 +23,12 @@
               <span dynamic-label key="FRG_18.RBK"></span> *
               <label class="radio">
                 <input id="diabetestyp1" name="diabetestyp" type="radio" value="DIABETES_TYP_1"
-                       ng-model="viewState.intygModel.diabetes.diabetesTyp">
+                       ng-model="viewState.intygModel.diabetes.diabetesTyp" ng-change="validate()">
                 <span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_1"></span>
               </label>
               <label class="radio">
                 <input id="diabetestyp2" name="diabetestyp" type="radio" value="DIABETES_TYP_2"
-                       ng-model="viewState.intygModel.diabetes.diabetesTyp">
+                       ng-model="viewState.intygModel.diabetes.diabetesTyp" ng-change="validate()">
                 <span message key="ts-bas.label.diabetes.diabetestyp.diabetes_typ_2"></span>
               </label>
             </wc-validation-group>
@@ -39,17 +39,17 @@
               <span dynamic-label key="FRG_19.RBK"></span> *
               <label class="checkbox">
                 <input id="diabetestreat1" name="diabetestreat1" type="checkbox"
-                       ng-model="viewState.intygModel.diabetes.kost">
+                       ng-model="viewState.intygModel.diabetes.kost" ng-change="validate()">
                 <span dynamic-label key="DFR_19.1.RBK"></span>
               </label>
               <label class="checkbox">
                 <input id="diabetestreat2" name="diabetestreat2" type="checkbox"
-                       ng-model="viewState.intygModel.diabetes.tabletter">
+                       ng-model="viewState.intygModel.diabetes.tabletter" ng-change="validate()">
                 <span dynamic-label key="DFR_19.2.RBK"></span>
               </label>
               <label class="checkbox">
                 <input id="diabetestreat3" name="diabetestreat3" type="checkbox"
-                       ng-model="viewState.intygModel.diabetes.insulin">
+                       ng-model="viewState.intygModel.diabetes.insulin" ng-change="validate()">
                 <span dynamic-label key="DFR_19.3.RBK"></span>
               </label>
             </div>

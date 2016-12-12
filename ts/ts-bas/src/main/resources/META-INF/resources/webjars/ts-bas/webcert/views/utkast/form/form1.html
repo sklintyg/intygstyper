@@ -13,26 +13,26 @@
     </tr>
     <tr>
       <td><input id="synay" name="syna" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsdefekter" ng-change="validate()"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.syn.synfaltsdefekter"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsdefekter" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_3.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('teckensynfaltsdefekter')"></wc-field-validation></td></tr>
     <tr>
       <td><input id="synby" name="synb" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.syn.nattblindhet"></td>
+                 ng-model="viewState.intygModel.syn.nattblindhet" ng-change="validate()"></td>
       <td><input id="synbn" name="synb" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.syn.nattblindhet"></td>
+                 ng-model="viewState.intygModel.syn.nattblindhet" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_4.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('nattblindhet')"></wc-field-validation></td></tr>
     <tr>
       <td><input id="syncy" name="sync" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.syn.progressivOgonsjukdom">
+                 ng-model="viewState.intygModel.syn.progressivOgonsjukdom" ng-change="validate()">
       </td>
       <td><input id="syncn" name="sync" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.syn.progressivOgonsjukdom">
+                 ng-model="viewState.intygModel.syn.progressivOgonsjukdom" ng-change="validate()">
       </td>
       <td>
         <p><span dynamic-label key="FRG_5.RBK"></span> *</p>
@@ -46,17 +46,17 @@
       </div>
     </td></tr>
     <tr>
-      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi">
+      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
       </td>
-      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
+      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
       </td>
       <td><span dynamic-label key="FRG_6.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('diplopi')"></wc-field-validation></td></tr>
     <tr>
-      <td><input id="syney" name="syne" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.nystagmus">
+      <td><input id="syney" name="syne" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.nystagmus" ng-change="validate()">
       </td>
-      <td><input id="synen" name="syne" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.nystagmus">
+      <td><input id="synen" name="syne" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.nystagmus" ng-change="validate()">
       </td>
       <td><span dynamic-label key="FRG_7.RBK"></span> *</td>
     </tr>
@@ -85,35 +85,42 @@
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('hogeroga.utankorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hogerOga.utanKorrektion" maxlength="4">
+                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hogerOga.utanKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hogerOga.medKorrektion" maxlength="4"></td>
-            <td><input type="checkbox" id="synHogerOgaKontaktlins" ng-model="viewState.intygModel.syn.hogerOga.kontaktlins"></td>
+                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hogerOga.medKorrektion" maxlength="4"
+                       ng-blur="validate()"></td>
+            <td><input type="checkbox" id="synHogerOgaKontaktlins" ng-model="viewState.intygModel.syn.hogerOga.kontaktlins" ng-change="validate()"></td>
           </tr>
           <tr>
             <td><span message key="ts-bas.label.syn.vanster-oga"></span></td>
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('vansteroga.utankorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vansterOga.utanKorrektion" maxlength="4">
+                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vansterOga.utanKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vansterOga.medKorrektion" maxlength="4"></td>
-            <td><input type="checkbox" id="synVasterOgaKontaktlins" ng-model="viewState.intygModel.syn.vansterOga.kontaktlins"></td>
+                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vansterOga.medKorrektion" maxlength="4"
+                       ng-blur="validate()"></td>
+            <td><input type="checkbox" id="synVasterOgaKontaktlins" ng-model="viewState.intygModel.syn.vansterOga.kontaktlins"
+                       ng-change="validate()"></td>
           </tr>
           <tr>
             <td><span message key="ts-bas.label.syn.binokulart"></span></td>
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('binokulart.utankorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4">
+                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
             <td><input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4"></td>
+                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4"
+                       ng-blur="validate()"></td>
             <td></td>
           </tr>
         </table>
@@ -121,7 +128,8 @@
         <h4><span message key="ts-bas.label.syn.korrektionsglasens-styrka"></span></h4>
         <label class="checkbox">
           <input name="dioptrier" type="checkbox" id="dioptrier"
-                 ng-model="viewState.intygModel.syn.korrektionsglasensStyrka">
+                 ng-model="viewState.intygModel.syn.korrektionsglasensStyrka"
+                 ng-change="validate()">
           <span dynamic-label key="FRG_9.RBK"></span>
         </label>
 

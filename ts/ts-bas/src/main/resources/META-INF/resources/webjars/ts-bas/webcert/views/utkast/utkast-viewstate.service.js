@@ -128,10 +128,10 @@ angular.module('ts-bas').service('ts-bas.UtkastController.ViewStateService',
             /* jshint ignore:end */
 
             this.getValidationErrors = function(field) {
-                if (!this.common.validationMessagesByField) {
+                if (!this.common.validation.messagesByField) {
                     return null;
                 }
-                return this.common.validationMessagesByField[field.toLowerCase()];
+                return this.common.validation.messagesByField[field.toLowerCase()];
             };
 
             this.reset();

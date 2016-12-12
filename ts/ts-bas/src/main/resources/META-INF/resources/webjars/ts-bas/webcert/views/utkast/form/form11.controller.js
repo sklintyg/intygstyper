@@ -19,8 +19,8 @@
 
 angular.module('ts-bas').controller('ts-bas.Utkast.Form11Controller',
     ['$scope', '$log',
-        'ts-bas.UtkastController.ViewStateService',
-        function($scope, $log, viewState) {
+        'ts-bas.UtkastController.ViewStateService', 'common.UtkastValidationService',
+        function($scope, $log, viewState, UtkastValidationService) {
             'use strict';
             $scope.viewState = viewState;
 
@@ -42,4 +42,8 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form11Controller',
                     viewState.intygModel.restoreFromAttic('narkotikaLakemedel.lakemedelOchDos');
                 }
             }, true);
+
+            $scope.validate = function() {
+                UtkastValidationService.validate(viewState.intygModel);
+            };
         }]);

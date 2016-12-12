@@ -11,9 +11,9 @@
     </tr>
     <tr>
       <td><input id="kognitivtay" name="kognitivta" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.kognitivt.sviktandeKognitivFunktion"></td>
+                 ng-model="viewState.intygModel.kognitivt.sviktandeKognitivFunktion" ng-change="validate()"></td>
       <td><input id="kognitivtan" name="kognitivta" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.kognitivt.sviktandeKognitivFunktion"></td>
+                 ng-model="viewState.intygModel.kognitivt.sviktandeKognitivFunktion" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_23.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('sviktandeKognitivFunktion')"></wc-field-validation></td></tr>

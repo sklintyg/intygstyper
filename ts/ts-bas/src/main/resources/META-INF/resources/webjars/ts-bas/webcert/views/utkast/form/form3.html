@@ -11,9 +11,11 @@
     </tr>
     <tr>
       <td><input id="funktionsnedsattningay" name="funktionsnedsattninga" type="radio"
-                 ng-value="true" ng-model="viewState.intygModel.funktionsnedsattning.funktionsnedsattning"></td>
+                 ng-value="true" ng-model="viewState.intygModel.funktionsnedsattning.funktionsnedsattning"
+                 ng-change="validate()"></td>
       <td><input id="funktionsnedsattningan" name="funktionsnedsattninga" type="radio"
-                 ng-value="false" ng-model="viewState.intygModel.funktionsnedsattning.funktionsnedsattning"></td>
+                 ng-value="false" ng-model="viewState.intygModel.funktionsnedsattning.funktionsnedsattning"
+                 ng-change="validate()"></td>
       <td><p><span dynamic-label key="FRG_12.RBK"></span> *</p>
 
         <div ng-show="viewState.intygModel.funktionsnedsattning.funktionsnedsattning">
@@ -21,7 +23,8 @@
             <p><span dynamic-label key="DFR_12.2.RBK"></span> *</p>
             <textarea id="funktionsnedsattning" class="form-control" name="funktionsnedsattning"
                       rows='5' wc-maxlength ng-trim="false" maxlength="{{viewState.inputLimits.funktionsnedsattning}}"
-                      ng-model="viewState.intygModel.funktionsnedsattning.beskrivning"></textarea>
+                      ng-model="viewState.intygModel.funktionsnedsattning.beskrivning"
+                      ng-blur="validate()"></textarea>
           </wc-validation-wrapper>
         </div>
       </td>
@@ -29,9 +32,11 @@
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('funktionsnedsattning')"></wc-field-validation></td></tr>
     <tr ng-show="viewState.korkortd">
       <td><input id="funktionsnedsattningby" name="funktionsnedsattningb" type="radio"
-                 ng-value="true" ng-model="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga"></td>
+                 ng-value="true" ng-model="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga"
+                 ng-change="validate()"></td>
       <td><input id="funktionsnedsattningbn" name="funktionsnedsattningb" type="radio"
-                 ng-value="false" ng-model="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga">
+                 ng-value="false" ng-model="viewState.intygModel.funktionsnedsattning.otillrackligRorelseformaga"
+                 ng-change="validate()">
       </td>
       <td><span dynamic-label key="FRG_13.RBK"></span> *</td>
     </tr>

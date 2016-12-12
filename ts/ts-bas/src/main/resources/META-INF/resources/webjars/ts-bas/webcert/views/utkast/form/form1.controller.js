@@ -19,10 +19,12 @@
 
 angular.module('ts-bas').controller('ts-bas.Utkast.Form1Controller',
     ['$scope', '$log',
-        'ts-bas.UtkastController.ViewStateService',
-        function($scope, $log, viewState) {
+        'ts-bas.UtkastController.ViewStateService', 'common.UtkastValidationService',
+        function($scope, $log, viewState, UtkastValidationService) {
             'use strict';
             $scope.viewState = viewState;
 
-
+            $scope.validate = function() {
+                UtkastValidationService.validate(viewState.intygModel);
+            };
         }]);

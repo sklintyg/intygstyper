@@ -11,9 +11,9 @@
     </tr>
     <tr>
       <td><input id="psykiskta" name="psykiskta" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.psykiskt.psykiskSjukdom"></td>
+                 ng-model="viewState.intygModel.psykiskt.psykiskSjukdom" ng-change="validate()"></td>
       <td><input name="psykiskta" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.psykiskt.psykiskSjukdom"></td>
+                 ng-model="viewState.intygModel.psykiskt.psykiskSjukdom" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_27.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('psykiskSjukdom')"></wc-field-validation></td></tr>

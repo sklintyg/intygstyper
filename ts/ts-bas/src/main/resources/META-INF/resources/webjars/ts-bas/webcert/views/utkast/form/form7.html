@@ -11,9 +11,9 @@
     </tr>
     <tr>
       <td><input id="medvetandestorningay" name="medvetandestorninga" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.medvetandestorning.medvetandestorning"></td>
+                 ng-model="viewState.intygModel.medvetandestorning.medvetandestorning" ng-change="validate()"></td>
       <td><input id="medvetandestorningan" name="medvetandestorninga" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.medvetandestorning.medvetandestorning"></td>
+                 ng-model="viewState.intygModel.medvetandestorning.medvetandestorning" ng-change="validate()"></td>
       <td>
         <p><span dynamic-label key="FRG_21.RBK"></span> *</p>
 
@@ -23,7 +23,8 @@
           </p>
           <textarea class="form-control" rows="4" data-ng-model="viewState.intygModel.medvetandestorning.beskrivning"
                     id="beskrivningMedvetandestorning" wc-maxlength ng-trim="false"
-                    maxlength="{{viewState.inputLimits.medvetandestorning}}"></textarea>
+                    maxlength="{{viewState.inputLimits.medvetandestorning}}"
+                    ng-blur="validate()"></textarea>
         </div>
       </td>
     </tr>

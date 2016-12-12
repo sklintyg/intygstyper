@@ -12,17 +12,17 @@
     </tr>
     <tr>
       <td><input id="horselbalansay" name="horselbalansa" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.horselBalans.balansrubbningar"></td>
+                 ng-model="viewState.intygModel.horselBalans.balansrubbningar" ng-change="validate()"></td>
       <td><input id="horselbalansan" name="horselbalansa" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.horselBalans.balansrubbningar"></td>
+                 ng-model="viewState.intygModel.horselBalans.balansrubbningar" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_10.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('balansrubbningar')"></wc-field-validation></td></tr>
     <tr ng-show="viewState.korkortd">
       <td><input id="horselbalansby" name="horselbalansb" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter"></td>
+                 ng-model="viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter" ng-change="validate()"></td>
       <td><input id="horselbalansbn" name="horselbalansb" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter"></td>
+                 ng-model="viewState.intygModel.horselBalans.svartUppfattaSamtal4Meter" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_11.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('svartupfattasamtal4meter')"></wc-field-validation></td></tr>

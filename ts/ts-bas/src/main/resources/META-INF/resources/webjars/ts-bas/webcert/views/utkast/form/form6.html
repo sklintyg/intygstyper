@@ -11,9 +11,9 @@
     </tr>
     <tr>
       <td><input id="neurologiay" name="neurologia" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.neurologi.neurologiskSjukdom"></td>
+                 ng-model="viewState.intygModel.neurologi.neurologiskSjukdom" ng-change="validate()"></td>
       <td><input id="neurologian" name="neurologia" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.neurologi.neurologiskSjukdom"></td>
+                 ng-model="viewState.intygModel.neurologi.neurologiskSjukdom" ng-change="validate()"></td>
       <td>
         <p><span dynamic-label key="FRG_20.RBK"></span> *</p>
       </td>

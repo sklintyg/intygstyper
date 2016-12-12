@@ -11,9 +11,9 @@
     </tr>
     <tr>
       <td><input id="sjukhusvarda" name="sjukhusvarda" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt"></td>
+                 ng-model="viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt" ng-change="validate()"></td>
       <td><input name="sjukhusvarda" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt"></td>
+                 ng-model="viewState.intygModel.sjukhusvard.sjukhusEllerLakarkontakt" ng-change="validate()"></td>
       <td>
         <p><span dynamic-label key="FRG_30.RBK"></span> *</p>
 
@@ -26,7 +26,8 @@
                        class="form-control" type="text"
                        data-ng-model="viewState.intygModel.sjukhusvard.tidpunkt"
                        wc-maxlength ng-trim="false"
-                       maxlength="{{viewState.inputLimits.sjukhusvardtidpunkt}}">
+                       maxlength="{{viewState.inputLimits.sjukhusvardtidpunkt}}"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
           </tr>
@@ -38,7 +39,8 @@
                        class="form-control" type="text"
                        data-ng-model="viewState.intygModel.sjukhusvard.vardinrattning"
                        wc-maxlength ng-trim="false"
-                       maxlength="{{viewState.inputLimits.sjukhusvardvardinrattning}}">
+                       maxlength="{{viewState.inputLimits.sjukhusvardvardinrattning}}"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
           </tr>
@@ -50,7 +52,8 @@
                        class="form-control" type="text"
                        data-ng-model="viewState.intygModel.sjukhusvard.anledning"
                        wc-maxlength ng-trim="false"
-                       maxlength="{{viewState.inputLimits.sjukhusvardanledning}}">
+                       maxlength="{{viewState.inputLimits.sjukhusvardanledning}}"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
           </tr>

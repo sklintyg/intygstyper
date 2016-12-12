@@ -11,9 +11,9 @@
     </tr>
     <tr>
       <td><input id="njuraray" name="njurara" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.njurar.nedsattNjurfunktion"></td>
+                 ng-model="viewState.intygModel.njurar.nedsattNjurfunktion" ng-change="validate()"></td>
       <td><input id="njuraran" name="njurara" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.njurar.nedsattNjurfunktion"></td>
+                 ng-model="viewState.intygModel.njurar.nedsattNjurfunktion" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_22.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('nedsattNjurfunktion')"></wc-field-validation></td></tr>

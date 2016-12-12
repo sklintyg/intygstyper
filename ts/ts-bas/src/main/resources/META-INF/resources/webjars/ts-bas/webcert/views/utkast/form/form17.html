@@ -8,19 +8,19 @@
   <div class="form-group">
     <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('bedomning')">
       <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false"
-                                  ng-model="viewState.intygModel.bedomning.kanInteTaStallning">
+                                  ng-model="viewState.intygModel.bedomning.kanInteTaStallning" ng-change="validate()">
         <span dynamic-label key="DFR_33.1.RBK"></span></label>
 
       <div class="form-group clearfix indent" ng-show="!viewState.intygModel.bedomning.kanInteTaStallning">
         <label class="checkbox checkbox-columns col-xs-2"
                ng-repeat="typ in viewState.intygModel.bedomning.korkortstyp track by $index"><input
             id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
-            ng-model="typ.selected">
+            ng-model="typ.selected" ng-change="validate()">
           <span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span></label>
       </div>
       <label class="radio">
         <input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
-               ng-model="viewState.intygModel.bedomning.kanInteTaStallning">
+               ng-model="viewState.intygModel.bedomning.kanInteTaStallning" ng-change="validate()">
         <span dynamic-label key="DFR_33.2.RBK"></span>
       </label>
     </wc-validation-group>
@@ -41,5 +41,6 @@
   <p><span dynamic-label key="FRG_34.RBK"></span></p>
   <textarea name="specialist" class="form-control" rows='3'
             id="specialist" ng-model="viewState.intygModel.bedomning.lakareSpecialKompetens" wc-maxlength ng-trim="false"
-            maxlength="{{viewState.inputLimits.lakareSpecialKompetens}}"></textarea>
+            maxlength="{{viewState.inputLimits.lakareSpecialKompetens}}"
+            ng-blur="validate()"></textarea>
 </div>
