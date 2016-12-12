@@ -19,8 +19,8 @@
 
 angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
-        'common.DateUtilsService', 'common.ObjectHelper',
-        function($scope, $log, viewState, utils, dateUtils, ObjectHelper) {
+        'common.DateUtilsService', 'common.ObjectHelper', 'common.UtkastValidationService',
+        function($scope, $log, viewState, utils, dateUtils, ObjectHelper, UtkastValidationService) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -195,4 +195,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
                 }, form4b);
             }
 
+            $scope.validate = function() {
+                UtkastValidationService.validate(model);
+            };
         }]);

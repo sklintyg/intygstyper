@@ -18,12 +18,15 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form9Ctrl',
-    ['$log', '$scope', 'fk7263.EditCertCtrl.ViewStateService',
-        function($log, $scope, viewState) {
+    ['$log', '$scope', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtkastValidationService',
+        function($log, $scope, viewState, UtkastValidationService) {
             'use strict';
             var model;
             model = viewState.intygModel;
             $scope.model = model;
             $scope.viewState = viewState;
 
+            $scope.validate = function() {
+                UtkastValidationService.validate(model);
+            };
         }]);

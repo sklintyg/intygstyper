@@ -6,14 +6,16 @@
                 vilken)</label>
                   <textarea id="measuresCurrent" class="form-control" name="measures.current" rows='2'
                             ng-model="model.atgardInomSjukvarden" wc-maxlength ng-trim="false"
-                            maxlength="{{viewState.inputLimits.atgardInomSjukvarden}}"></textarea>
+                            maxlength="{{viewState.inputLimits.atgardInomSjukvarden}}"
+                            ng-blur="validate()"></textarea>
         </div>
 
         <div class="form-group">
             <label class="control-label">Annan åtgärd (ange vilken)</label>
                   <textarea id="measuresOther" class="form-control" name="measures.other" rows='2'
                             ng-model="model.annanAtgard" wc-maxlength ng-trim="false"
-                            maxlength="{{viewState.inputLimits.annanAtgard}}"></textarea>
+                            maxlength="{{viewState.inputLimits.annanAtgard}}"
+                            ng-blur="validate()"></textarea>
         </div>
     </div>
 </div>

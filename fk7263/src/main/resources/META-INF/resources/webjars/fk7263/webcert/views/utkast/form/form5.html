@@ -14,7 +14,8 @@
                              validations="viewState.getValidationErrors('aktivitetsbegransning')">
         <textarea id="activityLimitation" class="form-control" name="activityLimitation" rows='10'
                   ng-model="model.aktivitetsbegransning" wc-maxlength ng-trim="false"
-                  maxlength="{{viewState.inputLimits.aktivitetsbegransning}}"></textarea>
+                  maxlength="{{viewState.inputLimits.aktivitetsbegransning}}"
+                  ng-blur="validate()"></textarea>
       </wc-validation-wrapper>
     </wc-fmb-help-display>
   </div>

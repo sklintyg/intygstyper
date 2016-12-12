@@ -13,7 +13,8 @@
                              validations="viewState.getValidationErrors('funktionsnedsattning')">
         <textarea id="disabilities" class="form-control" name="disabilities" rows='6'
                   ng-model="model.funktionsnedsattning" wc-maxlength ng-trim="false"
-                  maxlength="{{viewState.inputLimits.funktionsnedsattning}}"></textarea>
+                  maxlength="{{viewState.inputLimits.funktionsnedsattning}}"
+                  ng-blur="validate()"></textarea>
       </wc-validation-wrapper>
     </wc-fmb-help-display>
   </div>

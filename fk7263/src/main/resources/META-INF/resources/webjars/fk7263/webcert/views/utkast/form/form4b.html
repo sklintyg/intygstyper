@@ -17,11 +17,12 @@
                                                                                              name="informationBasedOn.examination"
                                                                                              class="checkbox-inline"
                                                                                              ng-model="basedOnState.check.undersokningAvPatienten"
-                                                                                             ng-change="toggleBaseradPaDate('undersokningAvPatienten')"
+                                                                                             ng-change="toggleBaseradPaDate('undersokningAvPatienten'); validate()"
                                                                                              value="true">
                             Min undersökning av patienten</label>
                         <span wc-date-picker-field target-model="dates.undersokningAvPatienten"
-                              dom-id="undersokningAvPatientenDate" add-date-parser="loose"></span>
+                              dom-id="undersokningAvPatientenDate" add-date-parser="loose"
+                              on-blur="validate()"></span>
                     </wc-validation-wrapper>
                 </div>
 
@@ -32,10 +33,11 @@
                                                                                              id="basedOnPhoneContact"
                                                                                          name="informationBasedOn.phoneContact"
                                                                                          ng-model="basedOnState.check.telefonkontaktMedPatienten"
-                                                                                         ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten')">
+                                                                                         ng-change="toggleBaseradPaDate('telefonkontaktMedPatienten'); validate()">
                         Min telefonkontakt med patienten</label>
                         <span wc-date-picker-field target-model="dates.telefonkontaktMedPatienten"
-                              dom-id="telefonkontaktMedPatientenDate" add-date-parser="loose"></span>
+                              dom-id="telefonkontaktMedPatientenDate" add-date-parser="loose"
+                              on-blur="validate()"></span>
                     </wc-validation-wrapper>
                 </div>
 
@@ -46,10 +48,11 @@
                                                                                              id="basedOnJournal"
                                                                                              name="informationBasedOn.journal"
                                                                                              ng-model="basedOnState.check.journaluppgifter"
-                                                                                             ng-change="toggleBaseradPaDate('journaluppgifter')">
+                                                                                             ng-change="toggleBaseradPaDate('journaluppgifter'); validate()">
                             Journaluppgifter</label>
                         <span wc-date-picker-field target-model="dates.journaluppgifter"
-                              dom-id="journaluppgifterDate" add-date-parser="loose"></span>
+                              dom-id="journaluppgifterDate" add-date-parser="loose"
+                              on-blur="validate()"></span>
                     </wc-validation-wrapper>
                 </div>
 
@@ -60,10 +63,10 @@
                                                                                              id="basedOnOther"
                                                                                              name="informationBasedOn.other"
                                                                                              ng-model="basedOnState.check.annanReferens"
-                                                                                             ng-change="toggleBaseradPaDate('annanReferens')">
+                                                                                             ng-change="toggleBaseradPaDate('annanReferens'); validate()">
                             Annat<span wc-help-mark field-help-text="fk7263.helptext.intyg-baserat-pa.annat"></span>
                         </label>
-                        <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate" add-date-parser="loose"></span>
+                        <span wc-date-picker-field target-model="dates.annanReferens" dom-id="annanReferensDate" add-date-parser="loose" on-blur="validate()"></span>
                     </wc-validation-wrapper>
                 </div>
 
@@ -74,7 +77,8 @@
                     <span>Ange vad:</span> *<br>
                     <textarea id="informationBasedOnOtherText" name="informationBasedOn.otherText" rows='2'
                               class='form-control otherInformation' ng-model="model.annanReferensBeskrivning"
-                              ng-change="viewState.limitOtherField('annanReferensBeskrivning')"></textarea>
+                              ng-change="viewState.limitOtherField('annanReferensBeskrivning')"
+                              ng-blur="validate()"></textarea>
 
                     <div class="counter">
                         Tecken kvar: {{viewState.inputLimits.ovrigt - viewState.getTotalOvrigtLength()}}

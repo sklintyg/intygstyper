@@ -20,9 +20,9 @@
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
     ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
         'fk7263.LastEffectiveDateNoticeModel', 'common.DateUtilsService',
-        'common.DateRangeService', 'common.fmbViewState', 'common.messageService',
+        'common.DateRangeService', 'common.fmbViewState', 'common.messageService', 'common.UtkastValidationService',
         function($scope, $log, viewState, LastEffectiveDateNoticeModel, dateUtils,
-            DateRangeService, fmbViewState, messageService) {
+            DateRangeService, fmbViewState, messageService, UtkastValidationService) {
             'use strict';
             // private vars
 
@@ -171,4 +171,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
                 }
             });
 
+            $scope.validate = function() {
+                UtkastValidationService.validate($scope.model);
+            };
         }]);

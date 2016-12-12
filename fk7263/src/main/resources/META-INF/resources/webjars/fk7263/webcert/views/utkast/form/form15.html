@@ -22,7 +22,8 @@
                         <div class="col-xs-9">
                             <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
                                    name="clinicInfo.postalAddress"
-                                   ng-model="model.grundData.skapadAv.vardenhet.postadress">
+                                   ng-model="model.grundData.skapadAv.vardenhet.postadress"
+                                   ng-blur="validate()">
                         </div>
                     </div>
                 </wc-validation-wrapper>
@@ -34,7 +35,8 @@
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
-                                   name="clinicInfo.postalCode" ng-model="model.grundData.skapadAv.vardenhet.postnummer">
+                                   name="clinicInfo.postalCode" ng-model="model.grundData.skapadAv.vardenhet.postnummer"
+                                   ng-blur="validate()">
                         </div>
                     </div>
                 </wc-validation-wrapper>
@@ -46,7 +48,8 @@
 
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="clinicInfoPostalCity" name="clinicInfo.postalCity"
-                                   ng-model="model.grundData.skapadAv.vardenhet.postort">
+                                   ng-model="model.grundData.skapadAv.vardenhet.postort"
+                                   ng-blur="validate()">
                         </div>
                     </div>
                 </wc-validation-wrapper>
@@ -58,7 +61,8 @@
 
                       <div class="col-xs-9">
                           <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
-                                 ng-model="model.grundData.skapadAv.vardenhet.telefonnummer">
+                                 ng-model="model.grundData.skapadAv.vardenhet.telefonnummer"
+                                 ng-blur="validate()">
                       </div>
                   </div>
                 </wc-validation-wrapper>

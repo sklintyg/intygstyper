@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form5Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.fmbViewState',
-        function($scope, $log, viewState, fmbViewState) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.fmbViewState', 'common.UtkastValidationService',
+        function($scope, $log, viewState, fmbViewState, UtkastValidationService) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -44,4 +44,8 @@ angular.module('fk7263').controller('fk7263.EditCert.Form5Ctrl',
                     }
                 }
             });
+
+            $scope.validate = function() {
+                UtkastValidationService.validate(model);
+            };
         }]);

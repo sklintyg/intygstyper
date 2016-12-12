@@ -6,6 +6,7 @@
             försäkringsmedicinska beslutsstöd</a>
                 <textarea id="capacityForWorkText" class="form-control" name="capacityForWork.text" rows='10'
                           ng-model="model.arbetsformagaPrognos" wc-maxlength ng-trim="false"
-                          maxlength="{{viewState.inputLimits.arbetsformagaPrognos}}"></textarea>
+                          maxlength="{{viewState.inputLimits.arbetsformagaPrognos}}"
+                          ng-blur="validate()"></textarea>
     </div>
 </div>

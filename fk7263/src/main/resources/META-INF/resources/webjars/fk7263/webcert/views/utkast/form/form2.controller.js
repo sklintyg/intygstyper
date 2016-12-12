@@ -19,8 +19,8 @@
 
 angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
     ['$scope', '$log', '$http', 'fk7263.EditCertCtrl.ViewStateService', 'fk7263.diagnosService', 'common.fmbService', 'common.fmbViewState',
-        'fk7263.EditCertCtrl.Helper', 'common.MonitoringLogService',
-        function($scope, $log, $http, viewState, diagnosService, fmbService, fmbViewState, helper, monitoringService) {
+        'fk7263.EditCertCtrl.Helper', 'common.MonitoringLogService', 'common.UtkastValidationService',
+        function($scope, $log, $http, viewState, diagnosService, fmbService, fmbViewState, helper, monitoringService, UtkastValidationService) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -298,4 +298,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form2Ctrl',
                 return totalLength;
             };
 
+            $scope.validate = function() {
+                UtkastValidationService.validate(model);
+            };
         }]);

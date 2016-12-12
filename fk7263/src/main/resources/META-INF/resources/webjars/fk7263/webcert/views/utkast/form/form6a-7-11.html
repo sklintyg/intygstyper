@@ -11,10 +11,10 @@
         <div class="form-group form-inline" id="rekommendationRessattRadioGroup">
             <label class="radio-inline">
                 <input type="radio" id="rekommendationRessatt" name="recommendationsToFkTravel" value="JA"
-                       ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('JA')"> Ja</label>
+                       ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('JA'); validate()"> Ja</label>
             <label class="radio-inline">
                 <input type="radio" id="rekommendationRessattEj" name="recommendationsToFkTravel" value="NEJ"
-                       ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('NEJ')"> Nej</label>
+                       ng-model="model.ressattTillArbete" ng-change="model.setressattTillArbete('NEJ'); validate()"> Nej</label>
         </div>
 
         <!-- 6a, 7 -->
@@ -24,7 +24,8 @@
             <div class="form-group form-inline">
                 <label class="checkbox"><input type="checkbox" id="rekommendationKontaktAf"
                                                name="recommendationsToFk.contactAf"
-                                               ng-model="model.rekommendationKontaktArbetsformedlingen">
+                                               ng-model="model.rekommendationKontaktArbetsformedlingen"
+                                               ng-change="validate()">
                     Patienten
                     bör komma i kontakt med arbetsförmedlingen</label> <span wc-help-mark
                                                                              field-help-text="fk7263.helptext.rekommendationer.arbetsformedlingen"></span>
@@ -32,7 +33,8 @@
             <div class="form-group form-inline">
                 <label class="checkbox"><input type="checkbox" id="rekommendationKontaktForetagshalsovard"
                                                name="recommendationsToFk.contactCompanyCare"
-                                               ng-model="model.rekommendationKontaktForetagshalsovarden">
+                                               ng-model="model.rekommendationKontaktForetagshalsovarden"
+                                               ng-change="validate()">
                     Patienten
                     bör komma i kontakt med företagshälsovården</label> <span wc-help-mark
                                                                               field-help-text="fk7263.helptext.rekommendationer.foretagshalsovarden"></span>
@@ -40,7 +42,7 @@
             <div class="form-group form-inline">
                 <label class="checkbox"><input type="checkbox" id="rekommendationOvrigt"
                                                name="recommendationsToFk.other"
-                                               ng-change="onOvrigtChange()"
+                                               ng-change="onOvrigtChange(); validate()"
                                                ng-model="model.rekommendationOvrigtCheck"> Övrigt (ange
                     vad *)</label><span wc-help-mark
                                       field-help-text="fk7263.helptext.rekommendationer.ovrigt"></span>
@@ -51,7 +53,8 @@
                         <input type="text" id="rekommendationOvrigtBeskrivning" name="recommendationsToFk.otherText"
                                value=""
                                class='form-control maxwidth' ng-model="model.rekommendationOvrigt" maxlength="80"
-                               wc-maxlength>
+                               wc-maxlength
+                               ng-blur="validate()">
 
                     </div>
                 </wc-validation-wrapper>
@@ -67,7 +70,7 @@
                   <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion"
                                                          value="JA"
-                                                         ng-model="model.rehab" id="rehabYes" ng-change="model.setrehab('JA')">
+                                                         ng-model="model.rehab" id="rehabYes" ng-change="model.setrehab('JA'); validate()">
                           Ja</label>
                   </div>
 
@@ -75,7 +78,7 @@
                   <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
                                                          value="NEJ" ng-model="model.rehab" id="rehabNo"
-                                                         ng-change="model.setrehab('NEJ')">
+                                                         ng-change="model.setrehab('NEJ'); validate()">
                           Nej</label>
                   </div>
 
@@ -83,7 +86,7 @@
                   <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="recommendationsToFkReabInQuestion" group="group3"
                                                          value="GAREJ" ng-model="model.rehab" id="garej"
-                                                         ng-change="model.setrehab('GAREJ')"> Går inte
+                                                         ng-change="model.setrehab('GAREJ'); validate()"> Går inte
                           att bedöma</label>
                   </div>
             </span>

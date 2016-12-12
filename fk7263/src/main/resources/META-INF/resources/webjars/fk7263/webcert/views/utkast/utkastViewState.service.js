@@ -115,10 +115,10 @@ angular.module('fk7263').service('fk7263.EditCertCtrl.ViewStateService',
             };
 
             this.getValidationErrors = function(field) {
-                if (!this.common.validationMessagesByField) {
+                if (!this.common.validation.messagesByField) {
                     return null;
                 }
-                return this.common.validationMessagesByField[field];
+                return this.common.validation.messagesByField[field];
             };
 
             this.reset();

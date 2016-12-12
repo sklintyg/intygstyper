@@ -14,7 +14,7 @@
                 <div class="controls form-inline">
                     <label class="checkbox"><input type="checkbox" id="arbeteNuvarande"
                                                    ng-model="model.nuvarandeArbete"
-                                                   ng-change="onSysselsattningChange()"> Nuvarande
+                                                   ng-change="onSysselsattningChange(); validate()"> Nuvarande
                         arbete</label><span wc-help-mark
                                             field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
 
@@ -25,7 +25,8 @@
                             <div class="controls">
                                 <textarea id="currentWork" class="" name="currentWork" rows='2'
                                           ng-model="model.nuvarandeArbetsuppgifter" wc-maxlength ng-trim="false"
-                                          maxlength="{{viewState.inputLimits.nuvarandeArbetsuppgifter}}"></textarea>
+                                          maxlength="{{viewState.inputLimits.nuvarandeArbetsuppgifter}}"
+                                          ng-blur="validate()"></textarea>
                             </div>
                         </div>
                     </wc-validation-wrapper>
@@ -34,7 +35,7 @@
             <div class="form-group form-inline">
                 <label class="checkbox"><input type="checkbox" id="arbeteArbetslos"
                                                ng-model="model.arbetsloshet"
-                                               ng-change="onSysselsattningChange()">
+                                               ng-change="onSysselsattningChange(); validate()">
                     Arbetslöshet - att utföra arbete på den
                     reguljära arbetsmarknaden</label><span wc-help-mark
                                                            field-help-text="fk7263.helptext.sysselsattning.arbetsloshet"></span>
@@ -42,7 +43,7 @@
             <div class="form-group form-inline">
                 <label class="checkbox"><input type="checkbox" id="arbeteForaldraledig"
                                                ng-model="model.foraldrarledighet"
-                                               ng-change="onSysselsattningChange()">
+                                               ng-change="onSysselsattningChange(); validate()">
                     Föräldraledighet med föräldrapenning -
                     att vårda sitt barn</label><span wc-help-mark
                                                      field-help-text="fk7263.helptext.sysselsattning.foraldrarledighet"></span>

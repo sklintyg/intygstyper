@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.ObjectHelper',
-        function($scope, $log, viewState, ObjectHelper) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.ObjectHelper', 'common.UtkastValidationService',
+        function($scope, $log, viewState, ObjectHelper, UtkastValidationService) {
             'use strict';
 
             var model = viewState.intygModel;
@@ -67,4 +67,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8aCtrl',
                 syncAttic(newVal);
             });
 
+            $scope.validate = function() {
+                UtkastValidationService.validate(model);
+            };
         }]);

@@ -2,7 +2,9 @@
     <div wc-field field-label="fk7263.label.fk-kontakt" field-number="12"
          field-help-text="fk7263.helptext.kontakt">
         <label><input type="checkbox" id="kontaktFk" name="contactWithFkRequested"
-                      ng-model="model.kontaktMedFk"> Kontakt önskas med
-            Försäkringskassan</label>
+                      ng-model="model.kontaktMedFk"
+                      ng-change="validate()">
+            Kontakt önskas med Försäkringskassan
+        </label>
     </div>
 </div>

@@ -18,8 +18,8 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.ObjectHelper',
-        function($scope, $log, viewState, ObjectHelper) {
+    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.ObjectHelper', 'common.UtkastValidationService',
+        function($scope, $log, viewState, ObjectHelper, UtkastValidationService) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -125,4 +125,7 @@ angular.module('fk7263').controller('fk7263.EditCert.Form10Ctrl',
                 return $scope.radioGroups.prognos === prognosStates.UNKNOWN;
             };
 
+            $scope.validate = function() {
+                UtkastValidationService.validate(model);
+            };
         }]);
