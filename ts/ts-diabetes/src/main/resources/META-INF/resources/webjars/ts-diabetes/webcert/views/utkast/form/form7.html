@@ -19,7 +19,7 @@
           <div class="col-md-9">
             <input type="text" class="form-control input-full" id="clinicInfoPostalAddress"
                    name="clinicInfo.postalAddress" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postadress"
-                   maxlength="70">
+                   maxlength="70" ng-blur="validate()">
           </div>
         </div>
       </wc-validation-wrapper>
@@ -32,7 +32,7 @@
           <div class="col-md-9">
             <input type="text" class="form-control input-5" id="clinicInfoPostalCode"
                    name="clinicInfo.postalCode" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postnummer"
-                   maxlength="6">
+                   maxlength="6" ng-blur="validate()">
           </div>
         </div>
       </wc-validation-wrapper>
@@ -45,7 +45,7 @@
           <div class="col-md-9">
             <input type="text" class="form-control" id="clinicInfoPostalCity"
                    name="clinicInfo.postalCity" ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.postort"
-                   maxlength="30">
+                   maxlength="30" ng-blur="validate()">
           </div>
         </div>
       </wc-validation-wrapper>
@@ -57,7 +57,7 @@
           <label class="col-md-3 control-label">Telefonnummer *</label>
           <div class="col-md-9">
             <input type="text" class="form-control" id="clinicInfoPhone" name="clinicInfo.phone"
-                   ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer" maxlength="20">
+                   ng-model="viewState.intygModel.grundData.skapadAv.vardenhet.telefonnummer" maxlength="20" ng-blur="validate()">
           </div>
         </div>
       </wc-validation-wrapper>

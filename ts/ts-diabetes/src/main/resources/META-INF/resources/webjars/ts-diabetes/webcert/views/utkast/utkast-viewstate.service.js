@@ -59,10 +59,10 @@ angular.module('ts-diabetes').service('ts-diabetes.UtkastController.ViewStateSer
             };
 
             this.getValidationErrors = function(field) {
-                if (!this.common.validationMessagesByField) {
+                if (!this.common.validation.messagesByField) {
                     return null;
                 }
-                return this.common.validationMessagesByField[field.toLowerCase()];
+                return this.common.validation.messagesByField[field.toLowerCase()];
             };
 
             this.reset();

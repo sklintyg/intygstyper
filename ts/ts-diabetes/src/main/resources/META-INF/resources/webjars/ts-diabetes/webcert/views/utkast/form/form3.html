@@ -27,9 +27,9 @@
     </tr>
     <tr>
       <td><input id="synay" name="syna" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
+                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg" ng-change="validate()"></td>
       <td><input id="synan" name="syna" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg"></td>
+                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg" ng-change="validate()"></td>
       <td><span dynamic-label key="FRG_43.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('separatOgonlakarintyg')"></wc-field-validation></td></tr>
@@ -48,9 +48,9 @@
     </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td><input id="synby" name="synb" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning" ng-change="validate()"></td>
       <td><input id="synbn" name="synb" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning"></td>
+                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning" ng-change="validate()"></td>
       <td>
         <span dynamic-label key="FRG_44.RBK"></span>
         <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
@@ -84,13 +84,15 @@
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('hoger.utankorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hoger.utanKorrektion" maxlength="4">
+                       id="synHogerOgaUtanKorrektion" ng-model="viewState.intygModel.syn.hoger.utanKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('hoger.medKorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hoger.medKorrektion" maxlength="4">
+                       id="synHogerOgaMedKorrektion" ng-model="viewState.intygModel.syn.hoger.medKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
           </tr>
@@ -99,13 +101,15 @@
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('vanster.utankorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vanster.utanKorrektion" maxlength="4">
+                       id="synVansterOgaUtanKorrektion" ng-model="viewState.intygModel.syn.vanster.utanKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('vanster.medKorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vanster.medKorrektion" maxlength="4">
+                       id="synVansterOgaMedKorrektion" ng-model="viewState.intygModel.syn.vanster.medKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
           </tr>
@@ -114,13 +118,15 @@
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('binokulart.utankorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4">
+                       id="synBinokulartUtanKorrektion" ng-model="viewState.intygModel.syn.binokulart.utanKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
             <td>
               <wc-validation-wrapper field-type="single-text" validations="viewState.getValidationErrors('binokulart.medKorrektion')">
                 <input type="text" class="form-control small-decimal" wc-decimal-number wc-decimal-max-numbers="2"
-                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4">
+                       id="synBinokulartMedKorrektion" ng-model="viewState.intygModel.syn.binokulart.medKorrektion" maxlength="4"
+                       ng-blur="validate()">
               </wc-validation-wrapper>
             </td>
           </tr>
@@ -128,9 +134,9 @@
     </tr>
 
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
-      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi">
+      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
       </td>
-      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi">
+      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
       </td>
       <td>
         <span dynamic-label key="FRG_6.RBK"></span>

@@ -13,7 +13,7 @@
         <label class="radio checkbox-columns col-md-6" ng-repeat="v in viewState.identitet">
           <input
             id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
-            ng-model="viewState.intygModel.vardkontakt.idkontroll">
+            ng-model="viewState.intygModel.vardkontakt.idkontroll" ng-change="validate()">
           {{v.label}}
         </label>
       </div>

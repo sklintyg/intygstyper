@@ -19,8 +19,8 @@
 
 angular.module('ts-diabetes').controller('ts-diabetes.Utkast.IntentionController',
     ['$scope', '$log',
-        'ts-diabetes.UtkastController.ViewStateService',
-        function($scope, $log, viewState) {
+        'ts-diabetes.UtkastController.ViewStateService', 'common.UtkastValidationService',
+        function($scope, $log, viewState, UtkastValidationService) {
             'use strict';
             $scope.viewState = viewState;
 
@@ -56,4 +56,7 @@ angular.module('ts-diabetes').controller('ts-diabetes.Utkast.IntentionController
             }, true);
             // --- intention
 
+            $scope.validate = function() {
+                UtkastValidationService.validate(viewState.intygModel);
+            };
         }]);
