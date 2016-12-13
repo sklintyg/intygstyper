@@ -95,7 +95,12 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
             });
 
             $scope.validate = function() {
-                UtkastValidationService.validate(viewState.intygModel);
+                // When a date is selected from a date popup a blur event is sent.
+                // In the current version of Angular UI this blur event is sent before utkast model is updated
+                // This timeout ensures we get the new value in $scope.model
+                $timeout(function() {
+                    UtkastValidationService.validate(viewState.intygModel);
+                });
             };
 
         }]);

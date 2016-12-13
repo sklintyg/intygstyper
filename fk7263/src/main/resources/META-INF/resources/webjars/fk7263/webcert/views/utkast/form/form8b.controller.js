@@ -18,10 +18,10 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService',
+    ['$scope', '$log', '$timeout', 'fk7263.EditCertCtrl.ViewStateService',
         'fk7263.LastEffectiveDateNoticeModel', 'common.DateUtilsService',
         'common.DateRangeService', 'common.fmbViewState', 'common.messageService', 'common.UtkastValidationService',
-        function($scope, $log, viewState, LastEffectiveDateNoticeModel, dateUtils,
+        function($scope, $log, $timeout, viewState, LastEffectiveDateNoticeModel, dateUtils,
             DateRangeService, fmbViewState, messageService, UtkastValidationService) {
             'use strict';
             // private vars
@@ -172,6 +172,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form8bCtrl',
             });
 
             $scope.validate = function() {
-                UtkastValidationService.validate($scope.model);
+                // When a date is selected from a date popup a blur event is sent.
+                // In the current version of Angular UI this blur event is sent before utkast model is updated
+                // This timeout ensures we get the new value in $scope.model
+                $timeout(function() {
+                    UtkastValidationService.validate($scope.model);
+                });
             };
         }]);

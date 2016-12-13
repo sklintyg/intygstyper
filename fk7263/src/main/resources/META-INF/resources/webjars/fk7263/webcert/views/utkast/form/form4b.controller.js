@@ -18,9 +18,9 @@
  */
 
 angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
-    ['$scope', '$log', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
+    ['$scope', '$log', '$timeout', 'fk7263.EditCertCtrl.ViewStateService', 'common.UtilsService',
         'common.DateUtilsService', 'common.ObjectHelper', 'common.UtkastValidationService',
-        function($scope, $log, viewState, utils, dateUtils, ObjectHelper, UtkastValidationService) {
+        function($scope, $log, $timeout, viewState, utils, dateUtils, ObjectHelper, UtkastValidationService) {
             'use strict';
             var model = viewState.intygModel;
             $scope.model = model;
@@ -196,6 +196,11 @@ angular.module('fk7263').controller('fk7263.EditCert.Form4bCtrl',
             }
 
             $scope.validate = function() {
-                UtkastValidationService.validate(model);
+                // When a date is selected from a date popup a blur event is sent.
+                // In the current version of Angular UI this blur event is sent before utkast model is updated
+                // This timeout ensures we get the new value in $scope.model
+                $timeout(function() {
+                    UtkastValidationService.validate(model);
+                });
             };
         }]);
