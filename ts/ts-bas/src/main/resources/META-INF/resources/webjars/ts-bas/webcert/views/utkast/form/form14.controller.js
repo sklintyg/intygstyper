@@ -19,8 +19,8 @@
 
 angular.module('ts-bas').controller('ts-bas.Utkast.Form14Controller',
     ['$scope', '$log',
-        'ts-bas.UtkastController.ViewStateService', 'common.UtkastValidationService',
-        function($scope, $log, viewState, UtkastValidationService) {
+        'ts-bas.UtkastController.ViewStateService',
+        function($scope, $log, viewState) {
             'use strict';
             $scope.viewState = viewState;
 
@@ -39,7 +39,4 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form14Controller',
                 }
             }, true);
 
-            $scope.validate = function() {
-                UtkastValidationService.validate(viewState.intygModel);
-            };
         }]);

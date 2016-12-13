@@ -21,9 +21,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
     [ '$location', '$q', '$rootScope', '$scope', '$timeout', '$window',
         'common.UtkastService', 'common.UserModel',
         'ts-bas.Domain.IntygModel',
-        'ts-bas.UtkastController.ViewStateService',
+        'ts-bas.UtkastController.ViewStateService', 'common.UtkastValidationService',
         function($location, $q, $rootScope, $scope, $timeout, $window,
-            UtkastService, UserModel, IntygModel, viewState) {
+            UtkastService, UserModel, IntygModel, viewState, UtkastValidationService) {
             'use strict';
 
             /**********************************************************************************
@@ -93,5 +93,9 @@ angular.module('ts-bas').controller('ts-bas.UtkastController',
                     $scope.certForm.$setDirty();
                 }
             });
+
+            $scope.validate = function() {
+                UtkastValidationService.validate(viewState.intygModel);
+            };
 
         }]);

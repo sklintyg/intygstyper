@@ -19,8 +19,8 @@
 
 angular.module('ts-diabetes').controller('ts-diabetes.Utkast.Form4Controller',
     ['$scope', '$log',
-        'ts-diabetes.UtkastController.ViewStateService', 'common.UtkastValidationService',
-        function($scope, $log, viewState, UtkastValidationService) {
+        'ts-diabetes.UtkastController.ViewStateService',
+        function($scope, $log, viewState) {
             'use strict';
             $scope.viewState = viewState;
 
@@ -35,7 +35,4 @@ angular.module('ts-diabetes').controller('ts-diabetes.Utkast.Form4Controller',
             });
             // --- form4
 
-            $scope.validate = function() {
-                UtkastValidationService.validate(viewState.intygModel);
-            };
         }]);

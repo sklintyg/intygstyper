@@ -19,9 +19,9 @@
 
 angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
     ['$location', '$log', '$q', '$rootScope', '$scope', '$timeout', '$window', 'common.UtkastService', 'common.UserModel',
-        'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.DateUtilsService',
+        'ts-diabetes.Domain.IntygModel', 'ts-diabetes.UtkastController.ViewStateService', 'common.UtkastValidationService',
         function($location, $log, $q, $rootScope, $scope, $timeout, $window, UtkastService, UserModel,
-            IntygModel, viewState, dateUtils) {
+            IntygModel, viewState, UtkastValidationService) {
             'use strict';
 
             /**********************************************************************************
@@ -88,5 +88,9 @@ angular.module('ts-diabetes').controller('ts-diabetes.UtkastController',
                     $scope.certForm.$setDirty();
                 }
             });
+
+            $scope.validate = function() {
+                UtkastValidationService.validate(viewState.intygModel);
+            };
 
         }]);
