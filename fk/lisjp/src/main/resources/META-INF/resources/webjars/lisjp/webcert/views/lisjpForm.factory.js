@@ -179,7 +179,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 {
                                     key: 'funktionsnedsattning', type: 'multi-text', templateOptions: {
                                     label: 'DFR_35.1',
-                                    required: true
+                                    required: 'FRG_ONLY'
                                 }
                                 }
                             ]
@@ -196,7 +196,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 {
                                     key: 'aktivitetsbegransning', type: 'multi-text', templateOptions: {
                                     label: 'DFR_17.1',
-                                    required: true
+                                    required: 'FRG_ONLY'
                                 }
                                 }
                             ]
@@ -281,7 +281,7 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                 }
                                 return scope.model.arbetstidsforlaggning !== true;
                             },
-                            templateOptions: {label: 'DFR_33.2', kompletteringKey: 'arbetstidsforlaggning'}
+                            templateOptions: {label: 'DFR_33.2', kompletteringKey: 'arbetstidsforlaggning', required: true}
                         },
                         {key: 'arbetsresor', type: 'boolean', templateOptions: {label: 'DFR_34.1'}, hideExpression: 'model.avstangningSmittskydd'},
                         {
