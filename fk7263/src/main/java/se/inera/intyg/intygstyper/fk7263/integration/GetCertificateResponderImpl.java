@@ -21,7 +21,11 @@ package se.inera.intyg.intygstyper.fk7263.integration;
 import java.io.StringReader;
 
 import javax.annotation.PostConstruct;
-import javax.xml.bind.*;
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -34,7 +38,9 @@ import org.w3c.dom.Document;
 import com.google.common.base.Throwables;
 
 import se.inera.ifv.insuranceprocess.healthreporting.getcertificate.rivtabp20.v1.GetCertificateResponderInterface;
-import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.*;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.CertificateType;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateRequestType;
+import se.inera.ifv.insuranceprocess.healthreporting.getcertificateresponder.v1.GetCertificateResponseType;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.ObjectFactory;
 import se.inera.ifv.insuranceprocess.healthreporting.registermedicalcertificateresponder.v3.RegisterMedicalCertificateType;
 import se.inera.intyg.common.schemas.insuranceprocess.healthreporting.converter.ModelConverter;
@@ -57,14 +63,14 @@ public class GetCertificateResponderImpl implements
     private JAXBContext jaxbContext;
     private ObjectFactory objectFactory;
 
+    @Autowired(required = false)
+    private ModuleContainerApi moduleContainer;
+
     @PostConstruct
     public void initializeJaxbContext() throws JAXBException {
         jaxbContext = JAXBContext.newInstance(RegisterMedicalCertificateType.class);
         objectFactory = new ObjectFactory();
     }
-
-    @Autowired(required = false)
-    private ModuleContainerApi moduleContainer;
 
     @Override
     public GetCertificateResponseType getCertificate(AttributedURIType logicalAddress, GetCertificateRequestType request) {

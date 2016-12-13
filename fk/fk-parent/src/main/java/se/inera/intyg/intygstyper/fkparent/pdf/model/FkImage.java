@@ -38,13 +38,13 @@ public class FkImage extends PdfComponent<FkImage> {
 
     private float linearScale = 1.0f;
 
+    public FkImage(byte[] imageData) {
+        this.imageData = imageData;
+    }
+
     public FkImage withLinearScale(float linearScale) {
         this.linearScale = linearScale;
         return this;
-    }
-
-    public FkImage(byte[] imageData) {
-        this.imageData = imageData;
     }
 
     @Override

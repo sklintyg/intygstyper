@@ -20,8 +20,6 @@
 package se.inera.intyg.intygstyper.fkparent.model.converter;
 
 public final class RespConstants {
-    private RespConstants() {
-    }
 
     public static final String GRUNDFORMEDICINSKTUNDERLAG_CODE_SYSTEM = "KV_FKMU_0001";
     public static final String TYP_AV_SYSSELSATTNING_CODE_SYSTEM = "KV_FKMU_0002";
@@ -215,6 +213,9 @@ public final class RespConstants {
     public static final String GRUNDDATA_SVAR_JSON_ID = "grundData";
     public static final String TEXTVERSION_JSON_ID = "textVersion";
     public static final String ID_JSON_ID = "id";
+
+    private RespConstants() {
+    }
 
     public static String getJsonPropertyFromFrageId(String frageId) {
         switch (frageId) {

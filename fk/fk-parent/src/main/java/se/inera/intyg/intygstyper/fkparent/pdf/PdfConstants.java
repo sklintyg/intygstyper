@@ -34,9 +34,6 @@ import com.itextpdf.text.pdf.BaseFont;
 // CHECKSTYLE:OFF MagicNumber
 public final class PdfConstants {
 
-    private PdfConstants() {
-    }
-
     public static final String ELECTRONIC_COPY_WATERMARK_TEXT = "Detta är en utskrift av ett elektroniskt intyg";
 
     /**
@@ -93,6 +90,9 @@ public final class PdfConstants {
             throw new RuntimeException("Failed to initialize fonts", e);
         }
 
+    }
+
+    private PdfConstants() {
     }
 
 }
