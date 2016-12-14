@@ -238,6 +238,30 @@ angular.module('lisjp').factory('lisjp.FormFactory',
                                         ],
                                         required: true
                                     }
+                                },{
+                                    key: 'motiveringTillTidigtStartdatumForSjukskrivning', type: 'multi-text',
+                                    className: 'fold-animation',
+                                    hideExpression: function($viewValue, $modelValue, scope) {
+                                        var hide = true;
+                                        var warnings = scope.options.formState.viewState.common.validation.warningMessagesByField;
+                                        if (warnings) {
+                                            angular.forEach(warnings.sjukskrivningar, function(w) {
+                                               if (w.message === 'lisjp.validation.bedomning.sjukskrivningar.tidigtstartdatum') {
+                                                   hide = false;
+                                               }
+                                            });
+                                        }
+                                        return hide;
+                                    },
+                                    templateOptions: {
+                                        bold: 'bold',
+                                        forceHeadingTypeLabel: true,
+                                        staticLabelId: 'lisjp.label.sjukskrivningar.tidigtstartdatum.motivering',
+                                        staticHelpId: 'lisjp.label.sjukskrivningar.tidigtstartdatum.motivering.help',
+                                        subTextId: 'lisjp.label.sjukskrivningar.tidigtstartdatum.motivering.info',
+                                        subTextDynId: 'FRG_25',
+                                        hideWhenEmpty: true
+                                    }
                                 }
                             ]
                         },

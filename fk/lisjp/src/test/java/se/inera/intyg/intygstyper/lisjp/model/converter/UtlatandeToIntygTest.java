@@ -143,6 +143,17 @@ public class UtlatandeToIntygTest {
     }
 
     @Test
+    public void testConvertWithConcatToOvrigt2() {
+        LisjpUtlatande utlatande = buildUtlatande().toBuilder().setMotiveringTillInteBaseratPaUndersokning("Motivering!").
+                setMotiveringTillTidigtStartdatumForSjukskrivning("Motivering2!").setOvrigt("TheRealOvrigt").build();
+        Intyg intyg = UtlatandeToIntyg.convert(utlatande);
+        assertTrue(intyg.getSvar().size() == 1);
+        assertEquals("Motivering till varför utlåtandet inte baseras på undersökning av patienten: Motivering!\n"
+                + "Orsak för att starta perioden mer än 7 dagar bakåt i tiden: Motivering2!\nTheRealOvrigt",
+                intyg.getSvar().get(0).getDelsvar().get(0).getContent().get(0));
+    }
+
+    @Test
     public void testConvertDoesNotAddSvarForSysselsattningWithoutType() {
         Sysselsattning sysselsattning = Sysselsattning.create(null);
         LisjpUtlatande utlatande = buildUtlatande().toBuilder().setSysselsattning(Arrays.asList(sysselsattning)).build();

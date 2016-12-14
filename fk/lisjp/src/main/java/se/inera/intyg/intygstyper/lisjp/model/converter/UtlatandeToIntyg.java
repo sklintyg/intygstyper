@@ -196,6 +196,7 @@ public final class UtlatandeToIntyg {
 
     private static String buildOvrigaUpplysningar(LisjpUtlatande source) {
         String motiveringTillInteBaseratPaUndersokning = null;
+        String motiveringTillTidigSjukskrivning = null;
         String ovrigt = null;
 
         // Since INTYG-2949, we have to concatenate information in the Övrigt-fält again...
@@ -204,11 +205,17 @@ public final class UtlatandeToIntyg {
                     + source.getMotiveringTillInteBaseratPaUndersokning();
         }
 
+        // INTYG-3207 motiveringTillTidigtStartdatumForSjukskrivning
+        if (!StringUtils.isBlank(source.getMotiveringTillTidigtStartdatumForSjukskrivning())) {
+            motiveringTillTidigSjukskrivning = "Orsak för att starta perioden mer än 7 dagar bakåt i tiden: "
+                    + source.getMotiveringTillTidigtStartdatumForSjukskrivning();
+        }
+
         if (!StringUtils.isBlank(source.getOvrigt())) {
             ovrigt = source.getOvrigt();
         }
 
-        String ret = Joiner.on("\n").skipNulls().join(motiveringTillInteBaseratPaUndersokning, ovrigt);
+        String ret = Joiner.on("\n").skipNulls().join(motiveringTillInteBaseratPaUndersokning, motiveringTillTidigSjukskrivning, ovrigt);
         return !StringUtils.isBlank(ret) ? ret : null;
     }
 

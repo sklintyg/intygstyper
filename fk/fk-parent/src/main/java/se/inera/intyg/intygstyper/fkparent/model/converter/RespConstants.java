@@ -176,6 +176,7 @@ public final class RespConstants {
     public static final String BEHOV_AV_SJUKSKRIVNING_NIVA_DELSVARSVAR_ID_32 = "32.1";
     public static final String BEHOV_AV_SJUKSKRIVNING_PERIOD_DELSVARSVAR_ID_32 = "32.2";
     public static final String BEHOV_AV_SJUKSKRIVNING_SVAR_JSON_ID_32 = "sjukskrivningar";
+    public static final String MOTIVERING_TILL_TIDIGT_STARTDATUM_FOR_SJUKSKRIVNING_ID = "motiveringTillTidigtStartdatumForSjukskrivning";
 
     public static final String ARBETSTIDSFORLAGGNING_SVAR_ID_33 = "33";
     public static final String ARBETSTIDSFORLAGGNING_OM_DELSVAR_ID_33 = "33.1";

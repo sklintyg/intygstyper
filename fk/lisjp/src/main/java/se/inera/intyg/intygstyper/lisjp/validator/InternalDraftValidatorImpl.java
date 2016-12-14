@@ -39,6 +39,7 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
 
     private static final int MAX_ARBETSLIVSINRIKTADE_ATGARDER = 10;
     private static final int MAX_SYSSELSATTNING = 5;
+    private static final int VARNING_FOR_TIDIG_SJUKSKRIVNING_ANTAL_DAGAR = 7;
 
     @Autowired
     private ValidatorUtilFK validatorUtilFK;
@@ -230,6 +231,17 @@ public class InternalDraftValidatorImpl implements InternalDraftValidator<LisjpU
 
             // R17 Validate no sjukskrivningperiods overlap
             validateSjukskrivningPeriodOverlap(utlatande, validationMessages);
+
+            // INTYG-3207: Show warning if any period starts earlier than 7 days before now
+            if (utlatande.getSjukskrivningar()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .anyMatch(sjukskrivning ->
+                            sjukskrivning.getPeriod() != null && sjukskrivning.getPeriod().getFrom() != null
+                                    && sjukskrivning.getPeriod().getFrom().isBeforeNumDays(VARNING_FOR_TIDIG_SJUKSKRIVNING_ANTAL_DAGAR))) {
+                ValidatorUtil.addValidationError(validationMessages, "bedomning.sjukskrivningar", ValidationMessageType.WARN,
+                        "lisjp.validation.bedomning.sjukskrivningar.tidigtstartdatum");
+            }
 
             // Arbetstidsforlaggning R13, R14, R15, R16
             if (isArbetstidsforlaggningMandatory(utlatande)) {

@@ -128,6 +128,9 @@ public abstract class LisjpUtlatande implements Utlatande, SitUtlatande {
     // 32.1
     public abstract ImmutableList<Sjukskrivning> getSjukskrivningar();
 
+    @Nullable
+    public abstract String getMotiveringTillTidigtStartdatumForSjukskrivning();
+
     // Fråga 37 - försäkringsmedicinskt beslutsstöd
     // 37.1
     @Nullable
@@ -266,6 +269,9 @@ public abstract class LisjpUtlatande implements Utlatande, SitUtlatande {
         }
         /* package private */
         abstract Builder setSjukskrivningar(ImmutableList<Sjukskrivning> sjukskrivningar);
+
+        @JsonProperty(MOTIVERING_TILL_TIDIGT_STARTDATUM_FOR_SJUKSKRIVNING_ID)
+        public abstract Builder setMotiveringTillTidigtStartdatumForSjukskrivning(String motiveringTillTidigtStartdatumForSjukskrivning);
 
         @JsonProperty(FORSAKRINGSMEDICINSKT_BESLUTSSTOD_SVAR_JSON_ID_37)
         public abstract Builder setForsakringsmedicinsktBeslutsstod(String forskningsmedicinsktBeslutsstod);
