@@ -8,22 +8,22 @@
 
         <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('sysselsattning')">
 
-            <div class="form-group form-inline">
+            <div class="form-group">
                 <label class="control-label"><span message key="fk7263.label.arbetsformaga"></span></label>
 
-                <div class="controls form-inline">
+                <div class="controls">
                     <label class="checkbox"><input type="checkbox" id="arbeteNuvarande"
                                                    ng-model="model.nuvarandeArbete"
                                                    ng-change="onSysselsattningChange(); validate()"> Nuvarande
-                        arbete</label><span wc-help-mark
-                                            field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span>
+                        arbete <span wc-help-mark
+                                     field-help-text="fk7263.helptext.sysselsattning.nuvarande"></span></label>
 
                     <wc-validation-wrapper field-type="multi-text" validations="viewState.getValidationErrors('nuvarandearbetsuppgifter')">
                         <div class="indent" ng-if="model.nuvarandeArbete">
                             <label for="currentWork">Ange aktuella arbetsuppgifter *</label>
 
                             <div class="controls">
-                                <textarea id="currentWork" class="" name="currentWork" rows='2'
+                                <textarea id="currentWork" class="form-control" name="currentWork" rows='2'
                                           ng-model="model.nuvarandeArbetsuppgifter" wc-maxlength ng-trim="false"
                                           maxlength="{{viewState.inputLimits.nuvarandeArbetsuppgifter}}"
                                           ng-blur="validate()"></textarea>
