@@ -2,15 +2,15 @@
 
   <a id="anchor-diagnos" name="anchor.diagnos"></a>
   <div wc-field field-label="fk7263.label.diagnos" field-number="2" field-help-text="fk7263.helptext.diagnos"
-       class="print-pagebreak-after" field-has-errors="viewState.common.validationMessagesGrouped.diagnos"
+       class="print-pagebreak-after" field-has-errors="viewState.common.validation.messagesGrouped.diagnos"
        id="diagnoseForm">
 
     <wc-fmb-help-display related-form-id="FALT2" fmb-states="fmbViewState" field-name="DIAGNOS">
 
-      <div class="alert alert-danger" ng-if="viewState.common.validationMessagesGrouped.diagnos"
+      <div class="alert alert-danger" ng-if="viewState.common.validation.messagesGrouped.diagnos"
            id="validationMessages_diagnos">
         <ul>
-          <li ng-repeat="message in viewState.common.validationMessagesGrouped.diagnos">
+          <li ng-repeat="message in viewState.common.validation.messagesGrouped.diagnos">
             <span message key="{{message.message}}"></span>
           </li>
         </ul>
