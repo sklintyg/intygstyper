@@ -70,6 +70,20 @@ This is to avoid leaking module specific style rules outside of it's intended co
     position: relative;
   }
 
+  .edit-form {
+    textarea#currentWork.form-control {
+      overflow-y: hidden;
+      padding: 2px 4px;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 1340px) {
+    textarea#currentWork.form-control {
+      max-width: 682px;
+    }
+  }
+
 }
 
 
