@@ -7,57 +7,77 @@
      name="synForm" id="synForm">
   <table class="table table-form">
     <tr>
-      <td></td>
-      <td></td>
-      <td><h5>Alternativ 1</h5></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td>Vid synnedsättningar av betydelse för innehavet krävs ögonläkarintyg. Detta gäller vid
-        proliferativ retinopati, genomgången laserbehandling av retinopati, signifikant makulaödem
-        eller
-        vid annan ögonsjukdom samt om ögonbottenfoto saknas.
+      <td colspan="3">
+        <h5>Alternativ 1</h5>
       </td>
     </tr>
     <tr>
-      <th><span message key="common.yes"></span></th>
-      <th><span message key="common.no"></span></th>
+      <td colspan="3">
+        Vid synnedsättningar av betydelse för innehavet krävs ögonläkarintyg. Detta gäller vid
+        proliferativ retinopati, genomgången laserbehandling av retinopati, signifikant makulaödem
+        eller vid annan ögonsjukdom samt om ögonbottenfoto saknas.
+      </td>
+    </tr>
+    <tr style="line-height:1.2em;">
+      <td colspan="3">&nbsp;</td>
+    </tr>
+    <tr>
+      <th class="text-center"><span message key="common.yes"></span></th>
+      <th class="text-center"><span message key="common.no"></span></th>
       <th class="maxwidth"></th>
     </tr>
     <tr>
-      <td><input id="synay" name="syna" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg" ng-change="validate()"></td>
-      <td><input id="synan" name="syna" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.syn.separatOgonlakarintyg" ng-change="validate()"></td>
-      <td><span dynamic-label key="FRG_43.RBK"></span> *</td>
+      <td class="text-center">
+        <input id="synay" name="syna" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.separatOgonlakarintyg" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="synan" name="syna" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.separatOgonlakarintyg" ng-change="validate()">
+      </td>
+      <td>
+        <span dynamic-label key="FRG_43.RBK"></span><span> *</span>
+      </td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('separatOgonlakarintyg')"></wc-field-validation></td></tr>
-
-    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
-      <td></td>
-      <td></td>
-      <td><h5 class="inline-heading">Alternativ 2: (frågorna b-d besvaras)</h5></td>
-    </tr>
-    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
-      <td></td>
-      <td></td>
-      <td>Om ögonläkarintyg inte krävs kan behandlande specialistkompetent läkare med god kännedom om
-        patientens sjukdom här avge intyg om synfunktionen.
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('separatOgonlakarintyg')"></wc-field-validation>
       </td>
     </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
-      <td><input id="synby" name="synb" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning" ng-change="validate()"></td>
-      <td><input id="synbn" name="synb" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning" ng-change="validate()"></td>
+      <td colspan="3">
+        <h5 class="inline-heading">Alternativ 2: (frågorna b-d besvaras)</h5>
+      </td>
+    </tr>
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
+      <td colspan="3">
+        Om ögonläkarintyg inte krävs kan behandlande specialistkompetent läkare med god kännedom om
+        patientens sjukdom här avge intyg om synfunktionen.
+      </td>
+    </tr>
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg" style="line-height:1.2em;">
+      <td colspan="3">&nbsp;</td>
+    </tr>
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
+      <th class="text-center"><span message key="common.yes"></span></th>
+      <th class="text-center"><span message key="common.no"></span></th>
+      <th class="maxwidth"></th>
+    </tr>
+    <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
+      <td class="text-center">
+        <input id="synby" name="synb" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="synbn" name="synb" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.synfaltsprovningUtanAnmarkning" ng-change="validate()">
+      </td>
       <td>
         <span dynamic-label key="FRG_44.RBK"></span>
         <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
       </td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('provningUtanAnmarkning')"></wc-field-validation></td></tr>
-
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('provningUtanAnmarkning')"></wc-field-validation>
+      </td>
+    </tr>
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
       <td></td>
       <td></td>
@@ -134,16 +154,21 @@
     </tr>
 
     <tr data-ng-hide="viewState.intygModel.syn.separatOgonlakarintyg">
-      <td><input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
+      <td>
+        <input id="syndy" name="synd" type="radio" ng-value="true" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
       </td>
-      <td><input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
+      <td>
+        <input id="syndn" name="synd" type="radio" ng-value="false" ng-model="viewState.intygModel.syn.diplopi" ng-change="validate()">
       </td>
       <td>
         <span dynamic-label key="FRG_6.RBK"></span>
         <span ng-if="viewState.intygModel.syn.separatOgonlakarintyg === false">*</span>
       </td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('diplopi')"></wc-field-validation></td></tr>
-
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('diplopi')"></wc-field-validation>
+      </td>
+    </tr>
   </table>
 </div>

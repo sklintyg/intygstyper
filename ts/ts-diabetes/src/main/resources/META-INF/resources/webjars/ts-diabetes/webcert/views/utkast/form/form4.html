@@ -8,49 +8,48 @@
 
   <table class="table table-form">
     <tr>
-      <td></td>
-      <td></td>
-      <td>
+      <td colspan="3">
         <p><span dynamic-label key="FRG_33.RBK"></span> *</p>
 
         <div class="form-group">
           <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('bedomning')">
-            <label class="radio"><input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false"
-                                        ng-model="viewState.intygModel.bedomning.kanInteTaStallning" ng-change="validate()">
+            <label class="radio">
+              <input id="behorighet_bedomning" name="behorighet" type="radio" ng-value="false" ng-model="viewState.intygModel.bedomning.kanInteTaStallning" ng-change="validate()">
               <span dynamic-label key="DFR_33.1.RBK"></span>
             </label>
             <div class="form-group clearfix indent" ng-show="!viewState.intygModel.bedomning.kanInteTaStallning">
-              <label class="checkbox checkbox-columns col-xs-2"
-                     ng-repeat="typ in viewState.intygModel.bedomning.korkortstyp track by $index"><input
-                  id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox"
-                  ng-model="typ.selected" ng-change="validate()">
+              <label class="checkbox checkbox-columns col-xs-2" ng-repeat="typ in viewState.intygModel.bedomning.korkortstyp track by $index">
+                <input id="korkortstyp{{$index}}" name="korkortstyp{{$index}}" type="checkbox" ng-model="typ.selected" ng-change="validate()">
                 <span dynamic-label key="KORKORT_{{typ.type}}.RBK"></span>
               </label>
             </div>
             <label class="radio">
-              <input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true"
-                     ng-model="viewState.intygModel.bedomning.kanInteTaStallning" ng-change="validate()">
+              <input id="behorighet_kanintetastallning" name="behorighet" type="radio" ng-value="true" ng-model="viewState.intygModel.bedomning.kanInteTaStallning" ng-change="validate()">
               <span dynamic-label key="DFR_33.2.RBK"></span>
             </label>
           </wc-validation-group>
         </div>
       </td>
     </tr>
-
     <tr ng-show="viewState.korkortd">
-      <th><span message key="common.yes"></span></th>
-      <th><span message key="common.no"></span></th>
+      <th class="text-center"><span message key="common.yes"></span></th>
+      <th class="text-center"><span message key="common.no"></span></th>
       <th class="maxwidth"></th>
     </tr>
-
     <tr ng-show="viewState.korkortd">
-      <td><input id="bedomningy" name="bedomning" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.bedomning.lamplighetInnehaBehorighet" ng-change="validate()"></td>
-      <td><input id="bedomningn" name="bedomning" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.bedomning.lamplighetInnehaBehorighet" ng-change="validate()"></td>
+      <td class="text-center">
+        <input id="bedomningy" name="bedomning" type="radio" ng-value="true" ng-model="viewState.intygModel.bedomning.lamplighetInnehaBehorighet" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="bedomningn" name="bedomning" type="radio" ng-value="false" ng-model="viewState.intygModel.bedomning.lamplighetInnehaBehorighet" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_45.RBK"></span> *</td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('lamplighetInnehaBehorighet')"></wc-field-validation></td></tr>
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('lamplighetInnehaBehorighet')"></wc-field-validation>
+      </td>
+    </tr>
 
   </table>
 </div>

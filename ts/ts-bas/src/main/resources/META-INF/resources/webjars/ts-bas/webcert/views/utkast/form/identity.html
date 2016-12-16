@@ -8,10 +8,10 @@
   <div class="form-group">
     <wc-validation-group field-type="check-group" validations="viewState.getValidationErrors('identitet')">
       <div class="clearfix">
-        <label class="radio checkbox-columns col-xs-6" ng-repeat="v in viewState.identitet">
+        <label class="radio col-xs-6" ng-repeat="v in viewState.identitet">
           <input id="identity{{$index}}" name="identity{{$index}}" type="radio" value="{{v.id}}"
                  ng-model="viewState.intygModel.vardkontakt.idkontroll" ng-change="validate()">
-          {{v.label}}
+          <span>{{v.label}}</span>
         </label>
       </div>
     </wc-validation-group>

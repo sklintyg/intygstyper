@@ -1,12 +1,11 @@
 <a id="anchor-patient" name="anchor.patientadress"></a>
 <div wc-field field-label="common.intyg.patientadress" field-has-errors="viewState.common.validation.messagesGrouped.patientadress" id="patientForm">
 
-  <div class="form-horizontal">
-    <div class="form-group">
+    <div class="form-horizontal form-group">
       <wc-validation-wrapper label-col-size="3" field-type="single-text" validations="viewState.getValidationErrors('grunddata.patient.postadress')">
         <div class="row">
-          <label class="col-md-3 control-label"><span message key="ts-bas.form.postadress"></span> *</label>
-          <div class="col-md-9">
+          <label class="col-md-2 control-label"><span message key="ts-bas.form.postadress"></span> *</label>
+          <div class="col-md-10">
             <input type="text" class="form-control input-full" id="patientPostadress"
                    name="viewState.intygModel.grundData.patient.postadress"
                    ng-model="viewState.intygModel.grundData.patient.postadress" maxlength="50" wc-focus-on="focusFirstInput"
@@ -16,11 +15,11 @@
       </wc-validation-wrapper>
     </div>
 
-    <div class="form-group">
+    <div class="form-horizontal form-group">
       <wc-validation-wrapper label-col-size="3" field-type="single-text" validations="viewState.getValidationErrors('grunddata.patient.postnummer')">
         <div class="row">
-          <label class="col-md-3 control-label"><span message key="ts-bas.form.postnummer"></span> *</label>
-          <div class="col-md-9">
+          <label class="col-md-2 control-label"><span message key="ts-bas.form.postnummer"></span> *</label>
+          <div class="col-md-10">
             <input type="text" class="form-control input-5" id="patientPostnummer"
                    name="viewState.intygModel.grundData.patient.postnummer"
                    ng-model="viewState.intygModel.grundData.patient.postnummer" maxlength="6"
@@ -30,11 +29,11 @@
       </wc-validation-wrapper>
     </div>
 
-    <div class="form-group">
+    <div class="form-horizontal form-group">
       <wc-validation-wrapper label-col-size="3" field-type="single-text" validations="viewState.getValidationErrors('grunddata.patient.postort')">
         <div class="row">
-          <label class="col-md-3 control-label"><span message key="ts-bas.form.postort"></span> *</label>
-          <div class="col-md-9">
+          <label class="col-md-2 control-label"><span message key="ts-bas.form.postort"></span> *</label>
+          <div class="col-md-10">
             <input type="text" class="form-control" id="patientPostort" name="viewState.intygModel.grundData.patient.postort"
                    ng-model="viewState.intygModel.grundData.patient.postort" maxlength="25"
                    ng-blur="validate()">
@@ -43,13 +42,12 @@
       </wc-validation-wrapper>
     </div>
 
-    <div class="form-group" wc-authority="HANTERA_PERSONUPPGIFTER">
+    <div class="form-horizontal form-group" wc-authority="HANTERA_PERSONUPPGIFTER">
       <div class="row">
-        <label class="col-md-3 control-label"></label>
-        <div class="col-md-9">
+        <label class="col-md-2 control-label"></label>
+        <div class="col-md-10">
           <wc-utkast-patient-address-updater patient-model="viewState.intygModel.grundData.patient" form="certForm"></wc-utkast-patient-address-updater>
         </div>
       </div>
     </div>
-  </div>
 </div>

@@ -1,10 +1,10 @@
-<div class="intyg-block clearfix">
-  <div ng-if="specialiteter && specialiteter != ''">
+<div class="intyg-block clearfix" ng-if="showForm()">
+  <div ng-if="showSpecialiteter()">
     <h4><span message key="ts-bas.label.specialkompetens"></span></h4>
     <span> {{specialiteter}}</span><br />
   </div>
   <br />
-  <div ng-if="befattningar && befattningar.length > 0">
+  <div ng-if="showBefattningar()">
     <h4><span message key="ts-bas.label.befattningar"></span></h4>
     <span ng-repeat="befattning in befattningar"></span>
   </div>

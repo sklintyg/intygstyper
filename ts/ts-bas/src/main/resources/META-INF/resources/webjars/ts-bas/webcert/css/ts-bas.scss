@@ -29,4 +29,31 @@ This is to avoid leaking module specific style rules outside of it's intended co
   input[type=text] {
     margin-bottom: 0;
   }
+
+  input[type="radio"] {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .intyg-block {
+    #vardenhetNamn label {
+      font-weight: 500;
+      padding-bottom: 10px;
+    }
+    .control-label {
+      white-space: nowrap;
+      text-align: left;
+    }
+    .form-group {
+      padding-bottom: 5px;
+    }
+  }
+
+  .radio {
+    span {
+      margin-left: 20px;
+    }
+  }
+
 }
+

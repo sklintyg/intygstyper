@@ -26,6 +26,9 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form19Controller',
 
             //Make a printable list of Befattningar (which as of yet consists of un-readable codes...)
             $scope.befattningar = '';
+            $scope.showBefattningar = function() {
+                return $scope.befattningar && $scope.befattningar.length > 0;
+            };
             $scope.$watch('user.user.befattningar', function(befattningar) {
                 if (befattningar === undefined) {
                     return;
@@ -35,6 +38,9 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form19Controller',
 
             //Make a printable list of Specialiteter
             $scope.specialiteter = '';
+            $scope.showSpecialiteter = function() {
+                return specialiteter && specialiteter != '';
+            };
             $scope.$watch('user.user.specialiseringar', function(specialiteter) {
                 if (specialiteter === undefined) {
                     return;
@@ -49,5 +55,9 @@ angular.module('ts-bas').controller('ts-bas.Utkast.Form19Controller',
                 }
                 $scope.specialiteter = result;
             }, true);
+
+            $scope.showForm = function() {
+                return showBefattningar() || showSpecialiteter();
+            };
 
         }]);

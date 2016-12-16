@@ -6,47 +6,66 @@
      id="hypoglykemierForm">
   <table class="table table-form">
     <tr>
-      <th><span message key="common.yes"></span></th>
-      <th><span message key="common.no"></span></th>
+      <th class="text-center"><span message key="common.yes"></span></th>
+      <th class="text-center"><span message key="common.no"></span></th>
       <th class="maxwidth"></th>
     </tr>
 
     <tr>
-      <td><input id="hypoay" name="hypoa" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder" ng-change="validate()"></td>
-      <td><input id="hypoan" name="hypoa" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder" ng-change="validate()"></td>
+      <td class="text-center">
+        <input id="hypoay" name="hypoa" type="radio" ng-value="true" ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="hypoan" name="hypoa" type="radio" ng-value="false" ng-model="viewState.intygModel.hypoglykemier.kunskapOmAtgarder" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_36.RBK"></span> *</td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('kunskapOmAtgarder')"></wc-field-validation></td></tr>
-
     <tr>
-      <td><input id="hypoby" name="hypob" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion" ng-change="validate()"></td>
-      <td><input id="hypobn" name="hypob" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion" ng-change="validate()"></td>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('kunskapOmAtgarder')"></wc-field-validation>
+      </td>
+    </tr>
+    <tr>
+      <td class="text-center">
+        <input id="hypoby" name="hypob" type="radio" ng-value="true" ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="hypobn" name="hypob" type="radio" ng-value="false" ng-model="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_37.RBK"></span> *</td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('teckenNedsattHjarnfunktion')"></wc-field-validation></td></tr>
-
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('teckenNedsattHjarnfunktion')"></wc-field-validation>
+      </td>
+    </tr>
     <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
-      <td><input id="hypocy" name="hypoc" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken" ng-change="validate()"></td>
-      <td><input id="hypocn" name="hypoc" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken" ng-change="validate()"></td>
+      <td class="text-center">
+        <input id="hypocy" name="hypoc" type="radio" ng-value="true" ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken" ng-change="validate()">
+      </td>
+      <td class="text-center"><input id="hypocn" name="hypoc" type="radio" ng-value="false" ng-model="viewState.intygModel.hypoglykemier.saknarFormagaKannaVarningstecken" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_38.RBK"></span> *</td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('saknarFormagaKannaVarningstecken')"></wc-field-validation></td></tr>
-
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('saknarFormagaKannaVarningstecken')"></wc-field-validation>
+      </td>
+    </tr>
     <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
-      <td><input id="hypody" name="hypod" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst" ng-change="validate()"></td>
-      <td><input id="hypodn" name="hypod" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst" ng-change="validate()"></td>
+      <td class="text-center">
+        <input id="hypody" name="hypod" type="radio" ng-value="true" ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="hypodn" name="hypod" type="radio" ng-value="false" ng-model="viewState.intygModel.hypoglykemier.allvarligForekomst" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_39.RBK"></span> *</td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('allvarligForekomst')"></wc-field-validation></td></tr>
-
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('allvarligForekomst')"></wc-field-validation>
+      </td>
+    </tr>
     <tr ng-show="viewState.intygModel.hypoglykemier.allvarligForekomst == true">
       <td colspan="2"></td>
       <td>
@@ -65,14 +84,21 @@
     </tr>
 
     <tr ng-show="viewState.intygModel.hypoglykemier.teckenNedsattHjarnfunktion">
-      <td><input id="hypoey" name="hypoe" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken" ng-change="validate()"></td>
-      <td><input id="hypoen" name="hypoe" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken" ng-change="validate()"></td>
+      <td class="text-center">
+        <input id="hypoey" name="hypoe" type="radio" ng-value="true"
+               ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="hypoen" name="hypoe" type="radio" ng-value="false"
+               ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_40.RBK"></span> *</td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('allvarligForekomstTrafiken')"></wc-field-validation></td></tr>
-
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('allvarligForekomstTrafiken')"></wc-field-validation>
+      </td>
+    </tr>
     <tr ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstTrafiken == true">
       <td colspan="2"></td>
       <td>
@@ -89,32 +115,43 @@
         </div>
       </td>
     </tr>
-
     <tr ng-show="viewState.korkortd">
       <td></td>
       <td></td>
-      <td><h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och
-        taxiförarlegitimation ska även fråga f-g besvaras</h5></td>
+      <td>
+        <h5 class="inline-heading">För innehav av behörigheterna C1, C1E, C, CE, D1, D1E, D, DE och
+        taxiförarlegitimation ska även fråga f-g besvaras</h5>
+      </td>
     </tr>
     <!-- 2f -->
     <tr ng-show="viewState.korkortd">
-      <td><input id="hypofy" name="hypof" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker" ng-change="validate()"></td>
-      <td><input id="hypofn" name="hypof" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker" ng-change="validate()"></td>
+      <td class="text-center">
+        <input id="hypofy" name="hypof" type="radio" ng-value="true"
+               ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="hypofn" name="hypof" type="radio" ng-value="false"
+               ng-model="viewState.intygModel.hypoglykemier.egenkontrollBlodsocker" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_41.RBK"></span> *</td>
     </tr>
     <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('egenkontrollBlodsocker')"></wc-field-validation></td></tr>
 
     <!-- 2g -->
     <tr ng-show="viewState.korkortd">
-      <td><input id="hypogy" name="hypog" type="radio" ng-value="true"
-                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid" ng-change="validate()"></td>
-      <td><input id="hypogn" name="hypog" type="radio" ng-value="false"
-                 ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid" ng-change="validate()"></td>
+      <td class="text-center">
+        <input id="hypogy" name="hypog" type="radio" ng-value="true"
+               ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid" ng-change="validate()">
+      </td>
+      <td class="text-center">
+        <input id="hypogn" name="hypog" type="radio" ng-value="false"
+               ng-model="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid" ng-change="validate()">
+      </td>
       <td><span dynamic-label key="FRG_42.RBK"></span> *</td>
     </tr>
-    <tr><td colspan="3"><wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('allvarligForekomstVakenTid')"></wc-field-validation></td></tr>
+    <tr>
+      <td colspan="3">
+        <wc-field-validation field-type="radio-group" validations="viewState.getValidationErrors('allvarligForekomstVakenTid')"></wc-field-validation></td></tr>
 
     <tr ng-show="viewState.intygModel.hypoglykemier.allvarligForekomstVakenTid == true">
       <td colspan="2"></td>
